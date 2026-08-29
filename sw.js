@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v67';   // sleeve wall: 12a full-screen gallery + chunk/met-sig/improv NaN class fix + live proxy labels
+const VERSION = 'keys-v68';   // hands segment both play boards + 11c task redesign (watermark, note cells, THIS ROUND) + task mock stand-down
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   'js/app.mjs', 'js/engine.mjs', 'js/midi.mjs', 'js/falls.mjs', 'js/score.mjs', 'js/songs.mjs', 'js/audio.mjs', 'js/echo.mjs',

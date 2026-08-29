@@ -36,7 +36,7 @@ import { difficultyScore, difficultyBand, HALL_OF_FAME } from './difficulty.mjs'
 import { coverDataUrl } from './covers.mjs';
 import { CANON_ON, setTextKeeping, setHTMLKeeping, setRichText, hideRestingLayer, setCanonNav, desktopFits, applyCanonZoom } from './canon-mount.mjs';
 import { bindTrophyList, bindXpLog, bindKeys12, bindKeys12Count, bindLessonList, bindImprovLoop, bindSegmentByIds, bindSegment } from './canon-bind.mjs';
-import { mountWidePlay, syncWidePlay } from './canon-play.mjs';
+import { mountWidePlay, syncWidePlay, bindHandCells, syncHandCells } from './canon-play.mjs';
 import { renderCanonLibrary } from './canon-library.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -306,8 +306,8 @@ function resumeLastSession() {
   $('wait-mode').checked = last.wait ?? true;
   if (last.hand && last.hand !== 'both') {
     hand = last.hand;
-    (CANON_ON && bindSegment([...document.querySelectorAll('.hand-btn')], (x) => x.dataset.hand === hand)) ||
-      document.querySelectorAll('.hand-btn').forEach((x) => (x.dataset.on = String(x.dataset.hand === hand)));
+    document.querySelectorAll('.hand-btn').forEach((x) => (x.dataset.on = String(x.dataset.hand === hand)));
+    if (CANON_ON) syncHandCells();
   }
   viewMode = last.view === 'score' ? 'score' : 'falls';
   syncModeButtons();
@@ -911,6 +911,8 @@ function startSong(s, { asScorePass = false } = {}) {
   scorePassFlag = asScorePass;
   viewMode = (asScorePass || sightMode) ? 'score' : 'falls';
   hand = 'both';
+  document.querySelectorAll('.hand-btn').forEach((x) => (x.dataset.on = String(x.dataset.hand === 'both')));
+  if (CANON_ON) syncHandCells();
   // sight reading is score-led by definition: no falls, no hearing it first
   $('mode-falls').disabled = sightMode;
   $('btn-hear').disabled = sightMode;
@@ -2370,6 +2372,8 @@ for (const b of document.querySelectorAll('.hand-btn')) {
     rebuildEngine();
   });
 }
+// the drawn HANDS segments (both compositions) proxy to the buttons above
+if (CANON_ON) bindHandCells($('screen-play'));
 $('tempo').addEventListener('input', () => { $('tempo-val').textContent = $('tempo').value + '%'; });
 $('tempo').addEventListener('change', rebuildEngine);
 $('section-select').addEventListener('change', rebuildEngine);
@@ -3018,8 +3022,8 @@ function renderJourney() {
     $('section-select').value = secIdx >= 0 ? String(secIdx) : '';
     $('wait-mode').checked = stepDef.wait;
     hand = stepDef.hand === 'both' ? 'both' : stepDef.hand;
-    (CANON_ON && bindSegment([...document.querySelectorAll('.hand-btn')], (x) => x.dataset.hand === hand)) ||
-      document.querySelectorAll('.hand-btn').forEach((x) => (x.dataset.on = String(x.dataset.hand === hand)));
+    document.querySelectorAll('.hand-btn').forEach((x) => (x.dataset.on = String(x.dataset.hand === hand)));
+    if (CANON_ON) syncHandCells();
     jlog('journey_step_start', { id: song.id, step: jj.step });
     rebuildEngine();
   });

@@ -129,6 +129,7 @@ export function mountWidePlay(host) {
   proxy('Restart', 'btn-restart');
   proxy('Prev', 'chunk-prev');
   proxy('Next', 'chunk-next');
+  bindHandCells(board);
   const modeF = proxy('Falls', 'mode-falls');
   const modeS = proxy('Score', 'mode-score');
   if (modeF && modeS) {
@@ -345,10 +346,46 @@ export function syncWidePlay(info = {}) {
   const chunkText = $('chunk-label')?.textContent?.trim();
   if (chunkText) put('cp-chunk', chunkText.replace(/^[^A-Za-z0-9]+/, ''));
   mirrorProxies();
+  syncHandCells();
   board?.__mirrorSections?.();
   board?.__syncSound?.();
 }
 let board = null;   // the mounted 9a root; module-scoped so sync can reach the section list
+
+// ---- the HANDS segment (drawn 2026-08-30) ----------------------------------
+// Mark: "I can't see the option to play with left or right hand or both."
+// He was right: the control lived only on the legacy markup and neither
+// composition drew it, so the port hid it. Both play boards now draw a
+// Both/Left/Right segment; each drawn cell clicks the hidden legacy
+// .hand-btn, and selection mirrors the legacy row's own data-on truth
+// (maintained by the app's existing click handler).
+const HAND_BY_WORD = { Both: 'both', Left: 'L', Right: 'R' };
+const handGroups = [];   // one array of bound cells per composition
+export function bindHandCells(root) {
+  if (!root) return false;
+  const cells = [];
+  for (const [word, code] of Object.entries(HAND_BY_WORD)) {
+    const el = [...root.querySelectorAll('*')]
+      .find((e) => !e.children.length && e.textContent.trim() === word && !e.closest('[data-legacy-screen]'));
+    const c = el?.closest('button');
+    if (!c || c.dataset.handCell) continue;
+    c.style.cursor = 'pointer';
+    c.dataset.handCell = code;
+    c.addEventListener('click', () => {
+      [...document.querySelectorAll('.hand-btn')].find((b2) => b2.dataset.hand === code)?.click();
+      setTimeout(syncHandCells, 0);
+    });
+    cells.push(c);
+  }
+  if (cells.length !== 3) return false;
+  handGroups.push(cells);
+  syncHandCells();
+  return true;
+}
+export function syncHandCells() {
+  const cur = [...document.querySelectorAll('.hand-btn')].find((b2) => b2.dataset.on === 'true')?.dataset.hand ?? 'both';
+  for (const cells of handGroups) bindSegment(cells, (el) => el.dataset.handCell === cur);
+}
 
 // drawn-label mirroring: emoji and glyph prefixes are the legacy rail's, not
 // the design's, so labels compare and display stripped of them

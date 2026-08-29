@@ -280,7 +280,9 @@ try {
     // asserted against the visible screen, so a dead drawer row cannot hide.
     const MAP = {
       'My path': 'path', 'Lessons': 'lessons', 'Sight reading': 'play',
-      'Quick win': 'play', 'Improve a song': 'play', 'Skill workout': 'play',
+      // Skill workout is "ear or scales, ALTERNATING EACH DAY": scales day
+      // lands on play, ear day on echo. Pinning one broke on the date rollover.
+      'Quick win': 'play', 'Improve a song': 'play', 'Skill workout': ['play', 'echo'],
       'Rhythm tap': 'rhythm', 'Melody echo': 'echo', 'Improv': 'improv',
       '12 keys': 'keys12', 'Free play': 'freeplay', 'Metronome': 'metronome',
       'Trophies': 'trophies', 'Takes': 'takes', 'Voice': 'library',
@@ -292,7 +294,8 @@ try {
       if (await clickText(label) !== 'ok') { bad.push('no drawer row for ' + label); await b.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', windowsVirtualKeyCode: 27, key: 'Escape', code: 'Escape' }); continue; }
       await new Promise((r) => setTimeout(r, 800));
       const where = await visible();
-      if (where !== expect) bad.push(`${label} landed on ${where}, expected ${expect}`);
+      const wanted = Array.isArray(expect) ? expect : [expect];
+      if (!wanted.includes(where)) bad.push(`${label} landed on ${where}, expected ${wanted.join(' or ')}`);
       // and back, whatever screen we are on
       if (where !== 'library') {
         if (await clickText('Library') !== 'ok') bad.push(`no way back from ${label} (${where})`);
@@ -767,6 +770,52 @@ try {
     await new Promise((r) => setTimeout(r, 600));
     if (await drawn() !== 'Hear it') bad.push(`stopping did not restore the resting word (reads ${JSON.stringify(await drawn())})`);
     await goHome(bad, 'the demo');
+    return bad;
+  });
+
+  await journey('TASK: a chord build shows its symbol, fills note cells on taps, and counts the round', async () => {
+    const bad = [];
+    await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify({
+      ...SEED, diagnosticDone: 1, mastery: { 'chord-symbol': { stage: 'independent', evidence: [], lastTested: 1, dueAt: 1 } }, teacherLessons: {},
+    }))}); true`);
+    await boot();
+    const r0 = await openTool('My path');
+    if (r0 !== 'ok') return [r0];
+    if (await clickId('path-go') !== 'ok') return ['path-go does not win its own hit-test'];
+    await new Promise((r) => setTimeout(r, 2200));
+    if (await visible() !== 'task') return ['the due chord skill did not open the task screen'];
+    // pre-start: no drawn specimen may be talking
+    const bleed = await b.eval(`(['Root position, left hand alone', 'That was a G sharp']
+      .filter((s) => document.getElementById('screen-task').textContent.includes(s)))`);
+    if (bleed.length) bad.push('drawn samples still visible pre-start: ' + JSON.stringify(bleed));
+    await b.eval(`(() => {
+      const l = [...document.querySelectorAll('*')].find((e) => !e.children.length && /Continue|Start/.test(e.textContent) && e.getBoundingClientRect().width > 0 && e.closest('button'));
+      l?.closest('button')?.click(); return true;
+    })()`);
+    await new Promise((r) => setTimeout(r, 1500));
+    const stage = await b.eval(`(() => {
+      const sheet = document.getElementById('task-sheet');
+      const wm = sheet && [...sheet.querySelectorAll('*')].find((e) => !e.children.length && /150px/.test(e.getAttribute('style') ?? ''));
+      const cells = [...document.getElementById('task-slots').children].map((c) => c.textContent.trim());
+      const round = [...document.querySelectorAll('#screen-task *')].filter((e) => !e.children.length && /^(Clean|Helped|Open)$/.test(e.textContent.trim())).length;
+      const line = [...document.querySelectorAll('#screen-task *')].find((e) => !e.children.length && /clean builds banked$/.test(e.textContent.trim()));
+      return { wm: wm?.textContent.trim() ?? null, cells, round, line: line?.textContent.trim() ?? null };
+    })()`);
+    if (!stage.wm) bad.push('the working area shows no watermark symbol');
+    if (!stage.cells.length || !stage.cells.every((c) => c === 'empty')) bad.push(`fresh build cells wrong: ${JSON.stringify(stage.cells)}`);
+    if (stage.round < 3) bad.push('THIS ROUND module missing its cells');
+    if (!/^0 of \d+ clean builds banked$/.test(stage.line ?? '')) bad.push(`round line wrong: ${JSON.stringify(stage.line)}`);
+    // a real tap on the drawn keys fills a note cell
+    await b.eval(`(() => {
+      const c = document.getElementById('task-keys');
+      const r = c.getBoundingClientRect();
+      c.dispatchEvent(new PointerEvent('pointerdown', { clientX: r.left + r.width * 0.2, clientY: r.bottom - 20, bubbles: true }));
+      return true;
+    })()`);
+    await new Promise((r) => setTimeout(r, 300));
+    const after = await b.eval(`([...document.getElementById('task-slots').children].map((c) => c.textContent.trim()))`);
+    if (!after.some((c) => c !== 'empty' && c.length)) bad.push(`a tapped key filled no note cell: ${JSON.stringify(after)}`);
+    await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify(SEED))}); true`);
     return bad;
   });
 

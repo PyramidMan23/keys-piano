@@ -1,4 +1,4 @@
-import { setTextKeeping, setHTMLKeeping, CANON_ON } from './canon-mount.mjs';
+import { setTextKeeping, setHTMLKeeping, CANON_ON, hideRestingLayer } from './canon-mount.mjs';
 import { coverDataUrl } from './covers.mjs';
 import { bindPathSkills, bindPathLessons } from './canon-bind.mjs';
 // Teacher Loop v1 UI (11th council 2026-08-25). The Path screen renders one
@@ -275,6 +275,10 @@ export function installPath(ctx) {
     v.pressed.clear();
     v.setRange(lo, hi);
     $('task-keys').hidden = false;
+    // the artboard's still keyboard picture (sample-lit cyan keys, middle C
+    // ring) must not sit over the live one: the one adopted canvas that never
+    // stood its mock down (Mark's "visual glitch", 2026-08-30)
+    if (CANON_ON) hideRestingLayer($('task-keys'));
     v.resize();
     drawKeys();
   }
@@ -287,16 +291,116 @@ export function installPath(ctx) {
     drawing = true;
     view.ctx.fillStyle = COLORS.bg;
     view.ctx.fillRect(0, 0, view.w, view.h);
-    view.kbH = view.h - 4;
-    view._drawKeyboard(4);
-    view._drawFlares(4, 0.016);
+    // The working area FLEXES taller when a task hides the sheet, and filling
+    // it painted 500px ghost keys (Mark's screenshot, 2026-08-30). The desktop
+    // board draws the keys as a 283px strip; that proportion is the ceiling,
+    // anchored to the canvas bottom with quiet black above.
+    view.kbH = Math.min(view.h - 4, 300);
+    const kbTop = view.h - view.kbH;
+    view._drawKeyboard(kbTop);
+    view._drawFlares(kbTop, 0.016);
     view._drawParticles(0.016);
     requestAnimationFrame(drawKeys);
   }
 
   function slots(n, states) {
-    $('task-slots').innerHTML = Array.from({ length: n }, (_, i) =>
-      '<i class="slot ' + (states[i] ?? 'todo') + '"></i>').join('');
+    // build tasks hand this row to the held-note cells (canon board 11c);
+    // everything else keeps the plain slot dots
+    if (!(isBuildTask() && heldModule())) {
+      $('task-slots').innerHTML = Array.from({ length: n }, (_, i) =>
+        '<i class="slot ' + (states[i] ?? 'todo') + '"></i>').join('');
+    }
+    bindRound(n, states);
+  }
+
+  // ---- board 11c stage bindings (2026-08-30) --------------------------------
+  // Mark: "it looks so messy... is this really the best learning experience we
+  // can do in a gamified way?" The redrawn task board added three modules;
+  // everything here binds DATA into the design's own markup, writes no styles.
+  const BUILD_TASKS = new Set(['chord', 'inversion', 'twohand']);
+  const isBuildTask = () => !!task && (BUILD_TASKS.has(task.spec?.type) || BUILD_TASKS.has(task.kind));
+
+  // the 150px watermark inside task-sheet: the symbol being built, huge and
+  // quiet behind the working area (drawn sample "Cm7")
+  function bindWatermark(sym) {
+    if (!CANON_ON) return;
+    const sheet = $('task-sheet');
+    const wm = sheet && [...sheet.querySelectorAll('*')]
+      .find((e) => !e.children.length && /150px/.test(e.getAttribute('style') ?? ''));
+    if (!wm) return;                     // the phone board draws no watermark
+    wm.textContent = sym || '';
+    if (sym) sheet.hidden = false;
+  }
+
+  // THIS ROUND, the module under HOW IT WORKS: cells lifted from its own drawn
+  // Clean/Helped/Open samples, dealt to the real round length every update
+  let roundUi;
+  function roundModule() {
+    if (roundUi !== undefined || !CANON_ON) return roundUi;
+    const leafFor = (word) => [...document.querySelectorAll('#screen-task *')]
+      .find((e) => !e.children.length && e.textContent.trim() === word && !e.closest('[data-legacy-screen]'));
+    if (!leafFor('THIS ROUND')) { roundUi = false; return roundUi; }
+    const tpl = {};
+    let row = null;
+    for (const [state, word] of [['clean', 'Clean'], ['recov', 'Helped'], ['todo', 'Open']]) {
+      const leaf = leafFor(word);
+      if (!leaf) { roundUi = false; return roundUi; }
+      let cell = leaf;
+      for (let i = 0; i < 3 && cell.parentElement; i++) {
+        if (cell.querySelector('i, b') || cell.children.length >= 2) break;
+        cell = cell.parentElement;
+      }
+      tpl[state] = cell.cloneNode(true);
+      row = cell.parentElement;
+    }
+    const line = [...document.querySelectorAll('#screen-task *')]
+      .find((e) => !e.children.length && /clean builds banked$/.test(e.textContent.trim()));
+    roundUi = row ? { row, tpl, line } : false;
+    return roundUi;
+  }
+  function bindRound(n, states) {
+    const ui = roundModule();
+    if (!ui) return;
+    while (ui.row.firstChild) ui.row.firstChild.remove();
+    for (let i = 0; i < n; i++) {
+      const st = states[i] === 'clean' ? 'clean' : states[i] === 'recov' ? 'recov' : 'todo';
+      ui.row.appendChild(ui.tpl[st].cloneNode(true));
+    }
+    if (ui.line) ui.line.textContent = `${states.filter((s) => s === 'clean').length} of ${n} clean builds banked`;
+  }
+
+  // the held-note cells: for build tasks the drawn slot row shows which notes
+  // are placed so far ("C", "E flat", "empty"), straight from task.held
+  let heldUi;
+  function heldModule() {
+    if (heldUi !== undefined || !CANON_ON) return heldUi;
+    const host = $('task-slots');
+    const emptyLeaf = host && [...host.querySelectorAll('*')]
+      .find((e) => !e.children.length && e.textContent.trim() === 'empty');
+    const nameLeaf = host && [...host.querySelectorAll('*')]
+      .find((e) => !e.children.length && /Fraunces/.test(e.getAttribute('style') ?? '') && e.textContent.trim());
+    if (!emptyLeaf || !nameLeaf) { heldUi = false; return heldUi; }
+    const cellOf = (l) => { let c = l; while (c.parentElement && c.parentElement !== host) c = c.parentElement; return c; };
+    heldUi = { host, emptyTpl: cellOf(emptyLeaf).cloneNode(true), nameTpl: cellOf(nameLeaf).cloneNode(true) };
+    return heldUi;
+  }
+  function syncHeldCells() {
+    const ui = heldModule();
+    if (!ui || !isBuildTask()) return;
+    const sym = task.round?.[task.idx] ?? task.seq?.[task.idx];
+    const wantN = sym ? triadMidis(sym).length : 3;
+    // the ATTEMPT set, judgeHeld's own rule: rolled/staccato notes stay shown
+    const held = [...new Set([...(task.window ?? []), ...task.held])].sort((a, b) => a - b);
+    while (ui.host.firstChild) ui.host.firstChild.remove();
+    for (let i = 0; i < wantN; i++) {
+      if (i < held.length) {
+        const c = ui.nameTpl.cloneNode(true);
+        const nm = [...c.querySelectorAll('*')].find((e) => !e.children.length && /Fraunces/.test(e.getAttribute('style') ?? ''));
+        // the app's spoken vocabulary ("G sharp"), never a bare accidental
+        if (nm) nm.textContent = NOTE_NAMES[held[i] % 12].replace('#', ' sharp');
+        ui.host.appendChild(c);
+      } else ui.host.appendChild(ui.emptyTpl.cloneNode(true));
+    }
   }
 
   function openTaskScreen(title, teach) {
@@ -462,7 +566,9 @@ export function installPath(ctx) {
     introHeld.clear();
     $('task-start').hidden = true;
     $('task-stage').hidden = false;
-    $('task-badge').textContent = opts.badge ?? '';
+    // setTextKeeping: the drawn badge is a styled mono span inside the box;
+    // bare textContent replaced it with unstyled inherited text
+    setTextKeeping($('task-badge'), opts.badge ?? '');
     $('task-sheet').hidden = true;
     const help = spec.help !== false;
     setKeyboard(48, 83, help);
@@ -509,6 +615,7 @@ export function installPath(ctx) {
   function nextRead() {
     const m = task.notes[task.idx];
     setHTMLKeeping($('task-prompt'), '<span class="big-sym">' + noteName(m) + '</span><span class="sym-sub">play this note</span>');
+    bindWatermark(noteName(m));
     if (task.help) view.targets = new Set([m]);
   }
 
@@ -523,6 +630,8 @@ export function installPath(ctx) {
     const sym = task.round[task.idx];
     const ms = triadMidis(sym);
     setHTMLKeeping($('task-prompt'), '<span class="big-sym">' + sym + '</span><span class="sym-sub">play this chord, all notes together</span>');
+    bindWatermark(sym);
+    syncHeldCells();
     view.targets = task.help ? new Set(ms) : new Set();
     $('task-msg').textContent = task.help ? 'Lit on the keyboard below.' : 'No help now: work it out from the symbol.';
   }
@@ -544,6 +653,8 @@ export function installPath(ctx) {
       ? 'left hand the root, right hand the chord, TOGETHER'
       : task.lastVoicing ? 'move as little as possible' : 'start in root position';
     setHTMLKeeping($('task-prompt'), '<span class="big-sym">' + sym + '</span><span class="sym-sub">' + sub + '</span>');
+    bindWatermark(sym);
+    syncHeldCells();
     view.targets = task.help
       ? new Set(task.kind === 'twohand' ? [...want, lhRoot(want[0])] : want)
       : new Set();
@@ -602,6 +713,7 @@ export function installPath(ctx) {
     }
 
     task.held.add(m);
+    syncHeldCells();
     // the attempt WINDOW keeps every note of this try even after its key is
     // released, a real player rolls chords and plays staccato, and judging
     // only the still-held keys silently rejected honest G chords
@@ -619,6 +731,8 @@ export function installPath(ctx) {
     if (!task) { introNote(m, false); return; }
     view?.keyUp(m);
     task.held.delete(m);
+    // held cells keep showing the ATTEMPT (task.window), so a rolled or
+    // staccato build never watches its own notes vanish; they clear on judge
   }
 
   // clearing a resolved prompt must lift the LATCHED keys visually too
@@ -627,6 +741,7 @@ export function installPath(ctx) {
     for (const m of task.held) view?.keyUp(m);
     task.held.clear();
     task.window?.clear();
+    syncHeldCells();
     task.nudged = false; task.rearmed = false;
   }
   function clearAttempt() { // a judged-wrong try must not poison the next one
@@ -924,12 +1039,29 @@ export function installPath(ctx) {
   // Tap input LATCHES for chord tasks: the old 200ms auto-release made building
   // a three-note chord one finger at a time impossible (found live 2026-08-25).
   // Tapping a latched key again lifts it, so a wrong note is correctable.
+  // harvest the 11c stage templates before anything wipes them, then stand
+  // the drawn SAMPLE VALUES down ("C", "E flat", "2 of 3 clean builds banked",
+  // the Cm7 watermark): they are the design's specimens, not app state
+  if (CANON_ON) {
+    if (heldModule()) { const h = $('task-slots'); while (h.firstChild) h.firstChild.remove(); }
+    if (roundModule()) bindRound(3, []);
+    bindWatermark('');
+    // the board's remaining sample VALUES, blanked byte for byte (labels stay)
+    for (const sample of ['Cm7', 'Root position, left hand alone, name the notes as you place them.',
+      'That was a G sharp. The seventh of Cm7 is B flat.', 'STAGE 4, INDEPENDENT']) {
+      const l = [...document.querySelectorAll('#screen-task *')]
+        .find((e) => !e.children.length && e.textContent.trim() === sample && !e.closest('[data-legacy-screen]'));
+      if (l) l.textContent = '';
+    }
+  }
+
   const CHORD_TASKS = new Set(['chord', 'inversion', 'twohand', 'leadsheet']);
   $('task-keys').addEventListener('pointerdown', (e) => {
     if (!view) return;
     const r = e.currentTarget.getBoundingClientRect();
     const sc = e.currentTarget.clientWidth / r.width;   // zoom-safe taps
-    const m = view.pickKeyAt((e.clientX - r.left) * sc, (e.clientY - r.top) * sc, 4, view.h - 4);
+    // same anchor as drawKeys: the keys live in the bottom kbH of the canvas
+    const m = view.pickKeyAt((e.clientX - r.left) * sc, (e.clientY - r.top) * sc, view.h - view.kbH, view.kbH);
     if (m == null) return;
     const latching = (task && CHORD_TASKS.has(task.spec.type)) || (!task && introTarget && introTarget.midis.length > 1);
     const heldSet = task ? task.held : introHeld;

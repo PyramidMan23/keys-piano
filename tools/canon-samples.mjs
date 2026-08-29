@@ -49,6 +49,13 @@ const SCREENS = [
   ['calibrate', 'btn-calibrate', ['Measured 42ms of output delay. Applied to scoring.', '42ms']],
   ['touch', 'btn-touch', ['mezzo forte, 78', '4 done']],
   ['keys12', 'btn-keys12', ['6 of 12', '3 of 12']],
+  // the teacher task screen (board 11c, 2026-08-30): its drawn specimens are
+  // blanked at boot by path.mjs; this holds that line
+  ['task', 'show:task', [
+    'Root position, left hand alone, name the notes as you place them.',
+    'That was a G sharp. The seventh of Cm7 is B flat.',
+    'STAGE 4, INDEPENDENT', 'E flat', '2 of 3 clean builds banked',
+  ]],
 ];
 
 // the drawer is its own surface with its own drawn sample states
@@ -81,6 +88,9 @@ try {
         return true;
       })()`);
       await new Promise((r) => setTimeout(r, 900));
+    } else if (how === 'show:task') {
+      await b.eval(`window.__show('task'); true`);
+      await new Promise((r) => setTimeout(r, 500));
     } else if (how) {
       await b.eval(`(() => { document.getElementById(${JSON.stringify(how)})?.click(); return true; })()`);
       await new Promise((r) => setTimeout(r, 700));
