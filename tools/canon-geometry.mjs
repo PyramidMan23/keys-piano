@@ -32,7 +32,8 @@ const SEED = {
 const OVERLAYS = ['freeze-offer', 'canon-tools-drawer', 'firstrun', 'results', 'theory-card'];
 
 const PROBE = `((screenId) => {
-  const host = document.getElementById('screen-' + screenId);
+  // a screen id, or a full-screen overlay's own id (the sleeve-wall gallery)
+  const host = document.getElementById('screen-' + screenId) ?? document.getElementById(screenId);
   const card = host && host.firstElementChild;
   if (!card) return { missing: true };
   const problems = [];
@@ -123,14 +124,25 @@ try {
     results.push({ state: s, ...res });
   }
 
-  // the library's HEAVY states, the ones that caused the original overlap
+  // the library's HEAVY states, the ones that caused the original overlap.
+  // On desktop the show-more tile now opens the full-screen sleeve wall
+  // (2026-08-29), which is measured as its own state and then closed.
+  await b.eval(`window.__show('library'); true`);
+  await new Promise((r) => setTimeout(r, 400));
+  await b.eval(`(() => { const m = [...document.querySelectorAll('#screen-library *')].find((e) => !e.children.length && /^Show the other/.test(e.textContent.trim())); (m && (m.closest('button') ?? m.parentElement)).click(); return true; })()`);
+  await new Promise((r) => setTimeout(r, 900));
+  const g = await b.eval(`!!document.getElementById('canon-gallery')`);
+  if (g) {
+    results.push({ state: 'library gallery (sleeve wall)', ...(await b.eval(`${PROBE}('canon-gallery')`)) });
+    await b.eval(`(document.getElementById('canon-gallery')?.remove(), true)`);
+  } else {
+    // the phone composition keeps the in-place expansion
+    results.push({ state: 'library show-all', ...(await b.eval(`${PROBE}('library')`)) });
+  }
   const libStates = [
-    ['library show-all', `(() => { const m = [...document.querySelectorAll('#screen-library *')].find((e) => !e.children.length && /^Show the other/.test(e.textContent.trim())); (m && (m.closest('button') ?? m.parentElement)).click(); return true; })()`],
     ['library explore tab', `(() => { document.getElementById('sec-explore')?.click(); return true; })()`],
     ['library search', `(() => { const s2 = document.getElementById('lib-search'); s2.value = 'a'; s2.dispatchEvent(new Event('input', { bubbles: true })); return true; })()`],
   ];
-  await b.eval(`window.__show('library'); true`);
-  await new Promise((r) => setTimeout(r, 400));
   for (const [label, action] of libStates) {
     await b.eval(action);
     await new Promise((r) => setTimeout(r, 600));

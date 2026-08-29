@@ -417,7 +417,12 @@ function bindDashboard(root, ctx) {
     const shown = c.style.display;
     c.style.display = hidden === 0 ? 'none' : shown;
     c.style.cursor = 'pointer';
-    c.addEventListener('click', () => ctx.onShowMore?.());
+    // Mark, 2026-08-29: this tile opens the FULL-SCREEN sleeve wall (12a)
+    // where the board exists; the in-place expansion stays the fallback.
+    c.addEventListener('click', () => {
+      if (CANON['library-gallery'] && desktopFits()) { openLibraryGallery(ctx); return; }
+      ctx.onShowMore?.();
+    });
   }
 
   // today's quests: the design drew three, the middle one ticked
@@ -663,6 +668,194 @@ function openToolsDrawer(ctx, onClose, board = 'alltools') {
     close();
   });
   return { wired, unmatched };
+}
+
+// ---- the 12a SLEEVE WALL (2026-08-29) ---------------------------------------
+// Mark: "see all the songs take up the whole screen with all the album art".
+// Artboard 12a IS that wall: a thin strip (Library out, shelf kicker, search)
+// over a full-width flex-wrap of 208px sleeves that overflows past the frame.
+// Same discipline as the drawer: render the board, deal real tiles into the
+// design's own cells, write no colour, size, radius or spacing.
+function openLibraryGallery(ctx) {
+  const existing = document.getElementById('canon-gallery');
+  if (existing) { existing.remove(); return null; }
+  if (!CANON['library-gallery']) return null;
+
+  const shade = document.createElement('div');
+  shade.id = 'canon-gallery';
+  shade.style.cssText = 'position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;overflow:auto';
+  shade.style.background = getComputedStyle(document.body).backgroundColor || '#000';
+  const host = document.createElement('div');
+  host.style.width = 'max-content';
+  shade.appendChild(host);
+  document.body.appendChild(shade);
+  const root = renderCanonScreen(host, 'library-gallery');
+  applyCanonZoom(root);
+
+  const close = () => { shade.remove(); };
+  const back = bySample(root, 'Library');
+  if (back) { const cb = control(back); cb.style.cursor = 'pointer'; cb.addEventListener('click', close); }
+  document.addEventListener('keydown', function esc(ev) {
+    if (ev.key !== 'Escape') return;
+    document.removeEventListener('keydown', esc);
+    close();
+  });
+
+  const leaves = (el) => [...el.querySelectorAll('*')].filter((e) => !e.children.length && e.textContent.trim());
+  const STATES = ['Banked', 'Needs work', 'Not started'];
+  const rows = ctx.galleryRows ?? ctx.rows ?? [];
+
+  // the wall: the container holding many identically-styled tile cells
+  const firstTitle = leaves(root).find((l) => /Fraunces/.test(l.getAttribute('style') ?? ''));
+  let cell = firstTitle, wall = null;
+  while (cell && cell.parentElement) {
+    const sibs = [...cell.parentElement.children].filter((s) => s.getAttribute('style') === cell.getAttribute('style'));
+    if (sibs.length >= 8) { wall = cell.parentElement; break; }
+    cell = cell.parentElement;
+  }
+  if (!wall) { CANON_MISSES.push('gallery: no tile wall found'); return { tiles: 0 }; }
+  const tiles = [...wall.children].filter((c2) => c2.getAttribute('style') === cell.getAttribute('style'));
+
+  // harvest the three drawn state appearances, renderTiles' rule
+  const stateVariants = new Map();
+  const stateSpanOf = (tile) => leaves(tile).map((x) => ({ l: x, w: x.textContent.trim() }))
+    .filter((x) => STATES.includes(x.w)).map((x) => x.l.parentElement)[0] ?? null;
+  for (const tile of tiles) {
+    const span = stateSpanOf(tile);
+    if (!span) continue;
+    const word = span.textContent.trim();
+    if (!stateVariants.has(word)) {
+      stateVariants.set(word, { i: span.querySelector('i')?.getAttribute('style') ?? null,
+        word: [...span.children].find((ch) => ch.tagName === 'SPAN')?.getAttribute('style') ?? null });
+    }
+  }
+  const template = tiles.find((t) => t.querySelector('img'))?.cloneNode(true);
+  const plateTpl = tiles.find((t) => !t.querySelector('img'))?.cloneNode(true) ?? null;
+  if (!template) { CANON_MISSES.push('gallery: no sleeve tile template'); return { tiles: 0 }; }
+  const monogram = (title) => {
+    const words = String(title ?? '').split(/\s+/).filter(Boolean);
+    if (!words.length) return '?';
+    if (words[0].length === 1) return words[0].toUpperCase();
+    return words.slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+  };
+
+  for (const t of tiles) t.remove();
+  const built = [];
+  for (const song of rows) {
+    const real = song.song ?? song;
+    const hasSleeve = !!song.art || !!(real.group && sleeveUrlByGroup(real.group, 512));
+    const tile = (hasSleeve || !plateTpl ? template : plateTpl).cloneNode(true);
+    wall.appendChild(tile);
+    built.push(tile);
+    const img = tile.querySelector('img');
+    if (img) {
+      // a wall of 512px jpgs decodes ~1MB each: lazy + async keeps the open snappy
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.src = song.art || coverDataUrl(real, 208);
+      img.alt = '';
+      img.removeAttribute('data-art');
+      const glow = tile.querySelector('i[style*="blur("]');
+      if (glow) paintArtGlow(glow, img);
+    } else {
+      // the plate's Georgia display leaf is the monogram slot
+      const mono = leaves(tile).find((l) => /Georgia/i.test(l.getAttribute('style') ?? ''));
+      if (mono) mono.textContent = monogram(song.title);
+    }
+    const title = leaves(tile).find((l) => /Fraunces/.test(l.getAttribute('style') ?? ''));
+    if (title) title.textContent = song.title;
+    const span = stateSpanOf(tile);
+    if (span) {
+      const v = stateVariants.get(song.state);
+      const wordEl = [...span.children].find((ch) => ch.tagName === 'SPAN');
+      if (wordEl) wordEl.textContent = song.state;
+      if (v) {
+        if (v.i && span.querySelector('i')) span.querySelector('i').setAttribute('style', v.i);
+        if (v.word && wordEl) wordEl.setAttribute('style', v.word);
+      }
+    }
+    const plays = leaves(tile).filter((l) => /^\d+$/.test(l.textContent.trim())).pop();
+    if (plays && song.plays != null) plays.textContent = String(song.plays);
+    if (song.onOpen) {
+      tile.style.cursor = 'pointer';
+      tile.addEventListener('click', () => { close(); song.onOpen(song); });
+    }
+  }
+
+  // the shelf kicker, a value slot: "EXPLORE · 17 SONGS" is the drawn sample
+  const kicker = leaves(root).find((l) => /·\s*\d+\s*SONGS?$/.test(l.textContent.trim()));
+  const word = (ctx.tabWord ?? 'Learning').toUpperCase();
+  const setKicker = (n) => { if (kicker) kicker.textContent = `${word} · ${n} ${n === 1 ? 'SONG' : 'SONGS'}`; };
+  setKicker(rows.length);
+
+  // a search that matches nothing gets the design's OWN no-results module
+  // (the states board's dashed plate), lifted verbatim, the renderTiles rule:
+  // a silent black wall answers nobody
+  let emptyMod = null;
+  const setEmpty = (show) => {
+    if (show && !emptyMod) {
+      const t = document.createElement('template');
+      t.innerHTML = CANON['states'] ?? '';
+      const frag = t.content.querySelector('#list-results')?.firstElementChild?.cloneNode(true);
+      if (frag) { emptyMod = frag; emptyMod.dataset.disp = frag.style.display || 'block'; wall.appendChild(frag); }
+    }
+    if (emptyMod) emptyMod.style.display = show ? emptyMod.dataset.disp : 'none';
+  };
+
+  // the search input the design drew, kept live: filter tiles by title
+  const input = root.querySelector('input');
+  if (input) {
+    input.value = '';
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      let shown2 = 0;
+      built.forEach((tile, i) => {
+        const hit = !q || String(rows[i]?.title ?? '').toLowerCase().includes(q);
+        // trap 8's class: every canon element carries an inline display, so
+        // hiding and restoring must round-trip the design's own value
+        if (!tile.dataset.disp) tile.dataset.disp = tile.style.display || 'block';
+        tile.style.display = hit ? tile.dataset.disp : 'none';
+        if (hit) shown2++;
+      });
+      setKicker(shown2);
+      setEmpty(!!q && shown2 === 0);
+      sync();
+    });
+    // typing in the wall should not fall through to the app's key handlers
+    input.addEventListener('keydown', (ev) => { if (ev.key !== 'Escape') ev.stopPropagation(); });
+  }
+
+  // SCROLL. The design draws the wall absolute inside an overflow:hidden
+  // viewport with its own hairline track + thumb on the right edge. Native
+  // scroll on the viewport, the native bar stood down; the drawn thumb becomes
+  // the live indicator. Its height/offset are TRUTH READOUTS (like counts),
+  // not styling: the board itself drew "about a third visible" as a sample.
+  const viewport = wall.parentElement;
+  const bars = [...viewport.children].filter((c2) => c2 !== wall && c2.tagName === 'I');
+  const track = bars.find((b2) => (b2.getAttribute('style') ?? '').includes('bottom'));
+  const thumb = bars.find((b2) => (b2.getAttribute('style') ?? '').includes('height'));
+  viewport.style.overflowY = 'auto';
+  viewport.style.scrollbarWidth = 'none';
+  const sync = () => {
+    const sh = viewport.scrollHeight, ch = viewport.clientHeight, st = viewport.scrollTop;
+    // the indicators scroll with the content (absolute in the scroller), so
+    // they ride scrollTop back into place
+    if (track) track.style.transform = `translateY(${st}px)`;
+    if (thumb) {
+      const trackH = ch - 32;
+      const frac = Math.min(1, ch / Math.max(1, sh));
+      const h = Math.max(24, Math.round(trackH * frac));
+      const y = st + ((sh > ch) ? (st / (sh - ch)) * (trackH - h) : 0);
+      thumb.style.height = h + 'px';
+      thumb.style.transform = `translateY(${y}px)`;
+      const hide = frac >= 1 ? 'hidden' : 'visible';
+      thumb.style.visibility = hide;
+      if (track) track.style.visibility = hide;
+    }
+  };
+  viewport.addEventListener('scroll', sync);
+  sync();
+  return { tiles: built.length };
 }
 
 // ---- All tools, the 756px fallback -----------------------------------------

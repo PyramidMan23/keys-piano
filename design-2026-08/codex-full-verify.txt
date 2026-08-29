@@ -1,0 +1,45 @@
+READ-ONLY FULL-APP VERIFICATION. Hard rules: READ-ONLY. No skills. No
+sub-reviewers or agents. No writes. You may run node probes that only read,
+and fetch from http://localhost:4180.
+
+Repo: C:\Users\markh\keys-piano. Mark's words: "are you sure everything's been
+done? verify, double check the whole app, every screen, every sub screen,
+every part, every tool."
+
+EVIDENCE PREPARED FOR YOU (read these, then attack them):
+- design-2026-08/verify-20260829/gate-*.txt: tonight's seven gate outputs
+  (suite 213, overlay 37/37, runtime, clickable 96/96, geometry 19/19,
+  samples 16/16, journeys 25/25), plus sub-*.png evidence shots.
+- design-2026-08/shots-final/*.png: every screen at 1418x738 seeded.
+- design/extracted/*.html|json: the canon, board by board.
+- The gates themselves: tools/{overlay,canon-runtime,canon-clickable,
+  canon-geometry,canon-samples,canon-journeys}.mjs and test/check.mjs.
+
+YOUR JOB, in order:
+1. THE COVERAGE HOLES. Grade the verification itself: enumerate every surface
+   and SUB-STATE the app can reach (screens, overlays, drawer wide+narrow,
+   play sub-modes: score view, hear-it demo, chunks, hands L/R, memorize
+   ladder, performance run, trainer ladder; echo's three modes; quick review;
+   the teacher diagnostic/assessment; freeze offer; firstrun; the phone
+   compositions below 1000px; resize behaviours) and name each one NO GATE
+   EXERCISES. That list is the deliverable I care most about.
+2. SPOT-VERIFY 5 surfaces of your choosing yourself with node probes against
+   the live server, preferring ones you suspect. Report what you find with
+   repro.
+3. THE GATES THEMSELVES: find one way each gate could pass while the thing it
+   claims is false (you broke the overlay once before with the hairline
+   magnitude argument; do it again if you can).
+4. MARK'S NEW FEATURE QUESTION, answer directly: he wants the "Show the other
+   N" tile to open a FULL-SCREEN gallery: the whole window becomes a wall of
+   large album sleeves (all songs of the active shelf), scrollable, search
+   kept, Escape/Library to exit, in the existing language (true black,
+   Fraunces, state word+shape, 44px targets). Agree or disagree, and if
+   agree: the three design decisions that will make or break it (sleeve
+   size, what metadata each tile keeps, how entry/exit must feel), plus any
+   binder/perf traps you foresee given js/canon-library.mjs renderTiles and
+   the 512px sleeves on disk.
+
+DELIVERABLE: (a) VERDICT per numbered section, (b) a single ranked list of
+anything you would fix before calling the whole app done, each with
+file:line or a runnable probe. Say explicitly which screens you checked and
+found CLEAN, so silence is not ambiguity.

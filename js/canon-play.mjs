@@ -107,13 +107,19 @@ export function mountWidePlay(host) {
   window.__falls?.resize?.();                    // set by app.mjs; harmless if absent
 
   // ---- proxies: every drawn control drives the hidden real one -------------
+  // A proxy also MIRRORS the hidden control's label whenever it leaves its
+  // resting text ("Hear it" -> "Stop", "Train" -> "Training at 80% (0/2)"),
+  // and returns to the design's own word at rest. Without this the desktop
+  // buttons concealed their active states (Codex full-verify, 2026-08-29).
+  proxyMirrors.length = 0;
   const proxy = (sample, id) => {
     const el = leaf(board, sample);
     if (!el) return null;
     const c = el.closest('button') ?? rowOf(el);
     c.style.cursor = 'pointer';
-    c.addEventListener('click', () => $(id)?.click());
+    c.addEventListener('click', () => { $(id)?.click(); setTimeout(mirrorProxies, 0); });
     c.dataset.proxyFor = id;
+    proxyMirrors.push({ el, id, drawn: el.textContent, base: stripLabel($(id)?.textContent) });
     return c;
   };
   proxy('Train', 'btn-train');
@@ -338,7 +344,22 @@ export function syncWidePlay(info = {}) {
   if (info.art) { const img = $('cp-art'); if (img && img.src !== info.art) img.src = info.art; }
   const chunkText = $('chunk-label')?.textContent?.trim();
   if (chunkText) put('cp-chunk', chunkText.replace(/^[^A-Za-z0-9]+/, ''));
+  mirrorProxies();
   board?.__mirrorSections?.();
   board?.__syncSound?.();
 }
 let board = null;   // the mounted 9a root; module-scoped so sync can reach the section list
+
+// drawn-label mirroring: emoji and glyph prefixes are the legacy rail's, not
+// the design's, so labels compare and display stripped of them
+const stripLabel = (t) => String(t ?? '').replace(/^[^\p{L}\p{N}]+/u, '').trim();
+const proxyMirrors = [];
+function mirrorProxies() {
+  for (const m of proxyMirrors) {
+    const real = $(m.id);
+    if (!real) continue;
+    const now = stripLabel(real.textContent);
+    const want = now && now !== m.base ? now : m.drawn;
+    if (m.el.textContent !== want) m.el.textContent = want;
+  }
+}

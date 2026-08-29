@@ -108,6 +108,22 @@ try {
       : sentinels.filter((sv) => visibleText.includes(sv));
     results.push({ screen, hits });
   }
+  // the SLEEVE WALL (12a), opened through its real door on the Explore shelf.
+  // Its drawn samples: "EXPLORE · 17 SONGS", Für Elise at "79" plays Banked -
+  // none can be true under this seed (fur-elise has 4 plays, and the shelf
+  // count is whatever the app computes).
+  await b.eval(`window.__show('library'); true`);
+  await new Promise((r) => setTimeout(r, 400));
+  await b.eval(`(() => { document.getElementById('sec-explore')?.click(); return true; })()`);
+  await new Promise((r) => setTimeout(r, 700));
+  await b.eval(`(() => { const m = [...document.querySelectorAll('#screen-library *')].find((e) => !e.children.length && /^Show the other/.test(e.textContent.trim())); (m && (m.closest('button') ?? m.parentElement)).click(); return true; })()`);
+  await new Promise((r) => setTimeout(r, 900));
+  const galleryText = await b.eval(`document.getElementById('canon-gallery')?.textContent ?? 'NO GALLERY'`);
+  const GALLERY_SENTINELS = ['EXPLORE · 17 SONGS'];
+  results.push({ screen: 'library gallery', hits: galleryText === 'NO GALLERY' ? ['NO GALLERY']
+    : GALLERY_SENTINELS.filter((sv) => galleryText.includes(sv)) });
+  await b.eval(`(document.getElementById('canon-gallery')?.remove(), true)`);
+
   // the ALL TOOLS drawer, opened for real
   await b.eval(`window.__show('library'); true`);
   await new Promise((r) => setTimeout(r, 500));

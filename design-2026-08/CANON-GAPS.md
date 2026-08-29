@@ -106,3 +106,19 @@ attribute itself is absent from the canon by design. Accepted.
 10. **No emoji on canon surfaces.** The app's own copy used emoji as icons
     (43 in js modules); all stripped 2026-08-29, badge shapes now geometric
     glyphs (◆ ★ ◎ ● ■ ▲) so the shape-plus-word law holds without them.
+11. **The 12a sleeve wall (2026-08-29 late)**: the "Show the other N" tile now
+    opens the full-screen gallery board where it exists and the window is
+    desktop; the in-place expansion stays the phone fallback. Deviations, all
+    behavioural truth over drawn sample: the hairline thumb's height/offset are
+    computed from real scroll extent (the board drew "about a third" as a
+    sample); the wall scrolls natively with the browser bar stood down; the
+    kicker counts the real shelf; sleeves lazy-load. Codex recommended a
+    responsive CSS grid instead of the fit-zoomed 1418 board; declined for
+    canon consistency - every desktop surface fit-zooms the same way, and the
+    entry gesture is desktop-only.
+12. **Verification coverage ledger**: Codex's full-app audit (its NO-GATE list
+    of unexercised sub-states, gate false-pass classes, and target-size note at
+    1000px fit-zoom) lives in design-2026-08/verify-20260829/
+    codex-full-verify-output.txt. The proven defects it found (chunk NaN,
+    concealed active labels, met-sig NaN, improv loop pinned to 0) are fixed
+    and journey-gated; the remaining list is coverage debt, not known bugs.

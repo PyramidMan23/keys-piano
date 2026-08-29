@@ -57,6 +57,10 @@ const SCREENS = [
   ['calibrate-desktop', '11l', 'Latency calibration, desktop'],
   ['touch-desktop',     '11m', 'Touch diagnostic, desktop'],
   ['keys12-desktop',    '11n', '12 keys, desktop'],
+  // 12a: the full-screen sleeve wall behind the "Show the other N" tile
+  // (Mark, 2026-08-29: "see all the songs take up the whole screen with all
+  // the album art").
+  ['library-gallery',   '12a', 'Library gallery, desktop'],
   ['alltools',        '7b', 'All tools'],
   ['library',   '5b', 'Library'],
   ['play',      '6a', 'Play'],

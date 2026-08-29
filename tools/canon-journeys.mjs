@@ -676,6 +676,100 @@ try {
     return bad;
   });
 
+  await journey('GALLERY: the show-more tile becomes a full-screen sleeve wall, search filters it, Escape leaves it', async () => {
+    const bad = [];
+    // Explore is the shelf with enough songs to overflow the grid
+    await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify({ ...SEED, lib: { learning: true, canonTab: 'explore' } }))}); true`);
+    await boot();
+    const label = await b.eval(`([...document.querySelectorAll('*')]
+      .map((e) => !e.children.length && e.getBoundingClientRect().width > 0 ? e.textContent.trim() : '')
+      .find((t) => /^Show the other \\d+ in /.test(t)) ?? null)`);
+    if (!label) return ['no "Show the other N" tile on the Explore shelf'];
+    if (await clickText(label) !== 'ok') return ['the show-more tile does not win its own hit-test'];
+    await new Promise((r) => setTimeout(r, 900));
+    const wall = await b.eval(`(() => {
+      const g = document.getElementById('canon-gallery');
+      if (!g) return null;
+      const titles = [...g.querySelectorAll('*')].filter((e) => !e.children.length
+        && /Fraunces/.test(e.getAttribute('style') ?? '') && e.textContent.trim());
+      const kicker = [...g.querySelectorAll('*')].find((e) => !e.children.length && /SONGS?$/.test(e.textContent.trim()));
+      const vp = [...g.querySelectorAll('div')].find((d) => d.style.overflowY === 'auto');
+      return { tiles: titles.length, kicker: kicker?.textContent.trim() ?? '',
+        scrollable: vp ? vp.scrollHeight > vp.clientHeight : false };
+    })()`);
+    if (!wall) return ['clicking the tile opened no gallery'];
+    if (wall.tiles <= 9) bad.push(`the wall shows ${wall.tiles} tiles, no more than the grid already did`);
+    if (!wall.kicker.includes(String(wall.tiles))) bad.push(`the kicker (${JSON.stringify(wall.kicker)}) does not carry the real count`);
+    if (!wall.scrollable) bad.push('the wall does not scroll, so most of the shelf is unreachable');
+    // search, typed for real
+    await b.eval(`(() => { const i = document.querySelector('#canon-gallery input'); i.focus(); return true; })()`);
+    for (const ch of 'ca') await b.send('Input.dispatchKeyEvent', { type: 'char', text: ch });
+    await b.eval(`(() => { const i = document.querySelector('#canon-gallery input'); i.dispatchEvent(new Event('input', { bubbles: true })); return true; })()`);
+    await new Promise((r) => setTimeout(r, 400));
+    const after = await b.eval(`(() => {
+      const g = document.getElementById('canon-gallery');
+      const vis = [...g.querySelectorAll('*')].filter((e) => !e.children.length
+        && /Fraunces/.test(e.getAttribute('style') ?? '') && e.textContent.trim()
+        && e.getBoundingClientRect().width > 0);
+      return { shown: vis.length, sampleTitle: vis[0]?.textContent.trim() ?? null };
+    })()`);
+    if (after.shown === 0 || after.shown >= wall.tiles) bad.push(`typing "ca" left ${after.shown} of ${wall.tiles} tiles, no filtering happened`);
+    if (after.sampleTitle && !/ca/i.test(after.sampleTitle)) bad.push(`a surviving tile (${JSON.stringify(after.sampleTitle)}) does not match the query`);
+    await b.send('Input.dispatchKeyEvent', { type: 'rawKeyDown', windowsVirtualKeyCode: 27, key: 'Escape', code: 'Escape' });
+    await new Promise((r) => setTimeout(r, 500));
+    const out = await b.eval(`({ gone: !document.getElementById('canon-gallery'), lib: !document.getElementById('screen-library')?.hidden })`);
+    if (!out.gone) bad.push('Escape did not close the gallery');
+    if (!out.lib) bad.push('leaving the gallery lost the library');
+    // back in, and a tile opens its song for real
+    if (await clickText(label) !== 'ok') bad.push('the show-more tile died after one use');
+    await new Promise((r) => setTimeout(r, 900));
+    const first = await b.eval(`([...document.querySelectorAll('#canon-gallery *')]
+      .filter((e) => !e.children.length && /Fraunces/.test(e.getAttribute('style') ?? '') && e.textContent.trim())[0]?.textContent.trim() ?? null)`);
+    if (!first) { bad.push('no tile to open on the second visit'); return bad; }
+    if (await clickText(first) !== 'ok') bad.push('the first sleeve does not win its own hit-test');
+    await new Promise((r) => setTimeout(r, 1200));
+    if (await visible() !== 'play') bad.push('clicking a sleeve did not open the song');
+    await b.eval(`(document.getElementById('canon-gallery')?.remove(), window.__show('library'), true)`);
+    await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify(SEED))}); true`);
+    return bad;
+  });
+
+  await journey('CHUNKS: Next from "Chunks off" lands on a real numbered chunk, never NaN', async () => {
+    const bad = [];
+    await boot();
+    if (await clickText('Still D.R.E.') !== 'ok') return ['no library row for the seeded song'];
+    await new Promise((r) => setTimeout(r, 1300));
+    if (await visible() !== 'play') return ['the song did not open'];
+    await b.eval(`(document.getElementById('chunk-next')?.click(), true)`);
+    await new Promise((r) => setTimeout(r, 500));
+    const lab = await b.eval(`(document.getElementById('chunk-label')?.textContent ?? '').trim()`);
+    // the NaN class: the canon select's word values fed +value (Codex 2026-08-29)
+    if (!/^Chunk \d+ \/ \d+$/.test(lab.replace(/^[^A-Za-z0-9]+/, ''))) bad.push(`chunk-next produced ${JSON.stringify(lab)}`);
+    const wide = await b.eval(`(document.getElementById('cp-chunk')?.textContent ?? '').trim()`);
+    if (wide && /NaN/.test(wide)) bad.push(`the wide readout mirrors NaN (${JSON.stringify(wide)})`);
+    await b.eval(`(document.getElementById('chunk-label')?.click(), true)`);
+    await goHome(bad, 'the chunk run');
+    return bad;
+  });
+
+  await journey('HEAR IT: the drawn desktop button says Stop while the demo runs, and comes back', async () => {
+    const bad = [];
+    await boot();
+    if (await clickText('Still D.R.E.') !== 'ok') return ['no library row for the seeded song'];
+    await new Promise((r) => setTimeout(r, 1300));
+    const drawn = () => b.eval(`(document.querySelector('[data-proxy-for="btn-hear"]')?.textContent ?? '').trim()`);
+    if (await drawn() !== 'Hear it') return [`no drawn Hear it proxy (reads ${JSON.stringify(await drawn())})`];
+    if (await clickText('Hear it') !== 'ok') return ['Hear it does not win its own hit-test'];
+    await new Promise((r) => setTimeout(r, 900));
+    const during = await drawn();
+    if (during !== 'Stop') bad.push(`the drawn button conceals the running demo (reads ${JSON.stringify(during)})`);
+    if (during === 'Stop' && await clickText('Stop') !== 'ok') bad.push('the Stop state does not win its own hit-test');
+    await new Promise((r) => setTimeout(r, 600));
+    if (await drawn() !== 'Hear it') bad.push(`stopping did not restore the resting word (reads ${JSON.stringify(await drawn())})`);
+    await goHome(bad, 'the demo');
+    return bad;
+  });
+
   await journey('the plain url IS the new design, and ?canon=0 still gets the old one', async () => {
     const bad = [];
     await b.goto('http://localhost:4180/index.html');

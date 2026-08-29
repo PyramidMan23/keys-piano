@@ -614,6 +614,8 @@ function canonLibraryCtx() {
     // one reflowing, so pick the widest that fits rather than stretch either.
     screen: canonLibraryScreen(),
     rows: shown.map(canonRowOf),
+    // the full shelf for the 12a sleeve wall, not just the nine on the grid
+    galleryRows: active.rows.map(canonRowOf),
     learningTotal: active.rows.length,
     tableTitle: active.title,
     tabWord: active.word,
@@ -936,7 +938,11 @@ function renderSections() {
   sel.value = keep && +keep < (song.sections?.length ?? 0) ? keep : '';
 }
 
-function chunkBars() { return +$('chunk-size').value; }
+// parseFloat, not unary +: the canon play board's own select claimed this id
+// and its options carry the drawn words ("2 bars") as values, which made every
+// chunk read NaN (Codex full-verify, 2026-08-29). The leading number is the
+// honest value in both worlds.
+function chunkBars() { return parseFloat($('chunk-size').value) || 2; }
 function syncChunkLabel() {
   const btn = $('chunk-label');
   if (chunkIdx === null) { btn.textContent = 'Chunks off'; return; }
@@ -2753,8 +2759,17 @@ $('btn-improv').addEventListener('click', () => {
   $('now-playing').textContent = 'Improv';
   improvEnterT = Date.now();
   const sel = $('improv-loop');
-  if (!sel.options.length) {
+  // Rebuild when the options carry no value attributes too: the canon board's
+  // own select claimed this id with the DRAWN loop names as values, so
+  // +value||0 pinned every choice to loop 0 (same class as chunk-size).
+  // Real loops in, canon styling kept.
+  if (!sel.options.length || !sel.options[0].hasAttribute('value')) {
     sel.innerHTML = LOOPS.map((l2, i) => `<option value="${i}">${l2.name}</option>`).join('');
+    // the options are DATA bound into a canon control, the same standing a
+    // cloned designed row has, so they carry the select's own stamp
+    if (sel.dataset.canonStamp !== undefined) {
+      for (const o of sel.options) o.dataset.canonStamp = sel.dataset.canonStamp;
+    }
   }
   improvLoop = LOOPS[+sel.value || 0];
   // the design draws the loop's chord sequence beside the live chord
@@ -3042,7 +3057,9 @@ function startMetronome() {
   metBeatIdx = 0;
   const tick = () => {
     const bpm = +$('met-bpm').value;
-    const perBar = +$('met-sig').value;
+    // parseFloat: the canon select's values are the drawn words ("3/4", "6/8"),
+    // and +"3/4" is NaN, which killed the accent (same class as chunk-size)
+    const perBar = parseFloat($('met-sig').value) || 4;
     const spb = 60 / bpm;
     while (metNextBeat < metCtx.currentTime + 0.3) {
       const accent = metBeatIdx % perBar === 0;
