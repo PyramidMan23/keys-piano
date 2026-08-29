@@ -1,0 +1,94 @@
+COMMISSION: 14 desktop boards, 1418 x 738 each, one per screen listed below.
+
+Every screen in this app except the library and the play screen exists only as a 756px phone column, so on Mark's 1418 x 738 window those screens float as a narrow strip in a black void. Each needs a real desktop composition, exactly the way 9a gave the play screen one.
+
+THE LANGUAGE IS LOCKED (5b/7a/9a): true black #000000 page, Fraunces only for display lines (brand, song titles, big numbers), ui-monospace for kicker labels, hairline #253129 structure, green accent #82bf9c with #2E6B47 as the ONLY filled green, amber #f0a832 = right hand and cyan #5ee0f2 = left hand and those two hues belong to the NOTES, not the chrome. The one allowed band tone is #131915. Type floor 11px, at most 6 size steps, tabular numerals on numbers. Mark is red-green colour-blind: no state may be carried by hue alone, every state = shape PLUS word. Every target 44px. No em dashes anywhere, no emoji anywhere, no element ids leaking as visible text. Each board is a self-contained inline-styled composition at EXACTLY 1418 x 738.
+
+HARD RULES FOR EVERY BOARD:
+1. Keep every element id listed, on the SAME tag as listed. The app addresses these ids; a missing id or a changed tag kills a live control.
+2. Keep every visible text string EXACTLY as listed, byte for byte. The app's binders anchor on these strings; a reworded label is a dead control.
+3. These are new desktop COMPOSITIONS, not the phone column stretched or centred. Use the whole 1418 x 738. Think how the play board 9a relates to the phone play board 6a: same controls, different architecture.
+4. A canvas region gets a drawn resting-state decoration as an absolutely positioned non-interactive layer INSIDE its wrapper (the app hides it when it animates), and the real canvas element with its id stays underneath.
+5. Every board draws its own way back: a control reading exactly "Library" (or the screen's own back control where listed, e.g. lesson-back, task-back, path-home).
+6. No vertical scroll at 738. Fit the composition to the frame.
+
+Name each artboard with the id given (10-series/11-series). Here is each screen with its REQUIRED ids (id, tag, input type where set) and its EXACT wording inventory:
+
+=== 11a lessons-desktop ===
+The curriculum list: a numbered spine of reading lessons plus the Quick review door. Desktop: give the spine room, two columns of lessons, the review card as its own object.
+Required ids: btn-review<button>, lesson-list<div>
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "Lessons" "Review what is due" "1" "Reading a chord symbol" "retained" "2" "Minor seventh shapes" "3" "Reading a lead sheet" "in progress, step 3 of 7" "4" "Nearest position inversions" "not started" "5" "Left root under right chord"
+
+=== 11b lesson-desktop ===
+One reading lesson being taught: teaching steps, a stave prompt, a clickable keyboard, coaching line, video link. Desktop: stave and keyboard get real width side by side with the teaching column, like a music stand.
+Required ids: lesson-back<button>, lesson-title<h2>, lesson-phase<span>, lesson-progress<span>, lesson-body<p>, lesson-steps<ol>, lesson-stave<div>, lesson-keys<canvas>, lesson-msg<div>, lesson-video<p>, lesson-start<button>, lesson-kb-toggle<button>, lesson-rhythm-link<button>, lesson-nomidi<div>
+Canvas surfaces (rule 4 applies): lesson-keys
+Exact wording to keep (sample data may change VALUES but never label wording): "Back" "Reading a lead sheet" "TEACH" "3 of 7" "A lead sheet gives you the melody and the chord symbols, and" "Play the melody alone, right hand, one time through." "Say each chord symbol out loud on beat one." "Add the root in the left hand, nothing else." "Fill in the full chord under the melody." "Both chords landed on the beat. Keep going." "No video for this step. The written steps and the keyboard a" "WHEN YOU ARE READY" "Play this step" "Hide the keyboard" "Struggling? Rhythm tap" "No keyboard" "Screen taps. Plug the P-45 in for the real thing."
+
+=== 11c task-desktop ===
+A teacher-loop task: prompt, stave sheet, answer slots, keyboard, help doors (Show me, Practice with help, Use the on-screen keyboard). Desktop: stage left, teaching rail right.
+Required ids: task-back<button>, task-title<h2>, task-badge<div>, task-prompt<div>, task-start<button>, task-stage<div>, task-sheet<div>, task-slots<div>, task-keys<canvas>, task-msg<div>, task-kb<button>, task-show<button>, task-easier<button>, task-payoff<button>, task-rubric<div>, task-teach<div>
+Canvas surfaces (rule 4 applies): task-keys
+Exact wording to keep (sample data may change VALUES but never label wording): "Back" "Chords from a symbol" "STAGE 4, INDEPENDENT" "BUILD THIS CHORD" "Cm7" "Root position, left hand alone, name the notes as you place " "Start the drill" "WORKING AREA" "C" "E flat" "empty" "That was a G sharp. The seventh of Cm7 is B flat." "Show the keyboard" "Show me the answer" "Make it easier" "Where this pays off" "WHAT COUNTS" "Four notes, right order, no gaps longer than a beat." "Two clean builds in a row moves you to retained." "THE RULE" "Minor seventh: root, flat third, fifth, flat seventh. Count "
+
+=== 11d path-desktop ===
+My path: the skills graph, the prescription with its reason and evidence, lesson list, playable-songs count, technique rubric door. Desktop: the path reads as a map, not a stack.
+Required ids: path-home<button>, path-skills<div>, path-reason<div>, path-go<button>, path-evidence<div>, path-lessons<div>, path-playable<div>, path-technique<button>
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "My path" "1" "Steady pulse" "retained" "2" "Chords from a symbol" "independent" "3" "Nearest-position inversions" "guided" "4" "Left root under right chord" "introduced" "5" "Playing from a lead sheet" "unseen" "WHY THIS IS NEXT" "Chords from a symbol has been independent for six days and d" "Test it now" "EVIDENCE" "Cm7 and F7 built clean on 24 and 26 August. Two of three nee" "LESSONS BEHIND IT" "Reading a chord symbol" "Minor seventh shapes" "WHAT IT UNLOCKS" "Still D.R.E., full left hand" "River Flows in You" "Technique drills"
+
+=== 11e echo-desktop ===
+Melody echo: the app plays a phrase, the player echoes it. Modes Echo / Sing first / Transpose, level, streak, delta. Desktop: the echo canvas is the stage, wide; controls in a rail.
+Required ids: echo-mode-echo<button>, echo-mode-sing<button>, echo-mode-trans<button>, echo-canvas<canvas>, echo-msg<div>, echo-play<button>, echo-again<button>, echo-level<span>, echo-streak<span>, echo-delta<span>
+Canvas surfaces (rule 4 applies): echo-canvas
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "Melody echo" "Echo" "Sing" "Transpose" "Four notes back, all correct, a little late on the last one." "LISTEN" "Play the phrase" "Play it again" "LEVEL" "4, five notes" "IN A ROW" "6" "TIMING" "+38ms"
+
+=== 11f rhythm-desktop ===
+Rhythm tap: pattern blocks, level, streak, play-pattern control. Desktop: the pattern blocks become large readable slabs across the width.
+Required ids: rhythm-level<span>, rhythm-streak<span>, rhythm-blocks<div>, rhythm-msg<div>, rhythm-go<button>
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "Rhythm tap" "LEVEL" "3" "IN A ROW" "9" "q" "e" "h" "Beat 5 landed early by 90ms. The rest were inside the window" "TAP THE PATTERN" "Start"
+
+=== 11g improv-desktop ===
+Improv: a chord loop plays, the player noodles. Loop select, chord readout, start/stop, improv canvas showing the highlighted keys. Desktop: the keyboard canvas is wide like the play deck, loop controls above.
+Required ids: improv-chord<span>, improv-canvas<canvas>, improv-loop<select>, improv-go<button>
+Canvas surfaces (rule 4 applies): improv-canvas
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "Improv" "NOW" "Fmaj7" "G7" "Cmaj7" "Am7" "BACKING" "ii V I in C" "12 bar blues in F" "Modal vamp on D" "Pop loop in G" "Start the loop"
+
+=== 11h freeplay-desktop ===
+FREE PLAY IS THE FLAGSHIP OF THIS BATCH. Mark: it currently renders as a tiny keyboard strip floating in a void. On desktop it becomes the FULL-WIDTH keyboard with the same presence and light as the play deck 9a: the freeplay canvas owns virtually the whole frame, a thin header names the screen, the note log is one quiet mono line, and the way back is small. Same dark-glass keys, same true black, light belongs to the played notes.
+Required ids: freeplay-canvas<canvas>, freeplay-log<div>
+Canvas surfaces (rule 4 applies): freeplay-canvas
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "Free play" "WHAT YOU PLAYED" "C, E flat, G, B flat" "Cm7, root position" "F, A, C, E" "Fmaj7, root position"
+
+=== 11i metronome-desktop ===
+Metronome: beat dots, bpm slider + typed number, time signature, start/stop. Desktop: a beautiful instrument face, big Fraunces bpm number, dots with real presence.
+Required ids: met-beat<div>, met-bpm<input type=range>, met-bpm-num<input type=number>, met-sig<select>, met-toggle<button>
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "Metronome" "1" "2" "3" "4" "beat 1" "TEMPO" "BPM" "SIGNATURE" "4/4" "3/4" "6/8" "2/4" "5/4" "Start"
+
+=== 11j trophies-desktop ===
+Trophies: the evidence cabinet (badges) and the XP ledger. Desktop: cabinet left, ledger right.
+Required ids: trophy-list<div>, xp-log<div>
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "Trophies" "First clean run" "24 Aug" "Seven day rhythm" "not yet" "Three songs banked" "26 Aug" "A hundred plays" "XP LOG" "Clean run, hard tier" "+60" "10 real minutes" "Skill to independent" "+150"
+
+=== 11k takes-desktop ===
+Takes: recorded practice takes with playback, the takes canvas replays keys. Desktop: shelf of takes left, replay stage right with a wide canvas.
+Required ids: takes-canvas<canvas>, takes-list<div>, takes-usage<div>
+Canvas surfaces (rule 4 applies): takes-canvas
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "Takes" "Star Wars Main Title" "28 Aug, easy tier" "2:14" "Für Elise" "26 Aug, hard tier" "3:41" "Still D.R.E." "24 Aug, medium tier" "1:58" "STORAGE" "9 takes kept, 312MB of 500MB." "Oldest takes go first when it fills."
+
+=== 11l calibrate-desktop ===
+Latency calibration: tap-along meter canvas, status line, redo/reset. Desktop: the meter gets width, the instructions read at a glance.
+Required ids: cal-canvas<canvas>, cal-status<div>, cal-redo<button>, cal-reset<button>
+Canvas surfaces (rule 4 applies): cal-canvas
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "Latency calibration" "Measured 42ms of output delay. Applied to scoring." "Measure again" "Back to zero"
+
+=== 11m touch-desktop ===
+Touch diagnostic: guided per-key velocity capture, status, current key, dynamics readout, progress, done/redo. Desktop: the capture reads like an instrument bench test.
+Required ids: touch-status<div>, touch-key<span>, touch-dyn<span>, touch-progress<div>, touch-done<button>, touch-redo<button>
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "Touch diagnostic" "PLAY THE KEY SHOWN, SIX TIMES" "Once softly, once hard, then four in between. This sets how " "KEY" "F above middle C" "LAST HIT" "mezzo forte, 78" "SIX HITS" "4 done" "pp" "p" "mp" "mf" "f" "ff" "Done" "Start over"
+
+=== 11n keys12-desktop ===
+The 12-key ladder: four grids (major scales, minor scales, major arpeggios, minor arpeggios), each cell a drill with its passed state. Desktop: all four grids visible at once, no scroll.
+Required ids: keys12-major<div>, keys12-minor<div>, keys12-majarp<div>, keys12-minarp<div>
+Exact wording to keep (sample data may change VALUES but never label wording): "Library" "12-key fluency ladder" "A key passes when you play it clean twice at the target temp" "Major" "6 of 12" "C" "passed" "G" "D" "A" "E" "open" "B" "F sharp" "D flat" "A flat" "E flat" "B flat" "F" "Natural minor" "3 of 12" "Major arpeggios, two octaves" "Minor arpeggios, two octaves" "1 of 12"
+
+Deliver all 14 on the existing canvas next to the current boards. Do not modify any existing artboard in this message.

@@ -1,0 +1,116 @@
+{
+ "01": {
+  "n": "01",
+  "title": "Resting",
+  "pairs": {
+   "strike line": "2px, alpha 0.35",
+   "idle breath": "0.30 to 0.40, 3.2s",
+   "lane hairlines": "#253129, alpha 0.5",
+   "blooms on screen": "0",
+   "ambient wash": "none"
+  },
+  "note": "Nothing moves except the line breathing. The deck should look switched on, not busy."
+ },
+ "02": {
+  "n": "02",
+  "title": "A note far away",
+  "pairs": {
+   "nearness n": "0.15",
+   "glow radius": "14px",
+   "glow alpha": "0.18",
+   "sprite scale": "0.55",
+   "ramp colour": "#6b4a12 / #10454e",
+   "note name": "hidden below n 0.6"
+  },
+  "note": "Far notes read as weather, not as objects. Hue is nearly gone, only value survives."
+ },
+ "03": {
+  "n": "03",
+  "title": "The same note about to land",
+  "pairs": {
+   "nearness n": "0.85",
+   "glow radius": "34px",
+   "glow alpha": "0.86",
+   "sprite scale": "1.35",
+   "ramp colour": "#f0a832 / #5ee0f2",
+   "name alpha": "0.90",
+   "guide thread": "1px, alpha 0.5, 24px"
+  },
+  "note": "The last 120ms is where the anticipation lives, so the curve is cubic and back-loaded."
+ },
+ "04": {
+  "n": "04",
+  "title": "The strike instant",
+  "pairs": {
+   "core": "r 18px, alpha 1.0, 1 frame",
+   "ring": "18 to 64px over 180ms",
+   "ring alpha": "0.90 to 0",
+   "ring width": "3px to 1px",
+   "needles": "5 to 9, 18-42px, 380-720px/s",
+   "needle life": "120 to 220ms",
+   "embers": "3 to 5, gravity 900px/s2",
+   "ember life": "260 to 420ms",
+   "starburst": "max 1, 6 spokes, 26px, 90ms",
+   "line segment": "+30% for 40px, tau 320ms"
+  },
+  "note": "One frame of white is the whole trick. Everything after it is decay, not more light."
+ },
+ "05": {
+  "n": "05",
+  "title": "A three-note chord landing together",
+  "pairs": {
+   "envelope": "union of note x, +22px each side",
+   "per-note core": "r 18px, alpha 0.70",
+   "rings": "1 shared, not 3",
+   "starburst": "1 shared",
+   "sparks": "14 total, split across notes",
+   "tone map": "clamp sum at 1.35, then normalise"
+  },
+  "note": "A chord is one event with three roots. Stacking three blooms is what turns a chord into a white blob."
+ },
+ "06": {
+  "n": "06",
+  "title": "A sustained note held",
+  "pairs": {
+   "tail texture": "1px scanline every 6px, scrolls",
+   "base pulse": "2.2Hz, alpha 0.55 to 0.75",
+   "radius pulse": "plus or minus 4px",
+   "held bar": "2px on the line, alpha 0.80"
+  },
+  "note": "Duration has to be a length you can read, not a brightness you have to judge."
+ },
+ "07": {
+  "n": "07",
+  "title": "A long clean run",
+  "pairs": {
+   "TIER 3, 34 IN A ROW": "G4",
+   "B4": "C3",
+   "tiers at": "8, 16, 32, 64 clean",
+   "line width": "2, 3, 4, 4px",
+   "bloom scale": "1.00, 1.15, 1.30, 1.30",
+   "sparks per hit": "8, 11, 14, 14",
+   "ambient wash": "from tier 3, alpha 0.12",
+   "ceiling": "no growth past tier 4",
+   "on a miss": "drop one tier, 400ms"
+  },
+  "note": "Escalation is capped and it is printed as a number, so it is never brightness alone."
+ },
+ "08": {
+  "n": "08",
+  "title": "Applies everywhere",
+  "pairs": {
+   "sprite": "128px, pre-rendered, additive",
+   "radial stops": "1.0 at 0, 0.35 at 0.45r, 0 at 1.0r",
+   "falloff exponent": "2.2",
+   "radius": "14px + 26px * n^2",
+   "alpha": "0.18 + 0.82 * n^3",
+   "right ramp": "#6b4a12, #c07a1c, #f0a832, #fff3d6",
+   "left ramp": "#10454e, #2a9cb0, #5ee0f2, #e8feff",
+   "bloom decay": "tau 260ms, zero by 900ms",
+   "key underglow": "24px, tau 180ms after release",
+   "spark budget": "60 alive, 24 spawned per 100ms",
+   "bloom budget": "6 envelopes, oldest dropped"
+  },
+  "note": "Cap shape and fill carry the hand, so moon mode and any hue loss keep them apart."
+ }
+}

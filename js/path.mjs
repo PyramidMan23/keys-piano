@@ -1,4 +1,5 @@
 import { setTextKeeping, setHTMLKeeping, CANON_ON } from './canon-mount.mjs';
+import { coverDataUrl } from './covers.mjs';
 import { bindPathSkills, bindPathLessons } from './canon-bind.mjs';
 // Teacher Loop v1 UI (11th council 2026-08-25). The Path screen renders one
 // prescription with its REASON and its EVIDENCE, and runs the six task types.
@@ -139,19 +140,66 @@ export function installPath(ctx) {
     // the path is the LEARNING voice: no resume candidate here (13th council)
     rx = prescribe(state, Date.now(), { songs: SONGS ?? [], statsOf: songStats });
     setTextKeeping($('path-reason'), rx.reason);   // the canon nests #path-go inside it
-    $('path-evidence').textContent = rx.evidence ? 'Why: ' + rx.evidence : '';
+    // The desktop module carries a Fraunces HEADLINE above the reason; the
+    // sample skill name sat there whatever the prescription said (Codex round
+    // 2, must-fix 1: headline, reason and evidence must name ONE subject).
+    {
+      const pr = $('path-reason');
+      const head = pr && [...pr.querySelectorAll('*')]
+        .find((x) => !x.children.length && /Fraunces/.test(x.getAttribute('style') ?? ''));
+      if (head) {
+        const skillId = rx.skillId
+          ?? (rx.lessonId && TEACHER_LESSONS.find((l) => l.id === rx.lessonId)?.skillIds?.[0]);
+        const song = rx.songId && (SONGS ?? []).find((x) => x.id === rx.songId);
+        head.textContent = (skillId && SKILL_BY_ID[skillId]?.name)
+          ?? song?.title
+          ?? ({ diagnostic: 'The check-in', assessment: 'The assessment', done: 'Path complete' }[rx.kind]
+              ?? 'Continue learning');
+      }
+    }
+    setTextKeeping($('path-evidence'), rx.evidence ? 'Why: ' + rx.evidence : '');
     $('path-go').textContent = rx.kind === 'diagnostic' ? '▶ Start the check-in'
       : rx.kind === 'review' ? '▶ Quick check'
       : rx.kind === 'assessment' ? '▶ Take the assessment'
-      : rx.kind === 'proof' ? '🎵 Prove it in the song'
-      : rx.kind === 'song-review' ? '🏆 Run the song'
-      : rx.kind === 'repertoire' ? '🎵 Five focused minutes'
+      : rx.kind === 'proof' ? 'Prove it in the song'
+      : rx.kind === 'song-review' ? 'Run the song'
+      : rx.kind === 'repertoire' ? 'Five focused minutes'
       : rx.kind === 'done' ? '✓ Path complete' : '▶ Continue learning';
     $('path-go').disabled = rx.kind === 'done';
     const nPlay = playableGroups(state, SONGS ?? []).length;
-    $('path-playable').textContent = nPlay > 0
-      ? '🏆 ' + nPlay + ' song' + (nPlay === 1 ? '' : 's') + ' independently playable'
-      : '';
+    // TWO compositions live behind #path-playable. The 756 column is a plain
+    // count line. The desktop board draws WHAT IT UNLOCKS with two song rows,
+    // and Codex caught the module keeping its SAMPLE songs (River Flows in
+    // You) whatever the data said. The rows now carry the prescribed skill's
+    // real repertoire, and rows with nothing behind them stand down.
+    {
+      const pp = $('path-playable');
+      const unlockRows = pp ? [...pp.children].filter((c) => c.querySelector('img')) : [];
+      if (unlockRows.length) {
+        const skillId = rx.skillId
+          ?? (rx.lessonId && TEACHER_LESSONS.find((l) => l.id === rx.lessonId)?.skillIds?.[0])
+          ?? null;
+        const rep = skillId ? SKILL_REPERTOIRE[skillId] : null;
+        const seen = new Set();
+        const entries = rep ? [rep.payoff, ...(rep.proof ?? [])].filter(Boolean)
+          .filter((e) => !seen.has(e.songId) && seen.add(e.songId)) : [];
+        unlockRows.forEach((row, i) => {
+          const e = entries[i];
+          if (!e) { row.style.display = 'none'; return; }
+          const song = (SONGS ?? []).find((x) => x.id === e.songId);
+          if (!song) { row.style.display = 'none'; return; }
+          row.style.display = '';
+          const img = row.querySelector('img');
+          if (img) { img.src = coverDataUrl(song, 64); img.alt = ''; img.removeAttribute('data-art'); }
+          const leaf = [...row.querySelectorAll('*')].find((x) => !x.children.length && x.textContent.trim());
+          if (leaf) leaf.textContent = song.title;
+        });
+      } else {
+        setTextKeeping(pp, nPlay > 0
+          ? '' + nPlay + ' song' + (nPlay === 1 ? '' : 's') + ' independently playable'
+          : '');
+      }
+    }
 
     // The canon drew a row per skill, with five pips for the stage ladder.
     // STAGES is the design's own order, read off its sample rows.
@@ -316,7 +364,12 @@ export function installPath(ctx) {
   function finishLessonPhase(res) {
     const skillId = lessonDef.skillIds[0];
     const assisted = phase === 'guided';
-    recordAttempt(mastery(), skillId, {
+    // ☠️ Codex lessons round: replaying a COMPLETED lesson restarted at
+    // guided and every attempt wrote mastery evidence, so one bad replay
+    // demoted an independent or retained skill while the row still said
+    // Complete. A voluntary replay is PRACTICE: it never moves the ledger.
+    const isReplay = !!doneLessons()[lessonDef.id];
+    if (!isReplay) recordAttempt(mastery(), skillId, {
       passed: res.passed, assisted, novel: false, now: Date.now(), note: res.note ?? '',
     });
     jlog('teacher_task', { lesson: lessonDef.id, phase, passed: res.passed, note: res.note ?? '' });
@@ -342,7 +395,7 @@ export function installPath(ctx) {
         const s = (SONGS ?? []).find((x) => x.id === rep.payoff.songId);
         const btn = $('task-payoff');
         btn.hidden = false;
-        btn.textContent = '🎵 Hear it in a song, ' + (s?.title ?? rep.payoff.songId) + ' (with help)';
+        btn.textContent = 'Hear it in a song, ' + (s?.title ?? rep.payoff.songId) + ' (with help)';
         btn.onclick = () => {
           jlog('path_payoff', { lesson: lessonDef.id, song: rep.payoff.songId });
           launchSong({ ...rep.payoff, wait: true });
@@ -350,14 +403,17 @@ export function installPath(ctx) {
       }
       return;
     }
-    // transfer passed: the lesson is genuinely done
-    doneLessons()[lessonDef.id] = Date.now();
+    // transfer passed: the lesson is genuinely done. A REPLAY pass keeps its
+    // original completion time and says what it is (practice went well).
+    if (!isReplay) doneLessons()[lessonDef.id] = Date.now();
     delete state.teacherStep[lessonDef.id];
     markPracticedToday();
     awardXp?.('lessonCleared', lessonDef.id);
     store.save(state);
-    comboFlash('STEP CLEARED');
-    $('task-msg').textContent = '✓ ' + (res.note ?? '') + ' "' + lessonDef.title + '" is yours. ' + SKILL_BY_ID[lessonDef.skillIds[0]].name + ' is now "on your own".';
+    comboFlash(isReplay ? 'REPLAY ✓' : 'STEP CLEARED');
+    $('task-msg').textContent = isReplay
+      ? '✓ ' + (res.note ?? '') + ' Good practice. "' + lessonDef.title + '" was already yours; nothing changed on the ledger.'
+      : '✓ ' + (res.note ?? '') + ' "' + lessonDef.title + '" is yours. ' + SKILL_BY_ID[lessonDef.skillIds[0]].name + ' is now "on your own".';
     $('task-start').hidden = true;
     setTimeout(() => { if (!$('screen-task').hidden) openPath(); }, 2400);
   }
@@ -872,7 +928,8 @@ export function installPath(ctx) {
   $('task-keys').addEventListener('pointerdown', (e) => {
     if (!view) return;
     const r = e.currentTarget.getBoundingClientRect();
-    const m = view.pickKeyAt(e.clientX - r.left, e.clientY - r.top, 4, view.h - 4);
+    const sc = e.currentTarget.clientWidth / r.width;   // zoom-safe taps
+    const m = view.pickKeyAt((e.clientX - r.left) * sc, (e.clientY - r.top) * sc, 4, view.h - 4);
     if (m == null) return;
     const latching = (task && CHORD_TASKS.has(task.spec.type)) || (!task && introTarget && introTarget.midis.length > 1);
     const heldSet = task ? task.held : introHeld;

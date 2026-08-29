@@ -1,0 +1,51 @@
+READ-ONLY product opinion round. Hard rules: READ-ONLY. No skills. No
+sub-reviewers or agents. No writes of any kind. You may run node commands that
+only read (probes, the app's own tools) and you may fetch pages from
+http://localhost:4180 (the app's own dev server).
+
+Repo: C:\Users\markh\keys-piano. Mark's words tonight, verbatim intent: "make
+sure this looks neat and the whole app's composition, and no buttons are
+overlapped and all the boxes have enough space around them; give your opinion
+on the whole app and the sessions and skills and tools."
+
+CONTEXT. Keys is Mark's personal piano-learning PWA (P-45 over Web MIDI, true
+black 5b design language, Fraunces display, amber RH / cyan LH, green accent).
+Tonight every screen gained a 1418x738 desktop composition (10a art-forward
+library; 11a-11n for the 14 utility screens), rendered as the design's own
+markup with data bound in (js/canon-*.mjs). Rendered screenshots of every
+screen with seeded data are in design-2026-08/shots-final/ (PNG, view them if
+your tooling can; the extracted boards in design/extracted/*.html are the same
+surfaces as markup). tools/canon-geometry.mjs is the new gate proving no
+overlapped controls / no frame overflow across 19 states.
+
+WHAT I WANT FROM YOU, as a product judge, not a code reviewer:
+
+1. COMPOSITION AND SPACE. Read design/extracted/library-desktop.html and any
+   three of the 11-series desktop boards (metronome-desktop, freeplay-desktop,
+   lesson-desktop are good picks). Judge the compositions: hierarchy, breathing
+   room, alignment, whether any region reads cramped or orphaned at 1418x738.
+   Name concrete offenders with the numbers (paddings, gaps, rect positions
+   are all in the extracted json).
+
+2. THE SESSIONS. The app's practice-session surfaces: the DO THIS NEXT
+   prescription (js/teacher.mjs prescribe()), Quick win / Improve a song /
+   Skill workout (sess-* in js/app.mjs), quests and the weekly mission
+   (js/game.mjs). Opinion: does a 5-minute session flow make sense end to end
+   from the new library? What would you cut, merge or resequence?
+
+3. THE SKILLS. The teacher loop (js/teacher.mjs: 5 skills, stages
+   unseen->retained, prescription order) and the path screen. Opinion: is the
+   path legible to a beginner at a glance on path-desktop? Is anything
+   dishonest or over-promised in the copy?
+
+4. THE TOOLS. 17 tools in the drawer (alltools board). Opinion: which tools
+   earn their place, which should be demoted or folded together, and is the
+   drawer the right door for them on desktop?
+
+5. ANYTHING ELSE a paying user would notice in the first ten minutes that we
+   have not.
+
+DELIVERABLE: a ranked opinion memo. Separate MUST-FIX (a user would call it
+broken or ugly) from SHOULD (worth doing) from TASTE (your preference,
+arguable). Be specific enough that each item is actionable without asking you
+anything.

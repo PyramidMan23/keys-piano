@@ -1,0 +1,67 @@
+READ-ONLY adversarial review. Hard rules for this run: READ-ONLY. Do NOT use
+any skills. Do NOT spawn sub-reviewers or any other agents. Do NOT write,
+edit, create or revert ANY file. You may run node commands that only READ
+(node --check, node test/check.mjs, ad-hoc node -e probes that write nothing).
+If you believe a file changed under you, report it and continue; never act.
+
+CONTEXT. Repo: C:\Users\markh\keys-piano (a vanilla-JS piano-learning PWA,
+served at http://localhost:4180). Tonight's wave, all of which is in scope:
+
+1. DESKTOP COMPOSITIONS. Claude Design drew 15 new artboards (10a = the
+   art-forward desktop library replacing 7a; 11a-11n = 1418x738 desktop boards
+   for the 14 screens that only had 756px phone columns). Pipeline:
+   design-2026-08/build-prototype.mjs -> tools/extract-design.mjs ->
+   tools/build-canon-templates.mjs -> js/canon-templates.mjs. The app mounts
+   the '<screen>-desktop' template at boot when innerWidth >= 1418
+   (boardFor in js/canon-mount.mjs).
+2. NEW/CHANGED BINDERS: js/canon-library.mjs (structural tab strip, the 10a
+   TILE GRID renderer renderTiles with row-dealing, art-true tile glow
+   paintArtGlow, freeze-offer module bindFreezeOffer, All tools trigger wired
+   before its fallback templates), js/canon-mount.mjs (boardFor,
+   setTextKeeping longest-non-kicker-leaf value slot), js/canon-list.mjs
+   (heading-wrapper detection), js/app.mjs (freeze ctx + handlers,
+   setTextKeeping for cal-status/touch-status, emoji sweep),
+   js/path.mjs (setTextKeeping for reason/evidence/playable, emoji sweep),
+   js/game.mjs (geometric badge shapes).
+3. THE DECK: js/falls.mjs gained the sustained-note scanline tail
+   (FallsView.scanlineRows + draw calls in _drawFountains), the last item of
+   design/extracted/deck-spec.json panel 06.
+4. GATES: tools/canon-journeys.mjs grew from 11 to 24 deep journeys (real
+   hit-tested CDP clicks, typed chars, persisted-state asserts);
+   tools/canon-clickable.mjs now exits non-zero on dead controls;
+   tools/overlay.mjs art-classes textless blur() layers padded 3x radius;
+   tools/canon-coverage.mjs skips spec boards; design-2026-08/canon-harness.html
+   seeds 10a's own nine tiles.
+
+CURRENT GATE STATE, which you should try to BREAK, not re-run for comfort:
+overlay 37/37 zero structural pixels; canon-runtime clean; canon-clickable
+95/95; canon-journeys 24/24; suite test/check.mjs 213 green.
+
+ALREADY FOUND AND FIXED tonight (do not re-report): renderTiles first crammed
+all tiles into the last row; the tile template spread Fur Elise's baked amber
+glow to every sleeve; bindAllTools required a MOST USED label 10a does not
+have and left All tools dead; fillCanonList treated the desktop heading
+wrapper as a row template and ate the +50 XP cell; quest rows are spans not
+buttons; setTextKeeping prepended text while the design sample stayed in a
+child span (the path screen shipped showing sample text); a template-literal
+regex in overlay.mjs lost its backslashes and never matched.
+
+NAMED WEAKEST POINTS, attack these first:
+- renderTiles: cloning, row-dealing and the show-more placement under odd row
+  counts (0 rows, 1 row, exactly perRow tiles, search results of 1).
+- setTextKeeping's "longest non-monospace leaf" heuristic: find a canon
+  module where it will write the WRONG slot.
+- boardFor picks at boot only: find a code path where the width changes and a
+  binder assumes the other composition.
+- The freeze offer floats position:absolute over a fixed composition: find
+  what it covers at 1418x738 and whether its controls can be occluded.
+- The emoji sweep: find a string where stripping the emoji broke meaning,
+  spacing, or a test/journey anchor, or a surviving emoji on a CANON surface.
+- The scanline tail: check the maths against deck-spec.json panel 06 and the
+  draw calls for budget/perf (it runs per pressed key per frame).
+- The journeys: find a journey that would PASS while the behaviour it claims
+  to prove is actually broken (assertion too weak, wrong anchor, timing).
+
+DELIVERABLE: a numbered list of findings, each with file:line, why it is
+wrong, and a minimal repro or probe I can run. Rank by severity. If you find
+nothing in an area, say so explicitly per area.

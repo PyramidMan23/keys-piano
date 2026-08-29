@@ -174,20 +174,20 @@ export function verdictWord(st, songId) {
 export function badges(st, songs = []) {
   const out = [];
   const proofs = Object.entries(st.pathProofs ?? {});
-  if (proofs.length) out.push({ id: 'first-proof', word: 'First proof', shape: '🎵', evidence: proofs[0][1] });
+  if (proofs.length) out.push({ id: 'first-proof', word: 'First proof', shape: '◆', evidence: proofs[0][1] });
   const playable = Object.entries(st.playable ?? {}).filter(([, p]) => p.provenAt);
-  if (playable.length) out.push({ id: 'first-playable', word: 'First playable song', shape: '🏆', evidence: { songId: playable[0][0], at: playable[0][1].provenAt } });
+  if (playable.length) out.push({ id: 'first-playable', word: 'First playable song', shape: '★', evidence: { songId: playable[0][0], at: playable[0][1].provenAt } });
   for (const [id, p] of playable) {
     const s = songs.find((x) => x.id === id);
-    out.push({ id: 'playable:' + id, word: (s?.title ?? id) + ' · playable', shape: '🏆', evidence: { songId: id, at: p.provenAt } });
+    out.push({ id: 'playable:' + id, word: (s?.title ?? id) + ' · playable', shape: '★', evidence: { songId: id, at: p.provenAt } });
   }
-  if (st.calibratedAt) out.push({ id: 'calibrated', word: 'Calibrated', shape: '🎯', evidence: { at: st.calibratedAt, offsetMs: st.calOffsetMs } });
-  if ((st.bestRhythm ?? 0) >= 7) out.push({ id: 'rhythm7', word: '7-day rhythm', shape: '🔥', evidence: { best: st.bestRhythm } });
+  if (st.calibratedAt) out.push({ id: 'calibrated', word: 'Calibrated', shape: '◎', evidence: { at: st.calibratedAt, offsetMs: st.calOffsetMs } });
+  if ((st.bestRhythm ?? 0) >= 7) out.push({ id: 'rhythm7', word: '7-day rhythm', shape: '●', evidence: { best: st.bestRhythm } });
   const lessons = Object.keys(st.teacherLessons ?? {}).length;
-  if (lessons >= 5) out.push({ id: 'foundation', word: 'Foundation complete', shape: '🎓', evidence: st.teacherLessons });
+  if (lessons >= 5) out.push({ id: 'foundation', word: 'Foundation complete', shape: '■', evidence: st.teacherLessons });
   // arcade stats are honest fun, labelled as arcade, never competence claims
   const bestCombo = Math.max(0, ...Object.values(st.songs ?? {}).map((s) => s.bestCombo ?? 0));
-  if (bestCombo >= 50) out.push({ id: 'combo50', word: bestCombo + ' note streak', shape: '⚡', arcade: true, evidence: { bestCombo } });
+  if (bestCombo >= 50) out.push({ id: 'combo50', word: bestCombo + ' note streak', shape: '▲', arcade: true, evidence: { bestCombo } });
   return out;
 }
 

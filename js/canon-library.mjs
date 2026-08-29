@@ -14,13 +14,39 @@
 //
 // Turn it on with ?canon=1 (or window.__canon = true before boot).
 import { CANON } from './canon-templates.mjs';
-import { applyInherited, mountMarkup } from './canon-screen.mjs';
-import { reclaimIds, captureFocus, restoreFocus, nameControls } from './canon-mount.mjs';
-import { coverDataUrl } from './covers.mjs';
+import { applyInherited, mountMarkup, renderCanonScreen } from './canon-screen.mjs';
+import { bindSegment as segmentVariants } from './canon-bind.mjs';
+import { reclaimIds, captureFocus, restoreFocus, nameControls, desktopFits, applyCanonZoom } from './canon-mount.mjs';
+import { coverDataUrl, sleeveUrlByGroup } from './covers.mjs';
 
-// The five songs the design drew in its own row samples. Named once, because
-// two places need them and they must not drift apart.
-const ROW_SAMPLES = ['River Flows in You', 'Für Elise', 'Still D.R.E.', 'Super Mario Bros. Theme', 'C Major Scale'];
+// THE SAMPLE ROWS, FOUND STRUCTURALLY.
+//
+// This used to be a hardcoded list of the five songs artboard 5b happens to
+// draw. Then 7a arrived, the desktop frame, and it samples a different five
+// (Happy Birthday instead of River Flows in You), so a hardcoded list binds one
+// composition and silently leaves the other showing the artboard's own data.
+//
+// Both compositions build the table the same way: a header row carrying SONG
+// and PLAYS, then sibling rows with the same slot count, then a narrower row for
+// "show the other N". Walk that, and the rule holds for whatever frame the
+// design draws next.
+function findRowAnchors(root) {
+  const song = bySample(root, 'SONG'), plays = bySample(root, 'PLAYS');
+  if (!song || !plays) return [];
+  let header = song;
+  while (header && !header.contains(plays)) header = header.parentElement;
+  if (!header) return [];
+  const slots = header.children.length;
+  const out = [];
+  for (let row = header.nextElementSibling; row; row = row.nextElementSibling) {
+    if (row.children.length !== slots) break;
+    const title = [...row.children[1].querySelectorAll('*')]
+      .find((e) => !e.children.length && e.textContent.trim());
+    if (!title) break;
+    out.push(title);
+  }
+  return out;
+}
 
 // Resolve a slot by the sample text the DESIGN put there. Text is the contract:
 // it survives restyling, and it is what a human would point at.
@@ -81,11 +107,17 @@ const setId = (root, sample, id, climb = 0) => {
 
 export function renderCanonLibrary(host, ctx) {
   const { prescription, streak, level, onRun } = ctx;
-  applyInherited(host, 'library');
+  // WHICH COMPOSITION. 5b is a 756px column; 7a is the 1418x738 desktop frame,
+  // drawn after Mark pointed out the app was using half his screen. They are
+  // different compositions, not one reflowing, so the caller names the one it
+  // wants and everything below binds to whichever arrived.
+  const screen = CANON[ctx.screen] ? ctx.screen : 'library';
+  applyInherited(host, screen);
   // a person can be typing in the search box while this runs
   CANON_MISSES.length = 0;
   const focus = captureFocus(host);
-  const root = mountMarkup(host, CANON.library);
+  const root = mountMarkup(host, CANON[screen]);
+  if (screen === 'library-desktop') applyCanonZoom(root);
 
   // Resolve the sample song rows NOW, before anything else rewrites text.
   // bySample finds the FIRST node with that text, and the moment the
@@ -93,7 +125,7 @@ export function renderCanonLibrary(host, ctx) {
   // a row: "Für Elise" then resolved to the hero, the row walk climbed past
   // the list looking for a parent that was never coming, and the whole library
   // threw. Order of binding is not a detail here.
-  const rowAnchors = ROW_SAMPLES.map((t) => bySample(root, t)).filter(Boolean);
+  const rowAnchors = findRowAnchors(root);
 
   // ---- rail: status ----
   setText(root, 'LVL 1', `LVL ${level.n}`);
@@ -112,17 +144,47 @@ export function renderCanonLibrary(host, ctx) {
     search.addEventListener('input', () => ctx.onSearch?.(search.value));
   }
 
+  // ---- the tab strip, found structurally (10a moved it into the content) ----
+  // The old rule was "a tab is a label whose rect sits above y=90", which was
+  // true of exactly one composition. The structural truth: the four shelf
+  // labels whose CONTROLS share one parent and sit on one horizontal line.
+  const TAB_LABELS = ['Learning', 'Repertoire', 'Hall of fame', 'Explore'];
+  const tabStrip = (() => {
+    const byParent = new Map();
+    for (const label of TAB_LABELS) {
+      for (const e of root.querySelectorAll('*')) {
+        if (e.children.length || e.textContent.trim() !== label) continue;
+        const c = control(e);
+        const p = c.parentElement;
+        if (!p) continue;
+        if (!byParent.has(p)) byParent.set(p, new Map());
+        if (!byParent.get(p).has(label)) byParent.get(p).set(label, c);
+      }
+    }
+    for (const [p, found] of byParent) {
+      if (found.size !== 4) continue;
+      const ys = [...found.values()].map((c) => c.getBoundingClientRect().y);
+      if (Math.max(...ys) - Math.min(...ys) <= 10) return { parent: p, controls: found };
+    }
+    return null;
+  })();
+
   // ---- rail: the dock ----
   const dock = [
     ['Repertoire', () => ctx.onTab?.('repertoire')],
     ['Free play', () => ctx.onTool?.('btn-freeplay')],
     ['Metronome', () => ctx.onTool?.('btn-metronome')],
     ['Latency calibration', () => ctx.onTool?.('btn-calibrate')],
+    // the rail's voice readout is a control, not a caption; it was dead
+    ['Voice', () => ctx.onTool?.('btn-voice')],
   ];
   for (const [label, fn] of dock) {
     const n = bySample(root, label);
     if (!n) continue;
     const c = control(n);
+    // a label that IS a tab is the tab's, not the dock's (10a has no rail
+    // Repertoire; binding the tab twice fired two renders per click)
+    if (tabStrip && tabStrip.parent.contains(c)) continue;
     c.addEventListener('click', fn);
     c.style.cursor = 'pointer';
   }
@@ -131,20 +193,49 @@ export function renderCanonLibrary(host, ctx) {
 
   // ---- the four shelves, now tabs ----
   const counts = ctx.counts;
+  const tabControls = [];
   const tabs = [['Learning', 'sec-learning', counts.learning], ['Repertoire', 'sec-repertoire', counts.repertoire],
                 ['Hall of fame', 'sec-fame', counts.fame], ['Explore', 'sec-explore', counts.explore]];
   for (const [label, id, n] of tabs) {
-    // the tab label appears twice (rail and tab bar), so take the one inside the tab strip
-    const hits = [...root.querySelectorAll('*')].filter((e) => !e.children.length && e.textContent.trim() === label && e.getBoundingClientRect().y < 90);
-    const node = hits[hits.length - 1];
-    if (!node) continue;
-    const c = control(node);
+    const c = tabStrip?.controls.get(label);
+    if (!c) continue;
     c.id = id;
     c.addEventListener('click', () => ctx.onTab?.(id.replace('sec-', '')));
     c.style.cursor = 'pointer';
     const countEl = c.querySelector('*:not(:first-child)');
     if (countEl && /^\d+$/.test(countEl.textContent.trim())) countEl.textContent = String(n);
     if (id === 'sec-learning' && countEl) countEl.id = 'learn-count';
+    tabControls.push({ id: id.replace('sec-', ''), el: c });
+  }
+  // The active tab has to LOOK active, and clicking one has to CHANGE THE
+  // TABLE. Before 2026-08-29 the click only toggled a collapse flag the canon
+  // renderer never read, so tapping Hall of fame did nothing a person could
+  // see, which is indistinguishable from broken, and Mark called it exactly
+  // that. The active look is harvested from the design's own Learning tab
+  // (drawn selected) against its neighbours, never invented here.
+  if (ctx.activeTab && tabControls.length > 1) {
+    // an activeTab that matches nothing ('search') styles every tab inactive,
+    // so the Learning underline does not sit there lying during a search
+    const activeEl = tabControls.find((t) => t.id === ctx.activeTab)?.el ?? null;
+    segmentVariants(tabControls.map((t) => t.el), (el) => el === activeEl);
+  }
+
+  // the table's sort control. Two buttons the design draws as a segment, and
+  // neither did anything: the app's own sort lives on #explore-sort.
+  const sortPair = [['Weakest', 'diff'], ['A to Z', 'az']]
+    .map(([label, mode]) => ({ el: bySample(root, label), mode }))
+    .filter((x) => x.el);
+  if (sortPair.length === 2) {
+    const members = sortPair.map((x) => control(x.el));
+    for (const { el, mode } of sortPair) {
+      const c = control(el);
+      c.style.cursor = 'pointer';
+      c.addEventListener('click', () => ctx.onSort?.(mode));
+    }
+    if (ctx.sortMode) {
+      const active = sortPair.find((x) => x.mode === ctx.sortMode);
+      if (active) segmentVariants(members, (el) => el === control(active.el));
+    }
   }
 
   // ---- the recommendation ----
@@ -173,10 +264,53 @@ export function renderCanonLibrary(host, ctx) {
     if (another) { const c = control(another); c.addEventListener('click', () => ctx.onChooseAnother?.()); c.style.cursor = 'pointer'; }
   }
 
+  // ---- the hero's ambient glow follows the REAL artwork -------------------
+  // The richness pass asked for "a soft ambient glow bled from that artwork's
+  // own colours". What the artboard shipped is a decorative textless <i>
+  // overlay (absolute, 560x330, pointer-events none) carrying a radial in the
+  // HAND colours, amber .22 over cyan .10, sampled from the Dr. Dre sleeve. On
+  // the green panel it reads as a swampy wash whatever song is showing, and
+  // Mark called it: "theres some weird green colour fade here, should it be
+  // like that?" No. The glow now samples the actual hero sleeve, and an artless
+  // hero gets no glow, because a glow from nothing is a lie in light.
+  const glowLayers = [...root.querySelectorAll('i[style*="radial-gradient"], span[style*="radial-gradient"], div[style*="radial-gradient"]')]
+    .filter((el) => !el.textContent.trim() && !el.querySelector('img'));
+  const heroBand = bySample(root, 'DO THIS NEXT')?.closest('div[style*="background"]')
+    ?? bySample(root, 'DO THIS NEXT')?.parentElement?.parentElement;
+  for (const layer of glowLayers) {
+    if (heroBand && !heroBand.contains(layer) && !layer.parentElement?.contains(heroBand)) continue;
+    const heroImg2 = root.querySelector('#next-action-cover, [id="next-action-cover"]') ?? heroBand?.querySelector('img');
+    if (!prescription?.song && !prescription?.art) { layer.style.display = 'none'; continue; }
+    if (!heroImg2) continue;
+    const paint = () => {
+      try {
+        const c = document.createElement('canvas');
+        c.width = c.height = 8;
+        const x = c.getContext('2d');
+        x.drawImage(heroImg2, 0, 0, 8, 8);
+        const d = x.getImageData(0, 0, 8, 8).data;
+        let r = 0, g = 0, b = 0;
+        for (let i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; }
+        const n = d.length / 4;
+        r = Math.round(r / n); g = Math.round(g / n); b = Math.round(b / n);
+        const max = Math.max(r, g, b, 1);
+        if (max < 90) { const k = 110 / max; r = Math.round(r * k); g = Math.round(g * k); b = Math.round(b * k); }
+        layer.style.background =
+          `radial-gradient(58% 120% at 20% 46%, rgba(${r},${g},${b},.20), rgba(${r},${g},${b},0) 68%)`;
+        layer.style.display = '';
+      } catch { layer.style.display = 'none'; }
+    };
+    if (heroImg2.complete && heroImg2.naturalWidth) paint();
+    else heroImg2.addEventListener('load', paint, { once: true });
+  }
+
   // ---- the rows, then everything the canon absorbed ----
-  renderRows(root, ctx, rowAnchors);
+  // 10a (2026-08-29) replaced the ledger table with an art-forward TILE GRID;
+  // the 756 column still draws rows. Try the grid first, structurally.
+  if (!renderTiles(root, ctx)) renderRows(root, ctx, rowAnchors);
   bindDashboard(root, ctx);
   bindAllTools(root, ctx);
+  bindFreezeOffer(root, ctx);
 
   // the binders above graft ids onto designed nodes; take those ids back off
   // the hidden legacy copy so nothing resolves twice
@@ -195,14 +329,22 @@ export function renderCanonLibrary(host, ctx) {
 // box vs an empty one) from the samples themselves. Same discipline as the tier
 // pips: the design owns how a state looks, this file owns which state.
 function rowsFromSamples(root, samples, tag = 'button') {
-  const rows = samples.map((t) => bySample(root, t)?.closest(tag)).filter(Boolean);
+  // 10a draws the quest and mission rows as SPANS, not buttons: fall back to
+  // the leaf's structural row (label-group's parent) when no button exists.
+  const rows = samples.map((t) => {
+    const leaf = bySample(root, t);
+    if (!leaf) return null;
+    return leaf.closest(tag) ?? leaf.parentElement?.parentElement ?? null;
+  }).filter(Boolean);
   return rows.length === samples.length ? rows : [];
 }
 
 // the two appearances of a checkbox, taken from a sample that is ticked and one
 // that is not
 function checkVariants(rows, doneIndex) {
-  const boxOf = (r) => r.firstElementChild;
+  // the checkbox is the row's <i> glyph; on the desktop boards it nests one
+  // level down, so firstElementChild alone grabbed the whole label group
+  const boxOf = (r) => r.querySelector('i') ?? r.firstElementChild;
   const onEl = rows[doneIndex] ? boxOf(rows[doneIndex]) : null;
   const offRow = rows.find((r, i) => i !== doneIndex && boxOf(r));
   const offEl = offRow ? boxOf(offRow) : null;
@@ -212,7 +354,7 @@ function checkVariants(rows, doneIndex) {
   };
 }
 function setCheck(row, done, v) {
-  const box = row.firstElementChild;
+  const box = row.querySelector('i') ?? row.firstElementChild;
   const want = done ? v.on : v.off;
   if (!box || !want) return;
   if (want.style != null) box.setAttribute('style', want.style);
@@ -253,16 +395,18 @@ function bindDashboard(root, ctx) {
     T('Screen taps. Plug the P-45 in for the real thing.', ctx.keyboard.sub);
   }
 
-  // the table header count, and the affordance for the rows not shown
+  // The table header names the ACTIVE tab and carries its count. Before this
+  // it said LEARNING forever, whatever the table was actually showing.
   const header = bySample(root, 'LEARNING, WEAKEST FIRST');
   if (header && header.parentElement) {
+    if (ctx.tableTitle) header.textContent = ctx.tableTitle;
     const count = [...header.parentElement.children].find((c) => c !== header && /^\d+$/.test(c.textContent.trim()));
     if (count && ctx.learningTotal != null) count.textContent = String(ctx.learningTotal);
   }
   const more = bySample(root, 'Show the other 7 in Learning');
   if (more) {
     const hidden = Math.max(0, (ctx.learningTotal ?? 0) - (ctx.rows?.length ?? 0));
-    more.textContent = `Show the other ${hidden} in Learning`;
+    more.textContent = `Show the other ${hidden} in ${ctx.tabWord ?? 'Learning'}`;
     const c = control(more);
     // NOT the hidden attribute: [hidden] hides via a user-agent display:none,
     // and every element in the canon carries an inline display, which wins, so
@@ -374,7 +518,154 @@ function bindDashboard(root, ctx) {
 }
 
 
+// ---- the freeze offer (CANON-GAPS Gap C, closed 2026-08-29) ----------------
+// The design drew this module once, on the states board (6q), and the canon
+// library never reached it: renderGameRow does not run under the canon, so a
+// broken 3-day rhythm never produced the offer. The module is LIFTED VERBATIM
+// out of the states canon (its inline styles are self-contained) and mounted
+// into the library only while an offer is live. Recorded deviation: the states
+// board draws it in isolation, so its position in the library composition is
+// the app's choice (first thing in the frame), not the design's.
+let statesFreezeHTML = null;
+function bindFreezeOffer(root, ctx) {
+  if (!ctx.freeze) return;
+  if (statesFreezeHTML === null) {
+    const t = document.createElement('template');
+    t.innerHTML = CANON['states'] ?? '';
+    statesFreezeHTML = t.content.querySelector('#freeze-offer')?.outerHTML ?? '';
+  }
+  if (!statesFreezeHTML) return;
+  const holder = document.createElement('template');
+  holder.innerHTML = statesFreezeHTML;
+  const offer = holder.content.firstElementChild;
+  // the design's sample numbers become the real ones; wording stays byte for byte
+  for (const e of offer.querySelectorAll('*')) {
+    if (e.children.length) continue;
+    const t2 = e.textContent;
+    if (/Use a freeze to keep your \d+ day rhythm/.test(t2)) {
+      e.textContent = t2.replace(/\d+ day rhythm/, `${ctx.freeze.wouldKeep} day rhythm`);
+    } else if (/You have \d+ freezes? left/.test(t2)) {
+      e.textContent = t2.replace(/\d+ freezes? left/, `${ctx.freeze.freezes} ${ctx.freeze.freezes === 1 ? 'freeze' : 'freezes'} left`);
+    }
+  }
+  const yes = offer.querySelector('#freeze-yes');
+  const no = offer.querySelector('#freeze-no');
+  if (yes) yes.addEventListener('click', () => ctx.onFreezeYes?.());
+  if (no) no.addEventListener('click', () => ctx.onFreezeNo?.());
+  // The states board draws the module in isolation; the library composition
+  // has no slot for it, so it floats over the frame rather than reflowing a
+  // fixed 738px composition. BOTTOM-RIGHT, not top-left: Codex measured the
+  // first placement covering the search field and half the quick rail; the
+  // corner over the form check occludes the least-used module and the offer
+  // is one click to dismiss either way. Scaffolding position only.
+  if (!root.style.position) root.style.position = 'relative';
+  offer.style.position = 'absolute';
+  offer.style.bottom = '12px';
+  offer.style.right = '12px';
+  offer.style.zIndex = '40';
+  root.insertAdjacentElement('afterbegin', offer);
+}
+
 // ---- All tools ------------------------------------------------------------
+// Artboard 7b IS this drawer: all 17 tools in three columns, each with a real
+// one-line description and a state marker, plus a legend. So there is nothing
+// to invent and nothing to lay out. Render the artboard, attach the app's
+// handlers to the rows the design already drew, and wire Close.
+//
+// The rows are matched to the app's tools BY THEIR LABEL, which works because
+// the design was briefed from the app's own rail and uses the same seventeen
+// words. A tool the drawer does not name is reported rather than dropped.
+function openToolsDrawer(ctx, onClose, board = 'alltools') {
+  const existing = document.getElementById('canon-tools-drawer');
+  if (existing) { existing.remove(); return null; }
+
+  const shade = document.createElement('div');
+  shade.id = 'canon-tools-drawer';
+  shade.style.cssText = 'position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;overflow:auto';
+  // the ground the design assumes behind its own card
+  shade.style.background = getComputedStyle(document.body).backgroundColor || '#000';
+
+  const host = document.createElement('div');
+  host.style.width = 'max-content';
+  shade.appendChild(host);
+  document.body.appendChild(shade);
+
+  const root = renderCanonScreen(host, board);
+  if (board === 'alltools') applyCanonZoom(root);
+
+  // every tool the app has, flattened, so a row can find its handler
+  const byLabel = new Map();
+  for (const group of ctx.tools ?? []) for (const item of group.items) byLabel.set(item.label, item);
+
+  const close = () => { shade.remove(); onClose?.(); };
+  let wired = 0;
+  const unmatched = [];
+  for (const el of root.querySelectorAll('*')) {
+    if (el.children.length) continue;
+    const label = el.textContent.trim();
+    const tool = byLabel.get(label);
+    if (!tool) continue;
+    // the row is the smallest ancestor that also holds the description AND
+    // the leading state box; stopping at the text column left every box
+    // wearing its drawn sample state (the swap silently never fired)
+    let row = el;
+    for (let i = 0; i < 3 && row.parentElement; i++) {
+      if (row.children.length >= 2) break;
+      row = row.parentElement;
+    }
+    for (let i = 0; i < 2 && row.parentElement && !row.querySelector('i'); i++) row = row.parentElement;
+    row.style.cursor = 'pointer';
+    row.addEventListener('click', () => { close(); ctx.onTool?.(tool.id); });
+    // TRUTH over sample (sample-bleed audit): the drawn rows carried fake
+    // per-tool states. Where the app computes a real line, it replaces the
+    // sample; a plain description keeps the design's own words. The leading
+    // box swaps between the design's own drawn checked/unchecked variants.
+    const st = ctx.toolStatus?.[label];
+    if (st) {
+      if (st.line) {
+        const desc = [...row.querySelectorAll('*')].find((x) => !x.children.length && x !== el && x.textContent.trim().length > 6);
+        if (desc) desc.textContent = st.line;
+      }
+      row.dataset.toolDone = st.done ? '1' : '0';
+    }
+    byLabel.delete(label);
+    wired++;
+  }
+  // swap every leading box to the drawn variant matching its truth, and make
+  // the header count honest
+  {
+    const rows2 = [...root.querySelectorAll('[data-tool-done]')];
+    const boxOf = (r) => r.querySelector('i');
+    const onBox = rows2.map(boxOf).find((b2) => (b2?.getAttribute('style') ?? '').includes('background:#82bf9c'));
+    const onStyle = onBox?.getAttribute('style');
+    const onInner = onBox?.innerHTML ?? '';
+    const offStyle = rows2.map(boxOf).find((b2) => b2 && !(b2.getAttribute('style') ?? '').includes('background:#82bf9c') && !(b2.getAttribute('style') ?? '').includes('border-bottom'))?.getAttribute('style');
+    let doneCount = 0;
+    for (const r of rows2) {
+      const done = r.dataset.toolDone === '1';
+      if (done) doneCount++;
+      const b2 = boxOf(r);
+      const want = done ? onStyle : offStyle;
+      if (b2 && want) { b2.setAttribute('style', want); b2.innerHTML = done ? onInner : ''; }
+    }
+    const counter = [...root.querySelectorAll('*')].find((x) => !x.children.length && /already set up$/.test(x.textContent.trim()));
+    if (counter) counter.textContent = `${doneCount} already set up`;
+  }
+  for (const [label] of byLabel) unmatched.push(label);
+  if (unmatched.length) CANON_MISSES.push('tools drawer has no row for: ' + unmatched.join(', '));
+
+  const closeBtn = bySample(root, 'Close');
+  if (closeBtn) { const c = control(closeBtn); c.addEventListener('click', close); c.style.cursor = 'pointer'; }
+  shade.addEventListener('click', (ev) => { if (ev.target === shade) close(); });
+  document.addEventListener('keydown', function esc(ev) {
+    if (ev.key !== 'Escape') return;
+    document.removeEventListener('keydown', esc);
+    close();
+  });
+  return { wired, unmatched };
+}
+
+// ---- All tools, the 756px fallback -----------------------------------------
 // The canon's rail ends with "All tools 17" and the line "Learn 3, Practise 9,
 // Tools 5. Searchable, nothing removed." Nothing in the canon shows what opens.
 // That is a real design gap, recorded in design-2026-08/CANON-GAPS.md, and it
@@ -390,6 +681,23 @@ function bindAllTools(root, ctx) {
   const trigger = bySample(root, 'All tools');
   if (!trigger) return;
   const triggerBtn = control(trigger);
+
+  // The TRIGGER is wired first and unconditionally. 10a dropped the 7a rail's
+  // "MOST USED" group label, and requiring it before wiring anything left the
+  // All tools control DEAD on the new library: the clickable gate caught it at
+  // 94/95. The in-rail expansion below is a fallback for widths where no
+  // drawer board exists, and only IT needs the templates.
+  triggerBtn.style.cursor = 'pointer';
+  let panel = null;
+  triggerBtn.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    // 7b at full width, 9c below it: the judge round drew the narrow drawer,
+    // so the improvised in-rail list is retired everywhere it exists.
+    const board = desktopFits() ? 'alltools' : 'alltools-narrow';
+    if (CANON[board]) { openToolsDrawer(ctx, undefined, board); return; }
+    if (panel) panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+  });
+
   const dockItem = bySample(root, 'Free play');
   const groupLabel = bySample(root, 'MOST USED');
   if (!dockItem || !groupLabel) return;
@@ -397,7 +705,7 @@ function bindAllTools(root, ctx) {
   const itemTemplate = control(dockItem).cloneNode(true);
   const labelTemplate = groupLabel.cloneNode(true);
 
-  const panel = document.createElement('div');
+  panel = document.createElement('div');
   panel.id = 'canon-all-tools';
   panel.style.display = 'none';
   // the rail is a flex column; match it rather than choose a layout
@@ -440,11 +748,6 @@ function bindAllTools(root, ctx) {
       .join(', ') + '. Searchable, nothing removed.';
   }
 
-  triggerBtn.style.cursor = 'pointer';
-  triggerBtn.addEventListener('click', (ev) => {
-    ev.stopPropagation();
-    panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
-  });
 }
 
 // The design drew five sample rows, and reading them properly is most of this
@@ -467,9 +770,228 @@ function bindAllTools(root, ctx) {
 // CANON GAP, recorded rather than invented: the design samples a drill in
 // "Needs work" only. A banked drill falls back to that row. If the app can
 // reach that state, the design owes us the artboard.
+// Recolour a designed glow layer from the artwork it sits behind, keeping the
+// design's own alpha. Used for the tile halos; the hero glow has its own pass.
+function paintArtGlow(layer, img) {
+  const alpha = (layer.getAttribute('style') ?? '').match(/rgba\([^)]*?,\s*(\.?\d*\.?\d+)\)/)?.[1] ?? '.3';
+  const paint = () => {
+    try {
+      const c = document.createElement('canvas');
+      c.width = c.height = 8;
+      const x = c.getContext('2d');
+      x.drawImage(img, 0, 0, 8, 8);
+      const d = x.getImageData(0, 0, 8, 8).data;
+      let r = 0, g = 0, b = 0;
+      for (let i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; }
+      const n = d.length / 4;
+      r = Math.round(r / n); g = Math.round(g / n); b = Math.round(b / n);
+      const max = Math.max(r, g, b, 1);
+      if (max < 90) { const k = 110 / max; r = Math.round(r * k); g = Math.round(g * k); b = Math.round(b * k); }
+      layer.style.background = `rgba(${r},${g},${b},${alpha})`;
+    } catch { layer.style.display = 'none'; }
+  };
+  if (img.complete && img.naturalWidth) paint();
+  else img.addEventListener('load', paint, { once: true });
+}
+
+// ---- the 10a ART GRID (2026-08-29) ------------------------------------------
+// The desktop library's heart is a grid of 132px sleeves: art, Fraunces title,
+// state in shape plus word, E/M/H tier pips, plays count, and a final
+// "Show the other N" cell. Everything visual is HARVESTED from the design's own
+// sample tiles; this function writes no colour, size, radius or spacing.
+function renderTiles(root, ctx) {
+  const moreLeaf = [...root.querySelectorAll('*')]
+    .find((e) => !e.children.length && /^Show the other \d+ in /.test(e.textContent.trim()));
+  if (!moreLeaf) return false;
+  const moreBtn = moreLeaf.closest('button') ?? control(moreLeaf);
+  // The grid is a COLUMN of row divs, five cells each, with the show-more
+  // control as the last cell of the last row. The first cut treated the last
+  // row as the whole grid, crammed all nine clones into it, and left the first
+  // row showing the design's samples; the overlay caught it at 140k pixels.
+  const lastRow = moreBtn.parentElement;
+  const rowsCol = lastRow.parentElement;
+  // ONLY siblings drawn as the same row shape count: on the 756 column the
+  // show-more's siblings are the whole content stack, and treating them as
+  // grid rows dismantled the phone library (the overlay caught it, 236px of
+  // card height gone). Identical inline style is the design's own row marker.
+  const rows = [...rowsCol.children].filter((r) => r.getAttribute('style') === lastRow.getAttribute('style'));
+  const perRow = Math.max(...rows.map((r) => r.children.length));
+  const tiles = rows.flatMap((r) => [...r.children]).filter((c) => c !== moreBtn);
+  // a GRID is many art-sized cells in wide rows; anything less is not 10a
+  if (rows.length < 2 || tiles.length < 3 || perRow < 4) return false;
+  const rowTpl = rows[0];
+
+  const leaves = (el) => [...el.querySelectorAll('*')].filter((e) => !e.children.length && e.textContent.trim());
+  const STATES = ['Banked', 'Needs work', 'Not started'];
+
+  // harvest each drawn state's appearance: the shape <i> and the word span
+  const stateVariants = new Map();
+  const stateSpanOf = (tile) => leaves(tile).map((l) => ({ l, w: l.textContent.trim() }))
+    .filter((x) => STATES.includes(x.w)).map((x) => x.l.parentElement)[0] ?? null;
+  for (const tile of tiles) {
+    const span = stateSpanOf(tile);
+    if (!span) continue;
+    const word = span.textContent.trim();
+    if (!stateVariants.has(word)) {
+      stateVariants.set(word, { i: span.querySelector('i')?.getAttribute('style') ?? null,
+        word: [...span.children].find((ch) => ch.tagName === 'SPAN')?.getAttribute('style') ?? null });
+    }
+  }
+
+  // harvest the two pip appearances (filled vs hollow) from the drawn grids
+  const pipRowOf = (tile) => leaves(tile).filter((l) => /^[EMH]$/.test(l.textContent.trim()))
+    .map((l) => l.parentElement?.parentElement)[0] ?? null;
+  let pipOn = null, pipOff = null, letterOn = null, letterOff = null;
+  for (const tile of tiles) {
+    const row = pipRowOf(tile);
+    if (!row) continue;
+    for (const cell of row.children) {
+      const pip = cell.querySelector('i');
+      const letter = cell.querySelector('span');
+      if (!pip) continue;
+      const filled = (pip.getAttribute('style') ?? '').includes('background');
+      if (filled && !pipOn) { pipOn = pip.getAttribute('style'); letterOn = letter?.getAttribute('style') ?? null; }
+      if (!filled && !pipOff) { pipOff = pip.getAttribute('style'); letterOff = letter?.getAttribute('style') ?? null; }
+    }
+  }
+
+  // TWO templates, both the design's own: a sleeve tile, and the artless PLATE
+  // tile (stave hairlines + a Georgia monogram) it drew for songs with no
+  // honest recording. Which one a song gets is data: does a real sleeve exist.
+  const template = tiles.find((t) => t.querySelector('img'))?.cloneNode(true);
+  const plateTpl = tiles.find((t) => !t.querySelector('img'))?.cloneNode(true) ?? null;
+  if (!template) return false;
+  // the design's own monogram rule, read off its samples: "HB" for Happy
+  // Birthday, "C" for C Major Scale (a single-letter first word stands alone)
+  const monogram = (title) => {
+    const words = String(title ?? '').split(/\s+/).filter(Boolean);
+    if (!words.length) return '?';
+    if (words[0].length === 1) return words[0].toUpperCase();
+    return words.slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+  };
+
+  // rebuild the rows: empty them, keep the first as the row template, deal
+  // tiles back at the design's own row size, close the last row with show-more
+  for (const t of tiles) t.remove();
+  moreBtn.remove();
+  for (const r of rows) if (r !== rowTpl) r.remove();
+  const rowsOut = [rowTpl];
+  const rowFor = (i) => {
+    const idx = Math.floor(i / perRow);
+    while (rowsOut.length <= idx) {
+      const nr = rowTpl.cloneNode(false);
+      rowsCol.appendChild(nr);
+      rowsOut.push(nr);
+    }
+    return rowsOut[idx];
+  };
+  (ctx.rows ?? []).forEach((song, ti) => {
+    const real = song.song ?? song;
+    const hasSleeve = !!song.art || !!(real.group && sleeveUrlByGroup(real.group, 132));
+    const tile = (hasSleeve || !plateTpl ? template : plateTpl).cloneNode(true);
+    rowFor(ti).appendChild(tile);
+
+    const img = tile.querySelector('img');
+    if (img) {
+      img.src = song.art || coverDataUrl(real, 132);
+      img.alt = '';
+      img.removeAttribute('data-art');
+      // ☠️ trap 25's class again: each tile's art wrapper carries a TEXTLESS
+      // blur-glow layer whose colour the design baked from ITS sample sleeve
+      // (Für Elise amber). Cloned as-is, every sleeve wore FE's amber halo:
+      // the overlay caught 116k pixels of it. Same ruling as the hero glow:
+      // the glow follows the REAL artwork, alpha kept from the design.
+      const glow = tile.querySelector('i[style*="blur("]');
+      if (glow) paintArtGlow(glow, img);
+    } else {
+      // the plate's centred Georgia leaf is the monogram slot
+      const mono = leaves(tile).find((l) => /44px/.test(l.getAttribute('style') ?? ''));
+      if (mono) mono.textContent = monogram(song.title);
+    }
+    // the Fraunces display line is the title slot
+    const title = leaves(tile).find((l) => /Fraunces/.test(l.getAttribute('style') ?? ''));
+    if (title) title.textContent = song.title;
+    const span = stateSpanOf(tile);
+    if (span) {
+      const v = stateVariants.get(song.state);
+      const wordEl = [...span.children].find((ch) => ch.tagName === 'SPAN');
+      if (wordEl) wordEl.textContent = song.state;
+      if (v) {
+        if (v.i && span.querySelector('i')) span.querySelector('i').setAttribute('style', v.i);
+        if (v.word && wordEl) wordEl.setAttribute('style', v.word);
+      }
+    }
+    const pips = pipRowOf(tile);
+    if (pips) {
+      const tiers = Array.isArray(song.tiers) ? song.tiers : [];
+      [...pips.children].forEach((cell, i) => {
+        const pip = cell.querySelector('i');
+        const letter = cell.querySelector('span');
+        if (!pip) return;
+        // a single-tier drill keeps only its first pip honest; spare letters go
+        if (i >= tiers.length && tiers.length) { cell.style.display = 'none'; return; }
+        const on = (tiers[i] ?? 0) > 0;
+        if (on && pipOn) { pip.setAttribute('style', pipOn); if (letterOn && letter) letter.setAttribute('style', letterOn); }
+        if (!on && pipOff) { pip.setAttribute('style', pipOff); if (letterOff && letter) letter.setAttribute('style', letterOff); }
+      });
+      // the plays count is the trailing numeric leaf OUTSIDE the E/M/H cells
+      const plays = leaves(pips.parentElement).filter((l) => /^\d+$/.test(l.textContent.trim())).pop();
+      if (plays && song.plays != null) plays.textContent = String(song.plays);
+    }
+    if (song.onOpen) {
+      tile.style.cursor = 'pointer';
+      tile.addEventListener('click', () => song.onOpen(song));
+    }
+  });
+  // the show-more cell is the next cell after the last tile, new row if full
+  rowFor((ctx.rows ?? []).length).appendChild(moreBtn);
+  // ZERO rows IN A SEARCH: the design drew this state on the states board
+  // (the dashed plate + "Nothing matches, try a shorter word."). Lift it
+  // verbatim, the freeze-offer pattern. Only for searches: an empty Learning
+  // tab is not a failed search, and the copy would lie there (caught on the
+  // theory-card eyeball pass).
+  if (!(ctx.rows ?? []).length && ctx.activeTab === 'search') {
+    const t = document.createElement('template');
+    t.innerHTML = CANON['states'] ?? '';
+    const empty = t.content.querySelector('#list-results');
+    if (empty) {
+      const frag = empty.firstElementChild?.cloneNode(true);
+      if (frag) rowTpl.appendChild(frag);
+    }
+  }
+  // The HERO also wears a state chip, drawn "Not started" on the board. It was
+  // the one sample left talking over real data (Still D.R.E. at 22 plays read
+  // "Not started"). Bind it here, where the harvested variants live; the chip
+  // outside the grid is the hero's.
+  if (ctx.prescription?.state) {
+    const heroLeaf = [...root.querySelectorAll('*')]
+      .find((e) => !e.children.length && STATES.includes(e.textContent.trim()) && !rowsCol.contains(e));
+    const span = heroLeaf?.parentElement;
+    if (span) {
+      const v = stateVariants.get(ctx.prescription.state);
+      const wordEl = [...span.children].find((ch) => ch.tagName === 'SPAN');
+      if (wordEl) wordEl.textContent = ctx.prescription.state;
+      if (v) {
+        if (v.i && span.querySelector('i')) span.querySelector('i').setAttribute('style', v.i);
+        if (v.word && wordEl) wordEl.setAttribute('style', v.word);
+      }
+    }
+  }
+  // CONTAINMENT (Mark's screenshot, 2026-08-29): the band the grid lives in is
+  // a fixed 392px of a fixed 738px composition. More rows than the design drew
+  // (show all, search) were painting straight over the practice chart and the
+  // form check below. The grid area now scrolls WITHIN its own bounds, the way
+  // every art-forward library (iTunes included) scrolls its grid; the
+  // composition itself still never scrolls. Scaffolding behaviour only.
+  rowsCol.style.overflowY = 'auto';
+  rowsCol.style.overflowX = 'hidden';
+  rowsCol.style.minHeight = '0';
+  return true;
+}
+
 function renderRows(root, ctx, anchors) {
   const { rows: wanted, onOpenSong } = ctx;
-  const titles = (anchors ?? ROW_SAMPLES.map((a) => bySample(root, a))).filter(Boolean);
+  const titles = (anchors ?? findRowAnchors(root)).filter(Boolean);
   if (titles.length < 2) return;
 
   // walk up from each title collecting ancestors, then take the deepest one

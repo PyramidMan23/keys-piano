@@ -34,8 +34,9 @@ import {
 } from './game.mjs';
 import { difficultyScore, difficultyBand, HALL_OF_FAME } from './difficulty.mjs';
 import { coverDataUrl } from './covers.mjs';
-import { CANON_ON, setTextKeeping, setHTMLKeeping, setRichText } from './canon-mount.mjs';
+import { CANON_ON, setTextKeeping, setHTMLKeeping, setRichText, hideRestingLayer, setCanonNav, desktopFits, applyCanonZoom } from './canon-mount.mjs';
 import { bindTrophyList, bindXpLog, bindKeys12, bindKeys12Count, bindLessonList, bindImprovLoop, bindSegmentByIds, bindSegment } from './canon-bind.mjs';
+import { mountWidePlay, syncWidePlay } from './canon-play.mjs';
 import { renderCanonLibrary } from './canon-library.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -54,9 +55,38 @@ const store = {
     if (typeof s.calOffsetMs !== 'number' || !isFinite(s.calOffsetMs)) s.calOffsetMs = 0;
     return s;
   },
-  save(s) { localStorage.setItem('keys-v1', JSON.stringify(s)); },
+  // A REAL ROLLBACK, not a renderer switch.
+  //
+  // Codex, council 2026-08-29: "Both renderers mutate the same persisted state.
+  // If Canon corrupts progress, double-awards XP, or writes an incompatible
+  // shape, ?canon=0 merely displays the old renderer over damaged data. That is
+  // a renderer switch, not rollback." It was right, and the claim that a
+  // rollback was one query string away was false.
+  //
+  // So the FIRST write under the canon copies the pre-canon state aside, once
+  // and never again, and window.__restorePreCanon() puts it back. Cheap
+  // insurance against the one failure that cannot be undone by reloading.
+  save(s) {
+    try {
+      if (CANON_ON && localStorage.getItem('keys-v1-precanon') === null) {
+        localStorage.setItem('keys-v1-precanon', localStorage.getItem('keys-v1') ?? '{}');
+      }
+    } catch { /* private mode, quota: never let a backup stop a save */ }
+    localStorage.setItem('keys-v1', JSON.stringify(s));
+  },
 };
 const state = Object.assign({ songs: {}, calOffsetMs: 0, days: [] }, store.load());
+// The restore half of the above. Deliberately a console lever rather than a
+// button: it throws away everything done since the canon first wrote, so it
+// should be hard to hit by accident.
+window.__restorePreCanon = () => {
+  const snap = localStorage.getItem('keys-v1-precanon');
+  if (snap === null) return 'no pre-canon snapshot exists';
+  localStorage.setItem('keys-v1', snap);
+  localStorage.removeItem('keys-v1-precanon');
+  location.reload();
+  return 'restored';
+};
 // note style (Mark 2026-08-25): 'duo' amber/cyan or 'moon' Rousseau white.
 // Views read the seam at construction; applyNoteStyle updates the live ones.
 window.__keysNoteStyle = state.noteStyle === 'moon' ? 'moon' : 'duo';
@@ -144,8 +174,8 @@ function syncInputChip(detail) {
   const el = $('midi-status');
   const connected = el.dataset.connected === 'true';
   el.textContent = !connected
-    ? '⌨ Screen taps · plug the P-45 in for the real thing'
-    : state.calibratedAt ? '🎹 MIDI · calibrated ✓' : '🎹 MIDI · uncalibrated, run Latency calibration';
+    ? 'Screen taps · plug the P-45 in for the real thing'
+    : state.calibratedAt ? 'MIDI · calibrated ✓' : 'MIDI · uncalibrated, run Latency calibration';
   if (detail) el.title = detail;
 }
 midi.onStatus = (text, connected) => {
@@ -161,6 +191,35 @@ window.__simCC = (cc, val) => midi.onControl?.(cc, val);
 
 // ---------- screens ----------
 const screens = ['library', 'play', 'freeplay', 'calibrate', 'echo', 'metronome', 'rhythm', 'lessons', 'lesson', 'touch', 'takes', 'improv', 'keys12', 'path', 'task', 'trophies'];
+
+// THE TOP BAR, ABSORBED. The desktop library is drawn as a full 1418x738 frame,
+// and the app's 61px bar sat above it, so the frame could never fit and the
+// bottom of the rail fell off the screen. Claude Design's ruling, asked
+// directly: absorb it, because the bar carries only a home label and the MIDI
+// status, and the rail already states the keyboard status in more detail plus
+// the two tools that depend on it. Keeping both says it twice and spends 61px
+// doing so. Every other screen keeps its bar, because they still need the way
+// back.
+// the canon's own back controls need somewhere to go
+setCanonNav({ home: () => { show('library'); renderLibrary(); } });
+
+function syncTopbar(name) {
+  // header CLASS topbar, not id: $('topbar') was null, this whole function was
+  // a silent no-op, and the bar sat over every canon screen while a probe
+  // reported it hidden because the probe's null branch printed 'none'. Two
+  // lessons for the price of one: verify the selector against the markup, and
+  // never let a probe's fallback string impersonate a real measurement.
+  const bar = document.querySelector('header.topbar');
+  if (!bar) return;
+  // Absorbed EVERYWHERE under the canon, not just the desktop library. The bar
+  // is old-app chrome Claude Design never drew: every artboard carries its own
+  // designed Library control (wired by bindBack), so the bar said everything
+  // twice in the wrong visual language. Mark, 2026-08-29, pointing at it: can
+  // we make this library button look better. The better version already
+  // existed inside every screen; the fix is deleting the duplicate.
+  bar.style.display = CANON_ON ? 'none' : '';
+}
+
 function show(name) {
   // leaving any screen kills preview audio and its visual leftovers (audit #1, #9)
   stopPreview();
@@ -173,6 +232,31 @@ function show(name) {
     improvEnterT = 0;
     improvOn = false;
   }
+  syncTopbar(name);
+  // The wide play board (9a): mounted lazily the first time the play screen
+  // shows at desktop width, so Mark's "why is the synthesizer so small" screen
+  // gets the 1074px deck instead of the phone column.
+  // Deferred a tick: this hook sits early in show(), while the play screen is
+  // still hidden, and a hidden pane measures 0x0 everywhere - the exact
+  // decorate-before-show trap the prototype already documents. Mounted eagerly
+  // here it found no deck region and quietly declined, and the small deck
+  // stayed. After the toggle below it measures true.
+  if (name === 'play') {
+    window.__viewMode = viewMode;
+    setTimeout(() => {
+      if (mountWidePlay($('screen-play')) && song) {
+        // full first sync, so the header never shows the artboard's sample song
+        const lv = (song.level ?? 'easy');
+        syncWidePlay({ title: song.title, sub: lv[0].toUpperCase() + lv.slice(1) + ' tier',
+          bpm: Math.round(song.bpm * (+$('tempo').value) / 100) + ' bpm',
+          accuracy: engine ? engine.accuracy() : 0, combo: 0, tier: (falls?.comboLevel ?? 0) + 1, timing: '\u2014',
+          art: coverDataUrl(song, 96) });
+      }
+    }, 0);
+  }
+  // A screen change closes the tools drawer. Reaching a tool by any other route
+  // left it hanging open behind the new screen.
+  document.getElementById('canon-tools-drawer')?.remove();
   previewActive = false;
   demoEngine = null; // a screen change ends the follow-along demo too
   const hearBtn = $('btn-hear');
@@ -188,6 +272,11 @@ function show(name) {
   for (const s of screens) $('screen-' + s).hidden = s !== name;
   $('results').hidden = true;
   active = name;
+  // keep the desktop composition fit-scaled to the live window
+  if (CANON_ON) {
+    const card = $('screen-' + name)?.firstElementChild;
+    if (card && card.clientWidth >= 1400) applyCanonZoom(card);
+  }
 }
 let active = 'library';
 
@@ -278,7 +367,7 @@ function runPrescription(rx) {
 // tap-sound toggle: Auto → On → Off, persisted; the chip always says the mode
 function syncSoundBtn() {
   const m = ['auto', 'on', 'off'].includes(state.soundMode) ? state.soundMode : 'auto';
-  $('btn-sound').textContent = m === 'auto' ? '🔊 Auto' : m === 'on' ? '🔊 On' : '🔈 Off';
+  $('btn-sound').textContent = m === 'auto' ? 'Auto' : m === 'on' ? 'On' : 'Off';
 }
 $('btn-sound').addEventListener('click', () => {
   state.soundMode = soundModeNext(state.soundMode);
@@ -375,7 +464,7 @@ function renderGameRow() {
   const today = localDay(new Date());
   const r = rhythmOf(state, today);
   $('rhythm-chip').textContent = r.current > 0
-    ? `🔥 ${r.current}-day rhythm · best ${r.best}` + (r.freezes ? ` · ❄×${r.freezes}` : '')
+    ? `${r.current}-day rhythm · best ${r.best}` + (r.freezes ? ` · freezes ×${r.freezes}` : '')
     : (r.best > 1 ? `Fresh start today · best rhythm ${r.best}` : '');
   // humane continuity: OFFER a freeze, never force or shame, and a declined
   // offer stays declined for the day (Codex review P3)
@@ -383,8 +472,8 @@ function renderGameRow() {
   const fo = $('freeze-offer');
   if (offer) {
     fo.hidden = false;
-    fo.innerHTML = `❄ Yesterday slipped by. Use a freeze to keep your ${offer.wouldKeep}-day rhythm?
-      <button id="freeze-yes" class="tool">❄ Use one</button>
+    fo.innerHTML = `Yesterday slipped by. Use a freeze to keep your ${offer.wouldKeep}-day rhythm?
+      <button id="freeze-yes" class="tool">Use one</button>
       <button id="freeze-no" class="ghost">Fresh start</button>`;
     $('freeze-yes').onclick = () => { useFreeze(state, offer.yesterday); store.save(state); jlog('freeze_used', {}); renderLibrary(); };
     $('freeze-no').onclick = () => { fo.hidden = true; state.freezeDeclined = today; store.save(state); };
@@ -448,6 +537,16 @@ function canonRowOf(variants) {
   };
 }
 
+// The desktop frame is a fixed 1418px composition. It fits or it does not;
+// there is no in-between the design specified, so this is a straight width test
+// against the frame's own width rather than a breakpoint somebody invented.
+const CANON_DESKTOP_W = 1418;
+// desktopFits gates at 1000 CSS px and the card fit-scales below 1418: Mark's
+// zoomed Edge viewport sat under 1418 and got the phone column in a desktop
+// window (his screenshot, 2026-08-29 evening).
+const canonLibraryScreen = () =>
+  (desktopFits() && CANON_ON ? 'library-desktop' : 'library');
+
 function canonLibraryCtx() {
   const lvl = gameLevel(totalXp(state));
   const today = localDay(new Date());
@@ -461,16 +560,64 @@ function canonLibraryCtx() {
     resume: lastSong ? { songId: lastSong.id, title: lastSong.title, level: lastSong.level, at: last.at } : null,
   });
   const heroSong = rx.songId && SONGS.find((x) => x.id === rx.songId);
+
+  // THE TABS ARE TABS. Clicking Hall of fame used to toggle a collapse flag the
+  // canon renderer never read, so the table showed Learning forever and every
+  // tab click did nothing a person could see. Mark, 2026-08-29, second report:
+  // "Why can't I click on Hall of Fame or repertoire or explore... Nothing
+  // happens." The table now shows the ACTIVE tab's list, and the search box
+  // filters across every shelf, tagged with where each hit lives.
+  const q = libQuery.trim();
+  const fameGroups = HALL_OF_FAME.map((h2) => groups.get(h2.group)).filter(Boolean);
+  const sortMode2 = state.lib.exploreSort === 'diff' ? 'diff' : 'az';
+  const exploreSorted = sortMode2 === 'diff'
+    ? [...explore].sort((a2, b2) => difficultyScore(a2[0]) - difficultyScore(b2[0]))
+    : explore;
+  const LISTS = {
+    learning: { rows: learning, title: 'LEARNING, WEAKEST FIRST', word: 'Learning' },
+    repertoire: { rows: repertoire, title: 'REPERTOIRE', word: 'Repertoire' },
+    fame: { rows: fameGroups, title: 'HALL OF FAME', word: 'Hall of fame' },
+    explore: { rows: exploreSorted, title: sortMode2 === 'diff' ? 'EXPLORE, EASIEST FIRST' : 'EXPLORE, A TO Z', word: 'Explore' },
+  };
+  const activeTab = LISTS[state.lib.canonTab] ? state.lib.canonTab : 'learning';
+  // Search over EVERY variant of every group. filterExplore only reads
+  // variants[0], while the table displays the LAST variant's composer, so a
+  // search for words a person can literally see on screen ("rondo", the
+  // arranger credit) found nothing. Codex caught it in review.
+  const qLower = q.toLowerCase();
+  const searchHits = q ? [...groups.values()].filter((v) =>
+    v.some((x) => `${x.title} ${x.composer ?? ''}`.toLowerCase().includes(qLower))) : [];
+  const active = q
+    ? { rows: searchHits, title: 'SEARCH RESULTS', word: 'results' }
+    : LISTS[activeTab];
+  // The page size is the COMPOSITION'S OWN capacity: the 10a grid draws nine
+  // tiles before its show-more cell, the 756 ledger draws five rows. One
+  // hardcoded 5 starved the desktop grid; show-all/search then overflowed the
+  // fixed band and tiles sat ON TOP of the practice chart and the form check
+  // (Mark's screenshot, 2026-08-29). The binder contains the overflow too, but
+  // the default page should fill the frame it was drawn for.
+  const pageSize = canonLibraryScreen() === 'library-desktop' ? 9 : 5;
+  const shown = state.lib.canonShowAll || q ? active.rows : active.rows.slice(0, pageSize);
+
   return {
     level: { n: lvl.level, xp: lvl.into, next: lvl.next },
     streak: { current: r.current, best: r.best },
     counts: { learning: learning.length, repertoire: repertoire.length,
               fame: HALL_OF_FAME.length, explore: explore.length },
     prescription: heroSong
-      ? { title: heroSong.title, reason: rx.evidence ?? rx.reason, song: heroSong }
+      ? { title: heroSong.title, reason: rx.evidence ?? rx.reason, song: heroSong,
+          // the hero's state chip carries the recommended GROUP's real state
+          state: (() => { const v = groups.get(heroSong.group); return v ? canonRowOf(v).state : null; })() }
       : { title: rx.reason, reason: rx.evidence ?? '', song: null },
-    rows: learning.slice(0, 5).map(canonRowOf),
-    learningTotal: learning.length,
+    // WHICH FRAME. The design draws the library twice: a 756px column (5b) and a
+    // 1418x738 desktop composition (7a). They are different compositions, not
+    // one reflowing, so pick the widest that fits rather than stretch either.
+    screen: canonLibraryScreen(),
+    rows: shown.map(canonRowOf),
+    learningTotal: active.rows.length,
+    tableTitle: active.title,
+    tabWord: active.word,
+    activeTab: q ? 'search' : activeTab,   // 'search' matches no tab, so none styles as selected
 
     // the rail's live readouts
     carryOn: lastSong ? { title: 'Resume the session', sub: lastSong.title } : null,
@@ -480,6 +627,20 @@ function canonLibraryCtx() {
     keyboard: ($('midi-status')?.dataset.connected === 'true')
       ? { title: 'P-45 connected', sub: 'Real keys, real velocity.' }
       : { title: 'No keyboard', sub: 'Screen taps. Plug the P-45 in for the real thing.' },
+
+    // The freeze offer (CANON-GAPS Gap C): same humane rules as renderGameRow,
+    // offered never forced, and a decline holds for the day.
+    freeze: (() => {
+      if (state.freezeDeclined === today) return null;
+      const offer = freezeOffer(state, today);
+      return offer ? { wouldKeep: offer.wouldKeep, yesterday: offer.yesterday, freezes: state.freezeTokens ?? 0 } : null;
+    })(),
+    onFreezeYes: () => {
+      const offer = freezeOffer(state, today);
+      if (offer) { useFreeze(state, offer.yesterday); store.save(state); jlog('freeze_used', {}); }
+      renderLibrary();
+    },
+    onFreezeNo: () => { state.freezeDeclined = today; store.save(state); renderLibrary(); },
 
     // the quests and the weekly mission the canon absorbed
     quests: questsFor(state, today).map((q) => ({ id: q.id, label: q.label, xp: q.xp, done: !!q.done, why: q.why })),
@@ -515,7 +676,7 @@ function canonLibraryCtx() {
     path: { skill: rx.reason, stage: rx.evidence ?? '' },
 
     onRun: () => runPrescription(rx),
-    onShowMore: () => { state.lib.learning = true; store.save(state); renderLibrary(); },
+    onShowMore: () => { state.lib.canonShowAll = true; store.save(state); renderLibrary(); },
     onQuest: (q) => { chooseQuest(state, today, q.id); store.save(state); renderLibrary(); },
     onMission: (m) => { chooseWeekly(state, isoWeek(new Date()), m.id); settleGame(); renderLibrary(); },
     onPath: () => runPrescription(rx),
@@ -523,8 +684,39 @@ function canonLibraryCtx() {
     onFormSnooze: () => { const el = $('form-snooze'); if (el) el.click(); },
     onChooseAnother: () => { state.lib.explore = true; store.save(state); renderLibrary(); },
     onSearch: (q) => { libQuery = q; renderLibrary(); },
-    onTab: (sec) => { state.lib[sec] = !state.lib[sec]; store.save(state); renderLibrary(); },
+    onTab: (sec) => { state.lib.canonTab = sec; state.lib.canonShowAll = false; store.save(state); renderLibrary(); },
     onTool: (id) => { const el = $(id); if (el) el.click(); },
+    sortMode: state.lib.exploreSort === 'diff' ? 'diff' : 'az',
+    onSort: (mode) => { state.lib.exploreSort = mode; store.save(state); renderLibrary(); },
+
+    // Per-tool TRUTH for the drawer (sample-bleed audit: the drawn rows carried
+    // fake states - "9 recordings kept, 312MB", "Measured 42ms", "Two won" -
+    // wearing the user's clothes). Only lines the app can actually compute;
+    // a tool with a plain description keeps the design's own words.
+    toolStatus: (() => {
+      const takes = state.takes ?? [];
+      const tu = takes.length ? takeUsage([...takes]) : null;
+      const won = badges(state, SONGS).length;
+      const ladderDone = LADDER.filter((l2) => {
+        const p2 = songStats(l2.id).sectionsPassed ?? {};
+        return !!(p2['Going up'] && p2['Coming down']);
+      }).length;
+      const rl = state.rhythm?.level;
+      const el2 = state.echo?.level;
+      const out = {
+        'Rhythm tap': { line: rl ? `Tap the pattern, no pitch. Level ${rl}.` : 'Tap the pattern, no pitch.', done: !!state.rhythm?.totalCleans },
+        'Melody echo': { line: el2 ? `Hear a phrase, play it back. Level ${el2}.` : 'Hear a phrase, play it back.', done: (state.echo?.bestStreak ?? 0) > 0 },
+        '12 keys': { line: `Fluency ladder. ${ladderDone} of ${LADDER.length} cells passed.`, done: ladderDone > 0 },
+        'Metronome': { line: (() => { const sig = String($('met-sig')?.value ?? '4/4'); return `${$('met-bpm')?.value ?? 100} bpm, ${sig.includes('/') ? sig : sig + '/4'}.`; })(), done: false },
+        'Trophies': { line: won ? `${won} won. XP log kept alongside.` : 'Nothing won yet. XP log kept alongside.', done: won > 0 },
+        'Takes': { line: tu ? `${tu.count} recording${tu.count === 1 ? '' : 's'} kept, ${tu.mb} MB.` : 'No takes yet. Record from any song.', done: takes.length > 0 },
+        'Latency calibration': { line: state.calOffsetMs ? `Measured ${state.calOffsetMs}ms of output delay, applied to scoring.` : 'Not measured yet. Two minutes, once.', done: !!state.calibratedAt },
+        'Touch diagnostic': { line: state.touch?.date ? `Calibrated ${state.touch.date}.` : 'Not run yet. Teaches the app your touch.', done: !!state.touch?.date },
+        'Lessons': { done: Object.keys(state.lessons ?? {}).length > 0 },
+        'My path': { done: Object.keys(state.mastery ?? {}).length > 0 },
+      };
+      return out;
+    })(),
 
     // The seventeen tools, read out of the app's own rails so the counts and
     // the labels cannot drift from what actually exists. The canon has no
@@ -554,7 +746,11 @@ function renderLibrary() {
   // row, the recommendation, the quests, the form card, the practice chart and
   // the path teaser that the old screen kept as separate blocks. So it replaces
   // the whole render, rather than running underneath it.
-  if (CANON_ON) { renderCanonLibrary($('screen-library'), canonLibraryCtx()); return; }
+  if (CANON_ON) {
+    syncTopbar(active);
+    renderCanonLibrary($('screen-library'), canonLibraryCtx());
+    return;
+  }
   renderGameRow();
   renderNextAction();
   renderFormCard();
@@ -743,9 +939,9 @@ function renderSections() {
 function chunkBars() { return +$('chunk-size').value; }
 function syncChunkLabel() {
   const btn = $('chunk-label');
-  if (chunkIdx === null) { btn.textContent = '🧩 Chunks off'; return; }
+  if (chunkIdx === null) { btn.textContent = 'Chunks off'; return; }
   const c = chunkRange(song, chunkIdx, chunkBars());
-  btn.textContent = `🧩 Chunk ${c.idx + 1} / ${c.count}`;
+  btn.textContent = `Chunk ${c.idx + 1} / ${c.count}`;
 }
 
 function rebuildEngine() {
@@ -771,6 +967,9 @@ function rebuildEngine() {
   wrongByGroup = new Map();
   window.__engine = engine; // debug/test handle, same spirit as __simNote
   if (!falls) falls = new FallsView($('falls'));
+  window.__falls = falls;   // the wide play screen adopts this canvas and calls resize()
+  // the artboard's still picture of the deck must not sit over the live one
+  if (CANON_ON) hideRestingLayer($('falls'));
   falls.noteStyle = window.__keysNoteStyle;
   falls.cueLetters = state.showLetters !== false;
   // Wait mode freezes the clock, so EARLY/PERFECT/LATE cannot exist there, 
@@ -932,11 +1131,34 @@ function loopFrame(t) {
     <span>Combo <b>${combo > 0 ? 'x' + combo : '-'}</b></span>
     <span>Accuracy <b>${engine.accuracy()}%</b></span>
     <span class="h-wrong">Wrong <b>${s.wrong}</b></span>` + paceHtml() + pedalHtml());
+  // the wide play board's readout column mirrors the same numbers
+  window.__viewMode = viewMode;
+  // the deck takes the screen the moment the run is real: first scored note in,
+  // chrome out (Mark: "minimize it when we start playing"). Escape or the
+  // CONTROLS rail brings the column back; finishSong restores it.
+  if ((points > 0 || combo > 0 || s.wrong > 0) && document.querySelector('[data-immersed=""], [data-wide-play]')) {
+    const wp = $('screen-play');
+    if (wp?.dataset.widePlay === '1' && wp.firstElementChild?.dataset.immersed !== '1' && !wp.dataset.autoImmersed) {
+      wp.dataset.autoImmersed = '1';   // once per run; Escape must not fight the player
+      window.__deckImmersion?.(true);
+    }
+  }
+  syncWidePlay({
+    accuracy: engine.accuracy(),
+    combo: combo > 0 ? combo : 0,
+    timing: '\u2014',   // no honest per-frame timing source yet; a dash, never sample data
+    tier: (falls?.comboLevel ?? 0) + 1,
+    title: song?.title,
+    sub: song ? `${(song.level ?? 'easy')[0].toUpperCase()}${(song.level ?? 'easy').slice(1)} tier` : null,
+    bpm: song ? Math.round(song.bpm * (+$('tempo').value) / 100) + ' bpm' : null,
+  });
   if (engine.finished) { finishSong(); return; }
   scheduleFrame();
 }
 
 function finishSong() {
+  window.__deckImmersion?.(false);   // the run is over; give the controls back
+  { const wp = $('screen-play'); if (wp) delete wp.dataset.autoImmersed; }
   if (engine.__finishHandled) return; // pumped frames must not double-count
   engine.__finishHandled = true;
   if (takeRec) finishTake(); // a finished song closes and shelves its take
@@ -961,7 +1183,7 @@ function finishSong() {
   if (qualified) {
     const wasDue = state.playable?.[song.id]?.dueAt && state.playable[song.id].dueAt <= Date.now();
     const status = recordPlayableRun(state, song.id, { day: localDay(new Date()), now: Date.now() });
-    if (status === 'proven') { comboFlash('🏆 INDEPENDENTLY PLAYABLE'); awardXp('playable', song.id); earnFreeze(state); }
+    if (status === 'proven') { comboFlash('INDEPENDENTLY PLAYABLE'); awardXp('playable', song.id); earnFreeze(state); }
     else if (status === 'day-banked') comboFlash('DAY ONE BANKED: AGAIN ANOTHER DAY');
     else if (status === 'refreshed' && wasDue) awardXp('songReview', song.id + ':' + localDay(new Date()));
     jlog('playable_run', { id: song.id, status, acc });
@@ -1022,19 +1244,19 @@ function finishSong() {
     const vtext = voicingText(voi, song.timeSig[0]);
     if (vtext) analysis.push('⚖ Voicing: ' + vtext);
   } else {
-    analysis.push('⌨ Input: screen taps, touch, pedal and voicing analysis wait for the real piano.');
+    analysis.push('Input: screen taps, touch, pedal and voicing analysis wait for the real piano.');
   }
   // signed timing story (council 08-24): the lean, not just the error size
   const ts = timingSummary(engine.timing);
   if (ts) {
     const lean = Math.abs(ts.median) < 15 ? 'dead centre'
       : `${Math.abs(ts.median)}ms ${ts.median < 0 ? 'ahead' : 'behind'}`;
-    analysis.push(`⏱ Timing: ${lean}, consistency ±${ts.spread}ms over ${ts.count} notes` +
+    analysis.push(`Timing: ${lean}, consistency ±${ts.spread}ms over ${ts.count} notes` +
       (state.calibratedAt ? '' : ' · run Latency calibration for honest verdicts'));
   }
   if (!ts && engine.responses.length) {
     const rs = timingSummary(engine.responses);
-    analysis.push(`⚡ Response: median ${rs.median}ms after each note arrives (wait mode)`);
+    analysis.push(`Response: median ${rs.median}ms after each note arrives (wait mode)`);
   }
   $('results-analysis').innerHTML = analysis.map((t) => `<li>${t}</li>`).join('');
   $('results-analysis').hidden = analysis.length === 0;
@@ -1043,7 +1265,7 @@ function finishSong() {
   // performance report: continuity is the story, not cleanliness
   if (perf) {
     const r = perf.tracker.result();
-    $('results-title').textContent = `🎭 ${r.rating}`;
+    $('results-title').textContent = `${r.rating}`;
     $('results-stats').innerHTML = `
       <span><b>${r.longestRun}</b>longest run</span>
       <span><b>${r.stumbles}</b>stumbles</span>
@@ -1066,7 +1288,7 @@ function finishSong() {
   if (worst) {
     const card = matchCard(worst.midis);
     tBtn.hidden = false;
-    tBtn.textContent = `🎓 ${card.title}`;
+    tBtn.textContent = `${card.title}`;
     tBtn.onclick = () => openTheoryCard(card);
   } else tBtn.hidden = true;
   $('results').hidden = false;
@@ -1152,12 +1374,50 @@ function renderLessonList() {
     let open = true;
     const rows = LESSONS.map((les, i) => {
       const isDone = !!done[les.id];
-      const row = { title: les.title, state: isDone ? 'Complete' : open ? 'Ready' : 'Locked',
+      // a finished lesson is a PLAYABLE thing, and the row must say so;
+      // rewards ride along in shape plus word (Codex: they were canon-invisible)
+      const row = { title: les.title, state: isDone ? 'Complete · Replay' : open ? 'Ready' : 'Locked',
+                    badge: !!state.lessonBadges?.[les.id], star: !!state.lessonStars?.[les.id],
                     locked: !open && !isDone, onOpen: open ? () => openLesson(les) : null };
       if (!isDone) open = false;
       return row;
     });
-    if (bindLessonList(rows)) return;
+    const bound = bindLessonList(rows);
+    // The redrawn 11a carries a CONTINUE HERE hero above the list: bind it to
+    // the next Ready lesson (number, title, its own capability line as the
+    // child-plain promise) and wire the one filled-green button. No Ready
+    // lesson (course finished) stands the hero down.
+    {
+      const rootEl = $('screen-lessons')?.firstElementChild;
+      const kick = rootEl && [...rootEl.querySelectorAll('*')]
+        .find((e) => !e.children.length && e.textContent.trim() === 'CONTINUE HERE');
+      const hero = kick?.closest('div[style*="border"]') ?? kick?.parentElement?.parentElement;
+      if (hero) {
+        const next = LESSONS.find((les) => !done[les.id]);
+        if (!next) { hero.style.display = 'none'; }
+        else {
+          const leaves = [...hero.querySelectorAll('*')].filter((e) => !e.children.length && e.textContent.trim());
+          // the hero's big NUMERAL is Fraunces too and sits first in the DOM;
+          // picking "first Fraunces leaf" as the title wrote the title into
+          // the number slot and it wrapped down the screen edge. Resolve the
+          // numeral first and exclude it.
+          const num = leaves.find((e) => /^\d+$/.test(e.textContent.trim()));
+          const title = leaves.find((e) => e !== num && /Fraunces/.test(e.getAttribute('style') ?? ''));
+          const btnLeaf = leaves.find((e) => e.textContent.trim() === 'Continue here');
+          const promise = leaves.find((e) => e !== kick && e !== num && e !== title && e !== btnLeaf);
+          if (num) num.textContent = String(LESSONS.indexOf(next) + 1);
+          if (title) title.textContent = next.title;
+          if (promise) promise.textContent = next.game?.capability ?? next.steps?.[0] ?? '';
+          const btn = btnLeaf?.closest('button') ?? btnLeaf?.parentElement;
+          if (btn && !btn.dataset.heroWired) {
+            btn.dataset.heroWired = '1';
+            btn.style.cursor = 'pointer';
+            btn.addEventListener('click', () => { const n2 = LESSONS.find((les) => !lessonsDone()[les.id]); if (n2) openLesson(n2); });
+          }
+        }
+      }
+    }
+    if (bound) return;
   }
   list.innerHTML = '';
   // numbered curriculum spine (10th council): sequential states as shape+word
@@ -1168,7 +1428,7 @@ function renderLessonList() {
     card.className = 'lesson-card' + (isDone ? ' done' : '') + (unlocked ? '' : ' locked');
     card.disabled = !unlocked;
     const star = state.lessonStars?.[les.id] ? '<span class="spine-star" title="retention star: nailed in a later review">★</span>' : '';
-    const badge = state.lessonBadges?.[les.id] ? '<span class="spine-badge" title="clean run: zero misses">🏅</span>' : '';
+    const badge = state.lessonBadges?.[les.id] ? '<span class="spine-badge" title="clean run: zero misses">★</span>' : '';
     const stateChip = isDone ? '<span class="spine-state done"><i>✓</i>Complete</span>'
       : unlocked ? '<span class="spine-state ready"><i>▶</i>Ready</span>'
       : '<span class="spine-state locked"><i>○</i>Locked</span>';
@@ -1284,7 +1544,7 @@ function openLesson(les) {
   $('lesson-title').textContent = les.title;
   $('lesson-body').textContent = '';
   $('lesson-steps').innerHTML = les.steps.map((s) => `<li>${s}</li>`).join('');
-  $('lesson-video').innerHTML = `🎥 Still confused? <a href="${les.video.url}" target="_blank" rel="noopener">Watch: ${les.video.title}</a> (free, opens YouTube)`;
+  $('lesson-video').innerHTML = `Still confused? <a href="${les.video.url}" target="_blank" rel="noopener">Watch: ${les.video.title}</a> (free, opens YouTube)`;
   $('lesson-nomidi').hidden = $('midi-status').dataset.connected === 'true';
   $('lesson-rhythm-link').hidden = les.drill.type !== 'rhythm-gate';
   $('lesson-phase').textContent = '';
@@ -1292,6 +1552,8 @@ function openLesson(les) {
   lessonScore = null;
   // the tappable, labelled keyboard is part of every lesson
   if (!lessonView) lessonView = new FallsView($('lesson-keys'));
+  // the artboard's still picture of the deck must not sit over the live one
+  if (CANON_ON) hideRestingLayer($('lesson-keys'));
   lessonView.kbLetters = true;
   lessonView.targets = new Set();
   lessonView.pressed.clear();
@@ -1308,9 +1570,16 @@ function openLesson(les) {
   if (les.drill.type === 'rhythm-gate') {
     $('lesson-start').hidden = true;
     const cleans = (state.rhythm?.totalCleans ?? 0);
-    if (cleans > 0) { completeLesson(); }
+    // ☠️ Codex lessons round: REOPENING this lesson used to re-fire the whole
+    // completion (celebration, timestamp overwrite, auto-exit) with nothing
+    // played. Opening a lesson may never complete it; only a FIRST clean
+    // round may.
+    if (lessonsDone()[les.id]) {
+      setTextKeeping($('lesson-msg'), 'Already complete. Any clean Rhythm tap round keeps it fresh.');
+      $('lesson-progress').textContent = '';
+    } else if (cleans > 0) { completeLesson(); }
     else {
-      $('lesson-msg').textContent = 'One clean Rhythm tap round finishes this lesson.';
+      setTextKeeping($('lesson-msg'), 'One clean Rhythm tap round finishes this lesson.');
       $('lesson-progress').textContent = '';
     }
     return;
@@ -1322,7 +1591,7 @@ function openLesson(les) {
     showLessonPrompt(demo.map((m) => ({ m, h: les.ex?.h ?? (m < 60 ? 'L' : 'R') })));
     lessonView.targets = new Set(demo);
     playPreview(demo.map((m) => ({ b: 0, d: 2, m, h: 'R' })), 600, null, null);
-    $('lesson-msg').textContent = `This is ${demo.map((m) => noteName(m)).join(' + ')}: on the stave above, lit on the keyboard below. When it makes sense, start the drill.`;
+    setTextKeeping($('lesson-msg'), `This is ${demo.map((m) => noteName(m)).join(' + ')}: on the stave above, lit on the keyboard below. When it makes sense, start the drill.`);
   }
   $('lesson-progress').textContent = '';
   $('lesson-start').hidden = false;
@@ -1345,10 +1614,17 @@ function enterLevel() {
   const how = Array.isArray(it) ? 'Play the notes shown TOGETHER.'
     : it?.ms ? 'Play the phrase in order.'
     : 'Read the note, play it.';
-  $('lesson-msg').textContent = lv.melody
-    ? '🎵 The payoff: play the melody you just learned. Each next key lights up.'
+  // ELI5 first-contact line (Codex): the slot ledger is five shapes and a
+  // count with no explanation anywhere a touch user can reach. Say it ONCE,
+  // on the very first level a brand-new learner ever runs.
+  const firstEver = !Object.keys(lessonsDone()).length && !state.railExplained;
+  if (firstEver) { state.railExplained = true; store.save(state); }
+  setTextKeeping($('lesson-msg'), lv.melody
+    ? 'The payoff: play the melody you just learned. Each next key lights up.'
     : lv.mixed ? `Mix round, names off. ${how}`
-    : `${lv.name}. ${how}`;
+    : firstEver
+      ? `${lv.name}. ${how} Get 4 first tries to pass the level. A diamond means you fixed one after a miss.`
+      : `${lv.name}. ${how}`);
   showCurrentPrompt();
   updateLessonHud();
 }
@@ -1378,19 +1654,35 @@ $('lesson-kb-toggle').addEventListener('click', () => {
 $('lesson-keys').addEventListener('pointerdown', (e) => {
   if (!lessonView) return;
   const r = e.currentTarget.getBoundingClientRect();
-  const m = lessonView.pickKeyAt(e.clientX - r.left, e.clientY - r.top, 4, lessonView.h - 4);
+  // normalise by the element's rendered scale: under the desktop-fit zoom the
+  // rect is scaled while the key layout is in layout px, and unscaled taps
+  // land one key to the side
+  const sc = e.currentTarget.clientWidth / r.width;
+  const m = lessonView.pickKeyAt((e.clientX - r.left) * sc, (e.clientY - r.top) * sc, 4, lessonView.h - 4);
   if (m != null) lessonNote(m, true, 'tap');
 });
 
 function completeLesson() {
   const clean = !!lessonRunner && lessonRunner.misses === 0;
-  lessonsDone()[lessonDef.id] = Date.now(); // timestamp feeds review recency
+  // Codex lessons round: a REPLAY may not rewrite history or lie about
+  // unlocking. completedAt is written once; replays record their own time.
+  const done = lessonsDone();
+  const wasComplete = !!done[lessonDef.id];
+  if (!wasComplete) done[lessonDef.id] = Date.now(); // feeds review recency
+  else (state.lessonReplays ??= {})[lessonDef.id] = Date.now();
   if (clean) (state.lessonBadges ??= {})[lessonDef.id] = true; // clean run, not a star
+  // reading lessons join the ONE value currency, first completion only; the
+  // dedupe key makes a replay award impossible
+  if (!wasComplete) awardXp('lessonCleared', 'reading:' + lessonDef.id);
   store.save(state);
   markPracticedToday();
   const cap = lessonDef.game?.capability ?? '';
-  $('lesson-msg').textContent = `✓ Lesson complete.${clean ? ' 🏅 Clean run!' : ''} ${cap} Next one unlocked.`;
-  comboFlash(clean ? 'CLEAN RUN 🏅' : 'LESSON ✓');
+  const isLast = LESSONS[LESSONS.length - 1]?.id === lessonDef.id;
+  setTextKeeping($('lesson-msg'), wasComplete
+    ? `✓ Replay complete.${clean ? ' ★ Clean run!' : ''} ${cap}`
+    : isLast ? `✓ Reading course complete.${clean ? ' ★ Clean run!' : ''} ${cap}`
+    : `✓ Lesson complete.${clean ? ' ★ Clean run!' : ''} ${cap} Next one unlocked.`);
+  comboFlash(clean ? 'CLEAN RUN ★' : wasComplete ? 'REPLAY ✓' : 'LESSON ✓');
   // flourish: the app plays back the melody he just earned, on the grand
   const mel = lessonDef.game?.melody;
   if (mel) {
@@ -1432,16 +1724,16 @@ function lessonNote(m, isDown, mode = 'midi') {
     const exp = lessonRunner.expected();
     lessonView.targets = new Set(exp);
     const expNames = exp.map(noteName).join(' + ');
-    $('lesson-msg').textContent = (item?.ms
+    setTextKeeping($('lesson-msg'), (item?.ms
       ? `You pressed ${noteName(m)}. The phrase restarts on ${expNames}, lit below.`
-      : `You pressed ${noteName(m)}. The note asked is ${expNames}, lit below.`) + whichKeyHint(m, exp);
+      : `You pressed ${noteName(m)}. The note asked is ${expNames}, lit below.`) + whichKeyHint(m, exp));
     updateLessonHud();
     return;
   }
 
   // correct input
   if (res.part) { // mid-phrase progress
-    $('lesson-msg').textContent = `${lessonRunner.seqIdx} / ${item.ms.length}…`;
+    setTextKeeping($('lesson-msg'), `${lessonRunner.seqIdx} / ${item.ms.length}…`);
     if (lv.melody) lessonView.targets = new Set(lessonRunner.expected());
     return;
   }
@@ -1464,13 +1756,13 @@ function lessonNote(m, isDown, mode = 'midi') {
   }
   if (res.levelFailed) {
     comboFlash('RUN IT BACK');
-    $('lesson-msg').textContent = 'So close. Same level, fresh run, nothing lost.';
+    setTextKeeping($('lesson-msg'), 'So close. Same level, fresh run, nothing lost.');
     showCurrentPrompt();
     updateLessonHud();
     return;
   }
   if (lv.melody) lessonView.targets = new Set(lessonRunner.expected());
-  $('lesson-msg').textContent = res.firstAttempt ? '✓ First try.' : '✓ Got there.';
+  setTextKeeping($('lesson-msg'), res.firstAttempt ? '✓ First try.' : '✓ Got there.');
   showCurrentPrompt();
   updateLessonHud();
 }
@@ -1496,15 +1788,15 @@ function showReviewItem() {
   if (item.type === 'staff') {
     reviewDrill = new StaffDrill([{ m: item.m, h: item.h }], 1);
     showLessonPrompt([{ m: item.m, h: item.h }]);
-    $('lesson-msg').textContent = 'Read it, play it.';
+    setTextKeeping($('lesson-msg'), 'Read it, play it.');
   } else if (item.type === 'chord') {
     reviewDrill = new TogetherDrill([item.midis], 1);
     showLessonPrompt(item.midis.map((m) => ({ m, h: m < 60 ? 'L' : 'R' })));
-    $('lesson-msg').textContent = 'Play all the notes together.';
+    setTextKeeping($('lesson-msg'), 'Play all the notes together.');
   } else {
     reviewDrill = new PhraseDrill([item.phrase], 1);
     showLessonPrompt(item.phrase.ms.map((m, i) => ({ m, h: item.phrase.h, b: i })));
-    $('lesson-msg').textContent = 'Read the phrase, play it in order.';
+    setTextKeeping($('lesson-msg'), 'Read the phrase, play it in order.');
   }
 }
 
@@ -1515,7 +1807,7 @@ function startReview() {
   reviewIdx = 0; reviewFirstTry = 0; reviewTotal = reviewItems.length;
   reviewLessonClean = {}; // lessonId -> stayed first-try this review (retention ★)
   reviewMode = true;
-  lessonDef = { id: 'review', title: '🔁 Quick review', body: 'Six things you have already learned, mixed together and weighted toward what you have missed before. First try is what counts.', drill: { type: 'review' } };
+  lessonDef = { id: 'review', title: 'Quick review', body: 'Six things you have already learned, mixed together and weighted toward what you have missed before. First try is what counts.', drill: { type: 'review' } };
   show('lesson');
   $('now-playing').textContent = 'Review';
   $('lesson-title').textContent = lessonDef.title;
@@ -1531,6 +1823,8 @@ function startReview() {
   // review keeps the tappable keyboard, labels on (review measures memory of
   // the STAVE, and the ledger already weights what it needs to)
   if (!lessonView) lessonView = new FallsView($('lesson-keys'));
+  // the artboard's still picture of the deck must not sit over the live one
+  if (CANON_ON) hideRestingLayer($('lesson-keys'));
   lessonView.kbLetters = true;
   lessonView.targets = new Set();
   const revMs = reviewItems.flatMap((it) => it.type === 'staff' ? [it.m] : it.type === 'chord' ? it.midis : it.phrase.ms);
@@ -1560,8 +1854,8 @@ function finishReview() {
   }
   if (starred.length) store.save(state);
   comboFlash(starred.length ? `RETENTION ★ ×${starred.length}` : `REVIEW ${reviewFirstTry}/${reviewTotal} FIRST TRY`);
-  $('lesson-msg').textContent = `Done: ${reviewFirstTry} of ${reviewTotal} on the first try.` +
-    (starred.length ? ` ★ Retention star${starred.length > 1 ? 's' : ''} earned, see the lesson list.` : ' Misses come back next review, weighted.');
+  setTextKeeping($('lesson-msg'), `Done: ${reviewFirstTry} of ${reviewTotal} on the first try.` +
+    (starred.length ? ` ★ Retention star${starred.length > 1 ? 's' : ''} earned, see the lesson list.` : ' Misses come back next review, weighted.'));
   setTimeout(() => { if (active === 'lesson') { show('lessons'); renderLessonList(); } }, 2200);
 }
 
@@ -1574,7 +1868,7 @@ function reviewNote(m, isDown) {
   if (res.firstAttempt) { recordItem(item.key, true); reviewFirstTry++; }
   if (res.firstMiss) { recordItem(item.key, false); reviewLessonClean[item.lessonId] = false; }
   if (res.firstAttempt && !(item.lessonId in reviewLessonClean)) reviewLessonClean[item.lessonId] = true;
-  if (res.ok === false) $('lesson-msg').textContent = 'Not that one.';
+  if (res.ok === false) setTextKeeping($('lesson-msg'), 'Not that one.');
   if (res.done) {
     reviewIdx++;
     if (reviewIdx >= reviewItems.length) { reviewDrill = null; finishReview(); }
@@ -1675,7 +1969,7 @@ function rhythmNote() {
 
 // ---------- section trainer ----------
 function syncTrainButton() {
-  $('btn-train').textContent = trainer ? `🎯 Training at ${trainer.tempoPct}% (${trainer.passes}/2)` : '🎯 Train section';
+  $('btn-train').textContent = trainer ? `Training at ${trainer.tempoPct}% (${trainer.passes}/2)` : 'Train section';
   $('btn-train').classList.toggle('training', !!trainer);
 }
 
@@ -1727,7 +2021,7 @@ function onLap(ev) {
       ev.accuracy >= PROOF_PASS.minAcc && ev.wrong <= PROOF_PASS.maxWrong) {
     (state.pathProofs ??= {})[pp.lessonId] = { songId: pp.songId, section: pp.section, at: Date.now(), acc: ev.accuracy };
     delete state.pathPending;
-    comboFlash('🎵 PROOF BANKED');
+    comboFlash('PROOF BANKED');
     jlog('path_proof', { lesson: pp.lessonId, song: pp.songId, acc: ev.accuracy });
     dayStat('proofsBanked');
     awardXp('proof', pp.lessonId);
@@ -1841,9 +2135,20 @@ const PERF_LOCKED = ['btn-restart', 'btn-train', 'btn-mem', 'btn-hear', 'wait-mo
 function perfControls(locked) {
   for (const id of PERF_LOCKED) $(id).disabled = locked;
   for (const b of document.querySelectorAll('.hand-btn')) b.disabled = locked;
-  $('perf-banner').hidden = !locked;
+  // ☠️ trap 8: the canon banner carries an inline display, which BEATS the
+  // hidden attribute, so the design's sample "Performance mode" line sat on
+  // every play screen. Toggle the captured inline display instead.
+  { const pb = $('perf-banner');
+    if (pb) {
+      if (pb.dataset.designDisplay === undefined) pb.dataset.designDisplay = pb.style.display;
+      pb.hidden = !locked;
+      pb.style.display = locked ? pb.dataset.designDisplay : 'none';
+    } }
   $('btn-perf').classList.toggle('training', locked);
 }
+// stand the banner down at boot: before the first performance run nothing
+// else touches it, and the canon ships it visible with sample text
+perfControls(false);
 function perfEnd() {
   if (!perf) return;
   perf = null;
@@ -1894,11 +2199,11 @@ function applyMemCues() {
 
 function syncMemButton() {
   const btn = $('btn-mem');
-  if (!memo) { btn.textContent = '🧠 Memorize'; btn.classList.remove('training'); return; }
+  if (!memo) { btn.textContent = 'Memorize'; btn.classList.remove('training'); return; }
   const st = MEM_STAGES[memo.rec.stage];
   btn.textContent = st.key === 'recall'
-    ? `🧠 5/5 from bar ${memo.recallBar} (${memo.rec.passes}/2)`
-    : `🧠 ${memo.rec.stage + 1}/5 ${st.label} (${memo.rec.passes}/2)`;
+    ? `5/5 from bar ${memo.recallBar} (${memo.rec.passes}/2)`
+    : `${memo.rec.stage + 1}/5 ${st.label} (${memo.rec.passes}/2)`;
   btn.classList.add('training');
 }
 
@@ -2074,10 +2379,45 @@ $('btn-home').addEventListener('click', () => { show('library'); renderLibrary()
 
 // ---------- free play ----------
 let fpView = null;
+let fpPlayed = false;   // first-note latch for the free-play affordance
+// FREE PLAY FILLS THE WINDOW, like the immersed deck (Mark: why is free play
+// still really small, I want it to look like the deck). The 11h board is the
+// 1418x738 REFERENCE composition; the live stage is ELASTIC: the card
+// stretches to the real window and the keyboard takes everything under the
+// header. Recorded deviation in CANON-GAPS.md.
+function sizeFreeplayStage() {
+  if (!CANON_ON) return;
+  const card = $('screen-freeplay')?.firstElementChild;
+  if (!card || !card.contains($('freeplay-canvas'))) return;
+  const z = parseFloat(card.style.zoom || '1') || 1;
+  card.style.width = Math.round(window.innerWidth / z) + 'px';
+  card.style.height = Math.round(window.innerHeight / z) + 'px';
+  // the board nests a fixed 1418x738 frame inside the card; stretch it too
+  const frame = card.querySelector('div[style*="width:1418px"]');
+  if (frame) { frame.style.width = '100%'; frame.style.height = '100%'; }
+}
 $('btn-freeplay').addEventListener('click', () => {
   show('freeplay');
   $('now-playing').textContent = 'Free play';
+  sizeFreeplayStage();
   if (!fpView) fpView = new FallsView($('freeplay-canvas'));
+  // the artboard's still picture of the deck must not sit over the live one
+  if (CANON_ON) hideRestingLayer($('freeplay-canvas'));
+  // The design's WHAT YOU PLAYED line ships SAMPLE chords, which read as the
+  // user's own playing. Keep the kicker, clear the samples, and give the app
+  // a value slot styled by the design's own sample span.
+  {
+    const log = $('freeplay-log');
+    if (CANON_ON && log && !document.getElementById('freeplay-log-val')) {
+      const kids = [...log.children];
+      const kicker = kids.find((c) => /WHAT YOU PLAYED/.test(c.textContent));
+      // REUSE a designed sample span as the value slot rather than creating
+      // one: the runtime gate rightly flags app-made elements in the canon
+      const val = kids.find((c) => c !== kicker && c.tagName === 'SPAN');
+      for (const c of kids) if (c !== kicker && c !== val) c.remove();
+      if (val) { val.id = 'freeplay-log-val'; val.textContent = ''; }
+    }
+  }
   fpView.resize();
   drawFreeplay();
 });
@@ -2089,6 +2429,16 @@ function drawFreeplay() {
   ctx.fillRect(0, 0, c.w, c.h);
   c.kbH = c.h - 4;
   c._drawKeyboard(4);
+  // First-use affordance (Codex opinion round, #11): before the first note the
+  // full-width keyboard risks reading as frozen. One quiet line, gone forever
+  // after the first key. Uses the deck's own muted ink.
+  if (!fpPlayed) {
+    ctx.fillStyle = COLORS.passive;
+    ctx.font = '400 14px ui-monospace, Menlo, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('Play anything. Every note and chord you play is named, top right.', c.w / 2, Math.max(28, (c.h - c.kbH) / 2 + 18));
+    ctx.textAlign = 'left';
+  }
   requestAnimationFrame(drawFreeplay);
 }
 
@@ -2104,10 +2454,10 @@ function calVerdict(ms) {
 // samples or the synth fallback, and taps toggle a forced A/B comparison.
 function voiceLabel() {
   const v = voiceInfo();
-  if (v.mode === 'synth') return '🔊 Voice: Synth (A/B test)';
+  if (v.mode === 'synth') return 'Voice: Synth (A/B test)';
   const status = v.loaded === 0 ? 'loading on first play' : `${v.loaded}/${v.total} loaded`;
   const fb = v.lastVoice === 'synth' && v.loaded < v.total ? ' ⚠ FALLBACK ACTIVE' : '';
-  return `🔊 Voice: Grand piano (${status})${fb}`;
+  return `Voice: Grand piano (${status})${fb}`;
 }
 function refreshVoiceBtn() { $('btn-voice').textContent = voiceLabel(); }
 setVoiceMode(localStorage.getItem('keys-voice') || 'auto');
@@ -2125,9 +2475,17 @@ $('btn-calibrate').addEventListener('click', () => {
   $('now-playing').textContent = 'Latency calibration';
   const cur = state.calOffsetMs || 0;
   setRichText($('cal-status'), `Currently stored: <b>${cur}ms</b> (${calVerdict(cur)}). Tap any key each time the bar lands to redo.`);
+  // the board's meter face carries a drawn readout chip stuck at its sample
+  // 42ms; with a different stored offset that is a lie in numerals
+  // (sample-bleed audit). Bind every ms readout on the face to the truth.
+  if (CANON_ON) {
+    for (const leaf of document.querySelectorAll('#screen-calibrate *')) {
+      if (!leaf.children.length && /^\d+ms$/.test(leaf.textContent.trim())) leaf.textContent = `${cur}ms`;
+    }
+  }
   runCalibration();
 });
-$('cal-redo').addEventListener('click', () => { runCalibration(); $('cal-status').textContent = 'Fresh run: press any key when the bar hits the line…'; });
+$('cal-redo').addEventListener('click', () => { runCalibration(); setTextKeeping($('cal-status'), 'Fresh run: press any key when the bar hits the line…'); });
 $('cal-reset').addEventListener('click', () => {
   state.calOffsetMs = 0;
   store.save(state);
@@ -2185,9 +2543,9 @@ function touchPrompt() {
 }
 function startTouchDiag() {
   touchDiag = new TouchDiagnostic();
-  $('touch-status').textContent = state.touch?.date
+  setTextKeeping($('touch-status'), state.touch?.date
     ? `Current calibration recorded ${state.touch.date}. Play the asked key at the asked strength to re-record.`
-    : 'Play the asked key at the asked strength. Three strikes each.';
+    : 'Play the asked key at the asked strength. Three strikes each.');
   $('touch-done').hidden = true;
   touchPrompt();
 }
@@ -2203,10 +2561,10 @@ function touchNote(m, vel) {
   const want = touchDiag.current().key;
   const res = touchDiag.strike(m, vel);
   if (!res.accepted) {
-    $('touch-status').textContent = `That was ${noteName(m)}, but this step wants ${noteName(want)}.`;
+    setTextKeeping($('touch-status'), `That was ${noteName(m)}, but this step wants ${noteName(want)}.`);
     return;
   }
-  $('touch-status').textContent = `✓ velocity ${vel}`;
+  setTextKeeping($('touch-status'), `✓ velocity ${vel}`);
   if (!res.done) { touchPrompt(); return; }
   const { cal, problems } = buildCalibration(touchDiag.samples, localDay(new Date()));
   touchDiag = null;
@@ -2214,7 +2572,7 @@ function touchNote(m, vel) {
     $('touch-dyn').textContent = 'REDO';
     $('touch-key').textContent = '';
     $('touch-progress').textContent = '';
-    $('touch-status').textContent = `The ${problems.map((z) => ZONES[z].name).join(' and ')} zone${problems.length === 1 ? ' did' : 's did'} not separate soft < medium < strong. Exaggerate the difference and restart.`;
+    setTextKeeping($('touch-status'), `The ${problems.map((z) => ZONES[z].name).join(' and ')} zone${problems.length === 1 ? ' did' : 's did'} not separate soft < medium < strong. Exaggerate the difference and restart.`);
     return;
   }
   state.touch = cal; // schema-versioned {v, date, zones}: the dynamics baseline
@@ -2223,7 +2581,7 @@ function touchNote(m, vel) {
   $('touch-dyn').textContent = 'DONE';
   $('touch-key').textContent = '✓';
   $('touch-progress').textContent = '';
-  $('touch-status').textContent = `Calibration saved (${cal.date}). Voicing feedback is live from your next song. Redo this if the piano or your touch drifts.`;
+  setTextKeeping($('touch-status'), `Calibration saved (${cal.date}). Voicing feedback is live from your next song. Redo this if the piano or your touch drifts.`);
   $('touch-done').hidden = false;
 }
 
@@ -2291,7 +2649,7 @@ async function finishTake() {
   const tr = takeRec;
   takeRec = null;
   const btn = $('btn-take');
-  if (btn) { btn.textContent = '⏺ Record take'; btn.classList.remove('training'); }
+  if (btn) { btn.textContent = 'Record take'; btn.classList.remove('training'); }
   if (!tr) return;
   if (tr.rec && tr.rec.state !== 'inactive') {
     await new Promise((res) => { tr.rec.onstop = res; tr.rec.stop(); });
@@ -2330,6 +2688,8 @@ $('btn-takes').addEventListener('click', () => {
   show('takes');
   $('now-playing').textContent = 'Takes';
   if (!takesView) takesView = new FallsView($('takes-canvas'));
+  // the artboard's still picture of the deck must not sit over the live one
+  if (CANON_ON) hideRestingLayer($('takes-canvas'));
   takesView.resize();
   drawTakes();
   renderTakes();
@@ -2348,7 +2708,7 @@ function renderTakes() {
   const u = takeUsage(takes);
   $('takes-usage').textContent = takes.length
     ? `${u.count} of 20 shelf slots · ${u.mb} MB of audio`
-    : 'No takes yet. Hit ⏺ Record take on any song.';
+    : 'No takes yet. Hit Record take on any song.';
   const list = $('takes-list');
   list.innerHTML = '';
   for (const t of takes) {
@@ -2402,6 +2762,8 @@ $('btn-improv').addEventListener('click', () => {
   improvOn = false;
   $('improv-go').textContent = '▶ Start backing';
   if (!improvView) improvView = new FallsView($('improv-canvas'));
+  // the artboard's still picture of the deck must not sit over the live one
+  if (CANON_ON) hideRestingLayer($('improv-canvas'));
   improvView.resize();
   drawImprov();
 });
@@ -2733,6 +3095,8 @@ $('btn-echo').addEventListener('click', () => {
   show('echo');
   $('now-playing').textContent = 'Melody echo';
   if (!echoView) echoView = new FallsView($('echo-canvas'));
+  // the artboard's still picture of the deck must not sit over the live one
+  if (CANON_ON) hideRestingLayer($('echo-canvas'));
   echoView.resize();
   // full session reset: stale rounds must not leak across exits (audit #10)
   echoStreak = 0; echoClean = 0;
@@ -2888,7 +3252,8 @@ midi.onNote = (m, vel, down) => {
   } else if (active === 'freeplay' && fpView) {
     if (down) {
       fpView.keyDown(m);
-      const log = $('freeplay-log');
+      fpPlayed = true;
+      const log = $('freeplay-log-val') ?? $('freeplay-log');
       log.innerHTML = `${noteName(m)} <span class="vel">vel ${vel}</span> ` + log.innerHTML.slice(0, 400);
     } else fpView.keyUp(m);
   } else if (active === 'echo') {
@@ -2930,4 +3295,35 @@ syncSoundBtn();
 maybeFirstRun();
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   navigator.serviceWorker.register('sw.js');
+}
+
+// Crossing the desktop frame's width swaps the whole composition, so the
+// library has to re-render. Debounced, because a drag across the boundary fires
+// resize continuously and each render remounts the canon.
+{
+  let composed = canonLibraryScreen();
+  const bootDesktop = desktopFits();
+  let t = 0;
+  window.addEventListener('resize', () => {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      const next = canonLibraryScreen();
+      if (next !== composed) {
+        composed = next;
+        if (active === 'library') renderLibrary();
+      }
+      // the utility boards were composed at boot; crossing the desktop
+      // threshold mid-session re-boots the shell ONCE, only while idling on
+      // the library, so every screen re-mounts in the right composition
+      if (CANON_ON && desktopFits() !== bootDesktop && active === 'library') {
+        location.reload();
+        return;
+      }
+      // otherwise keep the active card fit-scaled, and the free-play stage
+      // elastic
+      const card = $('screen-' + active)?.firstElementChild;
+      if (CANON_ON && card && card.clientWidth >= 1400) applyCanonZoom(card);
+      if (active === 'freeplay') { sizeFreeplayStage(); fpView?.resize(); }
+    }, 150);
+  });
 }

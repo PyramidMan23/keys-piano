@@ -13,7 +13,10 @@
      font: the renderer applies the canon's inherited typography itself, and a
      font here would mask the day that stops working. */
   html, body { margin: 0; background: #000; }
-  #host { width: 756px; }
+  /* The card declares its own width (756px for the phone-ish frames, 1418px
+     for the desktop ones), so the harness must not impose one. Pinning this
+     at 756 squeezed the 1418px desktop boards and the gate blamed the port. */
+  #host { width: max-content; }
 </style>
 </head>
 <body>
@@ -46,7 +49,27 @@ const LIBRARY_ROWS = [
   { song: byId('scale-c-major'),  title: 'C Major Scale',           sub: 'Technique drill, one octave, both hands, 70 bpm',  plays: '3',  diff: '3.8',     state: 'Needs work', tiers: [1] },
 ];
 
-if (screen === 'library') {
+// The desktop frame samples a DIFFERENT five songs than the 756 column does
+// (Happy Birthday in place of River Flows in You), with its own play counts and
+// its own tier pips. Seeding 5b's data into 7a would make every row a false
+// diff, so each composition gets the data its own artboard draws.
+const DESKTOP_ROWS = [
+  // 10a's OWN nine sample tiles (2026-08-29), read off the board by script:
+  // state word, E/M/H pip fills and plays count exactly as drawn. Titles are
+  // the board's own samples ("Super Mario", "In A Gadda Da Vida"), because the
+  // overlay compares pixels, not our catalogue.
+  { song: byId('fur-elise'),      title: 'Für Elise',          plays: '79', state: 'Banked',      tiers: [3, 3, 3] },
+  { song: byId('still-dre-easy'), title: 'Still D.R.E.',       plays: '39', state: 'Banked',      tiers: [3, 2, 0] },
+  { song: byId('mario-easy'),     title: 'Super Mario',        plays: '5',  state: 'Needs work',  tiers: [1, 0, 0] },
+  { song: byId('river'),          title: 'River Flows in You', plays: '12', state: 'Needs work',  tiers: [1, 0, 0] },
+  { song: byId('scale-c-major'),  title: 'C Major Scale',      plays: '3',  state: 'Needs work',  tiers: [1, 0, 0] },
+  { song: byId('hotel-california'), title: 'Hotel California', plays: '0',  state: 'Not started', tiers: [0, 0, 0] },
+  { song: byId('numb'),           title: 'Numb',               plays: '0',  state: 'Not started', tiers: [0, 0, 0] },
+  { song: byId('in-a-gadda-da-vida'), title: 'In A Gadda Da Vida', plays: '0', state: 'Not started', tiers: [0, 0, 0] },
+  { song: byId('happy-birthday'), title: 'Happy Birthday',     plays: '24', state: 'Banked',      tiers: [1, 1, 0] },
+];
+
+if (screen === 'library' || screen === 'library-desktop') {
   renderCanonLibrary(host, {
     level: { n: 1, xp: 80, next: 100 },
     streak: { current: 1, best: 1 },
@@ -56,13 +79,17 @@ if (screen === 'library') {
       reason: 'John Williams, arranged for two hands. Nothing banked yet, start on the easy tier.',
       art: 'art/128/star-wars.jpg',
     },
-    rows: LIBRARY_ROWS,
+    screen,
+    rows: screen === 'library-desktop' ? DESKTOP_ROWS : LIBRARY_ROWS,
 
     // The dashboard the canon absorbed, seeded with the DESIGN'S OWN numbers so
     // every binder is actually exercised by the pixel gate. Leaving these out
     // was not neutral: a binder with no data still runs, and one of them hid
     // the entire content column. The gate can only defend what it renders.
-    learningTotal: 12,
+    // the composition's OWN arithmetic: 5b draws 5 rows + "the other 7" = 12;
+    // 10a draws 9 tiles + "the other 7" = 16. Seeding one number into both
+    // left the desktop frame printing "the other 3" against the board's 7.
+    learningTotal: screen === 'library-desktop' ? 16 : 12,
     carryOn: { title: 'Resume the session', sub: 'Chords from a symbol' },
     metronomeBpm: '140',
     voiceName: 'Grand',

@@ -19,13 +19,45 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const SRC = join(HERE, 'claude-design-v6', 'Keys Library Directions.dc.html');
-const UP = join(HERE, 'claude-design-v6', 'uploads');
+const SRC = join(HERE, 'claude-design-v8', 'Keys Library Directions.dc.html');
+const UP = join(HERE, 'claude-design-v8', 'uploads');
 const OUT = join(HERE, 'keys-prototype.html');
 const src = readFileSync(SRC, 'utf8');
 
 // screen id -> [artboard, label]. Order is the walking order in the chrome.
 const SCREENS = [
+  // 7a and 7b are the DESKTOP frames, drawn at 1418x738 after Mark pointed out
+  // that every other artboard is a 756px column and his window is 1418 wide, so
+  // the app was using half his screen. They are separate COMPOSITIONS, not a
+  // reflow of 5b, and the port treats them that way.
+  // 8a is the DECK SPEC: not a screen the app renders, but the falling-notes
+  // language written as values, because the deck is a canvas painted at 60fps
+  // and a still artboard cannot carry motion.
+  ['deck',            '8a', 'Deck states'],
+  // the judge-panel round drew the screens that had never been drawn
+  ['play-training',   '9a', 'Play, training cluster'],
+  ['controls',        '9b', 'Compact controls'],
+  ['alltools-narrow', '9c', 'All tools, narrow'],
+  // 10a replaced 7a on 2026-08-29: Mark rejected 7a's layout (art squeezed,
+  // learning and tools buried); 10a is the judge-panel art-forward relayout.
+  // 7a stays on the canvas but is no longer ported.
+  ['library-desktop', '10a', 'Library, desktop'],
+  // the 11-series: every remaining screen's DESKTOP composition (2026-08-29)
+  ['lessons-desktop',   '11a', 'Lessons, desktop'],
+  ['lesson-desktop',    '11b', 'Lesson step, desktop'],
+  ['task-desktop',      '11c', 'Theory task, desktop'],
+  ['path-desktop',      '11d', 'My path, desktop'],
+  ['echo-desktop',      '11e', 'Melody echo, desktop'],
+  ['rhythm-desktop',    '11f', 'Rhythm tap, desktop'],
+  ['improv-desktop',    '11g', 'Improv, desktop'],
+  ['freeplay-desktop',  '11h', 'Free play, desktop'],
+  ['metronome-desktop', '11i', 'Metronome, desktop'],
+  ['trophies-desktop',  '11j', 'Trophies, desktop'],
+  ['takes-desktop',     '11k', 'Takes, desktop'],
+  ['calibrate-desktop', '11l', 'Latency calibration, desktop'],
+  ['touch-desktop',     '11m', 'Touch diagnostic, desktop'],
+  ['keys12-desktop',    '11n', '12 keys, desktop'],
+  ['alltools',        '7b', 'All tools'],
   ['library',   '5b', 'Library'],
   ['play',      '6a', 'Play'],
   ['keys12',    '6p', '12 keys'],

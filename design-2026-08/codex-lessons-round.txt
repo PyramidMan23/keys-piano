@@ -1,0 +1,38 @@
+READ-ONLY review, LESSONS AREA ONLY. Hard rules: READ-ONLY. No skills. No
+sub-reviewers or agents. No writes. Node probes that only read are fine, and
+you may fetch from http://localhost:4180.
+
+Repo: C:\Users\markh\keys-piano. Mark's bar, verbatim intent: "let's really
+make sure the lessons area is perfect. I want to be able to replay the lessons
+I've done, and it must be super intuitive and gamified and easy to use, as if
+you're explaining it to a 5 year old."
+
+WHAT EXISTS. The reading curriculum: js/lessons.mjs (LESSONS, buildLevels,
+LevelRunner: 5 prompts a level, pass 4/5, misses light+name the key and
+resurface, melody payoff, clean-run badge, retention stars from reviews),
+list + game wiring in js/app.mjs (renderLessonList around line 1337, openLesson,
+beginLessonDrill, the level rail and fixed slot ledger), the desktop boards
+design/extracted/lessons-desktop.html (11a) and lesson-desktop.html (11b), the
+teacher lessons in js/teacher.mjs + js/path.mjs (a separate loop). Completed
+lessons are replayable today and their rows now read "Complete · Replay".
+
+JUDGE IT AGAINST MARK'S BAR, as the 5-year-old's parent:
+1. REPLAY: open a completed lesson again. Is anything confusing, lossy or
+   dishonest (XP double-pay, badge overwrite, star loss, progress text lying)?
+   Check game.mjs dedupe keys against a replayed completion.
+2. FIRST MINUTE: from the library, how many decisions before a child is
+   playing lesson 1? Name every piece of text a beginner must read that is
+   jargon (stage words, "names-off", "mix round", anything).
+3. GAMIFICATION: the level rail, slots, badges, stars. Is the feedback loop
+   legible in the first run without explanation? What is missing that a
+   Simply-Piano-class app would have, that fits the app's restrained language
+   (no new currencies, shape plus word, no emoji)?
+4. THE DESKTOP BOARDS 11a/11b: composition problems (empty regions, weak
+   affordances, buried primary action), with numbers from the extracted json.
+5. TWO CURRICULA CONFUSION: reading lessons (Lessons) vs teacher lessons
+   (My path) both call themselves lessons. Does a beginner understand which
+   door to take? Propose the smallest honest fix.
+
+DELIVERABLE: MUST-FIX / SHOULD / TASTE, each item with file:line or a repro I
+can run, specific enough to act on without asking you anything. If replay is
+actually broken anywhere, prove it with a probe.

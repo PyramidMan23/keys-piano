@@ -21,35 +21,90 @@ const inCanon = (el) => !!el && !!el.closest('.canon-root') && !el.closest('[dat
 // Rows in the design are [index, name, stage] for the two ladders, and
 // [name, evidence] for a trophy. Bind by position: the design's own cell order
 // is the contract, and it is stable because the artboard drew it that way.
-function bindRows(id, items, fill) {
+function bindRows(id, items, fill, pickTpl) {
   const c = $(id);
   if (!inCanon(c)) return false;
-  return fillCanonList(c, items, fill);
+  return fillCanonList(c, items, fill, pickTpl);
 }
 
 // ---- the five teacher lessons, and the five skills behind them -------------
+// The drawn state vocabulary on the lessons boards is retained / in progress
+// / not started; the app's is Complete / Ready / Locked. Codex caught the
+// binder writing the word while KEEPING the template's shape (a Ready row
+// wearing the board's green check), and dropping clean-run badges and
+// retention stars entirely under the canon. Templates are picked by state
+// CLASS so shape and word agree, and rewards ride the state cell in shape
+// plus word.
+const LESSON_TPL_WORD = { Complete: 'retained', Ready: 'in progress', Locked: 'not started' };
 export const bindLessonList = (lessons) =>
   bindRows('lesson-list', lessons, (row, l, i, { cells }) => {
-    if (cells[0]) cells[0].textContent = String(i + 1);
-    if (cells[1]) cells[1].textContent = l.title;
-    if (cells[2]) cells[2].textContent = l.state;
+    // slot-aware, not index-aware: the redrawn rows carry numeral, Fraunces
+    // title, an optional REWARD leaf and the state chip; index writes put the
+    // state into the reward slot and it printed twice
+    const leaves = leafTexts(row);
+    const num = leaves.find((e) => /^\d+$/.test(e.textContent.trim()));
+    const title = leaves.find((e) => e !== num && /Fraunces/.test(e.getAttribute('style') ?? ''));
+    const stateLeaf = leaves.find((e) => /^(Complete|Ready|Locked|retained|in progress|not started)/.test(e.textContent.trim()));
+    const rewardLeaf = leaves.find((e) => /clean run|remembered/.test(e.textContent) && e !== stateLeaf);
+    if (num) num.textContent = String(i + 1);
+    if (title) title.textContent = l.title; else if (cells[1]) cells[1].textContent = l.title;
+    if (stateLeaf) stateLeaf.textContent = l.state; else if (cells[2]) cells[2].textContent = l.state;
+    if (rewardLeaf) {
+      // the design draws the diamond as its own glyph beside the words, so the
+      // text carries words only (a second diamond doubled it); no reward means
+      // the whole mark stands down rather than an orphan glyph
+      const marks = [l.badge ? 'clean run' : null, l.star ? '★ remembered' : null].filter(Boolean);
+      const wrap = rewardLeaf.parentElement;
+      if (!marks.length) { if (wrap) wrap.style.display = 'none'; }
+      else rewardLeaf.textContent = marks.join(' · ');
+    }
     if (l.onOpen) { row.style.cursor = 'pointer'; row.addEventListener('click', l.onOpen); }
+  }, (l, i, templates) => {
+    // the redrawn 11a speaks the app's own vocabulary; the phone board still
+    // speaks the older sample words, so try exact first, then the legacy map
+    const base = String(l.state).split(' ·')[0];
+    let idx = templates.findIndex((t) => t.textContent.includes(base));
+    if (idx < 0 && LESSON_TPL_WORD[base]) idx = templates.findIndex((t) => t.textContent.includes(LESSON_TPL_WORD[base]));
+    return idx >= 0 ? idx : Math.min(i, templates.length - 1);
   });
 
+const STAGE_WORDS = ['unseen', 'introduced', 'guided', 'independent', 'retained'];
+const leafTexts = (el) => [el, ...el.querySelectorAll('*')].filter((e) => !e.children.length && e.textContent.trim());
 export const bindPathSkills = (skills) =>
   bindRows('path-skills', skills, (row, s, i, { cells, setPips }) => {
-    if (cells[0]) cells[0].textContent = String(i + 1);
-    if (cells[1]) cells[1].textContent = s.name;
-    if (cells[2]) cells[2].textContent = s.stage;
+    // STRUCTURE-AWARE slots (2026-08-29): the desktop path cards carry an
+    // extra kicker leaf on the selected card, so index-order writes put the
+    // name into WHY THIS IS NEXT and the stage into the name. Resolve each
+    // slot by what it IS: the numeral, the Fraunces display line, the stage
+    // word; anything else (the kicker) is the design's own and stays.
+    const leaves = leafTexts(row);
+    const num = leaves.find((l) => /^\d+$/.test(l.textContent.trim()));
+    const state = leaves.find((l) => STAGE_WORDS.includes(l.textContent.trim()));
+    const name = leaves.find((l) => /Fraunces/.test(l.getAttribute('style') ?? ''))
+      ?? leaves.find((l) => l !== num && l !== state);
+    if (num) num.textContent = String(i + 1);
+    if (name) name.textContent = s.name;
+    if (state) state.textContent = s.stage;
     setPips(s.filled ?? 0);
     if (s.title) row.title = s.title;
+  }, (s, i, templates) => {
+    // the drawn card whose STATE matches carries the right shape for the word
+    const idx = templates.findIndex((t) => leafTexts(t).some((l) => l.textContent.trim() === s.stage));
+    return idx >= 0 ? idx : Math.min(i, templates.length - 1);
   });
 
 export const bindPathLessons = (lessons) =>
   bindRows('path-lessons', lessons, (row, l, i, { cells }) => {
-    if (cells[0]) cells[0].textContent = String(i + 1);
-    if (cells[1]) cells[1].textContent = l.title;
-    if (cells[2]) cells[2].textContent = l.state;
+    // same structure-aware rule: the desktop rows are [check glyph, name] with
+    // no numeral and no state word; writing by index ate the lesson names
+    const LESSON_STATES = ['Complete', 'Ready', 'Locked'];
+    const leaves = leafTexts(row);
+    const num = leaves.find((x) => /^\d+$/.test(x.textContent.trim()));
+    const state = leaves.find((x) => LESSON_STATES.includes(x.textContent.trim()));
+    const name = leaves.find((x) => x !== num && x !== state);
+    if (num) num.textContent = String(i + 1);
+    if (name) name.textContent = l.title;
+    if (state) state.textContent = l.state;
     row.toggleAttribute('disabled', !!l.locked);
     if (l.onOpen && !l.locked) { row.style.cursor = 'pointer'; row.addEventListener('click', l.onOpen); }
   });
@@ -85,8 +140,27 @@ export function bindKeys12(mode, entries) {
   const markDone = done?.querySelector('i')?.getAttribute('style');
   const markOpen = open?.querySelector('i')?.getAttribute('style');
 
+  // A VOCABULARY WITH TWO HOMES. The design writes data-k="F sharp" and
+  // "D flat"; the app's ladder writes "F#" and "Db". Twenty of the twenty-four
+  // black-key cells were therefore dead on arrival, and nothing noticed because
+  // the pixels matched and the ids resolved. Normalise both sides to the same
+  // spelling rather than picking a winner.
+  // Matched by PITCH CLASS, not by spelling. Normalising the words was not
+  // enough: the design spells all four grids in flats, while the app's minor
+  // ladders spell the same notes in sharps, so "D flat" still found nothing
+  // where the app had written "C#". Two names for one key is not a formatting
+  // difference, it is the same note, so compare the note.
+  const PC = { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b: 11 };
+  const keyName = (k) => {
+    const t = String(k ?? '').trim().toLowerCase().replace(/\s*sharp$/, '#').replace(/\s*flat$/, 'b').replace(/\s+/g, '');
+    const base = PC[t[0]];
+    if (base === undefined) return t;
+    const accidental = t.includes('#') ? 1 : t.slice(1).includes('b') ? -1 : 0;
+    return String((base + accidental + 12) % 12);
+  };
   for (const btn of buttons) {
-    const entry = entries.find((e) => e.key === btn.dataset.k);
+    const want = keyName(btn.dataset.k);
+    const entry = entries.find((e) => keyName(e.key) === want);
     if (!entry) continue;
     const style = entry.done ? shape.done : shape.open;
     if (style) btn.setAttribute('style', style);
@@ -109,8 +183,25 @@ export function bindKeys12(mode, entries) {
 export function bindKeys12Count(mode, entries) {
   const grid = $(`keys12-${mode}`);
   if (!inCanon(grid) || !grid.parentElement) return false;
-  const counter = [...grid.parentElement.querySelectorAll('*')]
-    .find((e) => !e.children.length && /^\d+\s+of\s+12$/.test(e.textContent.trim()));
+  // The desktop board keeps each section's counter in a heading row that is
+  // NOT inside the grid's direct parent, so the old one-level search bound
+  // nothing and all four sample counts stayed on screen (sample-bleed audit).
+  // Climb, then pick the counter GEOMETRICALLY closest to this grid, so a
+  // wide scope can never grab a sibling section's counter.
+  const gr = grid.getBoundingClientRect();
+  let counter = null, scope = grid.parentElement;
+  for (let up = 0; up < 3 && scope && !counter; up++, scope = scope.parentElement) {
+    const cands = [...scope.querySelectorAll('*')]
+      .filter((e) => !e.children.length && /^\d+\s+of\s+12$/.test(e.textContent.trim()))
+      .filter((e) => !e.closest('[id^="keys12-"]'));
+    if (cands.length) {
+      counter = cands.sort((x, y) => {
+        const dx = Math.abs(x.getBoundingClientRect().left - gr.left) + Math.abs(x.getBoundingClientRect().bottom - gr.top);
+        const dy = Math.abs(y.getBoundingClientRect().left - gr.left) + Math.abs(y.getBoundingClientRect().bottom - gr.top);
+        return dx - dy;
+      })[0];
+    }
+  }
   if (!counter) return false;
   counter.textContent = `${entries.filter((e) => e.done).length} of 12`;
   return true;
@@ -168,6 +259,9 @@ const STATE_PROPS = [
   'color', 'background-color', 'border-top-color', 'border-right-color',
   'border-bottom-color', 'border-left-color', 'box-shadow', 'opacity',
   'font-weight', 'text-decoration-line', 'filter',
+  // the library tabs carry their active state as an underline, which is a
+  // border-bottom WIDTH, not only a colour
+  'border-bottom-width', 'border-bottom-style',
 ];
 
 export function bindSegment(members, isActive) {

@@ -17,16 +17,57 @@
 import { CANON } from './canon-templates.mjs';
 import { renderCanonScreen } from './canon-screen.mjs';
 
+// THE CANON IS THE APP NOW, not an option behind a flag.
+//
+// Mark opened http://localhost:4180/ and got the OLD design, because the
+// redesign only appeared with ?canon=1, and then asked "is this the actual
+// app". It was a fair question and the honest answer was no. Codex made the
+// same point in council: while it lives behind a flag it is a redesign
+// candidate, not the app.
+//
+// The old renderer is still there and is one query away: ?canon=0.
 export const CANON_ON = (() => {
-  try { return new URLSearchParams(location.search).get('canon') === '1' || window.__canon === true; }
-  catch { return false; }
+  try {
+    if (window.__canon === false) return false;
+    const q = new URLSearchParams(location.search).get('canon');
+    return q !== '0';
+  } catch { return true; }
 })();
 
 const idsIn = (html) => new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
 
+// WHICH COMPOSITION, generically (2026-08-29). The design draws two boards for
+// a screen where one exists: the 756px phone column and a 1418x738 desktop
+// frame keyed '<screen>-desktop'. Same ids, same wording, different
+// architecture, exactly the library/7a precedent. Picked at BOOT, because
+// app.mjs wires its listeners onto these ids at module top level and a
+// post-boot remount would orphan every one of them; the library and the play
+// screens keep their own live width handling.
+//
+// THE GATE IS 1000, NOT 1418 (Mark's screenshot, 2026-08-29 evening): his Edge
+// runs zoomed, so his CSS viewport sits under 1418 and the old gate handed him
+// the PHONE column in a desktop window. Any window from 1000 CSS px up gets
+// the desktop composition, FIT-SCALED via applyCanonZoom when it is narrower
+// than the board's own 1418.
+export const DESKTOP_W = 1418;
+export const DESKTOP_MIN = 1000;
+export const desktopFits = () => { try { return window.innerWidth >= DESKTOP_MIN; } catch { return false; } };
+export const boardFor = (key) =>
+  (desktopFits() && CANON[`${key}-desktop`]) ? `${key}-desktop` : key;
+
+// Fit a fixed 1418 composition into a narrower window. CSS zoom scales the
+// rendering while layout px inside stay the board's own, so binders and
+// clientWidth measures are untouched; tap handlers normalise by rect scale.
+export function applyCanonZoom(card) {
+  if (!card) return;
+  const z = Math.min(1, window.innerWidth / DESKTOP_W);
+  card.style.zoom = z < 1 ? String(z) : '';
+}
+
 export function mountCanonScreens() {
   const mounted = [];
   for (const key of Object.keys(CANON)) {
+    if (key.endsWith('-desktop')) continue;   // a composition of its base screen, not a screen
     const host = document.getElementById(`screen-${key}`);
     if (!host) continue;               // overlays and states are artboards, not app screens
 
@@ -37,8 +78,11 @@ export function mountCanonScreens() {
     while (host.firstChild) legacy.appendChild(host.firstChild);
 
     // and take the ids the canon is about to claim, so nothing resolves to a
-    // hidden node. This is the whole defence against Rule 3.
-    const claimed = idsIn(CANON[key]);
+    // hidden node. This is the whole defence against Rule 3. Only the MOUNTED
+    // board's ids are claimed: stripping an id the other composition draws
+    // would leave it resolving to nothing at this width.
+    const board = boardFor(key);
+    const claimed = idsIn(CANON[board]);
     let stripped = 0;
     const carried = new Map();
     for (const el of legacy.querySelectorAll('[id]')) {
@@ -58,7 +102,8 @@ export function mountCanonScreens() {
       stripped++;
     }
 
-    renderCanonScreen(host, key);
+    renderCanonScreen(host, board);
+    if (board.endsWith('-desktop')) applyCanonZoom(host.firstElementChild);
 
     // apply the carried semantics onto the canon's own controls
     let a11y = 0;
@@ -111,11 +156,27 @@ export function setVariant(el, on, variants) {
 // tools/canon-nesting.mjs now fails the build if a new collision appears.
 
 // Set text without touching element children.
+//
+// ☠️ 2026-08-29, found by the path journey: when the design carries the VALUE
+// inside a child span (a #131915 module is kicker span + value span + button),
+// the old fallback PREPENDED a text node and the design's sample sentence
+// stayed on screen next to the real one. The path screen shipped showing
+// "Chords from a symbol has been independent for six days..." to every user.
+// The value slot is now resolved as the longest un-addressed leaf, which is the
+// sample sentence in every module the design draws this way.
 export function setTextKeeping(el, value) {
   if (!el) return;
   if (!el.children.length) { el.textContent = value; return; }
   const text = [...el.childNodes].find((n) => n.nodeType === 3 && n.data.trim());
-  if (text) text.data = value;
+  if (text) { text.data = value; return; }
+  const leaves = [...el.querySelectorAll('*')]
+    .filter((n) => !n.children.length && !n.id && n.textContent.trim());
+  // the KICKER is part of the design's module, never the value slot: it is the
+  // ui-monospace letter-spaced label ("WHY THIS IS NEXT", "EVIDENCE")
+  const values = leaves.filter((n) => !/ui-monospace/.test(n.getAttribute('style') ?? ''));
+  const slot = (values.length ? values : leaves)
+    .sort((a, b2) => b2.textContent.length - a.textContent.length)[0];
+  if (slot) slot.textContent = value;
   else el.insertBefore(document.createTextNode(value), el.firstChild);
 }
 
@@ -220,4 +281,61 @@ export function nameControls(root) {
     if (text) { el.setAttribute('aria-label', text); named++; } else unnamed.push(el.id || el.tagName.toLowerCase());
   }
   return { named, unnamed };
+}
+
+// ---- the artboard's RESTING deck -------------------------------------------
+// Claude Design draws a still picture of the falling-notes deck as an absolutely
+// positioned layer sitting over the canvas, so the artboard shows something
+// rather than an empty black box. The prototype hides it before animating; the
+// app never did, so the live deck ran UNDERNEATH a fake one and the pale
+// outlined pills Mark was looking at were the drawing, not the app.
+//
+// Called wherever the app takes a canvas over. The layer stays on every screen
+// that does not animate, because there it is the design.
+export function hideRestingLayer(canvas) {
+  if (!canvas || !canvas.parentElement || !canvas.closest('.canon-root')) return false;
+  let hidden = 0;
+  for (const el of canvas.parentElement.children) {
+    if (el === canvas) continue;
+    const cs = getComputedStyle(el);
+    if (cs.position !== 'absolute') continue;
+    // a decorative layer has no controls in it; never hide something addressable
+    if (el.querySelector('[id], button, a, input, select')) continue;
+    el.style.display = 'none';
+    hidden++;
+  }
+  return hidden > 0;
+}
+
+// ---- the way back ----------------------------------------------------------
+// EVERY screen in the canon draws its own back control, labelled "Library".
+// Nothing bound them, so on twelve screens a person could go in and not come
+// out, which is exactly what "why cant i click on anything" felt like from the
+// other side. The prototype wired these generically and the app never did.
+//
+// No gate here could have caught it: the pixels were identical and the ids all
+// resolved. Only asking "does a click do anything" finds a dead button, which
+// is what tools/canon-clickable.mjs now does.
+let canonNav = null;
+export const setCanonNav = (nav) => { canonNav = nav; };
+
+const BACK_WORDS = new Set(['library', 'back', 'home', 'done']);
+export function bindBack(root) {
+  if (!root) return 0;
+  let wired = 0;
+  for (const el of root.querySelectorAll('button, a, [role="button"]')) {
+    const word = (el.textContent || '').trim().toLowerCase().replace(/^[^a-z]+/, '');
+    if (!BACK_WORDS.has(word)) continue;
+    if (el.dataset.canonBack) continue;
+    // a control the app already addresses by id has an app handler; wiring a
+    // second navigation under it fires BOTH and the loser wins by ordering.
+    // The lesson's Back is the app's own #lesson-back (one level up, to the
+    // list), and it must stay exactly that.
+    if (el.id) continue;
+    el.dataset.canonBack = '1';
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => canonNav?.home?.());
+    wired++;
+  }
+  return wired;
 }

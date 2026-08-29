@@ -40,7 +40,14 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'design-2026-08', 'overlay');
 mkdirSync(OUT, { recursive: true });
 
-const ALL = readdirSync(join(ROOT, 'design', 'extracted')).filter((f) => f.endsWith('.html')).map((f) => f.replace('.html', ''));
+// Specification boards are extracted but never rendered by the app, so there is
+// nothing to overlay them against. 8a "Deck states" is labelled values for the
+// falling-notes canvas, not a surface.
+const SPEC_BOARDS = new Set(['deck']);
+const ALL = readdirSync(join(ROOT, 'design', 'extracted'))
+  .filter((f) => f.endsWith('.html'))
+  .map((f) => f.replace('.html', ''))
+  .filter((s) => !SPEC_BOARDS.has(s));
 const want = process.argv.slice(2);
 const SCREENS = want.length ? want : ALL;
 const DSF = 2;
@@ -76,6 +83,29 @@ async function shotOf(b, url, isDesign, prep) {
       const b = i.getBoundingClientRect();
       return { x: b.x - r.x, y: b.y - r.y, w: b.width, h: b.height };
     });
+    // The hero's ambient glow layer is ART-CLASS by decision, 2026-08-29: the
+    // app recolours it from the actual sleeve (and hides it when the hero has
+    // no art), so it legitimately differs from the artboard's baked amber. The
+    // deviation is recorded in CANON-GAPS.md; counting it as chrome would fail
+    // the gate for doing exactly what the design's own words asked for.
+    for (const g of el.querySelectorAll('i[style*="radial-gradient"], span[style*="radial-gradient"], div[style*="radial-gradient"]')) {
+      if (g.textContent.trim() || g.querySelector('img')) continue;
+      const b = g.getBoundingClientRect();
+      art.push({ x: b.x - r.x, y: b.y - r.y, w: b.width, h: b.height });
+    }
+    // The 10a tile halos are the same deviation one layer down: a textless
+    // blur() glow the design baked from its SAMPLE sleeve, which the app
+    // recolours from the real one (CANON-GAPS, art-true glow). Art-class too.
+    for (const g of el.querySelectorAll('i[style*="blur("], span[style*="blur("]')) {
+      if (g.textContent.trim() || g.querySelector('img')) continue;
+      const b = g.getBoundingClientRect();
+      // a filter: blur(N) paints roughly 3N beyond the element's own box
+      // NB this line lives inside a template-literal eval: escapes must be
+      // doubled or \\d reaches the page as a plain d and the regex goes blind
+      const blur = parseFloat((g.getAttribute('style') ?? '').match(/blur\\((\\d+(?:\\.\\d+)?)px\\)/)?.[1] ?? '0');
+      const p = blur * 3;
+      art.push({ x: b.x - r.x - p, y: b.y - r.y - p, w: b.width + 2 * p, h: b.height + 2 * p });
+    }
     return { box, art };
   })()`);
   if (!data) throw new Error('nothing to clip on ' + url);
@@ -157,7 +187,9 @@ async function compare(b, screen, keepImages) {
   };
 }
 
-const b = await launch({ width: 900, height: 2000, scale: DSF, port: 9471 });
+// 1700 wide: the desktop frames are 1418px, and a 900px viewport makes the
+// prototype fit-zoom them, so both sides would be measured at the wrong scale.
+const b = await launch({ width: 1700, height: 2000, scale: DSF, port: 9471 });
 const results = [];
 try {
   for (const s of SCREENS) {

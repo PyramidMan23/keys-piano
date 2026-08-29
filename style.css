@@ -784,3 +784,15 @@ button:disabled { opacity: 0.35; cursor: default; }
      tools/build-canon-templates.mjs, so it cannot drift silently. */
   box-sizing: border-box;
 }
+
+/* INTERIM, 2026-08-29. Every artboard in the canon is a fixed 756px frame, and
+   Mark's window is 1418 x 738, so the app sat hard against the left edge with
+   half the screen black. This does NOT redesign anything: it only centres the
+   frame the design already specifies, so it reads as a deliberate column rather
+   than as something that failed to load.
+
+   The real fix is a desktop composition, which Claude Design is drawing. DELETE
+   this block the moment that artboard lands: a centred 756px column is still
+   half a laptop screen of nothing. */
+.canon-root { display: flex; justify-content: center; }
+

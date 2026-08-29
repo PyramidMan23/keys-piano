@@ -55,6 +55,20 @@ createServer(async (req, res) => {
     });
     res.end(body);
   } catch {
+    // A typo must land IN THE APP, not on a bare "not found". Mark hand-typed
+    // localhost:4180/ with a stray character on the end and got a black page
+    // with two words on it (2026-08-29). For anything that looks like a page
+    // request, serve the app shell; only real asset misses still 404 so a
+    // broken image or module never silently becomes HTML.
+    const wantsPage = req.method === 'GET' && !extname(req.url.split('?')[0]) ;
+    if (wantsPage) {
+      try {
+        const shell = await readFile(join(ROOT, 'index.html'));
+        res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' });
+        res.end(shell);
+        return;
+      } catch { /* fall through to the honest 404 */ }
+    }
     res.writeHead(404).end('not found');
   }
 }).listen(PORT, () => console.log(`piano dev server on http://localhost:${PORT}`));

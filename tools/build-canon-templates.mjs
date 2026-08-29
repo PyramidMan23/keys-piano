@@ -14,7 +14,14 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const EX = join(ROOT, 'design', 'extracted');
-const SCREENS = readdirSync(EX).filter((f) => f.endsWith('.html')).map((f) => f.replace('.html', ''));
+// Boards that are SPECIFICATIONS, not surfaces. 8a "Deck states" is 73KB of
+// labelled values for the falling-notes canvas: the app reads its numbers
+// (design/extracted/deck-spec.json), it never renders the board. Shipping it
+// would put the spec sheet into an offline app's shell.
+export const SPEC_BOARDS = new Set(['deck']);
+const SCREENS = readdirSync(EX).filter((f) => f.endsWith('.html'))
+  .map((f) => f.replace('.html', ''))
+  .filter((s) => !SPEC_BOARDS.has(s));
 
 // Every image the app or the design tool holds, indexed by content hash. The
 // design inlines its sleeves as data URIs; hashing tells us WHICH SONG each one
@@ -25,7 +32,8 @@ const sha = (b) => createHash('sha1').update(b).digest('hex');
 const known = new Map();
 const groupFrom = (p) => p.replace(/^.*[\/]/, '').replace(/^sleeve-/, '').replace(/\.(jpg|jpeg|png)$/i, '');
 for (const dir of [join(ROOT, 'art', '_full'), join(ROOT, 'art', '512'), join(ROOT, 'art', '128'),
-                   join(ROOT, 'design-2026-08', 'claude-design-v2', 'uploads')]) {
+                   join(ROOT, 'design-2026-08', 'claude-design-v2', 'uploads'),
+                   join(ROOT, 'design-2026-08', 'claude-design-v8', 'uploads')]) {
   if (!existsSync(dir)) continue;
   for (const f of readdirSync(dir)) {
     if (!/\.(jpg|jpeg|png)$/i.test(f)) continue;

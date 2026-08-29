@@ -1,0 +1,26 @@
+COMMISSION: artboard 10a "library-desktop-2", 1418 x 738. A ground-up RELAYOUT of 7a, which Mark has rejected. His words: learning and tools are buried, the right-hand stack of cards squeezes the album artwork small, and it does not feel intuitive.
+
+THE BRIEF: art-forward, the way iTunes album view and Spotify home actually are. The album sleeves are the emotional heart: big, central, a real grid of artwork. The learning path (the DO THIS NEXT recommendation) and the tools must be obvious at a glance, not buried in a rail. Real hierarchy, less simultaneous clutter: quests, mission, practice chart and form check may collapse into quieter, smaller objects or a single strip; the art may not.
+
+CONVENE THE JUDGE PANEL used on the 9-series boards: the Apple HI designer, the iTunes library designer, the Spotify lead, the contrast scientist and the concert pianist. Have them force this to billion-dollar 2026 standard before you draw, and note their key rulings as annotation OUTSIDE the artboard.
+
+THE LANGUAGE IS LOCKED (5b/7a/9a): true black #000000 page, Fraunces only for display lines (brand, song titles, big numbers), ui-monospace for kicker labels, hairline #253129 structure, green accent #82bf9c with #2E6B47 as the ONLY filled green, amber #f0a832 = right hand and cyan #5ee0f2 = left hand and those two hues belong to the NOTES, not the chrome. The one allowed band tone is #131915. Type floor 11px, at most 6 size steps, tabular numerals on numbers. Mark is red-green colour-blind: no state may be carried by hue alone, every state = shape PLUS word. Every target 44px. No em dashes anywhere, no emoji anywhere, no element ids leaking as visible text. Each board is a self-contained inline-styled composition at EXACTLY 1418 x 738.
+
+FUNCTIONAL CONTENT THAT MUST SURVIVE, with the exact wording the app binds on (keep these strings byte for byte; sample VALUES like counts and song names may vary only where marked):
+- The recommendation: kicker exactly "DO THIS NEXT", a song title (sample: "Star Wars Main Title"), reason line exactly "John Williams, arranged for two hands. Nothing banked yet, start on the easy tier.", buttons exactly "Start" and "Choose another", and the song sleeve image. Start stays the ONLY filled green.
+- The four shelves as TABS, labels exactly "Learning", "Repertoire", "Hall of fame", "Explore", each with a numeric count, drawn with Learning selected. The tabs sit at the top of the song area.
+- THE SONG GRID, the new heart: a large album-art grid of sample songs (use the sleeves already on the canvas). Each tile: the sleeve big, the title (Fraunces), one state word from exactly this set: "Banked" / "Needs work" / "Not started", tier pips for Easy/Medium/Hard as shapes, and a plays count. Draw at least 8 tiles. Also draw one final tile-sized control reading exactly "Show the other 7 in Learning".
+- Sort segment, labels exactly "Weakest" and "A to Z".
+- A real <input type="search"> with placeholder exactly "Search all songs".
+- Status: exactly "LVL 1", "80/100", "1 day rhythm", "best 1".
+- Keyboard state: exactly "No keyboard" and "Screen taps. Plug the P-45 in for the real thing."
+- Carry on: exactly "Resume the session" with sub-line sample "Chords from a symbol".
+- Tools, visible at a glance (not buried): quick entries exactly "Free play", "Metronome", "Latency calibration", "Voice" (readout sample "Grand", metronome readout sample "140"), and one control reading exactly "All tools".
+- Quests: header sample "1 of 3 done", rows exactly "Master a section", "10 real minutes, done", "One clean run" with XP values, middle row drawn done (shape plus word).
+- Weekly mission: rows exactly "Make one song truly yours", "Bank two song proofs", "Three practice days", chip exactly "+150 each".
+- Practice, last 7 days: 7 bars plus day letters with the last labelled exactly "today". Draw three bar states: today (accent), a past day with minutes (outline), an empty day (dashed baseline).
+- Path teaser: skill line sample "Chords from a symbol", stage line exactly "Skill 2 of 5. Stage: independent, one stage short of retained.", pips with label exactly "4 OF 5 STAGES", button exactly "Continue".
+- Form check card: buttons exactly "Done, I watched it" and "Not today".
+- Table header line: exactly "LEARNING, WEAKEST FIRST" with a count, above or beside the grid.
+
+No vertical scroll at 738. No em dashes, no emoji, no visible element ids. The current 7a stays untouched on the canvas; 10a is a NEW artboard.

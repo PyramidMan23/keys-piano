@@ -23,7 +23,7 @@ const screens = readdirSync(EX).filter((f) => f.endsWith('.json'));
 const norm = (s) => s.toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
 for (const f of screens) {
   const d = JSON.parse(readFileSync(join(EX, f), 'utf8'));
-  for (const n of d.nodes) if (n.text) canonText.add(norm(n.text));
+  for (const n of d.nodes ?? []) if (n.text) canonText.add(norm(n.text));   // deck-spec.json carries pairs, not nodes
 }
 
 // every control in the app, with the label a person sees

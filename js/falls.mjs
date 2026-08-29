@@ -6,6 +6,39 @@
 // latched reduced mode when the effects budget (4ms, 8-of-12 frames) blows.
 // Hand identity law: amber+filled vs cyan+outlined, colour AND shape.
 
+// THE DECK'S NUMBERS, read off artboard 8a "Deck states".
+//
+// Mark, 2026-08-29, looking at the artboard's still picture of this deck: it
+// looks boring, and he wants it "magical and alive... soul and lights, like the
+// YouTube videos of people playing piano." A still artboard cannot carry motion,
+// so 8a was commissioned as VALUES instead of a picture, and these are them.
+// The panel number is on every line so any of them can be checked against the
+// board, and tools/deck-spec.mjs re-extracts it; test/check.mjs fails if the
+// design moves a number this file still hardcodes.
+const DECK = {
+  // panel 01, resting. The deck should look switched on, not busy.
+  rest: { alphaLo: 0.30, alphaHi: 0.40, periodS: 3.2 },
+  // panel 08, applies everywhere: radius 14px + 26px * n^2, alpha 0.18 + 0.82 * n^3
+  glow: { r0: 14, rGain: 26, a0: 0.18, aGain: 0.82 },
+  // panel 07, a long clean run. Capped, and printed as a number elsewhere, so
+  // escalation is never brightness alone.
+  tier: { at: [8, 16, 32, 64], lineWidth: [2, 3, 4, 4], bloomScale: [1.00, 1.15, 1.30, 1.30], sparks: [8, 11, 14, 14] },
+  // panel 08, budgets. Without these a fast passage sums to white.
+  budget: { sparksAlive: 60, sparksPer100ms: 24, blooms: 6 },
+  // panel 04, the strike instant: one ring, 18 to 64px over 180ms, 3px to 1px,
+  // alpha 0.90 to 0. One frame of white is the whole trick; this is the decay.
+  ring: { r0: 18, r1: 64, ttlS: 0.18, w0: 3, w1: 1, a0: 0.90 },
+  // panel 05, a chord: one shared ring, per-note cores at 0.70, never summed
+  chord: { windowMs: 50, coreAlpha: 0.70 },
+  // panel 06, a sustained note: 2.2Hz pulse between alpha 0.55 and 0.75, and a
+  // tail texture of one 1px scanline every 6px that scrolls. The board gives no
+  // scroll speed, so it is DERIVED from the board's own pulse: one line spacing
+  // per pulse period (6px x 2.2Hz), never a number somebody liked.
+  sustain: { hz: 2.2, aLo: 0.55, aHi: 0.75, scanStep: 6, scanPx: 1 },
+  // panel 07, a long clean run: a faint ambient wash from tier 3, never brighter
+  wash: { fromTier: 2, alpha: 0.12 },
+};
+
 const WHITE_PCS = [0, 2, 4, 5, 7, 9, 11];
 const LETTERS = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 export const LOW = 21, HIGH = 108;
@@ -123,6 +156,7 @@ export class FallsView {
     this.ctx = canvas.getContext('2d');
     this.lookaheadBeats = 4;
     this.pressed = new Map(); // midi -> 'R' | 'L'
+    this.pressedAt = new Map(); // midi -> performance.now() at press (duration = length)
     this.handMap = null;      // midi -> hand, set from the current song
     this.flashes = [];
     this.particles = [];      // {x,y,vx,vy,life,ttl,size,kind:'needle'|'ember'|'burst',hand}
@@ -141,6 +175,7 @@ export class FallsView {
     this.verdicts = [];       // per-strike EARLY/PERFECT/LATE plaques at the key
     this.banner = null;       // armed-start prompt (timed mode waits for a key)
     this.ripples = [];        // liquid-glass contact rings {x, y, t0, ttl, w, hand, perfect}
+    this.rings = [];          // strike rings, 8a panel 04 {x, y, life, hand}
     this.noteStyle = (typeof window !== 'undefined' && window.__keysNoteStyle) || 'duo';
     this._vig = null;         // pre-rendered vignette, free per frame
     this.reduced = false;     // latched for the session when the budget blows
@@ -181,8 +216,11 @@ export class FallsView {
   }
 
   _hand(m) { return this.pressed.get(m) ?? this.handMap?.get(m) ?? 'R'; }
-  keyDown(m, hand) { this.pressed.set(m, hand ?? this.handMap?.get(m) ?? 'R'); }
-  keyUp(m) { this.pressed.delete(m); }
+  // pressedAt lets a held note's length MEAN its duration (8a panel 06's note:
+  // "Duration has to be a length you can read, not a brightness you have to
+  // judge"). Codex caught that the fountain height carried combo, not time.
+  keyDown(m, hand) { this.pressed.set(m, hand ?? this.handMap?.get(m) ?? 'R'); this.pressedAt.set(m, performance.now()); }
+  keyUp(m) { this.pressed.delete(m); this.pressedAt.delete(m); }
   flash(m, type) { this.flashes.push({ midi: m, type, until: performance.now() + 350 }); }
 
   // Timing tick (council 08-24): one spatial vocabulary for ahead/behind.
@@ -215,9 +253,21 @@ export class FallsView {
     const perfect = type === 'perfect';
     const escal = 1 + this.comboLevel * 0.35;
 
+    // A chord is ONE event with several roots (8a panel 05): notes landing
+    // inside the 50ms window share a single ring, and their cores dim to 0.70
+    // instead of stacking three full-strength strikes into a white blob.
+    const nowMs = performance.now();
+    const inChord = this._lastBurstAt && nowMs - this._lastBurstAt < DECK.chord.windowMs;
+    this._lastBurstAt = nowMs;
+
     // contact bead + lens flare (the genre's highest-value cue)
     if (this.flares.length < 12) {
-      this.flares.push({ x, y, life: 0, ttl: 0.22, scale: (perfect ? 1 : 0.65) * escal, hand });
+      this.flares.push({ x, y, life: 0, ttl: 0.22, scale: (perfect ? 1 : 0.65) * escal * (inChord ? DECK.chord.coreAlpha : 1), hand });
+    }
+    // the strike ring (8a panel 04): 18 to 64px over 180ms, one per strike,
+    // shared across a chord window
+    if (!inChord && this.rings.length < 6) {
+      this.rings.push({ x, y, life: 0, hand });
     }
     // liquid-glass contact (cinema, 08-25): flattened rings spreading on the
     // deck, short-lived by law, or they become the rejected trails
@@ -240,7 +290,9 @@ export class FallsView {
       else this.bloom = { x, at: now, life: 0, ttl: 0.3, scale: (perfect ? 1.2 : 0.8) * escal };
     }
     // mixed sparks: needles + embers + at most one starburst
-    const cap = this.reduced ? 180 : 350;
+    // 8a panel 08: 60 alive. The old cap of 350 is what turns a fast passage
+    // into white mush, which is exactly the failure the board calls out.
+    const cap = this.reduced ? 30 : DECK.budget.sparksAlive;
     if (this.particles.length > cap) this.particles.splice(0, this.particles.length - cap);
     const nNeedle = (this.reduced ? 3 : 6) + this.comboLevel * 2;
     const nEmber = (this.reduced ? 3 : 6) + this.comboLevel;
@@ -263,6 +315,11 @@ export class FallsView {
   floaters = [];
 
   draw(engine) {
+    // A mid-layout frame can catch the canvas at zero width, and a zero-width
+    // key layout hands roundRect a negative radius, which THROWS and kills the
+    // whole animation loop. One guard, because one transient frame must never
+    // cost the run. (Found by the immersion toggle, 2026-08-29.)
+    if (this.w < 50 || this.h < 50) return;
     this._lastEngine = engine;
     const now = performance.now();
     const dt = Math.min(0.05, this._lastDraw ? (now - this._lastDraw) / 1000 : 0.016);
@@ -296,7 +353,7 @@ export class FallsView {
         ctx.textAlign = 'left';
         ctx.font = '600 11px system-ui';
         ctx.fillStyle = COLORS.hit;
-        ctx.fillText(`🧩 ${Math.round(b / this.chunkBeats) + 1}`, 8, y - 5);
+        ctx.fillText(`${Math.round(b / this.chunkBeats) + 1}`, 8, y - 5);
       }
     }
 
@@ -311,7 +368,15 @@ export class FallsView {
       const pad = k.white ? 2.5 : 1;
       const x = k.x + pad, bw = k.w - pad * 2, bh = Math.max(10, y2 - y1 - 3);
       const r = Math.min(7, bw / 2);
-      const nearLine = y2 > fallH - 26;
+      // NEARNESS, continuous. This used to be a boolean, "within 26px of the
+      // line", so a note was either flat or fully lit and nothing happened in
+      // between. Artboard 8a panels 02, 03 and 08 give the real curves: the
+      // radius grows with n squared and the alpha with n cubed, which is why
+      // the last 120ms carries the anticipation instead of the whole fall.
+      const near = Math.max(0, Math.min(1, y2 / fallH));
+      const glowR = DECK.glow.r0 + DECK.glow.rGain * near * near;
+      const glowA = DECK.glow.a0 + DECK.glow.aGain * near * near * near;
+      const nearLine = near > 0.94;
 
       if (passive) {
         ctx.globalAlpha = 0.4;
@@ -323,12 +388,12 @@ export class FallsView {
       const P = handPalette(this.noteStyle, n.h === 'L' ? 'L' : 'R');
       // layered halo: the wide soft bloom shadowBlur cannot give (a stamped
       // pre-rendered sprite, one drawImage), this is the videos' glow
-      if (nearLine && !passive) {
+      if (!passive && glowA > 0.02) {
         const hsprite = this.noteStyle === 'moon' ? this.spriteWhite : (n.h === 'L' ? this.spriteCyan : this.spriteAmber);
-        const hs = bw * 3;
+        const hs = glowR * 2;
         ctx.save();
         ctx.globalCompositeOperation = 'lighter';
-        ctx.globalAlpha = 0.5;
+        ctx.globalAlpha = glowA;
         ctx.drawImage(hsprite, x + bw / 2 - hs / 2, y1 + bh - hs / 2, hs, hs);
         ctx.restore();
         ctx.globalAlpha = 1;
@@ -388,12 +453,32 @@ export class FallsView {
     for (const g of engine.groups) for (const n of g.notes) if (cueShow(n)) drawNote(n, false);
     for (const n of engine.passive) if (cueShow(n)) drawNote(n, true);
 
-    // hit line, a whisper: the deck edge, not chrome (cinema 08-25)
+    // The ambient wash, 8a panel 07: from tier 3 the whole deck warms very
+    // slightly, so a long clean run FEELS different before you read the number.
+    // Capped at one value; escalation is never brightness alone.
+    if (this.comboLevel >= DECK.wash.fromTier && !this.reduced) {
+      ctx.save();
+      const wash = ctx.createLinearGradient(0, fallH, 0, 0);
+      wash.addColorStop(0, `rgba(240, 190, 90, ${DECK.wash.alpha})`);
+      wash.addColorStop(1, 'rgba(240, 190, 90, 0)');
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = wash;
+      ctx.fillRect(0, 0, w, fallH);
+      ctx.restore();
+    }
+
+    // The hit line BREATHES. Artboard 8a, panel 01, and it is the whole answer
+    // to why the resting deck looked dead: with nothing falling, nothing moved
+    // at all. 2px at alpha 0.30 to 0.40 over 3.2s, so the deck reads as
+    // switched on before a note is played. Widens with the run tier (panel 07).
     ctx.save();
+    const breath = DECK.rest.alphaLo
+      + (DECK.rest.alphaHi - DECK.rest.alphaLo) * (0.5 + 0.5 * Math.sin((now / 1000) * (Math.PI * 2 / DECK.rest.periodS)));
+    const lineW = DECK.tier.lineWidth[Math.min(this.comboLevel, DECK.tier.lineWidth.length - 1)];
     ctx.shadowColor = 'rgba(232, 228, 218, 0.35)';
     ctx.shadowBlur = 5;
-    ctx.fillStyle = 'rgba(232, 228, 218, 0.4)';
-    ctx.fillRect(0, fallH - 1.5, w, 1.5);
+    ctx.fillStyle = `rgba(232, 228, 218, ${breath.toFixed(3)})`;
+    ctx.fillRect(0, fallH - lineW, w, lineW);
     ctx.restore();
 
     if (this.banner) {
@@ -421,6 +506,7 @@ export class FallsView {
     // ---- effects pass, under the 4ms budget ----
     const fx0 = performance.now();
     this._drawRipples(fallH, dt);
+    this._drawRings(dt);
     this._drawFountains(fallH, now, dt);
     this._drawFlares(fallH, dt);
     this._drawBloom(fallH, dt);
@@ -519,17 +605,63 @@ export class FallsView {
     ctx.globalAlpha = 1;
   }
 
+  // the strike ring, 8a panel 04: values from the board, not tuned by eye
+  _drawRings(dt) {
+    if (!this.rings.length) return;
+    const { ctx } = this;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    this.rings = this.rings.filter((g) => {
+      g.life += dt;
+      const k = g.life / DECK.ring.ttlS;
+      if (k >= 1) return false;
+      const P = handPalette(this.noteStyle, g.hand === 'L' ? 'L' : 'R');
+      ctx.globalAlpha = DECK.ring.a0 * (1 - k);
+      ctx.lineWidth = DECK.ring.w0 + (DECK.ring.w1 - DECK.ring.w0) * k;
+      ctx.strokeStyle = P.bright;
+      ctx.beginPath();
+      ctx.arc(g.x, g.y, DECK.ring.r0 + (DECK.ring.r1 - DECK.ring.r0) * k, 0, Math.PI * 2);
+      ctx.stroke();
+      return true;
+    });
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+
+  // The scanline rows of a sustained note's tail, 8a panel 06: one 1px line
+  // every 6px, scrolling upward. Pure so the suite can pin spacing, width and
+  // the derived scroll speed against the board. h is height ABOVE the hit line;
+  // k is the 0..1 fraction of the tail's full height (for taper interpolation).
+  static scanlineRows(hMax, nowMs) {
+    const step = DECK.sustain.scanStep;
+    const speed = step * DECK.sustain.hz;              // one spacing per pulse period
+    const phase = ((nowMs / 1000) * speed) % step;
+    const rows = [];
+    for (let h = phase; h < hMax; h += step) rows.push({ h, k: h / hMax });
+    return rows;
+  }
+
   // held-key light fountains: tapered, breathing, hand-shaped
   _drawFountains(top, now, dt) {
     const { ctx } = this;
     if (this.pressed.size === 0) return;
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
-    const breath = 0.8 + 0.2 * Math.sin(now / 300);
-    const hMax = (this.reduced ? 60 : 100 + this.comboLevel * 20) * breath;
+    // 8a panel 06: a held note pulses at 2.2Hz between alpha 0.55 and 0.75, so
+    // duration reads as a living light, not a frozen one. The old value was a
+    // number somebody liked; this one is the board's.
+    const ph = 0.5 + 0.5 * Math.sin(now / 1000 * Math.PI * 2 * DECK.sustain.hz);
+    const breath = DECK.sustain.aLo + (DECK.sustain.aHi - DECK.sustain.aLo) * ph;
+    const hCeil = (this.reduced ? 60 : 100 + this.comboLevel * 20) * (0.75 + breath * 0.35);
+    // ±4px radius pulse on the contact sprite, panel 06's third value
+    const sprPulse = 8 * (ph - 0.5);
     for (const [m, hand] of this.pressed) {
       const k = this.keyX.get(m);
       if (!k) continue;
+      // duration IS the length: a tap is a stub, a held note grows to full
+      // height over ~2.5s and then breathes there
+      const heldS = (now - (this.pressedAt.get(m) ?? now)) / 1000;
+      const hMax = hCeil * Math.min(1, 0.25 + heldS / 2.5);
       const cx = k.x + k.w / 2;
       const PF = handPalette(this.noteStyle, hand === 'L' ? 'L' : 'R');
       if (hand === 'L') {
@@ -543,7 +675,21 @@ export class FallsView {
           ctx.closePath();
           ctx.fill();
         }
-        ctx.drawImage(this.noteStyle === 'moon' ? this.spriteWhite : this.spriteCyan, cx - 14, top - 14, 28, 28);
+        { const sz = 28 + sprPulse; ctx.drawImage(this.noteStyle === 'moon' ? this.spriteWhite : this.spriteCyan, cx - sz / 2, top - sz / 2, sz, sz); }
+        // 8a panel 06, the tail texture: 1px scanlines every 6px, scrolling up
+        // the split tapers. Budgeted: reduced mode drops the texture, and only
+        // ten fingers exist, so past 12 held keys (a MIDI fault) it stands down.
+        ctx.fillStyle = 'rgba(' + PF.triplet + ', 1)';
+        const tailH = hMax * (40 / 100 + 0.6);
+        for (const row of (this.reduced || this.pressed.size > 12) ? [] : FallsView.scanlineRows(tailH, now)) {
+          const half = 1.5 * (1 - row.k);
+          if (half < 0.3) continue;
+          ctx.globalAlpha = 0.30 * breath * (1 - row.k);
+          for (const off of [-k.w * 0.22, k.w * 0.22]) {
+            ctx.fillRect(cx + off - half, top - row.h, half * 2, DECK.sustain.scanPx);
+          }
+        }
+        ctx.globalAlpha = 1;
       } else {
         // single filled taper
         const grad = ctx.createLinearGradient(0, top, 0, top - hMax);
@@ -556,7 +702,17 @@ export class FallsView {
         ctx.lineTo(cx, top - hMax);
         ctx.closePath();
         ctx.fill();
-        ctx.drawImage(this.noteStyle === 'moon' ? this.spriteWhite : this.spriteAmber, cx - 14, top - 14, 28, 28);
+        { const sz = 28 + sprPulse; ctx.drawImage(this.noteStyle === 'moon' ? this.spriteWhite : this.spriteAmber, cx - sz / 2, top - sz / 2, sz, sz); }
+        // 8a panel 06, the tail texture: 1px scanlines every 6px, scrolling up
+        // the taper. Width follows the taper; same budget rule as the left hand.
+        ctx.fillStyle = 'rgba(' + PF.triplet + ', 1)';
+        for (const row of (this.reduced || this.pressed.size > 12) ? [] : FallsView.scanlineRows(hMax, now)) {
+          const half = k.w * 0.32 * (1 - row.k);
+          if (half < 0.5) continue;
+          ctx.globalAlpha = 0.30 * breath * (1 - row.k);
+          ctx.fillRect(cx - half, top - row.h, half * 2, DECK.sustain.scanPx);
+        }
+        ctx.globalAlpha = 1;
       }
     }
     ctx.restore();

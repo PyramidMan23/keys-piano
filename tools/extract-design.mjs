@@ -19,7 +19,10 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'design', 'extracted');
 mkdirSync(OUT, { recursive: true });
 
-const b = await launch({ width: 900, height: 1600, scale: 1, port: 9451 });
+// 1700 wide, not 900: the desktop frames 7a and 7b are 1418px, and a 900px
+// viewport would let the prototype fit-zoom them or clip them, so every
+// geometry extracted from them would be wrong.
+const b = await launch({ width: 1700, height: 1600, scale: 1, port: 9451 });
 try {
   // ?raw=1 stands the prototype's scaffolding down. Without it the extraction
   // captures the deck animation's own DOM edits as canon, and play.html came

@@ -11,7 +11,7 @@
 // friends); this is the part every screen shares.
 import { CANON, CANON_INHERITED } from './canon-templates.mjs';
 import { sleeveUrlByGroup } from './covers.mjs';
-import { nameControls } from './canon-mount.mjs';
+import { nameControls, bindBack } from './canon-mount.mjs';
 
 export const CANON_SCREENS = Object.keys(CANON);
 
@@ -66,5 +66,6 @@ export function renderCanonScreen(host, screen) {
   const root = mountMarkup(host, CANON[screen]);
   bindArt(root);
   nameControls(root);
+  bindBack(root);      // every artboard draws its own way back; nothing bound them
   return root;
 }
