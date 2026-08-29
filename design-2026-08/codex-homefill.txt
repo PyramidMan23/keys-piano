@@ -1,0 +1,29 @@
+READ-ONLY, one focused design question. No writes, no skills, no agents.
+Repo C:\Users\markh\keys-piano. Evidence: design-2026-08/verify-20260829/
+live-explore-grid.png (the live desktop library) and night-library.png.
+
+Mark, 3AM: "I don't like how there's empty black space at the bottom of the
+home screen, especially in full screen. Feels like a waste and takes away
+from the immersion and colours and contrast. Make sure the home page fills
+the page and looks amazing with the colours of the album art of the songs."
+
+Context: the library is a fixed 1418x738 composition, fit-zoomed on both
+axes; on taller windows the surplus height is dead black below the strip.
+The freeplay screen already solved its own version by going elastic
+(full-viewport). The hero card already paints a glow sampled from the
+recommended song's album art.
+
+Claude's held position, judge it: (a) make the library ELASTIC vertically:
+the tile-grid band is the flexible region, taller windows show MORE tile
+rows, the bottom strip pins to the viewport bottom; (b) add an AMBIENT WASH:
+a page-wide, very low alpha radial wash behind the whole library, colour
+sampled from the hero song's art (the paintArtGlow pipeline exists), so
+black never reads as void; (c) do both. Risks to weigh: contrast law
+(true-black canvas is the app's language; a wash must stay below attention),
+Mark is colour-blind (never encode meaning in the wash), and elastic rows
+must not break the fixed drawn compositions of other screens.
+
+Answer with: VERDICT (a/b/c/other), the exact wash parameters you would law
+(alpha, radius, position, sampled colour treatment), the elastic rules
+(what grows, what pins, minimums), and any trap you foresee in the current
+renderTiles/applyCanonZoom machinery. Short and decisive.

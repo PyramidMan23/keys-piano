@@ -25,6 +25,11 @@ const SCREENS = [
   ['library', null, [
     'John Williams, arranged for two hands. Nothing banked yet, start on the easy tier.',
     'Skill 2 of 5. Stage: independent, one stage short of retained.',
+    'Build Cm7 and F7 from the symbol, left hand alone.',
+    'Independent for six days. Decays Thursday.',
+    '84 MIN · 4 DAYS', '+18% vs previous 7 days',
+    '6 of 10 min · time at the keys is the only currency',
+    '1 of 3 days · 3 days left',
   ]],
   ['play', 'song:Für Elise', [
     'TIER 3', 'B2 of B4', 'Section B, bars 17 to 32', 'Star Wars Main Title',
@@ -35,6 +40,10 @@ const SCREENS = [
     'Cm7 and F7 built clean on 24 and 26 August. Two of three needed.',
     'Still D.R.E., full left hand',
     'Chords from a symbol has been independent for six days',
+    '2 OF 5 SKILLS INDEPENDENT', 'RETAINED · HELD 12 DAYS',
+    '26 August, four days ago', 'Two clean builds of three',
+    'One clean run moves this to Guided',
+    'Move between chords without jumping',
   ]],
   ['echo', 'btn-echo', ['4, five notes', '+38ms', 'Four notes back, all correct, a little late on the last one.']],
   ['rhythm', 'btn-rhythm', ['Beat 5 landed early by 90ms']],
@@ -46,7 +55,7 @@ const SCREENS = [
     'Clean run, hard tier', 'Skill to independent', '24 Aug', '26 Aug',
   ]],
   ['takes', 'btn-takes', ['9 takes kept, 312MB of 500MB.', '28 Aug, easy tier', '2:14', '3:41']],
-  ['calibrate', 'btn-calibrate', ['Measured 42ms of output delay. Applied to scoring.', '42ms']],
+  ['calibrate', 'btn-calibrate', ['Measured 42ms of output delay. Applied to scoring.', '42ms', 'spread 31 to 55ms']],
   ['touch', 'btn-touch', ['mezzo forte, 78', '4 done']],
   ['keys12', 'btn-keys12', ['6 of 12', '3 of 12']],
   // the teacher task screen (board 11c, 2026-08-30): its drawn specimens are

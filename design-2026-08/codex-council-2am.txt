@@ -1,0 +1,52 @@
+READ-ONLY COUNCIL, design judgment round. Hard rules: READ-ONLY. No skills.
+No sub-reviewers. No writes. You may fetch http://localhost:4180 and read the
+repo. You are the second voice; Claude holds positions and will rule after
+you. Argue from what a paying user of a billion-dollar practice app expects.
+
+Repo: C:\Users\markh\keys-piano. Mark, 2AM, final prompt: "every part of the
+app perfect... composed and well thought out like a billion dollar app."
+
+THREE SURFACES ON TRIAL (screenshots exist as evidence in
+design-2026-08/verify-20260829/*.png and the boards in design/extracted/):
+
+1. THE LIBRARY BOTTOM STRIP (library-desktop board, modules TODAY / THIS
+   WEEK / PRACTICE LAST 7 DAYS / YOUR PATH). Mark: "I clicked on this week
+   and it changed its options? can we do anything better, nicer, more
+   intuitive and informative?" Mechanics: clicking a weekly mission COMMITS
+   it for the week (chooseWeekly in js/game.mjs, wired app.mjs onMission)
+   and the card collapses to the chosen one. Questions:
+   a. Is silent commit-on-click defensible? If not, what is the smallest
+      honest interaction (confirm? chosen chip + ghosts? undo window?).
+   b. What information is MISSING from each of the four cards that a serious
+      practice app would show (totals, trends, why-lines, next milestone)?
+   c. The YOUR PATH teaser truncates its skill name ("Chords from a ...").
+      Ruling on title treatment?
+   Claude's held positions: chosen mission stays listed with its unchosen
+   siblings ghosted and a change-until-progress affordance; practice card
+   gains a week total line; path teaser wraps to two lines, never truncates.
+
+2. MY PATH DESKTOP (11d, path-desktop). Evidence: five near-empty 250px-tall
+   skill cards with giant black middles, a hero card whose content occupies
+   maybe 15% of its area, WHAT IT UNLOCKS rows with baseline-misaligned
+   thumbnails, and a Technique drills row floating alone. What composition
+   would a top-tier app draw for: N skills with stages, one prescribed next
+   action with reason/evidence, lessons-behind-it checklist, unlocked songs?
+   Be specific enough to draw from.
+
+3. THE TASK PRE-START (11c, task-desktop, before Start is pressed). Evidence:
+   fix-task-keys.png: a prompt bar, a 550px black void, buttons right. The
+   running state is now strong (watermark symbol, note cells, THIS ROUND).
+   What should PRE-START look like so the void never exists? Claude's held
+   position: the working area shows the stave + a centred invitation (the
+   lesson's symbol set as a quiet watermark row plus the single Start CTA),
+   teach panel stays.
+
+Also: sweep the remaining screens quickly (echo, rhythm, improv, metronome,
+trophies, takes, calibrate, touch, keys12 desktops) and name ANY module that
+still reads as filler, dead space, or sample-quality rather than
+billion-dollar. One line each, only where you would actually change something.
+
+DELIVERABLE: numbered VERDICTS with concrete drawable specs (sizes, rows,
+words), AGREE/DISAGREE against Claude's held positions where stated, and a
+short ranked list of anything else standing between this app and "composed
+like a billion dollar app". No code, no writes: judgment only.

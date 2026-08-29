@@ -97,30 +97,27 @@ if (screen === 'library' || screen === 'library-desktop') {
     metronomeBpm: '140',
     voiceName: 'Grand',
     keyboard: { title: 'No keyboard', sub: 'Screen taps. Plug the P-45 in for the real thing.' },
+    // the CHOOSE-1 cards, seeded to the boards' own drawn choice
     quests: [
-      { id: 'q1', label: 'Master a section', xp: 60, done: false },
-      { id: 'q2', label: '10 real minutes, done', xp: 60, done: true },
-      { id: 'q3', label: 'One clean run', xp: 60, done: false },
+      { id: 'q1', label: 'Master a section', xp: 60, done: false, chosen: false },
+      { id: 'q2', label: '10 real minutes', xp: 60, done: false, chosen: true, line: '6 of 10 min · time at the keys is the only currency' },
+      { id: 'q3', label: 'One clean run', xp: 60, done: false, chosen: false },
     ],
     mission: {
-      each: '+150 each',
+      each: '+150',
       items: [
-        { id: 'm1', label: 'Make one song truly yours', done: false },
-        { id: 'm2', label: 'Bank two song proofs', done: false },
-        { id: 'm3', label: 'Three practice days', done: false },
+        { id: 'm1', label: 'Make one song truly yours', done: false, chosen: false },
+        { id: 'm2', label: 'Bank two song proofs', done: false, chosen: false },
+        { id: 'm3', label: 'Three practice days', done: false, chosen: true, xp: 150, line: '1 of 3 days · 3 days left' },
       ],
     },
+    practiceHead: '84 MIN · 4 DAYS',
+    practiceTrend: '+18% vs previous 7 days',
     // minutes chosen so the bars reproduce the design's own heights
     // (14, 38, 9, 52, 22, 0, 74 per cent, today tallest)
-    practice: [
-      { label: 'M', minutes: 14, isToday: false },
-      { label: 'T', minutes: 38, isToday: false },
-      { label: 'W', minutes: 9, isToday: false },
-      { label: 'T', minutes: 52, isToday: false },
-      { label: 'F', minutes: 22, isToday: false },
-      { label: 'S', minutes: 0, isToday: false },
-      { label: 'S', minutes: 74, isToday: true },
-    ],
+    // per-board: each composition drew its own sample heights
+    practice: (screen === 'library-desktop' ? [30, 62, 0, 48, 22, 0, 86] : [14, 38, 9, 52, 22, 0, 74])
+      .map((m, i) => ({ label: 'MTWTFSS'[i], minutes: m, isToday: i === 6 })),
     // the seventeen tools the design's own copy counts: "Learn 3, Practise 9,
     // Tools 5". Seeded so the All tools panel is rendered by the pixel gate
     // rather than only by the app.
@@ -140,6 +137,8 @@ if (screen === 'library' || screen === 'library-desktop') {
     path: {
       skill: 'Chords from a symbol',
       stage: 'Skill 2 of 5. Stage: independent, one stage short of retained.',
+      action: 'Build Cm7 and F7 from the symbol, left hand alone.',
+      evidence: 'Independent for six days. Decays Thursday.',
       stagesDone: 4, stagesTotal: 5,
     },
   });

@@ -1,4 +1,5 @@
 import { setTextKeeping, setHTMLKeeping, CANON_ON, hideRestingLayer } from './canon-mount.mjs';
+import { CANON } from './canon-templates.mjs';
 import { coverDataUrl } from './covers.mjs';
 import { bindPathSkills, bindPathLessons } from './canon-bind.mjs';
 // Teacher Loop v1 UI (11th council 2026-08-25). The Path screen renders one
@@ -157,7 +158,11 @@ export function installPath(ctx) {
               ?? 'Continue learning');
       }
     }
-    setTextKeeping($('path-evidence'), rx.evidence ? 'Why: ' + rx.evidence : '');
+    // the 756 column's one-line evidence; the desktop strip binds its own
+    // three cells below, and this write must not clobber one of them
+    if (!$('path-evidence')?.textContent.includes('LAST TESTED')) {
+      setTextKeeping($('path-evidence'), rx.evidence ? 'Why: ' + rx.evidence : '');
+    }
     $('path-go').textContent = rx.kind === 'diagnostic' ? '▶ Start the check-in'
       : rx.kind === 'review' ? '▶ Quick check'
       : rx.kind === 'assessment' ? '▶ Take the assessment'
@@ -166,6 +171,88 @@ export function installPath(ctx) {
       : rx.kind === 'repertoire' ? 'Five focused minutes'
       : rx.kind === 'done' ? '✓ Path complete' : '▶ Continue learning';
     $('path-go').disabled = rx.kind === 'done';
+    // ---- 11d value slots (2026-08-30 council redraw), each guarded so the
+    // phone board is untouched. Scoped writes: sample text is the address.
+    {
+      const scr = $('screen-path');
+      const leafBy = (rootEl, sample) => rootEl && [...rootEl.querySelectorAll('*')]
+        .find((e) => !e.children.length && e.textContent.trim() === sample && !e.closest('[data-legacy-screen]'));
+      const skillId = rx.skillId
+        ?? (rx.lessonId && TEACHER_LESSONS.find((l2) => l2.id === rx.lessonId)?.skillIds?.[0]) ?? null;
+      const STAGES2 = ['unseen', 'introduced', 'guided', 'independent', 'retained'];
+      const m2 = skillId ? (mastery()[skillId] ?? { stage: 'unseen', evidence: [] }) : null;
+      const rank2 = m2 ? STAGES2.indexOf(m2.stage) : -1;
+      // header statement
+      const head = leafBy(scr, '2 OF 5 SKILLS INDEPENDENT');
+      if (head) {
+        const n2 = SKILLS.filter((s3) => STAGES2.indexOf((mastery()[s3.id] ?? { stage: 'unseen' }).stage) >= 3).length;
+        head.textContent = `${n2} OF ${SKILLS.length} SKILLS INDEPENDENT`;
+      }
+      const reason = $('path-reason');
+      const act = leafBy(reason, 'Build Cm7 and F7 from the symbol, left hand alone.');
+      if (act) act.textContent = rx.reason ?? '';
+      const why = leafBy(reason, 'Independent for six days. It decays Thursday.');
+      if (why) why.textContent = rx.evidence ?? rx.reason ?? '';
+      const mile = leafBy(reason, 'One clean run moves this to Guided');
+      if (mile) {
+        mile.textContent = rank2 >= 0 && rank2 < 4
+          ? `A clean, unassisted pass moves this to ${STAGES2[rank2 + 1]}`
+          : rank2 === 4 ? 'Held. Reviews keep it alive.'
+          : rx.kind === 'diagnostic' ? 'The check-in builds your path from what you play'
+          : 'Keep going: the path re-plans after every attempt';
+      }
+      // the three-cell evidence strip
+      const ev = $('path-evidence');
+      const evRow = ev && leafBy(ev, 'LAST TESTED')?.parentElement?.parentElement;
+      if (leafBy(ev, 'LAST TESTED')) {
+        if (!ev.dataset.disp) ev.dataset.disp = ev.style.display || 'flex';
+        if (!m2 || !m2.lastTested) { ev.style.display = rx.kind === 'diagnostic' ? 'none' : ev.dataset.disp; }
+        else ev.style.display = ev.dataset.disp;
+        const lt = leafBy(ev, '26 August, four days ago');
+        if (lt) {
+          if (m2?.lastTested) {
+            const d2 = new Date(m2.lastTested);
+            const days = Math.max(0, Math.round((Date.now() - m2.lastTested) / 864e5));
+            lt.textContent = `${d2.getDate()} ${d2.toLocaleString('en', { month: 'long' })}, ${days === 0 ? 'today' : days === 1 ? 'yesterday' : days + ' days ago'}`;
+          } else lt.textContent = 'Not tested yet';
+        }
+        const rr = leafBy(ev, 'Two clean builds of three');
+        if (rr) {
+          const tail = (m2?.evidence ?? []).slice(-3);
+          rr.textContent = tail.length
+            ? `${tail.filter((e2) => e2.passed).length} clean of the last ${tail.length}`
+            : 'No attempts on record';
+        }
+        const tg = leafBy(ev, 'Three clean builds, no help');
+        if (tg) {
+          tg.textContent = rank2 >= 4 ? 'Still there after a break'
+            : rank2 === 3 ? 'Stay clean on a quick check'
+            : 'Clean builds without help';
+        }
+      }
+      // the two technique tiles are DRAWN SAMPLES with no data behind them:
+      // they stand down; the Technique drills button is the real door
+      {
+        const tiles2 = ['Move between chords without jumping', 'Left hand root, right hand third and seventh']
+          .map((t2) => leafBy(scr, t2)).filter(Boolean);
+        // hide the tiles' shared ROW (hiding only the tiles left their gap),
+        // and the kicker floats gapless above the real button
+        const row2 = tiles2.length ? tiles2.map((l2) => {
+          let t3 = l2;
+          for (let i2 = 0; i2 < 4 && t3.parentElement; i2++) t3 = t3.parentElement;
+          return t3;
+        }) : [];
+        const common = tiles2.length === 2 ? (() => {
+          let a2 = tiles2[0];
+          while (a2 && !a2.contains(tiles2[1])) a2 = a2.parentElement;
+          return a2;
+        })() : null;
+        if (common && common !== scr && !common.querySelector('button[id]')) common.style.display = 'none';
+        else for (const l2 of tiles2) { let t3 = l2; for (let i2 = 0; i2 < 3 && t3.parentElement; i2++) { t3 = t3.parentElement; if (t3.children.length >= 2 && t3.querySelector('i, b')) break; } t3.style.display = 'none'; }
+      }
+      const lk = leafBy(scr, 'LESSONS BEHIND THIS · 3 OF 5');
+      if (lk) lk.textContent = `LESSONS BEHIND THIS · ${Object.keys(doneLessons()).length} OF ${TEACHER_LESSONS.length}`;
+    }
     const nPlay = playableGroups(state, SONGS ?? []).length;
     // TWO compositions live behind #path-playable. The 756 column is a plain
     // count line. The desktop board draws WHAT IT UNLOCKS with two song rows,
@@ -191,8 +278,12 @@ export function installPath(ctx) {
           row.style.display = '';
           const img = row.querySelector('img');
           if (img) { img.src = coverDataUrl(song, 64); img.alt = ''; img.removeAttribute('data-art'); }
-          const leaf = [...row.querySelectorAll('*')].find((x) => !x.children.length && x.textContent.trim());
-          if (leaf) leaf.textContent = song.title;
+          const leaves2 = [...row.querySelectorAll('*')].filter((x) => !x.children.length && x.textContent.trim());
+          const title2 = leaves2.find((x) => /Fraunces/.test(x.getAttribute('style') ?? '')) ?? leaves2[0];
+          if (title2) title2.textContent = song.title;
+          // the requirement line is REAL data: which section proves the skill
+          const req = leaves2.find((x) => x !== title2 && /^(Unlocks|Proof|The payoff)/.test(x.textContent.trim()));
+          if (req) req.textContent = `${rep.payoff && e.songId === rep.payoff.songId && e.section === rep.payoff.section ? 'The payoff' : 'Proof'} · ${e.section}`;
         });
       } else {
         setTextKeeping(pp, nPlay > 0
@@ -206,8 +297,16 @@ export function installPath(ctx) {
     const STAGES = ['unseen', 'introduced', 'guided', 'independent', 'retained'];
     const skillRows = SKILLS.map((s2) => {
       const m2 = mastery()[s2.id] ?? { stage: 'unseen' };
-      return { name: s2.name, stage: m2.stage, title: s2.passRule,
-               filled: Math.max(0, STAGES.indexOf(m2.stage) + 1) };
+      const rank2 = STAGES.indexOf(m2.stage);
+      const now2 = Date.now();
+      let bottom = m2.stage;
+      if (rank2 >= 1 && m2.dueAt) {
+        if (m2.dueAt <= now2) bottom = `${m2.stage} · due today`;
+        else bottom = `${m2.stage} · ${rank2 === 4 ? 'held' : 'decays'} ${new Date(m2.dueAt).toLocaleString('en', { weekday: 'long' })}`;
+      }
+      if (rank2 === 4 && m2.lastTested) bottom = `${m2.stage} · held ${Math.max(1, Math.round((now2 - m2.lastTested) / 864e5))} days`;
+      return { name: s2.name, stage: m2.stage, title: s2.passRule, bottom,
+               filled: Math.max(0, rank2 + 1) };
     });
     if (!(CANON_ON && bindPathSkills(skillRows))) {
     $('path-skills').innerHTML = '<h3 class="path-sub">What you can do</h3>' +
@@ -403,7 +502,7 @@ export function installPath(ctx) {
     }
   }
 
-  function openTaskScreen(title, teach) {
+  function openTaskScreen(title, teach, ready) {
     stopPreview();
     show('task');
     $('now-playing').textContent = 'My path';
@@ -420,6 +519,27 @@ export function installPath(ctx) {
     $('task-show').hidden = true;
     $('task-easier').hidden = true;
     $('task-kb').textContent = 'Hide keyboard';
+    // the PRE-START INVITE (states board, council 2026-08-30): the stage is
+    // never a black void before Start. Lifted verbatim, freeze-offer pattern;
+    // any start removes it.
+    $('task-prestart-live')?.remove();
+    if (CANON_ON && (CANON['states'] ?? '').includes('task-prestart')) {
+      const t2 = document.createElement('template');
+      t2.innerHTML = CANON['states'];
+      const inv = t2.content.querySelector('#task-prestart')?.cloneNode(true);
+      if (inv) {
+        inv.id = 'task-prestart-live';
+        const q2 = [...inv.querySelectorAll('*')].find((e) => !e.children.length && /\?$/.test(e.textContent.trim()));
+        if (q2) q2.textContent = title;
+        const line2 = [...inv.querySelectorAll('*')].find((e) => !e.children.length && e.textContent.trim() === 'Four notes, root position, left hand.');
+        if (line2) line2.textContent = ready ?? '';
+        const cta = [...inv.querySelectorAll('*')].find((e) => !e.children.length && e.textContent.trim() === 'Start drill');
+        const c2 = cta?.closest('button') ?? cta?.parentElement;
+        if (c2) { c2.style.cursor = 'pointer'; c2.addEventListener('click', () => { $('task-prestart-live')?.remove(); $('task-start')?.click(); }); }
+        inv.style.margin = '48px auto';
+        $('task-prompt')?.insertAdjacentElement('afterend', inv);
+      }
+    }
   }
 
   // ---- lesson: teach -> guided -> transfer ----
@@ -431,7 +551,7 @@ export function installPath(ctx) {
     for (const sid of les.skillIds) markIntroduced(mastery(), sid, Date.now());
     store.save(state);
     phase = (state.teacherStep?.[les.id] === 'transfer') ? 'transfer' : 'guided';
-    openTaskScreen(les.title, les.teach);
+    openTaskScreen(les.title, les.teach, 'Pass rule: ' + les.passRule + '.');
     $('task-start').textContent = phase === 'transfer' ? '▶ Continue: on your own' : '▶ Start the guided go';
     $('task-show').hidden = false;
     $('task-easier').hidden = phase !== 'transfer';
@@ -1022,6 +1142,7 @@ export function installPath(ctx) {
   $('btn-path').addEventListener('click', openPath);
   $('path-home').addEventListener('click', () => { show('library'); ctx.renderLibrary(); });
   $('path-technique').addEventListener('click', openTechnique);
+  $('task-start').addEventListener('click', () => $('task-prestart-live')?.remove());
   $('task-back').addEventListener('click', openPath);
   $('task-show').addEventListener('click', showMe);
   $('task-easier').addEventListener('click', () => {

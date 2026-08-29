@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v69';   // parity wave: tempo wired, Performance run, chunk size+off, JOURNEY strip, note style, tap sound, range contracts, form schedule
+const VERSION = 'keys-v70';   // the 3AM wave: choose-1 cards, elastic library + art wash, My Path rebuilt, task invite, tier picker, voices, conductor
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   'js/app.mjs', 'js/engine.mjs', 'js/midi.mjs', 'js/falls.mjs', 'js/score.mjs', 'js/songs.mjs', 'js/audio.mjs', 'js/echo.mjs',

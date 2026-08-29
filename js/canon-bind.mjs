@@ -79,17 +79,28 @@ export const bindPathSkills = (skills) =>
     // word; anything else (the kicker) is the design's own and stays.
     const leaves = leafTexts(row);
     const num = leaves.find((l) => /^\d+$/.test(l.textContent.trim()));
-    const state = leaves.find((l) => STAGE_WORDS.includes(l.textContent.trim()));
+    // the 11d cards carry an UPPERCASE stage chip and an uppercase bottom
+    // label ("INDEPENDENT · DECAYS THURSDAY"); the phone rows a lowercase word
+    const isStageWord = (t) => STAGE_WORDS.includes(t.trim().toLowerCase());
+    const chip = leaves.find((l) => isStageWord(l.textContent) && l.textContent.trim() === l.textContent.trim().toUpperCase());
+    const bottom = leaves.find((l) => l !== chip
+      && STAGE_WORDS.some((w) => l.textContent.trim().toLowerCase().startsWith(w))
+      && l.textContent.trim() === l.textContent.trim().toUpperCase());
+    const state = leaves.find((l) => isStageWord(l.textContent) && l !== chip && l !== bottom);
     const name = leaves.find((l) => /Fraunces/.test(l.getAttribute('style') ?? ''))
-      ?? leaves.find((l) => l !== num && l !== state);
+      ?? leaves.find((l) => l !== num && l !== state && l !== chip && l !== bottom);
     if (num) num.textContent = String(i + 1);
     if (name) name.textContent = s.name;
+    if (chip) chip.textContent = String(s.stage).toUpperCase();
+    if (bottom) bottom.textContent = (s.bottom ?? s.stage).toUpperCase();
     if (state) state.textContent = s.stage;
     setPips(s.filled ?? 0);
     if (s.title) row.title = s.title;
+    if (s.onOpen) { row.style.cursor = 'pointer'; row.addEventListener('click', s.onOpen); }
   }, (s, i, templates) => {
     // the drawn card whose STATE matches carries the right shape for the word
-    const idx = templates.findIndex((t) => leafTexts(t).some((l) => l.textContent.trim() === s.stage));
+    const want = String(s.stage).toLowerCase();
+    const idx = templates.findIndex((t) => leafTexts(t).some((l) => l.textContent.trim().toLowerCase().startsWith(want)));
     return idx >= 0 ? idx : Math.min(i, templates.length - 1);
   });
 
@@ -97,16 +108,24 @@ export const bindPathLessons = (lessons) =>
   bindRows('path-lessons', lessons, (row, l, i, { cells }) => {
     // same structure-aware rule: the desktop rows are [check glyph, name] with
     // no numeral and no state word; writing by index ate the lesson names
-    const LESSON_STATES = ['Complete', 'Ready', 'Locked'];
+    const LESSON_STATES = ['Complete', 'Ready', 'Locked', 'Due', 'Not started'];
+    // the 11d checklist speaks Due / Not started; the app speaks Ready / Locked
+    const BOARD_WORD = { Ready: 'Due', Locked: 'Not started' };
     const leaves = leafTexts(row);
     const num = leaves.find((x) => /^\d+$/.test(x.textContent.trim()));
     const state = leaves.find((x) => LESSON_STATES.includes(x.textContent.trim()));
     const name = leaves.find((x) => x !== num && x !== state);
+    const boardSpeaksDue = state && ['Due', 'Not started'].includes(state.textContent.trim());
     if (num) num.textContent = String(i + 1);
     if (name) name.textContent = l.title;
-    if (state) state.textContent = l.state;
+    if (state) state.textContent = boardSpeaksDue ? (BOARD_WORD[l.state] ?? l.state) : l.state;
     row.toggleAttribute('disabled', !!l.locked);
     if (l.onOpen && !l.locked) { row.style.cursor = 'pointer'; row.addEventListener('click', l.onOpen); }
+  }, (l, i, templates) => {
+    // deal each lesson the drawn row whose STATE SHAPE matches its truth
+    const words = [l.state, { Ready: 'Due', Locked: 'Not started' }[l.state]].filter(Boolean);
+    const idx = templates.findIndex((t) => leafTexts(t).some((x) => words.includes(x.textContent.trim())));
+    return idx >= 0 ? idx : Math.min(i, templates.length - 1);
   });
 
 // ---- trophies and the XP ledger --------------------------------------------

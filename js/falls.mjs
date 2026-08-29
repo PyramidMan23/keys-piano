@@ -37,6 +37,10 @@ const DECK = {
   sustain: { hz: 2.2, aLo: 0.55, aHi: 0.75, scanStep: 6, scanPx: 1 },
   // panel 07, a long clean run: a faint ambient wash from tier 3, never brighter
   wash: { fromTier: 2, alpha: 0.12 },
+  // panel 09, a long note approaching: the press and the ring. "The tail is
+  // the ring, not a hold. Only the press is judged." (Mark, 2026-08-30: the
+  // Fur Elise bass pills read as hold-this-for-six-beats.)
+  longNote: { headBeats: 1.0, tailAlpha: 0.30, thresholdBeats: 1.25, scanStep: 6, scanPx: 1, edgePx: 1, edgeAlpha: 0.55 },
 };
 
 const WHITE_PCS = [0, 2, 4, 5, 7, 9, 11];
@@ -398,23 +402,51 @@ export class FallsView {
         ctx.restore();
         ctx.globalAlpha = 1;
       }
+      // panel 09: a long note splits into the PRESS HEAD (the bottom beat,
+      // drawn exactly as pills always drew) and the RING TAIL above it, dim
+      // and scanlined so it reads as sound continuing, never a hold. The
+      // glow sprite above already stamps at the pill bottom: head only.
+      const LN = DECK.longNote;
+      const isLong = n.d > LN.thresholdBeats;
+      const headH = isLong ? Math.min(bh, Math.max(12, LN.headBeats * pxPerBeat)) : bh;
+      const headY = y1 + bh - headH;
+      const paintPill = (py, ph) => {
+        if (n.h === 'R') {
+          const grad = ctx.createLinearGradient(0, y1, 0, y1 + bh);
+          grad.addColorStop(0, P.main);
+          grad.addColorStop(1, nearLine ? P.bright : P.deep);
+          ctx.fillStyle = grad;
+          roundRect(ctx, x, py, bw, ph, r); ctx.fill();
+        } else {
+          ctx.fillStyle = P.fillDim;
+          roundRect(ctx, x, py, bw, ph, r); ctx.fill();
+          ctx.strokeStyle = nearLine ? P.bright : P.main;
+          ctx.lineWidth = 2;
+          roundRect(ctx, x + 1, py + 1, bw - 2, ph - 2, r); ctx.stroke();
+        }
+      };
       ctx.save();
-      if (n.h === 'R') {
-        ctx.shadowColor = P.glow;
-        ctx.shadowBlur = nearLine ? 36 : 16;
-        const grad = ctx.createLinearGradient(0, y1, 0, y1 + bh);
-        grad.addColorStop(0, P.main);
-        grad.addColorStop(1, nearLine ? P.bright : P.deep);
-        ctx.fillStyle = grad;
-        roundRect(ctx, x, y1, bw, bh, r); ctx.fill();
-      } else {
-        ctx.shadowColor = P.glow;
-        ctx.shadowBlur = nearLine ? 36 : 16;
-        ctx.fillStyle = P.fillDim;
-        roundRect(ctx, x, y1, bw, bh, r); ctx.fill();
-        ctx.strokeStyle = nearLine ? P.bright : P.main;
-        ctx.lineWidth = 2;
-        roundRect(ctx, x + 1, y1 + 1, bw - 2, bh - 2, r); ctx.stroke();
+      if (isLong) {
+        // the ring tail: no shadow glow (the board: "tail adds none")
+        ctx.globalAlpha = LN.tailAlpha;
+        paintPill(y1, bh - headH + r);
+        ctx.globalAlpha = 1;
+        // scanline texture, background-coloured cuts every 6px
+        ctx.fillStyle = COLORS.bg;
+        for (let sy = headY - LN.scanStep; sy > y1; sy -= LN.scanStep) {
+          ctx.fillRect(x, sy, bw, LN.scanPx);
+        }
+      }
+      ctx.shadowColor = P.glow;
+      ctx.shadowBlur = nearLine ? 36 : 16;
+      paintPill(headY, headH);
+      if (isLong) {
+        // the 1px edge at the split
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = LN.edgeAlpha;
+        ctx.fillStyle = P.main;
+        ctx.fillRect(x, headY, bw, LN.edgePx);
+        ctx.globalAlpha = 1;
       }
       ctx.restore();
 
@@ -424,12 +456,14 @@ export class FallsView {
       if (this.cueLetters) {
         ctx.textAlign = 'center';
         const letter = LETTERS[n.m % 12];
-        if (bh > 24) {
+        if (headH > 24) {
+          // the label lives in the PRESS HEAD: on a six-beat pill a centred
+          // letter floated mid-tail, exactly where nothing is played
           ctx.fillStyle = n.h === 'R' ? '#141414' : handPalette(this.noteStyle, 'L').bright;
           ctx.font = `bold ${Math.min(13, bw * 0.5)}px system-ui`;
-          ctx.fillText(letter, x + bw / 2, y1 + bh / 2 + 4);
+          ctx.fillText(letter, x + bw / 2, headY + headH / 2 + 4);
           if (n.f) {
-            if (bh > 44) {
+            if (headH > 44) {
               ctx.font = '10px system-ui';
               ctx.fillStyle = n.h === 'R' ? 'rgba(20,20,20,0.7)' : 'rgba(194,244,255,0.7)';
               ctx.fillText(String(n.f), x + bw / 2, y1 + bh - 7);

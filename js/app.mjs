@@ -9,7 +9,7 @@ import { Engine, medianOffset, chunkRange, timingSummary, biasText } from './eng
 import { MidiInput } from './midi.mjs';
 import { FallsView, LOW, HIGH, COLORS } from './falls.mjs';
 import { ScoreView } from './score.mjs';
-import { playPreview, stopPreview, setVoiceMode, voiceInfo, soundModeNext, tapSoundActive } from './audio.mjs';
+import { playPreview, stopPreview, setVoiceMode, voiceInfo, voiceModeLabel, voiceModeNext, soundModeNext, tapSoundActive } from './audio.mjs';
 import { pickPhrase, EchoRound, TransposeRound } from './echo.mjs';
 import { MEM_STAGES, memCues, memAdvance, randomStartBar } from './memory.mjs';
 import { makeExercise, judgeSight } from './sight.mjs';
@@ -25,7 +25,7 @@ import { analyzePedal, pedalNotes } from './pedal.mjs';
 import { analyzeArticulation, articulationSummary } from './artic.mjs';
 import { analyzeVoicing, voicingText } from './voicing.mjs';
 import { groupSongs, classifyGroups, filterExplore } from './library.mjs';
-import { prescribe, qualifiesPlayable, recordPlayableRun, PROOF_PASS } from './teacher.mjs';
+import { prescribe, qualifiesPlayable, recordPlayableRun, PROOF_PASS, SKILL_BY_ID, TEACHER_LESSONS, STAGES } from './teacher.mjs';
 import {
   grantXp, totalXp, gameLevel, questsFor, chooseQuest, settleQuest,
   isoWeek, weeklyOptions, chooseWeekly, settleWeekly,
@@ -573,9 +573,13 @@ function canonLibraryCtx() {
   const q = libQuery.trim();
   const fameGroups = HALL_OF_FAME.map((h2) => groups.get(h2.group)).filter(Boolean);
   const sortMode2 = state.lib.exploreSort === 'diff' ? 'diff' : 'az';
+  // Explore is the ALL SONGS shelf (Mark, 2026-08-30: "make sure explore has
+  // all our songs in it, that's our all songs area"): every group, not just
+  // the untouched remainder, so the sleeve wall from here is the whole catalogue
+  const allGroups = [...groups.values()];
   const exploreSorted = sortMode2 === 'diff'
-    ? [...explore].sort((a2, b2) => difficultyScore(a2[0]) - difficultyScore(b2[0]))
-    : explore;
+    ? [...allGroups].sort((a2, b2) => difficultyScore(a2[0]) - difficultyScore(b2[0]))
+    : [...allGroups].sort((a2, b2) => a2[a2.length - 1].title.localeCompare(b2[b2.length - 1].title));
   const LISTS = {
     learning: { rows: learning, title: 'LEARNING, WEAKEST FIRST', word: 'Learning' },
     repertoire: { rows: repertoire, title: 'REPERTOIRE', word: 'Repertoire' },
@@ -599,14 +603,14 @@ function canonLibraryCtx() {
   // fixed band and tiles sat ON TOP of the practice chart and the form check
   // (Mark's screenshot, 2026-08-29). The binder contains the overflow too, but
   // the default page should fill the frame it was drawn for.
-  const pageSize = canonLibraryScreen() === 'library-desktop' ? 9 : 5;
+  const pageSize = canonLibraryScreen() === 'library-desktop' ? libCapacity() : 5;
   const shown = state.lib.canonShowAll || q ? active.rows : active.rows.slice(0, pageSize);
 
   return {
     level: { n: lvl.level, xp: lvl.into, next: lvl.next },
     streak: { current: r.current, best: r.best },
     counts: { learning: learning.length, repertoire: repertoire.length,
-              fame: HALL_OF_FAME.length, explore: explore.length },
+              fame: HALL_OF_FAME.length, explore: allGroups.length },
     prescription: heroSong
       ? { title: heroSong.title, reason: rx.evidence ?? rx.reason, song: heroSong,
           // the hero's state chip carries the recommended GROUP's real state
@@ -627,7 +631,7 @@ function canonLibraryCtx() {
     // the rail's live readouts
     carryOn: lastSong ? { title: 'Resume the session', sub: lastSong.title } : null,
     metronomeBpm: $('met-bpm')?.value ?? '100',
-    voiceName: voiceInfo().mode === 'synth' ? 'Synth' : 'Grand',
+    voiceName: voiceModeLabel(voiceInfo().mode),
     // the app's single source of truth for whether a keyboard is plugged in
     keyboard: ($('midi-status')?.dataset.connected === 'true')
       ? { title: 'P-45 connected', sub: 'Real keys, real velocity.' }
@@ -647,16 +651,40 @@ function canonLibraryCtx() {
     },
     onFreezeNo: () => { state.freezeDeclined = today; store.save(state); renderLibrary(); },
 
-    // the quests and the weekly mission the canon absorbed
-    quests: questsFor(state, today).map((q) => ({ id: q.id, label: q.label, xp: q.xp, done: !!q.done, why: q.why })),
+    // the CHOOSE-1 cards (council 2026-08-30): every option visible, the
+    // chosen one expanded with a LIVE line, ghosts clickable until paid
+    quests: (() => {
+      const ds = (state.dayStats ?? {})[today] ?? {};
+      const prog = {
+        minutes10: `${Math.min(10, Math.round(ds.minutes ?? 0))} of 10 min`,
+        'clean-run': (ds.cleanRuns ?? 0) >= 1 ? 'clean run in' : null,
+        'train-section': (ds.sectionsMastered ?? 0) >= 1 ? 'section mastered' : null,
+        proof: (ds.proofsBanked ?? 0) >= 1 ? 'proof banked' : null,
+        review: (ds.reviewsPassed ?? 0) >= 1 ? 'review passed' : null,
+      };
+      return questsFor(state, today).map((q) => ({
+        id: q.id, label: q.label, xp: q.xp, done: !!q.done, why: q.why, chosen: !!q.active,
+        line: [prog[q.id], q.why].filter(Boolean).join(' · '),
+      }));
+    })(),
     mission: (() => {
       const week = isoWeek(new Date());
       const opts = weeklyOptions(state, week);
-      const chosen = state.weekly && !state.weekly.done ? state.weekly : null;
-      const items = chosen
-        ? opts.filter((m) => m.id === chosen.id).map((m) => ({ id: m.id, label: m.label, done: !!m.done }))
-        : opts.map((m) => ({ id: m.id, label: m.label, done: false }));
-      return { each: items.length > 1 ? `+${opts[0]?.xp ?? 150} each` : `+${opts[0]?.xp ?? 150}`, items, week };
+      const chosenId = state.weekly?.week === week ? state.weekly.id : null;
+      const dow = new Date().getDay();
+      const daysLeft = dow === 0 ? 1 : 8 - dow;
+      const daysIn = (state.days ?? []).filter((d) => isoWeek(new Date(d + 'T12:00:00')) === week).length;
+      const proofsIn = Object.values(state.pathProofs ?? {}).filter((p) => p.at && isoWeek(new Date(p.at)) === week).length;
+      const prog = {
+        days3: `${daysIn} of 3 days`,
+        proofs2: `${proofsIn} of 2 proofs`,
+        playable1: null,
+      };
+      const items = opts.map((m) => ({
+        id: m.id, label: m.label, xp: m.xp, done: !!m.done, why: m.why, chosen: m.id === chosenId,
+        line: [prog[m.id], `${daysLeft} day${daysLeft === 1 ? '' : 's'} left`].filter(Boolean).join(' · '),
+      }));
+      return { each: `+${opts[0]?.xp ?? 150}`, items, week };
     })(),
 
     // practice, last 7 days, oldest first, in real minutes
@@ -673,22 +701,56 @@ function canonLibraryCtx() {
       }
       return out;
     })(),
+    // the chart's total and trend (council: a chart is decorative without them)
+    practiceHead: (() => {
+      const pmin = state.pmin ?? {};
+      const d = new Date();
+      let total = 0, days = 0;
+      for (let i = 0; i < 7; i++) { const k = localDay(d); const m = pmin[k] ?? 0; total += m; if (m > 0) days++; d.setDate(d.getDate() - 1); }
+      return `${Math.round(total)} MIN · ${days} DAY${days === 1 ? '' : 'S'}`;
+    })(),
+    practiceTrend: (() => {
+      const pmin = state.pmin ?? {};
+      const d = new Date();
+      let cur = 0, prev = 0;
+      for (let i = 0; i < 14; i++) { const k = localDay(d); const m = pmin[k] ?? 0; if (i < 7) cur += m; else prev += m; d.setDate(d.getDate() - 1); }
+      // a tiny baseline makes the percentage absurd (+1599% on Mark's own
+      // screen): under 15 baseline minutes the comparison is not a trend yet
+      if (prev < 15) return cur > 0 ? 'Building the baseline' : 'First full week';
+      const pct = Math.round(((cur - prev) / prev) * 100);
+      if (pct > 300) return 'Way up on last week';
+      if (pct < -75) return 'Way down on last week';
+      return `${pct >= 0 ? '+' : ''}${pct}% vs previous 7 days`;
+    })(),
 
-    // The path teaser's headline and reason come straight from the one brain.
-    // The stage count is deliberately NOT supplied: prescribe() does not return
-    // one, and the binder leaves the design's own pips and label alone rather
-    // than print a number nobody computed.
-    path: { skill: rx.reason, stage: rx.evidence ?? '' },
+    // The four-line teaser (council): skill name, prescribed action, evidence,
+    // and the stage pips only when a real skill is on trial.
+    path: (() => {
+      const skillId = rx.skillId
+        ?? (rx.lessonId && TEACHER_LESSONS.find((l2) => l2.id === rx.lessonId)?.skillIds?.[0]);
+      const skillName = (skillId && SKILL_BY_ID[skillId]?.name)
+        ?? ({ diagnostic: 'The check-in', assessment: 'The assessment', done: 'Path complete' }[rx.kind] ?? 'Continue learning');
+      const stage = skillId ? (state.mastery?.[skillId]?.stage ?? 'unseen') : null;
+      const rank = stage ? STAGES.indexOf(stage) : -1;
+      return {
+        skill: skillName, action: rx.reason, evidence: rx.evidence ?? '',
+        stage: rx.evidence ?? '',
+        stagesDone: rank >= 0 ? rank + 1 : null,
+        stagesTotal: rank >= 0 ? STAGES.length : null,
+      };
+    })(),
 
     onRun: () => runPrescription(rx),
     onShowMore: () => { state.lib.canonShowAll = true; store.save(state); renderLibrary(); },
     onQuest: (q) => { chooseQuest(state, today, q.id); store.save(state); renderLibrary(); },
     onMission: (m) => { chooseWeekly(state, isoWeek(new Date()), m.id); settleGame(); renderLibrary(); },
     onPath: () => runPrescription(rx),
-    // re-render after the legacy handler saves, so the drawn module dismisses
-    onFormDone: () => { $('form-done')?.click(); renderLibrary(); },
-    onFormSnooze: () => { $('form-snooze')?.click(); renderLibrary(); },
-    formCheckDue: formDue(state.formLast ?? null, state.days ?? []) && state.formSnooze !== today,
+    // DEMOTED to an on-demand tool (Mark's word, 2026-08-30): the card never
+    // auto-appears; the All tools "Form check" row summons it, Done or Not
+    // today puts it away. formDue no longer nags anyone.
+    onFormDone: () => { $('form-done')?.click(); state.formOnDemand = false; store.save(state); renderLibrary(); },
+    onFormSnooze: () => { $('form-snooze')?.click(); state.formOnDemand = false; store.save(state); renderLibrary(); },
+    formCheckDue: state.formOnDemand === true,
     onChooseAnother: () => { state.lib.explore = true; store.save(state); renderLibrary(); },
     onSearch: (q) => { libQuery = q; renderLibrary(); },
     onTab: (sec) => { state.lib.canonTab = sec; state.lib.canonShowAll = false; store.save(state); renderLibrary(); },
@@ -721,6 +783,7 @@ function canonLibraryCtx() {
         'Touch diagnostic': { line: state.touch?.date ? `Calibrated ${state.touch.date}.` : 'Not run yet. Teaches the app your touch.', done: !!state.touch?.date },
         'Lessons': { done: Object.keys(state.lessons ?? {}).length > 0 },
         'My path': { done: Object.keys(state.mastery ?? {}).length > 0 },
+        'Form check': { line: state.formLast ? `Last done ${state.formLast}.` : 'A 60 second posture self-check, on your terms.', done: !!state.formLast },
       };
       return out;
     })(),
@@ -748,6 +811,91 @@ function canonLibraryCtx() {
   };
 }
 
+// ---- the ELASTIC library + AMBIENT WASH (council law, 2026-08-30) ----------
+// Mark: "the home page fills the page and looks amazing with the colours of
+// the album art." Codex verdict (c): the tile band flexes by WHOLE rows, the
+// dashboard pins to the viewport bottom, and a page-wide wash sampled from
+// the hero art keeps black from reading as void. All values are the
+// council's law, recorded in CANON-GAPS.
+const LIB_ROW_PITCH = 167;   // the board's own row pitch (y329 - y162)
+function libCapacity() {
+  const z = Math.min(1, window.innerWidth / 1418);
+  const extra = Math.max(0, Math.floor((window.innerHeight / z - 738) / LIB_ROW_PITCH));
+  return 9 + extra * 5;   // whole rows only, five-song increments
+}
+function applyLibraryAtmosphere() {
+  const host = $('screen-library');
+  const card = host?.firstElementChild;
+  const frame = card?.firstElementChild;
+  if (!frame || !frame.style.height) return;      // phone board: fixed column
+  const z = Math.min(1, window.innerWidth / 1418);
+  const target = Math.max(738, Math.round(window.innerHeight / z));
+  frame.style.height = target + 'px';
+  // the hero/tile band is the flexible region; find it as the frame child
+  // containing the grid's show-more control
+  const grid = frame.querySelector('[data-lib-grid]');
+  if (grid) {
+    // grow the grid's whole ancestry so the surplus height becomes tile rows,
+    // and let the column size to its content within it
+    for (let el = grid; el && el !== frame; el = el.parentElement) {
+      el.style.flex = '1 1 auto';
+      el.style.minHeight = '0';
+    }
+    grid.style.height = 'auto';
+    grid.style.maxHeight = 'none';
+  }
+  // the ambient wash: one layer, colour from the hero art, under everything
+  let wash = frame.querySelector(':scope > [data-lib-wash]');
+  if (!wash) {
+    wash = document.createElement('i');
+    wash.dataset.libWash = '1';
+    // data-bound atmosphere carries the frame's own stamp, the improv-options rule
+    if (frame.dataset.canonStamp !== undefined) wash.dataset.canonStamp = frame.dataset.canonStamp;
+    wash.style.cssText = 'position:absolute;inset:0;pointer-events:none;display:block';
+    frame.style.position = 'relative';
+    frame.insertBefore(wash, frame.firstChild);
+  }
+  const heroImg = [...frame.querySelectorAll('img')].find((i2) => i2.getBoundingClientRect().width > 100);
+  const paint = (el) => {
+    try {
+      const c = document.createElement('canvas');
+      c.width = c.height = 8;
+      const x = c.getContext('2d');
+      x.drawImage(el, 0, 0, 8, 8);
+      const d = x.getImageData(0, 0, 8, 8).data;
+      let r = 0, g = 0, b = 0;
+      for (let i2 = 0; i2 < d.length; i2 += 4) { r += d[i2]; g += d[i2 + 1]; b += d[i2 + 2]; }
+      const n = d.length / 4; r /= n; g /= n; b /= n;
+      // to HSL, clamp sat 40-72 and light 42-58 (council law); grey art
+      // falls back to the app's own muted ink at the low peak
+      const mx = Math.max(r, g, b) / 255, mn = Math.min(r, g, b) / 255;
+      const l = (mx + mn) / 2;
+      const sat = mx === mn ? 0 : (mx - mn) / (1 - Math.abs(2 * l - 1));
+      let h = 0;
+      const rr = r / 255, gg = g / 255, bb = b / 255;
+      if (mx !== mn) {
+        if (mx === rr) h = ((gg - bb) / (mx - mn)) % 6;
+        else if (mx === gg) h = (bb - rr) / (mx - mn) + 2;
+        else h = (rr - gg) / (mx - mn) + 4;
+        h = Math.round(h * 60); if (h < 0) h += 360;
+      }
+      const col = sat < 0.10 ? '120, 140, 130'
+        : (() => {
+          const s2 = Math.min(0.72, Math.max(0.40, sat)), l2 = Math.min(0.58, Math.max(0.42, l));
+          const c2 = (1 - Math.abs(2 * l2 - 1)) * s2, x2 = c2 * (1 - Math.abs(((h / 60) % 2) - 1)), m2 = l2 - c2 / 2;
+          const [r2, g2, b2] = h < 60 ? [c2, x2, 0] : h < 120 ? [x2, c2, 0] : h < 180 ? [0, c2, x2]
+            : h < 240 ? [0, x2, c2] : h < 300 ? [x2, 0, c2] : [c2, 0, x2];
+          return [r2 + m2, g2 + m2, b2 + m2].map((v) => Math.round(v * 255)).join(', ');
+        })();
+      const peak = sat < 0.10 ? '.035' : '.065';
+      wash.style.background = `radial-gradient(ellipse 82% 88% at 24% 38%, rgba(${col},${peak}) 0%, rgba(${col},.035) 38%, rgba(${col},.012) 62%, transparent 82%)`;
+    } catch { wash.style.background = 'none'; }
+  };
+  if (heroImg) {
+    if (heroImg.complete && heroImg.naturalWidth) paint(heroImg);
+    else heroImg.addEventListener('load', () => paint(heroImg), { once: true });
+  }
+}
 function renderLibrary() {
   // The canon is a DIFFERENT COMPOSITION, not a reskin: it absorbs the game
   // row, the recommendation, the quests, the form card, the practice chart and
@@ -756,6 +904,7 @@ function renderLibrary() {
   if (CANON_ON) {
     syncTopbar(active);
     renderCanonLibrary($('screen-library'), canonLibraryCtx());
+    applyLibraryAtmosphere();
     return;
   }
   renderGameRow();
@@ -1146,16 +1295,9 @@ function loopFrame(t) {
     <span class="h-wrong">Wrong <b>${s.wrong}</b></span>` + paceHtml() + pedalHtml());
   // the wide play board's readout column mirrors the same numbers
   window.__viewMode = viewMode;
-  // the deck takes the screen the moment the run is real: first scored note in,
-  // chrome out (Mark: "minimize it when we start playing"). Escape or the
-  // CONTROLS rail brings the column back; finishSong restores it.
-  if ((points > 0 || combo > 0 || s.wrong > 0) && document.querySelector('[data-immersed=""], [data-wide-play]')) {
-    const wp = $('screen-play');
-    if (wp?.dataset.widePlay === '1' && wp.firstElementChild?.dataset.immersed !== '1' && !wp.dataset.autoImmersed) {
-      wp.dataset.autoImmersed = '1';   // once per run; Escape must not fight the player
-      window.__deckImmersion?.(true);
-    }
-  }
+  // AUTO-immersion is DEAD (Mark, 2026-08-30: "the zooming in when we start
+  // playing is annoying and throws me off"). Immersion is now his gesture
+  // only: double-click the deck in, double-click / Escape / CONTROLS rail out.
   syncWidePlay({
     accuracy: engine.accuracy(),
     combo: combo > 0 ? combo : 0,
@@ -1171,7 +1313,6 @@ function loopFrame(t) {
 
 function finishSong() {
   window.__deckImmersion?.(false);   // the run is over; give the controls back
-  { const wp = $('screen-play'); if (wp) delete wp.dataset.autoImmersed; }
   if (engine.__finishHandled) return; // pumped frames must not double-count
   engine.__finishHandled = true;
   if (takeRec) finishTake(); // a finished song closes and shelves its take
@@ -2477,15 +2618,16 @@ function calVerdict(ms) {
 // samples or the synth fallback, and taps toggle a forced A/B comparison.
 function voiceLabel() {
   const v = voiceInfo();
-  if (v.mode === 'synth') return 'Voice: Synth (A/B test)';
+  if (v.mode === 'synth') return 'Voice: Synth';
+  const name = voiceModeLabel(v.mode) === 'Felt' ? 'Felt grand' : 'Grand piano';
   const status = v.loaded === 0 ? 'loading on first play' : `${v.loaded}/${v.total} loaded`;
   const fb = v.lastVoice === 'synth' && v.loaded < v.total ? ' ⚠ FALLBACK ACTIVE' : '';
-  return `Voice: Grand piano (${status})${fb}`;
+  return `Voice: ${name} (${status})${fb}`;
 }
 function refreshVoiceBtn() { $('btn-voice').textContent = voiceLabel(); }
 setVoiceMode(localStorage.getItem('keys-voice') || 'auto');
 $('btn-voice').addEventListener('click', () => {
-  const next = voiceInfo().mode === 'synth' ? 'auto' : 'synth';
+  const next = voiceModeNext(voiceInfo().mode);
   setVoiceMode(next);
   localStorage.setItem('keys-voice', next);
   refreshVoiceBtn();
@@ -2501,6 +2643,10 @@ $('btn-calibrate').addEventListener('click', () => {
   $('now-playing').textContent = 'Latency calibration';
   const cur = state.calOffsetMs || 0;
   setRichText($('cal-status'), `Currently stored: <b>${cur}ms</b> (${calVerdict(cur)}). Tap any key each time the bar lands to redo.`);
+  if (CANON_ON) {
+    const sp = [...$('screen-calibrate').querySelectorAll('*')].find((e) => !e.children.length && /^spread /.test(e.textContent.trim()));
+    if (sp) sp.style.visibility = 'hidden';   // a sample range must not outrank a real run
+  }
   // the board's meter face carries a drawn readout chip stuck at its sample
   // 42ms; with a different stored offset that is a lie in numerals
   // (sample-bleed audit). Bind every ms readout on the face to the truth.
@@ -2539,6 +2685,15 @@ function runCalibration() {
     if (offsets.length >= 8) {
       calRunning = false;
       state.calOffsetMs = medianOffset(offsets);
+      // the drawn SPREAD annotation (board 11l) speaks only after a real run
+      if (CANON_ON) {
+        const sp = [...$('screen-calibrate').querySelectorAll('*')].find((e) => !e.children.length && /^spread /.test(e.textContent.trim()));
+        if (sp) {
+          const lo = Math.round(Math.min(...offsets)), hi = Math.round(Math.max(...offsets));
+          sp.textContent = `spread ${lo} to ${hi}ms`;
+          sp.style.visibility = 'visible';
+        }
+      }
       state.calibratedAt = Date.now();
       awardXp('calibrated', 'cal');
       syncInputChip();
@@ -2735,6 +2890,30 @@ function renderTakes() {
   $('takes-usage').textContent = takes.length
     ? `${u.count} of 20 shelf slots · ${u.mb} MB of audio`
     : 'No takes yet. Hit Record take on any song.';
+  // the SELECTED TAKE inspector (drawn 2026-08-30) binds the newest take;
+  // with none, the module stands down rather than wearing its samples
+  if (CANON_ON) {
+    const host = $('screen-takes');
+    const kick = host && [...host.querySelectorAll('*')].find((e) => !e.children.length && e.textContent.trim() === 'SELECTED TAKE');
+    if (kick) {
+      let mod = kick.parentElement;
+      while (mod && mod.parentElement && mod.querySelectorAll('span').length < 4) mod = mod.parentElement;
+      if (!mod.dataset.disp) mod.dataset.disp = mod.style.display || 'block';
+      if (!takes.length) { mod.style.display = 'none'; }
+      else {
+        mod.style.display = mod.dataset.disp;
+        const t0 = takes[0];
+        const when = new Date(t0.at);
+        const leaves = [...mod.querySelectorAll('*')].filter((e) => !e.children.length && e.textContent.trim() && e !== kick);
+        const title = leaves.find((e) => /Fraunces/.test(e.getAttribute('style') ?? '')) ?? leaves[0];
+        const meta = leaves.find((e) => /,/.test(e.textContent) && e !== title);
+        const len = leaves.find((e) => /^\d+:\d\d$/.test(e.textContent.trim()));
+        if (title) title.textContent = t0.title;
+        if (meta) meta.textContent = `${localDay(when)}${t0.hasAudio ? '' : ' · no mic'}`;
+        if (len) len.textContent = `${Math.floor(t0.durMs / 60000)}:${String(Math.round(t0.durMs / 1000) % 60).padStart(2, '0')}`;
+      }
+    }
+  }
   const list = $('takes-list');
   list.innerHTML = '';
   for (const t of takes) {
@@ -2802,6 +2981,41 @@ $('btn-improv').addEventListener('click', () => {
   improvView.resize();
   drawImprov();
 });
+// The improv boards (11g, 2026-08-30) draw a chord TIMELINE with a current
+// cell and a stack of upcoming-chord cards. Both are value surfaces: the
+// timeline marker moves with the backing, the cards rotate from the live bar.
+let improvUi = null;
+function bindImprovNow(loop, curIdx) {
+  const host = $('screen-improv');
+  if (!host || host.hidden) return;
+  const chordRe = /^[A-G][#b]?(maj|min|m|dim|aug|sus)?[0-9]*$/;
+  const seq = (loop.chords ?? loop.bars ?? []).map((c) => c.sym ?? c.name ?? String(c));
+  if (!seq.length) return;
+  if (!improvUi) {
+    const live = $('improv-chord');
+    let strip = null;
+    for (const el of host.querySelectorAll('*')) {
+      const named = [...el.children].filter((c) => !c.children.length ? chordRe.test(c.textContent.trim()) : chordRe.test(c.textContent.trim()) && c.querySelector('span,i'));
+      if (named.length >= 3 && !named.includes(live)) { strip = el; break; }
+    }
+    const cells = strip ? [...strip.children].filter((c) => chordRe.test(c.textContent.trim())) : [];
+    const on = cells[0]?.getAttribute('style');
+    const off = cells[1]?.getAttribute('style');
+    const cards = [...host.querySelectorAll('*')].filter((e) => !e.children.length
+      && chordRe.test(e.textContent.trim()) && /Fraunces/.test(e.getAttribute('style') ?? '')
+      && (!strip || !strip.contains(e)));
+    improvUi = { cells, on, off, cards };
+  }
+  improvUi.cells.forEach((cell, i) => {
+    const idx = i % seq.length;
+    const leaf = [...cell.querySelectorAll('*')].find((e) => !e.children.length && e.textContent.trim()) ?? cell;
+    if (chordRe.test(leaf.textContent.trim()) || leaf === cell) leaf.textContent = seq[idx] ?? '';
+    if (improvUi.on && improvUi.off) cell.setAttribute('style', idx === (curIdx % seq.length) ? improvUi.on : improvUi.off);
+  });
+  improvUi.cards.forEach((card, i) => {
+    card.textContent = seq[(curIdx + i) % seq.length];
+  });
+}
 $('improv-loop').addEventListener('change', () => {
   improvLoop = LOOPS[+$('improv-loop').value || 0];
   if (improvOn) { improvT0 = performance.now(); playComp(); }
@@ -2832,6 +3046,7 @@ function drawImprov() {
   const cur = chordAt(improvLoop, beat);
   c.improv = { chordPcs: new Set(cur.pcs), scalePcs: new Set(improvLoop.scale) };
   $('improv-chord').textContent = improvOn ? `${cur.name} · bar ${cur.bar + 1}` : `${cur.name} (press ▶ to hear the loop)`;
+  if (CANON_ON) bindImprovNow(improvLoop, cur.bar ?? 0);
   c.ctx.fillStyle = COLORS.bg;
   c.ctx.fillRect(0, 0, c.w, c.h);
   c.kbH = c.h - 4;
@@ -2908,6 +3123,14 @@ $('form-snooze').addEventListener('click', () => {
   state.formSnooze = localDay(new Date());
   store.save(state);
   $('form-card').hidden = true;
+});
+// Form check as an ON-DEMAND tool (demoted from the auto card, Mark
+// 2026-08-30): the drawer row summons the library's form module once
+$('btn-form')?.addEventListener('click', () => {
+  state.formOnDemand = true;
+  store.save(state);
+  show('library');
+  renderLibrary();
 });
 
 // ---------- practice minutes + chart ----------
@@ -3094,7 +3317,7 @@ function startMetronome() {
       osc.stop(metNextBeat + 0.06);
       const idx = metBeatIdx % perBar;
       const at = (metNextBeat - metCtx.currentTime) * 1000;
-      setTimeout(() => { if (metTicker) $('met-beat').textContent = '● '.repeat(idx + 1) + '○ '.repeat(Math.max(0, perBar - idx - 1)); }, Math.max(0, at));
+      setTimeout(() => { if (metTicker) paintMetBeat(idx, perBar); }, Math.max(0, at));
       metNextBeat += spb;
       metBeatIdx++;
     }
@@ -3102,6 +3325,40 @@ function startMetronome() {
   tick();
   metTicker = setInterval(tick, 100);
   $('met-toggle').textContent = '■ Stop';
+}
+// The drawn CONDUCTOR (board 11i, 2026-08-30): a pulse ring with the beat
+// number and one dot per beat. Binding, never wiping: textContent on
+// #met-beat used to erase the whole drawn module with dot characters.
+let metDotTpl = null;
+function paintMetBeat(idx, perBar) {
+  const host = $('met-beat');
+  const num = CANON_ON && [...host.querySelectorAll('*')]
+    .find((e) => !e.children.length && /Fraunces/.test(e.getAttribute('style') ?? '') && /^\d+$/.test(e.textContent.trim()) && parseFloat(e.getAttribute('style').match(/font:[^;]*?(\d+)px/)?.[1] ?? 0) > 40);
+  if (!num) { host.textContent = '● '.repeat(idx + 1) + '○ '.repeat(Math.max(0, perBar - idx - 1)); return; }
+  num.textContent = String(idx + 1);
+  const line = [...host.querySelectorAll('*')].find((e) => !e.children.length && /^beat \d+$/.test(e.textContent.trim()));
+  if (line) line.textContent = `beat ${idx + 1}`;
+  // the dot cells: i shape + numbered span; dealt to the real beats per bar,
+  // the CURRENT beat wears the drawn filled look
+  // dot labels are the SMALL numerals; the ring's 86px numeral must not match
+  const numbered = [...host.querySelectorAll('span')].filter((e) => !e.children.length && /^\d$/.test(e.textContent.trim())
+    && parseFloat((e.getAttribute('style') ?? '').match(/font:[^;]*?(\d+(?:\.\d+)?)px/)?.[1] ?? 99) <= 14 && e !== num);
+  const cells = [...new Set(numbered.map((e) => e.parentElement))].filter((c) => c.querySelector('i') && !c.contains(num));
+  if (!cells.length) return;
+  if (!metDotTpl) {
+    const on = cells.map((c) => c.querySelector('i')).find((i2) => (i2.getAttribute('style') ?? '').includes('background'));
+    const off = cells.map((c) => c.querySelector('i')).find((i2) => !(i2.getAttribute('style') ?? '').includes('background'));
+    metDotTpl = { cell: cells[0].cloneNode(true), on: on?.getAttribute('style'), off: off?.getAttribute('style'), row: cells[0].parentElement };
+  }
+  const row = metDotTpl.row;
+  while (row.children.length < perBar) row.appendChild(metDotTpl.cell.cloneNode(true));
+  while (row.children.length > perBar) row.lastElementChild.remove();
+  [...row.children].forEach((c, i2) => {
+    const dot = c.querySelector('i');
+    const lab = c.querySelector('span');
+    if (lab) lab.textContent = String(i2 + 1);
+    if (dot && metDotTpl.on && metDotTpl.off) dot.setAttribute('style', i2 === idx ? metDotTpl.on : metDotTpl.off);
+  });
 }
 $('btn-metronome').addEventListener('click', () => {
   show('metronome');
@@ -3138,12 +3395,26 @@ $('btn-echo').addEventListener('click', () => {
   // full session reset: stale rounds must not leak across exits (audit #10)
   echoStreak = 0; echoClean = 0;
   echoRound = null; echoPhrase = null; echoAwaiting = false;
+  setEchoPhase(null);
   clearTimeout(echoSingTimer);
   syncEchoModes();
   updateEchoHud('Press ▶ to hear the first phrase.');
   drawEcho();
 });
 
+// the drawn LISTENING / YOUR TURN phase labels (board 11e): the adoption
+// stood them down as decor; the round brings the honest one back
+function setEchoPhase(phase) {
+  if (!CANON_ON) return;
+  const scr = $('screen-echo');
+  for (const [word, on] of [['LISTENING', phase === 'listen'], ['YOUR TURN', phase === 'reply']]) {
+    const l = scr && [...scr.querySelectorAll('*')].find((e) => !e.children.length && e.textContent.trim() === word && !e.closest('[data-legacy-screen]'));
+    if (!l) continue;
+    let mod = l.parentElement ?? l;
+    if (!mod.dataset.disp) mod.dataset.disp = mod.style.display || 'block';
+    mod.style.display = on ? mod.dataset.disp : 'none';
+  }
+}
 function updateEchoHud(msg) {
   const es = echoState();
   $('echo-level').textContent = `Phrase length: ${es.level}`;
@@ -3217,6 +3488,7 @@ function playEchoPhrase(freshPhrase) {
   echoAwaiting = false;
   clearTimeout(echoSingTimer);
   updateEchoHud(`Listen… (from ${echoPhrase.songTitle})`);
+  setEchoPhase('listen');
   playPreview(echoPhrase.playNotes, 500, (m, downState) => {
     if (downState) echoView.keyDown(m); else echoView.keyUp(m);
   }, () => {
@@ -3227,6 +3499,8 @@ function playEchoPhrase(freshPhrase) {
       echoSingTimer = setTimeout(() => {
         if (active !== 'echo') return;
         echoAwaiting = true;
+      setEchoPhase('reply');
+        setEchoPhase('reply');
         updateEchoHud('Now play it on the keys.');
       }, 3000);
     } else {
@@ -3313,7 +3587,28 @@ midi.onControl = (cc, val) => {
 // ---------- boot ----------
 // sight exercises are throwaway ids; stop their stats entries accumulating
 for (const k of Object.keys(state.songs)) if (k.startsWith('sight-')) delete state.songs[k];
-window.addEventListener('resize', () => { falls?.resize(); fpView?.resize(); echoView?.resize(); });
+let lastLibCap = 0;
+window.addEventListener('resize', () => {
+  falls?.resize(); fpView?.resize(); echoView?.resize(); window.__refitPlay?.();
+  // the elastic library re-plans only when a WHOLE row of capacity changes
+  if (CANON_ON && !$('screen-library').hidden) {
+    const cap = libCapacity();
+    if (cap !== lastLibCap) { lastLibCap = cap; renderLibrary(); }
+    else applyLibraryAtmosphere();
+  }
+});
+// the drawn tier picker's data hooks (canon-play): which tiers exist for the
+// open song's group, which is current, and the door to another one
+window.__tierInfo = () => {
+  if (!song) return null;
+  const vars = SONGS.filter((x) => x.group === song.group);
+  return { have: vars.map((x) => x.level), current: song.level };
+};
+window.__openTier = (level) => {
+  if (!song) return;
+  const target = SONGS.find((x) => x.group === song.group && x.level === level);
+  if (target && target.id !== song.id) startSong(target);
+};
 document.addEventListener('visibilitychange', () => { lastT = 0; });
 // Teacher Loop v1 (11th council): the path owns the "what next" question
 const pathUI = installPath({

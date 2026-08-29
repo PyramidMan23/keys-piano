@@ -173,13 +173,14 @@ try {
     // the first quest's label structurally rather than by tag
     const label = await b.eval(`(() => {
       const t = document.getElementById('screen-library');
-      const box = [...t.querySelectorAll('*')].find(e => !e.children.length && e.textContent.trim() === 'TODAY');
+      const box = [...t.querySelectorAll('*')].find(e => !e.children.length && /^TODAY( · CHOOSE 1)?$/.test(e.textContent.trim()));
       if (!box) return null;
-      const module = box.closest('div');
-      const leaves = [...module.querySelectorAll('*')]
-        .filter(e => !e.children.length && e.textContent.trim())
-        .map(e => e.textContent.trim());
-      return leaves.find(x => x !== 'TODAY' && !/of \\d+ done$/.test(x) && !/^\\+\\d+$/.test(x)) ?? null;
+      let module = box.closest('div');
+      while (module && !module.querySelector('button')) module = module.parentElement;
+      if (!module) return null;
+      const btn = [...module.querySelectorAll('button')].find((b2) => b2.getBoundingClientRect().width > 0);
+      const leaf2 = btn && [...btn.querySelectorAll('*')].find((e) => !e.children.length && /[a-z]/.test(e.textContent) && !/^(CHOSEN|\\+\\d+)$/.test(e.textContent.trim()));
+      return leaf2 ? leaf2.textContent.trim() : null;
     })()`);
     if (!label) { bad.push('no quests on the library'); return bad; }
     const beforeQ = JSON.stringify((await state()).activeQuest ?? null);   // chooseQuest writes activeQuest
@@ -233,13 +234,13 @@ try {
     const bad = [];
     await boot();
     const rowTitles = () => b.eval(`(() => {
-      const card = document.getElementById('screen-library').firstElementChild;
-      // the DO THIS NEXT hero also carries a sleeve, and it legitimately keeps
-      // showing the resume song while you search; only TABLE rows are results
-      return [...card.querySelectorAll('img')].filter(i => i.id !== 'next-action-cover').map(i => {
-        let r = i.parentElement; while (r && r.children.length < 4) r = r.parentElement;
-        return r ? (r.textContent || '').slice(0, 40) : '';
-      });
+      // the GRID is tagged by the elastic library; its Fraunces leaves are
+      // the result titles. The hero legitimately keeps the resume song.
+      const grid = document.querySelector('#screen-library [data-lib-grid]');
+      if (!grid) return [];
+      return [...grid.querySelectorAll('*')]
+        .filter((e) => !e.children.length && /Fraunces/.test(e.getAttribute('style') ?? '') && e.textContent.trim() && e.getBoundingClientRect().width > 0)
+        .map((e) => e.textContent.trim());
     })()`);
     const before = await rowTitles();
     await b.eval(`(() => { const s = document.getElementById('lib-search'); s.focus(); return true; })()`);

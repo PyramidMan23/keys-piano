@@ -66,7 +66,15 @@ export function mountWidePlay(host) {
 
   // mount FIRST, measure after: clientWidth is zero before insertion
   host.insertBefore(board, old);
-  applyCanonZoom(board);
+  // BOTH-axes fit, not width-only: browser chrome (bookmarks bar, zoom) eats
+  // height while width stays full, and the width-only zoom clipped the rail's
+  // bottom buttons clean off (Mark, 2026-08-30: "there's no restart button").
+  const fitZoom = () => {
+    const z = Math.min(1, window.innerWidth / 1418, window.innerHeight / 738);
+    board.style.zoom = z < 1 ? String(z) : '';
+  };
+  fitZoom();
+  window.__refitPlay = fitZoom;
   old.style.display = 'none';                    // hidden, NOT removed: it is the backend
   host.dataset.widePlay = '1';
 
@@ -104,6 +112,13 @@ export function mountWidePlay(host) {
   {
     const js = keepReadouts.find((c) => /JOURNEY/.test(c.textContent));
     if (js) { js.style.minHeight = ''; region.appendChild(js); }
+  }
+  // belt and braces: whatever a window does, the training rail must never
+  // strand a control below the fold; it scrolls within itself if squeezed
+  {
+    const railCol = region.parentElement && [...region.parentElement.children]
+      .find((c) => c !== region && c.clientWidth > 200 && c.clientWidth < 500);
+    if (railCol) { railCol.style.overflowY = 'auto'; railCol.style.minHeight = '0'; }
   }
   const falls = $('falls');
   falls.style.width = '100%';
@@ -156,6 +171,33 @@ export function mountWidePlay(host) {
   // drawn on 9a in the 2026-08-30 parity round; a no-op on older markup
   proxy('Performance run', 'btn-perf');
   bindHandCells(board);
+  // TIER PICKER (drawn Round C, Mark: "it's very hard to pick easy medium or
+  // hard"): each cell opens that tier's variant of the current song; cells
+  // for tiers a song does not ship stand down
+  {
+    const tierCells = ['Easy', 'Medium', 'Hard'].map((w) => {
+      const l = [...board.querySelectorAll('*')].find((e) => !e.children.length && e.textContent.trim() === w && e.closest('button'));
+      return l ? l.closest('button') : null;
+    });
+    if (tierCells.filter(Boolean).length === 3) {
+      tierCells.forEach((c, i) => {
+        c.dataset.tierCell = ['Easy', 'Medium', 'Hard'][i];
+        if (!c.dataset.disp) c.dataset.disp = c.style.display || 'flex';
+        c.style.cursor = 'pointer';
+        c.addEventListener('click', () => { window.__openTier?.(c.dataset.tierCell); setTimeout(() => board.__syncTiers?.(), 400); });
+      });
+      board.__syncTiers = () => {
+        const info = window.__tierInfo?.();
+        if (!info) return;
+        const sig = info.have.join(',') + '|' + info.current;
+        if (board.dataset.tsig === sig) return;
+        board.dataset.tsig = sig;
+        tierCells.forEach((c) => { c.style.display = info.have.includes(c.dataset.tierCell) ? c.dataset.disp : 'none'; });
+        bindSegment(tierCells.filter((c) => c.style.display !== 'none'), (el) => el.dataset.tierCell === info.current);
+      };
+      board.__syncTiers();
+    }
+  }
   const modeF = proxy('Falls', 'mode-falls');
   const modeS = proxy('Score', 'mode-score');
   if (modeF && modeS) {
@@ -303,17 +345,19 @@ export function mountWidePlay(host) {
   // truth rather than leaving two options that do nothing: Grand piano and
   // Synth, driven by the app's own voice toggle. Recorded in CANON-GAPS.md.
   if (sound9) {
+    // the app's real voices (Grand / Felt / Synth as of 2026-08-30), mirrored
     const syncSound = () => {
-      if (sound9.options.length !== 2) {
+      if (sound9.options.length !== 3) {
         sound9.innerHTML = '';
         sound9.add(new Option('Grand piano', 'auto'));
+        sound9.add(new Option('Felt grand', 'felt'));
         sound9.add(new Option('Synth', 'synth'));
       }
-      sound9.value = voiceInfo().mode === 'synth' ? 'synth' : 'auto';
+      sound9.value = voiceInfo().mode;
     };
     sound9.addEventListener('change', () => {
-      const wantSynth = sound9.value === 'synth';
-      if ((voiceInfo().mode === 'synth') !== wantSynth) $('btn-voice')?.click();
+      // cycle the real toggle until the modes agree (max 3 steps)
+      for (let i = 0; i < 3 && voiceInfo().mode !== sound9.value; i++) $('btn-voice')?.click();
       setTimeout(syncSound, 50);
     });
     board.__syncSound = syncSound;
@@ -491,6 +535,7 @@ export function syncWidePlay(info = {}) {
   board?.__syncSound?.();
   board?.__mirrorJourney?.();
   board?.__cycleReflect?.();
+  board?.__syncTiers?.();
 }
 let board = null;   // the mounted 9a root; module-scoped so sync can reach the section list
 

@@ -66,9 +66,17 @@ if (typeof window !== 'undefined') window.__audioStats = audioStats;
 // Voice diagnostic (council 08-24): what Mark hears must be a fact on screen,
 // not a guess. 'auto' = samples with per-note synth fail-soft (the shipped
 // behaviour), 'synth' = force the old triangle voice for A/B comparison.
+// Three voices (Mark, 2026-08-30: "make sure we have other options"):
+// 'auto'  = the Salamander grand, straight
+// 'felt'  = the SAME recorded grand through a warm lowpass, softer peak: the
+//           felt-piano intimacy without inventing a fake instrument
+// 'synth' = the triangle synth, kept as the honest electric-ish contrast
+export const VOICE_MODES = ['auto', 'felt', 'synth'];
+export const voiceModeLabel = (m) => ({ auto: 'Grand', felt: 'Felt', synth: 'Synth' }[m] ?? 'Grand');
+export const voiceModeNext = (m) => VOICE_MODES[(VOICE_MODES.indexOf(m) + 1) % VOICE_MODES.length];
 let voiceMode = 'auto';
 let lastVoice = null; // 'sample' | 'synth', what the most recent note used
-export function setVoiceMode(mode) { voiceMode = mode === 'synth' ? 'synth' : 'auto'; }
+export function setVoiceMode(mode) { voiceMode = VOICE_MODES.includes(mode) ? mode : 'auto'; }
 export function voiceInfo() { return { mode: voiceMode, lastVoice, ...audioStats() }; }
 
 // Authored dynamics (council 08-24): preview notes may carry v (0..1); mapped
@@ -117,13 +125,23 @@ function voice(bus, when, midi, durS, gainMul) {
   src.buffer = buffers.get(sm);
   src.playbackRate.value = rateFor(midi, sm);
   const g = ctx.createGain();
-  const peak = 0.85 * gainMul; // the sample carries its own natural decay
+  const felt = voiceMode === 'felt';
+  const peak = (felt ? 0.68 : 0.85) * gainMul; // the sample carries its own decay
   const end = when + Math.max(0.25, durS);
-  const release = 0.18; // damper falls: short ramp, not a hard cut
+  const release = felt ? 0.26 : 0.18; // damper falls: short ramp, not a hard cut
   g.gain.setValueAtTime(peak, when);
   g.gain.setValueAtTime(peak, end);
   g.gain.linearRampToValueAtTime(0.0001, end + release);
-  src.connect(g).connect(bus);
+  if (felt) {
+    // the felt voice: the same grand behind a warm lowpass, nothing invented
+    const lp = ctx.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.value = 1500 + Math.max(0, midi - 48) * 12; // opens a touch upward
+    lp.Q.value = 0.4;
+    src.connect(lp).connect(g).connect(bus);
+  } else {
+    src.connect(g).connect(bus);
+  }
   src.start(when);
   src.stop(end + release + 0.05);
   return src;

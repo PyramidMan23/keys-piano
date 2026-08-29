@@ -95,6 +95,20 @@
   },
   "note": "Escalation is capped and it is printed as a number, so it is never brightness alone."
  },
+ "09": {
+  "n": "09",
+  "title": "A long note approaching: the press and the ring",
+  "pairs": {
+   "press": "G2",
+   "press head": "first 1.0 beat, alpha 1.00",
+   "ring tail": "beyond 1.0 beat, alpha 0.30",
+   "tail texture": "1px scanline every 6px",
+   "threshold": "1.25 beats or less stays solid",
+   "head edge": "1px, alpha 0.55, at the split",
+   "glow source": "head only, tail adds none"
+  },
+  "note": "The tail is the ring, not a hold. Only the press is judged."
+ },
  "08": {
   "n": "08",
   "title": "Applies everywhere",

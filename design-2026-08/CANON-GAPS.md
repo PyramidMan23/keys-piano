@@ -133,3 +133,19 @@ attribute itself is absent from the canon by design. Accepted.
     are not in the canon module; the whole form-check feature is awaiting
     Mark's keep/demote/remove verdict, so drawing rating UI first would be
     waste. The audit itself: verify-20260829/codex-parity-output.txt.
+14. **The 3AM council wave (2026-08-30, Mark's final overnight brief)**: the
+    dashboard became two honest CHOOSE-1 cards (the code pays one quest a day
+    and one mission a week; the checklists lied); the practice chart carries
+    its total and a floored trend; the path teaser is four lines that never
+    truncate; 11d is a full progression system; the task screen opens with a
+    drawn invite instead of a void; 9a gained the tier picker; the voices are
+    Grand / Felt (the same Salamander samples behind a warm lowpass, council
+    values in audio.mjs) / Synth; the metronome conductor, improv timeline +
+    upcoming cards, echo phase labels, takes inspector and calibration labels
+    all bind truth. THE ELASTIC LIBRARY + AMBIENT WASH are council LAW, not a
+    drawn board: wash = radial-gradient(ellipse 82% 88% at 24% 38%) of the
+    hero art's 8x8 average clamped to HSL sat .40-.72 light .42-.58, peaks
+    .065/.035/.012, grey art falls back to #788c82; elastic = whole tile rows
+    only, five-song capacity increments, band flexes, strip pins, unscaled
+    height = viewportHeight / zoom. Recorded here because the values live in
+    js/app.mjs, not on a board.

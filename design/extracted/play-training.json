@@ -57,7 +57,7 @@
    "radius": "0px",
    "letterSpacing": "normal",
    "padding": "11px 14px 11px 14px",
-   "children": 4
+   "children": 5
   },
   {
    "dx": 2,
@@ -113,7 +113,7 @@
    "paints": false,
    "x": 147,
    "y": 12,
-   "w": 1130,
+   "w": 930,
    "h": 42,
    "font": "14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
    "fontSize": 14,
@@ -136,7 +136,7 @@
    "paints": false,
    "x": 147,
    "y": 12,
-   "w": 1130,
+   "w": 930,
    "h": 22,
    "font": "600 19px / 21.85px Fraunces, Georgia, serif",
    "fontSize": 19,
@@ -159,7 +159,7 @@
    "paints": false,
    "x": 147,
    "y": 37,
-   "w": 1130,
+   "w": 930,
    "h": 17,
    "font": "12px / 16.8px Helvetica, Arial, sans-serif",
    "fontSize": 12,
@@ -176,6 +176,98 @@
   },
   {
    "dx": 7,
+   "tag": "span",
+   "id": null,
+   "text": "",
+   "paints": false,
+   "x": 1096,
+   "y": 11,
+   "w": 180,
+   "h": 44,
+   "font": "14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "400",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgba(0, 0, 0, 0)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 3
+  },
+  {
+   "dx": 8,
+   "tag": "button",
+   "id": null,
+   "text": "Easy",
+   "paints": true,
+   "x": 1096,
+   "y": 11,
+   "w": 55,
+   "h": 44,
+   "font": "12px / 12px Helvetica, Arial, sans-serif",
+   "fontSize": 12,
+   "fontWeight": "400",
+   "fontFamily": "Helvetica",
+   "color": "rgb(120, 140, 130)",
+   "background": "rgb(0, 0, 0)",
+   "backgroundImage": null,
+   "border": "1px solid rgb(37, 49, 41)",
+   "radius": "3px 0px 0px 3px",
+   "letterSpacing": "normal",
+   "padding": "0px 13px 0px 13px",
+   "children": 0
+  },
+  {
+   "dx": 9,
+   "tag": "button",
+   "id": null,
+   "text": "Medium",
+   "paints": true,
+   "x": 1151,
+   "y": 11,
+   "w": 72,
+   "h": 44,
+   "font": "700 12px / 12px Helvetica, Arial, sans-serif",
+   "fontSize": 12,
+   "fontWeight": "700",
+   "fontFamily": "Helvetica",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgb(19, 25, 21)",
+   "backgroundImage": null,
+   "border": "1px solid rgb(130, 191, 156)",
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 13px 0px 13px",
+   "children": 0
+  },
+  {
+   "dx": 10,
+   "tag": "button",
+   "id": null,
+   "text": "Hard",
+   "paints": true,
+   "x": 1223,
+   "y": 11,
+   "w": 53,
+   "h": 44,
+   "font": "12px / 12px Helvetica, Arial, sans-serif",
+   "fontSize": 12,
+   "fontWeight": "400",
+   "fontFamily": "Helvetica",
+   "color": "rgb(120, 140, 130)",
+   "background": "rgb(0, 0, 0)",
+   "backgroundImage": null,
+   "border": "1px solid rgb(37, 49, 41)",
+   "radius": "0px 3px 3px 0px",
+   "letterSpacing": "normal",
+   "padding": "0px 13px 0px 13px",
+   "children": 0
+  },
+  {
+   "dx": 11,
    "tag": "span",
    "id": null,
    "text": "",
@@ -198,7 +290,7 @@
    "children": 2
   },
   {
-   "dx": 8,
+   "dx": 12,
    "tag": "button",
    "id": null,
    "text": "Falls",
@@ -221,7 +313,7 @@
    "children": 0
   },
   {
-   "dx": 9,
+   "dx": 13,
    "tag": "button",
    "id": null,
    "text": "Score",
@@ -244,7 +336,7 @@
    "children": 0
   },
   {
-   "dx": 10,
+   "dx": 14,
    "tag": "div",
    "id": null,
    "text": "",
@@ -267,7 +359,7 @@
    "children": 2
   },
   {
-   "dx": 11,
+   "dx": 15,
    "tag": "div",
    "id": null,
    "text": "",
@@ -290,7 +382,7 @@
    "children": 1
   },
   {
-   "dx": 12,
+   "dx": 16,
    "tag": "div",
    "id": null,
    "text": "",
@@ -313,7 +405,7 @@
    "children": 67
   },
   {
-   "dx": 13,
+   "dx": 17,
    "tag": "i",
    "id": null,
    "text": "",
@@ -336,7 +428,7 @@
    "children": 0
   },
   {
-   "dx": 14,
+   "dx": 18,
    "tag": "i",
    "id": null,
    "text": "",
@@ -359,104 +451,12 @@
    "children": 0
   },
   {
-   "dx": 15,
-   "tag": "i",
-   "id": null,
-   "text": "",
-   "paints": true,
-   "x": 283,
-   "y": 80,
-   "w": 1,
-   "h": 601,
-   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
-   "fontSize": 14,
-   "fontWeight": "400",
-   "fontFamily": "ui-sans-serif",
-   "color": "rgb(233, 237, 231)",
-   "background": "rgb(37, 49, 41)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "0px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 0
-  },
-  {
-   "dx": 16,
-   "tag": "i",
-   "id": null,
-   "text": "",
-   "paints": true,
-   "x": 372,
-   "y": 80,
-   "w": 1,
-   "h": 601,
-   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
-   "fontSize": 14,
-   "fontWeight": "400",
-   "fontFamily": "ui-sans-serif",
-   "color": "rgb(233, 237, 231)",
-   "background": "rgb(37, 49, 41)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "0px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 0
-  },
-  {
-   "dx": 17,
-   "tag": "i",
-   "id": null,
-   "text": "",
-   "paints": true,
-   "x": 462,
-   "y": 80,
-   "w": 1,
-   "h": 601,
-   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
-   "fontSize": 14,
-   "fontWeight": "400",
-   "fontFamily": "ui-sans-serif",
-   "color": "rgb(233, 237, 231)",
-   "background": "rgb(37, 49, 41)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "0px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 0
-  },
-  {
-   "dx": 18,
-   "tag": "i",
-   "id": null,
-   "text": "",
-   "paints": true,
-   "x": 551,
-   "y": 80,
-   "w": 1,
-   "h": 601,
-   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
-   "fontSize": 14,
-   "fontWeight": "400",
-   "fontFamily": "ui-sans-serif",
-   "color": "rgb(233, 237, 231)",
-   "background": "rgb(37, 49, 41)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "0px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 0
-  },
-  {
    "dx": 19,
    "tag": "i",
    "id": null,
    "text": "",
    "paints": true,
-   "x": 640,
+   "x": 283,
    "y": 80,
    "w": 1,
    "h": 601,
@@ -479,7 +479,7 @@
    "id": null,
    "text": "",
    "paints": true,
-   "x": 730,
+   "x": 372,
    "y": 80,
    "w": 1,
    "h": 601,
@@ -502,7 +502,7 @@
    "id": null,
    "text": "",
    "paints": true,
-   "x": 819,
+   "x": 462,
    "y": 80,
    "w": 1,
    "h": 601,
@@ -525,7 +525,7 @@
    "id": null,
    "text": "",
    "paints": true,
-   "x": 908,
+   "x": 551,
    "y": 80,
    "w": 1,
    "h": 601,
@@ -548,7 +548,7 @@
    "id": null,
    "text": "",
    "paints": true,
-   "x": 998,
+   "x": 640,
    "y": 80,
    "w": 1,
    "h": 601,
@@ -571,6 +571,98 @@
    "id": null,
    "text": "",
    "paints": true,
+   "x": 730,
+   "y": 80,
+   "w": 1,
+   "h": 601,
+   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "400",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgb(37, 49, 41)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 0
+  },
+  {
+   "dx": 25,
+   "tag": "i",
+   "id": null,
+   "text": "",
+   "paints": true,
+   "x": 819,
+   "y": 80,
+   "w": 1,
+   "h": 601,
+   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "400",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgb(37, 49, 41)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 0
+  },
+  {
+   "dx": 26,
+   "tag": "i",
+   "id": null,
+   "text": "",
+   "paints": true,
+   "x": 908,
+   "y": 80,
+   "w": 1,
+   "h": 601,
+   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "400",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgb(37, 49, 41)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 0
+  },
+  {
+   "dx": 27,
+   "tag": "i",
+   "id": null,
+   "text": "",
+   "paints": true,
+   "x": 998,
+   "y": 80,
+   "w": 1,
+   "h": 601,
+   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "400",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgb(37, 49, 41)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 0
+  },
+  {
+   "dx": 28,
+   "tag": "i",
+   "id": null,
+   "text": "",
+   "paints": true,
    "x": 15,
    "y": 678,
    "w": 1072,
@@ -589,7 +681,7 @@
    "children": 0
   },
   {
-   "dx": 25,
+   "dx": 29,
    "tag": "i",
    "id": null,
    "text": "",
@@ -612,7 +704,7 @@
    "children": 0
   },
   {
-   "dx": 26,
+   "dx": 30,
    "tag": "i",
    "id": null,
    "text": "",
@@ -635,104 +727,12 @@
    "children": 0
   },
   {
-   "dx": 27,
-   "tag": "i",
-   "id": null,
-   "text": "",
-   "paints": false,
-   "x": 15,
-   "y": 681,
-   "w": 49,
-   "h": 44,
-   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
-   "fontSize": 14,
-   "fontWeight": "400",
-   "fontFamily": "ui-sans-serif",
-   "color": "rgb(233, 237, 231)",
-   "background": "rgba(0, 0, 0, 0)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "0px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 0
-  },
-  {
-   "dx": 28,
-   "tag": "i",
-   "id": null,
-   "text": "",
-   "paints": false,
-   "x": 64,
-   "y": 681,
-   "w": 49,
-   "h": 44,
-   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
-   "fontSize": 14,
-   "fontWeight": "400",
-   "fontFamily": "ui-sans-serif",
-   "color": "rgb(233, 237, 231)",
-   "background": "rgba(0, 0, 0, 0)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "0px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 0
-  },
-  {
-   "dx": 29,
-   "tag": "i",
-   "id": null,
-   "text": "",
-   "paints": false,
-   "x": 112,
-   "y": 681,
-   "w": 49,
-   "h": 44,
-   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
-   "fontSize": 14,
-   "fontWeight": "400",
-   "fontFamily": "ui-sans-serif",
-   "color": "rgb(233, 237, 231)",
-   "background": "rgba(0, 0, 0, 0)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "0px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 0
-  },
-  {
-   "dx": 30,
-   "tag": "i",
-   "id": null,
-   "text": "",
-   "paints": false,
-   "x": 161,
-   "y": 681,
-   "w": 49,
-   "h": 44,
-   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
-   "fontSize": 14,
-   "fontWeight": "400",
-   "fontFamily": "ui-sans-serif",
-   "color": "rgb(233, 237, 231)",
-   "background": "rgba(0, 0, 0, 0)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "0px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 0
-  },
-  {
    "dx": 31,
    "tag": "i",
    "id": null,
    "text": "",
    "paints": false,
-   "x": 210,
+   "x": 15,
    "y": 681,
    "w": 49,
    "h": 44,
@@ -755,7 +755,7 @@
    "id": null,
    "text": "",
    "paints": false,
-   "x": 259,
+   "x": 64,
    "y": 681,
    "w": 49,
    "h": 44,
@@ -777,8 +777,8 @@
    "tag": "i",
    "id": null,
    "text": "",
-   "paints": true,
-   "x": 307,
+   "paints": false,
+   "x": 112,
    "y": 681,
    "w": 49,
    "h": 44,
@@ -787,7 +787,7 @@
    "fontWeight": "400",
    "fontFamily": "ui-sans-serif",
    "color": "rgb(233, 237, 231)",
-   "background": "rgb(94, 224, 242)",
+   "background": "rgba(0, 0, 0, 0)",
    "backgroundImage": null,
    "border": null,
    "radius": "0px",
@@ -801,6 +801,98 @@
    "id": null,
    "text": "",
    "paints": false,
+   "x": 161,
+   "y": 681,
+   "w": 49,
+   "h": 44,
+   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "400",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgba(0, 0, 0, 0)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 0
+  },
+  {
+   "dx": 35,
+   "tag": "i",
+   "id": null,
+   "text": "",
+   "paints": false,
+   "x": 210,
+   "y": 681,
+   "w": 49,
+   "h": 44,
+   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "400",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgba(0, 0, 0, 0)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 0
+  },
+  {
+   "dx": 36,
+   "tag": "i",
+   "id": null,
+   "text": "",
+   "paints": false,
+   "x": 259,
+   "y": 681,
+   "w": 49,
+   "h": 44,
+   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "400",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgba(0, 0, 0, 0)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 0
+  },
+  {
+   "dx": 37,
+   "tag": "i",
+   "id": null,
+   "text": "",
+   "paints": true,
+   "x": 307,
+   "y": 681,
+   "w": 49,
+   "h": 44,
+   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "400",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgb(94, 224, 242)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 0
+  },
+  {
+   "dx": 38,
+   "tag": "i",
+   "id": null,
+   "text": "",
+   "paints": false,
    "x": 307,
    "y": 655,
    "w": 49,
@@ -819,7 +911,7 @@
    "children": 0
   },
   {
-   "dx": 35,
+   "dx": 39,
    "tag": "i",
    "id": null,
    "text": "",
@@ -842,7 +934,7 @@
    "children": 0
   },
   {
-   "dx": 36,
+   "dx": 40,
    "tag": "i",
    "id": null,
    "text": "",
@@ -865,7 +957,7 @@
    "children": 0
   },
   {
-   "dx": 37,
+   "dx": 41,
    "tag": "i",
    "id": null,
    "text": "",
@@ -888,7 +980,7 @@
    "children": 0
   },
   {
-   "dx": 38,
+   "dx": 42,
    "tag": "i",
    "id": null,
    "text": "",
@@ -911,7 +1003,7 @@
    "children": 0
   },
   {
-   "dx": 39,
+   "dx": 43,
    "tag": "i",
    "id": null,
    "text": "",
@@ -934,7 +1026,7 @@
    "children": 0
   },
   {
-   "dx": 40,
+   "dx": 44,
    "tag": "i",
    "id": null,
    "text": "",
@@ -957,7 +1049,7 @@
    "children": 0
   },
   {
-   "dx": 41,
+   "dx": 45,
    "tag": "i",
    "id": null,
    "text": "",
@@ -980,7 +1072,7 @@
    "children": 0
   },
   {
-   "dx": 42,
+   "dx": 46,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1003,7 +1095,7 @@
    "children": 0
   },
   {
-   "dx": 43,
+   "dx": 47,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1026,7 +1118,7 @@
    "children": 0
   },
   {
-   "dx": 44,
+   "dx": 48,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1049,7 +1141,7 @@
    "children": 0
   },
   {
-   "dx": 45,
+   "dx": 49,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1072,7 +1164,7 @@
    "children": 0
   },
   {
-   "dx": 46,
+   "dx": 50,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1095,7 +1187,7 @@
    "children": 0
   },
   {
-   "dx": 47,
+   "dx": 51,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1118,7 +1210,7 @@
    "children": 0
   },
   {
-   "dx": 48,
+   "dx": 52,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1141,7 +1233,7 @@
    "children": 0
   },
   {
-   "dx": 49,
+   "dx": 53,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1164,7 +1256,7 @@
    "children": 0
   },
   {
-   "dx": 50,
+   "dx": 54,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1187,7 +1279,7 @@
    "children": 0
   },
   {
-   "dx": 51,
+   "dx": 55,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1210,7 +1302,7 @@
    "children": 0
   },
   {
-   "dx": 52,
+   "dx": 56,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1233,7 +1325,7 @@
    "children": 0
   },
   {
-   "dx": 53,
+   "dx": 57,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1256,7 +1348,7 @@
    "children": 0
   },
   {
-   "dx": 54,
+   "dx": 58,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1279,7 +1371,7 @@
    "children": 0
   },
   {
-   "dx": 55,
+   "dx": 59,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1302,7 +1394,7 @@
    "children": 0
   },
   {
-   "dx": 56,
+   "dx": 60,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1325,7 +1417,7 @@
    "children": 0
   },
   {
-   "dx": 57,
+   "dx": 61,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1348,7 +1440,7 @@
    "children": 0
   },
   {
-   "dx": 58,
+   "dx": 62,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1371,7 +1463,7 @@
    "children": 0
   },
   {
-   "dx": 59,
+   "dx": 63,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1394,7 +1486,7 @@
    "children": 0
   },
   {
-   "dx": 60,
+   "dx": 64,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1417,7 +1509,7 @@
    "children": 0
   },
   {
-   "dx": 61,
+   "dx": 65,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1440,7 +1532,7 @@
    "children": 0
   },
   {
-   "dx": 62,
+   "dx": 66,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1463,7 +1555,7 @@
    "children": 0
   },
   {
-   "dx": 63,
+   "dx": 67,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1486,7 +1578,7 @@
    "children": 0
   },
   {
-   "dx": 64,
+   "dx": 68,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1509,7 +1601,7 @@
    "children": 0
   },
   {
-   "dx": 65,
+   "dx": 69,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1532,7 +1624,7 @@
    "children": 0
   },
   {
-   "dx": 66,
+   "dx": 70,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1555,7 +1647,7 @@
    "children": 0
   },
   {
-   "dx": 67,
+   "dx": 71,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1578,7 +1670,7 @@
    "children": 0
   },
   {
-   "dx": 68,
+   "dx": 72,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1601,7 +1693,7 @@
    "children": 0
   },
   {
-   "dx": 69,
+   "dx": 73,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1624,7 +1716,7 @@
    "children": 0
   },
   {
-   "dx": 70,
+   "dx": 74,
    "tag": "i",
    "id": null,
    "text": "E4",
@@ -1647,7 +1739,7 @@
    "children": 0
   },
   {
-   "dx": 71,
+   "dx": 75,
    "tag": "i",
    "id": null,
    "text": "G4",
@@ -1670,7 +1762,7 @@
    "children": 0
   },
   {
-   "dx": 72,
+   "dx": 76,
    "tag": "i",
    "id": null,
    "text": "B4",
@@ -1693,7 +1785,7 @@
    "children": 0
   },
   {
-   "dx": 73,
+   "dx": 77,
    "tag": "i",
    "id": null,
    "text": "C3",
@@ -1716,7 +1808,7 @@
    "children": 0
   },
   {
-   "dx": 74,
+   "dx": 78,
    "tag": "i",
    "id": null,
    "text": "G2",
@@ -1739,7 +1831,7 @@
    "children": 0
   },
   {
-   "dx": 75,
+   "dx": 79,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1762,7 +1854,7 @@
    "children": 0
   },
   {
-   "dx": 76,
+   "dx": 80,
    "tag": "i",
    "id": null,
    "text": "",
@@ -1785,7 +1877,7 @@
    "children": 0
   },
   {
-   "dx": 77,
+   "dx": 81,
    "tag": "span",
    "id": null,
    "text": "",
@@ -1808,7 +1900,7 @@
    "children": 3
   },
   {
-   "dx": 78,
+   "dx": 82,
    "tag": "span",
    "id": null,
    "text": "",
@@ -1831,7 +1923,7 @@
    "children": 2
   },
   {
-   "dx": 79,
+   "dx": 83,
    "tag": "span",
    "id": null,
    "text": "CLEAN",
@@ -1854,7 +1946,7 @@
    "children": 0
   },
   {
-   "dx": 80,
+   "dx": 84,
    "tag": "span",
    "id": null,
    "text": "96%",
@@ -1877,7 +1969,7 @@
    "children": 0
   },
   {
-   "dx": 81,
+   "dx": 85,
    "tag": "span",
    "id": null,
    "text": "",
@@ -1900,7 +1992,7 @@
    "children": 2
   },
   {
-   "dx": 82,
+   "dx": 86,
    "tag": "span",
    "id": null,
    "text": "IN A ROW",
@@ -1923,7 +2015,7 @@
    "children": 0
   },
   {
-   "dx": 83,
+   "dx": 87,
    "tag": "span",
    "id": null,
    "text": "34",
@@ -1946,7 +2038,7 @@
    "children": 0
   },
   {
-   "dx": 84,
+   "dx": 88,
    "tag": "span",
    "id": null,
    "text": "",
@@ -1969,7 +2061,7 @@
    "children": 2
   },
   {
-   "dx": 85,
+   "dx": 89,
    "tag": "span",
    "id": null,
    "text": "TIMING",
@@ -1992,7 +2084,7 @@
    "children": 0
   },
   {
-   "dx": 86,
+   "dx": 90,
    "tag": "span",
    "id": null,
    "text": "+12",
@@ -2015,7 +2107,7 @@
    "children": 0
   },
   {
-   "dx": 87,
+   "dx": 91,
    "tag": "span",
    "id": null,
    "text": "",
@@ -2038,7 +2130,7 @@
    "children": 1
   },
   {
-   "dx": 88,
+   "dx": 92,
    "tag": "span",
    "id": null,
    "text": "TIER 3",
@@ -2061,7 +2153,7 @@
    "children": 0
   },
   {
-   "dx": 89,
+   "dx": 93,
    "tag": "div",
    "id": null,
    "text": "",
@@ -2084,7 +2176,7 @@
    "children": 7
   },
   {
-   "dx": 90,
+   "dx": 94,
    "tag": "span",
    "id": null,
    "text": "JOURNEY",
@@ -2107,7 +2199,7 @@
    "children": 0
   },
   {
-   "dx": 91,
+   "dx": 95,
    "tag": "span",
    "id": null,
    "text": "",
@@ -2130,104 +2222,12 @@
    "children": 2
   },
   {
-   "dx": 92,
-   "tag": "i",
-   "id": null,
-   "text": "",
-   "paints": true,
-   "x": 99,
-   "y": 691,
-   "w": 12,
-   "h": 12,
-   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
-   "fontSize": 14,
-   "fontWeight": "400",
-   "fontFamily": "ui-sans-serif",
-   "color": "rgb(233, 237, 231)",
-   "background": "rgb(130, 191, 156)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "2px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 1
-  },
-  {
-   "dx": 93,
-   "tag": "b",
-   "id": null,
-   "text": "",
-   "paints": false,
-   "x": 101,
-   "y": 692,
-   "w": 6,
-   "h": 6,
-   "font": "italic 700 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
-   "fontSize": 14,
-   "fontWeight": "700",
-   "fontFamily": "ui-sans-serif",
-   "color": "rgb(233, 237, 231)",
-   "background": "rgba(0, 0, 0, 0)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "0px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 0
-  },
-  {
-   "dx": 94,
-   "tag": "span",
-   "id": null,
-   "text": "Hear it",
-   "paints": false,
-   "x": 119,
-   "y": 691,
-   "w": 37,
-   "h": 12,
-   "font": "700 12px / 12px Helvetica, Arial, sans-serif",
-   "fontSize": 12,
-   "fontWeight": "700",
-   "fontFamily": "Helvetica",
-   "color": "rgb(130, 191, 156)",
-   "background": "rgba(0, 0, 0, 0)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "0px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 0
-  },
-  {
-   "dx": 95,
-   "tag": "span",
-   "id": null,
-   "text": "",
-   "paints": false,
-   "x": 176,
-   "y": 691,
-   "w": 83,
-   "h": 12,
-   "font": "14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
-   "fontSize": 14,
-   "fontWeight": "400",
-   "fontFamily": "ui-sans-serif",
-   "color": "rgb(233, 237, 231)",
-   "background": "rgba(0, 0, 0, 0)",
-   "backgroundImage": null,
-   "border": null,
-   "radius": "0px",
-   "letterSpacing": "normal",
-   "padding": "0px 0px 0px 0px",
-   "children": 2
-  },
-  {
    "dx": 96,
    "tag": "i",
    "id": null,
    "text": "",
    "paints": true,
-   "x": 176,
+   "x": 99,
    "y": 691,
    "w": 12,
    "h": 12,
@@ -2250,7 +2250,7 @@
    "id": null,
    "text": "",
    "paints": false,
-   "x": 179,
+   "x": 101,
    "y": 692,
    "w": 6,
    "h": 6,
@@ -2269,6 +2269,98 @@
   },
   {
    "dx": 98,
+   "tag": "span",
+   "id": null,
+   "text": "Hear it",
+   "paints": false,
+   "x": 119,
+   "y": 691,
+   "w": 37,
+   "h": 12,
+   "font": "700 12px / 12px Helvetica, Arial, sans-serif",
+   "fontSize": 12,
+   "fontWeight": "700",
+   "fontFamily": "Helvetica",
+   "color": "rgb(130, 191, 156)",
+   "background": "rgba(0, 0, 0, 0)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 0
+  },
+  {
+   "dx": 99,
+   "tag": "span",
+   "id": null,
+   "text": "",
+   "paints": false,
+   "x": 176,
+   "y": 691,
+   "w": 83,
+   "h": 12,
+   "font": "14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "400",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgba(0, 0, 0, 0)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 2
+  },
+  {
+   "dx": 100,
+   "tag": "i",
+   "id": null,
+   "text": "",
+   "paints": true,
+   "x": 176,
+   "y": 691,
+   "w": 12,
+   "h": 12,
+   "font": "italic 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "400",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgb(130, 191, 156)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "2px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 1
+  },
+  {
+   "dx": 101,
+   "tag": "b",
+   "id": null,
+   "text": "",
+   "paints": false,
+   "x": 179,
+   "y": 692,
+   "w": 6,
+   "h": 6,
+   "font": "italic 700 14px / 21px ui-sans-serif, system-ui, \"Segoe UI\", sans-serif",
+   "fontSize": 14,
+   "fontWeight": "700",
+   "fontFamily": "ui-sans-serif",
+   "color": "rgb(233, 237, 231)",
+   "background": "rgba(0, 0, 0, 0)",
+   "backgroundImage": null,
+   "border": null,
+   "radius": "0px",
+   "letterSpacing": "normal",
+   "padding": "0px 0px 0px 0px",
+   "children": 0
+  },
+  {
+   "dx": 102,
    "tag": "span",
    "id": null,
    "text": "Right hand",
@@ -2291,7 +2383,7 @@
    "children": 0
   },
   {
-   "dx": 99,
+   "dx": 103,
    "tag": "span",
    "id": null,
    "text": "",
@@ -2314,7 +2406,7 @@
    "children": 2
   },
   {
-   "dx": 100,
+   "dx": 104,
    "tag": "i",
    "id": null,
    "text": "",
@@ -2337,7 +2429,7 @@
    "children": 0
   },
   {
-   "dx": 101,
+   "dx": 105,
    "tag": "span",
    "id": null,
    "text": "Left hand",
@@ -2360,7 +2452,7 @@
    "children": 0
   },
   {
-   "dx": 102,
+   "dx": 106,
    "tag": "span",
    "id": null,
    "text": "",
@@ -2383,7 +2475,7 @@
    "children": 2
   },
   {
-   "dx": 103,
+   "dx": 107,
    "tag": "i",
    "id": null,
    "text": "",
@@ -2406,7 +2498,7 @@
    "children": 0
   },
   {
-   "dx": 104,
+   "dx": 108,
    "tag": "span",
    "id": null,
    "text": "Both hands",
@@ -2429,7 +2521,7 @@
    "children": 0
   },
   {
-   "dx": 105,
+   "dx": 109,
    "tag": "span",
    "id": null,
    "text": "",
@@ -2452,7 +2544,7 @@
    "children": 2
   },
   {
-   "dx": 106,
+   "dx": 110,
    "tag": "i",
    "id": null,
    "text": "",
@@ -2475,7 +2567,7 @@
    "children": 0
   },
   {
-   "dx": 107,
+   "dx": 111,
    "tag": "span",
    "id": null,
    "text": "Full run",
@@ -2498,7 +2590,7 @@
    "children": 0
   },
   {
-   "dx": 108,
+   "dx": 112,
    "tag": "button",
    "id": null,
    "text": "Next step",
@@ -2521,7 +2613,7 @@
    "children": 0
   },
   {
-   "dx": 109,
+   "dx": 113,
    "tag": "div",
    "id": null,
    "text": "",
@@ -2544,7 +2636,7 @@
    "children": 2
   },
   {
-   "dx": 110,
+   "dx": 114,
    "tag": "div",
    "id": null,
    "text": "",
@@ -2567,7 +2659,7 @@
    "children": 2
   },
   {
-   "dx": 111,
+   "dx": 115,
    "tag": "span",
    "id": null,
    "text": "TRAINING",
@@ -2590,7 +2682,7 @@
    "children": 0
   },
   {
-   "dx": 112,
+   "dx": 116,
    "tag": "span",
    "id": null,
    "text": "Section B, bars 17 to 32",
@@ -2613,7 +2705,7 @@
    "children": 0
   },
   {
-   "dx": 113,
+   "dx": 117,
    "tag": "div",
    "id": null,
    "text": "",
@@ -2636,7 +2728,7 @@
    "children": 7
   },
   {
-   "dx": 114,
+   "dx": 118,
    "tag": "div",
    "id": null,
    "text": "",
@@ -2659,7 +2751,7 @@
    "children": 2
   },
   {
-   "dx": 115,
+   "dx": 119,
    "tag": "div",
    "id": null,
    "text": "",
@@ -2682,7 +2774,7 @@
    "children": 2
   },
   {
-   "dx": 116,
+   "dx": 120,
    "tag": "span",
    "id": null,
    "text": "TEMPO",
@@ -2705,7 +2797,7 @@
    "children": 0
   },
   {
-   "dx": 117,
+   "dx": 121,
    "tag": "span",
    "id": null,
    "text": "",
@@ -2728,7 +2820,7 @@
    "children": 2
   },
   {
-   "dx": 118,
+   "dx": 122,
    "tag": "span",
    "id": null,
    "text": "74%",
@@ -2751,7 +2843,7 @@
    "children": 0
   },
   {
-   "dx": 119,
+   "dx": 123,
    "tag": "span",
    "id": null,
    "text": "104 bpm",
@@ -2774,7 +2866,7 @@
    "children": 0
   },
   {
-   "dx": 120,
+   "dx": 124,
    "tag": "input",
    "id": null,
    "text": "",
@@ -2797,7 +2889,7 @@
    "children": 0
   },
   {
-   "dx": 121,
+   "dx": 125,
    "tag": "div",
    "id": null,
    "text": "",
@@ -2820,7 +2912,7 @@
    "children": 2
   },
   {
-   "dx": 122,
+   "dx": 126,
    "tag": "label",
    "id": null,
    "text": "",
@@ -2843,7 +2935,7 @@
    "children": 3
   },
   {
-   "dx": 123,
+   "dx": 127,
    "tag": "input",
    "id": null,
    "text": "",
@@ -2866,7 +2958,7 @@
    "children": 0
   },
   {
-   "dx": 124,
+   "dx": 128,
    "tag": "span",
    "id": null,
    "text": "Wait for me",
@@ -2889,7 +2981,7 @@
    "children": 0
   },
   {
-   "dx": 125,
+   "dx": 129,
    "tag": "span",
    "id": null,
    "text": "on",
@@ -2912,7 +3004,7 @@
    "children": 0
   },
   {
-   "dx": 126,
+   "dx": 130,
    "tag": "label",
    "id": null,
    "text": "",
@@ -2935,7 +3027,7 @@
    "children": 3
   },
   {
-   "dx": 127,
+   "dx": 131,
    "tag": "input",
    "id": null,
    "text": "",
@@ -2958,7 +3050,7 @@
    "children": 0
   },
   {
-   "dx": 128,
+   "dx": 132,
    "tag": "span",
    "id": null,
    "text": "Note letters",
@@ -2981,7 +3073,7 @@
    "children": 0
   },
   {
-   "dx": 129,
+   "dx": 133,
    "tag": "span",
    "id": null,
    "text": "off",
@@ -3004,7 +3096,7 @@
    "children": 0
   },
   {
-   "dx": 130,
+   "dx": 134,
    "tag": "div",
    "id": null,
    "text": "",
@@ -3027,7 +3119,7 @@
    "children": 2
   },
   {
-   "dx": 131,
+   "dx": 135,
    "tag": "button",
    "id": null,
    "text": "",
@@ -3050,7 +3142,7 @@
    "children": 2
   },
   {
-   "dx": 132,
+   "dx": 136,
    "tag": "span",
    "id": null,
    "text": "Note style",
@@ -3073,7 +3165,7 @@
    "children": 0
   },
   {
-   "dx": 133,
+   "dx": 137,
    "tag": "span",
    "id": null,
    "text": "Colour",
@@ -3096,7 +3188,7 @@
    "children": 0
   },
   {
-   "dx": 134,
+   "dx": 138,
    "tag": "button",
    "id": null,
    "text": "",
@@ -3119,7 +3211,7 @@
    "children": 2
   },
   {
-   "dx": 135,
+   "dx": 139,
    "tag": "span",
    "id": null,
    "text": "Tap sound",
@@ -3142,7 +3234,7 @@
    "children": 0
   },
   {
-   "dx": 136,
+   "dx": 140,
    "tag": "span",
    "id": null,
    "text": "Auto",
@@ -3165,7 +3257,7 @@
    "children": 0
   },
   {
-   "dx": 137,
+   "dx": 141,
    "tag": "div",
    "id": null,
    "text": "",
@@ -3188,7 +3280,7 @@
    "children": 2
   },
   {
-   "dx": 138,
+   "dx": 142,
    "tag": "span",
    "id": null,
    "text": "HANDS",
@@ -3211,7 +3303,7 @@
    "children": 0
   },
   {
-   "dx": 139,
+   "dx": 143,
    "tag": "div",
    "id": null,
    "text": "",
@@ -3234,7 +3326,7 @@
    "children": 3
   },
   {
-   "dx": 140,
+   "dx": 144,
    "tag": "button",
    "id": null,
    "text": "",
@@ -3257,7 +3349,7 @@
    "children": 1
   },
   {
-   "dx": 141,
+   "dx": 145,
    "tag": "span",
    "id": null,
    "text": "Both",
@@ -3280,7 +3372,7 @@
    "children": 0
   },
   {
-   "dx": 142,
+   "dx": 146,
    "tag": "button",
    "id": null,
    "text": "",
@@ -3303,7 +3395,7 @@
    "children": 2
   },
   {
-   "dx": 143,
+   "dx": 147,
    "tag": "i",
    "id": null,
    "text": "",
@@ -3326,7 +3418,7 @@
    "children": 0
   },
   {
-   "dx": 144,
+   "dx": 148,
    "tag": "span",
    "id": null,
    "text": "Left",
@@ -3349,7 +3441,7 @@
    "children": 0
   },
   {
-   "dx": 145,
+   "dx": 149,
    "tag": "button",
    "id": null,
    "text": "",
@@ -3372,7 +3464,7 @@
    "children": 2
   },
   {
-   "dx": 146,
+   "dx": 150,
    "tag": "i",
    "id": null,
    "text": "",
@@ -3395,7 +3487,7 @@
    "children": 0
   },
   {
-   "dx": 147,
+   "dx": 151,
    "tag": "span",
    "id": null,
    "text": "Right",
@@ -3418,7 +3510,7 @@
    "children": 0
   },
   {
-   "dx": 148,
+   "dx": 152,
    "tag": "div",
    "id": null,
    "text": "",
@@ -3441,7 +3533,7 @@
    "children": 3
   },
   {
-   "dx": 149,
+   "dx": 153,
    "tag": "span",
    "id": null,
    "text": "SECTION",
@@ -3464,7 +3556,7 @@
    "children": 0
   },
   {
-   "dx": 150,
+   "dx": 154,
    "tag": "div",
    "id": null,
    "text": "",
@@ -3487,7 +3579,7 @@
    "children": 2
   },
   {
-   "dx": 151,
+   "dx": 155,
    "tag": "select",
    "id": null,
    "text": "",
@@ -3510,7 +3602,7 @@
    "children": 3
   },
   {
-   "dx": 152,
+   "dx": 156,
    "tag": "option",
    "id": null,
    "text": "Section B, bars 17 to 32",
@@ -3533,7 +3625,7 @@
    "children": 0
   },
   {
-   "dx": 153,
+   "dx": 157,
    "tag": "option",
    "id": null,
    "text": "Section A, bars 1 to 16",
@@ -3556,7 +3648,7 @@
    "children": 0
   },
   {
-   "dx": 154,
+   "dx": 158,
    "tag": "option",
    "id": null,
    "text": "Section C, bars 33 to 48",
@@ -3579,7 +3671,7 @@
    "children": 0
   },
   {
-   "dx": 155,
+   "dx": 159,
    "tag": "select",
    "id": null,
    "text": "",
@@ -3602,7 +3694,7 @@
    "children": 3
   },
   {
-   "dx": 156,
+   "dx": 160,
    "tag": "option",
    "id": null,
    "text": "2 bars",
@@ -3625,7 +3717,7 @@
    "children": 0
   },
   {
-   "dx": 157,
+   "dx": 161,
    "tag": "option",
    "id": null,
    "text": "1 bar",
@@ -3648,7 +3740,7 @@
    "children": 0
   },
   {
-   "dx": 158,
+   "dx": 162,
    "tag": "option",
    "id": null,
    "text": "4 bars",
@@ -3671,7 +3763,7 @@
    "children": 0
   },
   {
-   "dx": 159,
+   "dx": 163,
    "tag": "div",
    "id": null,
    "text": "",
@@ -3694,7 +3786,7 @@
    "children": 3
   },
   {
-   "dx": 160,
+   "dx": 164,
    "tag": "button",
    "id": null,
    "text": "Prev",
@@ -3717,7 +3809,7 @@
    "children": 0
   },
   {
-   "dx": 161,
+   "dx": 165,
    "tag": "span",
    "id": null,
    "text": "",
@@ -3740,7 +3832,7 @@
    "children": 2
   },
   {
-   "dx": 162,
+   "dx": 166,
    "tag": "span",
    "id": null,
    "text": "CHUNK",
@@ -3763,7 +3855,7 @@
    "children": 0
   },
   {
-   "dx": 163,
+   "dx": 167,
    "tag": "span",
    "id": null,
    "text": "B2 of B4",
@@ -3786,7 +3878,7 @@
    "children": 0
   },
   {
-   "dx": 164,
+   "dx": 168,
    "tag": "button",
    "id": null,
    "text": "Next",
@@ -3809,7 +3901,7 @@
    "children": 0
   },
   {
-   "dx": 165,
+   "dx": 169,
    "tag": "div",
    "id": null,
    "text": "",
@@ -3832,7 +3924,7 @@
    "children": 2
   },
   {
-   "dx": 166,
+   "dx": 170,
    "tag": "span",
    "id": null,
    "text": "SOUND",
@@ -3855,7 +3947,7 @@
    "children": 0
   },
   {
-   "dx": 167,
+   "dx": 171,
    "tag": "select",
    "id": null,
    "text": "",
@@ -3878,7 +3970,7 @@
    "children": 4
   },
   {
-   "dx": 168,
+   "dx": 172,
    "tag": "option",
    "id": null,
    "text": "Grand piano",
@@ -3901,7 +3993,7 @@
    "children": 0
   },
   {
-   "dx": 169,
+   "dx": 173,
    "tag": "option",
    "id": null,
    "text": "Upright",
@@ -3924,7 +4016,7 @@
    "children": 0
   },
   {
-   "dx": 170,
+   "dx": 174,
    "tag": "option",
    "id": null,
    "text": "Electric",
@@ -3947,7 +4039,7 @@
    "children": 0
   },
   {
-   "dx": 171,
+   "dx": 175,
    "tag": "option",
    "id": null,
    "text": "Muted felt",
@@ -3970,7 +4062,7 @@
    "children": 0
   },
   {
-   "dx": 172,
+   "dx": 176,
    "tag": "div",
    "id": null,
    "text": "",
@@ -3993,7 +4085,7 @@
    "children": 3
   },
   {
-   "dx": 173,
+   "dx": 177,
    "tag": "button",
    "id": null,
    "text": "Train",
@@ -4016,7 +4108,7 @@
    "children": 0
   },
   {
-   "dx": 174,
+   "dx": 178,
    "tag": "div",
    "id": null,
    "text": "",
@@ -4039,7 +4131,7 @@
    "children": 2
   },
   {
-   "dx": 175,
+   "dx": 179,
    "tag": "button",
    "id": null,
    "text": "Hear it",
@@ -4062,7 +4154,7 @@
    "children": 0
   },
   {
-   "dx": 176,
+   "dx": 180,
    "tag": "button",
    "id": null,
    "text": "Memorize",
@@ -4085,7 +4177,7 @@
    "children": 0
   },
   {
-   "dx": 177,
+   "dx": 181,
    "tag": "div",
    "id": null,
    "text": "",
@@ -4108,7 +4200,7 @@
    "children": 3
   },
   {
-   "dx": 178,
+   "dx": 182,
    "tag": "button",
    "id": null,
    "text": "Record take",
@@ -4131,7 +4223,7 @@
    "children": 0
   },
   {
-   "dx": 179,
+   "dx": 183,
    "tag": "button",
    "id": null,
    "text": "Performance run",
@@ -4154,7 +4246,7 @@
    "children": 0
   },
   {
-   "dx": 180,
+   "dx": 184,
    "tag": "button",
    "id": null,
    "text": "Restart",

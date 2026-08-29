@@ -425,8 +425,49 @@ function bindDashboard(root, ctx) {
     });
   }
 
-  // today's quests: the design drew three, the middle one ticked
-  if (ctx.quests) {
+  // The CHOOSE-1 cards (council round, 2026-08-30). The code truth is one
+  // paid quest a day and one mission a week; the drawn card says so now:
+  // every option stays visible, the CHOSEN row is expanded with its live
+  // line, the ghosts remain clickable until completion. Both templates and
+  // their looks are the design's own two drawn row variants.
+  const bindChooseCard = (kickerText, items, onPick) => {
+    const kick = bySample(root, kickerText);
+    if (!kick || !items) return false;
+    let card = kick.parentElement;
+    while (card && !card.querySelector('button')) card = card.parentElement;
+    if (!card) return false;
+    const rows = [...card.querySelectorAll('button')];
+    const chosenTpl = rows.find((r2) => /CHOSEN/.test(r2.textContent))?.cloneNode(true);
+    const plainTpl = rows.find((r2) => !/CHOSEN/.test(r2.textContent))?.cloneNode(true);
+    if (!chosenTpl || !plainTpl || !rows.length) return false;
+    const col = rows[0].parentElement;
+    // deal back WHERE the drawn rows were: the 756 card keeps its footer in
+    // the same column, and plain appending shoved the rows below it
+    const anchor = rows[rows.length - 1].nextSibling;
+    for (const r2 of rows) r2.remove();
+    for (const it of items) {
+      const row = (it.chosen ? chosenTpl : plainTpl).cloneNode(true);
+      const label = [...row.querySelectorAll('span')].find((s) => !s.children.length
+        && /700 12px/.test(s.getAttribute('style') ?? '') && !/^(CHOSEN|\+\d+)$/.test(s.textContent.trim()));
+      if (label) label.textContent = it.label;
+      if (it.chosen) {
+        const xp = [...row.querySelectorAll('span')].find((s) => !s.children.length && /^\+\d+$/.test(s.textContent.trim()));
+        if (xp && it.xp != null) xp.textContent = `+${it.xp}`;
+        const line = [...row.querySelectorAll('span')].find((s) => !s.children.length
+          && /400 11px/.test(s.getAttribute('style') ?? '') && s !== label
+          && s.textContent.trim() !== 'CHOSEN');
+        if (line) line.textContent = it.line ?? it.why ?? '';
+      }
+      row.style.cursor = 'pointer';
+      row.addEventListener('click', () => onPick(it));
+      col.insertBefore(row, anchor);
+    }
+    return true;
+  };
+
+  // today's quests: the CHOOSE-1 card on the desktop board, the old ticked
+  // trio on the 756 column until its own redraw lands
+  if (ctx.quests && !bindChooseCard('TODAY · CHOOSE 1', ctx.quests, (q) => ctx.onQuest?.(q))) {
     const rows = rowsFromSamples(root, ['Master a section', '10 real minutes, done', 'One clean run']);
     const v = checkVariants(rows, 1);
     T('1 of 3 done', `${ctx.quests.filter((q) => q.done).length} of ${ctx.quests.length} done`);
@@ -440,8 +481,8 @@ function bindDashboard(root, ctx) {
     });
   }
 
-  // the weekly mission
-  if (ctx.mission) {
+  // the weekly mission, same law
+  if (ctx.mission && !bindChooseCard('THIS WEEK · CHOOSE 1', ctx.mission.items, (m) => ctx.onMission?.(m))) {
     const rows = rowsFromSamples(root, ['Make one song truly yours', 'Bank two song proofs', 'Three practice days']);
     const v = checkVariants(rows, -1);
     T('+150 each', ctx.mission.each);
@@ -463,27 +504,45 @@ function bindDashboard(root, ctx) {
   if (ctx.practice?.length) {
     const todayLabel = bySample(root, 'today');
     const strip = todayLabel?.parentElement;
-    const bars = strip?.previousElementSibling;
+    // the bars row is the PRIOR SIBLING CARRYING %-HEIGHTS: the council round
+    // slid a headline between them and the naive previousElementSibling crashed
+    let bars = strip?.previousElementSibling;
+    while (bars && ![...bars.children].some((el) => /height\s*:\s*[\d.]+%/.test(el.getAttribute('style') ?? ''))) {
+      bars = bars.previousElementSibling;
+    }
     if (strip && bars) {
+      // The council redraw made a ZERO day a full-height WRAPPER holding a
+      // dashed baseline, so its own height reads 100% and the old percentage
+      // reader scaled every bar against a wrapper. A wrapper is recognised by
+      // its align-items:flex-end and counts as zero.
+      const isWrap = (el) => /align-items:\s*flex-end/.test(el.getAttribute('style') ?? '');
       const drawn = [...bars.children];
-      const pctOf = (el) => parseFloat((el.getAttribute('style') || '').match(/height\s*:\s*([\d.]+)%/)?.[1] ?? '0');
+      const pctOf = (el) => isWrap(el) ? 0 : parseFloat((el.getAttribute('style') || '').match(/height\s*:\s*([\d.]+)%/)?.[1] ?? '0');
       const styleOf = (el) => el.getAttribute('style');
       const pcts = drawn.map(pctOf);
       const maxPct = Math.max(...pcts);
       const minPct = Math.min(...pcts.filter((p) => p > 0));
+      const zeroTpl = drawn.find(isWrap)?.cloneNode(true) ?? null;
       const shape = {
         today: styleOf(drawn[drawn.length - 1]),
-        zero: styleOf(drawn.find((el, i) => pctOf(el) === 0 && i < drawn.length - 1) ?? drawn[0]),
-        value: styleOf(drawn.find((el, i) => pctOf(el) > 0 && i < drawn.length - 1) ?? drawn[0]),
+        zero: styleOf(drawn.find((el, i) => pctOf(el) === 0 && !isWrap(el) && i < drawn.length - 1) ?? drawn[0]),
+        value: styleOf(drawn.find((el, i) => pctOf(el) > 0 && !isWrap(el) && i < drawn.length - 1) ?? drawn[0]),
       };
       const max = Math.max(1, ...ctx.practice.map((d) => d.minutes));
       const labels = [...strip.children];
       ctx.practice.forEach((d, i) => {
         if (labels[i]) labels[i].textContent = d.isToday ? 'today' : d.label;
-        const bar = drawn[i];
+        const bar = bars.children[i];
         if (!bar) return;
+        if (d.minutes <= 0 && !d.isToday && zeroTpl) {
+          const z = zeroTpl.cloneNode(true);
+          z.title = `${d.label}: 0 min`;
+          bar.replaceWith(z);
+          return;
+        }
         const base = d.isToday ? shape.today : d.minutes > 0 ? shape.value : shape.zero;
         bar.setAttribute('style', base);
+        if (bar.children.length) bar.innerHTML = ''; // a repurposed wrapper sheds its baseline child
         if (d.minutes > 0 || d.isToday) {
           const pct = d.minutes > 0 ? Math.max(minPct, Math.round((d.minutes / max) * maxPct)) : 0;
           bar.style.height = `${pct}%`;
@@ -491,11 +550,19 @@ function bindDashboard(root, ctx) {
         bar.title = `${d.label}: ${Math.round(d.minutes)} min`;
       });
     }
+    // the council's measurement rulings: a chart is decorative until it
+    // carries its total and its trend
+    // board-conditional slots: only the compositions that DRAW them bind them
+    if (ctx.practiceHead && bySample(root, '84 MIN · 4 DAYS')) T('84 MIN · 4 DAYS', ctx.practiceHead);
+    if (ctx.practiceTrend && bySample(root, '+18% vs previous 7 days')) T('+18% vs previous 7 days', ctx.practiceTrend);
   }
 
   if (ctx.path) {
     T('Chords from a symbol', ctx.path.skill);
     T('Skill 2 of 5. Stage: independent, one stage short of retained.', ctx.path.stage);
+    // the four-line teaser (council round): action and evidence are value slots
+    if (ctx.path.action && bySample(root, 'Build Cm7 and F7 from the symbol, left hand alone.')) T('Build Cm7 and F7 from the symbol, left hand alone.', ctx.path.action);
+    if (ctx.path.evidence != null && bySample(root, 'Independent for six days. Decays Thursday.')) T('Independent for six days. Decays Thursday.', ctx.path.evidence);
     // Only write this when it is genuinely known. Writing "0 OF 5 STAGES" while
     // the design's own pips still showed four filled was the port contradicting
     // itself on screen, and a confident wrong number is worse than the sample.
@@ -510,6 +577,14 @@ function bindDashboard(root, ctx) {
           const style = i < ctx.path.stagesDone ? on : off;
           if (style) pip.setAttribute('style', style);
         });
+      }
+    } else {
+      // no skill on trial (diagnostic, assessment, done): the drawn 4-of-5
+      // sample must not speak for a stage nobody computed
+      const bar = bySample(root, '4 OF 5 STAGES')?.parentElement;
+      if (bar) {
+        if (!bar.dataset.disp) bar.dataset.disp = bar.style.display || 'flex';
+        bar.style.display = 'none';
       }
     }
     const go = bySample(root, 'Continue');
@@ -978,6 +1053,10 @@ function bindAllTools(root, ctx) {
 // Recolour a designed glow layer from the artwork it sits behind, keeping the
 // design's own alpha. Used for the tile halos; the hero glow has its own pass.
 function paintArtGlow(layer, img) {
+  // a glow HALO overhangs the tile TITLE, and an absolutely-positioned layer
+  // eats the hit-test for everything under it: clicks on a song's own name
+  // did nothing (journeys caught it, 2026-08-30)
+  layer.style.pointerEvents = 'none';
   const alpha = (layer.getAttribute('style') ?? '').match(/rgba\([^)]*?,\s*(\.?\d*\.?\d+)\)/)?.[1] ?? '.3';
   const paint = () => {
     try {
@@ -1189,6 +1268,7 @@ function renderTiles(root, ctx) {
   // every art-forward library (iTunes included) scrolls its grid; the
   // composition itself still never scrolls. Scaffolding behaviour only.
   rowsCol.style.overflowY = 'auto';
+  rowsCol.dataset.libGrid = '1';   // the elastic library grows this column
   rowsCol.style.overflowX = 'hidden';
   rowsCol.style.minHeight = '0';
   return true;
