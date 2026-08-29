@@ -79,8 +79,9 @@ export function mountWidePlay(host) {
   // artboard's mock deck. Wiping the whole region took the readouts with it and
   // every cp-* id silently went missing, so only children that do NOT carry the
   // readouts stand down.
-  // the readout strip and the tier chip are SEPARATE children of the region
-  const keepReadouts = [...region.children].filter((c) => /CLEAN|TIER/.test(c.textContent));
+  // the readout strip, the tier chip, and the JOURNEY strip (2026-08-30) are
+  // SEPARATE children of the region and all survive the wipe
+  const keepReadouts = [...region.children].filter((c) => /CLEAN|TIER|JOURNEY/.test(c.textContent));
   for (const c of [...region.children]) if (!keepReadouts.includes(c)) c.remove();
   region.style.position = 'relative';
   region.style.display = 'flex';
@@ -99,6 +100,11 @@ export function mountWidePlay(host) {
     const el = $(id);
     if (el) region.appendChild(el);
   }
+  // the JOURNEY strip belongs at the BOTTOM of the column, under the deck
+  {
+    const js = keepReadouts.find((c) => /JOURNEY/.test(c.textContent));
+    if (js) { js.style.minHeight = ''; region.appendChild(js); }
+  }
   const falls = $('falls');
   falls.style.width = '100%';
   falls.style.flex = '1 1 auto';
@@ -113,7 +119,12 @@ export function mountWidePlay(host) {
   // buttons concealed their active states (Codex full-verify, 2026-08-29).
   proxyMirrors.length = 0;
   const proxy = (sample, id) => {
-    const el = leaf(board, sample);
+    // Prefer the leaf inside a BUTTON: the journey strip draws a step named
+    // "Hear it", which sits earlier in the DOM than the action button and
+    // stole the proxy (v69 first battery caught it).
+    const cands = [...board.querySelectorAll('*')]
+      .filter((e) => !e.children.length && e.textContent.trim() === sample);
+    const el = cands.find((e) => e.closest('button')) ?? cands[0];
     if (!el) return null;
     const c = el.closest('button') ?? rowOf(el);
     c.style.cursor = 'pointer';
@@ -129,6 +140,21 @@ export function mountWidePlay(host) {
   proxy('Restart', 'btn-restart');
   proxy('Prev', 'chunk-prev');
   proxy('Next', 'chunk-next');
+  // the chunk READOUT is the legacy toggle (its label click turns chunk
+  // looping off): without this, desktop had no way OUT of chunk mode. Click
+  // wiring only, no label mirror: syncWidePlay already feeds cp-chunk.
+  {
+    const el = leaf(board, 'B2 of B4');
+    if (el) {
+      const c = el.closest('button') ?? rowOf(el);
+      c.style.cursor = 'pointer';
+      c.title = 'Toggle chunk looping';
+      c.dataset.proxyFor = 'chunk-label';
+      c.addEventListener('click', () => { $('chunk-label')?.click(); setTimeout(syncWidePlay, 0); });
+    }
+  }
+  // drawn on 9a in the 2026-08-30 parity round; a no-op on older markup
+  proxy('Performance run', 'btn-perf');
   bindHandCells(board);
   const modeF = proxy('Falls', 'mode-falls');
   const modeS = proxy('Score', 'mode-score');
@@ -139,21 +165,55 @@ export function mountWidePlay(host) {
     modeS.addEventListener('click', () => setTimeout(restyle, 0));
   }
 
-  // toggles: the row clicks the real checkbox; the word prints its state
+  // toggles: the row clicks the real checkbox; the word prints its state.
+  // preventDefault matters: the drawn row is a LABEL around a native checkbox,
+  // and a label click synthesizes a second click on its input, which bubbled
+  // back through this listener and flipped the real checkbox TWICE, a net
+  // no-op. The wait toggle was dead on desktop until the parity journey
+  // caught it (2026-08-30).
   const toggle = (sample, id) => {
     const label = leaf(board, sample);
     if (!label) return;
     const row = rowOf(label);
     const word = [...row.querySelectorAll('*')]
       .find((e) => !e.children.length && /^(on|off)$/.test(e.textContent.trim()));
-    const reflect = () => { if (word) word.textContent = $(id)?.checked ? 'on' : 'off'; };
+    const reflect = () => {
+      const real = $(id);
+      if (word) word.textContent = real?.checked ? 'on' : 'off';
+      const drawnBox = row.querySelector('input[type="checkbox"]');
+      if (drawnBox && real) drawnBox.checked = real.checked;
+    };
     row.style.cursor = 'pointer';
-    row.addEventListener('click', () => { $(id)?.click(); reflect(); });
+    row.addEventListener('click', (ev) => { ev.preventDefault(); $(id)?.click(); reflect(); });
     row.dataset.reflects = id;
     reflect();
   };
   toggle('Wait for me', 'wait-mode');
   toggle('Note letters', 'chk-letters');
+
+  // NOTE STYLE and TAP SOUND (drawn 2026-08-30 parity round): each half of the
+  // shared row is a button carrying its own state word; a click cycles the
+  // legacy control and the word mirrors the legacy truth
+  const cycleReflects = [];
+  const cycleRow = (sample, id, getWord, act) => {
+    const label = leaf(board, sample);
+    const btn = label?.closest('button');
+    if (!btn) return;
+    const word = [...btn.querySelectorAll('span')].find((s) => s !== label && !s.children.length);
+    const reflect = () => { const w = getWord(); if (word && w && word.textContent !== w) word.textContent = w; };
+    btn.style.cursor = 'pointer';
+    btn.dataset.proxyFor = id;
+    btn.addEventListener('click', () => { act(); setTimeout(reflect, 0); });
+    reflect();
+    cycleReflects.push(reflect);
+  };
+  cycleRow('Note style', 'notestyle-seg',
+    () => document.querySelector('#notestyle-seg .seg-btn[data-on="true"]')?.textContent.trim() ?? 'Colour',
+    () => document.querySelector('#notestyle-seg .seg-btn:not([data-on="true"])')?.click());
+  cycleRow('Tap sound', 'btn-sound',
+    () => stripLabel($('btn-sound')?.textContent) || 'Auto',
+    () => $('btn-sound')?.click());
+  board.__cycleReflect = () => cycleReflects.forEach((f) => f());
 
   // tempo: a click on the drawn track maps to the range input's own scale
   const pct = leaf(board, '74%');
@@ -163,20 +223,39 @@ export function mountWidePlay(host) {
   const tempoLabel = leaf(board, 'TEMPO');
   if (tempoLabel) {
     const block = rowOf(tempoLabel, 2).parentElement ?? rowOf(tempoLabel, 2);
-    const track = [...block.querySelectorAll('div')]
-      .find((d) => d.clientWidth > 150 && d.clientHeight <= 24 && !d.textContent.trim());
     const input = $('tempo');
-    if (track && input) {
-      track.style.cursor = 'pointer';
-      track.addEventListener('click', (ev) => {
-        const r = track.getBoundingClientRect();
-        const ratio = Math.max(0, Math.min(1, (ev.clientX - r.x) / r.width));
-        const min = +input.min || 40, max = +input.max || 140;
-        input.value = String(Math.round(min + ratio * (max - min)));
+    // The board draws a REAL <input type=range> now. The old wiring looked for
+    // a textless div track, found nothing, and wired nothing, so the thumb
+    // moved and the engine never heard it (Mark, 2026-08-30: "the tempo bar
+    // isn't working"). Forward its moves to the app's input; its RANGE is the
+    // app's truth (the drawn 40-140 was a sample, the engine's is 40-120).
+    const drawn = block?.querySelector('input[type="range"]') ?? board.querySelector('input[type="range"]');
+    if (drawn && input) {
+      drawn.min = input.min; drawn.max = input.max; drawn.step = input.step || '5';
+      drawn.value = input.value;
+      drawn.dataset.proxyFor = 'tempo';
+      drawn.addEventListener('input', () => {
+        input.value = drawn.value;
         input.dispatchEvent(new Event('input', { bubbles: true }));
         input.dispatchEvent(new Event('change', { bubbles: true }));
         syncWidePlay();
       });
+    } else if (input) {
+      // older markup fallback: the drawn static track maps a click to the scale
+      const track = [...(block ?? board).querySelectorAll('div')]
+        .find((d) => d.clientWidth > 150 && d.clientHeight <= 24 && !d.textContent.trim());
+      if (track) {
+        track.style.cursor = 'pointer';
+        track.addEventListener('click', (ev) => {
+          const r = track.getBoundingClientRect();
+          const ratio = Math.max(0, Math.min(1, (ev.clientX - r.x) / r.width));
+          const min = +input.min || 40, max = +input.max || 140;
+          input.value = String(Math.round(min + ratio * (max - min)));
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+          syncWidePlay();
+        });
+      }
     }
   }
 
@@ -239,6 +318,61 @@ export function mountWidePlay(host) {
     });
     board.__syncSound = syncSound;
     syncSound();
+  }
+
+  // CHUNK SIZE (drawn 2026-08-30 parity round): the drawn select drives the
+  // hidden real one by leading number, the same rule that fixed chunkBars
+  const chunk9 = selects.find((x) => optionTexts(x).some((t) => t.trim() === '1 bar'));
+  if (chunk9) {
+    chunk9.dataset.proxyFor = 'chunk-size';
+    chunk9.addEventListener('change', () => {
+      const real = $('chunk-size');
+      if (!real) return;
+      const want = parseFloat(chunk9.value || chunk9.options[chunk9.selectedIndex]?.text || '2');
+      const idx = [...real.options].findIndex((o) => parseFloat(o.value || o.text) === want);
+      if (idx >= 0) { real.selectedIndex = idx; real.dispatchEvent(new Event('change', { bubbles: true })); }
+      syncWidePlay();
+    });
+  }
+
+  // ---- the JOURNEY strip (drawn 2026-08-30 parity round) --------------------
+  // The per-song step ladder lived only on the hidden phone board; the deck
+  // now carries the drawn strip and mirrors the legacy #journey-strip truth:
+  // step names and states are dealt into the board's own drawn cell variants.
+  {
+    const kick = leaf(board, 'JOURNEY');
+    const nextBtn = leaf(board, 'Next step')?.closest('button');
+    if (kick && nextBtn) {
+      const row = kick.parentElement;
+      const cells = [...row.children].filter((c) => c.tagName === 'SPAN' && c !== kick && c.querySelector('i'));
+      // the drawn samples in order: done, done, current, todo, todo
+      const tplDone = cells[0]?.cloneNode(true), tplNow = cells[2]?.cloneNode(true), tplTodo = cells[3]?.cloneNode(true);
+      row.dataset.disp = row.style.display || 'flex';
+      nextBtn.dataset.disp = nextBtn.style.display || '';
+      nextBtn.style.cursor = 'pointer';
+      nextBtn.addEventListener('click', () => { $('j-go')?.click(); setTimeout(syncWidePlay, 0); });
+      board.__mirrorJourney = () => {
+        const legacy = $('journey-strip');
+        const steps = legacy && !legacy.hidden ? [...legacy.querySelectorAll('.j-step')] : [];
+        const sig = steps.map((s) => s.textContent.trim() + '|' + s.className).join(';') + '|' + !!$('j-go');
+        if (row.dataset.jsig === sig) return;
+        row.dataset.jsig = sig;
+        if (!steps.length || !tplDone || !tplNow || !tplTodo) { row.style.display = 'none'; return; }
+        row.style.display = row.dataset.disp;
+        for (const c of [...row.children]) {
+          if (c.tagName === 'SPAN' && c !== kick && c.querySelector('i')) c.remove();
+        }
+        for (const s of steps) {
+          const tpl = s.classList.contains('done') ? tplDone : s.classList.contains('now') ? tplNow : tplTodo;
+          const c = tpl.cloneNode(true);
+          const word = [...c.children].find((x) => x.tagName === 'SPAN');
+          if (word) word.textContent = s.textContent.replace(/^[^\p{L}]+/u, '').trim();
+          row.insertBefore(c, nextBtn);
+        }
+        nextBtn.style.display = $('j-go') ? nextBtn.dataset.disp : 'none';
+      };
+      board.__mirrorJourney();
+    }
   }
 
   // readouts and header slots the app will keep current
@@ -341,6 +475,12 @@ export function syncWidePlay(info = {}) {
   put('cp-title', info.title);
   put('cp-sub', info.sub);
   put('cp-tempo-pct', $('tempo') ? $('tempo').value + '%' : null);
+  // the drawn slider follows programmatic tempo writes (startSong resets 100)
+  {
+    const drawn = board?.querySelector('input[type="range"][data-proxy-for="tempo"]');
+    const real = $('tempo');
+    if (drawn && real && drawn.value !== real.value && document.activeElement !== drawn) drawn.value = real.value;
+  }
   put('cp-bpm', info.bpm);
   if (info.art) { const img = $('cp-art'); if (img && img.src !== info.art) img.src = info.art; }
   const chunkText = $('chunk-label')?.textContent?.trim();
@@ -349,6 +489,8 @@ export function syncWidePlay(info = {}) {
   syncHandCells();
   board?.__mirrorSections?.();
   board?.__syncSound?.();
+  board?.__mirrorJourney?.();
+  board?.__cycleReflect?.();
 }
 let board = null;   // the mounted 9a root; module-scoped so sync can reach the section list
 

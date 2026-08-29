@@ -91,6 +91,9 @@ if (screen === 'library' || screen === 'library-desktop') {
     // left the desktop frame printing "the other 3" against the board's 7.
     learningTotal: screen === 'library-desktop' ? 16 : 12,
     carryOn: { title: 'Resume the session', sub: 'Chords from a symbol' },
+    // the board draws the form check IN ITS DUE STATE; the binder hides it
+    // when not due, so the pixel gate needs the due sample seeded
+    formCheckDue: true,
     metronomeBpm: '140',
     voiceName: 'Grand',
     keyboard: { title: 'No keyboard', sub: 'Screen taps. Plug the P-45 in for the real thing.' },

@@ -819,6 +819,110 @@ try {
     return bad;
   });
 
+  await journey('PLAY PARITY: tempo, Wait for me, Note letters and Section all drive the engine', async () => {
+    const bad = [];
+    // See You Again has a defined song JOURNEY, so the strip assertion fires
+    await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify({
+      ...SEED, songs: { ...SEED.songs, 'see-you-again-easy': { plays: 2, stars: 0, best: 40 } },
+    }))}); true`);
+    await boot();
+    if (await clickText('See You Again') !== 'ok') return ['no library row for the seeded song'];
+    await new Promise((r) => setTimeout(r, 1500));
+    if (await visible() !== 'play') return ['the song did not open'];
+    // TEMPO: the drawn range drives the engine (dead until 2026-08-30)
+    const t = await b.eval(`(() => {
+      const drawn = document.querySelector('input[type="range"][data-proxy-for="tempo"]');
+      if (!drawn || drawn.getBoundingClientRect().width < 10) return null;
+      drawn.value = '60';
+      drawn.dispatchEvent(new Event('input', { bubbles: true }));
+      return true;
+    })()`);
+    if (!t) bad.push('no wired drawn tempo slider on the wide board');
+    await new Promise((r) => setTimeout(r, 500));
+    const tempoState = await b.eval(`({ engine: window.__engine?.tempo, pct: document.getElementById('cp-tempo-pct')?.textContent ?? null })`);
+    if (tempoState.engine !== 0.6) bad.push(`dragging the drawn tempo left the engine at ${JSON.stringify(tempoState.engine)}`);
+    if (tempoState.pct !== '60%') bad.push(`the tempo readout says ${JSON.stringify(tempoState.pct)}, expected "60%"`);
+    // WAIT FOR ME: the drawn row flips the real checkbox and its printed word
+    const wait0 = await b.eval(`document.getElementById('wait-mode').checked`);
+    if (await clickText('Wait for me') !== 'ok') bad.push('Wait for me does not win its own hit-test');
+    await new Promise((r) => setTimeout(r, 400));
+    const wait1 = await b.eval(`(() => {
+      const row = document.querySelector('[data-reflects="wait-mode"]');
+      const word = row && [...row.querySelectorAll('*')].find((e) => !e.children.length && /^(on|off)$/.test(e.textContent.trim()));
+      return { checked: document.getElementById('wait-mode').checked, word: word?.textContent.trim() ?? null };
+    })()`);
+    if (wait1.checked === wait0) bad.push('the Wait for me row did not flip the real checkbox');
+    if (wait1.word !== (wait1.checked ? 'on' : 'off')) bad.push(`Wait for me prints ${JSON.stringify(wait1.word)} while the checkbox is ${wait1.checked}`);
+    // NOTE LETTERS: same contract
+    const let0 = await b.eval(`document.getElementById('chk-letters').checked`);
+    if (await clickText('Note letters') !== 'ok') bad.push('Note letters does not win its own hit-test');
+    await new Promise((r) => setTimeout(r, 400));
+    const let1 = await b.eval(`document.getElementById('chk-letters').checked`);
+    if (let1 === let0) bad.push('the Note letters row did not flip the real checkbox');
+    // SECTION: choosing a section loops the engine
+    const sec = await b.eval(`(() => {
+      const sels = [...document.querySelectorAll('#screen-play select')].filter((s) => s.getBoundingClientRect().width > 0);
+      const sec9 = sels.find((s) => [...s.options].some((o) => /bars/i.test(o.text) || /Section|Whole/i.test(o.text)));
+      if (!sec9) return null;
+      const opt = [...sec9.options].find((o) => o.value !== '');
+      if (!opt) return 'NO SECTIONS';
+      sec9.value = opt.value;
+      sec9.dispatchEvent(new Event('change', { bubbles: true }));
+      return opt.text;
+    })()`);
+    if (!sec) bad.push('no visible section select on the wide board');
+    else if (sec !== 'NO SECTIONS') {
+      await new Promise((r) => setTimeout(r, 600));
+      const loop = await b.eval(`(window.__engine?.loop ? 'looped' : 'whole')`);
+      if (loop !== 'looped') bad.push(`choosing section ${JSON.stringify(sec)} set no engine loop`);
+    }
+    // PERFORMANCE RUN: drawn and wired (missing until 2026-08-30)
+    const perf = await b.eval(`(() => { const c = document.querySelector('[data-proxy-for="btn-perf"]'); return c ? c.getBoundingClientRect().width > 0 : false; })()`);
+    if (!perf) bad.push('no visible Performance run control on the wide board');
+    // CHUNK SIZE + the OFF toggle
+    await b.eval(`(document.getElementById('chunk-next')?.click(), true)`);
+    await new Promise((r) => setTimeout(r, 400));
+    const size = await b.eval(`(() => {
+      const drawn = document.querySelector('select[data-proxy-for="chunk-size"]');
+      if (!drawn || drawn.getBoundingClientRect().width < 5) return null;
+      const opt = [...drawn.options].find((o) => (o.value || o.text).startsWith('4'));
+      drawn.value = opt.value;
+      drawn.dispatchEvent(new Event('change', { bubbles: true }));
+      return true;
+    })()`);
+    if (!size) bad.push('no visible chunk size select on the wide board');
+    await new Promise((r) => setTimeout(r, 400));
+    const lab = await b.eval(`(document.getElementById('chunk-label')?.textContent ?? '').trim()`);
+    if (!/^Chunk \d+ \/ \d+$/.test(lab.replace(/^[^A-Za-z0-9]+/, ''))) bad.push(`chunk size change broke the label (${JSON.stringify(lab)})`);
+    const off = await b.eval(`(() => { const c = document.querySelector('[data-proxy-for="chunk-label"]'); if (!c) return null; c.click(); return true; })()`);
+    await new Promise((r) => setTimeout(r, 400));
+    const lab2 = await b.eval(`(document.getElementById('chunk-label')?.textContent ?? '').trim().replace(/^[^A-Za-z]+/, '')`);
+    if (!off) bad.push('no drawn way to turn chunk looping OFF');
+    else if (lab2 !== 'Chunks off') bad.push(`the chunk toggle did not turn chunks off (${JSON.stringify(lab2)})`);
+    // NOTE STYLE flips the legacy seg (colour-blind law: the words move)
+    const ns0 = await b.eval(`document.querySelector('#notestyle-seg .seg-btn[data-on="true"]')?.textContent.trim()`);
+    const nsC = await b.eval(`(() => { const c = document.querySelector('[data-proxy-for="notestyle-seg"]'); if (!c || c.getBoundingClientRect().width < 5) return null; c.click(); return true; })()`);
+    await new Promise((r) => setTimeout(r, 400));
+    const ns1 = await b.eval(`document.querySelector('#notestyle-seg .seg-btn[data-on="true"]')?.textContent.trim()`);
+    if (!nsC) bad.push('no visible Note style control on the wide board');
+    else if (ns1 === ns0) bad.push('the Note style row did not flip the legacy segment');
+    // JOURNEY strip mirrors the legacy ladder when the song has one
+    const jz = await b.eval(`(() => {
+      const legacy = document.getElementById('journey-strip');
+      const kick = [...document.querySelectorAll('#screen-play *')].find((e) => !e.children.length && e.textContent.trim() === 'JOURNEY');
+      const legacySteps = legacy && !legacy.hidden ? legacy.querySelectorAll('.j-step').length : 0;
+      if (!legacySteps) return { skip: true };
+      if (!kick || kick.getBoundingClientRect().width < 1) return { skip: false, drawn: 0, legacySteps };
+      const row = kick.parentElement;
+      return { skip: false, legacySteps,
+        drawn: [...row.children].filter((c) => c.tagName === 'SPAN' && c !== kick && c.querySelector('i')).length };
+    })()`);
+    if (!jz.skip && jz.drawn !== jz.legacySteps) bad.push(`the drawn journey shows ${jz.drawn} steps, the app has ${jz.legacySteps}`);
+    await goHome(bad, 'the play parity checks');
+    await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify(SEED))}); true`);
+    return bad;
+  });
+
   await journey('the plain url IS the new design, and ?canon=0 still gets the old one', async () => {
     const bad = [];
     await b.goto('http://localhost:4180/index.html');

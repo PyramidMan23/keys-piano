@@ -122,3 +122,14 @@ attribute itself is absent from the canon by design. Accepted.
     codex-full-verify-output.txt. The proven defects it found (chunk NaN,
     concealed active labels, met-sig NaN, improv loop pinned to 0) are fixed
     and journey-gated; the remaining list is coverage debt, not known bugs.
+13. **The parity wave (2026-08-30, after Mark's "so many things still broken")**:
+    a Codex read-only audit mapped every legacy control to its canon path. Six
+    missing features found; five drawn and wired the same night (Performance
+    run, chunk size, the song JOURNEY strip, Tap sound, Note style), and five
+    wiring/semantics breaks fixed (tempo wired at all + 40-120 contract
+    restored, metronome 200 contract, form card now obeys its 7-practice-day
+    schedule and dismisses, Voice and P-45 readouts repaint on change). The
+    one deliberate leftover: the form check's five optional 1-5 rating selects
+    are not in the canon module; the whole form-check feature is awaiting
+    Mark's keep/demote/remove verdict, so drawing rating UI first would be
+    waste. The audit itself: verify-20260829/codex-parity-output.txt.

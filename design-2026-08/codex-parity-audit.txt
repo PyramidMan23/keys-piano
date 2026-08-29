@@ -1,0 +1,44 @@
+READ-ONLY FEATURE-PARITY AUDIT. Hard rules: READ-ONLY. No skills. No
+sub-reviewers or agents. No writes. Node probes that only read are fine, and
+you may fetch from http://localhost:4180 (the live app).
+
+Repo: C:\Users\markh\keys-piano. Mark tonight, verbatim: "the tempo bar isn't
+working... why is so many things still broken and not here?? ... go through
+the whole app and check if it's all working and there's no bugs and every
+feature that was in the original design has been added to this one."
+
+CONTEXT. The redesign renders the DESIGN'S OWN MARKUP (js/canon-templates.mjs)
+over the legacy app: mountCanonScreens moves legacy markup into hidden
+[data-legacy-screen] divs and strips ids the canon claims; the wide play
+board (mountWidePlay in js/canon-play.mjs) additionally hides the phone play
+canon and PROXIES drawn controls to hidden real ones. THE BUG CLASS KILLING
+US: a legacy control the canon never drew, or drew but never wired. Proven
+kills so far: the Both/Left/Right hand buttons (never drawn), the tempo
+slider (drawn as a real <input type=range> but the wiring looked for an old
+div track and wired nothing), chunk-size/met-sig/improv-loop (canon selects
+with word values fed +value NaN), Hear it/Stop labels (never mirrored).
+Assume there are MORE.
+
+YOUR JOB:
+1. ENUMERATE the legacy feature surface: every interactive element in
+   index.html (ids, and class-driven ones like .hand-btn) plus every
+   addEventListener target in js/app.mjs and the js modules (path, improv,
+   takes, echo, rhythm, lessons wiring). That list is the parity baseline.
+2. For EACH item, determine how a user reaches it under canon at 1418px:
+   (a) the id is claimed by a canon board and the element is visible, or
+   (b) a proxy drives it ([data-proxy-for], [data-reflects],
+   [data-hand-cell], the toggle rows, the mirrored selects), or
+   (c) it is intentionally legacy-only / hidden by design (say so), or
+   (d) NOTHING reaches it = A MISSING FEATURE. List every (d) with the
+   file:line of the legacy control and what it did.
+3. For controls that ARE wired, look for value/semantics breaks of the
+   word-valued-select class: any numeric parse (+x.value, parseInt) reading a
+   canon element whose values are display words; any range/step mismatch; any
+   label that changes on the hidden control but not the drawn one.
+4. Spot-check 5 of the riskiest with node probes against localhost:4180
+   (drive the control, read the state that should change).
+
+DELIVERABLE: (a) the MISSING list ranked by user pain, each with file:line,
+(b) the BROKEN-WIRING list with repro, (c) explicitly name the screens/controls
+you checked and found CLEAN so silence is not ambiguity. No taste notes this
+round: parity and function only.

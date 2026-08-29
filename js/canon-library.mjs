@@ -520,6 +520,18 @@ function bindDashboard(root, ctx) {
   if (formDone) { const c = control(formDone); c.addEventListener('click', () => ctx.onFormDone?.()); c.style.cursor = 'pointer'; }
   const formSkip = bySample(root, 'Not today');
   if (formSkip) { const c = control(formSkip); c.addEventListener('click', () => ctx.onFormSnooze?.()); c.style.cursor = 'pointer'; }
+  // The module obeys the legacy SCHEDULE (due every 7 practice days, snooze
+  // holds the day): drawn always-on, it nagged daily and Done never dismissed
+  // it (Codex parity B3). Captured inline display, trap 8's rule.
+  {
+    const kick = bySample(root, 'FORM CHECK');
+    let mod = kick;
+    while (mod && mod.parentElement && !mod.contains(formDone ?? kick)) mod = mod.parentElement;
+    if (mod && kick) {
+      if (!mod.dataset.disp) mod.dataset.disp = mod.style.display || 'block';
+      mod.style.display = ctx.formCheckDue ? mod.dataset.disp : 'none';
+    }
+  }
 }
 
 

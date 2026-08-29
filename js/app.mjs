@@ -182,6 +182,9 @@ midi.onStatus = (text, connected) => {
   const el = $('midi-status');
   el.dataset.connected = String(connected);
   syncInputChip(text);
+  // the drawn "P-45 connected / No keyboard" module binds at render time:
+  // plugging in while parked on the library must repaint it (Codex parity B5)
+  if (CANON_ON && !$('screen-library').hidden) renderLibrary();
 };
 
 // Debug/test hooks: simulate a key or a control change from the console
@@ -682,8 +685,10 @@ function canonLibraryCtx() {
     onQuest: (q) => { chooseQuest(state, today, q.id); store.save(state); renderLibrary(); },
     onMission: (m) => { chooseWeekly(state, isoWeek(new Date()), m.id); settleGame(); renderLibrary(); },
     onPath: () => runPrescription(rx),
-    onFormDone: () => { const el = $('form-done'); if (el) el.click(); },
-    onFormSnooze: () => { const el = $('form-snooze'); if (el) el.click(); },
+    // re-render after the legacy handler saves, so the drawn module dismisses
+    onFormDone: () => { $('form-done')?.click(); renderLibrary(); },
+    onFormSnooze: () => { $('form-snooze')?.click(); renderLibrary(); },
+    formCheckDue: formDue(state.formLast ?? null, state.days ?? []) && state.formSnooze !== today,
     onChooseAnother: () => { state.lib.explore = true; store.save(state); renderLibrary(); },
     onSearch: (q) => { libQuery = q; renderLibrary(); },
     onTab: (sec) => { state.lib.canonTab = sec; state.lib.canonShowAll = false; store.save(state); renderLibrary(); },
@@ -2374,6 +2379,14 @@ for (const b of document.querySelectorAll('.hand-btn')) {
 }
 // the drawn HANDS segments (both compositions) proxy to the buttons above
 if (CANON_ON) bindHandCells($('screen-play'));
+// Range CONTRACTS: the canon boards drew sample ranges (tempo to 200%, met
+// slider to 240 against a 200 number field). The app's contracts are the
+// truth; drawn numbers are specimens (Codex parity audit, 2026-08-30).
+if (CANON_ON) {
+  const t = $('tempo');
+  if (t) { t.min = '40'; t.max = '120'; t.step = '5'; }
+  for (const id of ['met-bpm', 'met-bpm-num']) { const el = $(id); if (el) { el.min = '40'; el.max = '200'; } }
+}
 $('tempo').addEventListener('input', () => { $('tempo-val').textContent = $('tempo').value + '%'; });
 $('tempo').addEventListener('change', rebuildEngine);
 $('section-select').addEventListener('change', rebuildEngine);
@@ -2476,6 +2489,9 @@ $('btn-voice').addEventListener('click', () => {
   setVoiceMode(next);
   localStorage.setItem('keys-voice', next);
   refreshVoiceBtn();
+  // the canon library's Voice readout binds at render time; without this the
+  // drawn dock said Grand while the backend played Synth (Codex parity B4)
+  if (CANON_ON && !$('screen-library').hidden) renderLibrary();
 });
 refreshVoiceBtn();
 setInterval(refreshVoiceBtn, 4000); // status catches up after samples decode
