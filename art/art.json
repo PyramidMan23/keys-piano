@@ -1,0 +1,1173 @@
+{
+  "fetched": "2026-08-28T13:29:03.131Z",
+  "source": "iTunes Search API",
+  "manifest": {
+    "still-dre": {
+      "file": "art/still-dre.jpg",
+      "artist": "Dr. Dre",
+      "album": "2001",
+      "track": "Still D.R.E. (feat. Snoop Dogg)",
+      "year": "1999",
+      "source": "https://music.apple.com/au/album/still-d-r-e-feat-snoop-dogg/1444156266?i=1444156738&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Dr. Dre",
+          "track": "Still D.R.E. (feat. Snoop Dogg)",
+          "album": "2001",
+          "year": "1999",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/27/6b/4c/276b4c69-99cb-6209-2fd8-3edd17ccfd06/00602517641228.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/still-d-r-e-feat-snoop-dogg/1444156266?i=1444156738&uo=4",
+          "file": "_candidates/still-dre-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Dr. Dre",
+          "track": "Still D.R.E. (feat. Snoop Dogg)",
+          "album": "Party Hits",
+          "year": "1999",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/ad/f4/d3/adf4d36d-5e13-5c50-dabe-7dcc8250d1e9/23UMGIM03077.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/still-d-r-e-feat-snoop-dogg/1664979210?i=1664979222&uo=4",
+          "file": "_candidates/still-dre-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Dux n Bass & Dr. Dre",
+          "track": "Still D.R.E. (feat. Snoop Dogg) / Technical (Mixed)",
+          "album": "The Prototypes at Escape Halloween, 2022 (DJ Mix)",
+          "year": "2022",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/a4/14/b7/a414b7f9-1cc0-a1ee-3ae4-b0a046c537c5/c95734cc-5bfd-4c68-b1c2-490d23432468.png/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/still-d-r-e-feat-snoop-dogg-technical-mixed/1657810511?i=1657810852&uo=4",
+          "file": "_candidates/still-dre-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Dr. Dre",
+          "track": "Still D.R.E. (Instrumental)",
+          "album": "2001 (Instrumental)",
+          "year": "1999",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/07/d4/d9/07d4d90d-704e-c10e-2203-2b18318a2064/00606949057121.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/still-d-r-e-instrumental/1440869002?i=1440869007&uo=4",
+          "file": "_candidates/still-dre-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Vorso & Dr. Dre",
+          "track": "Still D.R.E. (feat. Snoop Dogg) / Crisis (Mixed)",
+          "album": "Shambhala 2023: The Funk Hunters at the Fractal Forest Stage (DJ Mix)",
+          "year": "2023",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/c7/d6/b5/c7d6b54a-5c64-5978-3166-af924945e751/b4bdac25-cf0e-4d07-bcec-781087cd1c10.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/still-d-r-e-feat-snoop-dogg-crisis-mixed/1727006822?i=1727007096&uo=4",
+          "file": "_candidates/still-dre-4.jpg"
+        }
+      ]
+    },
+    "game-of-thrones": {
+      "file": "art/game-of-thrones.jpg",
+      "artist": "Ramin Djawadi",
+      "album": "Game of Thrones (Music From the HBO Series)",
+      "track": "Game of Thrones",
+      "year": "2011",
+      "source": "https://music.apple.com/au/album/game-of-thrones/1440798940?i=1440800348&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "Ramin Djawadi",
+          "track": "Game of Thrones",
+          "album": "Game of Thrones (Music From the HBO Series)",
+          "year": "2011",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/20/75/39/207539da-60d1-8ac1-7f4f-9f7e534c8c85/00030206709728.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/game-of-thrones/1440798940?i=1440800348&uo=4",
+          "file": "_candidates/game-of-thrones-0.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Ramin Djawadi",
+          "track": "Game of Thrones",
+          "album": "Game of Thrones (Music from the HBO Series)",
+          "year": "2011",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/a1/51/2e/a1512ef0-cd99-50b6-35c2-91c6816b9d85/00030206709797.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/game-of-thrones/1440739553?i=1440739829&uo=4",
+          "file": "_candidates/game-of-thrones-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Ramin Djawadi",
+          "track": "Main Title (from “Game of Thrones”)",
+          "album": "Game of Thrones: Season 5 (Music from the HBO Series)",
+          "year": "2013",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/b1/68/9b/b1689b4c-09fc-3f10-9b90-ba7beacc0e0f/794043184222.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/main-title-from-game-of-thrones/1454325358?i=1454325359&uo=4",
+          "file": "_candidates/game-of-thrones-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Ramin Djawadi",
+          "track": "Main Title (From Game of Thrones: Season 4)",
+          "album": "Game of Thrones: Season 4 (Music from the HBO Series)",
+          "year": "2013",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/3c/f1/a0/3cf1a036-1a18-3e3d-0914-da85b5a6a22f/794043179525.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/main-title-from-game-of-thrones-season-4/1454397568?i=1454397569&uo=4",
+          "file": "_candidates/game-of-thrones-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Ramin Djawadi",
+          "track": "Main Title (From Game of Thrones: Season 3)",
+          "album": "Game of Thrones: Season 3 (Music from the HBO Series)",
+          "year": "2013",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/34/76/7a/34767a68-b218-6688-982d-4c4c9a2bd771/794043170065.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/main-title-from-game-of-thrones-season-3/1454321087?i=1454321088&uo=4",
+          "file": "_candidates/game-of-thrones-4.jpg"
+        }
+      ]
+    },
+    "runaway": {
+      "file": "art/runaway.jpg",
+      "artist": "Kanye West & Pusha T",
+      "album": "My Beautiful Dark Twisted Fantasy",
+      "track": "Runaway (feat. Pusha T)",
+      "year": "2010",
+      "source": "https://music.apple.com/au/album/runaway-feat-pusha-t/1443160553?i=1443160699&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Kanye West & Pusha T",
+          "track": "Runaway (feat. Pusha T)",
+          "album": "My Beautiful Dark Twisted Fantasy",
+          "year": "2010",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/d1/74/da/d174dacf-5782-dfe2-19f7-ce037dcd0237/00602527584935.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/runaway-feat-pusha-t/1443160553?i=1443160699&uo=4",
+          "file": "_candidates/runaway-0.jpg"
+        },
+        {
+          "score": 95,
+          "artist": "Kanye West & Pusha T",
+          "track": "Runaway (feat. Pusha T)",
+          "album": "My Beautiful Dark Twisted Fantasy (Deluxe Edition)",
+          "year": "2010",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/37/da/7c/37da7cc5-2b6f-9bb8-30ba-8a8c3be3e16a/00602527584973.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/runaway-feat-pusha-t/1445865909?i=1445866473&uo=4",
+          "file": "_candidates/runaway-1.jpg"
+        }
+      ]
+    },
+    "faded": {
+      "file": "art/faded.jpg",
+      "artist": "Alan Walker",
+      "album": "Faded - EP",
+      "track": "Faded",
+      "year": "2015",
+      "source": "https://music.apple.com/au/album/faded/1196294554?i=1196294581&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "Alan Walker",
+          "track": "Faded",
+          "album": "Faded - EP",
+          "year": "2015",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/0d/a3/1a/0da31af7-d0ff-9bee-c427-1b6d0336f6fc/886446321981.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/faded/1196294554?i=1196294581&uo=4",
+          "file": "_candidates/faded-0.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Alan Walker",
+          "track": "Faded",
+          "album": "Different World",
+          "year": "2015",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/7b/37/53/7b375382-ce23-cfa4-03d4-1db4b0f89d72/886447442562.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/faded/1445140820?i=1445141316&uo=4",
+          "file": "_candidates/faded-1.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Alan Walker",
+          "track": "Faded",
+          "album": "Men's Health: Beach Body Workout",
+          "year": "2015",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music18/v4/19/62/50/19625022-d397-6de4-7918-c24c7dcc6609/886445922097.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/faded/1118533178?i=1118534146&uo=4",
+          "file": "_candidates/faded-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Dario D'Aversa & Alan Walker",
+          "track": "Faded (Orchestral Version)",
+          "album": "Faded (Orchestral Version) - Single",
+          "year": "2019",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/21/0d/de/210dde69-bea8-abac-516a-fd3ee966fccb/DA043.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/faded-orchestral-version/1466938700?i=1466938701&uo=4",
+          "file": "_candidates/faded-3.jpg"
+        },
+        {
+          "score": 60,
+          "artist": "Alan Walker",
+          "track": "Faded (Tiesto's Deep House Remix)",
+          "album": "Faded (Remixes)",
+          "year": "2016",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/9d/38/b2/9d38b2d0-7c73-eaf2-9595-42561f311d61/886446322056.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/faded-tiestos-deep-house-remix/1196294897?i=1196295082&uo=4",
+          "file": "_candidates/faded-4.jpg"
+        }
+      ]
+    },
+    "fray-save-a-life": {
+      "file": "art/fray-save-a-life.jpg",
+      "artist": "The Fray",
+      "album": "How to Save a Life",
+      "track": "How to Save a Life",
+      "year": "2005",
+      "source": "https://music.apple.com/au/album/how-to-save-a-life/200880340?i=200880536&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "The Fray",
+          "track": "How to Save a Life",
+          "album": "How to Save a Life",
+          "year": "2005",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Features124/v4/0b/b3/a3/0bb3a3db-28db-0874-22a9-16e5a2c44616/dj.uzxusisg.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/how-to-save-a-life/200880340?i=200880536&uo=4",
+          "file": "_candidates/fray-save-a-life-0.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "The Fray",
+          "track": "How to Save a Life",
+          "album": "Sad Songs",
+          "year": "2005",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/06/dd/3c/06dd3cb9-882f-7e81-d0b6-c009d65adc2f/886444772556.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/how-to-save-a-life/904438715?i=904438815&uo=4",
+          "file": "_candidates/fray-save-a-life-1.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "The Fray",
+          "track": "How to Save a Life",
+          "album": "Love Songs",
+          "year": "2005",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/12/a1/8d/mzi.qoismzlq.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/how-to-save-a-life/303848555?i=303848768&uo=4",
+          "file": "_candidates/fray-save-a-life-2.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "The Fray",
+          "track": "How to Save a Life",
+          "album": "Short Days, Long Nights",
+          "year": "2005",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music71/v4/eb/73/16/eb73166f-2d14-e6dd-f74d-88f68e909e43/886446229010.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/how-to-save-a-life/1175096688?i=1175097583&uo=4",
+          "file": "_candidates/fray-save-a-life-3.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "The Fray",
+          "track": "How to Save a Life",
+          "album": "Heartbroken",
+          "year": "2005",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music2/v4/22/91/9d/22919d50-e52d-819f-7f69-9aac6cea2866/886445574616.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/how-to-save-a-life/1064992261?i=1064992882&uo=4",
+          "file": "_candidates/fray-save-a-life-4.jpg"
+        }
+      ]
+    },
+    "empire": {
+      "file": "art/empire.jpg",
+      "artist": "JAŸ-Z",
+      "album": "The Blueprint 3",
+      "track": "Empire State Of Mind (feat. Alicia Keys)",
+      "year": "2009",
+      "source": "https://music.apple.com/au/album/empire-state-of-mind-feat-alicia-keys/1440932009?i=1440932018&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "JAŸ-Z",
+          "track": "Empire State Of Mind (feat. Alicia Keys)",
+          "album": "The Blueprint 3",
+          "year": "2009",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/e6/20/cf/e620cfeb-eb74-4ef1-00c1-fd38aac6c3d7/00858786005470.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/empire-state-of-mind-feat-alicia-keys/1440932009?i=1440932018&uo=4",
+          "file": "_candidates/empire-0.jpg"
+        }
+      ]
+    },
+    "pirates": {
+      "file": "art/pirates.jpg",
+      "artist": "Klaus Badelt",
+      "album": "\"He's a Pirate\"- End Title Theme from the Motion Picture \"Pirates of the Caribbean, The Curse of the Black Pearl\" - Single",
+      "track": "\"He's a Pirate\" End Title Theme from the Motion Picture \"Pirates of the Caribbean\"",
+      "year": "2011",
+      "source": "https://music.apple.com/au/album/hes-a-pirate-end-title-theme-from-the-motion/522583713?i=522583876&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Klaus Badelt",
+          "track": "\"He's a Pirate\" End Title Theme from the Motion Picture \"Pirates of the Caribbean\"",
+          "album": "\"He's a Pirate\"- End Title Theme from the Motion Picture \"Pirates of the Caribbean, The Curse of the Black Pearl\" - Single",
+          "year": "2011",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/44/bb/1f/44bb1f97-e489-4e43-3a0b-e34733f72407/Cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/hes-a-pirate-end-title-theme-from-the-motion/522583713?i=522583876&uo=4",
+          "file": "_candidates/pirates-0.jpg"
+        }
+      ]
+    },
+    "river": {
+      "file": "art/river.jpg",
+      "artist": "Yiruma",
+      "album": "Yiruma 2nd Album 'First Love' (The Original & the Very First Recording)",
+      "track": "River Flows In You",
+      "year": "2001",
+      "source": "https://music.apple.com/au/album/river-flows-in-you/1436677753?i=1436677761&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "Yiruma",
+          "track": "River Flows In You",
+          "album": "Yiruma 2nd Album 'First Love' (The Original & the Very First Recording)",
+          "year": "2001",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/5f/f4/9b/5ff49b8c-d0bb-3748-14f4-131edfb332ce/first_love_3000.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/river-flows-in-you/1436677753?i=1436677761&uo=4",
+          "file": "_candidates/river-0.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Yiruma",
+          "track": "River Flows In You",
+          "album": "Yiruma Special Album 'First Love' (Repackage) [The Original & the Very First Recording]",
+          "year": "2001",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/95/9c/5d/959c5d91-29d5-69b0-0d34-bf935d46b991/first_love_repackage_3000.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/river-flows-in-you/1437482782?i=1437482786&uo=4",
+          "file": "_candidates/river-1.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Yiruma",
+          "track": "River Flows In You",
+          "album": "Yiruma Official Album 'Yiruma The Best Winter'",
+          "year": "2001",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/91/fc/d3/91fcd3fc-1b5a-3d91-8e62-16de98fa5eba/thebestwinter_3000.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/river-flows-in-you/1442479386?i=1442479636&uo=4",
+          "file": "_candidates/river-2.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Yiruma",
+          "track": "River Flows In You",
+          "album": "SOLO",
+          "year": "2021",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/0a/d1/e8/0ad1e89c-df29-a43e-9852-eb6ece2dd556/21UMGIM24785.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/river-flows-in-you/1576662868?i=1576663116&uo=4",
+          "file": "_candidates/river-3.jpg"
+        },
+        {
+          "score": 105,
+          "artist": "Yiruma",
+          "track": "River Flows In You",
+          "album": "The Best - Reminiscent 10th Anniversary",
+          "year": "2011",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/b5/ae/26/b5ae2651-542a-9ee9-be4c-278791e2918f/mzi.ncrxyndi.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/river-flows-in-you/485353575?i=485353578&uo=4",
+          "file": "_candidates/river-4.jpg"
+        }
+      ]
+    },
+    "piano-man": {
+      "file": "art/piano-man.jpg",
+      "artist": "Billy Joel",
+      "album": "Piano Man",
+      "track": "Piano Man",
+      "year": "1973",
+      "source": "https://music.apple.com/au/album/piano-man/158617297?i=158617575&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "Billy Joel",
+          "track": "Piano Man",
+          "album": "Piano Man",
+          "year": "1973",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/67/f9/8d/67f98d03-7896-153f-4965-a92458c06965/dj.aiuntmgo.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/piano-man/158617297?i=158617575&uo=4",
+          "file": "_candidates/piano-man-0.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Billy Joel",
+          "track": "Piano Man",
+          "album": "Piano Man (Legacy Edition)",
+          "year": "1973",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/9e/ac/68/9eac689d-affa-ae61-a978-1bd1512c0fcd/886443223370.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/piano-man/474764241?i=474764243&uo=4",
+          "file": "_candidates/piano-man-1.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Billy Joel",
+          "track": "Piano Man",
+          "album": "Rock Classics of the 70's",
+          "year": "1973",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/92/5e/d3/mzi.okyumwks.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/piano-man/211380064?i=211380072&uo=4",
+          "file": "_candidates/piano-man-2.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Billy Joel",
+          "track": "Piano Man",
+          "album": "50 Years of the Piano Man",
+          "year": "1973",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/3d/4b/0f/3d4b0f47-ce8f-a0d8-2dda-58138aea696c/196589011169.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/piano-man/1617344690?i=1617344703&uo=4",
+          "file": "_candidates/piano-man-3.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Billy Joel",
+          "track": "Piano Man",
+          "album": "USA Patriotic Classics",
+          "year": "1973",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/2d/b9/61/2db961c7-e6f0-cb2b-0004-23466f33a769/196871048743.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/piano-man/1688281214?i=1688281672&uo=4",
+          "file": "_candidates/piano-man-4.jpg"
+        }
+      ]
+    },
+    "gangstas-paradise": {
+      "file": "art/gangstas-paradise.jpg",
+      "artist": "Coolio",
+      "album": "Gangsta's Paradise",
+      "track": "Gangsta's Paradise (feat. L.V.)",
+      "year": "1995",
+      "source": "https://music.apple.com/au/album/gangstas-paradise-feat-l-v/1604645496?i=1604645502&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Coolio",
+          "track": "Gangsta's Paradise (feat. L.V.)",
+          "album": "Gangsta's Paradise",
+          "year": "1995",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/92/f7/88/92f7884b-d115-5d5f-1eb5-85128af2d58f/081227882365.png/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/gangstas-paradise-feat-l-v/1604645496?i=1604645502&uo=4",
+          "file": "_candidates/gangstas-paradise-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Coolio",
+          "track": "Gangsta's Paradise",
+          "album": "Gangsta's Paradise - Single",
+          "year": "1995",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/4e/0b/3e/4e0b3e18-9663-2476-f6e2-9b4eb9f955f8/XELSJ17030.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/gangstas-paradise/1206676041?i=1206676136&uo=4",
+          "file": "_candidates/gangstas-paradise-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Coolio",
+          "track": "Gangsta's Paradise (Re-Recorded Version)",
+          "album": "Gangsta's Paradise (Re-Recorded Version)",
+          "year": "1995",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/ea/c6/04/eac60480-ef15-13e3-17ba-64104092600a/884385049751.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/gangstas-paradise-re-recorded-version/291981675?i=291981704&uo=4",
+          "file": "_candidates/gangstas-paradise-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Coolio",
+          "track": "Gangsta's Paradise (feat. L.V.)",
+          "album": "Gangsta's Paradise",
+          "year": "1995",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/b7/d4/ce/b7d4cee5-38ab-34af-5605-1588e9a34fec/081227515461.png/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/gangstas-paradise-feat-l-v/1604646668?i=1604646670&uo=4",
+          "file": "_candidates/gangstas-paradise-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Coolio & L.V.",
+          "track": "Gangsta's Paradise",
+          "album": "Gangsta's Paradise - Single",
+          "year": "1995",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/88/6c/9f/886c9fa3-3ae3-dda9-2910-b91bb0e46c6a/016998558966.png/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/gangstas-paradise/1827554490?i=1827554491&uo=4",
+          "file": "_candidates/gangstas-paradise-4.jpg"
+        }
+      ]
+    },
+    "lost": {
+      "file": "art/lost.jpg",
+      "artist": "LINKIN PARK",
+      "album": "Lost Demos",
+      "track": "Lost",
+      "year": "2023",
+      "source": "https://music.apple.com/au/album/lost/1668484895?i=1668488811&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "LINKIN PARK",
+          "track": "Lost",
+          "album": "Lost Demos",
+          "year": "2023",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/d8/7d/db/d87ddb2d-b918-137a-8b73-5a42d54bc221/093624856634_06.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/lost/1668484895?i=1668488811&uo=4",
+          "file": "_candidates/lost-0.jpg"
+        }
+      ]
+    },
+    "numb": {
+      "file": "art/numb.jpg",
+      "artist": "LINKIN PARK",
+      "album": "Meteora",
+      "track": "Numb",
+      "year": "2003",
+      "source": "https://music.apple.com/au/album/numb/528435845?i=528437514&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "LINKIN PARK",
+          "track": "Numb",
+          "album": "Meteora",
+          "year": "2003",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/dd/7d/72/dd7d7259-d27f-5b3e-ce64-9e304d2cb40f/dj.rxzrauer.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/numb/528435845?i=528437514&uo=4",
+          "file": "_candidates/numb-0.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "LINKIN PARK",
+          "track": "Numb",
+          "album": "Meteora",
+          "year": "2003",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/bb/66/49/bb664991-467a-4e91-120c-17808b222eb9/093624856634_01.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/numb/1668484895?i=1668485735&uo=4",
+          "file": "_candidates/numb-1.jpg"
+        },
+        {
+          "score": 105,
+          "artist": "LINKIN PARK",
+          "track": "Numb",
+          "album": "Meteora (Deluxe Edition)",
+          "year": "2003",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/13/44/05/134405bd-9e27-a678-8953-b5f724201f95/093624948988.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/numb/590423275?i=590423552&uo=4",
+          "file": "_candidates/numb-2.jpg"
+        },
+        {
+          "score": 60,
+          "artist": "LINKIN PARK",
+          "track": "Numb (Live from New York, 2008)",
+          "album": "Meteora: Live Around the World",
+          "year": "2012",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/48/70/bf/4870bfe1-ef6a-6ee4-c421-86c55bb4cf18/093624949725.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/numb-live-from-new-york-2008/547121718?i=547121725&uo=4",
+          "file": "_candidates/numb-3.jpg"
+        }
+      ]
+    },
+    "star-wars": {
+      "file": "art/star-wars.jpg",
+      "artist": "John Williams & London Symphony Orchestra",
+      "album": "Star Wars: A New Hope (Original Motion Picture Score)",
+      "track": "Main Title",
+      "year": "1977",
+      "source": "https://music.apple.com/au/album/main-title/1375814280?i=1375814284&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "John Williams & London Symphony Orchestra",
+          "track": "Main Title",
+          "album": "Star Wars: A New Hope (Original Motion Picture Score)",
+          "year": "1977",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/29/1c/17/291c1798-5d54-9b64-4b89-a19805cec0f8/18UMGIM22119.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/main-title/1375814280?i=1375814284&uo=4",
+          "file": "_candidates/star-wars-0.jpg"
+        }
+      ]
+    },
+    "see-you-again": {
+      "file": "art/see-you-again.jpg",
+      "artist": "Wiz Khalifa",
+      "album": "Furious 7 (Original Motion Picture Soundtrack)",
+      "track": "See You Again (feat. Charlie Puth)",
+      "year": "2015",
+      "source": "https://music.apple.com/au/album/see-you-again-feat-charlie-puth/966411595?i=966411602&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Wiz Khalifa",
+          "track": "See You Again (feat. Charlie Puth)",
+          "album": "Furious 7 (Original Motion Picture Soundtrack)",
+          "year": "2015",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/e6/8a/68/e68a688e-129e-cb9d-938f-bc3ee37059ae/075679930910.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/see-you-again-feat-charlie-puth/966411595?i=966411602&uo=4",
+          "file": "_candidates/see-you-again-0.jpg"
+        },
+        {
+          "score": 95,
+          "artist": "Wiz Khalifa",
+          "track": "See You Again (feat. Charlie Puth)",
+          "album": "Furious 7 (Original Motion Picture Soundtrack) [Deluxe Version]",
+          "year": "2015",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/4a/9b/c5/4a9bc5c5-9616-d5f9-02e5-d9845d7032cb/mzm.pgafiurb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/see-you-again-feat-charlie-puth/1029607120?i=1029609244&uo=4",
+          "file": "_candidates/see-you-again-1.jpg"
+        },
+        {
+          "score": 95,
+          "artist": "Wiz Khalifa",
+          "track": "See You Again (feat. Charlie Puth)",
+          "album": "Furious 7 (Original Motion Picture Soundtrack) [Deluxe Version]",
+          "year": "2015",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/71/c9/86/71c98649-0636-4df1-7a63-f577268a042a/dj.ukfzigab.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/see-you-again-feat-charlie-puth/1030597789?i=1030597947&uo=4",
+          "file": "_candidates/see-you-again-2.jpg"
+        }
+      ]
+    },
+    "interstellar": {
+      "file": "art/interstellar.jpg",
+      "artist": "Hans Zimmer",
+      "album": "Interstellar (Original Motion Picture Soundtrack) [Expanded Edition]",
+      "track": "Cornfield Chase",
+      "year": "2014",
+      "source": "https://music.apple.com/au/album/cornfield-chase/1533983552?i=1533984393&uo=4",
+      "candidates": [
+        {
+          "score": 95,
+          "artist": "Hans Zimmer",
+          "track": "Cornfield Chase",
+          "album": "Interstellar (Original Motion Picture Soundtrack) [Expanded Edition]",
+          "year": "2014",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/f4/5b/73/f45b735a-8d7a-9713-b217-0f8e1593c28b/794043201943.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/cornfield-chase/1533983552?i=1533984393&uo=4",
+          "file": "_candidates/interstellar-0.jpg"
+        }
+      ]
+    },
+    "in-the-end": {
+      "file": "art/in-the-end.jpg",
+      "artist": "LINKIN PARK",
+      "album": "Hybrid Theory",
+      "track": "In the End",
+      "year": "2000",
+      "source": "https://music.apple.com/au/album/in-the-end/528436018?i=528437613&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "LINKIN PARK",
+          "track": "In the End",
+          "album": "Hybrid Theory",
+          "year": "2000",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Features115/v4/f0/31/b2/f031b2b2-bcf0-6102-426f-e0b2c7437415/dj.vrgpwamf.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/in-the-end/528436018?i=528437613&uo=4",
+          "file": "_candidates/in-the-end-0.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "LINKIN PARK",
+          "track": "In the End",
+          "album": "00s Rock Anthems",
+          "year": "2000",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/36/f4/d4/36f4d4f8-09fa-e241-f97d-6657889db3fd/190295260606.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/in-the-end/1499140197?i=1499140468&uo=4",
+          "file": "_candidates/in-the-end-1.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "LINKIN PARK",
+          "track": "In the End",
+          "album": "Hybrid Theory",
+          "year": "2000",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/14/4d/a8/144da8e1-1d94-5206-fb2f-e6c5fc62566c/093624949107.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/in-the-end/591534774?i=591534783&uo=4",
+          "file": "_candidates/in-the-end-2.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "LINKIN PARK",
+          "track": "In the End",
+          "album": "Sad Boy Hours: Rock Edition",
+          "year": "2000",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c7/6f/8b/c76f8b48-f211-a945-1132-7caf49d18b4a/5059460400665.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/in-the-end/1812442462?i=1812442463&uo=4",
+          "file": "_candidates/in-the-end-3.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "LINKIN PARK",
+          "track": "In the End",
+          "album": "Evolution of Mike Shinoda - EP",
+          "year": "2000",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/cb/25/10/cb25100e-aed7-85df-10c3-27ef340a101f/5059460242289.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/in-the-end/1710375159?i=1710375716&uo=4",
+          "file": "_candidates/in-the-end-4.jpg"
+        }
+      ]
+    },
+    "what-ive-done": {
+      "file": "art/what-ive-done.jpg",
+      "artist": "LINKIN PARK",
+      "album": "Minutes to Midnight",
+      "track": "What I've Done",
+      "year": "2007",
+      "source": "https://music.apple.com/au/album/what-ive-done/528975362?i=528975368&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "LINKIN PARK",
+          "track": "What I've Done",
+          "album": "Minutes to Midnight",
+          "year": "2007",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Features124/v4/f5/d6/68/f5d6681a-734c-8225-aa28-418c3715b6da/dj.xkwgleci.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/what-ive-done/528975362?i=528975368&uo=4",
+          "file": "_candidates/what-ive-done-0.jpg"
+        },
+        {
+          "score": 105,
+          "artist": "LINKIN PARK",
+          "track": "What I've Done",
+          "album": "Minutes to Midnight (Deluxe Edition)",
+          "year": "2007",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/73/03/56/730356d5-a510-3d3f-d3c6-171f64700d35/093624948971.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/what-ive-done/590427297?i=590427450&uo=4",
+          "file": "_candidates/what-ive-done-1.jpg"
+        },
+        {
+          "score": 105,
+          "artist": "LINKIN PARK",
+          "track": "What I've Done",
+          "album": "Minutes to Midnight (Deluxe Edition)",
+          "year": "2007",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b9/23/32/b92332a6-51d1-0420-96b2-29858b73efe5/093624869610.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/what-ive-done/1622310678?i=1622311449&uo=4",
+          "file": "_candidates/what-ive-done-2.jpg"
+        },
+        {
+          "score": 105,
+          "artist": "LINKIN PARK",
+          "track": "What I've Done",
+          "album": "Minutes to Midnight (Deluxe Edition)",
+          "year": "2007",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/e5/c5/82/e5c58290-c5b6-f4c3-6dd6-78c5df5bc0af/093624869603.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/what-ive-done/1622307157?i=1622307559&uo=4",
+          "file": "_candidates/what-ive-done-3.jpg"
+        },
+        {
+          "score": 60,
+          "artist": "LINKIN PARK",
+          "track": "What I've Done (Live from New York, 2008)",
+          "album": "Minutes to Midnight: Live Around the World",
+          "year": "2012",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/68/a7/bd/68a7bd28-c9ce-f9c5-5951-401a82ab1d4b/093624949718.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/what-ive-done-live-from-new-york-2008/547119230?i=547119237&uo=4",
+          "file": "_candidates/what-ive-done-4.jpg"
+        }
+      ]
+    },
+    "work-this-time": {
+      "file": "art/work-this-time.jpg",
+      "artist": "King Gizzard & The Lizard Wizard",
+      "album": "Oddments",
+      "track": "Work This Time",
+      "year": "2014",
+      "source": "https://music.apple.com/au/album/work-this-time/1876025788?i=1876025798&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "King Gizzard & The Lizard Wizard",
+          "track": "Work This Time",
+          "album": "Oddments",
+          "year": "2014",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/12/2e/1d/122e1dbf-65ab-c87a-fcfe-20dc106d1af4/109.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/work-this-time/1876025788?i=1876025798&uo=4",
+          "file": "_candidates/work-this-time-0.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "King Gizzard & The Lizard Wizard",
+          "track": "Work This Time",
+          "album": "Oddments",
+          "year": "2014",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/41/1b/4c/411b4c50-3a65-9506-edb5-7dbf454c5e8f/54.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/work-this-time/1832807125?i=1832807137&uo=4",
+          "file": "_candidates/work-this-time-1.jpg"
+        },
+        {
+          "score": 60,
+          "artist": "bootleg gizzard",
+          "track": "Work This Time (Live at Bonnaroo '22)",
+          "album": "Live at Bonnaroo '22",
+          "year": "2022",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/2d/28/bc/2d28bc51-70c4-ac70-c63c-c395bcb6fa7e/79.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/work-this-time-live-at-bonnaroo-22/1828475348?i=1828475754&uo=4",
+          "file": "_candidates/work-this-time-2.jpg"
+        }
+      ]
+    },
+    "in-a-gadda-da-vida": {
+      "file": "art/in-a-gadda-da-vida.jpg",
+      "artist": "Iron Butterfly",
+      "album": "In-A-Gadda-Da-Vida",
+      "track": "In-A-Gadda-Da-Vida",
+      "year": "1968",
+      "source": "https://music.apple.com/au/album/in-a-gadda-da-vida/1215591780?i=1215591788&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Iron Butterfly",
+          "track": "In-A-Gadda-Da-Vida",
+          "album": "In-A-Gadda-Da-Vida",
+          "year": "1968",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music111/v4/fa/fb/22/fafb22b7-a8d7-f6d6-55a6-c323e33e6ce4/084247962505.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/in-a-gadda-da-vida/1215591780?i=1215591788&uo=4",
+          "file": "_candidates/in-a-gadda-da-vida-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Iron Butterfly",
+          "track": "In-A-Gadda-Da-Vida",
+          "album": "In-A-Gadda-Da-Vida",
+          "year": "1968",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/c8/3a/fa/c83afa2a-a76b-a115-89db-e3cddcd8c7bf/075679039224.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/in-a-gadda-da-vida/780234002?i=780234010&uo=4",
+          "file": "_candidates/in-a-gadda-da-vida-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Iron Butterfly",
+          "track": "In-A-Gadda-Da-Vida (Rerecorded)",
+          "album": "Days of Flower Power (Rerecorded Version)",
+          "year": "1982",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Features115/v4/6f/f5/28/6ff528e3-67df-7172-ff74-353e0a31ca1f/dj.dsgwjcdl.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/in-a-gadda-da-vida-rerecorded/26174179?i=26174141&uo=4",
+          "file": "_candidates/in-a-gadda-da-vida-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Iron Butterfly",
+          "track": "In-A-Gadda-Da-Vida (Single Version)",
+          "album": "Unconscious Power: An Anthology 1967-1971",
+          "year": "1968",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/1f/db/f9/1fdbf933-f6b0-1696-2cff-a05a57794edd/5059460065376.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/in-a-gadda-da-vida-single-version/1551148769?i=1551150979&uo=4",
+          "file": "_candidates/in-a-gadda-da-vida-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Iron Butterfly",
+          "track": "In-A-Gadda-Da-Vida",
+          "album": "Born To Rock - 60 Tracks of Classic Rock",
+          "year": "1968",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/ae/ed/df/aeeddf77-6504-f632-ea2e-ade13ab812a8/825646550227.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/in-a-gadda-da-vida/576801078?i=576802302&uo=4",
+          "file": "_candidates/in-a-gadda-da-vida-4.jpg"
+        }
+      ]
+    },
+    "stairway": {
+      "file": "art/stairway.jpg",
+      "artist": "Led Zeppelin",
+      "album": "Led Zeppelin IV",
+      "track": "Stairway to Heaven",
+      "year": "1971",
+      "source": "https://music.apple.com/au/album/stairway-to-heaven/674271135?i=674272186&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "Led Zeppelin",
+          "track": "Stairway to Heaven",
+          "album": "Led Zeppelin IV",
+          "year": "1971",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/47/31/8e/47318e93-c0fa-35d1-8b84-809691955124/603497926121.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/stairway-to-heaven/674271135?i=674272186&uo=4",
+          "file": "_candidates/stairway-0.jpg"
+        },
+        {
+          "score": 105,
+          "artist": "Led Zeppelin",
+          "track": "Stairway to Heaven",
+          "album": "Led Zeppelin IV (Remastered)",
+          "year": "1971",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/5c/15/9b/5c159b27-95ca-b9a7-84e3-28e795fffd39/dj.kvkrpptq.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/stairway-to-heaven/580708175?i=580708180&uo=4",
+          "file": "_candidates/stairway-1.jpg"
+        },
+        {
+          "score": 105,
+          "artist": "Led Zeppelin",
+          "track": "Stairway to Heaven",
+          "album": "Led Zeppelin IV (Deluxe Edition)",
+          "year": "1971",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music5/v4/16/de/e3/16dee335-173b-57ce-80b5-dadf684c0b33/dj.oblporhs.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/stairway-to-heaven/902620286?i=902620521&uo=4",
+          "file": "_candidates/stairway-2.jpg"
+        }
+      ]
+    },
+    "bohemian-rhapsody": {
+      "file": "art/bohemian-rhapsody.jpg",
+      "artist": "Queen",
+      "album": "A Night At The Opera",
+      "track": "Bohemian Rhapsody",
+      "year": "1975",
+      "source": "https://music.apple.com/au/album/bohemian-rhapsody/6781023399?i=6781023657&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "Queen",
+          "track": "Bohemian Rhapsody",
+          "album": "A Night At The Opera",
+          "year": "1975",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/dd/86/92/dd86925d-484d-8ee7-3985-ef3264214269/602527644264.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/bohemian-rhapsody/6781023399?i=6781023657&uo=4",
+          "file": "_candidates/bohemian-rhapsody-0.jpg"
+        },
+        {
+          "score": 105,
+          "artist": "Queen",
+          "track": "Bohemian Rhapsody",
+          "album": "A Night At The Opera (Deluxe Edition)",
+          "year": "1975",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/8b/0a/ea/8b0aea60-6f4a-195b-5958-cdf459c2333b/602527644271.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/bohemian-rhapsody/6781024026?i=6781024437&uo=4",
+          "file": "_candidates/bohemian-rhapsody-1.jpg"
+        }
+      ]
+    },
+    "hotel-california": {
+      "file": "art/hotel-california.jpg",
+      "artist": "Eagles",
+      "album": "Hotel California",
+      "track": "Hotel California",
+      "year": "1976",
+      "source": "https://music.apple.com/au/album/hotel-california/635770200?i=635770202&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "Eagles",
+          "track": "Hotel California",
+          "album": "Hotel California",
+          "year": "1976",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/88/16/2c/88162c3d-46db-8321-61f3-3a47404cfe76/075596050920.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/hotel-california/635770200?i=635770202&uo=4",
+          "file": "_candidates/hotel-california-0.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Eagles",
+          "track": "Hotel California",
+          "album": "Selected Works 1972-1999",
+          "year": "1976",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/c3/dd/c1/c3ddc1b5-58d9-914b-7138-a0f1e3bfea5e/081227962395.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/hotel-california/779290454?i=779290515&uo=4",
+          "file": "_candidates/hotel-california-1.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Eagles",
+          "track": "Hotel California",
+          "album": "Hotel California",
+          "year": "1976",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/d4/f9/c8/d4f9c804-104f-7f9d-cace-a9d595579f9a/075596050920.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/hotel-california/635788137?i=635788944&uo=4",
+          "file": "_candidates/hotel-california-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Eagles",
+          "track": "Hotel California (Remastered)",
+          "album": "Hotel California",
+          "year": "1976",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/a0/32/60/a03260d6-93ff-111b-901e-fa07455e52d4/603497854363_05.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/hotel-california-remastered/1440199153?i=1440200257&uo=4",
+          "file": "_candidates/hotel-california-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Eagles",
+          "track": "Hotel California (Mixed)",
+          "album": "100 Best Albums (DJ Mix)",
+          "year": "2024",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/28/2d/a4/282da4f1-3aaa-c389-64c6-09ddb0940923/dj.clownkxu.png/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/hotel-california-mixed/1747359693?i=1747359789&uo=4",
+          "file": "_candidates/hotel-california-4.jpg"
+        }
+      ]
+    },
+    "fur-elise": {
+      "file": "art/fur-elise.jpg",
+      "artist": "Wilhelm Kempff",
+      "album": "111 Years of Deutsche Grammophon",
+      "track": "Bagatelle in A Minor, WoO 59 -\"Für Elise\": Poco moto",
+      "year": "1988",
+      "source": "https://music.apple.com/au/album/bagatelle-in-a-minor-woo-59-f%C3%BCr-elise-poco-moto/1452254474?i=1452255199&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Wilhelm Kempff",
+          "track": "Bagatelle in A Minor, WoO 59 -\"Für Elise\": Poco moto",
+          "album": "111 Years of Deutsche Grammophon",
+          "year": "1988",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/52/c7/8b/52c78bae-48e0-07e7-c8c7-7dac11b65e4f/09UMGIM05689.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/bagatelle-in-a-minor-woo-59-f%C3%BCr-elise-poco-moto/1452254474?i=1452255199&uo=4",
+          "file": "_candidates/fur-elise-0.jpg"
+        }
+      ]
+    },
+    "moonlight-sonata": {
+      "file": "art/moonlight-sonata.jpg",
+      "artist": "Wilhelm Kempff",
+      "album": "Beethoven: Piano Sonatas Nos.8 \"Pathétique\", 14 \"Moonlight\", 15 \"Pastorale\" & 24 \"For Therese\"",
+      "track": "Piano Sonata No. 14 in C-Sharp Minor, Op. 27 No. 2 -\"Moonlight\": 1. Adagio Sostenuto",
+      "year": "1987",
+      "source": "https://music.apple.com/au/album/piano-sonata-no-14-in-c-sharp-minor-op-27-no-2-moonlight/1452152338?i=1452152364&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Wilhelm Kempff",
+          "track": "Piano Sonata No. 14 in C-Sharp Minor, Op. 27 No. 2 -\"Moonlight\": 1. Adagio Sostenuto",
+          "album": "Beethoven: Piano Sonatas Nos.8 \"Pathétique\", 14 \"Moonlight\", 15 \"Pastorale\" & 24 \"For Therese\"",
+          "year": "1987",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/16/bb/6b/16bb6bc4-3d7d-5876-5bb0-22757721c3b5/00028941583420.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/piano-sonata-no-14-in-c-sharp-minor-op-27-no-2-moonlight/1452152338?i=1452152364&uo=4",
+          "file": "_candidates/moonlight-sonata-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Wilhelm Kempff",
+          "track": "Piano Sonata No. 14 in C-Sharp Minor, Op. 27 No. 2 -\"Moonlight\": 1. Adagio Sostenuto",
+          "album": "Beethoven: Piano Sonatas Nos.8, 14, 21 & 22",
+          "year": "1987",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/6d/f4/10/6df410b3-bfb1-88c2-b438-2817c3007b1f/00028944740424.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/piano-sonata-no-14-in-c-sharp-minor-op-27-no-2-moonlight/1452214327?i=1452215462&uo=4",
+          "file": "_candidates/moonlight-sonata-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Wilhelm Kempff",
+          "track": "Piano Sonata No. 14 in C-Sharp Minor, Op. 27 No. 2 \"Moonlight\": I. Adagio sostenuto",
+          "album": "Beethoven: Piano Sonatas",
+          "year": "1987",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/ad/72/aa/ad72aaff-a812-97bd-6b1c-b3ce11a05e6b/00028947963042.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/piano-sonata-no-14-in-c-sharp-minor-op-27-no-2-moonlight/1440790051?i=1440795428&uo=4",
+          "file": "_candidates/moonlight-sonata-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Wilhelm Kempff",
+          "track": "Piano Sonata No. 14 in C-Sharp Minor, Op. 27 No. 2 \"Moonlight\": I. Adagio sostenuto",
+          "album": "Beethoven: Sonatas Nos. 13 - 19",
+          "year": "1987",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/e2/a8/bc/e2a8bc93-850c-6451-cae4-f424f410f4b4/19UMGIM47726.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/piano-sonata-no-14-in-c-sharp-minor-op-27-no-2-moonlight/1478358846?i=1478359158&uo=4",
+          "file": "_candidates/moonlight-sonata-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Emil Gilels",
+          "track": "Piano Sonata No. 14 in C-Sharp Minor, Op. 27 No. 2 \"Moonlight\": I. Adagio sostenuto",
+          "album": "Beethoven: Pathétique & Moonlight Sonatas",
+          "year": "1981",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/c6/76/4e/c6764e8d-e414-342e-814c-b523a242d25f/00028940003622.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/piano-sonata-no-14-in-c-sharp-minor-op-27-no-2-moonlight/1452515037?i=1452515307&uo=4",
+          "file": "_candidates/moonlight-sonata-4.jpg"
+        }
+      ]
+    },
+    "ode-to-joy": {
+      "file": "art/ode-to-joy.jpg",
+      "artist": "Berlin Philharmonic & Herbert von Karajan",
+      "album": "Beethoven: Symphony No. 9",
+      "track": "Symphony No. 9 in D Minor, Op. 125 \"Choral\": II. Molto vivace",
+      "year": "1984",
+      "source": "https://music.apple.com/au/album/symphony-no-9-in-d-minor-op-125-choral-ii-molto-vivace/1440743071?i=1440743435&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Berlin Philharmonic & Herbert von Karajan",
+          "track": "Symphony No. 9 in D Minor, Op. 125 \"Choral\": II. Molto vivace",
+          "album": "Beethoven: Symphony No. 9",
+          "year": "1984",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music128/v4/ce/c6/9e/cec69efe-daa4-b308-905d-ec43844202e4/00028943900621.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/symphony-no-9-in-d-minor-op-125-choral-ii-molto-vivace/1440743071?i=1440743435&uo=4",
+          "file": "_candidates/ode-to-joy-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Berlin Philharmonic & Herbert von Karajan",
+          "track": "Symphony No. 9 in D Minor, Op. 125 \"Choral\": IVa. Presto",
+          "album": "Beethoven: Symphony No. 9",
+          "year": "1963",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/af/49/a7/af49a7ab-6522-785a-9f6f-ebc6e7fa8b81/21UMGIM53455.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/symphony-no-9-in-d-minor-op-125-choral-iva-presto/1575697279?i=1575697286&uo=4",
+          "file": "_candidates/ode-to-joy-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Berlin Philharmonic & Ferenc Fricsay",
+          "track": "Symphony No. 9 in D Minor, Op. 125 - \"Choral\": 3. Adagio molto e cantabile",
+          "album": "Beethoven: Symphony No. 9, Egmont Overture & Leonore Overture",
+          "year": "2015",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/74/44/ab/7444abeb-d426-339b-1d79-ac7a535ac9c3/00028947950868.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/symphony-no-9-in-d-minor-op-125-choral-3-adagio-molto/1452332183?i=1452333017&uo=4",
+          "file": "_candidates/ode-to-joy-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Berlin Philharmonic & Herbert von Karajan",
+          "track": "Symphony No. 9 in D Minor, Op. 125 - \"Choral\": IV.a. Presto -",
+          "album": "Beethoven: Symphonies Nos. 5, 6 & 9",
+          "year": "1977",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/9a/04/6d/9a046df4-9dd6-e154-795b-ad28d49c3430/06UMGIM29386.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/symphony-no-9-in-d-minor-op-125-choral-iv-a-presto/1452547990?i=1452548382&uo=4",
+          "file": "_candidates/ode-to-joy-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Berlin Philharmonic & Herbert von Karajan",
+          "track": "Symphony No. 9 in D Minor, Op. 125 \"Choral\": II. Scherzo. Molto vivace – Presto (Recorded 1976)",
+          "album": "Beethoven 2020 – Symphonies & Overtures",
+          "year": "1977",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/be/28/4e/be284ef0-43d0-03ff-4775-b07396122f49/19UMGIM61650.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/symphony-no-9-in-d-minor-op-125-choral-ii-scherzo-molto/1484342299?i=1484343101&uo=4",
+          "file": "_candidates/ode-to-joy-4.jpg"
+        }
+      ]
+    },
+    "mario": {
+      "file": "art/mario.jpg",
+      "artist": "Koji Kondo",
+      "album": "Super Mario Bros. 35 Original Soundtrack",
+      "track": "Super Mario Bros. 35 Original Soundtrack",
+      "year": "2020",
+      "source": "https://musicbrainz.org/release/138c0ebc-2c41-4763-9b87-b6753e8946cb",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Koji Kondo",
+          "track": "Super Mario Bros. 35 Original Soundtrack",
+          "album": "Super Mario Bros. 35 Original Soundtrack",
+          "year": "2020",
+          "art": "https://coverartarchive.org/release/138c0ebc-2c41-4763-9b87-b6753e8946cb/front-1200",
+          "url": "https://musicbrainz.org/release/138c0ebc-2c41-4763-9b87-b6753e8946cb",
+          "file": "_candidates/mario-0.jpg"
+        }
+      ]
+    },
+    "happy-birthday": {
+      "file": null,
+      "reason": "no canonical recording - generative plate"
+    },
+    "bella-ciao": {
+      "file": null,
+      "reason": "no canonical recording - generative plate"
+    },
+    "scale-c-major": {
+      "file": null,
+      "reason": "no canonical recording - generative plate"
+    },
+    "scale-a-minor": {
+      "file": null,
+      "reason": "no canonical recording - generative plate"
+    }
+  },
+  "rejects": {}
+}

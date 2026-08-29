@@ -1,0 +1,1690 @@
+{
+  "generated": "tools/control-inventory.mjs",
+  "screens": {
+    "library": [
+      {
+        "id": "btn-calibrate",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-echo",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-freeplay",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-improv",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-keys12",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-lessons",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-metronome",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-path",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-rhythm",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-sight",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-takes",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-touch",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-trophies",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-voice",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "explore-sort",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "form-card",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "form-checks",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "form-done",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "form-snooze",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "freeze-offer",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "game-level",
+        "screen": "library",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "learn-count",
+        "screen": "library",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lib-search",
+        "screen": "library",
+        "tag": "input",
+        "type": "search",
+        "data": [],
+        "mustSupport": [
+          "value"
+        ]
+      },
+      {
+        "id": "list-explore",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "list-fame",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "list-learning",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "list-repertoire",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "list-results",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "next-action",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "next-action-cover",
+        "screen": "library",
+        "tag": "img",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "next-action-label",
+        "screen": "library",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "next-action-reason",
+        "screen": "library",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "path-teaser",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "practice-chart",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "quest-row",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "rail-learn",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "rail-practise",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "rail-tools",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "rhythm-chip",
+        "screen": "library",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "sec-explore",
+        "screen": "library",
+        "tag": "section",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "sec-fame",
+        "screen": "library",
+        "tag": "section",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "sec-learning",
+        "screen": "library",
+        "tag": "section",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "sec-repertoire",
+        "screen": "library",
+        "tag": "section",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "sec-results",
+        "screen": "library",
+        "tag": "section",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "sess-improve",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "sess-quick",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "sess-skill",
+        "screen": "library",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "weekly-row",
+        "screen": "library",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "play": [
+      {
+        "id": "btn-hear",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-mem",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-perf",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-restart",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-sound",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-take",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "btn-train",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "chk-letters",
+        "screen": "play",
+        "tag": "input",
+        "type": "checkbox",
+        "data": [],
+        "mustSupport": [
+          "checked"
+        ]
+      },
+      {
+        "id": "chunk-label",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "chunk-next",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "chunk-prev",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "chunk-size",
+        "screen": "play",
+        "tag": "select",
+        "type": null,
+        "data": [],
+        "mustSupport": [
+          "value"
+        ]
+      },
+      {
+        "id": "combo-flash",
+        "screen": "play",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "falls",
+        "screen": "play",
+        "tag": "canvas",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "hud",
+        "screen": "play",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "journey-strip",
+        "screen": "play",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "mode-falls",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [
+          "data-on"
+        ],
+        "mustSupport": []
+      },
+      {
+        "id": "mode-score",
+        "screen": "play",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "notestyle-seg",
+        "screen": "play",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "perf-banner",
+        "screen": "play",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "play-cover",
+        "screen": "play",
+        "tag": "img",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "score-wrap",
+        "screen": "play",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "section-select",
+        "screen": "play",
+        "tag": "select",
+        "type": null,
+        "data": [],
+        "mustSupport": [
+          "value"
+        ]
+      },
+      {
+        "id": "tempo",
+        "screen": "play",
+        "tag": "input",
+        "type": "range",
+        "data": [],
+        "mustSupport": [
+          "value"
+        ]
+      },
+      {
+        "id": "tempo-val",
+        "screen": "play",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "wait-mode",
+        "screen": "play",
+        "tag": "input",
+        "type": "checkbox",
+        "data": [],
+        "mustSupport": [
+          "checked"
+        ]
+      }
+    ],
+    "(outside a screen)": [
+      {
+        "id": "btn-home",
+        "screen": "(outside a screen)",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "firstrun",
+        "screen": "(outside a screen)",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "firstrun-msg",
+        "screen": "(outside a screen)",
+        "tag": "p",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "firstrun-skip",
+        "screen": "(outside a screen)",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "firstrun-taps",
+        "screen": "(outside a screen)",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "midi-status",
+        "screen": "(outside a screen)",
+        "tag": "div",
+        "type": null,
+        "data": [
+          "data-connected"
+        ],
+        "mustSupport": []
+      },
+      {
+        "id": "now-playing",
+        "screen": "(outside a screen)",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "results",
+        "screen": "(outside a screen)",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "results-again",
+        "screen": "(outside a screen)",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "results-analysis",
+        "screen": "(outside a screen)",
+        "tag": "ul",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "results-done",
+        "screen": "(outside a screen)",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "results-nudge",
+        "screen": "(outside a screen)",
+        "tag": "p",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "results-score-pass",
+        "screen": "(outside a screen)",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "results-stats",
+        "screen": "(outside a screen)",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "results-theory",
+        "screen": "(outside a screen)",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "results-title",
+        "screen": "(outside a screen)",
+        "tag": "h2",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-calibrate",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-echo",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-freeplay",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-improv",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-keys12",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-lesson",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-lessons",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-library",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-metronome",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-path",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-play",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-rhythm",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-takes",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-task",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-touch",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "screen-trophies",
+        "screen": "(outside a screen)",
+        "tag": "main",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "theory-body",
+        "screen": "(outside a screen)",
+        "tag": "p",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "theory-card",
+        "screen": "(outside a screen)",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "theory-close",
+        "screen": "(outside a screen)",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "theory-status",
+        "screen": "(outside a screen)",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "theory-title",
+        "screen": "(outside a screen)",
+        "tag": "h2",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "lessons": [
+      {
+        "id": "btn-review",
+        "screen": "lessons",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-list",
+        "screen": "lessons",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "calibrate": [
+      {
+        "id": "cal-canvas",
+        "screen": "calibrate",
+        "tag": "canvas",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "cal-redo",
+        "screen": "calibrate",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "cal-reset",
+        "screen": "calibrate",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "cal-status",
+        "screen": "calibrate",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "echo": [
+      {
+        "id": "echo-again",
+        "screen": "echo",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "echo-canvas",
+        "screen": "echo",
+        "tag": "canvas",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "echo-delta",
+        "screen": "echo",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "echo-level",
+        "screen": "echo",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "echo-mode-echo",
+        "screen": "echo",
+        "tag": "button",
+        "type": null,
+        "data": [
+          "data-on"
+        ],
+        "mustSupport": []
+      },
+      {
+        "id": "echo-mode-sing",
+        "screen": "echo",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "echo-mode-trans",
+        "screen": "echo",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "echo-msg",
+        "screen": "echo",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "echo-play",
+        "screen": "echo",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "echo-streak",
+        "screen": "echo",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "freeplay": [
+      {
+        "id": "freeplay-canvas",
+        "screen": "freeplay",
+        "tag": "canvas",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "freeplay-log",
+        "screen": "freeplay",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "(NOT IN MARKUP - built by JS)": [
+      {
+        "id": "freeze-no",
+        "screen": "(NOT IN MARKUP - built by JS)",
+        "tag": null,
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "freeze-yes",
+        "screen": "(NOT IN MARKUP - built by JS)",
+        "tag": null,
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "j-go",
+        "screen": "(NOT IN MARKUP - built by JS)",
+        "tag": null,
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "tech-save",
+        "screen": "(NOT IN MARKUP - built by JS)",
+        "tag": null,
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "improv": [
+      {
+        "id": "improv-canvas",
+        "screen": "improv",
+        "tag": "canvas",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "improv-chord",
+        "screen": "improv",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "improv-go",
+        "screen": "improv",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "improv-loop",
+        "screen": "improv",
+        "tag": "select",
+        "type": null,
+        "data": [],
+        "mustSupport": [
+          "value"
+        ]
+      }
+    ],
+    "keys12": [
+      {
+        "id": "keys12-majarp",
+        "screen": "keys12",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "keys12-major",
+        "screen": "keys12",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "keys12-minarp",
+        "screen": "keys12",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "keys12-minor",
+        "screen": "keys12",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "lesson": [
+      {
+        "id": "lesson-back",
+        "screen": "lesson",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-body",
+        "screen": "lesson",
+        "tag": "p",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-kb-toggle",
+        "screen": "lesson",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-keys",
+        "screen": "lesson",
+        "tag": "canvas",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-msg",
+        "screen": "lesson",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-nomidi",
+        "screen": "lesson",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-phase",
+        "screen": "lesson",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-progress",
+        "screen": "lesson",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-rhythm-link",
+        "screen": "lesson",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-start",
+        "screen": "lesson",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-stave",
+        "screen": "lesson",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-steps",
+        "screen": "lesson",
+        "tag": "ol",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-title",
+        "screen": "lesson",
+        "tag": "h2",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "lesson-video",
+        "screen": "lesson",
+        "tag": "p",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "metronome": [
+      {
+        "id": "met-beat",
+        "screen": "metronome",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "met-bpm",
+        "screen": "metronome",
+        "tag": "input",
+        "type": "range",
+        "data": [],
+        "mustSupport": [
+          "value"
+        ]
+      },
+      {
+        "id": "met-bpm-num",
+        "screen": "metronome",
+        "tag": "input",
+        "type": "number",
+        "data": [],
+        "mustSupport": [
+          "value"
+        ]
+      },
+      {
+        "id": "met-sig",
+        "screen": "metronome",
+        "tag": "select",
+        "type": null,
+        "data": [],
+        "mustSupport": [
+          "value"
+        ]
+      },
+      {
+        "id": "met-toggle",
+        "screen": "metronome",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "path": [
+      {
+        "id": "path-evidence",
+        "screen": "path",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "path-go",
+        "screen": "path",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "path-home",
+        "screen": "path",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "path-lessons",
+        "screen": "path",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "path-next",
+        "screen": "path",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "path-playable",
+        "screen": "path",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "path-reason",
+        "screen": "path",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "path-skills",
+        "screen": "path",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "path-technique",
+        "screen": "path",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "rhythm": [
+      {
+        "id": "rhythm-blocks",
+        "screen": "rhythm",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "rhythm-go",
+        "screen": "rhythm",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "rhythm-level",
+        "screen": "rhythm",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "rhythm-msg",
+        "screen": "rhythm",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "rhythm-streak",
+        "screen": "rhythm",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "takes": [
+      {
+        "id": "takes-canvas",
+        "screen": "takes",
+        "tag": "canvas",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "takes-list",
+        "screen": "takes",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "takes-usage",
+        "screen": "takes",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "task": [
+      {
+        "id": "task-back",
+        "screen": "task",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-badge",
+        "screen": "task",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-easier",
+        "screen": "task",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-kb",
+        "screen": "task",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-keys",
+        "screen": "task",
+        "tag": "canvas",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-msg",
+        "screen": "task",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-payoff",
+        "screen": "task",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-prompt",
+        "screen": "task",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-rubric",
+        "screen": "task",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-sheet",
+        "screen": "task",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-show",
+        "screen": "task",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-slots",
+        "screen": "task",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-stage",
+        "screen": "task",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-start",
+        "screen": "task",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-teach",
+        "screen": "task",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "task-title",
+        "screen": "task",
+        "tag": "h2",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "touch": [
+      {
+        "id": "touch-done",
+        "screen": "touch",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "touch-dyn",
+        "screen": "touch",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "touch-key",
+        "screen": "touch",
+        "tag": "span",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "touch-progress",
+        "screen": "touch",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "touch-redo",
+        "screen": "touch",
+        "tag": "button",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "touch-status",
+        "screen": "touch",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ],
+    "trophies": [
+      {
+        "id": "trophy-list",
+        "screen": "trophies",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      },
+      {
+        "id": "xp-log",
+        "screen": "trophies",
+        "tag": "div",
+        "type": null,
+        "data": [],
+        "mustSupport": []
+      }
+    ]
+  },
+  "dataAttributesJsReads": [
+    "data-check",
+    "data-connected",
+    "data-hand",
+    "data-i",
+    "data-id",
+    "data-lesson",
+    "data-on",
+    "data-q",
+    "data-r",
+    "data-rail",
+    "data-sec",
+    "data-style",
+    "data-w"
+  ]
+}

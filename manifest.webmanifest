@@ -1,0 +1,12 @@
+{
+  "name": "Keys",
+  "short_name": "Keys",
+  "description": "Personal piano practice with a MIDI keyboard",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#14171d",
+  "theme_color": "#14171d",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

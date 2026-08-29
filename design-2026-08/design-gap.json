@@ -1,0 +1,486 @@
+{
+  "drawn": {
+    "5b": "library: rail, tabs, recommendation strip, ledger rows, quests, practice chart, path, form check",
+    "2b": "library states: empty library, search results with section tags, no MIDI"
+  },
+  "undrawnControls": [
+    {
+      "id": "firstrun",
+      "screen": "(outside a screen)",
+      "tag": "div",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "firstrun-msg",
+      "screen": "(outside a screen)",
+      "tag": "p",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "firstrun-skip",
+      "screen": "(outside a screen)",
+      "tag": "button",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "firstrun-taps",
+      "screen": "(outside a screen)",
+      "tag": "button",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "results",
+      "screen": "(outside a screen)",
+      "tag": "div",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "results-again",
+      "screen": "(outside a screen)",
+      "tag": "button",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "results-analysis",
+      "screen": "(outside a screen)",
+      "tag": "ul",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "results-done",
+      "screen": "(outside a screen)",
+      "tag": "button",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "results-nudge",
+      "screen": "(outside a screen)",
+      "tag": "p",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "results-score-pass",
+      "screen": "(outside a screen)",
+      "tag": "button",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "results-stats",
+      "screen": "(outside a screen)",
+      "tag": "div",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "results-theory",
+      "screen": "(outside a screen)",
+      "tag": "button",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "results-title",
+      "screen": "(outside a screen)",
+      "tag": "h2",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-calibrate",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-echo",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-freeplay",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-improv",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-keys12",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-lesson",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-lessons",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-library",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-metronome",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-path",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-play",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-rhythm",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-takes",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-task",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-touch",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "screen-trophies",
+      "screen": "(outside a screen)",
+      "tag": "main",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "theory-body",
+      "screen": "(outside a screen)",
+      "tag": "p",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "theory-card",
+      "screen": "(outside a screen)",
+      "tag": "div",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "theory-close",
+      "screen": "(outside a screen)",
+      "tag": "button",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "theory-status",
+      "screen": "(outside a screen)",
+      "tag": "div",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    },
+    {
+      "id": "theory-title",
+      "screen": "(outside a screen)",
+      "tag": "h2",
+      "type": null,
+      "data": [],
+      "mustSupport": []
+    }
+  ],
+  "undrawnScreens": [
+    {
+      "screen": "play",
+      "controls": 26,
+      "ids": [
+        "btn-hear",
+        "btn-mem",
+        "btn-perf",
+        "btn-restart",
+        "btn-sound",
+        "btn-take",
+        "btn-train",
+        "chk-letters",
+        "chunk-label",
+        "chunk-next",
+        "chunk-prev",
+        "chunk-size",
+        "combo-flash",
+        "falls",
+        "hud",
+        "journey-strip",
+        "mode-falls",
+        "mode-score",
+        "notestyle-seg",
+        "perf-banner",
+        "play-cover",
+        "score-wrap",
+        "section-select",
+        "tempo",
+        "tempo-val",
+        "wait-mode"
+      ]
+    },
+    {
+      "screen": "task",
+      "controls": 16,
+      "ids": [
+        "task-back",
+        "task-badge",
+        "task-easier",
+        "task-kb",
+        "task-keys",
+        "task-msg",
+        "task-payoff",
+        "task-prompt",
+        "task-rubric",
+        "task-sheet",
+        "task-show",
+        "task-slots",
+        "task-stage",
+        "task-start",
+        "task-teach",
+        "task-title"
+      ]
+    },
+    {
+      "screen": "lesson",
+      "controls": 14,
+      "ids": [
+        "lesson-back",
+        "lesson-body",
+        "lesson-kb-toggle",
+        "lesson-keys",
+        "lesson-msg",
+        "lesson-nomidi",
+        "lesson-phase",
+        "lesson-progress",
+        "lesson-rhythm-link",
+        "lesson-start",
+        "lesson-stave",
+        "lesson-steps",
+        "lesson-title",
+        "lesson-video"
+      ]
+    },
+    {
+      "screen": "echo",
+      "controls": 10,
+      "ids": [
+        "echo-again",
+        "echo-canvas",
+        "echo-delta",
+        "echo-level",
+        "echo-mode-echo",
+        "echo-mode-sing",
+        "echo-mode-trans",
+        "echo-msg",
+        "echo-play",
+        "echo-streak"
+      ]
+    },
+    {
+      "screen": "path",
+      "controls": 9,
+      "ids": [
+        "path-evidence",
+        "path-go",
+        "path-home",
+        "path-lessons",
+        "path-next",
+        "path-playable",
+        "path-reason",
+        "path-skills",
+        "path-technique"
+      ]
+    },
+    {
+      "screen": "touch",
+      "controls": 6,
+      "ids": [
+        "touch-done",
+        "touch-dyn",
+        "touch-key",
+        "touch-progress",
+        "touch-redo",
+        "touch-status"
+      ]
+    },
+    {
+      "screen": "metronome",
+      "controls": 5,
+      "ids": [
+        "met-beat",
+        "met-bpm",
+        "met-bpm-num",
+        "met-sig",
+        "met-toggle"
+      ]
+    },
+    {
+      "screen": "rhythm",
+      "controls": 5,
+      "ids": [
+        "rhythm-blocks",
+        "rhythm-go",
+        "rhythm-level",
+        "rhythm-msg",
+        "rhythm-streak"
+      ]
+    },
+    {
+      "screen": "calibrate",
+      "controls": 4,
+      "ids": [
+        "cal-canvas",
+        "cal-redo",
+        "cal-reset",
+        "cal-status"
+      ]
+    },
+    {
+      "screen": "improv",
+      "controls": 4,
+      "ids": [
+        "improv-canvas",
+        "improv-chord",
+        "improv-go",
+        "improv-loop"
+      ]
+    },
+    {
+      "screen": "keys12",
+      "controls": 4,
+      "ids": [
+        "keys12-majarp",
+        "keys12-major",
+        "keys12-minarp",
+        "keys12-minor"
+      ]
+    },
+    {
+      "screen": "takes",
+      "controls": 3,
+      "ids": [
+        "takes-canvas",
+        "takes-list",
+        "takes-usage"
+      ]
+    },
+    {
+      "screen": "lessons",
+      "controls": 2,
+      "ids": [
+        "btn-review",
+        "lesson-list"
+      ]
+    },
+    {
+      "screen": "freeplay",
+      "controls": 2,
+      "ids": [
+        "freeplay-canvas",
+        "freeplay-log"
+      ]
+    },
+    {
+      "screen": "trophies",
+      "controls": 2,
+      "ids": [
+        "trophy-list",
+        "xp-log"
+      ]
+    }
+  ],
+  "total": 201,
+  "undrawnCount": 146
+}

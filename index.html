@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keys</title>
+<meta name="theme-color" content="#14171d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button id="btn-home" class="ghost" title="Library">⌂ Library</button>
+  <div id="now-playing" class="now-playing"></div>
+  <div id="midi-status" class="midi-status" data-connected="false">MIDI: not connected</div>
+</header>
+
+<!-- LIBRARY -->
+<main id="screen-library" class="screen">
+  <h1 class="brand">Keys</h1>
+  <p class="tagline">Your P-45, your songs, no subscription.</p>
+  <div class="game-row">
+    <span id="game-level" class="game-level"></span>
+    <span id="rhythm-chip" class="rhythm-chip"></span>
+    <input id="lib-search" type="search" placeholder="🔍 Search all songs" class="lib-search-global" aria-label="Search all songs">
+  </div>
+  <section class="lib-sec open" id="sec-results" hidden>
+    <div class="lib-body" style="display:block;opacity:1"><div id="list-results" class="song-rows"></div></div>
+  </section>
+  <div id="freeze-offer" class="freeze-offer" hidden></div>
+  <button id="next-action" class="next-action" hidden>
+    <img id="next-action-cover" class="cover-plate cover-96" alt="" aria-hidden="true" hidden>
+    <span class="next-action-text">
+      <span id="next-action-label" class="next-action-label"></span>
+      <span id="next-action-reason" class="next-action-reason"></span>
+    </span>
+  </button>
+  <div id="quest-row" class="quest-row"></div>
+  <div id="weekly-row" class="weekly-row"></div>
+  <div id="form-card" class="form-card" hidden>
+    <h3>🎥 Film 60 seconds of yourself playing</h3>
+    <p class="hint">MIDI hears every note but it cannot see your body. Prop your phone up and film one minute, then watch it against these five checks. No video is recorded by the app.</p>
+    <p class="hint">Camera angle: torso, forearms, wrists and keys all in frame.</p>
+    <div id="form-checks" class="form-checks"></div>
+    <p class="hint form-teacher">Remember: recurring pain or uncertainty means show a human teacher.</p>
+    <div class="echo-actions">
+      <button id="form-done" class="tool accent">✓ Done, I watched it</button>
+      <button id="form-snooze" class="ghost">Not today</button>
+    </div>
+  </div>
+  <section class="lib-sec" id="sec-learning">
+    <button class="lib-head" data-sec="learning" aria-expanded="true">
+      <span class="lib-caret">▸</span> Learning <span id="learn-count" class="lib-count"></span>
+    </button>
+    <div class="lib-body"><div id="list-learning" class="song-list"></div></div>
+  </section>
+  <section class="lib-sec" id="sec-repertoire">
+    <button class="lib-head" data-sec="repertoire" aria-expanded="false">
+      <span class="lib-caret">▸</span> Repertoire
+    </button>
+    <div class="lib-body"><div id="list-repertoire" class="song-rows"></div></div>
+  </section>
+  <section class="lib-sec" id="sec-fame">
+    <button class="lib-head" data-sec="fame" aria-expanded="false">
+      <span class="lib-caret">▸</span> 🎬 Hall of fame
+    </button>
+    <div class="lib-body"><div id="list-fame" class="song-rows"></div></div>
+  </section>
+  <section class="lib-sec" id="sec-explore">
+    <div class="lib-head-row">
+      <button class="lib-head" data-sec="explore" aria-expanded="false">
+        <span class="lib-caret">▸</span> Explore
+      </button>
+      <button id="explore-sort" class="ghost sort-toggle" title="Order the shelf">A–Z</button>
+    </div>
+    <div class="lib-body"><div id="list-explore" class="song-rows"></div></div>
+  </section>
+  <div id="practice-chart" class="practice-chart"></div>
+  <div id="path-teaser" class="path-teaser" hidden></div>
+  <p class="hint">Want a new song? Ask Claude to curate it into the library, that is the pipeline.</p>
+  <div class="rail-sheet" id="rail-learn" hidden>
+    <button id="btn-path" class="tool">🎓 My path</button>
+    <button id="btn-lessons" class="tool">🎼 Lessons</button>
+    <button id="btn-sight" class="tool">📖 Sight reading</button>
+  </div>
+  <div class="rail-sheet" id="rail-practise" hidden>
+    <button id="sess-quick" class="tool">⚡ Quick win</button>
+    <button id="sess-improve" class="tool">🎵 Improve a song</button>
+    <button id="sess-skill" class="tool">🧠 Skill workout</button>
+    <button id="btn-rhythm" class="tool">🥁 Rhythm tap</button>
+    <button id="btn-echo" class="tool">🎧 Melody echo</button>
+    <button id="btn-improv" class="tool">🎹 Improv</button>
+    <button id="btn-keys12" class="tool">🗝 12 keys</button>
+    <button id="btn-freeplay" class="tool">Free play</button>
+    <button id="btn-metronome" class="tool">🕰 Metronome</button>
+  </div>
+  <div class="rail-sheet" id="rail-tools" hidden>
+    <button id="btn-trophies" class="tool">🏆 Trophies</button>
+    <button id="btn-takes" class="tool">⏵ Takes</button>
+    <button id="btn-voice" class="tool">🔊 Voice</button>
+    <button id="btn-calibrate" class="tool">Latency calibration</button>
+    <button id="btn-touch" class="tool">🖐 Touch diagnostic</button>
+  </div>
+  <nav class="rail" aria-label="Tools">
+    <button class="rail-btn" data-rail="learn">Learn</button>
+    <button class="rail-btn" data-rail="practise">Practise</button>
+    <button class="rail-btn" data-rail="tools">Tools</button>
+  </nav>
+</main>
+
+<!-- PLAY (falls + score share this screen; one-tap toggle) -->
+<main id="screen-play" class="screen" hidden>
+  <div class="play-controls">
+    <div class="seg" role="group" aria-label="View">
+      <button id="mode-falls" class="seg-btn" data-on="true">Falling notes</button>
+      <button id="mode-score" class="seg-btn">Score</button>
+    </div>
+    <div class="seg" role="group" aria-label="Hands">
+      <button class="seg-btn hand-btn" data-hand="both" data-on="true">Both</button>
+      <button class="seg-btn hand-btn" data-hand="L">Left</button>
+      <button class="seg-btn hand-btn" data-hand="R">Right</button>
+    </div>
+    <div class="seg" id="notestyle-seg" title="how the falling notes are lit">
+      <button class="seg-btn" data-style="duo" data-on="true">Colour</button>
+      <button class="seg-btn" data-style="moon" data-on="false">White</button>
+    </div>
+    <label class="ctl chk" title="note letters inside the falling pills"><input type="checkbox" id="chk-letters" checked> Letters</label>
+    <label class="ctl">Tempo <input id="tempo" type="range" min="40" max="120" value="100" step="5"><span id="tempo-val">100%</span></label>
+    <select id="section-select" class="ctl-select" title="Loop a section"></select>
+    <div class="seg" role="group" aria-label="Learning chunks">
+      <button id="chunk-prev" class="seg-btn" title="Previous chunk">◀</button>
+      <button id="chunk-label" class="seg-btn" title="Toggle chunk looping">🧩 Chunks off</button>
+      <button id="chunk-next" class="seg-btn" title="Next chunk">▶</button>
+    </div>
+    <select id="chunk-size" class="ctl-select" title="Chunk size">
+      <option value="1">1 bar</option>
+      <option value="2" selected>2 bars</option>
+      <option value="4">4 bars</option>
+    </select>
+    <label class="ctl chk"><input id="wait-mode" type="checkbox" checked> Wait for me</label>
+    <button id="btn-sound" class="ghost" title="What your presses sound like: Auto = screen taps sound the grand, the P-45 speaks for itself">🔊 Auto</button>
+    <button id="btn-hear" class="ghost">▶ Hear it</button>
+    <button id="btn-train" class="ghost">🎯 Train section</button>
+    <button id="btn-mem" class="ghost">🧠 Memorize</button>
+    <button id="btn-take" class="ghost">⏺ Record take</button>
+    <button id="btn-perf" class="ghost">🎭 Performance run</button>
+    <button id="btn-restart" class="ghost">↺ Restart</button>
+  </div>
+  <img id="play-cover" class="cover-plate cover-160" alt="" aria-hidden="true" hidden>
+  <div id="journey-strip" class="journey-strip" hidden></div>
+  <div id="perf-banner" class="perf-banner" hidden>🎭 PERFORMANCE · one take · no stopping</div>
+  <canvas id="falls" class="falls"></canvas>
+  <div id="combo-flash" class="combo-flash"></div>
+  <div id="score-wrap" class="score-wrap" hidden></div>
+  <div id="hud" class="hud"></div>
+</main>
+
+<!-- TROPHIES: an evidence cabinet, never decoration (14th council) -->
+<main id="screen-trophies" class="screen" hidden>
+  <h2>🏆 Trophies</h2>
+  <p class="hint">Every one of these links to the run that earned it. Arcade stats are fun and say so, they are never claims about your playing.</p>
+  <div id="trophy-list" class="trophy-list"></div>
+  <h3 class="path-sub">XP ledger, where every point came from</h3>
+  <div id="xp-log" class="xp-log"></div>
+</main>
+
+<!-- FIRST RUN: hardware-aware welcome, one-tap skippable -->
+<div id="firstrun" class="firstrun" hidden>
+  <div class="firstrun-card">
+    <h2>Keys</h2>
+    <p id="firstrun-msg">Plug the P-45 in (USB TO HOST) and press any key, or tap below to play on screen for now.</p>
+    <div class="echo-actions">
+      <button id="firstrun-taps" class="tool accent">I'll tap the screen</button>
+      <button id="firstrun-skip" class="ghost">Skip, just show me the app</button>
+    </div>
+  </div>
+</div>
+
+<!-- FREE PLAY -->
+<main id="screen-freeplay" class="screen" hidden>
+  <h2>Free play</h2>
+  <p class="hint">Every key you press lights up below, with its name. Good first test that the P-45 is talking.</p>
+  <canvas id="freeplay-canvas" class="falls freeplay"></canvas>
+  <div id="freeplay-log" class="freeplay-log"></div>
+</main>
+
+<!-- LESSONS LIST -->
+<main id="screen-path" class="screen" hidden>
+  <h2 class="path-h">My path</h2>
+  <p class="hint">One thing at a time, chosen from what you have actually played. Teacher Loop v1 takes you to playing a pop song from a lead sheet.</p>
+
+  <div id="path-next" class="path-next">
+    <div class="path-next-head">Next</div>
+    <div id="path-reason" class="path-reason"></div>
+    <div id="path-evidence" class="path-evidence"></div>
+    <div id="path-playable" class="path-playable"></div>
+    <div class="echo-actions">
+      <button id="path-go" class="tool accent">▶ Continue learning</button>
+      <button id="path-technique" class="ghost">🪑 Technique check</button>
+      <button id="path-home" class="ghost">← Library</button>
+    </div>
+  </div>
+
+  <div id="path-skills" class="path-skills"></div>
+  <div id="path-lessons" class="path-lessons"></div>
+</main>
+
+<main id="screen-task" class="screen" hidden>
+  <h2 id="task-title" class="path-h"></h2>
+  <div id="task-teach" class="task-teach"></div>
+  <div id="task-rubric" class="form-card" hidden></div>
+  <div id="task-stage" class="task-stage" hidden>
+    <div id="task-badge" class="task-badge"></div>
+    <div id="task-prompt" class="task-prompt"></div>
+    <div id="task-sheet" class="lead-sheet" hidden></div>
+    <div id="task-slots" class="slot-row"></div>
+  </div>
+  <div id="task-msg" class="echo-msg"></div>
+  <div class="echo-actions">
+    <button id="task-start" class="tool accent">▶ Start</button>
+    <button id="task-payoff" class="tool" hidden>🎵 Hear it in a song</button>
+    <button id="task-show" class="tool" hidden>👁 Show me</button>
+    <button id="task-easier" class="ghost" hidden>◀ Practice with help</button>
+    <button id="task-back" class="ghost">← My path</button>
+    <button id="task-kb" class="ghost">Hide keyboard</button>
+  </div>
+  <canvas id="task-keys"></canvas>
+</main>
+
+<main id="screen-lessons" class="screen" hidden>
+  <h2>Lessons</h2>
+  <p class="hint">The stuff a teacher would explain, in order. Each lesson ends with a drill you answer on the piano. Finish one to unlock the next.</p>
+  <div class="echo-actions">
+    <button id="btn-review" class="tool accent" hidden>🔁 Quick review</button>
+  </div>
+  <div id="lesson-list" class="lesson-list"></div>
+</main>
+
+<!-- ONE LESSON -->
+<main id="screen-lesson" class="screen" hidden>
+  <h2 id="lesson-title"></h2>
+  <div id="lesson-nomidi" class="lesson-banner" hidden>⚠ No piano detected. Tap the keys on the screen keyboard below to answer. Plug in the P-45 (USB TO HOST) for the real thing.</div>
+  <p id="lesson-body" class="theory-body"></p>
+  <ol id="lesson-steps" class="lesson-steps"></ol>
+  <p id="lesson-video" class="hint lesson-video"></p>
+  <div id="lesson-stave" class="lesson-stave"></div>
+  <div class="echo-status">
+    <span id="lesson-phase"></span>
+    <span id="lesson-progress"></span>
+  </div>
+  <div id="lesson-msg" class="echo-msg"></div>
+  <div class="echo-actions">
+    <button id="lesson-start" class="tool accent" hidden>▶ Start the drill</button>
+    <button id="lesson-back" class="ghost">← Lessons</button>
+    <button id="lesson-kb-toggle" class="ghost">Hide keyboard</button>
+    <button id="lesson-rhythm-link" class="tool" hidden>Open Rhythm tap</button>
+  </div>
+  <canvas id="lesson-keys" class="falls lesson-keys"></canvas>
+</main>
+
+<!-- RHYTHM TAP -->
+<main id="screen-rhythm" class="screen" hidden>
+  <h2>Rhythm tap</h2>
+  <p class="hint">Four clicks count you in, the pattern plays once, four more clicks, then YOU tap it back on any piano key. Three clean rounds and the patterns get trickier.</p>
+  <div class="echo-status">
+    <span id="rhythm-level"></span>
+    <span id="rhythm-streak"></span>
+  </div>
+  <div id="rhythm-blocks" class="rhythm-blocks"></div>
+  <div id="rhythm-msg" class="echo-msg">Press ▶ when you're ready.</div>
+  <div class="echo-actions">
+    <button id="rhythm-go" class="tool accent">▶ Play pattern</button>
+  </div>
+</main>
+
+<!-- METRONOME -->
+<main id="screen-metronome" class="screen" hidden>
+  <h2>Metronome</h2>
+  <div class="met-row">
+    <button id="met-toggle" class="tool accent">▶ Start</button>
+    <label class="ctl">Tempo <input id="met-bpm" type="range" min="40" max="200" value="80" step="1"><input id="met-bpm-num" type="number" min="40" max="200" value="80" step="1" class="met-num"> bpm</label>
+    <label class="ctl">Beats per bar
+      <select id="met-sig" class="ctl-select"><option value="4">4</option><option value="3">3</option><option value="2">2</option></select>
+    </label>
+  </div>
+  <div id="met-beat" class="met-beat"></div>
+</main>
+
+<!-- MELODY ECHO -->
+<main id="screen-echo" class="screen" hidden>
+  <h2>Melody echo</h2>
+  <p class="hint">I play a phrase from one of your songs. You play it back. A wrong note restarts the phrase. Five clean echoes in a row and the phrases get longer.</p>
+  <div class="seg echo-modes" role="group" aria-label="Echo mode">
+    <button id="echo-mode-echo" class="seg-btn" data-on="true">Echo</button>
+    <button id="echo-mode-sing" class="seg-btn">Sing first</button>
+    <button id="echo-mode-trans" class="seg-btn">Transpose it</button>
+  </div>
+  <div class="echo-status">
+    <span id="echo-level"></span>
+    <span id="echo-streak"></span>
+    <span id="echo-delta" class="hint"></span>
+  </div>
+  <div id="echo-msg" class="echo-msg">Press ▶ to hear the first phrase.</div>
+  <div class="echo-actions">
+    <button id="echo-play" class="tool accent">▶ Play phrase</button>
+    <button id="echo-again" class="ghost">↻ Hear again</button>
+  </div>
+  <canvas id="echo-canvas" class="falls freeplay"></canvas>
+</main>
+
+<!-- CALIBRATION -->
+<main id="screen-calibrate" class="screen" hidden>
+  <h2>Latency calibration</h2>
+  <p class="hint">A bar drops onto the line at a steady beat. Press ANY key exactly when it lands. Eight taps, we store the median offset and use it when scoring your timing.</p>
+  <canvas id="cal-canvas" class="cal-canvas"></canvas>
+  <div id="cal-status" class="cal-status">Press any key when the bar hits the line…</div>
+  <div class="echo-actions">
+    <button id="cal-redo" class="tool">↺ Redo calibration</button>
+    <button id="cal-reset" class="ghost">Reset to 0ms</button>
+  </div>
+</main>
+
+<!-- IMPROV PLAYGROUND -->
+<main id="screen-improv" class="screen" hidden>
+  <h2>Improv playground</h2>
+  <p class="hint">No judgement zone. Nothing here is scored, ever. Pick a loop, start the backing, and make noise over it: bright filled-dot keys are the CURRENT chord's tones, outlined-dot keys are safe scale tones.</p>
+  <div class="met-row">
+    <select id="improv-loop" class="ctl-select" title="Backing loop"></select>
+    <button id="improv-go" class="tool accent">▶ Start backing</button>
+    <span id="improv-chord" class="improv-chord"></span>
+  </div>
+  <canvas id="improv-canvas" class="falls freeplay"></canvas>
+</main>
+
+<!-- 12-KEY LADDER -->
+<main id="screen-keys12" class="screen" hidden>
+  <h2>12-key fluency ladder</h2>
+  <p class="hint">Every major and natural-minor scale, standard fingering, as trainer drills. A key is passed when the trainer has taken BOTH halves (up and down) to full tempo. Click a key to train it.</p>
+  <div class="keys12-grid-wrap">
+    <h3 class="keys12-row-title">Major</h3>
+    <div id="keys12-major" class="keys12-grid"></div>
+    <h3 class="keys12-row-title">Natural minor</h3>
+    <div id="keys12-minor" class="keys12-grid"></div>
+    <h3 class="keys12-row-title">Major arpeggios · two octaves</h3>
+    <div id="keys12-majarp" class="keys12-grid"></div>
+    <h3 class="keys12-row-title">Minor arpeggios · two octaves</h3>
+    <div id="keys12-minarp" class="keys12-grid"></div>
+  </div>
+</main>
+
+<!-- TAKES SHELF -->
+<main id="screen-takes" class="screen" hidden>
+  <h2>Takes</h2>
+  <p class="hint">Recorded runs: your real sound (mic) plus the exact keys you played (MIDI), for honest A/B review. Audio is never scored, mic gain lies. The shelf keeps the newest 20; older takes fall off.</p>
+  <div id="takes-usage" class="echo-status"></div>
+  <div id="takes-list" class="takes-list"></div>
+  <canvas id="takes-canvas" class="falls freeplay"></canvas>
+</main>
+
+<!-- TOUCH DIAGNOSTIC -->
+<main id="screen-touch" class="screen" hidden>
+  <h2>Touch diagnostic</h2>
+  <p class="hint">Your piano's action is not uniform and neither is your hand. Play the asked key at the asked strength; the app learns YOUR soft, medium and strong per register, and all dynamics feedback maps through that instead of raw numbers.</p>
+  <div class="touch-ask">
+    <span id="touch-dyn" class="touch-dyn"></span>
+    <span id="touch-key" class="touch-key"></span>
+  </div>
+  <div id="touch-progress" class="echo-status"></div>
+  <div id="touch-status" class="echo-msg"></div>
+  <div class="echo-actions">
+    <button id="touch-redo" class="tool">↺ Restart diagnostic</button>
+    <button id="touch-done" class="tool accent" hidden>Done, back to library</button>
+  </div>
+</main>
+
+<!-- RESULTS -->
+<div id="results" class="results" hidden>
+  <div class="results-card">
+    <h2 id="results-title">Nice one</h2>
+    <div id="results-stats" class="results-stats"></div>
+    <ul id="results-analysis" class="results-analysis" hidden></ul>
+    <p id="results-nudge" class="hint"></p>
+    <div class="results-actions">
+      <button id="results-again" class="tool">Play again</button>
+      <button id="results-score-pass" class="tool accent">Score-mode pass</button>
+      <button id="results-theory" class="tool" hidden></button>
+      <button id="results-done" class="ghost">Library</button>
+    </div>
+  </div>
+</div>
+
+<!-- THEORY CARD -->
+<div id="theory-card" class="results" hidden>
+  <div class="results-card">
+    <h2 id="theory-title"></h2>
+    <p id="theory-body" class="theory-body"></p>
+    <div id="theory-status" class="echo-msg">Play it now.</div>
+    <div class="results-actions">
+      <button id="theory-close" class="ghost">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- The canon mount runs BEFORE the app, because app.mjs wires listeners onto
+     ids at module top level: mount after it and every one of those listeners is
+     attached to an element that is no longer in the page. Module scripts execute
+     in document order, so this ordering is the guarantee. Flag off, it does
+     nothing at all. -->
+<script type="module">
+  import { CANON_ON, mountCanonScreens } from './js/canon-mount.mjs';
+  if (CANON_ON) {
+    const mounted = mountCanonScreens();
+    console.info(`canon: mounted ${mounted.length} screens`,
+      mounted.map((m) => `${m.key}(${m.stripped}/${m.claimed} ids taken from legacy)`).join(' '));
+  }
+</script>
+<script type="module" src="js/app.mjs"></script>
+</body>
+</html>

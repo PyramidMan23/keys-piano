@@ -1,0 +1,1114 @@
+<title>Keys Stage Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+/* Keys, stage concepts. A deliberately single-theme instrument panel: this
+   page is the inside of a dark stage, so it commits to one world and paints
+   every ground and ink explicitly rather than inheriting the host theme. */
+:root {
+  --void: #07090d;
+  --stage: #0a0c10;
+  --panel: #12161e;
+  --panel-hi: #1a2029;
+  --line: #242c38;
+  --line-hi: #38424f;
+  --ink: #ece7dc;
+  --ink-dim: #9aa4b2;
+  --ink-faint: #626c7a;
+  --amber: #f0a832;
+  --amber-hi: #ffd88c;
+  --cyan: #5ec8f2;
+  --cyan-hi: #c4f0ff;
+  --good: #7ac97a;
+  --warn: #e0a052;
+
+  --step-0: 0.75rem;
+  --step-1: 0.875rem;
+  --step-2: 1rem;
+  --step-3: 1.25rem;
+  --step-4: 1.75rem;
+  --step-5: 2.5rem;
+  --step-6: 3.75rem;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: var(--step-2);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px 90px; }
+
+/* ---------- masthead ---------- */
+.mast { padding: 54px 0 26px; }
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--step-0);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin: 0 0 14px;
+}
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(2.25rem, 6vw, var(--step-6));
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+.thesis {
+  max-width: 60ch;
+  color: var(--ink-dim);
+  font-size: var(--step-3);
+  line-height: 1.5;
+  margin: 0;
+}
+.thesis b { color: var(--ink); font-weight: 500; }
+
+/* ---------- the stage ---------- */
+.stage-shell {
+  margin: 34px 0 0;
+  background: var(--stage);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 30px 80px rgba(0,0,0,0.6);
+}
+
+.rail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px 14px;
+  background: linear-gradient(180deg, var(--panel-hi), var(--panel));
+  border-bottom: 1px solid var(--line);
+}
+.rail-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--step-0);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-right: 4px;
+}
+.tab {
+  appearance: none;
+  font: inherit;
+  font-size: var(--step-1);
+  font-weight: 500;
+  color: var(--ink-dim);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 15px;
+  cursor: pointer;
+  min-height: 40px;
+  transition: color .14s, border-color .14s, background .14s;
+}
+.tab:hover { color: var(--ink); border-color: var(--line-hi); }
+.tab[aria-pressed="true"] {
+  color: #0a0c10;
+  background: var(--amber);
+  border-color: var(--amber);
+  font-weight: 600;
+}
+.tab:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+.spacer { flex: 1 1 40px; }
+
+.toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: var(--step-1); color: var(--ink-dim);
+  cursor: pointer; user-select: none;
+}
+.toggle input { width: 17px; height: 17px; accent-color: var(--amber); cursor: pointer; }
+
+canvas#stage { display: block; width: 100%; height: 460px; touch-action: none; }
+
+.readout {
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  padding: 11px 15px;
+  border-top: 1px solid var(--line);
+  background: var(--panel);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--step-1);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-dim);
+}
+.readout b { color: var(--ink); font-weight: 600; }
+.readout .hint-key {
+  border: 1px solid var(--line-hi); border-radius: 5px;
+  padding: 1px 7px; color: var(--ink); font-size: var(--step-0);
+}
+
+/* ---------- concept detail ---------- */
+.section-head {
+  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  margin: 64px 0 6px;
+}
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: var(--step-5);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+.section-note { color: var(--ink-faint); font-size: var(--step-1); max-width: 46ch; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; margin-top: 26px; }
+.card {
+  background: linear-gradient(165deg, var(--panel-hi), var(--panel));
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 21px 22px;
+  display: flex; flex-direction: column; gap: 13px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.card.is-pick { border-color: var(--amber); }
+.card h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600; font-size: var(--step-4); line-height: 1.12;
+  margin: 0;
+}
+.card .metaphor { color: var(--amber-hi); font-size: var(--step-1); font-style: italic; margin: -6px 0 0; }
+.pick-flag {
+  align-self: flex-start;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--step-0); letter-spacing: 0.14em; text-transform: uppercase;
+  color: #0a0c10; background: var(--amber); border-radius: 999px; padding: 3px 10px; font-weight: 600;
+}
+dl.spec { margin: 0; display: grid; gap: 11px; }
+dl.spec dt {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--step-0); letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+dl.spec dd { margin: 3px 0 0; font-size: var(--step-1); color: var(--ink-dim); line-height: 1.55; }
+dl.spec dd b { color: var(--ink); font-weight: 500; }
+.cost { display: inline-flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: var(--step-1); }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.dot.low { background: var(--good); }
+.dot.med { background: transparent; border: 2px solid var(--warn); }
+
+/* ---------- judgement strip demo ---------- */
+.judge-demo {
+  margin-top: 26px;
+  background: var(--stage);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 26px 20px 22px;
+}
+.judge-row { display: flex; justify-content: center; gap: clamp(14px, 5vw, 54px); flex-wrap: wrap; }
+.judge-item { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 9px; }
+.judge-glyph {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--step-5); line-height: 1; color: var(--ink);
+}
+.judge-word {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: var(--step-1); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink);
+}
+.judge-sub { font-size: var(--step-0); color: var(--ink-faint); font-family: 'IBM Plex Mono', monospace; }
+.judge-caption { text-align: center; color: var(--ink-dim); font-size: var(--step-1); margin: 22px auto 0; max-width: 62ch; }
+.judge-caption b { color: var(--ink); font-weight: 500; }
+
+/* ---------- menu concept ---------- */
+.menu-mock {
+  margin-top: 26px;
+  background: var(--stage);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+}
+.menu-top {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 18px; border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--panel-hi), var(--panel));
+}
+.menu-brand { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: var(--step-3); }
+.menu-pill {
+  margin-left: auto;
+  font-family: 'IBM Plex Mono', monospace; font-size: var(--step-0);
+  border: 1px solid var(--good); color: var(--good);
+  border-radius: 999px; padding: 3px 11px;
+}
+.menu-body { padding: 20px 18px 24px; }
+.menu-next {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  background: linear-gradient(150deg, rgba(240,168,50,0.13), rgba(240,168,50,0.02));
+  border: 1px solid var(--amber); border-radius: 13px;
+  padding: 15px 17px; margin-bottom: 20px;
+}
+.menu-next .tag {
+  font-family: 'IBM Plex Mono', monospace; font-size: var(--step-0);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--amber); color: #0a0c10; border-radius: 999px; padding: 3px 10px; font-weight: 600;
+}
+.menu-next .txt { flex: 1 1 240px; }
+.menu-next .txt strong { display: block; font-size: var(--step-3); font-weight: 500; }
+.menu-next .txt span { color: var(--ink-dim); font-size: var(--step-1); font-family: 'IBM Plex Mono', monospace; }
+.menu-next .cta {
+  font: inherit; font-weight: 600; font-size: var(--step-1);
+  background: var(--amber); color: #0a0c10; border: 0; border-radius: 9px;
+  padding: 11px 18px; cursor: pointer; min-height: 44px;
+}
+.shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 13px; }
+.disc {
+  position: relative;
+  background: linear-gradient(160deg, var(--panel-hi), var(--panel));
+  border: 1px solid var(--line); border-radius: 13px;
+  padding: 15px 16px 16px; overflow: hidden;
+}
+.disc::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(120% 90% at 50% 120%, rgba(94,200,242,0.09), transparent 62%);
+  pointer-events: none;
+}
+.disc h4 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: var(--step-3); margin: 0 0 3px; padding-right: 46px; }
+.disc .by { color: var(--ink-faint); font-size: var(--step-0); font-family: 'IBM Plex Mono', monospace; }
+.disc .label {
+  position: absolute; top: 13px; right: 13px; width: 38px;
+  background: #f3efe4; color: #1b1f26; border-radius: 5px;
+  display: flex; flex-direction: column; align-items: center; padding: 4px 3px 3px;
+  font-family: 'Fraunces', Georgia, serif;
+}
+.disc .label b { font-size: var(--step-2); line-height: 1; font-weight: 700; }
+.disc .label i {
+  font-style: normal; font-family: 'IBM Plex Mono', monospace; font-size: 9px;
+  border-top: 1px solid #c6bfae; margin-top: 3px; padding-top: 2px; width: 100%; text-align: center;
+}
+.tiers { display: flex; gap: 6px; margin-top: 12px; }
+.tier {
+  font-family: 'IBM Plex Mono', monospace; font-size: var(--step-0);
+  border: 1px solid var(--line-hi); border-radius: 7px; padding: 5px 9px; color: var(--ink-dim);
+}
+.tier.on { border-color: var(--amber); color: var(--amber); }
+
+/* ---------- plan ---------- */
+ol.plan { counter-reset: p; list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 12px; }
+ol.plan li {
+  counter-increment: p;
+  display: grid; grid-template-columns: 42px 1fr; gap: 15px; align-items: start;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 15px 17px;
+}
+ol.plan li::before {
+  content: counter(p, decimal-leading-zero);
+  font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: var(--step-3);
+  color: var(--amber); font-variant-numeric: tabular-nums; line-height: 1.3;
+}
+ol.plan strong { display: block; font-weight: 500; font-size: var(--step-2); }
+ol.plan span { color: var(--ink-dim); font-size: var(--step-1); }
+
+.rules { margin: 26px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.rules li {
+  display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start;
+  font-size: var(--step-1); color: var(--ink-dim);
+}
+.rules li i { font-style: normal; color: var(--amber); font-family: 'IBM Plex Mono', monospace; }
+.rules li b { color: var(--ink); font-weight: 500; }
+
+footer {
+  margin-top: 70px; padding-top: 22px; border-top: 1px solid var(--line);
+  color: var(--ink-faint); font-size: var(--step-1); font-family: 'IBM Plex Mono', monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+@media (max-width: 640px) {
+  canvas#stage { height: 340px; }
+  .mast { padding: 34px 0 18px; }
+}
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <p class="eyebrow">Keys · stage concepts · 25 Aug 2026</p>
+    <h1>Three ways to make the keys feel alive</h1>
+    <p class="thesis">Every direction below is <b>running live</b> in the panel, play it, don't read about it. Same engine, same 4&nbsp;ms effects budget, same colour-blind rule: <b>shape and position carry the meaning, colour is garnish.</b> The difference is what happens in the 300&nbsp;ms after your finger lands.</p>
+  </header>
+
+  <div class="stage-shell">
+    <div class="rail">
+      <span class="rail-label">Direction</span>
+      <button class="tab" data-dir="water" aria-pressed="true">Liquid glass</button>
+      <button class="tab" data-dir="light" aria-pressed="false">Aperture light</button>
+      <button class="tab" data-dir="fog" aria-pressed="false">Fog apparition</button>
+      <button class="tab" data-dir="cinema" aria-pressed="false">Cinema ✦</button>
+      <span class="spacer"></span>
+      <label class="toggle"><input type="checkbox" id="depth" checked> Perspective</label>
+      <label class="toggle"><input type="checkbox" id="auto" checked> Auto-play</label>
+    </div>
+
+    <canvas id="stage" aria-label="Interactive falling-notes prototype. Play using the keys A S D F G H J K, or click the on-screen keys."></canvas>
+
+    <div class="readout">
+      <span>Play: <span class="hint-key">A</span><span class="hint-key">S</span><span class="hint-key">D</span><span class="hint-key">F</span><span class="hint-key">G</span><span class="hint-key">H</span><span class="hint-key">J</span><span class="hint-key">K</span> or click the keys</span>
+      <span class="spacer"></span>
+      <span>Perfect <b id="r-perfect">0</b></span>
+      <span>Early <b id="r-early">0</b></span>
+      <span>Late <b id="r-late">0</b></span>
+      <span>Frame <b id="r-ms">0.00</b> ms</span>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>What each one actually draws</h2>
+    <p class="section-note">Written as build specs, not adjectives, so the cost is arguable before a line ships.</p>
+  </div>
+
+  <div class="cards">
+    <article class="card is-pick">
+      <span class="pick-flag">Recommended</span>
+      <h3>Liquid glass</h3>
+      <p class="metaphor">Notes fall onto black water stretched across the keyboard.</p>
+      <dl class="spec">
+        <dt>Per strike</dt>
+        <dd>Two or three <b>expanding elliptical strokes</b> at the contact point, one compressed white glow beneath, and 6–10 droplets thrown upward. A chord shares <b>one</b> wider ripple rather than stacking three.</dd>
+        <dt>How the hit reads</dt>
+        <dd>A razor-white bead lands <b>first</b>, then the ripples spread for 220–300 ms. Perfect gets a filled bead; anything else gets a hollow one, readable without colour.</dd>
+        <dt>Faked depth</dt>
+        <dd>Ellipses flatten and widen as they grow; the far arc draws dimmer and thinner than the near arc, so the surface reads as a plane you are looking across.</dd>
+        <dt>Cost</dt>
+        <dd><span class="cost"><span class="dot low"></span> Low, a handful of stroked ellipses on top of what already renders.</span></dd>
+        <dt>Risk</dt>
+        <dd>If ripple lifetime creeps past ~300 ms it becomes the <b>trails</b> effect an earlier review already rejected.</dd>
+      </dl>
+    </article>
+
+    <article class="card">
+      <h3>Aperture light</h3>
+      <p class="metaphor">Each correct key briefly opens a slit into something very bright.</p>
+      <dl class="spec">
+        <dt>Per strike</dt>
+        <dd>Three <b>nested rounded rectangles</b> in perspective, one white core, one horizontal flare, and 4–8 straight rays clipped to the width of that key.</dd>
+        <dt>How the hit reads</dt>
+        <dd>Snaps open in 40 ms, holds 60 ms, collapses over 160 ms. Perfect opens three frames; early or late opens one, <b>displaced to that side</b>.</dd>
+        <dt>Faked depth</dt>
+        <dd>Frames shrink toward a vanishing point above the key, with line weight and alpha falling off as they recede.</dd>
+        <dt>Cost</dt>
+        <dd><span class="cost"><span class="dot low"></span> Very low, plain paths and clipping, no gradients, no blur.</span></dd>
+        <dt>Risk</dt>
+        <dd>Rays taller than ~80 px turn into the rejected <b>full columns</b>, and it is the coldest of the three.</dd>
+      </dl>
+    </article>
+
+    <article class="card">
+      <h3>Fog apparition</h3>
+      <p class="metaphor">Contact condenses a brief luminous form that carries the verdict.</p>
+      <dl class="spec">
+        <dt>Per strike</dt>
+        <dd>Three to five pre-rendered irregular alpha clouds drifting up 20–45 px at diverging scales, plus one sharp bead. <b>No ambient fog between hits.</b></dd>
+        <dt>How the hit reads</dt>
+        <dd>The bead flashes instantly, then the fog resolves into a word-shaped plaque and evaporates inside 500 ms.</dd>
+        <dt>Faked depth</dt>
+        <dd>Layered sprites at different scales, speeds and overlaps, genuine parallax, the most physically convincing of the three.</dd>
+        <dt>Cost</dt>
+        <dd><span class="cost"><span class="dot med"></span> Medium, additive overdraw during dense chords; reduced mode would drop to 1–2 sprites.</span></dd>
+        <dt>Risk</dt>
+        <dd>Softness is the direct opposite of the <b>razor-bright contact</b> rule, and the effect outlives the moment that caused it.</dd>
+      </dl>
+    </article>
+
+    <article class="card">
+      <h3>Cinema ✦</h3>
+      <p class="metaphor">Why Rousseau and Patrik Pietschmann look the way they do, the closable half, built.</p>
+      <dl class="spec">
+        <dt>What the videos have</dt>
+        <dd>A <b>glossy black deck that reflects the notes</b>, bloom around every bar, embers drifting off the strikes, a vignette pulling your eye to the middle, and offline rendering: their frames take minutes each in After Effects, ours get 4 milliseconds, live, while judging your timing.</dd>
+        <dt>What this mode adds</dt>
+        <dd><b>True black ground, zero grid</b>, no lane lines, no beat lines, a whisper of a hit line: every photon in the frame belongs to a note. The deck goes dark glass and <b>mirrors each arriving note</b>, bars get hot cores and wide bloom, strikes throw slow embers, a vignette frames it. Locked flat 2D.</dd>
+        <dt>What stays impossible in a browser</dt>
+        <dd>True gaussian bloom over the whole frame, motion blur, film grading, and their <b>content</b>: a virtuoso playing dense four-octave runs. Half of "their look" is simply that the music is spectacular.</dd>
+        <dt>Cost</dt>
+        <dd><span class="cost"><span class="dot low"></span> Measured live in the readout below the stage, watch it while you play.</span></dd>
+        <dt>Risk</dt>
+        <dd>This deliberately breaks the earlier <b>restraint ruling</b> (ambient embers, persistent glow) so you can judge with your own eyes whether restraint was right.</dd>
+      </dl>
+    </article>
+  </div>
+
+  <div class="section-head">
+    <h2>Early · Perfect · Late</h2>
+    <p class="section-note">The Guitar&nbsp;Hero moment, built so it still works when the colours don't.</p>
+  </div>
+
+  <div class="judge-demo">
+    <div class="judge-row">
+      <div class="judge-item">
+        <span class="judge-glyph">◀◀</span>
+        <span class="judge-word">Early</span>
+        <span class="judge-sub">&gt; 120 ms ahead</span>
+      </div>
+      <div class="judge-item">
+        <span class="judge-glyph">◀</span>
+        <span class="judge-word">Early</span>
+        <span class="judge-sub">45–120 ms ahead</span>
+      </div>
+      <div class="judge-item">
+        <span class="judge-glyph">◎</span>
+        <span class="judge-word">Perfect</span>
+        <span class="judge-sub">within 45 ms</span>
+      </div>
+      <div class="judge-item">
+        <span class="judge-glyph">▶</span>
+        <span class="judge-word">Late</span>
+        <span class="judge-sub">45–120 ms behind</span>
+      </div>
+      <div class="judge-item">
+        <span class="judge-glyph">▶▶</span>
+        <span class="judge-word">Late</span>
+        <span class="judge-sub">&gt; 120 ms behind</span>
+      </div>
+    </div>
+    <p class="judge-caption">Three signals, none of them colour: the <b>word</b>, the <b>direction the chevron points</b>, and <b>where it appears</b>, left of the key for early, right for late, dead centre for perfect. Doubling the chevron past 120&nbsp;ms means the size of the miss reads at a glance too.</p>
+  </div>
+
+  <div class="section-head">
+    <h2>The menu, same world</h2>
+    <p class="section-note">If the stage is water and light, the library can't stay a settings screen.</p>
+  </div>
+
+  <div class="menu-mock">
+    <div class="menu-top">
+      <span class="menu-brand">Keys</span>
+      <span class="menu-pill">P-45 connected</span>
+    </div>
+    <div class="menu-body">
+      <div class="menu-next">
+        <span class="tag">Your path</span>
+        <span class="txt">
+          <strong>Move less: nearest position</strong>
+          <span>because "Chords from a symbol" is now on your own</span>
+        </span>
+        <button class="cta" type="button">Continue</button>
+      </div>
+      <div class="shelf">
+        <div class="disc">
+          <span class="label"><b>S</b><i>108</i></span>
+          <h4>Star Wars</h4>
+          <span class="by">John Williams</span>
+          <div class="tiers"><span class="tier on">Easy</span><span class="tier">Medium</span><span class="tier">Hard</span></div>
+        </div>
+        <div class="disc">
+          <span class="label"><b>F</b><i>90</i></span>
+          <h4>Faded</h4>
+          <span class="by">Alan Walker</span>
+          <div class="tiers"><span class="tier">Easy</span><span class="tier on">Medium</span><span class="tier">Hard</span></div>
+        </div>
+        <div class="disc">
+          <span class="label"><b>M</b><i>200</i></span>
+          <h4>Super Mario</h4>
+          <span class="by">Koji Kondo</span>
+          <div class="tiers"><span class="tier">Easy</span><span class="tier">Medium</span><span class="tier on">Hard</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>How it would ship</h2>
+    <p class="section-note">Four gated waves, each one provable on its own.</p>
+  </div>
+
+  <ol class="plan">
+    <li><strong>Perspective lanes</strong><span>Convert the flat note lanes to the converging projection you're looking at above. Pure geometry, no new effects, no budget change. This alone is most of the "3D" feeling.</span></li>
+    <li><strong>Liquid-glass contact</strong><span>Replace the current bloom with the ripple-and-bead strike. Measure the frame cost against the existing 2.31 ms worst case before anything else lands.</span></li>
+    <li><strong>Early / Perfect / Late</strong><span>Promote the existing signed timing data into the chevron plaque at the key, keeping the tick strip as the running history.</span></li>
+    <li><strong>Menu and shelf</strong><span>Carry the same depth and glass into the library so the app stops changing personality between screens.</span></li>
+  </ol>
+
+  <ul class="rules">
+    <li><i>✱</i><span><b>Nothing here breaks the colour-blind rule.</b> Every verdict is a word plus a direction plus a position.</span></li>
+    <li><i>✱</i><span><b>The 4 ms effects budget still governs.</b> Any direction that blows it eight frames in twelve latches to reduced mode, exactly as it does today.</span></li>
+    <li><i>✱</i><span><b>Spectacle stays at the contact moment.</b> No ambient haze between notes, that was rejected once already and it is still the right call.</span></li>
+  </ul>
+
+  <footer>Live prototype · 2D canvas, no WebGL, no libraries · Concepts developed with Codex 5.6</footer>
+</div>
+
+<script>
+(function () {
+  // one-line open beacon: the only way to know this page actually rendered on
+  // Mark s screen rather than just being handed to the browser
+  try {
+    fetch('/journal', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify([{ v: 1, t: Date.now(), e: 'stage_concepts_opened',
+        w: window.innerWidth, h: window.innerHeight }]) });
+  } catch (e) {}
+
+  const canvas = document.getElementById('stage');
+  const ctx = canvas.getContext('2d');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const AMBER = [240, 168, 50], CYAN = [94, 200, 242], BONE = [236, 231, 220];
+  const rgba = (c, a) => 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')';
+
+  // eight lanes: white keys C..C, alternating hands so both grammars show
+  const LANES = [
+    { key: 'a', name: 'C', hand: 'L' }, { key: 's', name: 'D', hand: 'L' },
+    { key: 'd', name: 'E', hand: 'L' }, { key: 'f', name: 'F', hand: 'L' },
+    { key: 'g', name: 'G', hand: 'R' }, { key: 'h', name: 'A', hand: 'R' },
+    { key: 'j', name: 'B', hand: 'R' }, { key: 'k', name: 'C', hand: 'R' }
+  ];
+  const N = LANES.length;
+
+  let W = 0, H = 0, dpr = 1;
+  let direction = 'water';
+  let usePerspective = true;
+  let autoPlay = !reduce;
+
+  const LOOKAHEAD = 2200;           // ms of runway visible
+  const notes = [];                 // {lane, at, dur, hit}
+  const ripples = [], beads = [], sparks = [], plaques = [], apertures = [], clouds = [], embers = [];
+  let vignette = null; // pre-rendered once per resize: free per frame
+  const pressed = new Map();        // lane -> release timestamp
+  const stats = { perfect: 0, early: 0, late: 0 };
+  let frameMs = 0, nextSpawn = 0, seed = 7, demoCycle = 0;
+
+  const rand = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const r = canvas.getBoundingClientRect();
+    W = r.width; H = r.height;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  const KB_H = () => Math.max(64, Math.min(104, H * 0.2));
+  const hitY = () => H - KB_H();
+  const horizonY = () => H * 0.06;
+
+  // Projection. t = 0 far away, 1 at the hit line.
+  function proj(t) {
+    // cinema is locked FLAT: Mark rejected the perspective look 2026-08-25
+    const flat = !usePerspective || direction === 'cinema';
+    const s = !flat ? 0.14 + 0.86 * Math.pow(Math.max(0, t), 2.1) : t;
+    return {
+      y: horizonY() + (hitY() - horizonY()) * s,
+      scale: !flat ? 0.22 + 0.78 * s : 1
+    };
+  }
+  function laneRect(lane, t) {
+    const p = proj(t);
+    const full = W / N;
+    const cx = W / 2;
+    const centre = full * (lane + 0.5);
+    const w = full * p.scale;
+    return { x: cx + (centre - cx) * p.scale, y: p.y, w: w, scale: p.scale };
+  }
+
+  function spawn(now) {
+    const lane = Math.floor(rand() * N);
+    notes.push({ lane, at: now + LOOKAHEAD, dur: 260 + rand() * 240, hit: null });
+  }
+
+  // ---------- judgement ----------
+  function judge(lane, now) {
+    let best = null, bestD = Infinity;
+    for (const n of notes) {
+      if (n.lane !== lane || n.hit !== null) continue;
+      const d = now - n.at;
+      if (Math.abs(d) < Math.abs(bestD)) { bestD = d; best = n; }
+    }
+    if (!best || Math.abs(bestD) > 260) return null;
+    const abs = Math.abs(bestD);
+    const verdict = abs <= 45 ? 'perfect' : bestD < 0 ? 'early' : 'late';
+    best.hit = verdict;
+    stats[verdict]++;
+    document.getElementById('r-' + verdict).textContent = stats[verdict];
+    return { verdict, delta: bestD, heavy: abs > 120 };
+  }
+
+  function strike(lane, res, now) {
+    const r = laneRect(lane, 1);
+    const hand = LANES[lane].hand;
+    const col = hand === 'R' ? AMBER : CYAN;
+    const perfect = res && res.verdict === 'perfect';
+
+    beads.push({ x: r.x, y: r.y, t: now, ttl: perfect ? 260 : 200, perfect: perfect, col: col });
+
+    if (direction === 'water' || direction === 'cinema') {
+      const rings = perfect ? 3 : 2;
+      for (let i = 0; i < rings; i++) {
+        ripples.push({ x: r.x, y: r.y, t: now + i * 55, ttl: 300, w: r.w, col: col, perfect: perfect });
+      }
+      const drops = perfect ? 10 : 6;
+      for (let i = 0; i < drops; i++) {
+        const a = -Math.PI / 2 + (rand() - 0.5) * 1.5;
+        const sp = 90 + rand() * 190;
+        sparks.push({ x: r.x, y: r.y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
+                      t: now, ttl: 420 + rand() * 320, size: 1.6 + rand() * 2.2, col: col, kind: 'drop' });
+      }
+    } else if (direction === 'light') {
+      apertures.push({ x: r.x, y: r.y, t: now, ttl: 260, w: r.w, col: col,
+                       frames: perfect ? 3 : 1, shift: res ? (res.verdict === 'early' ? -1 : res.verdict === 'late' ? 1 : 0) : 0 });
+      const rays = perfect ? 8 : 4;
+      for (let i = 0; i < rays; i++) {
+        sparks.push({ x: r.x + (rand() - 0.5) * r.w * 0.7, y: r.y, vx: (rand() - 0.5) * 26, vy: -(150 + rand() * 210),
+                      t: now, ttl: 230, size: 1.1, col: col, kind: 'ray' });
+      }
+    } else {
+      const n = perfect ? 5 : 3;
+      for (let i = 0; i < n; i++) {
+        clouds.push({ x: r.x + (rand() - 0.5) * r.w * 0.9, y: r.y, t: now + i * 30, ttl: 520,
+                      vy: -(28 + rand() * 40), scale: 0.7 + rand() * 0.9, col: col });
+      }
+    }
+
+    if (direction === 'cinema') {
+      // the Rousseau plume: slow embers that rise, wobble and die high
+      for (let i = 0; i < 9; i++) {
+        embers.push({ x: r.x + (rand() - 0.5) * r.w * 0.6, y: r.y, t: now, ttl: 900 + rand() * 900,
+                      vy: -(26 + rand() * 46), amp: 4 + rand() * 10, ph: rand() * 6.28, size: 1 + rand() * 2, col: col });
+      }
+    }
+    if (res) plaques.push({ x: r.x, y: r.y, t: now, ttl: 460, verdict: res.verdict, heavy: res.heavy, w: r.w });
+  }
+
+  // ---------- drawing ----------
+  function drawLanesAndNotes(now) {
+    const hy = hitY(), hz = horizonY();
+
+    // lane guides, converging, cinema draws NONE: light belongs to notes only
+    ctx.lineWidth = 1;
+    for (let i = 0; direction !== 'cinema' && i <= N; i++) {
+      const top = laneRect(i - 0.5, 0), bot = laneRect(i - 0.5, 1);
+      const g = ctx.createLinearGradient(0, top.y, 0, bot.y);
+      g.addColorStop(0, 'rgba(36,44,56,0)');
+      g.addColorStop(1, 'rgba(56,66,79,0.85)');
+      ctx.strokeStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(top.x + top.w / 2, top.y);
+      ctx.lineTo(bot.x + bot.w / 2, bot.y);
+      ctx.stroke();
+    }
+
+    // beat rungs receding
+    for (let b = 0; direction !== 'cinema' && b < 5; b++) {
+      const t = ((now / 900 + b / 5) % 1);
+      const p = proj(t);
+      ctx.strokeStyle = 'rgba(56,66,79,' + (0.06 + 0.3 * p.scale) + ')';
+      ctx.lineWidth = Math.max(0.6, 1.4 * p.scale);
+      const l = laneRect(-0.5, t), r = laneRect(N - 0.5, t);
+      ctx.beginPath();
+      ctx.moveTo(l.x + l.w / 2, l.y);
+      ctx.lineTo(r.x + r.w / 2, r.y);
+      ctx.stroke();
+    }
+
+    // notes
+    for (const n of notes) {
+      const tHead = 1 - (n.at - now) / LOOKAHEAD;
+      const tTail = 1 - (n.at + n.dur - now) / LOOKAHEAD;
+      if (tHead < -0.05 || tTail > 1.1) continue;
+      const head = laneRect(n.lane, Math.min(tHead, 1.06));
+      const tail = laneRect(n.lane, Math.max(-0.02, tTail));
+      const hand = LANES[n.lane].hand;
+      const col = hand === 'R' ? AMBER : CYAN;
+      const near = tHead > 0.82;
+      const bw = head.w * 0.62;
+      const top = tail.y, bot = head.y;
+      const h = Math.max(4, bot - top);
+
+      if (n.hit) { ctx.globalAlpha = Math.max(0, 1 - (now - n.at) / 260) * 0.35; }
+      if (direction === 'cinema') { ctx.save(); ctx.shadowColor = rgba(col, near ? 1 : 0.65); ctx.shadowBlur = near ? 38 : 18; }
+
+      if (hand === 'R') {
+        // filled pill
+        const g = ctx.createLinearGradient(0, top, 0, bot);
+        g.addColorStop(0, rgba(col, 0.55));
+        g.addColorStop(1, near ? 'rgba(255,216,140,0.98)' : rgba(col, 0.92));
+        ctx.fillStyle = g;
+        roundRect(head.x - bw / 2, top, bw, h, Math.min(7, bw / 2));
+        ctx.fill();
+      } else {
+        // outlined pill, shape carries the hand, not hue
+        ctx.fillStyle = rgba(col, 0.13);
+        roundRect(head.x - bw / 2, top, bw, h, Math.min(7, bw / 2));
+        ctx.fill();
+        ctx.strokeStyle = near ? 'rgba(196,240,255,0.98)' : rgba(col, 0.9);
+        ctx.lineWidth = Math.max(1.2, 2 * head.scale);
+        roundRect(head.x - bw / 2 + 1, top + 1, bw - 2, Math.max(2, h - 2), Math.min(6, bw / 2));
+        ctx.stroke();
+      }
+      if (direction === 'cinema') ctx.restore();
+      ctx.globalAlpha = 1;
+    }
+
+    // the hit line, cinema keeps only a whisper of it (the deck edge)
+    ctx.fillStyle = 'rgba(236,231,220,' + (direction === 'cinema' ? 0.22 : 0.9) + ')';
+    ctx.fillRect(0, hy - 1.5, W, direction === 'cinema' ? 1.5 : 2.5);
+    if (direction !== 'cinema') {
+      ctx.fillStyle = 'rgba(236,231,220,0.10)';
+      ctx.fillRect(0, hy - 12, W, 12);
+    }
+  }
+
+  function roundRect(x, y, w, h, r) {
+    r = Math.max(0, Math.min(r, w / 2, h / 2));
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawEffects(now) {
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+
+    // ripples (water)
+    for (let i = ripples.length - 1; i >= 0; i--) {
+      const r = ripples[i];
+      const age = now - r.t;
+      if (age < 0) continue;
+      if (age > r.ttl) { ripples.splice(i, 1); continue; }
+      const k = age / r.ttl;
+      const rx = r.w * (0.45 + k * 2.3);
+      const ry = rx * 0.28;
+      const a = (1 - k) * (r.perfect ? 0.85 : 0.6);
+      // near arc bright, far arc dim, reads as a plane
+      ctx.lineWidth = Math.max(0.8, 2.4 * (1 - k));
+      ctx.strokeStyle = rgba(BONE, a * 0.5);
+      ctx.beginPath(); ctx.ellipse(r.x, r.y, rx, ry, 0, Math.PI, 2 * Math.PI); ctx.stroke();
+      ctx.strokeStyle = rgba(r.col, a);
+      ctx.beginPath(); ctx.ellipse(r.x, r.y, rx, ry, 0, 0, Math.PI); ctx.stroke();
+    }
+
+    // apertures (light)
+    for (let i = apertures.length - 1; i >= 0; i--) {
+      const ap = apertures[i];
+      const age = now - ap.t;
+      if (age < 0) continue;
+      if (age > ap.ttl) { apertures.splice(i, 1); continue; }
+      const k = age / ap.ttl;
+      const open = k < 0.16 ? k / 0.16 : k < 0.4 ? 1 : 1 - (k - 0.4) / 0.6;
+      for (let f = 0; f < ap.frames; f++) {
+        const shrink = 1 - f * 0.26;
+        const w = ap.w * 0.8 * shrink * open;
+        const h = 46 * shrink * open;
+        ctx.strokeStyle = rgba(f === 0 ? BONE : ap.col, (0.9 - f * 0.22) * open);
+        ctx.lineWidth = 2 - f * 0.4;
+        roundRect(ap.x - w / 2 + ap.shift * 6 * f, ap.y - h, w, h, 5);
+        ctx.stroke();
+      }
+      ctx.fillStyle = rgba(BONE, 0.5 * open);
+      ctx.fillRect(ap.x - ap.w * 0.34 * open, ap.y - 2, ap.w * 0.68 * open, 3);
+    }
+
+    // clouds (fog)
+    for (let i = clouds.length - 1; i >= 0; i--) {
+      const c = clouds[i];
+      const age = now - c.t;
+      if (age < 0) continue;
+      if (age > c.ttl) { clouds.splice(i, 1); continue; }
+      const k = age / c.ttl;
+      const a = Math.sin(Math.PI * k) * 0.42;
+      const rad = 26 * c.scale * (1 + k * 1.1);
+      const y = c.y + c.vy * (age / 1000);
+      const g = ctx.createRadialGradient(c.x, y, 1, c.x, y, rad);
+      g.addColorStop(0, rgba(c.col, a));
+      g.addColorStop(0.55, rgba(c.col, a * 0.3));
+      g.addColorStop(1, rgba(c.col, 0));
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(c.x, y, rad, 0, 6.2832); ctx.fill();
+    }
+
+    // beads, the razor-bright contact, in every direction
+    for (let i = beads.length - 1; i >= 0; i--) {
+      const b = beads[i];
+      const age = now - b.t;
+      if (age < 0) continue;
+      if (age > b.ttl) { beads.splice(i, 1); continue; }
+      const k = age / b.ttl;
+      const a = 1 - k;
+      const rad = 5 + k * 13;
+      if (b.perfect) {
+        const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, rad * 2.4);
+        g.addColorStop(0, rgba(BONE, a));
+        g.addColorStop(0.4, rgba(b.col, a * 0.55));
+        g.addColorStop(1, rgba(b.col, 0));
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(b.x, b.y, rad * 2.4, 0, 6.2832); ctx.fill();
+      } else {
+        ctx.strokeStyle = rgba(BONE, a * 0.9);
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(b.x, b.y, rad, 0, 6.2832); ctx.stroke();
+      }
+    }
+
+    // sparks: droplets and rays
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const s = sparks[i];
+      const age = now - s.t;
+      if (age < 0) continue;
+      if (age > s.ttl) { sparks.splice(i, 1); continue; }
+      const k = age / s.ttl, a = 1 - k, dt = age / 1000;
+      const x = s.x + s.vx * dt;
+      const y = s.y + s.vy * dt + (s.kind === 'drop' ? 260 * dt * dt : 0);
+      if (s.kind === 'ray') {
+        ctx.strokeStyle = rgba(BONE, a * 0.8);
+        ctx.lineWidth = s.size;
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - s.vx * 0.02, y - s.vy * 0.02); ctx.stroke();
+      } else {
+        ctx.fillStyle = rgba(s.col, a * 0.95);
+        ctx.beginPath(); ctx.arc(x, y, s.size * (0.6 + a * 0.6), 0, 6.2832); ctx.fill();
+      }
+    }
+    ctx.restore();
+
+    // plaques: word + chevron + position. Never colour alone.
+    for (let i = plaques.length - 1; i >= 0; i--) {
+      const p = plaques[i];
+      const age = now - p.t;
+      if (age < 0) continue;
+      if (age > p.ttl) { plaques.splice(i, 1); continue; }
+      const k = age / p.ttl;
+      const a = k < 0.12 ? k / 0.12 : 1 - (k - 0.12) / 0.88;
+      const rise = 16 + k * 26;
+      const dx = p.verdict === 'early' ? -p.w * 0.72 : p.verdict === 'late' ? p.w * 0.72 : 0;
+      const glyph = p.verdict === 'perfect' ? '◎' : p.verdict === 'early' ? (p.heavy ? '◀◀' : '◀') : (p.heavy ? '▶▶' : '▶');
+      const word = p.verdict === 'perfect' ? 'PERFECT' : p.verdict === 'early' ? 'EARLY' : 'LATE';
+      ctx.globalAlpha = Math.max(0, a);
+      ctx.textAlign = 'center';
+      ctx.font = '600 20px "IBM Plex Mono", monospace';
+      ctx.fillStyle = 'rgba(236,231,220,0.98)';
+      ctx.fillText(glyph, p.x + dx, p.y - rise);
+      ctx.font = '600 11px "IBM Plex Mono", monospace';
+      ctx.fillStyle = 'rgba(236,231,220,0.8)';
+      ctx.fillText(word, p.x + dx, p.y - rise + 15);
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function drawKeyboard(now) {
+    const kh = KB_H(), top = hitY();
+    const kw = W / N;
+    for (let i = 0; i < N; i++) {
+      const down = pressed.has(i) && pressed.get(i) > now;
+      const hand = LANES[i].hand;
+      const col = hand === 'R' ? AMBER : CYAN;
+      const g = ctx.createLinearGradient(0, top, 0, top + kh);
+      if (down) {
+        g.addColorStop(0, rgba(col, 0.95));
+        g.addColorStop(1, rgba(col, 0.45));
+      } else if (direction === 'cinema') {
+        // dark glossy deck, like the videos: light lives ON it, not in it
+        g.addColorStop(0, '#181b21');
+        g.addColorStop(1, '#0c0e12');
+      } else {
+        g.addColorStop(0, '#e6e1d5');
+        g.addColorStop(1, '#bdb8ab');
+      }
+      ctx.fillStyle = g;
+      ctx.fillRect(i * kw + 0.5, top, kw - 1, kh);
+
+      // held-key light spill, hand-shaped: filled taper vs split taper
+      if (down) {
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        if (hand === 'R') {
+          const gg = ctx.createLinearGradient(0, top, 0, top - 70);
+          gg.addColorStop(0, rgba(col, 0.4));
+          gg.addColorStop(1, rgba(col, 0));
+          ctx.fillStyle = gg;
+          ctx.beginPath();
+          ctx.moveTo(i * kw + kw * 0.16, top);
+          ctx.lineTo(i * kw + kw * 0.84, top);
+          ctx.lineTo(i * kw + kw * 0.5, top - 70);
+          ctx.closePath(); ctx.fill();
+        } else {
+          ctx.fillStyle = rgba(col, 0.3);
+          for (const off of [-kw * 0.2, kw * 0.2]) {
+            ctx.beginPath();
+            ctx.moveTo(i * kw + kw * 0.5 + off - 2, top);
+            ctx.lineTo(i * kw + kw * 0.5 + off + 2, top);
+            ctx.lineTo(i * kw + kw * 0.5 + off, top - 52);
+            ctx.closePath(); ctx.fill();
+          }
+        }
+        ctx.restore();
+      }
+
+      ctx.textAlign = 'center';
+      ctx.font = '600 11px "IBM Plex Mono", monospace';
+      ctx.fillStyle = down ? 'rgba(12,14,18,0.85)' : direction === 'cinema' ? 'rgba(154,164,178,0.75)' : 'rgba(90,86,78,0.9)';
+      ctx.fillText(LANES[i].name, i * kw + kw / 2, top + kh - 10);
+    }
+  }
+
+  // ---------- cinema layers (the production-value pass) ----------
+  // Mirror: near-line note heads reflect down onto the glossy deck. This one
+  // trick is most of what reads as "professional" in the reference videos.
+  function drawReflections(now) {
+    const top = hitY(), kh = KB_H();
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    for (const n of notes) {
+      const tHead = 1 - (n.at - now) / LOOKAHEAD;
+      if (tHead < 0.45 || tHead > 1.05 || n.hit) continue;
+      const head = laneRect(n.lane, Math.min(tHead, 1));
+      const col = LANES[n.lane].hand === 'R' ? AMBER : CYAN;
+      const depth = Math.min(kh * 0.85, 64) * (0.4 + 0.6 * tHead);
+      const bw = head.w * 0.5;
+      const g = ctx.createLinearGradient(0, top, 0, top + depth);
+      g.addColorStop(0, rgba(col, 0.34 * tHead));
+      g.addColorStop(1, rgba(col, 0));
+      ctx.fillStyle = g;
+      ctx.fillRect(head.x - bw / 2, top, bw, depth);
+    }
+    ctx.restore();
+  }
+  function drawEmbers(now) {
+    if (!embers.length) return;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = embers.length - 1; i >= 0; i--) {
+      const e = embers[i];
+      const age = now - e.t;
+      if (age < 0) continue;
+      if (age > e.ttl) { embers.splice(i, 1); continue; }
+      const k = age / e.ttl;
+      const a = Math.sin(Math.PI * Math.min(1, k * 1.15)) * 0.85;
+      const x = e.x + Math.sin(e.ph + age / 260) * e.amp;
+      const y = e.y + e.vy * (age / 1000);
+      ctx.fillStyle = rgba(e.col, a);
+      ctx.beginPath(); ctx.arc(x, y, e.size * (1 - k * 0.5), 0, 6.2832); ctx.fill();
+      if (e.size > 2.2) { // the bigger motes get a soft halo
+        ctx.fillStyle = rgba(e.col, a * 0.25);
+        ctx.beginPath(); ctx.arc(x, y, e.size * 3, 0, 6.2832); ctx.fill();
+      }
+    }
+    ctx.restore();
+  }
+  function makeVignette() {
+    vignette = document.createElement('canvas');
+    vignette.width = Math.max(2, Math.round(W)); vignette.height = Math.max(2, Math.round(H));
+    const v = vignette.getContext('2d');
+    const g = v.createRadialGradient(W / 2, H * 0.58, Math.min(W, H) * 0.42, W / 2, H * 0.58, Math.max(W, H) * 0.78);
+    g.addColorStop(0, 'rgba(0,0,0,0)');
+    g.addColorStop(1, 'rgba(0,0,0,0.52)');
+    v.fillStyle = g; v.fillRect(0, 0, W, H);
+  }
+
+  function frame(now) {
+    const t0 = performance.now();
+    if (autoPlay && now > nextSpawn) { spawn(now); nextSpawn = now + 430 + rand() * 320; }
+
+    // attract mode: when an auto-played note reaches the line, the stage
+    // plays it, cycling perfect/perfect/early/late so each direction shows
+    // its whole vocabulary hands-free. Demo strikes never touch the counters.
+    if (autoPlay) {
+      for (const n of notes) {
+        if (n.hit !== null || now < n.at) continue;
+        n.hit = 'demo';
+        demoCycle = (demoCycle + 1) % 4;
+        const verdict = demoCycle === 2 ? 'early' : demoCycle === 3 ? 'late' : 'perfect';
+        pressed.set(n.lane, now + 130);
+        strike(n.lane, { verdict: verdict, delta: verdict === 'early' ? -80 : verdict === 'late' ? 80 : 0, heavy: false }, now);
+      }
+    }
+    // retire notes that fell past the line untouched
+    for (let i = notes.length - 1; i >= 0; i--) {
+      if (now - notes[i].at > 700) notes.splice(i, 1);
+    }
+
+    ctx.fillStyle = direction === 'cinema' ? '#000002' : '#0a0c10';
+    ctx.fillRect(0, 0, W, H);
+    // a faint ground glow at the hit line so the stage has a floor
+    if (direction !== 'cinema') {
+    const fg = ctx.createLinearGradient(0, hitY() - 90, 0, hitY());
+    fg.addColorStop(0, 'rgba(94,200,242,0)');
+    fg.addColorStop(1, 'rgba(94,200,242,0.05)');
+    ctx.fillStyle = fg;
+    ctx.fillRect(0, hitY() - 90, W, 90);
+    }
+
+    drawLanesAndNotes(now);
+    drawKeyboard(now);
+    if (direction === 'cinema') drawReflections(now);
+    drawEffects(now);
+    if (direction === 'cinema') {
+      drawEmbers(now);
+      if (!vignette || vignette.width !== Math.round(W)) makeVignette();
+      ctx.drawImage(vignette, 0, 0, W, H);
+    }
+
+    frameMs = frameMs * 0.9 + (performance.now() - t0) * 0.1;
+    document.getElementById('r-ms').textContent = frameMs.toFixed(2);
+    requestAnimationFrame(frame);
+  }
+
+  function hit(lane) {
+    const now = performance.now();
+    pressed.set(lane, now + 130);
+    const res = judge(lane, now);
+    strike(lane, res, now);
+  }
+
+  // ---------- input ----------
+  window.addEventListener('keydown', (e) => {
+    if (e.repeat) return;
+    const i = LANES.findIndex((l) => l.key === e.key.toLowerCase());
+    if (i >= 0) { e.preventDefault(); hit(i); }
+  });
+  canvas.addEventListener('pointerdown', (e) => {
+    const r = canvas.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    hit(Math.max(0, Math.min(N - 1, Math.floor(x / (W / N)))));
+  });
+
+  for (const b of document.querySelectorAll('.tab')) {
+    b.addEventListener('click', () => {
+      direction = b.dataset.dir;
+      for (const o of document.querySelectorAll('.tab')) o.setAttribute('aria-pressed', String(o === b));
+      // instant answer: three demonstration strikes in the new look
+      const now = performance.now();
+      [[1, 'perfect'], [4, 'early'], [6, 'late']].forEach(([lane, verdict], i) => {
+        setTimeout(() => {
+          pressed.set(lane, performance.now() + 130);
+          strike(lane, { verdict: verdict, delta: verdict === 'early' ? -80 : verdict === 'late' ? 80 : 0, heavy: false }, performance.now());
+        }, i * 160);
+      });
+    });
+  }
+  document.getElementById('depth').addEventListener('change', (e) => { usePerspective = e.target.checked; });
+  document.getElementById('auto').addEventListener('change', (e) => { autoPlay = e.target.checked; });
+
+  resize();
+  if (reduce) { document.getElementById('auto').checked = false; }
+
+  // Dev lever: step the stage by hand. Background tabs throttle rAF to about
+  // one frame a second, which is too slow to ever see a 300ms strike effect.
+  window.__stage = { hit: hit, step: (t) => frame(t), spawn: (t) => spawn(t),
+                     set: (d) => { direction = d; }, counts: () => ({ ripples: ripples.length,
+                     beads: beads.length, sparks: sparks.length, clouds: clouds.length,
+                     apertures: apertures.length, plaques: plaques.length, notes: notes.length }) };
+
+  requestAnimationFrame(frame);
+})();
+</script>

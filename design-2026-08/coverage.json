@@ -1,0 +1,158 @@
+{
+  "rows": [
+    {
+      "key": "library",
+      "appScreen": "library",
+      "want": 38,
+      "drawn": 39,
+      "inputs": 0,
+      "canvases": 0,
+      "h": 1283
+    },
+    {
+      "key": "play",
+      "appScreen": "play",
+      "want": 25,
+      "drawn": 19,
+      "inputs": 5,
+      "canvases": 1,
+      "h": 908
+    },
+    {
+      "key": "keys12",
+      "appScreen": null,
+      "want": null,
+      "drawn": 48,
+      "inputs": 0,
+      "canvases": 0,
+      "h": 844
+    },
+    {
+      "key": "path",
+      "appScreen": "path",
+      "want": 8,
+      "drawn": 3,
+      "inputs": 0,
+      "canvases": 0,
+      "h": 496
+    },
+    {
+      "key": "lessons",
+      "appScreen": "lessons",
+      "want": 2,
+      "drawn": 1,
+      "inputs": 0,
+      "canvases": 0,
+      "h": 318
+    },
+    {
+      "key": "lesson",
+      "appScreen": "lesson",
+      "want": 14,
+      "drawn": 5,
+      "inputs": 0,
+      "canvases": 1,
+      "h": 509
+    },
+    {
+      "key": "task",
+      "appScreen": "task",
+      "want": 16,
+      "drawn": 12,
+      "inputs": 0,
+      "canvases": 1,
+      "h": 579
+    },
+    {
+      "key": "echo",
+      "appScreen": "echo",
+      "want": 10,
+      "drawn": 7,
+      "inputs": 0,
+      "canvases": 1,
+      "h": 358
+    },
+    {
+      "key": "rhythm",
+      "appScreen": "rhythm",
+      "want": 5,
+      "drawn": 1,
+      "inputs": 0,
+      "canvases": 0,
+      "h": 219
+    },
+    {
+      "key": "improv",
+      "appScreen": "improv",
+      "want": 4,
+      "drawn": 3,
+      "inputs": 1,
+      "canvases": 1,
+      "h": 304
+    },
+    {
+      "key": "freeplay",
+      "appScreen": "freeplay",
+      "want": 2,
+      "drawn": 1,
+      "inputs": 0,
+      "canvases": 1,
+      "h": 304
+    },
+    {
+      "key": "metronome",
+      "appScreen": "metronome",
+      "want": 5,
+      "drawn": 4,
+      "inputs": 3,
+      "canvases": 0,
+      "h": 240
+    },
+    {
+      "key": "trophies",
+      "appScreen": "trophies",
+      "want": 2,
+      "drawn": 4,
+      "inputs": 0,
+      "canvases": 0,
+      "h": 232
+    },
+    {
+      "key": "takes",
+      "appScreen": "takes",
+      "want": 3,
+      "drawn": 1,
+      "inputs": 0,
+      "canvases": 1,
+      "h": 411
+    },
+    {
+      "key": "calibrate",
+      "appScreen": "calibrate",
+      "want": 4,
+      "drawn": 3,
+      "inputs": 0,
+      "canvases": 1,
+      "h": 300
+    },
+    {
+      "key": "touch",
+      "appScreen": "touch",
+      "want": 6,
+      "drawn": 4,
+      "inputs": 0,
+      "canvases": 0,
+      "h": 338
+    },
+    {
+      "key": "overlays",
+      "appScreen": null,
+      "want": null,
+      "drawn": 7,
+      "inputs": 0,
+      "canvases": 0,
+      "h": 490
+    }
+  ],
+  "holes": 7
+}

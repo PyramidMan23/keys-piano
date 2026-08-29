@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- the app's own root, so art/128/*.jpg resolves the way it does in the app -->
+<base href="/">
+<title>Canon harness</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* The harness exists ONLY to render the ported renderer in isolation at the
+     canon's own width, so the overlay compares like with like. It adds no
+     styling of its own beyond removing the page chrome, and it must NOT set a
+     font: the renderer applies the canon's inherited typography itself, and a
+     font here would mask the day that stops working. */
+  html, body { margin: 0; background: #000; }
+  #host { width: 756px; }
+</style>
+</head>
+<body>
+<div id="host"></div>
+<script type="module">
+import { renderCanonScreen } from './js/canon-screen.mjs';
+import { renderCanonLibrary } from './js/canon-library.mjs';
+import { SONGS } from './js/songs.mjs';
+
+const screen = new URLSearchParams(location.search).get('screen') || 'library';
+const host = document.getElementById('host');
+
+// apply-design Rule 12.2: seed the build with the DESIGN'S OWN sample data.
+// Anything else makes every text node a false diff and trains you to ignore red.
+//
+// These are the five songs artboard 5b actually shows, with its own numbers.
+// They carry the REAL song objects out of js/songs.mjs, not stand-ins, because
+// the artless drill's sleeve is a plate generated from the song's notes: seed a
+// look-alike object and the plate differs, and the overlay reports a defect
+// that is really bad test data.
+//
+// The tier arrays are proofs-per-tier READ OFF the design's own pips
+// (filled/empty, left to right), never invented.
+const byId = (id) => SONGS.find((s) => s.id === id);
+const LIBRARY_ROWS = [
+  { song: byId('river'),          title: 'River Flows in You',      sub: 'Yiruma, from First Love',                          plays: '0',  diff: '',        state: 'Not started', tiers: [0, 0, 0] },
+  { song: byId('fur-elise'),      title: 'F\u00fcr Elise',          sub: 'Beethoven, the full rondo, 140 bpm',               plays: '79', diff: '4.2\u20135.7', state: 'Banked',     tiers: [3, 3, 3] },
+  { song: byId('still-dre-easy'), title: 'Still D.R.E.',            sub: 'Dr. Dre, cover-style arrangement, 93 bpm',         plays: '39', diff: '2.5\u20136.5', state: 'Banked',     tiers: [3, 2, 1] },
+  { song: byId('mario-easy'),     title: 'Super Mario Bros. Theme', sub: 'Koji Kondo, cover-style arrangement, 200 bpm',     plays: '5',  diff: '3.3\u20136.2', state: 'Needs work', tiers: [1, 0, 0] },
+  { song: byId('scale-c-major'),  title: 'C Major Scale',           sub: 'Technique drill, one octave, both hands, 70 bpm',  plays: '3',  diff: '3.8',     state: 'Needs work', tiers: [1] },
+];
+
+if (screen === 'library') {
+  renderCanonLibrary(host, {
+    level: { n: 1, xp: 80, next: 100 },
+    streak: { current: 1, best: 1 },
+    counts: { learning: 12, repertoire: 1, fame: 9, explore: 17 },
+    prescription: {
+      title: 'Star Wars Main Title',
+      reason: 'John Williams, arranged for two hands. Nothing banked yet, start on the easy tier.',
+      art: 'art/128/star-wars.jpg',
+    },
+    rows: LIBRARY_ROWS,
+
+    // The dashboard the canon absorbed, seeded with the DESIGN'S OWN numbers so
+    // every binder is actually exercised by the pixel gate. Leaving these out
+    // was not neutral: a binder with no data still runs, and one of them hid
+    // the entire content column. The gate can only defend what it renders.
+    learningTotal: 12,
+    carryOn: { title: 'Resume the session', sub: 'Chords from a symbol' },
+    metronomeBpm: '140',
+    voiceName: 'Grand',
+    keyboard: { title: 'No keyboard', sub: 'Screen taps. Plug the P-45 in for the real thing.' },
+    quests: [
+      { id: 'q1', label: 'Master a section', xp: 60, done: false },
+      { id: 'q2', label: '10 real minutes, done', xp: 60, done: true },
+      { id: 'q3', label: 'One clean run', xp: 60, done: false },
+    ],
+    mission: {
+      each: '+150 each',
+      items: [
+        { id: 'm1', label: 'Make one song truly yours', done: false },
+        { id: 'm2', label: 'Bank two song proofs', done: false },
+        { id: 'm3', label: 'Three practice days', done: false },
+      ],
+    },
+    // minutes chosen so the bars reproduce the design's own heights
+    // (14, 38, 9, 52, 22, 0, 74 per cent, today tallest)
+    practice: [
+      { label: 'M', minutes: 14, isToday: false },
+      { label: 'T', minutes: 38, isToday: false },
+      { label: 'W', minutes: 9, isToday: false },
+      { label: 'T', minutes: 52, isToday: false },
+      { label: 'F', minutes: 22, isToday: false },
+      { label: 'S', minutes: 0, isToday: false },
+      { label: 'S', minutes: 74, isToday: true },
+    ],
+    // the seventeen tools the design's own copy counts: "Learn 3, Practise 9,
+    // Tools 5". Seeded so the All tools panel is rendered by the pixel gate
+    // rather than only by the app.
+    tools: [
+      { label: 'LEARN', items: [{ id: 'btn-path', label: 'My path' }, { id: 'btn-lessons', label: 'Lessons' }, { id: 'btn-sight', label: 'Sight reading' }] },
+      { label: 'PRACTISE', items: [
+        { id: 'sess-quick', label: 'Quick win' }, { id: 'sess-improve', label: 'Improve a song' },
+        { id: 'sess-skill', label: 'Skill workout' }, { id: 'btn-rhythm', label: 'Rhythm tap' },
+        { id: 'btn-echo', label: 'Melody echo' }, { id: 'btn-improv', label: 'Improv' },
+        { id: 'btn-keys12', label: '12 keys' }, { id: 'btn-freeplay', label: 'Free play' },
+        { id: 'btn-metronome', label: 'Metronome' }] },
+      { label: 'TOOLS', items: [
+        { id: 'btn-trophies', label: 'Trophies' }, { id: 'btn-takes', label: 'Takes' },
+        { id: 'btn-voice', label: 'Voice', note: 'Grand' }, { id: 'btn-calibrate', label: 'Latency calibration' },
+        { id: 'btn-touch', label: 'Touch diagnostic' }] },
+    ],
+    path: {
+      skill: 'Chords from a symbol',
+      stage: 'Skill 2 of 5. Stage: independent, one stage short of retained.',
+      stagesDone: 4, stagesTotal: 5,
+    },
+  });
+} else {
+  // Every other screen is still pure canon: no data is bound yet, so the
+  // overlay is measuring whether the MARKUP renders identically outside the
+  // prototype. That has to pass before any binding is worth writing.
+  renderCanonScreen(host, screen);
+}
+window.__canonReady = true;
+</script>
+</body>
+</html>

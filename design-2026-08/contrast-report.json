@@ -1,0 +1,92 @@
+[
+  {
+    "key": "library",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "play",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "keys12",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "path",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "lessons",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "lesson",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "task",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "echo",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "rhythm",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "improv",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "freeplay",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "metronome",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "trophies",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "takes",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "calibrate",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "touch",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "overlays",
+    "fails": 0,
+    "worst": []
+  },
+  {
+    "key": "states",
+    "fails": 0,
+    "worst": []
+  }
+]

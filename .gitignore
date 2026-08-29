@@ -1,0 +1,5 @@
+journal.log
+*.log
+node_modules/
+.DS_Store
+desktop.ini

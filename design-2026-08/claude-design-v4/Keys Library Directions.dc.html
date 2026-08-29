@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas"><style>@font-face{font-family:Fraunces;src:url("fonts/Fraunces.ttf") format("truetype");font-weight:400 700;font-display:swap}body{margin:0;background:#0b0a09;font-family:Helvetica,Arial,sans-serif}a{color:#e8a33d}a:hover{color:#f4bd6a}.dv-turn{padding:40px 44px 32px 104px;border-bottom:1px solid rgba(255,255,255,.08)}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#f2ede6;color:#100e0d;border-radius:4px;text-decoration:none}.dv-tname{font:600 13px/1.2 Helvetica,Arial,sans-serif;color:#f2ede6}.dv-opts{display:flex;flex-wrap:nowrap;gap:32px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(255,255,255,.12);color:#f2ede6;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11.5px/1.4 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.6);max-width:756px}.dv-card{background:#100e0d;border:1px solid rgba(255,255,255,.1);border-radius:6px;overflow:hidden;position:relative}.dv-opt:target .dv-oid{background:#e8a33d;color:#100e0d}.dv-next{margin:22px 0 0;font:12px/1.6 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.5)}.fold{position:absolute;left:-30px;width:22px;top:393px;border-top:1px dashed rgba(232,163,61,.55);z-index:1;pointer-events:none}.fold span{position:absolute;right:24px;top:-5px;white-space:nowrap;font:600 8.5px ui-monospace,Menlo,monospace;letter-spacing:.08em;color:rgba(232,163,61,.75)}.dv-card{overflow:visible}</style></helmet>
+
+<section class="dv-turn" id="t4">
+<div class="dv-thd"><a class="dv-tid" href="#t4">4</a><span class="dv-tname">True black ground, raised #1a221c surfaces, bordered sleeves, re-solved semantics, six type roles with an 11px floor.</span></div>
+<div class="dv-opts" style="flex-wrap:wrap;gap:40px">
+
+<div class="dv-opt" id="4a">
+<div class="dv-olabel"><a class="dv-oid" href="#4a">4a</a><span><b style="color:#f2ede6">Console on OLED black</b>. Page is switched-off pixels, every surface that holds a control is raised 12 steps, every sleeve carries an edge.</span></div>
+<div class="dv-card" style="width:756px;background:#000;border-color:#253129">
+<div class="fold"><span>393PX FOLD</span></div>
+<div style="display:flex;align-items:stretch;min-height:1030px">
+
+<div style="width:186px;flex:none;background:#1a221c;border-right:1px solid #253129;display:flex;flex-direction:column">
+
+<div style="padding:13px 14px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid #253129">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<span style="font:600 19px/1 Fraunces,Georgia,serif;letter-spacing:-.01em;color:#E9EDE7">Keys</span>
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#788c82">LVL 1</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:baseline;justify-content:space-between">
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#788c82">XP</span>
+<span style="font:700 12px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">80/100</span>
+</div>
+<span style="display:block;height:6px;background:#253129;border-radius:3px;overflow:hidden"><i style="display:block;width:80%;height:100%;background:#82bf9c"></i></span>
+<div style="display:flex;align-items:center;gap:7px">
+<i style="display:block;width:11px;height:11px;flex:none;background:#82bf9c;border-radius:2px"></i>
+<span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">1 day rhythm</span>
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#788c82">best 1</span>
+</div>
+</div>
+</div>
+
+<div style="padding:12px 14px;border-bottom:1px solid #253129">
+<div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 10px;background:#000;border:1px solid #253129;border-radius:4px">
+<i style="display:block;width:12px;height:12px;flex:none;border:1.6px solid #788c82;border-radius:50%"></i>
+<span style="font:400 12px/1 Helvetica,Arial,sans-serif;color:#788c82">Search all songs</span>
+</div>
+</div>
+
+<div style="padding:12px;display:flex;flex-direction:column;gap:7px;border-bottom:1px solid #253129">
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#788c82">CARRY ON</span>
+<button style="min-height:44px;padding:9px 10px;border:1px solid #253129;border-left:3px solid #82bf9c;background:#000;border-radius:0 3px 3px 0;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px">
+<span style="font:700 12px/1.2 Helvetica,Arial,sans-serif;color:#82bf9c">Resume the session</span>
+<span style="font:400 12px/1.25 Helvetica,Arial,sans-serif;color:#788c82">Chords from a symbol</span>
+</button>
+</div>
+
+<div style="padding:12px;display:flex;flex-direction:column;gap:5px;border-bottom:1px solid #253129">
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#788c82">MOST USED</span>
+<button style="height:44px;border:1px solid #253129;background:#000;border-radius:3px;text-align:left;padding:0 10px;color:#E9EDE7;font:700 12px/1 Helvetica,Arial,sans-serif;cursor:pointer">Repertoire</button>
+<button style="height:44px;border:1px solid #253129;background:#000;border-radius:3px;text-align:left;padding:0 10px;color:#E9EDE7;font:700 12px/1 Helvetica,Arial,sans-serif;cursor:pointer">Free play</button>
+<button style="height:44px;border:1px solid #253129;background:#000;border-radius:3px;padding:0 10px;display:flex;align-items:center;gap:8px;cursor:pointer"><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Metronome</span><span style="margin-left:auto;font:700 12px/1 ui-monospace,Menlo,monospace;color:#788c82">140</span></button>
+</div>
+
+<div style="padding:12px;display:flex;flex-direction:column;gap:7px;border-bottom:1px solid #253129">
+<div style="display:flex;align-items:flex-start;gap:7px">
+<i style="display:block;width:11px;height:11px;flex:none;margin-top:2px;border:1.6px solid #efce81;border-radius:50%"></i>
+<div style="display:flex;flex-direction:column;gap:3px">
+<span style="font:700 12px/1.15 Helvetica,Arial,sans-serif;color:#efce81">No keyboard</span>
+<span style="font:400 12px/1.35 Helvetica,Arial,sans-serif;color:#788c82">Screen taps. Plug the P-45 in for the real thing.</span>
+</div>
+</div>
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#788c82">SO THESE ARE HERE</span>
+<button style="height:44px;border:1px solid #efce81;background:#000;border-radius:3px;text-align:left;padding:0 10px;color:#E9EDE7;font:700 12px/1.2 Helvetica,Arial,sans-serif;cursor:pointer">Latency calibration</button>
+<button style="height:44px;border:1px solid #efce81;background:#000;border-radius:3px;padding:0 10px;display:flex;align-items:center;gap:8px;cursor:pointer"><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Voice</span><span style="margin-left:auto;font:400 12px/1 Helvetica,Arial,sans-serif;color:#788c82">Grand</span></button>
+</div>
+
+<div style="padding:12px;display:flex;flex-direction:column;gap:7px">
+<button style="height:44px;border:1px solid #253129;background:#000;border-radius:3px;padding:0 10px;display:flex;align-items:center;gap:8px;cursor:pointer">
+<i style="display:block;width:11px;height:11px;flex:none;border:1.6px solid #788c82"></i>
+<span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">All tools</span>
+<span style="margin-left:auto;font:700 12px/1 ui-monospace,Menlo,monospace;color:#788c82">17</span>
+</button>
+<span style="font:400 12px/1.4 Helvetica,Arial,sans-serif;color:#788c82">Learn 3, Practise 9, Tools 5. Searchable, nothing removed.</span>
+</div>
+</div>
+
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;background:#000">
+
+<div style="display:flex;align-items:stretch;border-bottom:1px solid #253129;background:#1a221c">
+<button style="flex:none;padding:0 13px;height:48px;border:0;border-bottom:2px solid #82bf9c;background:#000;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;cursor:pointer">
+<span style="display:flex;align-items:center;gap:7px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Learning</span><span style="font:700 12px/1 ui-monospace,Menlo,monospace;color:#82bf9c">12</span></span>
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#788c82">WHERE YOU LEFT OFF</span>
+</button>
+<button style="flex:none;padding:0 13px;height:48px;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font:400 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Repertoire</span><span style="font:700 12px/1 ui-monospace,Menlo,monospace;color:#788c82">1</span></button>
+<button style="flex:none;padding:0 13px;height:48px;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font:400 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Hall of fame</span><span style="font:700 12px/1 ui-monospace,Menlo,monospace;color:#788c82">9</span></button>
+<button style="flex:none;padding:0 13px;height:48px;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font:400 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Explore</span><span style="font:700 12px/1 ui-monospace,Menlo,monospace;color:#788c82">17</span></button>
+</div>
+
+<div style="background:#1a221c;border-bottom:1px solid #253129;padding:12px 14px;display:flex;align-items:center;gap:13px">
+<div style="width:72px;height:72px;flex:none;position:relative">
+<span style="position:absolute;left:-5px;top:-5px;right:-5px;bottom:-5px;border-radius:5px;background:rgba(230,195,74,.26);filter:blur(6px)"></span>
+<img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="position:relative;width:72px;height:72px;object-fit:cover;display:block;border-radius:3px;border:1px solid #253129;box-sizing:border-box">
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px">
+<span style="font:600 14px/1 Fraunces,Georgia,serif;letter-spacing:.1em;color:#82bf9c">DO THIS NEXT</span>
+<span style="font:600 19px/1.1 Fraunces,Georgia,serif;letter-spacing:-.01em;color:#E9EDE7">F&uuml;r Elise</span>
+<span style="font:400 12px/1.3 Helvetica,Arial,sans-serif;color:#788c82">Hard tier is your weakest at 5.7. Last clean run was 2 days ago.</span>
+</div>
+<div style="flex:none;display:flex;flex-direction:column;gap:6px;width:132px">
+<button style="height:44px;border:0;background:#2E6B47;color:#E9EDE7;font:700 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Start</button>
+<button style="height:44px;border:1px solid #253129;background:#000;color:#E9EDE7;font:700 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Choose another</button>
+</div>
+</div>
+
+<div style="display:flex;align-items:center;gap:10px;padding:12px 14px 6px">
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#E9EDE7">LEARNING, WEAKEST FIRST</span>
+<span style="font:700 12px/1 ui-monospace,Menlo,monospace;color:#82bf9c">12</span>
+<div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#788c82">SORT</span>
+<span style="display:flex">
+<button style="height:44px;padding:0 12px;white-space:nowrap;border:1px solid #253129;border-radius:3px 0 0 3px;background:#1a221c;color:#E9EDE7;font:700 12px/1 Helvetica,Arial,sans-serif;cursor:pointer">Weakest</button>
+<button style="height:44px;padding:0 12px;white-space:nowrap;border:1px solid #253129;border-left:0;border-radius:0 3px 3px 0;background:#000;color:#788c82;font:400 12px/1 Helvetica,Arial,sans-serif;cursor:pointer">A to Z</button>
+</span>
+</div>
+</div>
+
+<div style="display:flex;gap:8px;padding:0 14px 7px;border-bottom:1px solid #253129;font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#788c82">
+<span style="width:40px;flex:none"></span><span style="flex:1;min-width:0">SONG</span><span style="width:40px;text-align:right;flex:none">PLAYS</span><span style="width:52px;text-align:right;flex:none">DIFF</span><span style="width:92px;flex:none">STATE</span><span style="width:140px;flex:none">TIERS</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #253129">
+<img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="width:40px;height:40px;flex:none;object-fit:cover;display:block;border-radius:2px;border:1px solid #253129;box-sizing:border-box">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">F&uuml;r Elise</span><span style="font:400 12px/1.2 Helvetica,Arial,sans-serif;color:#788c82">Beethoven, the full rondo, 140 bpm</span></div>
+<span style="width:40px;flex:none;text-align:right;font:700 12px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">79</span>
+<span style="width:52px;flex:none;text-align:right;font:400 12px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">4.2&ndash;5.7</span>
+<span style="width:92px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:13px;height:13px;flex:none;background:#82bf9c;border-radius:2px;position:relative"><b style="position:absolute;left:3px;top:3px;width:6px;height:3px;border-left:1.6px solid #000;border-bottom:1.6px solid #000;transform:rotate(-45deg)"></b></i><span style="font:700 12px/1.15 Helvetica,Arial,sans-serif;color:#82bf9c">Banked</span></span>
+<span style="width:140px;flex:none;display:flex;gap:4px">
+<button style="width:44px;height:44px;border:1px solid #253129;background:#1a221c;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid #253129;background:#1a221c;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid #253129;background:#1a221c;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i></span></button>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #253129">
+<img src="uploads/sleeve-still-dre.jpg" alt="Dr. Dre, 2001" style="width:40px;height:40px;flex:none;object-fit:cover;display:block;border-radius:2px;border:1px solid #253129;box-sizing:border-box">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">Still D.R.E.</span><span style="font:400 12px/1.2 Helvetica,Arial,sans-serif;color:#788c82">Dr. Dre, cover-style arrangement, 93 bpm</span></div>
+<span style="width:40px;flex:none;text-align:right;font:700 12px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">39</span>
+<span style="width:52px;flex:none;text-align:right;font:400 12px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">2.5&ndash;6.5</span>
+<span style="width:92px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:13px;height:13px;flex:none;background:#82bf9c;border-radius:2px;position:relative"><b style="position:absolute;left:3px;top:3px;width:6px;height:3px;border-left:1.6px solid #000;border-bottom:1.6px solid #000;transform:rotate(-45deg)"></b></i><span style="font:700 12px/1.15 Helvetica,Arial,sans-serif;color:#82bf9c">Banked</span></span>
+<span style="width:140px;flex:none;display:flex;gap:4px">
+<button style="width:44px;height:44px;border:1px solid #253129;background:#1a221c;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid #253129;background:#1a221c;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;border:1px solid #788c82"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid #253129;background:#1a221c;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;border:1px solid #788c82"></i><i style="width:4px;height:4px;border:1px solid #788c82"></i></span></button>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #253129">
+<img src="uploads/sleeve-mario.jpg" alt="Super Mario Bros. 35 soundtrack" style="width:40px;height:40px;flex:none;object-fit:cover;display:block;border-radius:2px;border:1px solid #253129;box-sizing:border-box">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">Super Mario Bros. Theme</span><span style="font:400 12px/1.2 Helvetica,Arial,sans-serif;color:#788c82">Koji Kondo, cover-style arrangement, 200 bpm</span></div>
+<span style="width:40px;flex:none;text-align:right;font:700 12px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">5</span>
+<span style="width:52px;flex:none;text-align:right;font:400 12px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">3.3&ndash;6.2</span>
+<span style="width:92px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #788c82;border-radius:2px"></i><span style="font:700 12px/1.15 Helvetica,Arial,sans-serif;color:#E9EDE7">Needs work</span></span>
+<span style="width:140px;flex:none;display:flex;gap:4px">
+<button style="width:44px;height:44px;border:1px solid #253129;background:#1a221c;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;border:1px solid #788c82"></i><i style="width:4px;height:4px;border:1px solid #788c82"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid #253129;background:#1a221c;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;border:1px solid #788c82"></i><i style="width:4px;height:4px;border:1px solid #788c82"></i><i style="width:4px;height:4px;border:1px solid #788c82"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid #253129;background:#1a221c;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;border:1px solid #788c82"></i><i style="width:4px;height:4px;border:1px solid #788c82"></i><i style="width:4px;height:4px;border:1px solid #788c82"></i></span></button>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid #253129">
+<span style="width:40px;height:40px;flex:none;background:#1a221c;border:1px solid #253129;border-radius:2px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;box-sizing:border-box">
+<span style="position:absolute;left:0;right:0;top:11px;display:flex;flex-direction:column;gap:4px;opacity:.34"><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i></span>
+<span style="position:relative;font:400 19px/1.15 Georgia,serif;color:#E9EDE7">C</span>
+</span>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">C Major Scale</span><span style="font:400 12px/1.2 Helvetica,Arial,sans-serif;color:#788c82">Technique drill, one octave, both hands, 70 bpm</span></div>
+<span style="width:40px;flex:none;text-align:right;font:700 12px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">3</span>
+<span style="width:52px;flex:none;text-align:right;font:400 12px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">3.8</span>
+<span style="width:92px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #788c82;border-radius:2px"></i><span style="font:700 12px/1.15 Helvetica,Arial,sans-serif;color:#E9EDE7">Needs work</span></span>
+<span style="width:140px;flex:none;display:flex"><button style="width:140px;height:44px;border:1px solid #253129;background:#1a221c;border-radius:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px"><span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#788c82">1 TIER</span><span style="display:flex;gap:3px"><i style="width:5px;height:5px;background:#E9EDE7"></i><i style="width:5px;height:5px;border:1px solid #788c82"></i><i style="width:5px;height:5px;border:1px solid #788c82"></i></span></button></span>
+</div>
+
+<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 14px;border-bottom:1px solid #253129">
+<button style="height:44px;padding:0;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><i style="display:block;width:7px;height:7px;border-right:1.6px solid #82bf9c;border-bottom:1.6px solid #82bf9c;transform:rotate(45deg)"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#82bf9c">Show the other 8 in Learning</span></button>
+<span style="font:400 12px/1 Helvetica,Arial,sans-serif;color:#788c82">Want a new song? Ask Claude to curate it.</span>
+</div>
+
+<div style="display:flex;gap:12px;padding:14px">
+<div style="flex:1;background:#1a221c;border:1px solid #253129;border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#788c82">TODAY</span><span style="margin-left:auto;font:400 11px/1 ui-monospace,Menlo,monospace;color:#788c82">1 of 3 done</span></div>
+<button style="height:44px;border:1px solid #253129;background:#000;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #788c82;border-radius:2px"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Master a section</span><span style="margin-left:auto;font:700 12px/1 ui-monospace,Menlo,monospace;color:#788c82">+60</span></button>
+<button style="height:44px;border:1px solid #253129;background:#000;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:13px;height:13px;flex:none;background:#82bf9c;border-radius:2px;position:relative"><b style="position:absolute;left:3px;top:3px;width:6px;height:3px;border-left:1.6px solid #000;border-bottom:1.6px solid #000;transform:rotate(-45deg)"></b></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#82bf9c">10 real minutes, done</span><span style="margin-left:auto;font:700 12px/1 ui-monospace,Menlo,monospace;color:#82bf9c">+60</span></button>
+<button style="height:44px;border:1px solid #253129;background:#000;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #788c82;border-radius:2px"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">One clean run</span><span style="margin-left:auto;font:700 12px/1 ui-monospace,Menlo,monospace;color:#788c82">+60</span></button>
+</div>
+<div style="flex:1;background:#1a221c;border:1px solid #253129;border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#788c82">MISSION</span><span style="margin-left:auto;font:400 11px/1 ui-monospace,Menlo,monospace;color:#788c82">+150 each</span></div>
+<button style="height:44px;border:1px solid #253129;background:#000;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #788c82;border-radius:2px"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Make one song truly yours</span></button>
+<button style="height:44px;border:1px solid #253129;background:#000;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #788c82;border-radius:2px"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Bank two song proofs</span></button>
+<button style="height:44px;border:1px solid #253129;background:#000;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #788c82;border-radius:2px"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Three practice days</span></button>
+</div>
+</div>
+
+<div style="display:flex;gap:12px;padding:0 14px 14px">
+<div style="width:298px;flex:none;background:#1a221c;border:1px solid #253129;border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:9px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#788c82">FORM CHECK</span><button style="margin-left:auto;width:44px;height:44px;margin:-11px -11px -11px 0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center"><i style="display:block;width:7px;height:7px;border-right:1.6px solid #788c82;border-bottom:1.6px solid #788c82;transform:rotate(45deg)"></i></button></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px">
+<span style="display:flex;align-items:center;gap:6px;font:400 12px/1.2 Helvetica,Arial,sans-serif;color:#E9EDE7"><i style="display:block;width:9px;height:9px;flex:none;border:1.5px solid #788c82"></i>Balanced seat and feet</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 12px/1.2 Helvetica,Arial,sans-serif;color:#E9EDE7"><i style="display:block;width:9px;height:9px;flex:none;border:1.5px solid #788c82"></i>Neutral wrist</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 12px/1.2 Helvetica,Arial,sans-serif;color:#E9EDE7"><i style="display:block;width:9px;height:9px;flex:none;border:1.5px solid #788c82"></i>Relaxed shoulders</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 12px/1.2 Helvetica,Arial,sans-serif;color:#E9EDE7"><i style="display:block;width:9px;height:9px;flex:none;border:1.5px solid #788c82"></i>Curved fingers</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 12px/1.2 Helvetica,Arial,sans-serif;color:#E9EDE7"><i style="display:block;width:9px;height:9px;flex:none;border:1.5px solid #788c82"></i>No visible tension</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:5px">
+<span style="font:400 12px/1.35 Helvetica,Arial,sans-serif;color:#788c82">Camera angle: torso, forearms, wrists and keys all in frame.</span>
+<span style="display:flex;align-items:flex-start;gap:6px"><i style="display:block;width:0;height:0;flex:none;margin-top:3px;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:8px solid #efce81"></i><span style="font:700 12px/1.35 Helvetica,Arial,sans-serif;color:#efce81">Recurring pain or uncertainty means show a human teacher.</span></span>
+</div>
+<div style="display:flex;gap:7px">
+<button style="height:44px;flex:1;border:1px solid #2E6B47;background:#000;color:#82bf9c;font:700 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Done, I watched it</button>
+<button style="height:44px;padding:0 12px;border:1px solid #253129;background:#000;color:#788c82;font:400 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Not today</button>
+</div>
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:12px">
+<div style="background:#1a221c;border:1px solid #253129;border-radius:4px;padding:12px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#788c82">PRACTICE, LAST 7 DAYS</span><button style="margin-left:auto;width:44px;height:44px;margin:-11px -11px -11px 0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center"><i style="display:block;width:7px;height:7px;border-right:1.6px solid #788c82;border-bottom:1.6px solid #788c82;transform:rotate(45deg)"></i></button></div>
+<div style="margin-top:10px;display:flex;align-items:flex-end;gap:7px;height:48px">
+<span style="flex:1;height:14%;background:#253129;border-radius:1px"></span>
+<span style="flex:1;height:38%;background:#253129;border-radius:1px"></span>
+<span style="flex:1;height:9%;background:#253129;border-radius:1px"></span>
+<span style="flex:1;height:52%;background:#253129;border-radius:1px"></span>
+<span style="flex:1;height:22%;background:#253129;border-radius:1px"></span>
+<span style="flex:1;height:0;border-top:1px dashed #788c82"></span>
+<span style="flex:1;height:74%;background:#82bf9c;border-radius:1px"></span>
+</div>
+<div style="margin-top:7px;display:flex;gap:7px;font:400 11px/1 ui-monospace,Menlo,monospace;color:#788c82"><span style="flex:1;text-align:center">M</span><span style="flex:1;text-align:center">T</span><span style="flex:1;text-align:center">W</span><span style="flex:1;text-align:center">T</span><span style="flex:1;text-align:center">F</span><span style="flex:1;text-align:center">S</span><span style="flex:1;text-align:center;color:#E9EDE7">today</span></div>
+</div>
+<div style="background:#1a221c;border:1px solid #253129;border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:8px">
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#788c82">YOUR PATH</span>
+<span style="font:600 14px/1.2 Fraunces,Georgia,serif;color:#E9EDE7">Chords from a symbol</span>
+<span style="font:400 12px/1.35 Helvetica,Arial,sans-serif;color:#788c82">Skill 2 of 5. Stage: independent, one stage short of retained.</span>
+<span style="display:flex;align-items:center;gap:4px">
+<i style="display:block;flex:1;max-width:22px;height:5px;background:#82bf9c"></i>
+<i style="display:block;flex:1;max-width:22px;height:5px;background:#82bf9c"></i>
+<i style="display:block;flex:1;max-width:22px;height:5px;background:#82bf9c"></i>
+<i style="display:block;flex:1;max-width:22px;height:5px;background:#82bf9c"></i>
+<i style="display:block;flex:1;max-width:22px;height:5px;background:#253129"></i>
+<span style="margin-left:6px;font:400 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#788c82">4 OF 5 STAGES</span>
+</span>
+<button style="height:44px;border:1px solid #2E6B47;background:#000;color:#82bf9c;font:700 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Continue</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="4b">
+<div class="dv-olabel"><a class="dv-oid" href="#4b">4b</a><span><b style="color:#f2ede6">Ground comparison, true black</b>. Page is #000000 in all three. Only the raised surface and its border hue change.</span></div>
+<div style="display:flex;gap:16px">
+
+<div style="width:236px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:baseline;gap:8px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Conservatory</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#788c82">#1a221c</span></div>
+<div style="background:#000;border:1px solid #253129;border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:10px">
+<div style="position:relative;width:72px">
+<span style="position:absolute;left:-5px;top:-5px;right:-5px;bottom:-5px;border-radius:5px;background:rgba(230,195,74,.24);filter:blur(6px)"></span>
+<img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="position:relative;width:72px;height:72px;object-fit:cover;display:block;border-radius:3px;border:1px solid #253129;box-sizing:border-box">
+</div>
+<div style="background:#1a221c;border:1px solid #253129;border-radius:3px;padding:10px;display:flex;flex-direction:column;gap:9px">
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">Still D.R.E.</span><i style="display:block;width:13px;height:13px;flex:none;background:#82bf9c;border-radius:2px;position:relative"><b style="position:absolute;left:3px;top:3px;width:6px;height:3px;border-left:1.6px solid #1a221c;border-bottom:1.6px solid #1a221c;transform:rotate(-45deg)"></b></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#82bf9c">Banked</span></div>
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">C Major Scale</span><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #788c82;border-radius:2px"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Needs work</span></div>
+<button style="height:44px;border:0;background:#2E6B47;color:#E9EDE7;font:700 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Start</button>
+</div>
+</div>
+</div>
+
+<div style="width:236px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:baseline;gap:8px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Darkroom</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#788c82">#221D18</span></div>
+<div style="background:#000;border:1px solid #33291F;border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:10px">
+<div style="position:relative;width:72px">
+<span style="position:absolute;left:-5px;top:-5px;right:-5px;bottom:-5px;border-radius:5px;background:rgba(230,195,74,.24);filter:blur(6px)"></span>
+<img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="position:relative;width:72px;height:72px;object-fit:cover;display:block;border-radius:3px;border:1px solid #33291F;box-sizing:border-box">
+</div>
+<div style="background:#221D18;border:1px solid #33291F;border-radius:3px;padding:10px;display:flex;flex-direction:column;gap:9px">
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">Still D.R.E.</span><i style="display:block;width:13px;height:13px;flex:none;background:#82bf9c;border-radius:2px;position:relative"><b style="position:absolute;left:3px;top:3px;width:6px;height:3px;border-left:1.6px solid #221D18;border-bottom:1.6px solid #221D18;transform:rotate(-45deg)"></b></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#82bf9c">Banked</span></div>
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">C Major Scale</span><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #788c82;border-radius:2px"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Needs work</span></div>
+<button style="height:44px;border:0;background:#2E6B47;color:#E9EDE7;font:700 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Start</button>
+</div>
+</div>
+</div>
+
+<div style="width:236px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:baseline;gap:8px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Eucalypt</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#788c82">#18201F</span></div>
+<div style="background:#000;border:1px solid #243030;border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:10px">
+<div style="position:relative;width:72px">
+<span style="position:absolute;left:-5px;top:-5px;right:-5px;bottom:-5px;border-radius:5px;background:rgba(230,195,74,.24);filter:blur(6px)"></span>
+<img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="position:relative;width:72px;height:72px;object-fit:cover;display:block;border-radius:3px;border:1px solid #243030;box-sizing:border-box">
+</div>
+<div style="background:#18201F;border:1px solid #243030;border-radius:3px;padding:10px;display:flex;flex-direction:column;gap:9px">
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">Still D.R.E.</span><i style="display:block;width:13px;height:13px;flex:none;background:#82bf9c;border-radius:2px;position:relative"><b style="position:absolute;left:3px;top:3px;width:6px;height:3px;border-left:1.6px solid #18201F;border-bottom:1.6px solid #18201F;transform:rotate(-45deg)"></b></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#82bf9c">Banked</span></div>
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">C Major Scale</span><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #788c82;border-radius:2px"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Needs work</span></div>
+<button style="height:44px;border:0;background:#2E6B47;color:#E9EDE7;font:700 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Start</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<p class="dv-next">Turns 3, 2 and 1 kept below for reference.</p>
+</section>
+
+<section class="dv-turn" id="t3">
+<div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">2a rebuilt: recommendation strip in place of the hero, adaptive dock, remembered tab, Fraunces restored. Eight review notes applied.</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="3a">
+<div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a><span><b style="color:#f2ede6">Console, second pass</b>. The fold now carries one recommendation strip, four song rows and the shelf tabs. Nothing has to be dismissed to browse.</span></div>
+<div class="dv-card" style="width:756px;background:#0A0D0B;border-color:rgba(233,237,231,.1)">
+<div class="fold"><span>393PX FOLD</span></div>
+<div style="display:flex;align-items:stretch;min-height:1030px">
+
+<div style="width:186px;flex:none;background:#0c100e;border-right:1px solid rgba(233,237,231,.1);display:flex;flex-direction:column">
+
+<div style="padding:13px 14px 11px;display:flex;flex-direction:column;gap:9px;border-bottom:1px solid rgba(233,237,231,.08)">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<span style="font:600 19px/1 Fraunces,Georgia,serif;letter-spacing:-.01em;color:#E9EDE7">Keys</span>
+<span style="font:400 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#6c7f75">LVL 1</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:7px">
+<div style="display:flex;align-items:baseline;justify-content:space-between">
+<span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#6c7f75">XP</span>
+<span style="font:700 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">80/100</span>
+</div>
+<span style="display:block;height:5px;background:rgba(233,237,231,.12);border-radius:3px;overflow:hidden"><i style="display:block;width:80%;height:100%;background:#7cb694"></i></span>
+<div style="display:flex;align-items:center;gap:7px">
+<i style="display:block;width:8px;height:8px;flex:none;background:#7cb694;border-radius:2px"></i>
+<span style="font:600 10.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">1 day rhythm</span>
+<span style="font:400 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">best 1</span>
+</div>
+</div>
+</div>
+
+<div style="padding:11px 14px;border-bottom:1px solid rgba(233,237,231,.08)">
+<div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 10px;background:#121814;border:1px solid rgba(233,237,231,.12);border-radius:4px">
+<i style="display:block;width:11px;height:11px;flex:none;border:1.6px solid rgba(233,237,231,.5);border-radius:50%"></i>
+<span style="font:400 12px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.45)">Search all songs</span>
+</div>
+</div>
+
+<div style="padding:11px 12px 12px;display:flex;flex-direction:column;gap:7px;border-bottom:1px solid rgba(233,237,231,.08)">
+<span style="font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#6c7f75">CARRY ON</span>
+<button style="min-height:44px;padding:8px 10px;border:1px solid rgba(124,182,148,.5);border-left:3px solid #7cb694;background:#121814;border-radius:0 3px 3px 0;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px">
+<span style="font:700 11.5px/1.2 Helvetica,Arial,sans-serif;color:#7cb694">Resume the session</span>
+<span style="font:400 10px/1.25 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.62)">Chords from a symbol</span>
+</button>
+</div>
+
+<div style="padding:11px 12px 12px;display:flex;flex-direction:column;gap:4px;border-bottom:1px solid rgba(233,237,231,.08)">
+<span style="font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#6c7f75">MOST USED</span>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;text-align:left;padding:0 10px;color:#E9EDE7;font:600 11.5px/1 Helvetica,Arial,sans-serif;cursor:pointer">Repertoire</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;text-align:left;padding:0 10px;color:#E9EDE7;font:600 11.5px/1 Helvetica,Arial,sans-serif;cursor:pointer">Free play</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;padding:0 10px;display:flex;align-items:center;gap:8px;cursor:pointer"><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Metronome</span><span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">140</span></button>
+</div>
+
+<div style="padding:11px 12px 12px;display:flex;flex-direction:column;gap:6px;border-bottom:1px solid rgba(233,237,231,.08)">
+<div style="display:flex;align-items:flex-start;gap:6px">
+<i style="display:block;width:9px;height:9px;flex:none;margin-top:2px;border:1.6px solid #f0ce7f;border-radius:50%"></i>
+<div style="display:flex;flex-direction:column;gap:2px">
+<span style="font:700 10px/1.15 Helvetica,Arial,sans-serif;color:#f0ce7f">No keyboard</span>
+<span style="font:400 9.5px/1.35 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.55)">Screen taps. Plug the P-45 in for the real thing.</span>
+</div>
+</div>
+<span style="font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#6c7f75">SO THESE ARE HERE</span>
+<button style="height:44px;border:1px solid rgba(240,206,127,.34);background:transparent;border-radius:3px;text-align:left;padding:0 10px;color:#E9EDE7;font:600 11.5px/1.2 Helvetica,Arial,sans-serif;cursor:pointer">Latency calibration</button>
+<button style="height:44px;border:1px solid rgba(240,206,127,.34);background:transparent;border-radius:3px;padding:0 10px;display:flex;align-items:center;gap:8px;cursor:pointer"><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Voice</span><span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">Grand</span></button>
+</div>
+
+<div style="padding:11px 12px 14px;display:flex;flex-direction:column;gap:6px">
+<button style="height:44px;border:1px solid rgba(233,237,231,.18);background:transparent;border-radius:3px;padding:0 10px;display:flex;align-items:center;gap:8px;cursor:pointer">
+<i style="display:block;width:9px;height:9px;flex:none;border:1.6px solid rgba(233,237,231,.6)"></i>
+<span style="font:700 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">All tools</span>
+<span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">17</span>
+</button>
+<span style="font:400 9.5px/1.4 Helvetica,Arial,sans-serif;color:#6c7f75">Learn 3, Practise 9, Tools 5. Searchable, nothing removed.</span>
+</div>
+</div>
+
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:stretch;border-bottom:1px solid rgba(233,237,231,.1)">
+<button style="flex:none;padding:0 13px;height:46px;border:0;border-bottom:2px solid #7cb694;background:#121814;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;cursor:pointer">
+<span style="display:flex;align-items:center;gap:7px"><span style="font:700 12.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Learning</span><span style="font:700 11px/1 ui-monospace,Menlo,monospace;color:#7cb694">12</span></span>
+<span style="font:400 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#6c7f75">WHERE YOU LEFT OFF</span>
+</button>
+<button style="flex:none;padding:0 13px;height:46px;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font:400 12.5px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.72)">Repertoire</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6c7f75">1</span></button>
+<button style="flex:none;padding:0 13px;height:46px;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font:400 12.5px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.72)">Hall of fame</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6c7f75">9</span></button>
+<button style="flex:none;padding:0 13px;height:46px;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font:400 12.5px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.72)">Explore</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6c7f75">17</span></button>
+</div>
+
+<div style="background:#070908;border-bottom:1px solid rgba(233,237,231,.1);padding:12px 14px;display:flex;align-items:center;gap:13px">
+<div style="width:72px;height:72px;flex:none;position:relative">
+<span style="position:absolute;left:-5px;top:-5px;right:-5px;bottom:-5px;border-radius:5px;background:rgba(230,195,74,.3);filter:blur(6px)"></span>
+<img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="position:relative;width:72px;height:72px;object-fit:cover;display:block;border-radius:3px">
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="font:600 9.5px/1 Fraunces,Georgia,serif;letter-spacing:.14em;color:#7cb694">DO THIS NEXT</span>
+<span style="font:600 19px/1.1 Fraunces,Georgia,serif;letter-spacing:-.01em;color:#E9EDE7">F&uuml;r Elise</span>
+<span style="font:400 11px/1.3 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.72)">Hard tier is your weakest at 5.7. Last clean run was 2 days ago.</span>
+</div>
+<div style="flex:none;display:flex;flex-direction:column;gap:6px;width:132px">
+<button style="height:44px;border:0;background:#2E6B47;color:#fff;font:700 12.5px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Start</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.22);background:transparent;color:#E9EDE7;font:600 11.5px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Choose another</button>
+</div>
+</div>
+
+<div style="display:flex;align-items:center;gap:10px;padding:11px 14px 5px">
+<span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:#E9EDE7">LEARNING, WEAKEST FIRST</span>
+<span style="font:700 11px/1 ui-monospace,Menlo,monospace;color:#7cb694">12</span>
+<div style="margin-left:auto;display:flex;align-items:center;gap:0">
+<span style="font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#6c7f75;margin-right:8px">SORT</span>
+<button style="height:44px;padding:0 12px;white-space:nowrap;border:1px solid rgba(233,237,231,.22);border-radius:3px 0 0 3px;background:#1a211d;color:#E9EDE7;font:700 10.5px/1 Helvetica,Arial,sans-serif;cursor:pointer">Weakest</button>
+<button style="height:44px;padding:0 12px;white-space:nowrap;border:1px solid rgba(233,237,231,.14);border-left:0;border-radius:0 3px 3px 0;background:transparent;color:rgba(233,237,231,.6);font:400 10.5px/1 Helvetica,Arial,sans-serif;cursor:pointer">A to Z</button>
+</div>
+</div>
+
+<div style="display:flex;gap:8px;padding:0 14px 6px;font:700 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#6c7f75;border-bottom:1px solid rgba(233,237,231,.09);padding-bottom:6px">
+<span style="width:40px;flex:none"></span><span style="flex:1;min-width:0">SONG</span><span style="width:30px;text-align:right;flex:none">PLAYS</span><span style="width:46px;text-align:right;flex:none">DIFF</span><span style="width:98px;flex:none">STATE</span><span style="width:140px;flex:none">TIERS</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.07);background:#0e120f">
+<img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="width:40px;height:40px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">F&uuml;r Elise</span><span style="font:400 10px/1.1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Beethoven, the full rondo, 140 bpm</span></div>
+<span style="width:30px;flex:none;text-align:right;font:700 13px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">79</span>
+<span style="width:46px;flex:none;text-align:right;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">4.2&ndash;5.7</span>
+<span style="width:98px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:13px;height:13px;flex:none;background:#7cb694;border-radius:2px;position:relative"><b style="position:absolute;left:3px;top:3px;width:6px;height:3px;border-left:1.6px solid #070908;border-bottom:1.6px solid #070908;transform:rotate(-45deg)"></b></i><span style="font:700 10px/1.15 Helvetica,Arial,sans-serif;color:#7cb694">Banked</span></span>
+<span style="width:140px;flex:none;display:flex;gap:4px">
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i></span></button>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.07)">
+<img src="uploads/sleeve-still-dre.jpg" alt="Dr. Dre, 2001" style="width:40px;height:40px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">Still D.R.E.</span><span style="font:400 10px/1.1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Dr. Dre, cover-style arrangement, 93 bpm</span></div>
+<span style="width:30px;flex:none;text-align:right;font:700 13px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">39</span>
+<span style="width:46px;flex:none;text-align:right;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">2.5&ndash;6.5</span>
+<span style="width:98px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:13px;height:13px;flex:none;background:#7cb694;border-radius:2px;position:relative"><b style="position:absolute;left:3px;top:3px;width:6px;height:3px;border-left:1.6px solid #070908;border-bottom:1.6px solid #070908;transform:rotate(-45deg)"></b></i><span style="font:700 10px/1.15 Helvetica,Arial,sans-serif;color:#7cb694">Banked</span></span>
+<span style="width:140px;flex:none;display:flex;gap:4px">
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i></span></button>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.07);background:#0e120f">
+<img src="uploads/sleeve-mario.jpg" alt="Super Mario Bros. 35 soundtrack" style="width:40px;height:40px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">Super Mario Bros. Theme</span><span style="font:400 10px/1.1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Koji Kondo, cover-style arrangement, 200 bpm</span></div>
+<span style="width:30px;flex:none;text-align:right;font:700 13px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">5</span>
+<span style="width:46px;flex:none;text-align:right;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">3.3&ndash;6.2</span>
+<span style="width:98px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #6c7f75;border-radius:2px"></i><span style="font:600 10px/1.15 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.75)">Needs work</span></span>
+<span style="width:140px;flex:none;display:flex;gap:4px">
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i></span></button>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.09)">
+<span style="width:40px;height:40px;flex:none;background:#171e1a;border:1px solid rgba(233,237,231,.12);border-radius:2px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
+<span style="position:absolute;left:0;right:0;top:11px;display:flex;flex-direction:column;gap:4px;opacity:.32"><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i></span>
+<span style="position:relative;font:400 20px/1.15 Georgia,serif;color:#E9EDE7">C</span>
+</span>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:600 14px/1.15 Fraunces,Georgia,serif;color:#E9EDE7">C Major Scale</span><span style="font:400 10px/1.1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Technique drill, one octave, both hands, 70 bpm</span></div>
+<span style="width:30px;flex:none;text-align:right;font:700 13px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">3</span>
+<span style="width:46px;flex:none;text-align:right;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">3.8</span>
+<span style="width:98px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:13px;height:13px;flex:none;border:1.6px solid #6c7f75;border-radius:2px"></i><span style="font:600 10px/1.15 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.75)">Needs work</span></span>
+<span style="width:140px;flex:none;display:flex"><button style="width:140px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;border-radius:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif;color:#6c7f75">1 TIER</span><span style="display:flex;gap:3px"><i style="width:5px;height:5px;background:#E9EDE7"></i><i style="width:5px;height:5px;border:1px solid #6c7f75"></i><i style="width:5px;height:5px;border:1px solid #6c7f75"></i></span></button></span>
+</div>
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid rgba(233,237,231,.09)">
+<button style="height:44px;padding:0;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><i style="display:block;width:7px;height:7px;border-right:1.6px solid #7cb694;border-bottom:1.6px solid #7cb694;transform:rotate(45deg)"></i><span style="font:600 11px/1 Helvetica,Arial,sans-serif;color:#7cb694">Show the other 8 in Learning</span></button>
+<span style="font:400 10.5px/1 Helvetica,Arial,sans-serif;color:#6c7f75">Want a new song? Ask Claude to curate it.</span>
+</div>
+
+<div style="display:flex;gap:12px;padding:14px">
+<div style="flex:1;background:#121814;border:1px solid rgba(233,237,231,.1);border-radius:4px;padding:11px 12px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center"><span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:rgba(233,237,231,.55)">TODAY</span><span style="margin-left:auto;font:400 9.5px/1 ui-monospace,Menlo,monospace;color:#6c7f75">1 of 3 done</span></div>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:11px;height:11px;flex:none;border:1.5px solid #6c7f75;border-radius:2px"></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Master a section</span><span style="margin-left:auto;font:700 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">+60</span></button>
+<button style="height:44px;border:1px solid rgba(124,182,148,.35);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:11px;height:11px;flex:none;background:#7cb694;border-radius:2px;position:relative"><b style="position:absolute;left:2px;top:2px;width:5px;height:2.5px;border-left:1.5px solid #0e120f;border-bottom:1.5px solid #0e120f;transform:rotate(-45deg)"></b></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#7cb694">10 real minutes, done</span><span style="margin-left:auto;font:700 10px/1 ui-monospace,Menlo,monospace;color:#7cb694">+60</span></button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:11px;height:11px;flex:none;border:1.5px solid #6c7f75;border-radius:2px"></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">One clean run</span><span style="margin-left:auto;font:700 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">+60</span></button>
+</div>
+<div style="flex:1;background:#121814;border:1px solid rgba(233,237,231,.1);border-radius:4px;padding:11px 12px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center"><span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:rgba(233,237,231,.55)">MISSION</span><span style="margin-left:auto;font:400 9.5px/1 ui-monospace,Menlo,monospace;color:#6c7f75">+150 each</span></div>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:11px;height:11px;flex:none;border:1.5px solid #6c7f75;border-radius:2px"></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Make one song truly yours</span></button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:11px;height:11px;flex:none;border:1.5px solid #6c7f75;border-radius:2px"></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Bank two song proofs</span></button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:11px;height:11px;flex:none;border:1.5px solid #6c7f75;border-radius:2px"></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Three practice days</span></button>
+</div>
+</div>
+
+<div style="display:flex;gap:12px;padding:0 14px 14px">
+<div style="width:298px;flex:none;background:#121814;border:1px solid rgba(233,237,231,.1);border-radius:4px;padding:11px 12px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:rgba(233,237,231,.55)">FORM CHECK</span><button style="margin-left:auto;width:44px;height:44px;margin:-11px -11px -11px 0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center"><i style="display:block;width:7px;height:7px;border-right:1.6px solid rgba(233,237,231,.6);border-bottom:1.6px solid rgba(233,237,231,.6);transform:rotate(45deg)"></i></button></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 12px">
+<span style="display:flex;align-items:center;gap:6px;font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.78)"><i style="display:block;width:7px;height:7px;flex:none;border:1.5px solid #6c7f75"></i>Balanced seat and feet</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.78)"><i style="display:block;width:7px;height:7px;flex:none;border:1.5px solid #6c7f75"></i>Neutral wrist</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.78)"><i style="display:block;width:7px;height:7px;flex:none;border:1.5px solid #6c7f75"></i>Relaxed shoulders</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.78)"><i style="display:block;width:7px;height:7px;flex:none;border:1.5px solid #6c7f75"></i>Curved fingers</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.78)"><i style="display:block;width:7px;height:7px;flex:none;border:1.5px solid #6c7f75"></i>No visible tension</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<span style="font:400 10.5px/1.35 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.6)">Camera angle: torso, forearms, wrists and keys all in frame.</span>
+<span style="display:flex;align-items:flex-start;gap:6px"><i style="display:block;width:0;height:0;flex:none;margin-top:2px;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:8px solid #f0ce7f"></i><span style="font:600 10.5px/1.35 Helvetica,Arial,sans-serif;color:#f0ce7f">Recurring pain or uncertainty means show a human teacher.</span></span>
+</div>
+<div style="display:flex;gap:7px">
+<button style="height:44px;flex:1;border:1px solid rgba(124,182,148,.5);background:transparent;color:#7cb694;font:700 11.5px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Done, I watched it</button>
+<button style="height:44px;padding:0 12px;border:1px solid rgba(233,237,231,.16);background:transparent;color:rgba(233,237,231,.7);font:400 11.5px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Not today</button>
+</div>
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:12px">
+<div style="background:#121814;border:1px solid rgba(233,237,231,.1);border-radius:4px;padding:11px 12px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:rgba(233,237,231,.55)">PRACTICE, LAST 7 DAYS</span><button style="margin-left:auto;width:44px;height:44px;margin:-11px -11px -11px 0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center"><i style="display:block;width:7px;height:7px;border-right:1.6px solid rgba(233,237,231,.6);border-bottom:1.6px solid rgba(233,237,231,.6);transform:rotate(45deg)"></i></button></div>
+<div style="margin-top:10px;display:flex;align-items:flex-end;gap:7px;height:48px">
+<span style="flex:1;height:14%;background:#26312c;border-radius:1px"></span>
+<span style="flex:1;height:38%;background:#26312c;border-radius:1px"></span>
+<span style="flex:1;height:9%;background:#26312c;border-radius:1px"></span>
+<span style="flex:1;height:52%;background:#26312c;border-radius:1px"></span>
+<span style="flex:1;height:22%;background:#26312c;border-radius:1px"></span>
+<span style="flex:1;height:0;border-top:1px dashed #6c7f75"></span>
+<span style="flex:1;height:74%;background:#7cb694;border-radius:1px"></span>
+</div>
+<div style="margin-top:6px;display:flex;gap:7px;font:400 9px/1 ui-monospace,Menlo,monospace;color:#6c7f75"><span style="flex:1;text-align:center">M</span><span style="flex:1;text-align:center">T</span><span style="flex:1;text-align:center">W</span><span style="flex:1;text-align:center">T</span><span style="flex:1;text-align:center">F</span><span style="flex:1;text-align:center">S</span><span style="flex:1;text-align:center;color:#E9EDE7">today</span></div>
+</div>
+<div style="background:#121814;border:1px solid rgba(233,237,231,.1);border-radius:4px;padding:11px 12px;display:flex;flex-direction:column;gap:7px">
+<span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:rgba(233,237,231,.55)">YOUR PATH</span>
+<span style="font:600 15px/1.2 Fraunces,Georgia,serif;color:#E9EDE7">Chords from a symbol</span>
+<span style="font:400 10.5px/1.35 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.6)">Skill 2 of 5. Stage: independent, one stage short of retained.</span>
+<span style="display:flex;align-items:center;gap:4px">
+<i style="display:block;flex:1;max-width:22px;height:4px;background:#7cb694"></i>
+<i style="display:block;flex:1;max-width:22px;height:4px;background:#7cb694"></i>
+<i style="display:block;flex:1;max-width:22px;height:4px;background:#7cb694"></i>
+<i style="display:block;flex:1;max-width:22px;height:4px;background:#7cb694"></i>
+<i style="display:block;flex:1;max-width:22px;height:4px;background:#26312c"></i>
+<span style="margin-left:4px;font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#6c7f75">4 OF 5 STAGES</span>
+</span>
+<button style="height:44px;border:1px solid rgba(124,182,148,.5);background:transparent;color:#7cb694;font:700 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Continue</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Turns 2 and 1 kept below for reference.</p>
+</section>
+
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Console base, Ledger rows, Conservatory ground. All 51 controls, plus three states and a ground comparison.</span></div>
+<div class="dv-opts" style="flex-wrap:wrap;gap:40px">
+
+<div class="dv-opt" id="2a">
+<div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a><span><b style="color:#f2ede6">Main screen</b>. Fixed rail carries status, progress, search and all 15 tools. Green appears only as a rule, a dot, a tab underline and one filled button.</span></div>
+<div class="dv-card" style="width:756px;background:#0A0D0B;border-color:rgba(233,237,231,.1)">
+<div class="fold"><span>393PX FOLD</span></div>
+<div style="display:flex;align-items:stretch;min-height:1080px">
+
+<div style="width:186px;flex:none;background:#0c100e;border-right:1px solid rgba(233,237,231,.1);display:flex;flex-direction:column">
+<div style="padding:14px 14px 12px;display:flex;flex-direction:column;gap:9px;border-bottom:1px solid rgba(233,237,231,.08)">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<span style="font:700 16px/1 Helvetica,Arial,sans-serif;letter-spacing:-.02em;color:#E9EDE7">Keys</span>
+<button style="height:44px;padding:0 12px;border:1px solid rgba(233,237,231,.2);background:transparent;border-radius:3px;color:#E9EDE7;font:600 11px/1 Helvetica,Arial,sans-serif;cursor:pointer">Library</button>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<span style="font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#6c7f75">NOW PLAYING</span>
+<span style="font:600 11.5px/1.2 Helvetica,Arial,sans-serif;color:#E9EDE7">Nothing loaded</span>
+</div>
+<div style="display:flex;align-items:flex-start;gap:7px;padding:8px;background:#121814;border:1px solid rgba(233,237,231,.09);border-radius:3px">
+<i style="display:block;width:9px;height:9px;flex:none;margin-top:1px;border:1.6px solid #f0ce7f;border-radius:50%"></i>
+<div style="display:flex;flex-direction:column;gap:3px">
+<span style="font:700 10px/1 Helvetica,Arial,sans-serif;color:#f0ce7f">No keyboard</span>
+<span style="font:400 9.5px/1.35 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.55)">Screen taps. Plug the P-45 in for the real thing.</span>
+</div>
+</div>
+</div>
+
+<div style="padding:12px 14px;display:flex;flex-direction:column;gap:8px;border-bottom:1px solid rgba(233,237,231,.08)">
+<div style="display:flex;align-items:baseline;justify-content:space-between">
+<span style="font:700 20px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Level 1</span>
+<span style="font:700 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.65)">80/100</span>
+</div>
+<span style="display:block;height:5px;background:rgba(233,237,231,.12);border-radius:3px;overflow:hidden"><i style="display:block;width:80%;height:100%;background:#7cb694"></i></span>
+<div style="display:flex;align-items:center;gap:7px">
+<i style="display:block;width:8px;height:8px;background:#7cb694;border-radius:2px"></i>
+<span style="font:600 10.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">1 day rhythm</span>
+<span style="font:400 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">best 1</span>
+</div>
+</div>
+
+<div style="padding:12px 14px;border-bottom:1px solid rgba(233,237,231,.08)">
+<div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 10px;background:#121814;border:1px solid rgba(233,237,231,.12);border-radius:4px">
+<i style="display:block;width:11px;height:11px;flex:none;border:1.6px solid rgba(233,237,231,.5);border-radius:50%"></i>
+<span style="font:400 12px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.45)">Search all songs</span>
+</div>
+</div>
+
+<div style="padding:12px 10px;display:flex;flex-direction:column;gap:3px;border-bottom:1px solid rgba(233,237,231,.08)">
+<button style="height:44px;border:0;background:transparent;display:flex;align-items:center;gap:8px;padding:0 4px;cursor:pointer">
+<i style="display:block;width:10px;height:10px;flex:none;border:1.6px solid #7cb694"></i>
+<span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#E9EDE7">LEARN</span>
+<span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">3</span>
+</button>
+<button style="height:44px;border:0;border-left:3px solid #7cb694;background:#121814;text-align:left;padding:0 10px 0 11px;color:#E9EDE7;font:700 12px/1 Helvetica,Arial,sans-serif;border-radius:0 3px 3px 0;cursor:pointer">My path</button>
+<button style="height:44px;border:0;border-left:3px solid transparent;background:transparent;text-align:left;padding:0 10px 0 11px;color:rgba(233,237,231,.75);font:400 12px/1 Helvetica,Arial,sans-serif;cursor:pointer">Lessons</button>
+<button style="height:44px;border:0;border-left:3px solid transparent;background:transparent;text-align:left;padding:0 10px 0 11px;color:rgba(233,237,231,.75);font:400 12px/1 Helvetica,Arial,sans-serif;cursor:pointer">Sight reading</button>
+</div>
+
+<div style="padding:12px 10px;display:flex;flex-direction:column;gap:3px;border-bottom:1px solid rgba(233,237,231,.08)">
+<button style="height:44px;border:0;background:transparent;display:flex;align-items:center;gap:8px;padding:0 4px;cursor:pointer">
+<i style="display:block;width:10px;height:10px;flex:none;border:1.6px solid rgba(233,237,231,.6);border-radius:50%"></i>
+<span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#E9EDE7">PRACTISE</span>
+<span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">9</span>
+</button>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:3px">
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;color:#E9EDE7;font:600 10.5px/1.2 Helvetica,Arial,sans-serif;cursor:pointer;padding:0 4px">Quick win</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;color:#E9EDE7;font:600 10.5px/1.2 Helvetica,Arial,sans-serif;cursor:pointer;padding:0 4px">Improve a song</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;color:#E9EDE7;font:600 10.5px/1.2 Helvetica,Arial,sans-serif;cursor:pointer;padding:0 4px">Skill workout</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;color:#E9EDE7;font:600 10.5px/1.2 Helvetica,Arial,sans-serif;cursor:pointer;padding:0 4px">Rhythm tap</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;color:#E9EDE7;font:600 10.5px/1.2 Helvetica,Arial,sans-serif;cursor:pointer;padding:0 4px">Melody echo</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;color:#E9EDE7;font:600 10.5px/1.2 Helvetica,Arial,sans-serif;cursor:pointer;padding:0 4px">Improv</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;color:#E9EDE7;font:600 10.5px/1.2 Helvetica,Arial,sans-serif;cursor:pointer;padding:0 4px">12 keys</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;color:#E9EDE7;font:600 10.5px/1.2 Helvetica,Arial,sans-serif;cursor:pointer;padding:0 4px">Free play</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#121814;border-radius:3px;color:#E9EDE7;font:600 10.5px/1.2 Helvetica,Arial,sans-serif;cursor:pointer;padding:0 4px;grid-column:span 2">Metronome</button>
+</div>
+</div>
+
+<div style="padding:12px 10px;display:flex;flex-direction:column;gap:3px">
+<button style="height:44px;border:0;background:transparent;display:flex;align-items:center;gap:8px;padding:0 4px;cursor:pointer">
+<i style="display:block;width:10px;height:10px;flex:none;border:1.6px solid rgba(233,237,231,.6);transform:rotate(45deg)"></i>
+<span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#E9EDE7">TOOLS</span>
+<span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">5</span>
+</button>
+<button style="height:44px;border:0;background:transparent;text-align:left;padding:0 14px;color:rgba(233,237,231,.75);font:400 12px/1 Helvetica,Arial,sans-serif;cursor:pointer">Trophies</button>
+<button style="height:44px;border:0;background:transparent;text-align:left;padding:0 14px;color:rgba(233,237,231,.75);font:400 12px/1 Helvetica,Arial,sans-serif;cursor:pointer">Takes</button>
+<button style="height:44px;border:0;background:transparent;padding:0 14px;display:flex;align-items:center;gap:8px;cursor:pointer"><span style="font:400 12px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.75)">Voice</span><span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">Grand</span></button>
+<button style="height:44px;border:0;background:transparent;text-align:left;padding:0 14px;color:rgba(233,237,231,.75);font:400 12px/1.2 Helvetica,Arial,sans-serif;cursor:pointer">Latency calibration</button>
+<button style="height:44px;border:0;background:transparent;text-align:left;padding:0 14px;color:rgba(233,237,231,.75);font:400 12px/1.2 Helvetica,Arial,sans-serif;cursor:pointer">Touch diagnostic</button>
+</div>
+</div>
+
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+
+<div style="display:flex;align-items:stretch;border-bottom:1px solid rgba(233,237,231,.1)">
+<button style="flex:none;padding:0 14px;height:46px;border:0;border-bottom:2px solid #7cb694;background:#121814;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font:700 12.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Learning</span><span style="font:700 11px/1 ui-monospace,Menlo,monospace;color:#7cb694">12</span></button>
+<button style="flex:none;padding:0 14px;height:46px;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font:400 12.5px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.72)">Repertoire</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6c7f75">1</span></button>
+<button style="flex:none;padding:0 14px;height:46px;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font:400 12.5px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.72)">Hall of fame</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6c7f75">9</span></button>
+<button style="flex:none;padding:0 14px;height:46px;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><span style="font:400 12.5px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.72)">Explore</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6c7f75">17</span></button>
+</div>
+
+<div style="display:flex;gap:12px;padding:14px;position:relative;overflow:hidden">
+<div style="position:absolute;left:-40px;top:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(230,195,74,.17),rgba(230,195,74,0) 68%);pointer-events:none"></div>
+
+<div style="width:240px;flex:none;position:relative;border-radius:4px;overflow:hidden;background:#000">
+<img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="width:240px;height:240px;object-fit:cover;display:block">
+<div style="position:absolute;left:0;right:0;bottom:0;padding:16px 13px 12px;background:linear-gradient(rgba(10,13,11,0),rgba(10,13,11,.9) 14px,rgba(10,13,11,.97) 34px,rgba(10,13,11,.99))">
+<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><i style="display:block;width:9px;height:9px;background:#7cb694;border-radius:2px"></i><span style="font:700 10.5px/1 Helvetica,Arial,sans-serif;color:#7cb694">One clean day banked</span></div>
+<div style="font:700 21px/1.05 Helvetica,Arial,sans-serif;letter-spacing:-.02em;color:#fff">F&uuml;r Elise</div>
+<div style="margin-top:4px;font:400 10.5px/1.25 Helvetica,Arial,sans-serif;color:rgba(255,255,255,.72)">Beethoven, the full rondo, 140 bpm</div>
+<div style="margin-top:5px;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.8)">79 plays &middot; 4.2&ndash;5.7</div>
+<div style="display:flex;gap:5px;margin-top:9px">
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.5);color:#fff;cursor:pointer;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Easy</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i></span></button>
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.5);color:#fff;cursor:pointer;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Med</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i></span></button>
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.5);color:#fff;cursor:pointer;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Hard</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i></span></button>
+</div>
+</div>
+</div>
+
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:10px;position:relative">
+<div style="background:#121814;border:1px solid rgba(233,237,231,.1);border-left:3px solid #7cb694;border-radius:0 4px 4px 0;padding:12px 13px;display:flex;flex-direction:column;gap:9px">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:#7cb694">DO THIS NEXT</span>
+<span style="margin-left:auto;display:flex;align-items:center;gap:5px"><i style="display:block;width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:8px solid #f0ce7f"></i><span style="font:700 10px/1 Helvetica,Arial,sans-serif;color:#f0ce7f">Decays Thursday</span></span>
+</div>
+<div style="display:flex;gap:11px">
+<div style="width:56px;height:56px;flex:none;background:#0c100e;border:1px solid rgba(233,237,231,.14);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+<span style="position:absolute;left:0;right:0;top:16px;display:flex;flex-direction:column;gap:5px;opacity:.3"><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i></span>
+<span style="position:relative;font:400 22px/1.15 Georgia,serif;color:#E9EDE7">Cm7</span>
+</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px">
+<h2 style="margin:0;font:700 16px/1.15 Helvetica,Arial,sans-serif;letter-spacing:-.015em;color:#E9EDE7">Check &ldquo;Chords from a symbol&rdquo; is still there</h2>
+<p style="margin:0;font:400 11px/1.35 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.6)">Last tested 2 days ago. Stage: independent. Two minutes banks it.</p>
+</div>
+</div>
+<div style="display:flex;gap:7px">
+<button style="height:44px;padding:0 18px;border:0;background:#2E6B47;color:#fff;font:700 12.5px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Test it now</button>
+<button style="height:44px;padding:0 14px;border:1px solid rgba(233,237,231,.22);background:transparent;color:#E9EDE7;font:600 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Freeze the skill</button>
+</div>
+</div>
+
+<div style="background:#121814;border:1px solid rgba(233,237,231,.1);border-radius:4px;padding:11px 13px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:rgba(233,237,231,.55)">FORM CHECK</span>
+<button style="margin-left:auto;width:44px;height:44px;margin:-11px -11px -11px 0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center"><i style="display:block;width:7px;height:7px;border-right:1.6px solid rgba(233,237,231,.6);border-bottom:1.6px solid rgba(233,237,231,.6);transform:rotate(45deg)"></i></button>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 12px">
+<span style="display:flex;align-items:center;gap:6px;font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.78)"><i style="display:block;width:7px;height:7px;flex:none;border:1.5px solid #6c7f75"></i>Balanced seat and feet</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.78)"><i style="display:block;width:7px;height:7px;flex:none;border:1.5px solid #6c7f75"></i>Neutral wrist</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.78)"><i style="display:block;width:7px;height:7px;flex:none;border:1.5px solid #6c7f75"></i>Relaxed shoulders</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.78)"><i style="display:block;width:7px;height:7px;flex:none;border:1.5px solid #6c7f75"></i>Curved fingers</span>
+<span style="display:flex;align-items:center;gap:6px;font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.78)"><i style="display:block;width:7px;height:7px;flex:none;border:1.5px solid #6c7f75"></i>No visible tension</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:4px;padding:2px 0 1px">
+<span style="font:400 10.5px/1.35 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.6)">Camera angle: torso, forearms, wrists and keys all in frame.</span>
+<span style="display:flex;align-items:flex-start;gap:6px"><i style="display:block;width:0;height:0;flex:none;margin-top:2px;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:8px solid #f0ce7f"></i><span style="font:600 10.5px/1.35 Helvetica,Arial,sans-serif;color:#f0ce7f">Recurring pain or uncertainty means show a human teacher.</span></span>
+</div>
+<div style="display:flex;gap:7px">
+<button style="height:44px;flex:1;border:1px solid rgba(124,182,148,.5);background:transparent;color:#7cb694;font:700 11.5px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Done, I watched it</button>
+<button style="height:44px;padding:0 14px;border:1px solid rgba(233,237,231,.16);background:transparent;color:rgba(233,237,231,.7);font:400 11.5px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Not today</button>
+</div>
+</div>
+</div>
+</div>
+
+<div style="display:flex;align-items:center;gap:10px;padding:0 14px 5px">
+<span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:#E9EDE7">LEARNING, WEAKEST FIRST</span>
+<span style="font:700 11px/1 ui-monospace,Menlo,monospace;color:#7cb694">12</span>
+<div style="margin-left:auto;display:flex;align-items:center;gap:0;padding:0">
+<span style="font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#6c7f75;margin-right:8px">EXPLORE SORT</span>
+<button style="height:44px;padding:0 12px;white-space:nowrap;border:1px solid rgba(233,237,231,.22);border-radius:3px 0 0 3px;background:#1a211d;color:#E9EDE7;font:700 10.5px/1 Helvetica,Arial,sans-serif;cursor:pointer">A to Z</button>
+<button style="height:44px;padding:0 12px;white-space:nowrap;border:1px solid rgba(233,237,231,.14);border-left:0;border-radius:0 3px 3px 0;background:transparent;color:rgba(233,237,231,.6);font:400 10.5px/1 Helvetica,Arial,sans-serif;cursor:pointer">Difficulty</button>
+</div>
+</div>
+
+<div style="display:flex;gap:8px;padding:0 14px 6px;font:700 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#6c7f75;border-bottom:1px solid rgba(233,237,231,.09);padding-bottom:6px">
+<span style="width:40px;flex:none"></span><span style="flex:1;min-width:0">SONG</span><span style="width:30px;text-align:right;flex:none">PLAYS</span><span style="width:46px;text-align:right;flex:none">DIFF</span><span style="width:96px;flex:none">STATE</span><span style="width:140px;flex:none">TIERS</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.07);background:#0e120f">
+<img src="uploads/sleeve-still-dre.jpg" alt="Dr. Dre, 2001" style="width:40px;height:40px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:700 13px/1.1 Helvetica,Arial,sans-serif;color:#E9EDE7">Still D.R.E.</span><span style="font:400 10px/1.1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Dr. Dre, cover-style arrangement, 93 bpm</span></div>
+<span style="width:30px;flex:none;text-align:right;font:700 13px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">39</span>
+<span style="width:46px;flex:none;text-align:right;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">2.5&ndash;6.5</span>
+<span style="width:78px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;flex:none;background:#7cb694;border-radius:2px"></i><span style="font:700 10px/1.15 Helvetica,Arial,sans-serif;color:#7cb694">Banked, 1 clean day</span></span>
+<span style="width:140px;flex:none;display:flex;gap:4px">
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i></span></button>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.07)">
+<img src="uploads/sleeve-mario.jpg" alt="Super Mario Bros. 35 soundtrack" style="width:40px;height:40px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:700 13px/1.1 Helvetica,Arial,sans-serif;color:#E9EDE7">Super Mario Bros. Theme</span><span style="font:400 10px/1.1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Koji Kondo, cover-style arrangement, 200 bpm</span></div>
+<span style="width:30px;flex:none;text-align:right;font:700 13px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">5</span>
+<span style="width:46px;flex:none;text-align:right;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">3.3&ndash;6.2</span>
+<span style="width:78px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;flex:none;border:1.6px solid #f0ce7f;border-radius:50%"></i><span style="font:600 10px/1.15 Helvetica,Arial,sans-serif;color:#f0ce7f">Needs work</span></span>
+<span style="width:140px;flex:none;display:flex;gap:4px">
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#E9EDE7"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i></span></button>
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;color:#E9EDE7;cursor:pointer;border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i><i style="width:4px;height:4px;border:1px solid #6c7f75"></i></span></button>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.07);background:#0e120f">
+<span style="width:40px;height:40px;flex:none;background:#171e1a;border:1px solid rgba(233,237,231,.12);border-radius:2px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
+<span style="position:absolute;left:0;right:0;top:11px;display:flex;flex-direction:column;gap:4px;opacity:.32"><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i></span>
+<span style="position:relative;font:400 20px/1.15 Georgia,serif;color:#E9EDE7">C</span>
+</span>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:700 13px/1.1 Helvetica,Arial,sans-serif;color:#E9EDE7">C Major Scale</span><span style="font:400 10px/1.1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Technique drill, one octave, both hands, 70 bpm</span></div>
+<span style="width:30px;flex:none;text-align:right;font:700 13px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">3</span>
+<span style="width:46px;flex:none;text-align:right;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">3.8</span>
+<span style="width:78px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;flex:none;border:1.6px solid #f0ce7f;border-radius:50%"></i><span style="font:600 10px/1.15 Helvetica,Arial,sans-serif;color:#f0ce7f">Needs work</span></span>
+<span style="width:140px;flex:none;display:flex"><button style="width:140px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;border-radius:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif;color:#6c7f75">1 TIER</span><span style="display:flex;gap:3px"><i style="width:5px;height:5px;background:#E9EDE7"></i><i style="width:5px;height:5px;border:1px solid #6c7f75"></i><i style="width:5px;height:5px;border:1px solid #6c7f75"></i></span></button></span>
+</div>
+
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.09)">
+<span style="width:40px;height:40px;flex:none;background:#171e1a;border:1px solid rgba(233,237,231,.12);border-radius:2px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
+<span style="position:absolute;left:0;right:0;top:11px;display:flex;flex-direction:column;gap:4px;opacity:.32"><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i></span>
+<span style="position:relative;font:400 20px/1.15 Georgia,serif;color:#E9EDE7">HB</span>
+</span>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px"><span style="font:700 13px/1.1 Helvetica,Arial,sans-serif;color:#E9EDE7">Happy Birthday</span><span style="font:400 10px/1.1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Traditional, no honest recording, designed plate</span></div>
+<span style="width:30px;flex:none;text-align:right;font:700 13px/1 ui-monospace,Menlo,monospace;color:#E9EDE7">24</span>
+<span style="width:46px;flex:none;text-align:right;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">2.9</span>
+<span style="width:78px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;flex:none;background:#7cb694;border-radius:2px"></i><span style="font:700 10px/1.15 Helvetica,Arial,sans-serif;color:#7cb694">Banked, 1 clean day</span></span>
+<span style="width:140px;flex:none;display:flex"><button style="width:140px;height:44px;border:1px solid rgba(233,237,231,.14);background:#171e1a;border-radius:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif;color:#6c7f75">1 TIER</span><span style="display:flex;gap:3px"><i style="width:5px;height:5px;background:#E9EDE7"></i><i style="width:5px;height:5px;background:#E9EDE7"></i><i style="width:5px;height:5px;border:1px solid #6c7f75"></i></span></button></span>
+</div>
+
+<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.09)">
+<button style="height:44px;padding:0;border:0;background:transparent;display:flex;align-items:center;gap:7px;cursor:pointer"><i style="display:block;width:7px;height:7px;border-right:1.6px solid #7cb694;border-bottom:1.6px solid #7cb694;transform:rotate(45deg)"></i><span style="font:600 11px/1 Helvetica,Arial,sans-serif;color:#7cb694">Show the other 8 in Learning</span></button>
+<span style="font:400 10.5px/1 Helvetica,Arial,sans-serif;color:#6c7f75">Want a new song? Ask Claude to curate it.</span>
+</div>
+
+<div style="display:flex;gap:12px;padding:14px">
+<div style="flex:1;background:#121814;border:1px solid rgba(233,237,231,.1);border-radius:4px;padding:11px 12px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center"><span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:rgba(233,237,231,.55)">TODAY</span><span style="margin-left:auto;font:400 9.5px/1 ui-monospace,Menlo,monospace;color:#6c7f75">1 of 3 done</span></div>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:9px;height:9px;flex:none;border:1.5px solid #6c7f75"></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Master a section</span><span style="margin-left:auto;font:700 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">+60</span></button>
+<button style="height:44px;border:1px solid rgba(124,182,148,.35);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:9px;height:9px;flex:none;background:#7cb694"></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#7cb694">10 real minutes, done</span><span style="margin-left:auto;font:700 10px/1 ui-monospace,Menlo,monospace;color:#7cb694">+60</span></button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:9px;height:9px;flex:none;border:1.5px solid #6c7f75"></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">One clean run</span><span style="margin-left:auto;font:700 10px/1 ui-monospace,Menlo,monospace;color:#6c7f75">+60</span></button>
+</div>
+<div style="flex:1;background:#121814;border:1px solid rgba(233,237,231,.1);border-radius:4px;padding:11px 12px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center"><span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:rgba(233,237,231,.55)">MISSION</span><span style="margin-left:auto;font:400 9.5px/1 ui-monospace,Menlo,monospace;color:#6c7f75">+150 each</span></div>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:9px;height:9px;flex:none;border:1.5px solid #6c7f75"></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Make one song truly yours</span></button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:9px;height:9px;flex:none;border:1.5px solid #6c7f75"></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Bank two song proofs</span></button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.1);background:#0e120f;border-radius:3px;display:flex;align-items:center;gap:8px;padding:0 10px;cursor:pointer"><i style="display:block;width:9px;height:9px;flex:none;border:1.5px solid #6c7f75"></i><span style="font:600 11.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Three practice days</span></button>
+</div>
+</div>
+
+<div style="display:flex;gap:12px;padding:0 14px 16px">
+<div style="flex:1;background:#121814;border:1px solid rgba(233,237,231,.1);border-radius:4px;padding:11px 12px">
+<div style="display:flex;align-items:center;gap:8px"><span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:rgba(233,237,231,.55)">PRACTICE, LAST 7 DAYS</span><button style="margin-left:auto;width:44px;height:44px;margin:-11px -11px -11px 0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center"><i style="display:block;width:7px;height:7px;border-right:1.6px solid rgba(233,237,231,.6);border-bottom:1.6px solid rgba(233,237,231,.6);transform:rotate(45deg)"></i></button></div>
+<div style="margin-top:12px;display:flex;align-items:flex-end;gap:8px;height:56px">
+<span style="flex:1;height:14%;background:#26312c;border-radius:1px"></span>
+<span style="flex:1;height:38%;background:#26312c;border-radius:1px"></span>
+<span style="flex:1;height:9%;background:#26312c;border-radius:1px"></span>
+<span style="flex:1;height:52%;background:#26312c;border-radius:1px"></span>
+<span style="flex:1;height:22%;background:#26312c;border-radius:1px"></span>
+<span style="flex:1;height:0;border-top:1px dashed #6c7f75"></span>
+<span style="flex:1;height:74%;background:#7cb694;border-radius:1px"></span>
+</div>
+<div style="margin-top:6px;display:flex;gap:8px;font:400 9px/1 ui-monospace,Menlo,monospace;color:#6c7f75"><span style="flex:1;text-align:center">M</span><span style="flex:1;text-align:center">T</span><span style="flex:1;text-align:center">W</span><span style="flex:1;text-align:center">T</span><span style="flex:1;text-align:center">F</span><span style="flex:1;text-align:center">S</span><span style="flex:1;text-align:center;color:#E9EDE7">today</span></div>
+</div>
+<div style="width:246px;flex:none;background:#121814;border:1px solid rgba(233,237,231,.1);border-radius:4px;padding:11px 12px;display:flex;flex-direction:column;gap:8px">
+<span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:rgba(233,237,231,.55)">YOUR PATH</span>
+<span style="font:700 14px/1.2 Helvetica,Arial,sans-serif;color:#E9EDE7">Chords from a symbol</span>
+<span style="font:400 10.5px/1.35 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.6)">Skill 2 of 5. Stage: independent, one stage short of retained.</span>
+<span style="display:flex;align-items:center;gap:4px">
+<i style="display:block;width:100%;max-width:22px;height:4px;background:#7cb694"></i>
+<i style="display:block;width:100%;max-width:22px;height:4px;background:#7cb694"></i>
+<i style="display:block;width:100%;max-width:22px;height:4px;background:#7cb694"></i>
+<i style="display:block;width:100%;max-width:22px;height:4px;background:#7cb694"></i>
+<i style="display:block;width:100%;max-width:22px;height:4px;background:#26312c"></i>
+<span style="margin-left:4px;font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#6c7f75">4 OF 5 STAGES</span>
+</span>
+<button style="margin-top:auto;height:44px;border:1px solid rgba(124,182,148,.5);background:transparent;color:#7cb694;font:700 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Continue</button>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="2b">
+<div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a><span><b style="color:#f2ede6">States</b>. Content area only, the rail is unchanged in all three.</span></div>
+<div style="display:flex;flex-direction:column;gap:22px">
+
+<div class="dv-card" style="width:570px;background:#0A0D0B;border-color:rgba(233,237,231,.1)">
+<div style="padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.09);font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#6c7f75">EMPTY LIBRARY</div>
+<div style="display:flex;align-items:stretch;border-bottom:1px solid rgba(233,237,231,.1)">
+<div style="padding:0 14px;height:46px;display:flex;align-items:center;gap:7px;border-bottom:2px solid #7cb694;background:#121814"><span style="font:700 12.5px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">Learning</span><span style="font:700 11px/1 ui-monospace,Menlo,monospace;color:#6c7f75">0</span></div>
+<div style="padding:0 14px;height:46px;display:flex;align-items:center;gap:7px"><span style="font:400 12.5px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Repertoire</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6c7f75">0</span></div>
+<div style="padding:0 14px;height:46px;display:flex;align-items:center;gap:7px"><span style="font:400 12.5px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Hall of fame</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6c7f75">0</span></div>
+<div style="padding:0 14px;height:46px;display:flex;align-items:center;gap:7px"><span style="font:400 12.5px/1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Explore</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6c7f75">0</span></div>
+</div>
+<div style="display:flex;gap:14px;padding:20px 14px 22px">
+<div style="width:140px;height:140px;flex:none;border:1px dashed rgba(233,237,231,.22);border-radius:4px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
+<span style="position:absolute;left:0;right:0;top:46px;display:flex;flex-direction:column;gap:11px;opacity:.22"><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i><i style="height:1px;background:#E9EDE7"></i></span>
+<span style="position:relative;font:400 12px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#6c7f75">NO PLATES YET</span>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:9px;justify-content:center">
+<span style="font:700 18px/1.15 Helvetica,Arial,sans-serif;color:#E9EDE7">No songs in the library yet</span>
+<span style="font:400 11.5px/1.45 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.62)">Charts are hand-curated: split into hands, tempo-mapped, sectioned and fingered. Ask Claude to curate the first one and it lands in Learning with its sleeve.</span>
+<div style="display:flex;gap:7px;margin-top:2px">
+<button style="height:44px;padding:0 16px;border:0;background:#2E6B47;color:#fff;font:700 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Ask Claude to curate a song</button>
+<button style="height:44px;padding:0 14px;border:1px solid rgba(233,237,231,.2);background:transparent;color:#E9EDE7;font:600 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Free play</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="dv-card" style="width:570px;background:#0A0D0B;border-color:rgba(233,237,231,.1)">
+<div style="padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.09);font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#6c7f75">SEARCH RESULTS, SHELVES HIDDEN</div>
+<div style="padding:12px 14px;border-bottom:1px solid rgba(233,237,231,.09);display:flex;align-items:center;gap:10px">
+<div style="flex:1;display:flex;align-items:center;gap:9px;height:44px;padding:0 12px;background:#121814;border:1px solid rgba(124,182,148,.45);border-radius:4px">
+<i style="display:block;width:11px;height:11px;flex:none;border:1.6px solid #7cb694;border-radius:50%"></i>
+<span style="font:600 13px/1 Helvetica,Arial,sans-serif;color:#E9EDE7">hotel</span>
+<span style="width:1px;height:16px;background:#7cb694"></span>
+</div>
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:#6c7f75">3 of 30 groups</span>
+<button style="width:44px;height:44px;border:1px solid rgba(233,237,231,.16);background:transparent;border-radius:3px;color:#E9EDE7;font:400 13px/1 Helvetica,Arial,sans-serif;cursor:pointer">Clear</button>
+</div>
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.07)">
+<img src="uploads/sleeve-hotel-california-8dec6722.jpg" alt="Eagles, Hotel California" style="width:44px;height:44px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="font:700 13px/1.1 Helvetica,Arial,sans-serif;color:#E9EDE7">Hotel California</span>
+<span style="font:400 10px/1.1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Eagles, arranged in A minor, 147 bpm</span>
+</div>
+<span style="flex:none;height:22px;padding:0 8px;border:1px solid rgba(233,237,231,.2);border-radius:2px;display:flex;align-items:center;font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:rgba(233,237,231,.75)">EXPLORE</span>
+<span style="width:82px;flex:none;text-align:right;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">3 tiers &middot; 5.9&ndash;6.9</span>
+<span style="width:90px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;flex:none;border:1.6px solid #6c7f75"></i><span style="font:600 10px/1.15 Helvetica,Arial,sans-serif;color:#6c7f75">Not started</span></span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.07);background:#0e120f">
+<span style="width:44px;height:44px;flex:none;background:#171e1a;border:1px solid rgba(233,237,231,.12);border-radius:2px;display:flex;align-items:center;justify-content:center;font:400 20px/1.15 Georgia,serif;color:#E9EDE7">C</span>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="font:700 13px/1.1 Helvetica,Arial,sans-serif;color:#E9EDE7">C Major Scale</span>
+<span style="font:400 10px/1.1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Technique drill, one octave, both hands, 70 bpm</span>
+</div>
+<span style="flex:none;height:22px;padding:0 8px;border:1px solid rgba(124,182,148,.5);border-radius:2px;display:flex;align-items:center;font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#7cb694">LEARNING</span>
+<span style="width:82px;flex:none;text-align:right;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">3 plays &middot; 3.8</span>
+<span style="width:90px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;flex:none;border:1.6px solid #f0ce7f;border-radius:50%"></i><span style="font:600 10px/1.15 Helvetica,Arial,sans-serif;color:#f0ce7f">Needs work</span></span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.09)">
+<img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="width:44px;height:44px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="font:700 13px/1.1 Helvetica,Arial,sans-serif;color:#E9EDE7">F&uuml;r Elise</span>
+<span style="font:400 10px/1.1 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.5)">Beethoven, the full rondo, 140 bpm</span>
+</div>
+<span style="flex:none;height:22px;padding:0 8px;border:1px solid rgba(233,237,231,.2);border-radius:2px;display:flex;align-items:center;font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:rgba(233,237,231,.75)">HALL OF FAME</span>
+<span style="width:82px;flex:none;text-align:right;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(233,237,231,.7)">79 &middot; 4.2&ndash;5.7</span>
+<span style="width:90px;flex:none;display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;flex:none;background:#7cb694;border-radius:2px"></i><span style="font:700 10px/1.15 Helvetica,Arial,sans-serif;color:#7cb694">Banked</span></span>
+</div>
+<div style="padding:11px 14px;font:400 10.5px/1 Helvetica,Arial,sans-serif;color:#6c7f75">Want a new song? Ask Claude to curate it.</div>
+</div>
+
+<div class="dv-card" style="width:570px;background:#0A0D0B;border-color:rgba(233,237,231,.1)">
+<div style="padding:9px 14px;border-bottom:1px solid rgba(233,237,231,.09);font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#6c7f75">NO MIDI, SCREEN TAPS</div>
+<div style="display:flex;gap:12px;padding:14px">
+<div style="flex:1;background:#121814;border:1px solid rgba(240,206,127,.4);border-radius:4px;padding:13px;display:flex;gap:11px">
+<i style="display:block;width:12px;height:12px;flex:none;margin-top:3px;border:1.8px solid #f0ce7f;border-radius:50%"></i>
+<div style="display:flex;flex-direction:column;gap:6px">
+<span style="font:700 14px/1.15 Helvetica,Arial,sans-serif;color:#f0ce7f">No keyboard detected</span>
+<span style="font:400 11.5px/1.4 Helvetica,Arial,sans-serif;color:rgba(233,237,231,.7)">Screen taps. Plug the P-45 in for the real thing. Scores from taps are kept separately and are not banked as clean days.</span>
+<div style="display:flex;align-items:center;gap:14px;margin-top:2px">
+<span style="display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;border:1.5px solid #6c7f75"></i><span style="font:400 10.5px/1 Helvetica,Arial,sans-serif;color:#6c7f75">USB cable</span></span>
+<span style="display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;border:1.5px solid #6c7f75"></i><span style="font:400 10.5px/1 Helvetica,Arial,sans-serif;color:#6c7f75">Piano powered on</span></span>
+</div>
+</div>
+</div>
+<div style="width:170px;flex:none;display:flex;flex-direction:column;gap:7px;justify-content:center">
+<button style="height:44px;border:1px solid rgba(233,237,231,.2);background:transparent;color:#E9EDE7;font:600 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Look again</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.14);background:transparent;color:rgba(233,237,231,.7);font:400 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Latency calibration</button>
+<button style="height:44px;border:1px solid rgba(233,237,231,.14);background:transparent;color:rgba(233,237,231,.7);font:400 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Touch diagnostic</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="dv-opt" id="2c">
+<div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a><span><b style="color:#f2ede6">Ground comparison</b>. Same sleeve, same two rows, same accent and state ladder. Only ground, panel and ink change.</span></div>
+<div style="display:flex;gap:16px">
+
+<div style="width:236px;display:flex;flex-direction:column;gap:7px">
+<div style="display:flex;align-items:baseline;gap:8px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Conservatory</span><span style="font:400 9.5px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.45)">#0A0D0B</span></div>
+<div style="background:#0A0D0B;border:1px solid rgba(233,237,231,.12);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:10px">
+<div style="position:relative"><div style="position:absolute;left:-6px;top:-6px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(230,195,74,.16),rgba(230,195,74,0) 68%)"></div><img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="position:relative;width:118px;height:118px;object-fit:cover;display:block;border-radius:3px"></div>
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:700 12px/1.1 Helvetica,Arial,sans-serif;color:#E9EDE7">Still D.R.E.</span><i style="display:block;width:8px;height:8px;flex:none;background:#7cb694;border-radius:2px"></i><span style="font:700 9.5px/1 Helvetica,Arial,sans-serif;color:#7cb694">Banked</span></div>
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:700 12px/1.1 Helvetica,Arial,sans-serif;color:#E9EDE7">C Major Scale</span><i style="display:block;width:8px;height:8px;flex:none;border:1.5px solid #f0ce7f;border-radius:50%"></i><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif;color:#f0ce7f">Needs work</span></div>
+<button style="height:44px;border:0;background:#2E6B47;color:#fff;font:700 11.5px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Test it now</button>
+</div>
+</div>
+
+<div style="width:236px;display:flex;flex-direction:column;gap:7px">
+<div style="display:flex;align-items:baseline;gap:8px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Darkroom</span><span style="font:400 9.5px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.45)">#100E0B</span></div>
+<div style="background:#100E0B;border:1px solid rgba(237,233,225,.12);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:10px">
+<div style="position:relative"><div style="position:absolute;left:-6px;top:-6px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(230,195,74,.16),rgba(230,195,74,0) 68%)"></div><img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="position:relative;width:118px;height:118px;object-fit:cover;display:block;border-radius:3px"></div>
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:700 12px/1.1 Helvetica,Arial,sans-serif;color:#EDE9E1">Still D.R.E.</span><i style="display:block;width:8px;height:8px;flex:none;background:#7cb694;border-radius:2px"></i><span style="font:700 9.5px/1 Helvetica,Arial,sans-serif;color:#7cb694">Banked</span></div>
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:700 12px/1.1 Helvetica,Arial,sans-serif;color:#EDE9E1">C Major Scale</span><i style="display:block;width:8px;height:8px;flex:none;border:1.5px solid #f0ce7f;border-radius:50%"></i><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif;color:#f0ce7f">Needs work</span></div>
+<button style="height:44px;border:0;background:#2E6B47;color:#fff;font:700 11.5px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Test it now</button>
+</div>
+</div>
+
+<div style="width:236px;display:flex;flex-direction:column;gap:7px">
+<div style="display:flex;align-items:baseline;gap:8px"><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Eucalypt</span><span style="font:400 9.5px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.45)">#0B0D0C</span></div>
+<div style="background:#0B0D0C;border:1px solid rgba(232,236,234,.12);border-radius:4px;padding:12px;display:flex;flex-direction:column;gap:10px">
+<div style="position:relative"><div style="position:absolute;left:-6px;top:-6px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(230,195,74,.16),rgba(230,195,74,0) 68%)"></div><img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="position:relative;width:118px;height:118px;object-fit:cover;display:block;border-radius:3px"></div>
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:700 12px/1.1 Helvetica,Arial,sans-serif;color:#E8ECEA">Still D.R.E.</span><i style="display:block;width:8px;height:8px;flex:none;background:#7cb694;border-radius:2px"></i><span style="font:700 9.5px/1 Helvetica,Arial,sans-serif;color:#7cb694">Banked</span></div>
+<div style="display:flex;align-items:center;gap:8px"><span style="flex:1;font:700 12px/1.1 Helvetica,Arial,sans-serif;color:#E8ECEA">C Major Scale</span><i style="display:block;width:8px;height:8px;flex:none;border:1.5px solid #f0ce7f;border-radius:50%"></i><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif;color:#f0ce7f">Needs work</span></div>
+<button style="height:44px;border:0;background:#2E6B47;color:#fff;font:700 11.5px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Test it now</button>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<p class="dv-next">Turn 1 kept below for reference.</p>
+</section>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Keys library, three identity directions. Dark. Real save data, real sleeves, 756px viewport width.</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a">
+<div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a><span><b style="color:#f2ede6">Stage</b>. Betting that the sleeve is the interface: one amber instruction, then large cover plates you recognise before you read.</span></div>
+<div class="dv-card" style="width:756px">
+<div class="fold"><span>393PX FOLD</span></div>
+
+<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 20px 10px;background:linear-gradient(#151211,#100e0d);border-bottom:1px solid rgba(255,255,255,.07)">
+<div style="display:flex;align-items:baseline;gap:12px">
+<span style="font:700 17px/1 Helvetica,Arial,sans-serif;letter-spacing:-.02em;color:#f2ede6">Keys</span>
+<span style="font:400 10.5px/1.3 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.45)">Screen taps. Plug the P-45 in for the real thing.</span>
+</div>
+<div style="display:flex;align-items:center;gap:14px">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:rgba(242,237,230,.55)">LVL 1</span>
+<span style="display:block;width:104px;height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden"><i style="display:block;width:80%;height:100%;background:#e8a33d"></i></span>
+<span style="font:700 11px/1 ui-monospace,Menlo,monospace;color:#f2ede6">80<span style="color:rgba(242,237,230,.45)">/100</span></span>
+</div>
+<div style="display:flex;align-items:center;gap:6px;height:26px;padding:0 10px;border:1px solid rgba(255,255,255,.16);border-radius:13px">
+<i style="display:block;width:7px;height:7px;background:#f2ede6;border-radius:2px"></i>
+<span style="font:600 10.5px/1 Helvetica,Arial,sans-serif;color:#f2ede6">1 day rhythm</span>
+<span style="font:400 10.5px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.45)">best 1</span>
+</div>
+</div>
+</div>
+
+<div style="display:flex;gap:0;background:#e8a33d;color:#1a1207">
+<div style="flex:1;padding:18px 20px 16px;display:flex;flex-direction:column;gap:8px">
+<span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;color:rgba(26,18,7,.62)">DO THIS NEXT</span>
+<h2 style="margin:0;font:700 26px/1.08 Helvetica,Arial,sans-serif;letter-spacing:-.025em">Check &ldquo;Chords from a symbol&rdquo; is still there</h2>
+<p style="margin:0;max-width:430px;font:400 12.5px/1.45 Helvetica,Arial,sans-serif;color:rgba(26,18,7,.78)">Last tested 2 days ago. Stage: independent. It decays on Thursday, so a two minute test banks it.</p>
+<div style="display:flex;gap:10px;margin-top:4px">
+<button style="height:44px;padding:0 20px;border:0;border-radius:4px;background:#1a1207;color:#f6e2c2;font:700 13px/1 Helvetica,Arial,sans-serif;cursor:pointer">Test it now</button>
+<button style="height:44px;padding:0 16px;border:1px solid rgba(26,18,7,.4);border-radius:4px;background:transparent;color:#1a1207;font:600 13px/1 Helvetica,Arial,sans-serif;cursor:pointer">Freeze the skill</button>
+</div>
+</div>
+<div style="width:184px;flex:none;background:#1a1207;position:relative;display:flex;align-items:flex-end;padding:14px">
+<div style="position:absolute;left:14px;top:14px;right:14px;bottom:14px;border:1px solid rgba(246,226,194,.16)"></div>
+<div style="position:absolute;left:0;right:0;top:34px;display:flex;flex-direction:column;gap:9px;opacity:.5">
+<i style="height:1px;background:#f6e2c2"></i><i style="height:1px;background:#f6e2c2"></i><i style="height:1px;background:#f6e2c2"></i><i style="height:1px;background:#f6e2c2"></i><i style="height:1px;background:#f6e2c2"></i>
+</div>
+<span style="position:relative;font:400 46px/1.15 Georgia,serif;color:#f6e2c2">Cm7</span>
+</div>
+</div>
+
+<div style="display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.07)">
+<div style="flex:1;display:flex;align-items:center;gap:10px;height:44px;padding:0 14px;background:#1c1917;border:1px solid rgba(255,255,255,.1);border-radius:4px">
+<i style="display:block;width:12px;height:12px;border:1.6px solid rgba(242,237,230,.5);border-radius:50%"></i>
+<span style="font:400 13px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.42)">Search every song, 30 groups</span>
+</div>
+</div>
+
+<div style="padding:16px 20px 0;display:flex;align-items:flex-end;justify-content:space-between">
+<div style="display:flex;align-items:baseline;gap:10px">
+<h3 style="margin:0;font:700 20px/1 Helvetica,Arial,sans-serif;letter-spacing:-.02em;color:#f2ede6">Learning</h3>
+<span style="font:700 13px/1 ui-monospace,Menlo,monospace;color:#e8a33d">12</span>
+<span style="font:400 11px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.4)">weakest first</span>
+</div>
+<span style="font:600 11px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.55)">See all</span>
+</div>
+
+<div style="display:flex;gap:14px;padding:14px 20px 18px;overflow:hidden">
+
+<div style="width:172px;flex:none">
+<div style="width:172px;height:172px;border-radius:3px;overflow:hidden;background:#000;box-shadow:0 8px 22px rgba(0,0,0,.55)"><img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+<div style="margin-top:10px;display:flex;flex-direction:column;gap:5px">
+<span style="font:700 14px/1.15 Helvetica,Arial,sans-serif;color:#f2ede6">F&uuml;r Elise</span>
+<span style="font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.5)">Beethoven, the full rondo, 140 bpm</span>
+<div style="display:flex;align-items:center;gap:8px;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.62)"><span>79 plays</span><span style="color:rgba(242,237,230,.25)">|</span><span>4.2&ndash;5.7</span></div>
+<div style="display:flex;align-items:center;gap:6px;margin-top:2px">
+<i style="display:block;width:9px;height:9px;background:#f2ede6;border-radius:2px"></i>
+<span style="font:700 11px/1 Helvetica,Arial,sans-serif;color:#f2ede6">One clean day banked</span>
+</div>
+<div style="display:flex;gap:5px;margin-top:6px">
+<button style="height:44px;flex:1;border:1px solid rgba(255,255,255,.14);background:#1c1917;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Easy</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i></span></button>
+<button style="height:44px;flex:1;border:1px solid rgba(255,255,255,.14);background:#1c1917;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Med</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i></span></button>
+<button style="height:44px;flex:1;border:1px solid rgba(255,255,255,.14);background:#1c1917;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Hard</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i></span></button>
+</div>
+</div>
+</div>
+
+<div style="width:172px;flex:none">
+<div style="width:172px;height:172px;border-radius:3px;overflow:hidden;background:#000;box-shadow:0 8px 22px rgba(0,0,0,.55)"><img src="uploads/sleeve-still-dre.jpg" alt="Dr. Dre, 2001" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+<div style="margin-top:10px;display:flex;flex-direction:column;gap:5px">
+<span style="font:700 14px/1.15 Helvetica,Arial,sans-serif;color:#f2ede6">Still D.R.E.</span>
+<span style="font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.5)">Dr. Dre, cover-style arrangement, 93 bpm</span>
+<div style="display:flex;align-items:center;gap:8px;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.62)"><span>39 plays</span><span style="color:rgba(242,237,230,.25)">|</span><span>2.5&ndash;6.5</span></div>
+<div style="display:flex;align-items:center;gap:6px;margin-top:2px">
+<i style="display:block;width:9px;height:9px;background:#f2ede6;border-radius:2px"></i>
+<span style="font:700 11px/1 Helvetica,Arial,sans-serif;color:#f2ede6">One clean day banked</span>
+</div>
+<div style="display:flex;gap:5px;margin-top:6px">
+<button style="height:44px;flex:1;border:1px solid rgba(255,255,255,.14);background:#1c1917;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Easy</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i></span></button>
+<button style="height:44px;flex:1;border:1px solid rgba(255,255,255,.14);background:#1c1917;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Med</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span></button>
+<button style="height:44px;flex:1;border:1px solid rgba(255,255,255,.14);background:#1c1917;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Hard</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span></button>
+</div>
+</div>
+</div>
+
+<div style="width:172px;flex:none">
+<div style="width:172px;height:172px;border-radius:3px;overflow:hidden;background:#000;box-shadow:0 8px 22px rgba(0,0,0,.55)"><img src="uploads/sleeve-mario.jpg" alt="Super Mario Bros. 35 soundtrack" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+<div style="margin-top:10px;display:flex;flex-direction:column;gap:5px">
+<span style="font:700 14px/1.15 Helvetica,Arial,sans-serif;color:#f2ede6">Super Mario Bros. Theme</span>
+<span style="font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.5)">Koji Kondo, cover-style arrangement, 200 bpm</span>
+<div style="display:flex;align-items:center;gap:8px;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.62)"><span>5 plays</span><span style="color:rgba(242,237,230,.25)">|</span><span>3.3&ndash;6.2</span></div>
+<div style="display:flex;align-items:center;gap:6px;margin-top:2px">
+<i style="display:block;width:9px;height:9px;border:1.6px solid rgba(242,237,230,.75);border-radius:50%"></i>
+<span style="font:400 11px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.75)">Needs work</span>
+</div>
+<div style="display:flex;gap:5px;margin-top:6px">
+<button style="height:44px;flex:1;border:1px solid rgba(255,255,255,.14);background:#1c1917;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Easy</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span></button>
+<button style="height:44px;flex:1;border:1px solid rgba(255,255,255,.14);background:#1c1917;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Med</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span></button>
+<button style="height:44px;flex:1;border:1px solid rgba(255,255,255,.14);background:#1c1917;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Hard</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span></button>
+</div>
+</div>
+</div>
+
+<div style="width:172px;flex:none">
+<div style="width:172px;height:172px;border-radius:3px;overflow:hidden;background:#181514;box-shadow:0 8px 22px rgba(0,0,0,.55);position:relative;display:flex;align-items:center;justify-content:center">
+<div style="position:absolute;left:0;right:0;top:52px;display:flex;flex-direction:column;gap:13px;opacity:.28"><i style="height:1px;background:#f2ede6"></i><i style="height:1px;background:#f2ede6"></i><i style="height:1px;background:#f2ede6"></i><i style="height:1px;background:#f2ede6"></i><i style="height:1px;background:#f2ede6"></i></div>
+<span style="position:relative;font:400 76px/1.15 Georgia,serif;color:#f2ede6">C</span>
+<span style="position:absolute;left:12px;bottom:10px;font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:rgba(242,237,230,.45)">SCALE, NO RECORD</span>
+</div>
+<div style="margin-top:10px;display:flex;flex-direction:column;gap:5px">
+<span style="font:700 14px/1.15 Helvetica,Arial,sans-serif;color:#f2ede6">C Major Scale</span>
+<span style="font:400 11px/1.2 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.5)">Technique drill, one octave, both hands, 70 bpm</span>
+<div style="display:flex;align-items:center;gap:8px;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.62)"><span>3 plays</span><span style="color:rgba(242,237,230,.25)">|</span><span>3.8</span></div>
+<div style="display:flex;align-items:center;gap:6px;margin-top:2px">
+<i style="display:block;width:9px;height:9px;border:1.6px solid rgba(242,237,230,.75);border-radius:50%"></i>
+<span style="font:400 11px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.75)">Needs work</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;margin-top:6px;height:44px;padding:0 12px;border:1px solid rgba(255,255,255,.14);background:#1c1917;border-radius:3px">
+<span style="font:600 10px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.6)">Single tier</span>
+<span style="display:flex;gap:3px"><i style="width:6px;height:6px;background:#f2ede6;border-radius:1px"></i><i style="width:6px;height:6px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:6px;height:6px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span>
+</div>
+</div>
+</div>
+
+</div>
+
+<div style="display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,.07)">
+<div style="display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 20px;border-bottom:1px solid rgba(255,255,255,.06)"><div style="display:flex;align-items:baseline;gap:10px"><span style="font:700 15px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Repertoire</span><span style="font:400 11px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.4)">three stars on every tier</span></div><span style="font:700 13px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.7)">1</span></div>
+<div style="display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 20px;border-bottom:1px solid rgba(255,255,255,.06)"><span style="font:700 15px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Hall of fame</span><span style="font:700 13px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.7)">9</span></div>
+<div style="display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 20px"><div style="display:flex;align-items:baseline;gap:10px"><span style="font:700 15px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Explore</span><span style="font:400 11px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.4)">sorted A to Z</span></div><span style="font:700 13px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.7)">17</span></div>
+</div>
+
+<div style="display:flex;gap:0;border-top:1px solid rgba(255,255,255,.1);background:#161312">
+<button style="flex:1;height:56px;border:0;border-right:1px solid rgba(255,255,255,.08);background:transparent;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer"><i style="display:block;width:11px;height:11px;border:1.6px solid #e8a33d"></i><span style="font:700 12.5px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Learn</span><span style="font:400 10px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.4)">3</span></button>
+<button style="flex:1;height:56px;border:0;border-right:1px solid rgba(255,255,255,.08);background:transparent;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer"><i style="display:block;width:11px;height:11px;border:1.6px solid rgba(242,237,230,.6);border-radius:50%"></i><span style="font:700 12.5px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Practise</span><span style="font:400 10px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.4)">9</span></button>
+<button style="flex:1;height:56px;border:0;background:transparent;display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer"><i style="display:block;width:11px;height:11px;border:1.6px solid rgba(242,237,230,.6);transform:rotate(45deg)"></i><span style="font:700 12.5px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Tools</span><span style="font:400 10px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.4)">5</span></button>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="1b">
+<div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a><span><b style="color:#f2ede6">Ledger</b>. Betting on the mid-song user: one dense scannable line per song, numbers aligned, tiers reachable without opening anything.</span></div>
+<div class="dv-card" style="width:756px">
+<div class="fold"><span>393PX FOLD</span></div>
+
+<div style="display:flex;align-items:stretch;border-bottom:1px solid rgba(255,255,255,.09)">
+<div style="flex:1;padding:14px 18px;display:flex;flex-direction:column;gap:7px">
+<div style="display:flex;align-items:baseline;gap:10px"><span style="font:700 15px/1.15 Georgia,serif;letter-spacing:.02em;color:#f2ede6">Keys</span><span style="font:400 10px/1.2 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.42)">Screen taps. Plug the P-45 in for the real thing.</span></div>
+<div style="display:flex;align-items:center;gap:10px;height:40px;padding:0 12px;background:#0c0b0a;border:1px solid rgba(255,255,255,.12);border-radius:2px"><span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:rgba(242,237,230,.4)">FIND</span><span style="font:400 12.5px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.42)">title, composer or tag</span></div>
+</div>
+<div style="width:250px;flex:none;padding:14px 18px;border-left:1px solid rgba(255,255,255,.09);display:flex;flex-direction:column;gap:8px;background:#141110">
+<div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:rgba(242,237,230,.45)">LEVEL 1</span><span style="font:700 12px/1 ui-monospace,Menlo,monospace;color:#f2ede6">80<span style="color:rgba(242,237,230,.4)">/100 XP</span></span></div>
+<span style="display:block;height:4px;background:rgba(255,255,255,.12);overflow:hidden"><i style="display:block;width:80%;height:100%;background:#e8a33d"></i></span>
+<div style="display:flex;align-items:center;gap:7px"><i style="display:block;width:8px;height:8px;background:#f2ede6"></i><span style="font:600 11px/1 Helvetica,Arial,sans-serif;color:#f2ede6">1 day rhythm</span><span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.42)">best 1</span></div>
+</div>
+</div>
+
+<div style="display:flex;align-items:center;gap:16px;padding:0 18px;min-height:88px;background:#e8a33d;color:#1a1207;border-bottom:1px solid rgba(255,255,255,.09)">
+<span style="writing-mode:vertical-rl;transform:rotate(180deg);font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.2em;color:rgba(26,18,7,.6)">NEXT ACTION</span>
+<div style="flex:1;display:flex;flex-direction:column;gap:4px;padding:14px 0">
+<h2 style="margin:0;font:700 18px/1.15 Helvetica,Arial,sans-serif;letter-spacing:-.02em">Check &ldquo;Chords from a symbol&rdquo; is still there</h2>
+<p style="margin:0;font:400 11.5px/1.35 Helvetica,Arial,sans-serif;color:rgba(26,18,7,.78)">Last tested 2 days ago. Stage: independent. Two minutes banks it before it decays.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;flex:none">
+<button style="height:44px;padding:0 18px;border:0;background:#1a1207;color:#f6e2c2;font:700 12.5px/1 Helvetica,Arial,sans-serif;border-radius:2px;cursor:pointer">Test it now</button>
+<button style="height:26px;padding:0 18px;border:1px solid rgba(26,18,7,.35);background:transparent;color:#1a1207;font:600 11px/1 Helvetica,Arial,sans-serif;border-radius:2px;cursor:pointer">Freeze</button>
+</div>
+</div>
+
+<div style="display:flex;align-items:baseline;gap:10px;padding:14px 18px 8px">
+<h3 style="margin:0;font:700 13px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#f2ede6">LEARNING</h3>
+<span style="font:700 13px/1 ui-monospace,Menlo,monospace;color:#e8a33d">12</span>
+<span style="font:400 11px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.4)">weakest first, 4 shown</span>
+</div>
+
+<div style="display:flex;gap:12px;padding:0 18px 6px;font:700 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:rgba(242,237,230,.35);border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:7px">
+<span style="width:56px;flex:none"></span><span style="flex:1">SONG</span><span style="width:52px;text-align:right">PLAYS</span><span style="width:64px;text-align:right">DIFFICULTY</span><span style="width:150px">STATE</span><span style="width:152px">TIERS</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,.06);background:#131110">
+<img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="width:56px;height:56px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font:700 14px/1.1 Helvetica,Arial,sans-serif;color:#f2ede6">F&uuml;r Elise</span><span style="font:400 11px/1.1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.48)">Beethoven, the full rondo, 140 bpm</span></div>
+<span style="width:52px;text-align:right;font:700 14px/1 ui-monospace,Menlo,monospace;color:#f2ede6">79</span>
+<span style="width:64px;text-align:right;font:400 12px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.7)">4.2&ndash;5.7</span>
+<span style="width:150px;display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;background:#f2ede6"></i><span style="font:700 11px/1 Helvetica,Arial,sans-serif;color:#f2ede6">One clean day banked</span></span>
+<span style="width:152px;display:flex;gap:4px">
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.14);background:#1c1917;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:2px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;background:#f2ede6"></i></span></button>
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.14);background:#1c1917;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:2px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;background:#f2ede6"></i></span></button>
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.14);background:#1c1917;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:2px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;background:#f2ede6"></i></span></button>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,.06)">
+<img src="uploads/sleeve-still-dre.jpg" alt="Dr. Dre, 2001" style="width:56px;height:56px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font:700 14px/1.1 Helvetica,Arial,sans-serif;color:#f2ede6">Still D.R.E.</span><span style="font:400 11px/1.1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.48)">Dr. Dre, cover-style arrangement, 93 bpm</span></div>
+<span style="width:52px;text-align:right;font:700 14px/1 ui-monospace,Menlo,monospace;color:#f2ede6">39</span>
+<span style="width:64px;text-align:right;font:400 12px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.7)">2.5&ndash;6.5</span>
+<span style="width:150px;display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;background:#f2ede6"></i><span style="font:700 11px/1 Helvetica,Arial,sans-serif;color:#f2ede6">One clean day banked</span></span>
+<span style="width:152px;display:flex;gap:4px">
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.14);background:#1c1917;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:2px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;background:#f2ede6"></i></span></button>
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.14);background:#1c1917;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:2px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4)"></i></span></button>
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.14);background:#1c1917;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:2px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4)"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4)"></i></span></button>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,.06);background:#131110">
+<img src="uploads/sleeve-mario.jpg" alt="Super Mario Bros. 35 soundtrack" style="width:56px;height:56px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font:700 14px/1.1 Helvetica,Arial,sans-serif;color:#f2ede6">Super Mario Bros. Theme</span><span style="font:400 11px/1.1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.48)">Koji Kondo, cover-style arrangement, 200 bpm</span></div>
+<span style="width:52px;text-align:right;font:700 14px/1 ui-monospace,Menlo,monospace;color:#f2ede6">5</span>
+<span style="width:64px;text-align:right;font:400 12px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.7)">3.3&ndash;6.2</span>
+<span style="width:150px;display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;border:1.6px solid rgba(242,237,230,.8);border-radius:50%"></i><span style="font:400 11px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.78)">Needs work</span></span>
+<span style="width:152px;display:flex;gap:4px">
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.14);background:#1c1917;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:2px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#f2ede6"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4)"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4)"></i></span></button>
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.14);background:#1c1917;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:2px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4)"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4)"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4)"></i></span></button>
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.14);background:#1c1917;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:2px"><span style="font:600 9px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4)"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4)"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4)"></i></span></button>
+</span>
+</div>
+
+<div style="display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,.09)">
+<span style="width:56px;height:56px;flex:none;background:#1b1817;border:1px solid rgba(255,255,255,.12);border-radius:2px;display:flex;align-items:center;justify-content:center;font:400 30px/1.15 Georgia,serif;color:#f2ede6">C</span>
+<div style="flex:1;display:flex;flex-direction:column;gap:3px"><span style="font:700 14px/1.1 Helvetica,Arial,sans-serif;color:#f2ede6">C Major Scale</span><span style="font:400 11px/1.1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.48)">Technique drill, one octave, both hands, 70 bpm</span></div>
+<span style="width:52px;text-align:right;font:700 14px/1 ui-monospace,Menlo,monospace;color:#f2ede6">3</span>
+<span style="width:64px;text-align:right;font:400 12px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.7)">3.8</span>
+<span style="width:150px;display:flex;align-items:center;gap:6px"><i style="display:block;width:9px;height:9px;border:1.6px solid rgba(242,237,230,.8);border-radius:50%"></i><span style="font:400 11px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.78)">Needs work</span></span>
+<span style="width:152px;display:flex;gap:4px"><button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.14);background:#1c1917;color:#f2ede6;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:2px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.6)">Single tier</span><span style="display:flex;gap:3px"><i style="width:5px;height:5px;background:#f2ede6"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4)"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4)"></i></span></button></span>
+</div>
+
+<div style="display:flex;padding:0">
+<div style="flex:1;display:flex;flex-direction:column">
+<div style="display:flex;align-items:center;justify-content:space-between;height:46px;padding:0 18px;border-bottom:1px solid rgba(255,255,255,.06)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#f2ede6">REPERTOIRE</span><span style="font:700 12px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.7)">1</span></div>
+<div style="display:flex;align-items:center;justify-content:space-between;height:46px;padding:0 18px;border-bottom:1px solid rgba(255,255,255,.06)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#f2ede6">HALL OF FAME</span><span style="font:700 12px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.7)">9</span></div>
+<div style="display:flex;align-items:center;justify-content:space-between;height:46px;padding:0 18px"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:#f2ede6">EXPLORE<span style="font-weight:400;letter-spacing:0;color:rgba(242,237,230,.4)">  A&ndash;Z</span></span><span style="font:700 12px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.7)">17</span></div>
+</div>
+<div style="width:250px;flex:none;border-left:1px solid rgba(255,255,255,.09);background:#141110;display:flex;flex-direction:column">
+<button style="height:46px;border:0;border-bottom:1px solid rgba(255,255,255,.07);background:transparent;display:flex;align-items:center;gap:10px;padding:0 16px;cursor:pointer"><i style="display:block;width:10px;height:10px;border:1.6px solid #e8a33d"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Learn</span><span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.4)">3 tools</span></button>
+<button style="height:46px;border:0;border-bottom:1px solid rgba(255,255,255,.07);background:transparent;display:flex;align-items:center;gap:10px;padding:0 16px;cursor:pointer"><i style="display:block;width:10px;height:10px;border:1.6px solid rgba(242,237,230,.6);border-radius:50%"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Practise</span><span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.4)">9 tools</span></button>
+<button style="height:46px;border:0;background:transparent;display:flex;align-items:center;gap:10px;padding:0 16px;cursor:pointer"><i style="display:block;width:10px;height:10px;border:1.6px solid rgba(242,237,230,.6);transform:rotate(45deg)"></i><span style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Tools</span><span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.4)">5 tools</span></button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="1c">
+<div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a><span><b style="color:#f2ede6">Console</b>. Betting on a fixed left column: tools and progress always addressable, never floating, so the whole right side is music at uneven weights.</span></div>
+<div class="dv-card" style="width:756px">
+<div class="fold"><span>393PX FOLD</span></div>
+
+<div style="display:flex;align-items:stretch">
+<div style="width:186px;flex:none;background:#0c0b0a;border-right:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;padding:14px 0">
+<div style="padding:0 16px 14px;display:flex;flex-direction:column;gap:3px">
+<span style="font:700 16px/1 Helvetica,Arial,sans-serif;letter-spacing:-.02em;color:#f2ede6">Keys</span>
+<span style="font:400 9.5px/1.35 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.4)">Screen taps. Plug the<br>P-45 in for the real thing.</span>
+</div>
+<div style="padding:0 16px 14px;display:flex;flex-direction:column;gap:7px;border-bottom:1px solid rgba(255,255,255,.08)">
+<div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font:700 22px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Lvl 1</span><span style="font:700 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.6)">80/100</span></div>
+<span style="display:block;height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden"><i style="display:block;width:80%;height:100%;background:#e8a33d"></i></span>
+<div style="display:flex;align-items:center;gap:7px"><i style="display:block;width:8px;height:8px;background:#f2ede6;border-radius:2px"></i><span style="font:600 10.5px/1 Helvetica,Arial,sans-serif;color:#f2ede6">1 day rhythm</span><span style="font:400 10px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.4)">best 1</span></div>
+</div>
+<div style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.08)">
+<div style="display:flex;align-items:center;gap:8px;height:44px;padding:0 10px;background:#191615;border:1px solid rgba(255,255,255,.1);border-radius:4px"><i style="display:block;width:11px;height:11px;border:1.6px solid rgba(242,237,230,.5);border-radius:50%"></i><span style="font:400 12px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.42)">Search songs</span></div>
+</div>
+<div style="padding:12px 8px;display:flex;flex-direction:column;gap:2px;border-bottom:1px solid rgba(255,255,255,.08)">
+<div style="display:flex;align-items:center;gap:8px;padding:0 8px 6px"><i style="display:block;width:10px;height:10px;border:1.6px solid #e8a33d"></i><span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#f2ede6">LEARN</span></div>
+<button style="height:44px;border:0;background:#1a1613;text-align:left;padding:0 8px 0 26px;color:#f2ede6;font:600 12px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer;border-left:3px solid #e8a33d">My path</button>
+<button style="height:44px;border:0;background:transparent;text-align:left;padding:0 8px 0 29px;color:rgba(242,237,230,.72);font:400 12px/1 Helvetica,Arial,sans-serif;cursor:pointer">Lessons</button>
+<button style="height:44px;border:0;background:transparent;text-align:left;padding:0 8px 0 29px;color:rgba(242,237,230,.72);font:400 12px/1 Helvetica,Arial,sans-serif;cursor:pointer">Sight reading</button>
+</div>
+<div style="padding:12px 8px;display:flex;flex-direction:column;gap:2px">
+<button style="height:44px;border:0;background:transparent;display:flex;align-items:center;gap:8px;padding:0 16px;cursor:pointer"><i style="display:block;width:10px;height:10px;border:1.6px solid rgba(242,237,230,.6);border-radius:50%"></i><span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#f2ede6">PRACTISE</span><span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.4)">9</span></button>
+<button style="height:44px;border:0;background:transparent;display:flex;align-items:center;gap:8px;padding:0 16px;cursor:pointer"><i style="display:block;width:10px;height:10px;border:1.6px solid rgba(242,237,230,.6);transform:rotate(45deg)"></i><span style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:#f2ede6">TOOLS</span><span style="margin-left:auto;font:400 10px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.4)">5</span></button>
+</div>
+</div>
+
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+
+<div style="display:flex;gap:14px;padding:16px;background:#e8a33d;color:#1a1207">
+<div style="width:78px;height:78px;flex:none;background:#1a1207;display:flex;align-items:center;justify-content:center;position:relative">
+<div style="position:absolute;left:0;right:0;top:22px;display:flex;flex-direction:column;gap:7px;opacity:.45"><i style="height:1px;background:#f6e2c2"></i><i style="height:1px;background:#f6e2c2"></i><i style="height:1px;background:#f6e2c2"></i><i style="height:1px;background:#f6e2c2"></i><i style="height:1px;background:#f6e2c2"></i></div>
+<span style="position:relative;font:400 26px/1.15 Georgia,serif;color:#f6e2c2">Cm7</span>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:5px">
+<span style="font:700 9.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;color:rgba(26,18,7,.6)">DO THIS NEXT</span>
+<h2 style="margin:0;font:700 19px/1.12 Helvetica,Arial,sans-serif;letter-spacing:-.02em">Check &ldquo;Chords from a symbol&rdquo; is still there</h2>
+<p style="margin:0;font:400 11.5px/1.35 Helvetica,Arial,sans-serif;color:rgba(26,18,7,.78)">Last tested 2 days ago. Stage: independent.</p>
+</div>
+<div style="flex:none;display:flex;flex-direction:column;gap:6px;justify-content:center">
+<button style="height:44px;padding:0 16px;border:0;background:#1a1207;color:#f6e2c2;font:700 12.5px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Test it</button>
+<button style="height:26px;padding:0 16px;border:1px solid rgba(26,18,7,.35);background:transparent;color:#1a1207;font:600 11px/1 Helvetica,Arial,sans-serif;border-radius:3px;cursor:pointer">Freeze</button>
+</div>
+</div>
+
+<div style="display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,.09)">
+<div style="flex:1;padding:11px 14px;border-right:1px solid rgba(255,255,255,.07);border-bottom:2px solid #e8a33d;background:#161312"><div style="font:700 12px/1 Helvetica,Arial,sans-serif;color:#f2ede6">Learning</div><div style="margin-top:4px;font:700 11px/1 ui-monospace,Menlo,monospace;color:#e8a33d">12</div></div>
+<div style="flex:1;padding:11px 14px;border-right:1px solid rgba(255,255,255,.07)"><div style="font:400 12px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.7)">Repertoire</div><div style="margin-top:4px;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.5)">1</div></div>
+<div style="flex:1;padding:11px 14px;border-right:1px solid rgba(255,255,255,.07)"><div style="font:400 12px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.7)">Hall of fame</div><div style="margin-top:4px;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.5)">9</div></div>
+<div style="flex:1;padding:11px 14px"><div style="font:400 12px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.7)">Explore</div><div style="margin-top:4px;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.5)">17</div></div>
+</div>
+
+<div style="display:flex;gap:12px;padding:14px">
+<div style="width:270px;flex:none;position:relative;border-radius:4px;overflow:hidden;background:#000">
+<img src="uploads/sleeve-fur-elise.jpg" alt="111 Years of Deutsche Grammophon" style="width:100%;height:270px;object-fit:cover;display:block">
+<div style="position:absolute;left:0;right:0;bottom:0;padding:16px 14px 13px;background:linear-gradient(rgba(8,7,6,0),rgba(8,7,6,.9) 14px,rgba(8,7,6,.97) 34px,rgba(8,7,6,.99))">
+<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><i style="display:block;width:9px;height:9px;background:#f2ede6;border-radius:2px"></i><span style="font:700 10.5px/1 Helvetica,Arial,sans-serif;color:#f2ede6">One clean day banked</span></div>
+<div style="font:700 21px/1.05 Helvetica,Arial,sans-serif;letter-spacing:-.02em;color:#fff">F&uuml;r Elise</div>
+<div style="margin-top:4px;font:400 11px/1 Helvetica,Arial,sans-serif;color:rgba(255,255,255,.7)">Beethoven, the full rondo, 140 bpm</div>
+<div style="margin-top:6px;display:flex;align-items:center;gap:8px;font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(255,255,255,.8)"><span>79 plays</span><span style="color:rgba(255,255,255,.35)">|</span><span>4.2&ndash;5.7</span></div>
+<div style="display:flex;gap:5px;margin-top:9px">
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:#fff;cursor:pointer;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Easy</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i></span></button>
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:#fff;cursor:pointer;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Med</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i></span></button>
+<button style="flex:1;height:44px;border:1px solid rgba(255,255,255,.28);background:rgba(0,0,0,.45);color:#fff;cursor:pointer;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:600 9.5px/1 Helvetica,Arial,sans-serif">Hard</span><span style="display:flex;gap:2px"><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i><i style="width:5px;height:5px;background:#fff;border-radius:1px"></i></span></button>
+</div>
+</div>
+</div>
+
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:10px">
+
+<div style="display:flex;gap:11px;align-items:center;padding:9px;background:#161312;border:1px solid rgba(255,255,255,.08);border-radius:4px">
+<img src="uploads/sleeve-still-dre.jpg" alt="Dr. Dre, 2001" style="width:64px;height:64px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="font:700 14px/1.1 Helvetica,Arial,sans-serif;color:#f2ede6">Still D.R.E.</span>
+<span style="font:400 10.5px/1.2 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.5)">Dr. Dre, cover-style arrangement, 93 bpm</span>
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.6)">39 plays &middot; 2.5&ndash;6.5</span>
+<div style="display:flex;align-items:center;gap:6px"><i style="display:block;width:8px;height:8px;background:#f2ede6;border-radius:2px"></i><span style="font:700 10.5px/1 Helvetica,Arial,sans-serif;color:#f2ede6">One clean day banked</span></div>
+</div>
+<span style="flex:none;display:flex;gap:4px"><button style="width:34px;height:44px;border:1px solid rgba(255,255,255,.16);background:#211d1b;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:700 10px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#f2ede6;border-radius:1px"></i><i style="width:4px;height:4px;background:#f2ede6;border-radius:1px"></i><i style="width:4px;height:4px;background:#f2ede6;border-radius:1px"></i></span></button><button style="width:34px;height:44px;border:1px solid rgba(255,255,255,.16);background:#211d1b;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:700 10px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#f2ede6;border-radius:1px"></i><i style="width:4px;height:4px;background:#f2ede6;border-radius:1px"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span></button><button style="width:34px;height:44px;border:1px solid rgba(255,255,255,.16);background:#211d1b;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:700 10px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#f2ede6;border-radius:1px"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span></button></span>
+</div>
+
+<div style="display:flex;gap:11px;align-items:center;padding:9px;background:#161312;border:1px solid rgba(255,255,255,.08);border-radius:4px">
+<img src="uploads/sleeve-mario.jpg" alt="Super Mario Bros. 35 soundtrack" style="width:64px;height:64px;flex:none;object-fit:cover;display:block;border-radius:2px">
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="font:700 14px/1.1 Helvetica,Arial,sans-serif;color:#f2ede6">Super Mario Bros. Theme</span>
+<span style="font:400 10.5px/1.2 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.5)">Koji Kondo, cover-style arrangement, 200 bpm</span>
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.6)">5 plays &middot; 3.3&ndash;6.2</span>
+<div style="display:flex;align-items:center;gap:6px"><i style="display:block;width:8px;height:8px;border:1.6px solid rgba(242,237,230,.8);border-radius:50%"></i><span style="font:400 10.5px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.78)">Needs work</span></div>
+</div>
+<span style="flex:none;display:flex;gap:4px"><button style="width:34px;height:44px;border:1px solid rgba(255,255,255,.16);background:#211d1b;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:700 10px/1 Helvetica,Arial,sans-serif">E</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;background:#f2ede6;border-radius:1px"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span></button><button style="width:34px;height:44px;border:1px solid rgba(255,255,255,.16);background:#211d1b;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:700 10px/1 Helvetica,Arial,sans-serif">M</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span></button><button style="width:34px;height:44px;border:1px solid rgba(255,255,255,.16);background:#211d1b;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px"><span style="font:700 10px/1 Helvetica,Arial,sans-serif">H</span><span style="display:flex;gap:2px"><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:4px;height:4px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span></button></span>
+</div>
+
+<div style="display:flex;gap:11px;align-items:center;padding:9px;background:#161312;border:1px solid rgba(255,255,255,.08);border-radius:4px">
+<span style="width:64px;height:64px;flex:none;background:#1f1c1a;border-radius:2px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden">
+<span style="position:absolute;left:0;right:0;top:18px;display:flex;flex-direction:column;gap:6px;opacity:.3"><i style="height:1px;background:#f2ede6"></i><i style="height:1px;background:#f2ede6"></i><i style="height:1px;background:#f2ede6"></i><i style="height:1px;background:#f2ede6"></i><i style="height:1px;background:#f2ede6"></i></span>
+<span style="position:relative;font:400 32px/1.15 Georgia,serif;color:#f2ede6">C</span>
+</span>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px">
+<span style="font:700 14px/1.1 Helvetica,Arial,sans-serif;color:#f2ede6">C Major Scale</span>
+<span style="font:400 10.5px/1.2 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.5)">Technique drill, one octave, both hands, 70 bpm</span>
+<span style="font:400 11px/1 ui-monospace,Menlo,monospace;color:rgba(242,237,230,.6)">3 plays &middot; 3.8</span>
+<div style="display:flex;align-items:center;gap:6px"><i style="display:block;width:8px;height:8px;border:1.6px solid rgba(242,237,230,.8);border-radius:50%"></i><span style="font:400 10.5px/1 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.78)">Needs work</span></div>
+</div>
+<button style="width:44px;height:44px;flex:none;border:1px solid rgba(255,255,255,.16);background:#211d1b;border-radius:3px;color:#f2ede6;cursor:pointer;display:flex;align-items:center;justify-content:center"><span style="display:flex;gap:3px"><i style="width:5px;height:5px;background:#f2ede6;border-radius:1px"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i><i style="width:5px;height:5px;border:1px solid rgba(242,237,230,.4);border-radius:1px"></i></span></button>
+</div>
+
+<div style="padding:8px 2px 0;font:400 11px/1.3 Helvetica,Arial,sans-serif;color:rgba(242,237,230,.45)">9 more in Learning, weakest first</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Try next: &ldquo;take <a class="dv-oid" href="#1a">1a</a> forward, but keep the fixed left rail from <a class="dv-oid" href="#1c">1c</a>&rdquo; &middot; &ldquo;show <a class="dv-oid" href="#1b">1b</a> at 375px&rdquo; &middot; &ldquo;more directions&rdquo;</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:2400,&quot;height&quot;:1300}}"></script>
+</body>
+</html>

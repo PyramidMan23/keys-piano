@@ -1,0 +1,16 @@
+You are verifying a deliverable adversarially. Mark asked for this explicitly. Find what is wrong with it. You must raise at least three substantive problems and rank them by what would actually hurt. Do not compliment, do not summarise back. Maximum 300 words.
+
+You have file access. The things worth reading:
+  C:/Users/markh/keys-piano/design-2026-08/keys-prototype.html  (the deliverable, 0.56MB, 17 screens)
+  C:/Users/markh/keys-piano/design-2026-08/control-inventory.json  (generated: every id the app JS addresses, with required tag)
+  C:/Users/markh/keys-piano/design-2026-08/coverage.json  (per-screen drawn-vs-needed counts)
+  C:/Users/markh/keys-piano/tools/coverage-check.mjs  (how those counts were produced)
+  C:/Users/markh/keys-piano/design-2026-08/build-prototype.mjs  (how the prototype was assembled)
+
+WHAT WAS BUILT. Claude Design produced 17 artboards covering the whole Keys piano app in a pure-black design language. I lifted each artboard's markup verbatim into a single self-contained HTML prototype, added navigation chrome OUTSIDE the 756px frame (the design draws no app navigation, so that scaffolding is mine and is labelled as such in the page), wired seven controls the design itself drew in the library so they really navigate, and added hover and press states to the 39 elements that measured as control-shaped. A headless-Chrome test drives it with real clicks: 27 checks, all passing, including that every screen switches, that the All tools sheet is genuinely open by geometry rather than by its text existing, and that no image is broken.
+
+WHAT I ALREADY FOUND, so do not just repeat it: the library search is a div plus a span while the app reads .value off it as lib-search; and two checkboxes carry the React property defaultChecked, which does nothing in exported HTML, so they render off while the design tool reported them on. Both have been sent back to Claude Design.
+
+MY CLAIM FOR YOU TO ATTACK: the app is now fully designed, and the remaining work is porting rather than designing.
+
+MY OWN WEAKEST POINT: my coverage check counts painted, button-shaped elements, and it flagged seven screens as holes that turned out to be complete once I read the text. So the same crudeness could be hiding a real hole it scored as covered.

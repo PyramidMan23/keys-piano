@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keys - pick a background</title>
+<style>
+  /* NO JAVASCRIPT. The switch is three radio inputs and sibling selectors.
+     The first build used a click handler and I could not prove it fired,
+     because every tab I can drive is a background tab and hidden tabs here
+     do not dispatch events. CSS removes the question entirely. */
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+
+  /* shared in all three: the green, the amber, the art. only the ground moves. */
+  body {
+    --accent:#2E6B47; --accent-ink:#7cb694; --urgent:#f0ce7f; --muted:#6c7f75;
+    --ground:#0A0D0B; --panel:#121814; --line:#1E2620; --ink:#E9EDE7;
+    margin: 0; font: 15px/1.5 ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+    background: var(--ground); color: var(--ink);
+  }
+  .sw { position: absolute; opacity: 0; pointer-events: none; }
+
+  /* 1 Conservatory is the default above. 2 and 3 override it. */
+  #g2:checked ~ .page { --ground:#100E0B; --panel:#191611; --line:#26221B; --ink:#EDE9E1; }
+  #g3:checked ~ .page { --ground:#0B0D0C; --panel:#141816; --line:#212724; --ink:#E8ECEA; }
+  .page { background: var(--ground); color: var(--ink); min-height: 100vh; }
+
+  .bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+         padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--ground); }
+  .bar b { font-size: 13px; margin-right: 4px; }
+  .lab { border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+         min-height: 44px; padding: 0 16px; border-radius: 8px; font: 600 14px/44px inherit;
+         cursor: pointer; user-select: none; display: inline-block; }
+  .lab .n { color: var(--accent-ink); font-family: ui-monospace, Consolas, monospace; margin-right: 7px; }
+  #g1:checked ~ .page label[for="g1"],
+  #g2:checked ~ .page label[for="g2"],
+  #g3:checked ~ .page label[for="g3"] { border-color: var(--accent-ink); box-shadow: inset 0 0 0 1px var(--accent-ink); }
+  .hint { color: var(--muted); font-size: 12.5px; width: 100%; margin: 2px 0 0; }
+
+  .stage { padding: 20px 16px 60px; max-width: 720px; }
+  .lead { display: grid; grid-template-columns: 190px 1fr; gap: 18px; align-items: start; }
+  .lead img { width: 190px; height: 190px; border-radius: 8px; display: block; box-shadow: 0 14px 34px rgba(0,0,0,.6); }
+  .state { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--accent-ink); }
+  .sq { width: 9px; height: 9px; background: currentColor; flex: none; }
+  h1 { font: 700 26px/1.15 inherit; margin: 8px 0 2px; letter-spacing: -.015em; }
+  .sub { color: var(--muted); font-size: 13.5px; margin: 0 0 10px; }
+  .tiers { display: flex; gap: 8px; }
+  .tier { border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+          min-height: 44px; padding: 0 15px; border-radius: 7px; font: 600 13px/1 inherit;
+          display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+  .dots { letter-spacing: 2px; color: var(--accent-ink); font-size: 10px; }
+
+  .next { margin: 22px 0 0; border: 1px solid var(--line); background: var(--panel);
+          border-left: 3px solid var(--accent-ink); border-radius: 8px; padding: 14px 16px; }
+  .kick { font: 700 10.5px/1 ui-monospace, monospace; letter-spacing: .12em; color: var(--muted); }
+  .decay { float: right; color: var(--urgent); font-size: 12px; font-weight: 700; }
+  .next h2 { font: 700 17px/1.25 inherit; margin: 8px 0 4px; }
+  .next p { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+  .go { background: var(--accent); color: #fff; border: 0; min-height: 44px; padding: 0 18px;
+        border-radius: 7px; font: 700 13.5px/1 inherit; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 26px; }
+  th { text-align: left; font: 700 10px/1 ui-monospace, monospace; letter-spacing: .1em; color: var(--muted); padding: 0 8px 9px 0; }
+  td { border-top: 1px solid var(--line); padding: 11px 8px 11px 0; font-size: 13.5px; vertical-align: middle; }
+  td img { width: 40px; height: 40px; border-radius: 4px; display: block; }
+  .plate { width: 40px; height: 40px; border-radius: 4px; border: 1px solid var(--line);
+           display: grid; place-items: center; font: 700 13px/1 Georgia, serif; color: var(--muted); }
+  .num { font-family: ui-monospace, Consolas, monospace; }
+  .needs { color: var(--muted); }
+  .ring { display: inline-block; width: 9px; height: 9px; border: 1.6px solid currentColor; border-radius: 50%; margin-right: 6px; }
+</style>
+</head>
+<body>
+
+<input class="sw" type="radio" name="g" id="g1" checked>
+<input class="sw" type="radio" name="g" id="g2">
+<input class="sw" type="radio" name="g" id="g3">
+
+<div class="page">
+  <div class="bar">
+    <b>Background</b>
+    <label class="lab" for="g1"><span class="n">1</span>Conservatory</label>
+    <label class="lab" for="g2"><span class="n">2</span>Darkroom</label>
+    <label class="lab" for="g3"><span class="n">3</span>Eucalypt</label>
+    <p class="hint">Same screen, same green, same album art. The only thing that changes is the background.
+      Click between them a few times and watch the covers, not the background.</p>
+  </div>
+
+  <div class="stage">
+    <div class="lead">
+      <img src="../art/512/fur-elise.jpg" alt="">
+      <div>
+        <div class="state"><i class="sq"></i>One clean day banked</div>
+        <h1>F&uuml;r Elise</h1>
+        <p class="sub">Beethoven, the full rondo, 140 bpm<br>79 plays &middot; 4.2&ndash;5.7</p>
+        <div class="tiers">
+          <div class="tier">Easy<span class="dots">&#9679;&#9679;&#9679;</span></div>
+          <div class="tier">Med<span class="dots">&#9679;&#9679;&#9679;</span></div>
+          <div class="tier">Hard<span class="dots">&#9679;&#9679;&#9679;</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="next">
+      <span class="decay">&#9650; Decays Thursday</span>
+      <span class="kick">DO THIS NEXT</span>
+      <h2>Check "Chords from a symbol" is still there</h2>
+      <p>Last tested 2 days ago. Stage: independent. Two minutes banks it.</p>
+      <button class="go">Test it now</button>
+    </div>
+
+    <table>
+      <tr><th></th><th>Song</th><th>Plays</th><th>State</th></tr>
+      <tr>
+        <td><img src="../art/512/still-dre.jpg" alt=""></td>
+        <td><b>Still D.R.E.</b><br><span class="needs">Dr. Dre, 93 bpm</span></td>
+        <td class="num">39</td>
+        <td class="state"><i class="sq"></i>Banked</td>
+      </tr>
+      <tr>
+        <td><img src="../art/512/mario.jpg" alt=""></td>
+        <td><b>Super Mario Bros. Theme</b><br><span class="needs">Koji Kondo, 200 bpm</span></td>
+        <td class="num">5</td>
+        <td class="needs"><i class="ring"></i>Needs work</td>
+      </tr>
+      <tr>
+        <td><img src="../art/512/in-a-gadda-da-vida.jpg" alt=""></td>
+        <td><b>In-A-Gadda-Da-Vida</b><br><span class="needs">Iron Butterfly</span></td>
+        <td class="num">0</td>
+        <td class="needs"><i class="ring"></i>Never played</td>
+      </tr>
+      <tr>
+        <td><div class="plate">HB</div></td>
+        <td><b>Happy Birthday</b><br><span class="needs">Traditional, no honest recording</span></td>
+        <td class="num">24</td>
+        <td class="state"><i class="sq"></i>Banked</td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>
