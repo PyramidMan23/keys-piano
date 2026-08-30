@@ -1,0 +1,39 @@
+READ-ONLY REVIEW. Do not write, edit or create any file. No sub-reviewers, no
+review skills. Read files and run read-only node probes. Numbered prose, under
+600 words.
+
+Context: "Keys", Mark's piano-learning app at C:/Users/markh/keys-piano. Songs
+are { b, d, m, h } notes; `h` is L or R and decides which hand the app teaches.
+
+TWICE TODAY a correction tool shipped data that was WORSE than what it replaced,
+and both times the gates were green and I believed the tool's own report:
+
+1. tools/import-midi.mjs got a tier comparison inverted. It silently dropped 35
+   playable tiers to 12. The suite went GREEN. Only an unrelated count I happened
+   to print caught it.
+2. tools/unroam.mjs read its hand string off a SORTED copy while js/songs.mjs
+   applies that string BY INDEX to notes in authored order. Every hand landed on
+   a different note. The tool reported "40 -> 18 semitones"; the library received
+   40 -> 31, and one song went 38 -> 60. Mark caught it by PLAYING: "the left and
+   right hand were switched and the notes were way too far apart."
+
+I have since written tools/correction-check.mjs, which loads the library twice
+(KEYS_RAW_HANDS=1 for raw, normal for corrected) and fails if any corrected song
+is worse on the metric the correction claimed to improve.
+
+Rule on this:
+
+1. Is loading the module twice under an env var a sound way to compare before
+   and after, or is there a trap in it I have not seen?
+2. My corrections are stored as a STRING OF HANDS applied by index
+   (js/songs-hands.mjs, applied in js/songs.mjs). Index-keyed patches against
+   mutable arrays are what caused failure 2. What is the smallest change that
+   makes this class impossible rather than merely detected? Content-addressing
+   each note? Storing {beat,midi}->hand instead of a positional string?
+3. What OTHER invariant should a correction gate assert beyond "the metric
+   improved"? Name the specific ones for this data (I already assert the note
+   count matches, and the suite pins musical facts for ~40 songs).
+4. Both failures shared a shape: a tool reporting on itself. Where else in
+   tools/ is that pattern still live, and which is most likely to bite next?
+5. Be blunt about whether this correction pipeline is worth keeping at all, or
+   whether hand assignment should only ever come from a source that states it.

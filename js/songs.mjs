@@ -2734,16 +2734,28 @@ const applyRehand = !(typeof process !== 'undefined' && process.env && process.e
 for (const song of applyRehand ? SONGS : []) {
   const fix = REHANDED[song.id];
   if (!fix) continue;
-  if (song.notes.length !== fix.hands.length) {
-    throw new Error(`${song.id} has ${song.notes.length} notes but its hand correction has ${fix.hands.length}: re-run tools/rehand.mjs`);
+  if (song.notes.length !== fix.notes) {
+    throw new Error(`${song.id} has ${song.notes.length} notes but its correction expects ${fix.notes}: re-run tools/unroam.mjs`);
   }
-  song.notes.forEach((n, i) => { n.h = fix.hands[i]; });
-  // Moving notes between hands disturbs the ordering the app relies on (notes
-  // ascending within each hand), so restore it with the library's own
-  // comparator. Applied AFTER the correction, because the correction is keyed
-  // to the authored order.
+  if (fix.hands) {                       // the older positional form
+    song.notes.forEach((n, i) => { n.h = fix.hands[i]; });
+  } else {
+    // Each move must match EXACTLY ONE authored note, by beat, pitch and the
+    // hand it is leaving. Anything else is a stale correction and must shout.
+    for (const mv of fix.moves) {
+      const hits = song.notes.filter((n) => n.b === mv.b && n.m === mv.m && n.h === mv.from);
+      if (hits.length !== 1) {
+        throw new Error(`${song.id}: a hand correction matched ${hits.length} notes at beat ${mv.b}, expected exactly 1: re-run tools/unroam.mjs`);
+      }
+      hits[0].h = mv.to;
+      // ☠️ AND ITS FINGERING GOES WITH IT. A finger number is authored against a
+      // hand; moving the note and keeping the number teaches the wrong finger,
+      // which is worse than teaching none. Codex caught this shipping live.
+      delete hits[0].f;
+    }
+  }
   song.notes.sort((a, b) => (a.h === b.h ? a.b - b.b || a.m - b.m : a.h < b.h ? -1 : 1));
-  song.handAssignment = 'repaired';
+  song.handsRepaired = true;
 }
 
 export function songEndBeat(song) {
