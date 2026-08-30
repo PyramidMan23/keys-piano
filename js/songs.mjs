@@ -4,6 +4,8 @@
 // h = hand 'L'|'R', f = finger 1..5 (optional).
 // beatUnit: which note value one beat represents (4 = quarter, 8 = eighth).
 
+import { IMPORTED } from './songs-imported.mjs';
+
 export const SONGS = [
   {
     id: 'ode-to-joy',
@@ -2711,6 +2713,11 @@ export function validateSong(song) {
   }
   return errors;
 }
+
+// Imported songs live in their own generated file so the importer can never
+// rewrite a curated one, and so provenance survives: every one of them carries
+// handAssignment: 'generated' and the source it came from.
+SONGS.push(...IMPORTED);
 
 export function songEndBeat(song) {
   return Math.max(...song.notes.map((n) => n.b + n.d));
