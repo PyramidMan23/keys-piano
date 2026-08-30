@@ -111,9 +111,18 @@ for (const song of list) {
       const purity = ok / (L.length + R.length);
       if (purity > bestPurity) { bestPurity = purity; bestCut = cut; }
     }
-    if (bestPurity > 0.985) {
-      add('probable threshold split', `${(bestPurity * 100).toFixed(1)}% of notes fall on one side of ${name(bestCut)}; ` +
-        'no arranger splits hands that cleanly, a script did');
+    // ☠️ A CLEAN SPLIT IS NOT ITSELF A DEFECT. The first version of this rule
+    // said "no arranger splits hands that cleanly, a script did", and it was
+    // wrong: most simple piano writing puts the hands in separate registers, so
+    // it fired on the Gymnopedie, the Op.9 nocturne and the Rondo alla Turca,
+    // all of which take their hands straight off an engraved score. 36 songs
+    // were accused on that basis alone. What actually identifies a script is a
+    // clean split that is ALSO unplayable: a real arranger's hands separate
+    // neatly AND stay within reach, a threshold does the first and not the
+    // second. Both, or it is not evidence.
+    if (bestPurity > 0.985 && (over || travel || fingers || crossed)) {
+      add('threshold split', `${(bestPurity * 100).toFixed(1)}% of notes fall on one side of ${name(bestCut)}, ` +
+        'and the result is unplayable: a script cut this by pitch');
     }
   }
 

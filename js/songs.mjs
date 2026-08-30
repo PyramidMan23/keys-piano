@@ -5,6 +5,7 @@
 // beatUnit: which note value one beat represents (4 = quarter, 8 = eighth).
 
 import { IMPORTED } from './songs-imported.mjs';
+import { REHANDED } from './songs-hands.mjs';
 
 export const SONGS = [
   {
@@ -2718,6 +2719,32 @@ export function validateSong(song) {
 // rewrite a curated one, and so provenance survives: every one of them carries
 // handAssignment: 'generated' and the source it came from.
 SONGS.push(...IMPORTED);
+
+// THE HANDS A SCRIPT GOT WRONG, corrected offline and committed. See
+// tools/rehand.mjs: these songs were cut by a pitch threshold rather than
+// arranged, and the result was physically unplayable. The correction is DATA,
+// not a repair that runs here, and the length assertion means a song edited
+// without re-running the tool fails loudly rather than being silently
+// mis-handed.
+// KEYS_RAW_HANDS lets the repair tool read the library BEFORE its own
+// corrections are applied. Without it tools/rehand.mjs analyses its own output,
+// concludes everything is fine, and can never revise a correction it has
+// already made.
+const applyRehand = !(typeof process !== 'undefined' && process.env && process.env.KEYS_RAW_HANDS);
+for (const song of applyRehand ? SONGS : []) {
+  const fix = REHANDED[song.id];
+  if (!fix) continue;
+  if (song.notes.length !== fix.hands.length) {
+    throw new Error(`${song.id} has ${song.notes.length} notes but its hand correction has ${fix.hands.length}: re-run tools/rehand.mjs`);
+  }
+  song.notes.forEach((n, i) => { n.h = fix.hands[i]; });
+  // Moving notes between hands disturbs the ordering the app relies on (notes
+  // ascending within each hand), so restore it with the library's own
+  // comparator. Applied AFTER the correction, because the correction is keyed
+  // to the authored order.
+  song.notes.sort((a, b) => (a.h === b.h ? a.b - b.b || a.m - b.m : a.h < b.h ? -1 : 1));
+  song.handAssignment = 'repaired';
+}
 
 export function songEndBeat(song) {
   return Math.max(...song.notes.map((n) => n.b + n.d));
