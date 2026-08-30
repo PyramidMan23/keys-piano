@@ -129,7 +129,7 @@ try {
   // (2026-08-29), which is measured as its own state and then closed.
   await b.eval(`window.__show('library'); true`);
   await new Promise((r) => setTimeout(r, 400));
-  await b.eval(`(() => { const m = [...document.querySelectorAll('#screen-library *')].find((e) => !e.children.length && /^Show the other/.test(e.textContent.trim())); (m && (m.closest('button') ?? m.parentElement)).click(); return true; })()`);
+  await b.eval(`(() => { const m = [...document.querySelectorAll('#screen-library *')].find((e) => !e.children.length && /^(Show the other|See all) /.test(e.textContent.trim())); (m && (m.closest('button') ?? m.parentElement))?.click(); return !!m; })()`);
   await new Promise((r) => setTimeout(r, 900));
   const g = await b.eval(`!!document.getElementById('canon-gallery')`);
   if (g) {

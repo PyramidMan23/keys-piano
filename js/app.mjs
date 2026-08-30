@@ -884,13 +884,18 @@ function libPlan() {
   const firstRow = Math.max(1, Math.floor((1390 - LIB_MODULE_W) / LIB_CELL));
   const otherRow = Math.max(1, Math.floor(1390 / LIB_CELL));
   const cellsFor = (r) => firstRow + (r - 1) * otherRow;
-  let rows = 1;
-  for (let r = bySpace; r >= 1; r--) {
-    // the door is a DOUBLE-WIDTH cell (286px against a 132px tile), so it eats
-    // two slots, not one. Counting it as one overflowed into a fourth row that
-    // could not be filled, which is where the black came back.
-    if (cellsFor(r) - 2 <= libShelfTotal) { rows = r; break; }
-  }
+  // OPEN THE ROWS THE SHELF NEEDS, not only the rows it exactly fills.
+  // Mark, 2026-08-30, looking at 13 songs in Learning with five on screen: "can
+  // we have all the songs we're learning fill up this area and not just 4 of
+  // them". The old rule took the LARGEST row count the shelf could COMPLETELY
+  // fill, so 13 songs against 15 slots over two rows failed that test, fell
+  // back to one row of five, and hid eight songs behind rows of black. A
+  // part-filled last row is not a defect. Hiding two thirds of the shelf is.
+  // The door is still a DOUBLE-WIDTH cell (286px against 132px) and eats two
+  // slots wherever it lands.
+  let need = bySpace;
+  for (let r = 1; r <= bySpace; r++) if (cellsFor(r) - 2 >= libShelfTotal) { need = r; break; }
+  const rows = Math.max(1, Math.min(bySpace, need));
   const gap = rows > 1
     ? Math.max(LIB_ROW_GAP_MIN, Math.min(LIB_ROW_GAP, Math.floor((avail - rows * LIB_ROW_H) / (rows - 1))))
     : LIB_ROW_GAP;

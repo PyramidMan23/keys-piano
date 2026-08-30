@@ -193,6 +193,10 @@ export const ART = {
     "generated": true,
     "drawnFrom": "the notes of Liebestraum No. 3, Franz Liszt"
   },
+  "light-of-the-seven": {
+    "generated": true,
+    "drawnFrom": "the notes of Light of the Seven, Ramin Djawadi"
+  },
   "lost": {
     "artist": "LINKIN PARK",
     "album": "Lost Demos",
@@ -207,6 +211,10 @@ export const ART = {
     "artist": "Wilhelm Kempff",
     "album": "Beethoven: Piano Sonatas Nos.8 \"Pathétique\", 14 \"Moonlight\", 15 \"Pastorale\" & 24 \"For Therese\"",
     "year": "1987"
+  },
+  "mozart-pc21-2": {
+    "generated": true,
+    "drawnFrom": "the notes of Piano Concerto No. 21, 2nd movement, W.A. Mozart, K. 467"
   },
   "nocturne-op9-2": {
     "generated": true,
