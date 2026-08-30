@@ -44,6 +44,16 @@ const span = (sorted) => (sorted.length ? sorted[sorted.length - 1] - sorted[0] 
 // (which would mean we mis-read the staves) and a hand asked to cover ground
 // faster than a hand moves. Derived hands get the strict rule, because there we
 // ARE guessing and a wide span is the signature of guessing wrong.
+// A BLEMISH IS NOT A DEFECT. The first version of this returned false on the
+// FIRST violation, so one awkward instant condemned a whole piece: Clair de
+// Lune's Medium tier was refused for a single crossed moment and a single fast
+// move across 1,400 notes. What this is for is catching PERVASIVE wrongness,
+// the kind a pitch threshold produces: the old Interstellar broke on 4.5% of
+// its onsets, not on one. So judge the RATE, with a floor so that a short piece
+// cannot hide a real problem behind a percentage.
+const BAD_RATE = 0.01;    // more than 1% of onsets in trouble is systemic
+const BAD_FLOOR = 3;      // and fewer than 3 bad moments is never systemic
+
 export function handsAreSane(notes, bpm = 100, fromScore = false) {
   const byBeat = new Map();
   for (const n of notes) {
@@ -51,21 +61,22 @@ export function handsAreSane(notes, bpm = 100, fromScore = false) {
     if (!byBeat.has(k)) byBeat.set(k, []);
     byBeat.get(k).push(n);
   }
+  let bad = 0;
   for (const group of byBeat.values()) {
     const l = group.filter((n) => n.h === 'L').map((n) => n.m).sort((a, b) => a - b);
     const r = group.filter((n) => n.h === 'R').map((n) => n.m).sort((a, b) => a - b);
-    if (l.length && r.length && r[0] < l[l.length - 1]) return false;   // crossed
-    if (!fromScore && (span(l) > SPAN_MAX || span(r) > SPAN_MAX)) return false;   // unreachable chord
+    if (l.length && r.length && r[0] < l[l.length - 1]) bad++;                    // crossed
+    else if (!fromScore && (span(l) > SPAN_MAX || span(r) > SPAN_MAX)) bad++;     // unreachable chord
   }
   for (const h of ['L', 'R']) {
     const line = notes.filter((n) => n.h === h).sort((a, b) => a.b - b.b);
     for (let i = 1; i < line.length; i++) {
       const secs = (line[i].b - line[i - 1].b) * 60 / bpm;
       if (secs <= 0) continue;
-      if (Math.abs(line[i].m - line[i - 1].m) / secs > TRAVEL_MAX) return false;
+      if (Math.abs(line[i].m - line[i - 1].m) / secs > TRAVEL_MAX) bad++;
     }
   }
-  return true;
+  return bad < BAD_FLOOR || bad / byBeat.size < BAD_RATE;
 }
 
 // Re-derive `h` for every note, in place. Returns the notes.

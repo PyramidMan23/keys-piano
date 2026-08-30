@@ -201,6 +201,32 @@ for (const level of wantTiers) {
 
 console.log('');
 for (const p of problems) console.log('REFUSED  ' + p);
+// A TIER THAT IS NOT EASIER IS NOT A TIER. Thinning a very dense piece can
+// remove almost nothing: the Fantaisie-Impromptu is essentially one fast line,
+// so its Medium came out exactly as hard as its Hard and the difficulty gate
+// said so. Shipping both would put two identical arrangements on the ladder and
+// tell the learner one of them is a step down.
+{
+  // Walk DOWN from Hard: each easier tier must be meaningfully lighter than the
+  // one above it. (Walking up and comparing against the easier tier is the same
+  // test inverted, and it drops everything, because Medium always has more
+  // notes than Easy.)
+  const keep = [];
+  for (const level of ['Hard', 'Medium', 'Easy']) {
+    const t = built.find((x) => x.level === level);
+    if (!t) continue;
+    const above = keep[keep.length - 1];
+    if (above && t.notes.length >= above.notes.length * 0.85) {
+      problems.push(`${level}: ${t.notes.length} notes against ${above.level}'s ${above.notes.length} is not a step down, so it is not a tier`);
+      continue;
+    }
+    keep.push(t);
+  }
+  keep.reverse();
+  built.length = 0;
+  built.push(...keep);
+}
+for (const p of problems.slice(-3)) if (/not a step down/.test(p)) console.log('DROPPED  ' + p);
 for (const s of built) console.log(`ok       ${s.id.padEnd(28)} ${String(s.notes.length).padStart(5)} notes, ${s.bpm}bpm, ${s.sections.length} sections`);
 if (!built.length) { console.log('\nnothing written: no tier passed the audit'); process.exit(1); }
 // ONE SURVIVING TIER IS NOT AN "EASY" TIER. If the audit refuses the fuller
