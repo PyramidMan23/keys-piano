@@ -61,11 +61,21 @@ export const COLORS = {
   leftGlow: 'rgba(94, 224, 242, 0.55)',
   leftBright: '#c2f4ff',
   wrong: '#e05252',
-  whiteKey: '#171b22',
-  whiteKeyLow: '#0a0c10',
-  blackKey: '#04060a',
+  // WHITE KEYS ARE WHITE (Mark, 2026-08-30: "can we get the white keys to be
+  // white but still look cinematic and amazing like Apple would do it").
+  // They were #171b22, which is not a white key: it is a black one with a
+  // lighter name. Cinematic does not mean dark. A real piano under stage light
+  // has ivory keys with the far end in the fallboard's shadow and the near
+  // front edge catching the light, which is exactly this gradient, top to
+  // bottom. Never pure #ffffff: it glares and reads as plastic, where warm
+  // ivory reads as an instrument.
+  whiteKey: '#ded9ce',       // the far end, in shadow
+  whiteKeyLow: '#faf8f3',    // the front edge, lit
+  blackKey: '#0d1016',       // lifted just off the ground so it reads as a key
+  blackKeyLow: '#05070b',
   passive: '#2c323d',
-  label: '#8d97a4',
+  label: '#4a4f57',          // ink ON a white key
+  labelOnBlack: '#b9bec7',   // and on a black key, where dark ink would vanish
 };
 
 // Keyboard geometry as pure data so the tap hit-test is node-testable.
@@ -1029,7 +1039,7 @@ export class FallsView {
       }
       if (this.kbLetters) {
         ctx.textAlign = 'center';
-        ctx.fillStyle = down ? '#141414' : '#7d8694';
+        ctx.fillStyle = down ? '#141414' : COLORS.labelOnBlack;
         ctx.font = `bold ${Math.min(9, k.w * 0.5)}px system-ui`;
         ctx.fillText(LETTERS[m % 12], k.x + k.w / 2, top + bh - 6);
       }
