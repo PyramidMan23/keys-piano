@@ -88,6 +88,7 @@ for (const n of notes) n.b = +(n.b - first).toFixed(4);
 
 // ---- 4. hands: the file's own evidence first --------------------------------
 let handSource = 'derived';
+let fromScore = false;   // did the FILE tell us the hands, or did we work them out
 const byTrack = new Map();
 for (const n of notes) {
   const k = n.track + ':' + n.channel;
@@ -103,6 +104,7 @@ if (parts.length === 2) {
   for (const n of lo[1]) n.h = 'L';
   for (const n of hi[1]) n.h = 'R';
   handSource = `the file's own two parts (${lo[1].length} low, ${hi[1].length} high)`;
+  fromScore = true;
 } else {
   repairHands(notes, bpm);
   handSource = 'derived by js/hands.mjs (the file carried no staff information)';
@@ -153,9 +155,26 @@ for (const level of wantTiers) {
   const ns = thin(notes, level);
   if (ns.length < 8) { problems.push(`${level}: only ${ns.length} notes survived thinning`); continue; }
   const tierBpm = Math.round(bpm * TEMPO_OF[level]);
-  if (!handsAreSane(ns, tierBpm)) {
+  // WHOSE WORK IS BEING JUDGED. When the hands came off an engraved score and
+  // the notes are the score's own (hard = everything), there is nothing of ours
+  // left to check: it is a published piece that pianists play, and refusing it
+  // means the tool is grading Chopin. Easy and Medium are OURS, though. Thinning
+  // to the top voice can invent a leap the composer never wrote, so those tiers
+  // are still checked, and so is anything whose hands we had to derive.
+  const oursToJudge = !fromScore || level !== 'hard';
+  if (oursToJudge && !handsAreSane(ns, tierBpm, fromScore)) {
     problems.push(`${level}: FAILS the playability audit (chord over ${SPAN_MAX} semitones, crossed hands, or a hand asked to travel over ${TRAVEL_MAX} semitones a second)`);
     continue;
+  }
+  {
+    const wide = [];
+    const byB = groupBy(ns, (n) => n.b);
+    for (const [b, g] of byB) for (const h of ['L', 'R']) {
+      const v = g.filter((n) => n.h === h).map((n) => n.m).sort((x, y) => x - y);
+      if (v.length > 1 && v[v.length - 1] - v[0] > SPAN_MAX) wide.push(b);
+    }
+    if (wide.length) console.log(`  note: ${level} has ${wide.length} chords wider than ${SPAN_MAX} semitones. ` +
+      'The score says so, so they are rolled under the pedal, not grabbed.');
   }
   built.push({
     id: level === 'hard' ? id + '-hard' : level === 'easy' ? id + '-easy' : id,

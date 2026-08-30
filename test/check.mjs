@@ -13,7 +13,17 @@ for (const s of SONGS) {
   assert.deepEqual(errs, [], `${s.id}: ${errs.join('; ')}`);
   ok(`${s.id} valid (${s.notes.length} notes, ends beat ${songEndBeat(s)})`);
 }
-assert.equal(SONGS.length, 128); // 102 + Fur Elise full (2 tiers) + 24 arpeggio drills
+// The CURATED count is pinned; the imported count is not, because importing a
+// song is a normal thing to do and should not fail a build. What IS pinned is
+// that every imported song declares where it came from, so a generated
+// arrangement can never be mistaken for a hand-curated one.
+{
+  const imported = SONGS.filter((s) => s.handAssignment === 'generated');
+  const curated = SONGS.filter((s) => s.handAssignment !== 'generated');
+  assert.equal(curated.length, 128); // 102 + Fur Elise full (2 tiers) + 24 arpeggio drills
+  for (const s of imported) assert.ok(s.source, `${s.id} is generated but names no source`);
+  ok(`${curated.length} curated songs, ${imported.length} imported, all with provenance`);
+}
 
 // --- Hard tier: denser than Medium, octave/arpeggio figuration present ---
 for (const grp of ['gangstas-paradise', 'faded', 'river', 'still-dre', 'game-of-thrones', 'runaway', 'pirates', 'piano-man', 'empire', 'fray-save-a-life', 'lost', 'numb', 'mario', 'moonlight-sonata', 'bella-ciao', 'see-you-again', 'interstellar', 'in-the-end', 'what-ive-done', 'work-this-time', 'in-a-gadda-da-vida', 'stairway', 'bohemian-rhapsody', 'hotel-california']) {
@@ -83,7 +93,7 @@ assert.deepEqual(pm.notes.filter((n) => n.h === 'L').slice(0, 5).map((n) => n.m)
 const gp = SONGS.find((s) => s.id === 'gangstas-paradise');
 const gpChorus = gp.notes.filter((n) => n.h === 'R' && n.b === 48).map((n) => n.m).sort((a, b) => a - b);
 assert.deepEqual(gpChorus, [60, 63, 67], 'Gangsta chorus opens on a Cm triad');
-assert.ok(SONGS.filter((s) => s.level === 'Easy').length === 26, 'all multi-level groups have Easy variants');
+assert.ok(SONGS.filter((s) => s.level === 'Easy' && s.handAssignment !== 'generated').length === 26, 'all multi-level curated groups have Easy variants');
 ok('new songs match their verified transcriptions (Pirates, River, Piano Man, Gangsta)');
 
 // --- signed timing feedback (council 08-24) ---
@@ -1846,8 +1856,18 @@ ok('covers: deterministic, all distinct, dark-glass palette, notes-as-art, notch
   // nothing may fall between the two: a new song either gets a real sleeve or
   // is a declared no-recording case. This is the check that catches curation
   // adding a song and nobody fetching its art.
+  // A score-derived piece has no album sleeve and never will: Bach did not
+  // release a record. Those fall back to the engraved plate on purpose, so they
+  // are not "uncovered", they are covered the way they should be. What this
+  // check is really for is a RECORDED song being added with nobody fetching its
+  // art, so it still applies to everything curated.
+  const generated = new Set(SONGS.filter((s) => s.handAssignment === 'generated').map((s) => s.group ?? s.id));
+  for (const g of generated) {
+    const song = SONGS.find((s) => (s.group ?? s.id) === g);
+    assert.ok(C.coverSpec(song).pts.length > 0, `${g} must fall back to the note-derived plate`);
+  }
   const uncovered = [...new Set(SONGS.filter((s) => !s.ladder).map((s) => s.group ?? s.id))]
-    .filter((g) => !ART[g] && !NO_SLEEVE.includes(g));
+    .filter((g) => !ART[g] && !NO_SLEEVE.includes(g) && !generated.has(g));
   assert.deepEqual(uncovered, [], `these groups have no sleeve and are not declared no-recording: ${uncovered.join(', ')}`);
 }
 ok('real art: every claimed sleeve on disk at both sizes, no-recording songs fall back, no group uncovered');

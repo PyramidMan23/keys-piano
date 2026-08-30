@@ -35,7 +35,16 @@ const span = (sorted) => (sorted.length ? sorted[sorted.length - 1] - sorted[0] 
 
 // Is this song's hand assignment physically playable? The same test the audit
 // tool uses, so "repaired" and "passes the gate" cannot drift apart.
-export function handsAreSane(notes, bpm = 100) {
+// `fromScore` matters. When the hands came off an engraved score's own staves,
+// the score is ground truth and a wide span is not a defect: Romantic piano is
+// full of chords wider than a hand, written to be ROLLED under the pedal, and
+// Chopin's left hand in the Op.9 nocturne does exactly that. Refusing Clair de
+// Lune because Debussy wrote a tenth is the tool overruling the composer. What
+// still fails even from a score is a physical impossibility: crossed hands
+// (which would mean we mis-read the staves) and a hand asked to cover ground
+// faster than a hand moves. Derived hands get the strict rule, because there we
+// ARE guessing and a wide span is the signature of guessing wrong.
+export function handsAreSane(notes, bpm = 100, fromScore = false) {
   const byBeat = new Map();
   for (const n of notes) {
     const k = Math.round(n.b * 1000) / 1000;
@@ -46,7 +55,7 @@ export function handsAreSane(notes, bpm = 100) {
     const l = group.filter((n) => n.h === 'L').map((n) => n.m).sort((a, b) => a - b);
     const r = group.filter((n) => n.h === 'R').map((n) => n.m).sort((a, b) => a - b);
     if (l.length && r.length && r[0] < l[l.length - 1]) return false;   // crossed
-    if (span(l) > SPAN_MAX || span(r) > SPAN_MAX) return false;         // unreachable chord
+    if (!fromScore && (span(l) > SPAN_MAX || span(r) > SPAN_MAX)) return false;   // unreachable chord
   }
   for (const h of ['L', 'R']) {
     const line = notes.filter((n) => n.h === h).sort((a, b) => a.b - b.b);
