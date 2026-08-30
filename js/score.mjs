@@ -31,6 +31,21 @@ function yFor(idx, topLineY, topIdx) {
 const TREBLE_TOP_IDX = diatonic(77).idx; // F5 top line of treble
 const BASS_TOP_IDX = diatonic(57).idx;   // A3 top line of bass
 
+// ☠️ PAINT WITH INLINE STYLE, NEVER A PRESENTATION ATTRIBUTE. An SVG
+// presentation attribute (stroke="..." / fill="...") is the LOWEST priority
+// author declaration there is, so the canon's unlayered
+// `.canon-root * { all: revert }` beats every one of them: inside the canon the
+// staves, note heads, stems and flags all painted with no colour at all and the
+// score read as an empty page. Inline style is not in a layer and survives.
+// ☠️ AND THE INK IS A CUSTOM PROPERTY, NOT `currentColor`. `color` is an
+// ordinary inherited property, so the canon's `all: revert` resets it on every
+// descendant to the dark-scheme default, which is WHITE, and every note head,
+// accidental, dot, stem and flag painted white on the cream page: a score with
+// staves and barlines and no notes on it. Custom properties are explicitly NOT
+// touched by `all`, which is why the stave lines (already var(--score-line))
+// survived and the notes did not. `--note-ink` carries the per-note hand
+// colour that ScoreView.update writes while playing, falling back to the page
+// ink before a run starts.
 export class ScoreView {
   constructor(container) {
     this.container = container; // scrollable div
@@ -120,20 +135,20 @@ export class ScoreView {
     head.setAttribute('cx', x); head.setAttribute('cy', y);
     head.setAttribute('rx', 6); head.setAttribute('ry', 4.6);
     head.setAttribute('transform', `rotate(-15 ${x} ${y})`);
-    head.setAttribute('fill', open ? 'transparent' : 'currentColor');
-    head.setAttribute('stroke', 'currentColor');
+    head.style.fill = open ? 'transparent' : 'var(--note-ink, var(--score-ink))';
+    head.style.stroke = 'var(--note-ink, var(--score-ink))';
     head.setAttribute('stroke-width', open ? 2 : 1);
     g.appendChild(head);
 
-    if (sharp) text(g, x - 16, y + 5, '♯', 14, 'currentColor');
+    if (sharp) text(g, x - 16, y + 5, '♯', 14, 'var(--note-ink, var(--score-ink))');
     const dotted = beats === 1.5 || beats === 3;
-    if (dotted) circle(g, x + 11, y - 2, 2, 'currentColor');
+    if (dotted) circle(g, x + 11, y - 2, 2, 'var(--note-ink, var(--score-ink))');
 
     if (beats < 4) { // stem
       const up = treble ? idx < diatonic(71).idx : idx < diatonic(50).idx;
       const sx = up ? x + 5.5 : x - 5.5;
       const sy2 = up ? y - 30 : y + 30;
-      line(g, sx, y, sx, sy2, 'currentColor', 1.6);
+      line(g, sx, y, sx, sy2, 'var(--note-ink, var(--score-ink))', 1.6);
       if (beats <= 0.5) { // flag(s)
         const dir = up ? 1 : -1;
         flagPath(g, sx, sy2, dir);
@@ -143,7 +158,7 @@ export class ScoreView {
     if (n.f) text(g, x, treble ? y - 34 : y + 42, String(n.f), 10, 'var(--score-finger)');
 
     g.setAttribute('data-hand', n.h);
-    g.style.color = 'var(--score-ink)';
+    g.style.setProperty('--note-ink', 'var(--score-ink)');
     svg.appendChild(g);
     return g;
   }
@@ -157,7 +172,7 @@ export class ScoreView {
     if (this._lastCurBar !== curBar) {
       this._lastCurBar = curBar;
       this.barRects.forEach((r, i) => {
-        r.setAttribute('fill', i === curBar ? 'var(--score-cur-bar)' : i === curBar + 1 ? 'var(--score-next-bar)' : 'transparent');
+        r.style.fill = i === curBar ? 'var(--score-cur-bar)' : i === curBar + 1 ? 'var(--score-next-bar)' : 'transparent';
       });
     }
     for (const [n, el] of this.noteEls) {
@@ -168,7 +183,7 @@ export class ScoreView {
         : passive ? 'var(--score-passive)'
         : played ? 'var(--score-played)' : 'var(--score-ink)';
       // style writes are the frame cost on 1600-note songs: only touch changes
-      if (el.__c !== color) { el.style.color = color; el.__c = color; }
+      if (el.__c !== color) { el.style.setProperty('--note-ink', color); el.__c = color; }
       const op = passive ? '0.45' : '1';
       if (el.__o !== op) { el.style.opacity = op; el.__o = op; }
     }
@@ -182,14 +197,14 @@ function line(parent, x1, y1, x2, y2, stroke, width = 1) {
   const l = document.createElementNS(NS, 'line');
   l.setAttribute('x1', x1); l.setAttribute('y1', y1);
   l.setAttribute('x2', x2); l.setAttribute('y2', y2);
-  l.setAttribute('stroke', stroke); l.setAttribute('stroke-width', width);
+  l.style.stroke = stroke; l.style.strokeWidth = width;
   parent.appendChild(l);
   return l;
 }
 function text(parent, x, y, str, size, fill, weight = 'normal') {
   const t = document.createElementNS(NS, 'text');
   t.setAttribute('x', x); t.setAttribute('y', y);
-  t.setAttribute('font-size', size); t.setAttribute('fill', fill);
+  t.setAttribute('font-size', size); t.style.fill = fill;
   t.setAttribute('font-weight', weight);
   t.setAttribute('text-anchor', 'middle');
   t.setAttribute('font-family', "'Segoe UI Symbol', 'Noto Music', serif");
@@ -201,23 +216,23 @@ function rect(parent, x, y, w, h, fill) {
   const r = document.createElementNS(NS, 'rect');
   r.setAttribute('x', x); r.setAttribute('y', y);
   r.setAttribute('width', w); r.setAttribute('height', h);
-  r.setAttribute('fill', fill);
+  r.style.fill = fill;
   parent.appendChild(r);
   return r;
 }
 function circle(parent, cx, cy, r, fill) {
   const c = document.createElementNS(NS, 'circle');
   c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', r);
-  c.setAttribute('fill', fill);
+  c.style.fill = fill;
   parent.appendChild(c);
   return c;
 }
 function flagPath(parent, x, y, dir) {
   const p = document.createElementNS(NS, 'path');
   p.setAttribute('d', `M ${x} ${y} q 10 ${dir * 6} 8 ${dir * 18}`);
-  p.setAttribute('stroke', 'currentColor');
+  p.style.stroke = 'var(--note-ink, var(--score-ink))';
   p.setAttribute('stroke-width', 2.4);
-  p.setAttribute('fill', 'none');
+  p.style.fill = 'none';
   parent.appendChild(p);
   return p;
 }

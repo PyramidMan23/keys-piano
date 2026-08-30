@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v73';   // amber = accumulated progress (one meaning, 9.48:1), and no single seam is the surplus-height sink: a third row of songs at 1418x900
+const VERSION = 'keys-v74';   // SCORE VIEW FIXED: the canon reset was wiping the notation's stroke, fill, colour and even rx/ry
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   'js/app.mjs', 'js/engine.mjs', 'js/midi.mjs', 'js/falls.mjs', 'js/score.mjs', 'js/songs.mjs', 'js/audio.mjs', 'js/echo.mjs',

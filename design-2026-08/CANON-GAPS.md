@@ -241,3 +241,46 @@ attribute itself is absent from the canon by design. Accepted.
     decision, then regenerate the canon and require every gate to pass against
     the new artboard. Never patch the binder to outrun the specification. The
     pixel gate exists to stop implementation drift, not to freeze the design.
+18. **The canon reset was eating the score (2026-08-30).** Mark: "make sure the
+    score area looks amazing and is working and functioning. how is this not in
+    here or not working." It rendered as an empty black box, and all seven
+    gates were green while it did, which is the part worth writing down.
+
+    The board only ever drew a 56px "SCORE VIEW" strip: a PICTURE of a score.
+    The port hands that element's id to the real ScoreView, which wipes it and
+    injects a 5,600-node SVG. Four faults stacked, each hiding the next:
+    - The strip's inline `display:flex;flex-direction:column` stretched the SVG
+      to the column width, and an SVG with intrinsic width and height scales its
+      height to match, so the whole of Fur Elise rendered **1048x9**.
+    - `.canon-root * { all: revert }` is UNLAYERED, so it beats every rule in
+      `@layer app` regardless of specificity. The `.score-wrap` printed page
+      (ground, horizontal scroll, ink variables) evaporated. Adding specificity
+      changed nothing; the rule had to move OUT of the layer and BELOW the
+      reset, where order decides.
+    - `all: revert` also beats SVG PRESENTATION ATTRIBUTES, which are the
+      lowest-priority author declarations there are and are what score.mjs
+      draws with. Stroke and fill went first (staves and stems with no colour),
+      then `color` behind `currentColor` (heads painted white on cream), then
+      `rx` and `ry`, which are CSS properties in SVG2, so every note head
+      collapsed to a 0x0 box while still reporting the correct fill.
+    - Nothing set a base ink on the page, so `currentColor` inherited the app's
+      near-white body ink onto a cream page.
+    The rule: **the subtree an app component DRAWS INTO is not canon markup and
+    must be exempt from the canon reset.** `.canon-root *:not(#score-wrap,
+    #score-wrap *)`. Converting attributes one at a time was losing to a class.
+
+    Two new gates, because the existing seven could not see any of this:
+    `tools/score-render-check.mjs` renders the notation inside a canon subtree
+    and measures the ink against the page it sits on (it immediately caught a
+    second defect: the stave lines were 2.67:1, under the 3:1 floor that
+    meaningful graphics owe, now #837c69 at 3.68:1). And
+    `tools/void-check.mjs`, which captures every screen and finds the largest
+    EMPTY RECTANGLE in it, because every existing gate inspects ELEMENTS and an
+    element can exist, be the right size, in the right place, and be blank.
+
+    ☠️ And a caution about that second gate: its first draft read only the
+    top-left 400x300 of each canvas and reported Free play blank while it was
+    drawing a full keyboard lower down. Its second draft judged
+    `#freeplay-canvas`, which under the canon is not even the surface the user
+    sees. A gate that looks in the wrong place is worse than no gate; judge the
+    PICTURE, not an element you picked.

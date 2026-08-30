@@ -127,6 +127,29 @@ export function mountWidePlay(host) {
   falls.style.height = 'auto';
   window.__falls?.resize?.();                    // set by app.mjs; harmless if absent
 
+  // THE SCORE IS A SURFACE, NOT A DRAWING. The board drew a 56px "SCORE VIEW"
+  // strip as a picture OF the score, and the port hands that element's id to
+  // the real ScoreView, which wipes it and injects a 5,600-node SVG. Falls got
+  // adopted properly here and the score got nothing, so it inherited the
+  // strip's inline `display:flex;flex-direction:column`: a flex column stretches
+  // its child to the container width, and an SVG with intrinsic width and
+  // height scales its height to match, so the whole of Fur Elise rendered
+  // 1048x9 and Mark saw an empty black box. It also never picked up the app's
+  // own `.score-wrap` class, which carries the printed-page ground, the
+  // horizontal scroll and every --score-* ink variable the notation paints
+  // with. Adopt it the way the deck is adopted.
+  const scoreWrap = $('score-wrap');
+  if (scoreWrap) {
+    scoreWrap.classList.add('score-wrap');
+    scoreWrap.style.display = 'block';           // never flex: the SVG must not stretch
+    scoreWrap.style.flexDirection = '';
+    scoreWrap.style.gap = '';
+    scoreWrap.style.padding = '';                // let the class set the page margins
+    scoreWrap.style.flex = '1 1 auto';
+    scoreWrap.style.minHeight = '0';
+    scoreWrap.style.width = '100%';
+  }
+
   // ---- proxies: every drawn control drives the hidden real one -------------
   // A proxy also MIRRORS the hidden control's label whenever it leaves its
   // resting text ("Hear it" -> "Stop", "Train" -> "Training at 80% (0/2)"),

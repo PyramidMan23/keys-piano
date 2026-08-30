@@ -515,25 +515,6 @@ button:disabled { opacity: 0.35; cursor: default; }
 .slot.recov { border-radius: 3px; transform: rotate(45deg); width: 11px; height: 11px; border-color: var(--accent); background: var(--panel-2); }
 .slot-need { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink); font-size: 13px; }
 .freeplay { max-height: 40vh; }
-.score-wrap {
-  flex: 1; overflow-x: auto; overflow-y: hidden; background: #f5f1e6;
-  border-radius: 12px; padding: 14px 0;
-  /* score mode is printed-page look: dark ink on cream, ratio 13.8:1 */
-  --score-ink: #23282f;
-  --score-line: #9a948a;
-  --score-passive: #b3ada1;
-  --score-played: #8d8779;
-  --score-finger: #6b6558;
-  --score-cur-bar: rgba(155, 97, 8, 0.13);
-  --score-next-bar: rgba(35, 40, 47, 0.05);
-  /* Score mode is a printed page, cream not black, so the tokens invert here
-     and scoping does the work. --right was #b8730a, which measured 3.39:1 on
-     this cream and FAILED AA: a pre-existing bug found during the port and
-     fixed, not introduced by it. #9b6108 is the same hue at 4.53:1. */
-  --right: #9b6108;
-  --left: #0a6fa8;
-  --accent: #2e6b47;   /* 5.62:1 on the cream page */
-}
 .stars { color: var(--accent); font-size: 0.8em; letter-spacing: 2px; }
 .stars.big { font-size: 1em; }
 
@@ -619,7 +600,6 @@ button:disabled { opacity: 0.35; cursor: default; }
 .tools { flex-wrap: wrap; }
 
 /* memory ladder: the score surface dims as cues are removed */
-.score-wrap.dimmed { opacity: 0.5; }
 .echo-modes { margin-bottom: 10px; width: fit-content; flex: none; }
 
 /* takes shelf */
@@ -752,6 +732,8 @@ button:disabled { opacity: 0.35; cursor: default; }
 
 }   /* end @layer app */
 
+
+
 /* Unlayered, and therefore stronger than every rule above regardless of
    specificity. Inside a canon subtree the app's stylesheet stands down and the
    design's own inline styles are the only author styles that apply.
@@ -774,8 +756,18 @@ button:disabled { opacity: 0.35; cursor: default; }
   border-radius: inherit;
 }
 
+/* ☠️ THE SCORE SUBTREE IS EXEMPT, and it has to be an exemption rather than a
+   patch. `all: revert` beats SVG PRESENTATION ATTRIBUTES, which are the lowest
+   priority author declarations there are, and score.mjs draws with them. That
+   cost three separate rounds of this bug: first stroke and fill (the staves and
+   stems painted with no colour), then `color` behind currentColor (the heads
+   painted white on a cream page), and then `rx` and `ry`, which are CSS
+   properties in SVG2, so every note head collapsed to a 0x0 box while still
+   reporting the correct fill. Converting attributes one at a time was losing to
+   a class of bug; the subtree the app DRAWS into is simply not canon markup and
+   must not be reset. */
 .canon-root,
-.canon-root * {
+.canon-root *:not(#score-wrap, #score-wrap *) {
   all: revert;
   /* The one thing that must come BACK. The canon was authored in a page with
      `* { box-sizing: border-box }` and every width in it assumes that; reverting
@@ -796,3 +788,44 @@ button:disabled { opacity: 0.35; cursor: default; }
    half a laptop screen of nothing. */
 .canon-root { display: flex; justify-content: center; }
 
+/* THE SCORE PAGE LIVES OUT HERE ON PURPOSE. It is an APP SURFACE the canon
+   HOSTS, exactly like the falls canvas; the artboard only ever drew a 56px
+   picture of one. Left inside @layer app it was unreachable: the canon's
+   unlayered `all: revert` below beats every layered rule REGARDLESS of
+   specificity, so the printed page, the horizontal scroll and the ink
+   variables all evaporated inside a canon subtree, the notation painted with
+   an undefined colour on black, and Fur Elise rendered as an empty box. Adding
+   specificity did nothing, because layers are compared before specificity.
+   It sits at the END of the file, AFTER the canon reset: both are unlayered
+   and equally specific, so the only thing that separates them is order. */
+.score-wrap {
+  flex: 1; overflow-x: auto; overflow-y: hidden; background: #f5f1e6;
+  border-radius: 12px; padding: 14px 0;
+  /* THE PAGE'S OWN INK. Note heads, accidentals and flags paint with
+     `currentColor`, and until a run starts nothing sets a colour on them, so
+     they inherited the app's near-white body ink and were invisible on the
+     cream page: a score with staves, stems and barlines and no notes. The
+     per-note hand colours in ScoreView.update still override this while
+     playing. */
+  color: #23282f;
+  /* score mode is printed-page look: dark ink on cream, ratio 13.8:1 */
+  --score-ink: #23282f;
+  /* #9a948a measured 2.67:1 on this cream and stave lines are MEANINGFUL
+     graphics (they carry pitch), so they owe the 3:1 floor. #837c69 is the
+     same hue at 3.68:1: legible, still clearly subordinate to the notes at
+     13.14:1. Caught by tools/score-render-check.mjs, not by eye. */
+  --score-line: #837c69;
+  --score-passive: #b3ada1;
+  --score-played: #8d8779;
+  --score-finger: #6b6558;
+  --score-cur-bar: rgba(155, 97, 8, 0.13);
+  --score-next-bar: rgba(35, 40, 47, 0.05);
+  /* Score mode is a printed page, cream not black, so the tokens invert here
+     and scoping does the work. --right was #b8730a, which measured 3.39:1 on
+     this cream and FAILED AA: a pre-existing bug found during the port and
+     fixed, not introduced by it. #9b6108 is the same hue at 4.53:1. */
+  --right: #9b6108;
+  --left: #0a6fa8;
+  --accent: #2e6b47;   /* 5.62:1 on the cream page */
+}
+.score-wrap.dimmed { opacity: 0.5; }

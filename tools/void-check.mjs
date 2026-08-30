@@ -1,0 +1,123 @@
+// THE BLACK-HOLE GATE. For every screen the app can show, capture what is
+// actually on screen and find the largest EMPTY rectangle in it.
+//
+// Two reasons this exists, and they are the same reason:
+//   1. Mark, repeatedly: "I do not want black empty space on the homepage."
+//   2. The Score view rendered as an empty box for days behind seven green
+//      gates. Every one of them inspected ELEMENTS. None of them looked at the
+//      picture and asked whether a large part of it was nothing. An element can
+//      exist, be the right size, in the right place, and be blank; and under
+//      the canon the element the app draws into is often not even the thing the
+//      user sees, so element-picking gates cannot be trusted here.
+//
+// It judges rendered pixels, so it does not care which layer painted them.
+//
+// Usage: node tools/void-check.mjs [--limit 25]
+import { launch } from './cdp.mjs';
+import { decode } from './png.mjs';
+
+const LIMIT = Number((process.argv.find((a) => a.startsWith('--limit=')) || '').split('=')[1] || 25);
+const day = (o) => { const x = new Date(); x.setDate(x.getDate() - o);
+  return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0'); };
+
+const SCREENS = [
+  ['library', null], ['play', null], ['play', 'score'], ['freeplay', null], ['echo', null],
+  ['improv', null], ['metronome', null], ['calibrate', null], ['lessons', null], ['lesson', null],
+  ['task', null], ['rhythm', null], ['path', null], ['trophies', null], ['takes', null], ['touch', null],
+];
+
+const CELL = 12;          // downsample: one cell is 12x12 device px
+const INK = 12;           // a cell is "inked" if any pixel differs from the ground by this
+
+// largest all-zero axis-aligned rectangle in a binary grid (histogram method)
+function largestVoid(grid, W, H) {
+  const heights = new Array(W).fill(0);
+  let best = 0, bestBox = null;
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) heights[x] = grid[y * W + x] ? 0 : heights[x] + 1;
+    const stack = [];
+    for (let x = 0; x <= W; x++) {
+      const h = x === W ? 0 : heights[x];
+      let start = x;
+      while (stack.length && stack[stack.length - 1][1] >= h) {
+        const [s, hh] = stack.pop();
+        const area = hh * (x - s);
+        if (area > best) { best = area; bestBox = { x: s, y: y - hh + 1, w: x - s, h: hh }; }
+        start = s;
+      }
+      stack.push([start, h]);
+    }
+  }
+  return { area: best, box: bestBox };
+}
+
+const b = await launch({ width: 1600, height: 950, scale: 1, port: 9595 });
+const rows = [];
+try {
+  await b.goto('http://localhost:4180/index.html?canon=0');
+  const ids = JSON.parse(await b.eval('(async () => JSON.stringify((await import("/js/songs.mjs")).SONGS.map(s=>s.id)))()'));
+  const songs = {}; ids.slice(0, 40).forEach((id, i) => { songs[id] = { plays: 3 + (i % 9), stars: i % 3, best: 55 + (i % 40) }; });
+  const seed = { firstRunDone: true, diagnosticDone: true, days: [day(0), day(1), day(3)],
+    pmin: { [day(0)]: 20, [day(1)]: 32, [day(3)]: 18 }, songs, lessons: {}, lib: { learning: true },
+    lastSession: { songId: 'fur-elise', sec: 0, tempo: '100', hand: 'both', wait: true, view: 'falls', at: Date.now() } };
+  await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify(seed))}); true`);
+  await b.goto('http://localhost:4180/index.html?canon=1');
+  await new Promise((r) => setTimeout(r, 2200));
+  await b.freezeMotion();
+
+  for (const [name, mode] of SCREENS) {
+    const opened = await b.eval(`(() => {
+      if (typeof window.__show !== 'function') return 'no __show';
+      window.__show(${JSON.stringify(name)});
+      const s = document.getElementById('screen-' + ${JSON.stringify(name)});
+      return s && getComputedStyle(s).display !== 'none' ? 'ok' : 'not shown';
+    })()`);
+    if (mode === 'score') await b.eval(`document.getElementById('mode-score')?.click(); true`);
+    await new Promise((r) => setTimeout(r, 650));
+    if (opened !== 'ok') { rows.push({ name: name + (mode ? ':' + mode : ''), verdict: 'NOT REACHED', detail: opened }); continue; }
+
+    // the CONTENT box: the canon card if there is one, else the screen itself
+    const box = JSON.parse(await b.eval(`(() => {
+      const s = document.getElementById('screen-' + ${JSON.stringify(name)});
+      const card = s.querySelector('.dv-card') || s;
+      const r = card.getBoundingClientRect();
+      return JSON.stringify({ x: Math.max(0, Math.round(r.x)), y: Math.max(0, Math.round(r.y)),
+        width: Math.round(r.width), height: Math.round(r.height) });
+    })()`));
+    if (box.width < 50 || box.height < 50) { rows.push({ name, verdict: 'COLLAPSED', detail: box.width + 'x' + box.height }); continue; }
+
+    const img = decode(await b.shot(box));
+    const W = Math.floor(img.width / CELL), H = Math.floor(img.height / CELL);
+    const grid = new Uint8Array(W * H);
+    const px = (x, y) => { const i = (y * img.width + x) * 4; return [img.data[i], img.data[i + 1], img.data[i + 2]]; };
+    const ground = px(1, 1);
+    for (let cy = 0; cy < H; cy++) for (let cx = 0; cx < W; cx++) {
+      let inked = 0;
+      for (let y = cy * CELL; y < (cy + 1) * CELL && !inked; y += 3)
+        for (let x = cx * CELL; x < (cx + 1) * CELL && !inked; x += 3) {
+          const p = px(x, y);
+          if (Math.abs(p[0] - ground[0]) > INK || Math.abs(p[1] - ground[1]) > INK || Math.abs(p[2] - ground[2]) > INK) inked = 1;
+        }
+      grid[cy * W + cx] = inked;
+    }
+    const { area, box: v } = largestVoid(grid, W, H);
+    const pct = (100 * area) / (W * H);
+    rows.push({
+      name: name + (mode ? ':' + mode : ''),
+      verdict: pct > LIMIT ? 'VOID' : 'ok',
+      detail: `${box.width}x${box.height}, biggest empty block ${pct.toFixed(1)}% ` +
+        (v ? `at ${v.x * CELL}, ${v.y * CELL} (${v.w * CELL}x${v.h * CELL}px)` : ''),
+    });
+  }
+} finally { await b.close(); }
+
+console.log(`screen           verdict      the biggest hole in it (flagged over ${LIMIT}%)`);
+console.log('-'.repeat(84));
+let bad = 0;
+for (const r of rows) {
+  if (r.verdict !== 'ok') bad++;
+  console.log(`${r.name.padEnd(16)} ${r.verdict.padEnd(12)} ${r.detail}`);
+}
+console.log('-'.repeat(84));
+console.log(`${rows.length - bad}/${rows.length} screens have no large empty region`);
+process.exit(bad ? 1 : 0);
