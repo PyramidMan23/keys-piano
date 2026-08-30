@@ -41,6 +41,8 @@ for (const song of list) {
   if (notes.length < 12) continue;
   const bpm = song.bpm || 100;
   const add = (kind, detail) => findings.push({ song: song.id, kind, detail });
+  // hands taken off an engraved score: the composer is the authority there
+  const fromScore = /mutopia|wikimedia/i.test(song.source || '');
 
   const byBeat = new Map();
   for (const n of notes) {
@@ -117,7 +119,14 @@ for (const song of list) {
         }
         if (hi - lo > worst) { worst = hi - lo; eg = `beat ${hn[i].b}: ${name(lo)} up to ${name(hi)}`; }
       }
-      if (worst > 18) add('hand roams too far in one beat',
+      // ☠️ AND NOT WHEN THE COMPOSER WROTE IT. A Romantic left hand genuinely
+      // sweeps two octaves inside a beat: Clair de Lune does 38 semitones,
+      // Liebestraum 50, the Op.9 nocturne 26. Where the hands came off an
+      // ENGRAVED SCORE that is the piece, not a defect, and flagging it is the
+      // tool marking Chopin's homework. This rule is for arrangements a script
+      // made, where a wide reach means the bass and an inner voice landed in
+      // the same hand by accident.
+      if (worst > 18 && !fromScore) add('hand roams too far in one beat',
         `${h === 'L' ? 'left' : 'right'} hand covers ${worst} semitones inside a beat; ${eg}`);
     }
   }
@@ -152,8 +161,16 @@ for (const song of list) {
   }
 
   // fingering that no longer matches its hand is worse than no fingering
+  //
+  // ☠️ WHAT THIS RULE MEANS IS "THE FINGERING PREDATES A HAND CHANGE", not "the
+  // song has fingering". Fingering derived by tools/finger.mjs is computed FROM
+  // the shipped hands, after the corrections and the re-sort songs.mjs applies,
+  // so it cannot predate them: it is the one kind that is stale-proof by
+  // construction. Without this distinction, filling in the missing fingering
+  // that Mark asked for lit up 40 songs as suspect purely for having any, which
+  // would have buried the 62 real hand defects under noise of my own making.
   const fingered = notes.filter((n) => n.f != null);
-  if (fingered.length && song.handAssignment === 'generated') {
+  if (fingered.length && song.handAssignment === 'generated' && !song.fingeringDerived) {
     add('fingering may be stale', `${fingered.length} notes carry a finger number but the hands were generated`);
   }
 }

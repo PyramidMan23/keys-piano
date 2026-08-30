@@ -514,8 +514,57 @@ export function mountWidePlay(host) {
   rail.addEventListener('click', () => board.__immersion(false));
   (main ?? board).style.position = 'relative';
   (main ?? board).appendChild(rail);
+  // PLAY AGAIN, while immersed. Mark, 2026-08-30: "when the notes and keyboard
+  // take up the whole screen, can we have a restart button ... out of the way,
+  // semi opaque, but we know it's there."
+  //
+  // So: a circle in the bottom corner, clear of the CONTROLS rail, resting at
+  // low opacity so it never competes with the falling notes, and coming fully
+  // up on hover or keyboard focus with its name beside it. Mint on waking, not
+  // amber: the colour law says mint is what you can act on NOW and amber is
+  // progress already made, and a restart is an action. 44px because every touch
+  // target here is. It drives the board's own Restart control rather than a
+  // second code path, so there is one definition of what restarting means.
+  const again = document.createElement('button');
+  again.type = 'button';
+  again.setAttribute('aria-label', 'Play again from the start');
+  // ☠️ BOTTOM LEFT, NOT BOTTOM RIGHT. The first version sat at right:44px and
+  // landed directly on the combo badge: "Play again" at 1260,678 and "24 in a
+  // row" at 1294,695, two boxes of text printed over each other. A screenshot
+  // showed it at once and no gate would have, because each element was
+  // individually correct. The bottom right corner belongs to the combo counter
+  // and the right edge to the CONTROLS rail, so the free corner is this one.
+  again.style.cssText = 'position:absolute;left:16px;bottom:16px;height:44px;padding:0 14px;'
+    + 'display:none;align-items:center;gap:9px;z-index:6;cursor:pointer;'
+    + 'background:rgba(0,0,0,.55);border:1px solid #253129;border-radius:22px;'
+    + 'color:#e9ede7;font:700 12px/1 Helvetica,Arial,sans-serif;opacity:.32;'
+    + 'transition:opacity .18s ease,border-color .18s ease,background .18s ease;'
+    + '-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)';
+  again.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" '
+    + 'style="display:block;flex:none"><path d="M13.2 6.6A5.4 5.4 0 1 0 13 9.9" fill="none" '
+    + 'stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>'
+    + '<path d="M13.6 2.6v4.2h-4.2" fill="none" stroke="currentColor" stroke-width="1.7" '
+    + 'stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    + '<span style="pointer-events:none">Play again</span>';
+  const wake = (up) => {
+    again.style.opacity = up ? '1' : '.32';
+    again.style.borderColor = up ? '#82bf9c' : '#253129';
+    again.style.background = up ? 'rgba(0,0,0,.78)' : 'rgba(0,0,0,.55)';
+  };
+  again.addEventListener('pointerenter', () => wake(true));
+  again.addEventListener('pointerleave', () => wake(false));
+  again.addEventListener('focus', () => wake(true));
+  again.addEventListener('blur', () => wake(false));
+  again.addEventListener('click', () => $('btn-restart')?.click());
+  (main ?? board).appendChild(again);
+
   const innerImmersion = board.__immersion;
-  board.__immersion = (on) => { innerImmersion(on); rail.style.display = on ? 'block' : 'none'; };
+  board.__immersion = (on) => {
+    innerImmersion(on);
+    rail.style.display = on ? 'block' : 'none';
+    again.style.display = on ? 'flex' : 'none';
+    if (!on) wake(false);
+  };
 
   document.addEventListener('keydown', (ev) => {
     if (ev.key === 'Escape' && board.dataset.immersed === '1') board.__immersion(false);

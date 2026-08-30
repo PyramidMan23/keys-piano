@@ -180,6 +180,14 @@ export class FallsView {
     this.targets = new Set();
     this.comboLevel = 0;      // 0 | 1 (10+) | 2 (25+), set by the app
     this.cueLetters = true;   // memory ladder: note letters can be removed
+    // ☠️ FINGERING IS NOT A CUE. It rode inside cueLetters until 2026-08-30,
+    // so switching note names off (or reaching a memory-ladder stage that
+    // strips cues) silently took the finger numbers with it. Mark: "we used to
+    // have which finger we should be using on which note ... this has gone.
+    // Make sure this is in every single zone. Never disappears." A note name is
+    // a crutch you are meant to outgrow; a finger number is technique, and
+    // removing it teaches nothing. Nothing sets this false.
+    this.cueFingers = true;
     this.cueFilter = null;    // null | 'landmarks' (bar-first notes) | 'none' (blank)
     this.improv = null;       // {chordPcs:Set, scalePcs:Set} keyboard highlights
     this.kbLetters = true;    // lesson READ phase hides the printed key names
@@ -463,31 +471,39 @@ export class FallsView {
       // EVERY note carries its name, and its finger when authored, quick
       // short notes used to drop both (Mark, live 2026-08-28): pills too
       // short for an inside label wear it just above the pill instead.
-      if (this.cueLetters) {
+      const fing = this.cueFingers && n.f ? String(n.f) : '';
+      if (this.cueLetters || fing) {
         ctx.textAlign = 'center';
-        const letter = LETTERS[n.m % 12];
+        const letter = this.cueLetters ? LETTERS[n.m % 12] : '';
+        const headInk = n.h === 'R' ? '#141414' : handPalette(this.noteStyle, 'L').bright;
         if (headH > 24) {
           // the label lives in the PRESS HEAD: on a six-beat pill a centred
           // letter floated mid-tail, exactly where nothing is played
-          ctx.fillStyle = n.h === 'R' ? '#141414' : handPalette(this.noteStyle, 'L').bright;
-          ctx.font = `bold ${Math.min(13, bw * 0.5)}px system-ui`;
-          ctx.fillText(letter, x + bw / 2, headY + headH / 2 + 4);
-          if (n.f) {
-            if (headH > 44) {
-              ctx.font = '10px system-ui';
-              ctx.fillStyle = n.h === 'R' ? 'rgba(20,20,20,0.7)' : 'rgba(194,244,255,0.7)';
-              ctx.fillText(String(n.f), x + bw / 2, y1 + bh - 7);
-            } else {
-              ctx.font = '9px system-ui';
-              ctx.fillStyle = handPalette(this.noteStyle, n.h).bright;
-              ctx.fillText(String(n.f), x + bw / 2, y1 - 3);
-            }
+          if (letter) {
+            ctx.fillStyle = headInk;
+            ctx.font = `bold ${Math.min(13, bw * 0.5)}px system-ui`;
+            ctx.fillText(letter, x + bw / 2, headY + headH / 2 + 4);
+          }
+          if (fing && !letter) {
+            // names are off, so the finger inherits the head: the number sits
+            // exactly where the eye was already going, not shrunk into a corner
+            ctx.fillStyle = headInk;
+            ctx.font = `bold ${Math.min(13, bw * 0.5)}px system-ui`;
+            ctx.fillText(fing, x + bw / 2, headY + headH / 2 + 4);
+          } else if (fing && headH > 44) {
+            ctx.font = '10px system-ui';
+            ctx.fillStyle = n.h === 'R' ? 'rgba(20,20,20,0.7)' : 'rgba(194,244,255,0.7)';
+            ctx.fillText(fing, x + bw / 2, y1 + bh - 7);
+          } else if (fing) {
+            ctx.font = '9px system-ui';
+            ctx.fillStyle = handPalette(this.noteStyle, n.h).bright;
+            ctx.fillText(fing, x + bw / 2, y1 - 3);
           }
         } else {
           // short pill: name (·finger) floats just above it, hand-coloured
           ctx.font = `bold ${Math.min(10, Math.max(8, bw * 0.4))}px system-ui`;
           ctx.fillStyle = handPalette(this.noteStyle, n.h).bright;
-          ctx.fillText(letter + (n.f ? '·' + n.f : ''), x + bw / 2, y1 - 3);
+          ctx.fillText(letter + (fing ? (letter ? '·' : '') + fing : ''), x + bw / 2, y1 - 3);
         }
       }
     };

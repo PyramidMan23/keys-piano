@@ -929,7 +929,17 @@ for (const entry of LADDER.filter((l2) => l2.mode === 'major' || l2.mode === 'mi
   assert.equal(shape(s), entry.mode === 'major' ? '2212221' : '2122122', `${entry.id} interval shape`);
 }
 // arpeggio ladder (2026-08-28): triad theory through two octaves, up + down,
-// both hands parallel; fingering deliberately absent (no verified source yet)
+// both hands parallel.
+//
+// FINGERING (2026-08-30). This pin used to assert the OPPOSITE: that the
+// arpeggios carried no fingering, because no verified source was reachable the
+// day they were written and the law here is "notes yes, guessed fingers never".
+// Mark then asked for fingering in every zone, so he can build correct hand
+// placement. Changing it deliberately rather than deleting it: the standard
+// two-octave root-position arpeggio is thumb-under-after-the-third, fifth on
+// top, hands mirrored, and the descent puts the SAME finger back on the SAME
+// note, exactly as the scale pins already assert. That last property is what is
+// pinned, because it is the thing a transposition slip would break.
 for (const entry of LADDER.filter((l2) => l2.mode === 'majarp' || l2.mode === 'minarp')) {
   const s = SONGS.find((x) => x.id === entry.id);
   assert.ok(s, entry.id + ' exists');
@@ -938,7 +948,14 @@ for (const entry of LADDER.filter((l2) => l2.mode === 'majarp' || l2.mode === 'm
   assert.equal(rh[6] - rh[0], 24, entry.id + ' spans two octaves');
   assert.equal(rh[12], rh[0], entry.id + ' lands home');
   assert.equal(rh[1] - rh[0], entry.mode === 'majarp' ? 4 : 3, entry.id + ' third quality');
-  assert.ok(s.notes.every((n2) => n2.f == null), entry.id + ' carries no guessed fingering');
+  const rhF = s.notes.filter((n2) => n2.h === 'R').map((n2) => n2.f);
+  const lhF = s.notes.filter((n2) => n2.h === 'L').map((n2) => n2.f);
+  assert.deepEqual(rhF, [1, 2, 3, 1, 2, 3, 5, 3, 2, 1, 3, 2, 1], entry.id + ' RH arpeggio fingering');
+  assert.deepEqual(lhF, [5, 3, 2, 1, 3, 2, 1, 2, 3, 1, 2, 3, 5], entry.id + ' LH arpeggio fingering');
+  for (let i = 0; i < 6; i++) {
+    assert.equal(rhF[12 - i], rhF[i], entry.id + ' RH finger stays with its note');
+    assert.equal(lhF[12 - i], lhF[i], entry.id + ' LH finger stays with its note');
+  }
   assert.equal(s.notes.filter((n2) => n2.h === 'L').length, 13, entry.id + ' both hands');
 }
 // fingering spot checks against the verified references (pianoscales.org,

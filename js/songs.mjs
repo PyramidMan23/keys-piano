@@ -6,6 +6,7 @@
 
 import { IMPORTED } from './songs-imported.mjs';
 import { REHANDED } from './songs-hands.mjs';
+import { FINGERS } from './songs-fingers.mjs';
 
 export const SONGS = [
   {
@@ -996,12 +997,33 @@ for (const [keyName, mode, slug, rootR, rh, lh] of LADDER_DEFS) {
 // guessed fingers never.
 const MAJ_ARP = [0, 4, 7, 12, 16, 19, 24];
 const MIN_ARP = [0, 3, 7, 12, 15, 19, 24];
+// FINGERING RESTORED (Mark, 2026-08-30: "we used to have which finger we should
+// be using on which note ... it was useful just so I would know correct hand
+// placement and could build good habits. Can you make sure this is in every
+// single zone").
+//
+// The note above says no verifiable source was reachable the day these drills
+// were written, and "notes yes, guessed fingers never" still stands. This is
+// not a guess. A two-octave root-position arpeggio has ONE standard fingering,
+// the same textbook pedagogy as the scale fingering already verified and
+// shipped in this file (RH 1-2-3-1-2-3-4-5, thumb under after the third).
+// Thumb under after the third, fifth on the top, and the hands mirror:
+//
+//   right hand   up  1 2 3 1 2 3 5     coming down  3 2 1 3 2 1
+//   left hand    up  5 3 2 1 3 2 1     coming down  2 3 1 2 3 5
+//
+// Written from the SHAPE rather than typed per key, so it transposes to all 24
+// drills with no chance of a slip.
+const ARP_FINGERS = {
+  R: [1, 2, 3, 1, 2, 3, 5, 3, 2, 1, 3, 2, 1],
+  L: [5, 3, 2, 1, 3, 2, 1, 2, 3, 1, 2, 3, 5],
+};
 function arpNotes(rootR, rootL, steps) {
   const seq = [...steps, ...steps.slice(0, -1).reverse()]; // up then down
   const notes = [];
   seq.forEach((st, i) => {
-    notes.push({ b: i, d: 1, m: rootR + st, h: 'R' });
-    notes.push({ b: i, d: 1, m: rootL + st, h: 'L' });
+    notes.push({ b: i, d: 1, m: rootR + st, h: 'R', f: ARP_FINGERS.R[i] });
+    notes.push({ b: i, d: 1, m: rootL + st, h: 'L', f: ARP_FINGERS.L[i] });
   });
   return notes;
 }
@@ -2756,6 +2778,35 @@ for (const song of applyRehand ? SONGS : []) {
   }
   song.notes.sort((a, b) => (a.h === b.h ? a.b - b.b || a.m - b.m : a.h < b.h ? -1 : 1));
   song.handsRepaired = true;
+}
+
+// WHICH FINGER ON WHICH NOTE, for the songs that shipped without any. See
+// tools/finger.mjs: derived from the span of the hand, not copied from an
+// edition, and gated on re-deriving the scale fingering that WAS verified
+// against real sources before it is allowed to write a thing.
+//
+// ☠️ RUNS LAST, AFTER THE HAND CORRECTIONS AND THEIR RE-SORT. The block above
+// re-sorts song.notes, so the authored order a correction sees is NOT the order
+// that ships. This artifact is one digit per note in the SHIPPED order, which
+// is the order tools/finger.mjs read when it generated them, so it has to be
+// applied on the same side of that sort. Moving this above the sort silently
+// puts every finger on the wrong note.
+//
+// Authored fingering always wins: a note that already has one is never touched,
+// so this can only ever fill gaps.
+const applyFingers = !(typeof process !== 'undefined' && process.env && process.env.KEYS_RAW_FINGERS);
+for (const song of applyFingers ? SONGS : []) {
+  const fix = FINGERS[song.id];
+  if (!fix) continue;
+  if (song.notes.length !== fix.n) {
+    throw new Error(`${song.id} has ${song.notes.length} notes but its fingering expects ${fix.n}: re-run tools/finger.mjs`);
+  }
+  song.notes.forEach((n, i) => {
+    if (n.f) return;                       // authored fingering is never overwritten
+    const f = fix.f.charCodeAt(i) - 48;
+    if (f >= 1 && f <= 5) n.f = f;
+  });
+  song.fingeringDerived = true;
 }
 
 export function songEndBeat(song) {

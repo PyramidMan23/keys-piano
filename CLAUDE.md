@@ -50,7 +50,8 @@ in `js/songs-imported.mjs`, never in `songs.mjs`.
 `tools/canon-runtime.mjs` · `tools/canon-clickable.mjs` ·
 `tools/canon-geometry.mjs` · `tools/canon-samples.mjs` ·
 `tools/canon-journeys.mjs` · `tools/score-render-check.mjs` ·
-`tools/void-check.mjs` · `tools/hand-audit.mjs`
+`tools/void-check.mjs` · `tools/hand-audit.mjs` ·
+`tools/finger-check.mjs` · `tools/finger-probe.mjs`
 
 ## Laws
 
@@ -61,11 +62,26 @@ in `js/songs-imported.mjs`, never in `songs.mjs`.
    one side of a fixed pitch. That is a script, not an arranger, and it is the
    single biggest source of wrong teaching in this app. `hand-audit.mjs` detects
    it; do not add another one.
-3. **Never rewrite `h` on a song that carries `f`.** Fingering is authored
-   against a hand. Change the hand and the fingering silently becomes a lie.
+3. **Never rewrite `h` on a song that carries AUTHORED `f`.** Fingering is
+   written against a hand. Change the hand and the fingering silently becomes a
+   lie. Fingering DERIVED by `tools/finger.mjs` is the exception and must not be
+   read as one: it is computed from the shipped hands, so a hand fix simply
+   requires re-running the tool afterwards. Read literally, this law would have
+   frozen all 62 outstanding hand defects the moment fingering was filled in,
+   which is the opposite of what it is for. Check `song.fingeringDerived`.
 4. **Repair offline, never at load time.** The data the learner receives must be
    the data in the file. Load time validates; it does not mutate.
-5. **Fingering: notes yes, guessed fingers never.** No verified source, no `f`.
+5. **Fingering: notes yes, guessed fingers never** — and know which kind you
+   are writing. EDITORIAL fingering is what a particular editor printed; it
+   encodes an interpretation, cannot be derived, and inventing one is a lie.
+   ERGONOMIC fingering is a consequence of the hand (five fingers of fixed
+   length, a thumb that passes under, a span that runs out) and is mostly forced
+   by the notes. `tools/finger.mjs` derives only the second, and earns the right
+   to by re-deriving the scale fingering that WAS checked against real sources:
+   a hard 100% on the white-key scales before it may write anything. It cannot
+   reach the memorised flat-key patterns (Bb and Eb left hands are byte-
+   identical despite different notes) and does not pretend to; those scales
+   already carry verified fingering, so it never fingers them.
 6. **The app renders the design's own extracted markup** (`js/canon-templates.mjs`).
    Binders bind DATA. They write no colour, size, radius or spacing.
 7. **A subtree the app DRAWS into is not canon markup** and is exempt from
