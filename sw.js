@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v76';   // fingering in every zone: off the note-names flag, and derived for the 27 groups that had none
+const VERSION = 'keys-v77';   // Play again moved off the keyboard to the empty top strip, and its icon given back its ink
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

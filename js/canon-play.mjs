@@ -527,14 +527,30 @@ export function mountWidePlay(host) {
   // second code path, so there is one definition of what restarting means.
   const again = document.createElement('button');
   again.type = 'button';
+  // The id is load-bearing, not decoration: style.css exempts #cp-again from
+  // `.canon-root * { all: revert }`. Without it that reset strips the icon's SVG
+  // presentation attributes and the arrow paints black on a black pill, at the
+  // right size and completely invisible. Same trap that erased the score view.
+  again.id = 'cp-again';
   again.setAttribute('aria-label', 'Play again from the start');
-  // ☠️ BOTTOM LEFT, NOT BOTTOM RIGHT. The first version sat at right:44px and
-  // landed directly on the combo badge: "Play again" at 1260,678 and "24 in a
-  // row" at 1294,695, two boxes of text printed over each other. A screenshot
-  // showed it at once and no gate would have, because each element was
-  // individually correct. The bottom right corner belongs to the combo counter
-  // and the right edge to the CONTROLS rail, so the free corner is this one.
-  again.style.cssText = 'position:absolute;left:16px;bottom:16px;height:44px;padding:0 14px;'
+  // ☠️☠️ IT HAS COLLIDED TWICE. Read this before moving it a third time.
+  //   1st: right:44px/bottom:16px printed over the combo badge ("Play again" at
+  //        1260,678 against "24 in a row" at 1294,695), two boxes of text on
+  //        top of one another.
+  //   2nd: left:16px/bottom:16px, chosen as "the free corner", sat ON THE
+  //        KEYBOARD. There is ONE canvas for the whole deck (x15-1389, y80-695)
+  //        and its lower band IS the keys, so bottom:16px laid a 44px button
+  //        over the bottom 17px of the low white keys, exactly where a finger
+  //        lands. Both times every element was individually correct and only
+  //        looking at a screenshot showed it.
+  // The lesson from both: the BOTTOM of this board belongs to the playing
+  // surface. The one band with nothing in it is the readout strip along the TOP
+  // (y 0-80), whose right half is empty, and it sits ABOVE the canvas so it can
+  // never cover a note or a key. It also puts this beside the CONTROLS rail, so
+  // the two things you reach for mid-song live together.
+  // tools/immersion-clearance.mjs now FAILS if this box touches the deck
+  // canvas, the combo badge, the tier chip or the rail. Move it there, not here.
+  again.style.cssText = 'position:absolute;right:40px;top:10px;height:44px;padding:0 14px;'
     + 'display:none;align-items:center;gap:9px;z-index:6;cursor:pointer;'
     + 'background:rgba(0,0,0,.55);border:1px solid #253129;border-radius:22px;'
     + 'color:#e9ede7;font:700 12px/1 Helvetica,Arial,sans-serif;opacity:.32;'

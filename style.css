@@ -766,8 +766,16 @@ button:disabled { opacity: 0.35; cursor: default; }
    reporting the correct fill. Converting attributes one at a time was losing to
    a class of bug; the subtree the app DRAWS into is simply not canon markup and
    must not be reset. */
+/* #cp-again joined the exemption 2026-08-31, the FOURTH time this bug was paid
+   for. The immersed "Play again" pill is app-drawn, and its refresh-arrow icon
+   is an inline SVG stroked with presentation attributes. The pill's own inline
+   cssText survived (inline styles outrank any stylesheet), so it measured a
+   correct 114x44 with a correct 16x16 icon inside it and passed every check,
+   while the icon painted with no stroke: black on a black pill. The tell is
+   always the same, the box is right and the ink is missing. App-draw anything
+   new in here and exempt it in the same breath. */
 .canon-root,
-.canon-root *:not(#score-wrap, #score-wrap *) {
+.canon-root *:not(#score-wrap, #score-wrap *, #cp-again, #cp-again *) {
   all: revert;
   /* The one thing that must come BACK. The canon was authored in a page with
      `* { box-sizing: border-box }` and every width in it assumes that; reverting
