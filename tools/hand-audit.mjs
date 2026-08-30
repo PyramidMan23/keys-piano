@@ -96,6 +96,31 @@ for (const song of list) {
     last.beat = beat;
   }
 
+  // ☠️ REACH WITHIN A BEAT. Mark found this by PLAYING, after every check here
+  // passed the song: "the range on the left hand seemed like it was very far
+  // apart ... on the version that I did it was only about eight keys apart."
+  // He was right, and nothing here saw it. The simultaneous-span rule only
+  // looks at notes struck together, and the travel rule is a RATE: 22 semitones
+  // across a beat at 105bpm is 38 a second, comfortably under a threshold set
+  // at what a trained pianist can do. But a learner's hand does not roam two
+  // octaves between one beat and the next, and an arrangement that asks it to
+  // has put the bass and a mid-register figure in the same hand.
+  {
+    const line = notes.filter((n) => n.h === 'L' || n.h === 'R');
+    for (const h of ['L', 'R']) {
+      const hn = line.filter((n) => n.h === h).sort((a, b) => a.b - b.b);
+      let worst = 0, eg = null;
+      for (let i = 0; i < hn.length; i++) {
+        let lo = hn[i].m, hi = hn[i].m;
+        for (let j = i + 1; j < hn.length && hn[j].b - hn[i].b <= 1; j++) {
+          lo = Math.min(lo, hn[j].m); hi = Math.max(hi, hn[j].m);
+        }
+        if (hi - lo > worst) { worst = hi - lo; eg = `beat ${hn[i].b}: ${name(lo)} up to ${name(hi)}`; }
+      }
+      if (worst > 18) add('hand roams too far in one beat',
+        `${h === 'L' ? 'left' : 'right'} hand covers ${worst} semitones inside a beat; ${eg}`);
+    }
+  }
   if (over) add('chord no hand can hold', `${over} moments; e.g. ${overEg}`);
   if (fingers) add('more than five keys in one hand', `${fingers} moments; e.g. ${fingerEg}`);
   if (crossed) add('crossed hands', `${crossed} moments; e.g. ${crossedEg}`);
