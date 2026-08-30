@@ -149,3 +149,17 @@ attribute itself is absent from the canon by design. Accepted.
     only, five-song capacity increments, band flexes, strip pins, unscaled
     height = viewportHeight / zoom. Recorded here because the values live in
     js/app.mjs, not on a board.
+15. **The hero billboard is dead (2026-08-30, Mark's morning)**: a Claude+Codex
+    council ruled the 666x516 recommendation card down to a 412x166 module
+    pinned in the grid's first three columns. Song state bleeds a 166px sleeve
+    to the module edge (and the hero now requests the 512px file, not the 128px
+    thumbnail it was stretching); SKILL state reserves NO art space at all,
+    because inventing a sleeve for a skill is a lie and an empty plate was what
+    Mark was looking at. Both states live on the states board as
+    #rec-module-song / #rec-module-skill. Deviations from the council: the app
+    changes NO geometry at the canonical 1418x738 (only surplus height buys
+    whole extra tile rows), because a 214px dashboard pin shifted the strip
+    against the design and blinded the pixel gate. Residual: the overlay still
+    reports content-level differences inside tile artwork on the two library
+    boards; their LAYOUT is proven pixel-identical (same cell x and widths on
+    both sides), so what remains is art rendering, not composition.

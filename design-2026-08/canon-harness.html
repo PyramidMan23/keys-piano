@@ -54,18 +54,17 @@ const LIBRARY_ROWS = [
 // its own tier pips. Seeding 5b's data into 7a would make every row a false
 // diff, so each composition gets the data its own artboard draws.
 const DESKTOP_ROWS = [
-  // 10a's OWN nine sample tiles (2026-08-29), read off the board by script:
-  // state word, E/M/H pip fills and plays count exactly as drawn. Titles are
-  // the board's own samples ("Super Mario", "In A Gadda Da Vida"), because the
-  // overlay compares pixels, not our catalogue.
+  // 10a's OWN nine sample tiles, IN THE BOARD'S OWN ORDER (re-read 2026-08-30
+  // after the council redraw moved C Major Scale from 5th to 8th). The overlay
+  // compares pixels, so the order is as load-bearing as the values.
   { song: byId('fur-elise'),      title: 'Für Elise',          plays: '79', state: 'Banked',      tiers: [3, 3, 3] },
   { song: byId('still-dre-easy'), title: 'Still D.R.E.',       plays: '39', state: 'Banked',      tiers: [3, 2, 0] },
   { song: byId('mario-easy'),     title: 'Super Mario',        plays: '5',  state: 'Needs work',  tiers: [1, 0, 0] },
   { song: byId('river'),          title: 'River Flows in You', plays: '12', state: 'Needs work',  tiers: [1, 0, 0] },
-  { song: byId('scale-c-major'),  title: 'C Major Scale',      plays: '3',  state: 'Needs work',  tiers: [1, 0, 0] },
   { song: byId('hotel-california'), title: 'Hotel California', plays: '0',  state: 'Not started', tiers: [0, 0, 0] },
   { song: byId('numb'),           title: 'Numb',               plays: '0',  state: 'Not started', tiers: [0, 0, 0] },
   { song: byId('in-a-gadda-da-vida'), title: 'In A Gadda Da Vida', plays: '0', state: 'Not started', tiers: [0, 0, 0] },
+  { song: byId('scale-c-major'),  title: 'C Major Scale',      plays: '3',  state: 'Needs work',  tiers: [1, 0, 0] },
   { song: byId('happy-birthday'), title: 'Happy Birthday',     plays: '24', state: 'Banked',      tiers: [1, 1, 0] },
 ];
 
@@ -77,7 +76,7 @@ if (screen === 'library' || screen === 'library-desktop') {
     prescription: {
       title: 'Star Wars Main Title',
       reason: 'John Williams, arranged for two hands. Nothing banked yet, start on the easy tier.',
-      art: 'art/128/star-wars.jpg',
+      art: 'art/512/star-wars.jpg',
     },
     screen,
     rows: screen === 'library-desktop' ? DESKTOP_ROWS : LIBRARY_ROWS,

@@ -577,14 +577,29 @@ function canonLibraryCtx() {
   // all our songs in it, that's our all songs area"): every group, not just
   // the untouched remainder, so the sleeve wall from here is the whole catalogue
   const allGroups = [...groups.values()];
-  const exploreSorted = sortMode2 === 'diff'
-    ? [...allGroups].sort((a2, b2) => difficultyScore(a2[0]) - difficultyScore(b2[0]))
-    : [...allGroups].sort((a2, b2) => a2[a2.length - 1].title.localeCompare(b2[b2.length - 1].title));
+  // THE SORT APPLIES TO EVERY SHELF (Mark, 2026-08-30: "I don't think those
+  // buttons do anything"). He was right: only Explore consulted the setting,
+  // so on Learning the click stored a preference, moved nothing, and left the
+  // header still reading WEAKEST FIRST. Now each shelf keeps its own smart
+  // order under 'diff' and every shelf can go A to Z, and the header below
+  // NAMES the order actually on screen.
+  const azSort = (list) => [...list].sort((a2, b2) =>
+    a2[a2.length - 1].title.localeCompare(b2[b2.length - 1].title));
+  const az = sortMode2 === 'az';
+  const smartTitle = { learning: 'LEARNING, WEAKEST FIRST', repertoire: 'REPERTOIRE, STRONGEST FIRST',
+    fame: 'HALL OF FAME', explore: 'EXPLORE, EASIEST FIRST' };
+  const shelf = (key, list) => ({
+    rows: az ? azSort(list) : list,
+    title: az ? `${smartTitle[key].split(',')[0]}, A TO Z` : smartTitle[key],
+    word: { learning: 'Learning', repertoire: 'Repertoire', fame: 'Hall of fame', explore: 'Explore' }[key],
+  });
   const LISTS = {
-    learning: { rows: learning, title: 'LEARNING, WEAKEST FIRST', word: 'Learning' },
-    repertoire: { rows: repertoire, title: 'REPERTOIRE', word: 'Repertoire' },
-    fame: { rows: fameGroups, title: 'HALL OF FAME', word: 'Hall of fame' },
-    explore: { rows: exploreSorted, title: sortMode2 === 'diff' ? 'EXPLORE, EASIEST FIRST' : 'EXPLORE, A TO Z', word: 'Explore' },
+    learning: shelf('learning', learning),
+    repertoire: shelf('repertoire', repertoire),
+    fame: shelf('fame', fameGroups),
+    explore: shelf('explore', sortMode2 === 'diff'
+      ? [...allGroups].sort((a2, b2) => difficultyScore(a2[0]) - difficultyScore(b2[0]))
+      : allGroups),
   };
   const activeTab = LISTS[state.lib.canonTab] ? state.lib.canonTab : 'learning';
   // Search over EVERY variant of every group. filterExplore only reads
@@ -615,7 +630,18 @@ function canonLibraryCtx() {
       ? { title: heroSong.title, reason: rx.evidence ?? rx.reason, song: heroSong,
           // the hero's state chip carries the recommended GROUP's real state
           state: (() => { const v = groups.get(heroSong.group); return v ? canonRowOf(v).state : null; })() }
-      : { title: rx.reason, reason: rx.evidence ?? '', song: null },
+      // NO SONG: the headline is the SKILL'S NAME, never the whole sentence.
+      // The drawn module allows three lines; "Time to check "Chords from a
+      // symbol" is still there." overran and clipped (Mark's screenshot,
+      // 2026-08-30). Name on top, sentence underneath, same as the teaser.
+      : (() => {
+        const sid = rx.skillId
+          ?? (rx.lessonId && TEACHER_LESSONS.find((l2) => l2.id === rx.lessonId)?.skillIds?.[0]);
+        const name = (sid && SKILL_BY_ID[sid]?.name)
+          ?? ({ diagnostic: 'The check-in', assessment: 'The assessment', done: 'Path complete' }[rx.kind]
+              ?? 'Continue learning');
+        return { title: name, reason: rx.reason ?? rx.evidence ?? '', song: null };
+      })(),
     // WHICH FRAME. The design draws the library twice: a 756px column (5b) and a
     // 1418x738 desktop composition (7a). They are different compositions, not
     // one reflowing, so pick the widest that fits rather than stretch either.
@@ -817,11 +843,24 @@ function canonLibraryCtx() {
 // dashboard pins to the viewport bottom, and a page-wide wash sampled from
 // the hero art keeps black from reading as void. All values are the
 // council's law, recorded in CANON-GAPS.
-const LIB_ROW_PITCH = 167;   // the board's own row pitch (y329 - y162)
+// the council redraw's own numbers, read off the board: 132px cells, 6px gaps,
+// 166px rows, and a 412px recommendation module occupying the first row's head
+let lastLibCap = 0;
+const LIB_CELL = 138;        // 132 + 6 gap
+const LIB_ROW_PITCH = 172;   // 166 + 6
+const LIB_MODULE_W = 418;    // 412 + 6
+let libDrawnGridH = 346;     // the board's own grid band, captured at first render
 function libCapacity() {
-  const z = Math.min(1, window.innerWidth / 1418);
-  const extra = Math.max(0, Math.floor((window.innerHeight / z - 738) / LIB_ROW_PITCH));
-  return 9 + extra * 5;   // whole rows only, five-song increments
+  // DETERMINISTIC, never measured. Measuring the grid we had just resized fed
+  // its own output back in: capacity ballooned, every song was dealt, and the
+  // "Show the other N" tile vanished because nothing was left to show.
+  const z = Math.min(1, window.innerWidth / 1418) || 1;
+  const surplus = Math.max(0, Math.round(window.innerHeight / z) - 738);
+  const rows = Math.max(1, Math.floor((libDrawnGridH + surplus + 6) / LIB_ROW_PITCH));
+  const firstRow = Math.max(1, Math.floor((1390 - LIB_MODULE_W) / LIB_CELL));
+  const otherRow = Math.max(1, Math.floor(1390 / LIB_CELL));
+  // one cell of the last row belongs to "Show the other N"
+  return Math.max(5, firstRow + (rows - 1) * otherRow - 1);
 }
 function applyLibraryAtmosphere() {
   const host = $('screen-library');
@@ -833,16 +872,51 @@ function applyLibraryAtmosphere() {
   frame.style.height = target + 'px';
   // the hero/tile band is the flexible region; find it as the frame child
   // containing the grid's show-more control
-  const grid = frame.querySelector('[data-lib-grid]');
-  if (grid) {
-    // grow the grid's whole ancestry so the surplus height becomes tile rows,
-    // and let the column size to its content within it
-    for (let el = grid; el && el !== frame; el = el.parentElement) {
-      el.style.flex = '1 1 auto';
-      el.style.minHeight = '0';
+  // ELASTIC GROWTH ONLY (2026-08-30). The board IS the law at its canonical
+  // 1418x738: at that size the app changes no geometry at all, so the pixel
+  // gate can still compare the two sides. A 214px dashboard pin was tried and
+  // shifted the whole strip ~13px against the design. Only SURPLUS height
+  // (a taller window) is spent, and only on whole extra tile rows.
+  const gridRow = frame.querySelector('[data-lib-grid]');
+  if (gridRow) {
+    gridRow.style.flexWrap = 'wrap';
+    gridRow.style.alignContent = 'flex-start';
+    gridRow.style.overflow = 'hidden';
+    // renderTiles stamps the design's own band height before dealing anything
+    if (gridRow.dataset.drawnH) libDrawnGridH = Number(gridRow.dataset.drawnH) || libDrawnGridH;
+    const z = Math.min(1, window.innerWidth / 1418) || 1;
+    const surplus = Math.max(0, Math.round(window.innerHeight / z) - 738);
+    const drawn = Number(gridRow.dataset.drawnH) || 346;
+    const rows = Math.max(1, Math.floor((drawn + surplus + 6) / LIB_ROW_PITCH));
+    gridRow.style.height = surplus > 0 ? Math.round(rows * LIB_ROW_PITCH - 6) + 'px' : '';
+    // NOTHING UNREACHABLE STAYS IN THE GRID. Wrapping can push a cell past the
+    // clipped edge, where it is invisible but still in the DOM: a person (and
+    // three journeys) then "click" a tile that cannot be hit. Hide any cell
+    // that does not fully fit, and keep the show-more as the last visible one.
+    const cells = [...gridRow.children];
+    const more = cells.find((c) => /^Show the other/.test(c.textContent.trim()));
+    for (const c of cells) if (c.dataset.disp) c.style.display = c.dataset.disp;
+    const bottom = gridRow.getBoundingClientRect().bottom;
+    let lastFits = -1;
+    cells.forEach((c, i) => {
+      const r = c.getBoundingClientRect();
+      if (!(r.height > 0 && r.bottom <= bottom + 2)) {
+        if (!c.dataset.disp) c.dataset.disp = c.style.display || '';
+        c.style.display = 'none';
+      } else lastFits = i;
+    });
+    // only when it was CLIPPED, never when the app hid it because the shelf
+    // is fully shown (that swap ate the single search result, twice)
+    if (more && more.style.display === 'none' && !more.dataset.moreEmpty
+        && !(more.querySelector('[data-more-empty]')) && lastFits >= 0) {
+      const victim = cells[lastFits];
+      if (victim !== more) {
+        if (!victim.dataset.disp) victim.dataset.disp = victim.style.display || '';
+        victim.style.display = 'none';
+        more.style.display = more.dataset.disp || '';
+        gridRow.insertBefore(more, victim);
+      }
     }
-    grid.style.height = 'auto';
-    grid.style.maxHeight = 'none';
   }
   // the ambient wash: one layer, colour from the hero art, under everything
   let wash = frame.querySelector(':scope > [data-lib-wash]');
@@ -894,6 +968,16 @@ function applyLibraryAtmosphere() {
   if (heroImg) {
     if (heroImg.complete && heroImg.naturalWidth) paint(heroImg);
     else heroImg.addEventListener('load', () => paint(heroImg), { once: true });
+  }
+  // ONE correction pass: the first render sizes the bands, and only then can
+  // capacity be measured. If the measured grid holds more (or fewer) whole
+  // cells than we dealt, re-render exactly once. The flag stops a loop.
+  const want = libCapacity();
+  if (want !== lastLibCap && !applyLibraryAtmosphere.__correcting) {
+    applyLibraryAtmosphere.__correcting = true;
+    lastLibCap = want;
+    renderLibrary();
+    applyLibraryAtmosphere.__correcting = false;
   }
 }
 function renderLibrary() {
@@ -3587,7 +3671,6 @@ midi.onControl = (cc, val) => {
 // ---------- boot ----------
 // sight exercises are throwaway ids; stop their stats entries accumulating
 for (const k of Object.keys(state.songs)) if (k.startsWith('sight-')) delete state.songs[k];
-let lastLibCap = 0;
 window.addEventListener('resize', () => {
   falls?.resize(); fpView?.resize(); echoView?.resize(); window.__refitPlay?.();
   // the elastic library re-plans only when a WHOLE row of capacity changes

@@ -238,8 +238,13 @@ try {
       // the result titles. The hero legitimately keeps the resume song.
       const grid = document.querySelector('#screen-library [data-lib-grid]');
       if (!grid) return [];
+      // the recommendation MODULE now lives in the grid's first cells and
+      // legitimately keeps naming the resume song while you search: it is not
+      // a result row, so exclude anything inside it
+      const mod = [...grid.querySelectorAll('div')].find((d) => /Start/.test(d.textContent) && /Choose another/.test(d.textContent));
       return [...grid.querySelectorAll('*')]
-        .filter((e) => !e.children.length && /Fraunces/.test(e.getAttribute('style') ?? '') && e.textContent.trim() && e.getBoundingClientRect().width > 0)
+        .filter((e) => !e.children.length && /Fraunces/.test(e.getAttribute('style') ?? '') && e.textContent.trim()
+          && e.getBoundingClientRect().width > 0 && !(mod && mod.contains(e)))
         .map((e) => e.textContent.trim());
     })()`);
     const before = await rowTitles();

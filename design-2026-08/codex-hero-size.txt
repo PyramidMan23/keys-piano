@@ -1,0 +1,39 @@
+READ-ONLY council question, composition. No writes, no skills, no agents.
+Repo C:\Users\markh\keys-piano. Evidence: design-2026-08/verify-20260829/
+elastic-tall2.png and live-explore-grid.png (the live desktop library).
+
+Mark, this morning, three complaints about the library hero card ("DO THIS
+NEXT"):
+1. "I don't like this empty space here, can we have the song cover art fill
+   up this space more?"
+2. "Should this area of the home screen be as big as it is? I feel like
+   there's no need for it to be this big and take up this much of the main
+   area."
+
+THE FACTS I have verified: the hero is a fixed ~668x346 card, half of it an
+art plate. prescribe() returns several KINDS: some name a SONG (which has
+cover art), but review/diagnostic/assessment kinds name a SKILL and carry NO
+art at all, so the plate renders as pure empty black with only a colour wash
+behind it. Both his screenshots are the SKILL case. The right half holds a
+kicker, a Fraunces headline that wraps to 3 lines, one evidence line, a
+state chip, and two buttons: perhaps 40% of the card's area is used.
+
+The library grid beside it is 132px sleeve tiles, 5 per row, and the whole
+library is now elastic (whole extra rows appear on tall windows).
+
+QUESTIONS, answer decisively with drawable specs:
+a. How big SHOULD the hero be, in px, at 1418x738? Is a hero justified at
+   all, or does the next-action belong as a lit FIRST TILE in the grid?
+b. When the prescription names a song: how should art fill the plate (bleed
+   to the card edge? full-bleed background with text over a scrim? keep the
+   plate but enlarge?) given the art on disk is 512px.
+c. When the prescription names a SKILL with no art: what fills that space
+   honestly? (Inventing art for a skill is a lie; empty black is what he is
+   complaining about.) Options include: collapse the card to a text-only
+   band, use the skill's own evidence as a visual (attempt sparkline, stage
+   pips), or show the songs the skill unlocks as small sleeves.
+d. Does the answer change the grid's row capacity, and is that a problem?
+
+Constraints: true black is the app's language; Mark is COLOUR-BLIND so no
+meaning in hue alone; 44px targets; the app already samples art colour for a
+wash. Be specific enough to commission in Claude Design.

@@ -238,29 +238,70 @@ export function renderCanonLibrary(host, ctx) {
     }
   }
 
-  // ---- the recommendation ----
+  // ---- the recommendation (council redraw 2026-08-30) ----------------------
+  // The 666x516 billboard is gone. The recommendation is a pinned 412x166
+  // module in the grid's first three columns. Its two states live on the
+  // STATES BOARD as #rec-module-song and #rec-module-skill, where every
+  // liftable module in this app lives: the SKILL state carries no artwork at
+  // all, because inventing a sleeve for a skill is a lie, and an empty plate
+  // is what Mark was looking at. (They were briefly drawn in an annex under
+  // 10a; that made the board 980 tall and blinded the pixel gate.)
+  const moduleIn = (scope) => {
+    if (!scope) return null;
+    return [...scope.querySelectorAll('div')]
+      .filter((d) => {
+        const r = d.getBoundingClientRect();
+        // module-sized, never the button ROW inside it (it holds both words too)
+        return /Start/.test(d.textContent) && /Choose another/.test(d.textContent)
+          && r.height >= 100 && r.width >= 300;
+      })
+      .sort((a, b) => (a.getBoundingClientRect().width * a.getBoundingClientRect().height)
+        - (b.getBoundingClientRect().width * b.getBoundingClientRect().height))[0] ?? null;
+  };
+  if (prescription && !prescription.song && !prescription.art) {
+    const t = document.createElement('template');
+    t.innerHTML = CANON['states'] ?? '';
+    const skillMod = t.content.querySelector('#rec-module-skill');
+    const songMod = moduleIn(root);
+    if (skillMod && songMod) {
+      const clone = skillMod.cloneNode(true);
+      clone.removeAttribute('id');   // that id is the design's, not the app's
+      songMod.replaceWith(clone);
+    }
+  }
   if (prescription) {
-    setText(root, 'Star Wars Main Title', prescription.title);
-    const reason = bySample(root, 'John Williams, arranged for two hands. Nothing banked yet, start on the easy tier.');
+    // SCOPE EVERY WRITE TO THE MODULE. Two states carry two sets of samples,
+    // and one of the skill state's samples ("Chords from a symbol") is also
+    // the sample headline of the YOUR PATH card further down the same board:
+    // an unscoped bind overwrote the path teaser with the song title and
+    // reported a phantom miss. The module is the only place these belong.
+    const rec = moduleIn(root) ?? root;
+    const headline = [...rec.querySelectorAll('*')].find((e) => !e.children.length
+      && /Fraunces/.test(e.getAttribute('style') ?? '') && e.textContent.trim());
+    if (headline) headline.textContent = prescription.title;
+    const reason = bySample(rec, 'John Williams, arranged for two hands. Nothing banked yet, start on the easy tier.')
+      ?? bySample(rec, 'last tested 4 days ago');
     if (reason) { reason.textContent = prescription.reason; reason.id = 'next-action-reason'; }
-    const label = bySample(root, 'DO THIS NEXT');
+    const label = bySample(rec, 'DO THIS NEXT');
     if (label) label.id = 'next-action-label';
-    const title = bySample(root, prescription.title);
-    if (title) control(title, 3).id = 'next-action';
-    const img = root.querySelector('img[data-art]');
+    if (headline) control(headline, 3).id = 'next-action';
+    const img = rec.querySelector('img[data-art]') ?? rec.querySelector('img');
     if (img) {
       // No song yet means no sleeve. An empty src is not "no image": the
       // browser draws a broken-image glyph, which is how the very first screen
       // a new user sees ended up with one.
-      const src = prescription.art ?? (prescription.song ? coverDataUrl(prescription.song, 96) : null);
+      // 512, not 96: the hero plate is 258 CSS px and rising, and a 96 request
+      // resolves to the art/128 THUMBNAIL, which the browser then stretched.
+      // Mark, 2026-08-30: the hero read as a blur. Ask for the big file.
+      const src = prescription.art ?? (prescription.song ? coverDataUrl(prescription.song, 512) : null);
       if (src) { img.src = src; img.hidden = false; } else { img.removeAttribute('src'); img.hidden = true; }
       img.alt = '';
       img.removeAttribute('data-art');
       img.id = 'next-action-cover';
     }
-    const start = bySample(root, 'Start');
+    const start = bySample(rec, 'Start');
     if (start) { const c = control(start); c.addEventListener('click', () => onRun?.(prescription)); c.style.cursor = 'pointer'; }
-    const another = bySample(root, 'Choose another');
+    const another = bySample(rec, 'Choose another');
     if (another) { const c = control(another); c.addEventListener('click', () => ctx.onChooseAnother?.()); c.style.cursor = 'pointer'; }
   }
 
@@ -415,6 +456,9 @@ function bindDashboard(root, ctx) {
     // design's own inline display:flex, which dropped the chevron onto its own
     // line. Put back exactly what the design had.
     const shown = c.style.display;
+    // TAG WHY it is hidden: "nothing left to show" is not "it did not fit",
+    // and the elastic sweep must not resurrect it by evicting a real tile.
+    if (hidden === 0) c.dataset.moreEmpty = '1'; else delete c.dataset.moreEmpty;
     c.style.display = hidden === 0 ? 'none' : shown;
     c.style.cursor = 'pointer';
     // Mark, 2026-08-29: this tile opens the FULL-SCREEN sleeve wall (12a)
@@ -559,7 +603,8 @@ function bindDashboard(root, ctx) {
 
   if (ctx.path) {
     T('Chords from a symbol', ctx.path.skill);
-    T('Skill 2 of 5. Stage: independent, one stage short of retained.', ctx.path.stage);
+    // the 4-line teaser replaced this sample; bind it only where it exists
+    if (bySample(root, 'Skill 2 of 5. Stage: independent, one stage short of retained.')) T('Skill 2 of 5. Stage: independent, one stage short of retained.', ctx.path.stage);
     // the four-line teaser (council round): action and evidence are value slots
     if (ctx.path.action && bySample(root, 'Build Cm7 and F7 from the symbol, left hand alone.')) T('Build Cm7 and F7 from the symbol, left hand alone.', ctx.path.action);
     if (ctx.path.evidence != null && bySample(root, 'Independent for six days. Decays Thursday.')) T('Independent for six days. Decays Thursday.', ctx.path.evidence);
@@ -1092,18 +1137,52 @@ function renderTiles(root, ctx) {
   // control as the last cell of the last row. The first cut treated the last
   // row as the whole grid, crammed all nine clones into it, and left the first
   // row showing the design's samples; the overlay caught it at 140k pixels.
+  // THE GRID, found by SHAPE, not by inline style. Three row structures have
+  // now shipped: a column of identical rows, one flex row, and (after the
+  // council redraw) two rows with DIFFERENT inline styles. Style-matching
+  // broke on the third and the entire grid silently vanished, taking every
+  // song row with it. So: take the container that holds the show-more, gather
+  // every tile-shaped cell inside it whatever the row nesting, and collapse
+  // them into ONE wrapping row. Wrapping is what the elastic library wants
+  // anyway: more height simply means more rows, with no arithmetic.
   const lastRow = moreBtn.parentElement;
   const rowsCol = lastRow.parentElement;
-  // ONLY siblings drawn as the same row shape count: on the 756 column the
-  // show-more's siblings are the whole content stack, and treating them as
-  // grid rows dismantled the phone library (the overlay caught it, 236px of
-  // card height gone). Identical inline style is the design's own row marker.
-  const rows = [...rowsCol.children].filter((r) => r.getAttribute('style') === lastRow.getAttribute('style'));
-  const perRow = Math.max(...rows.map((r) => r.children.length));
-  const tiles = rows.flatMap((r) => [...r.children]).filter((c) => c !== moreBtn);
-  // a GRID is many art-sized cells in wide rows; anything less is not 10a
-  if (rows.length < 2 || tiles.length < 3 || perRow < 4) return false;
-  const rowTpl = rows[0];
+  const isModule = (c) => /Start/.test(c.textContent) && /Choose another/.test(c.textContent);
+  // A TILE IS TILE-SHAPED. The 756 column's ledger rows also carry a Fraunces
+  // title, so a title-only test treated the phone library as a grid and
+  // collapsed its rows into one wrapping line (the overlay caught it: 1030px
+  // tall against the drawn 1334). A tile is a narrow cell, never a full-width row.
+  const colW = rowsCol.getBoundingClientRect().width || 1390;
+  const isTile = (c) => c !== moreBtn && !isModule(c)
+    && c.getBoundingClientRect().width < colW * 0.4
+    && [...c.querySelectorAll('*')].some((e) => !e.children.length && /Fraunces/.test(e.getAttribute('style') ?? ''));
+  const rowDivs = [...rowsCol.children].filter((r) => [...r.children].some(isTile) || r.contains(moreBtn));
+  // THE DESIGN'S OWN BAND HEIGHT, read before a single tile is dealt. Captured
+  // any later and it is the height the app itself just produced, which fed
+  // straight back into capacity (46 songs dealt, no room, show-more gone).
+  const drawnBandH = Math.round(rowsCol.getBoundingClientRect().height);
+  const gridHost = rowDivs[0] ?? lastRow;
+  const module = rowDivs.flatMap((r) => [...r.children]).find(isModule) ?? null;
+  const tiles = rowDivs.flatMap((r) => [...r.children]).filter(isTile);
+  if (tiles.length < 3) return false;
+  if (module && module.parentElement !== gridHost) gridHost.appendChild(module);
+  if (moreBtn.parentElement !== gridHost) gridHost.appendChild(moreBtn);
+  for (const r of rowDivs) if (r !== gridHost) r.remove();
+  gridHost.style.flexWrap = 'wrap';
+  gridHost.style.alignContent = 'flex-start';
+  gridHost.style.height = 'auto';
+  // WRAPPING INHERITS THE WRONG GAP. Collapsing the rows made the wrap use the
+  // row's own COLUMN gap (6px) where the design spaced its rows by 14px, so
+  // every row after the first sat 7px high and the whole dashboard rode up
+  // (the overlay caught it as a 7px shift). Take the container's real row gap.
+  {
+    const cs = getComputedStyle(rowsCol);
+    const drawnRowGap = parseFloat(cs.rowGap) || parseFloat(cs.gap) || 0;
+    if (drawnRowGap) gridHost.style.rowGap = drawnRowGap + 'px';
+  }
+  const rows = [gridHost];
+  const rowTpl = gridHost;
+  const perRow = Infinity;   // wrapping decides the break, not arithmetic
 
   const leaves = (el) => [...el.querySelectorAll('*')].filter((e) => !e.children.length && e.textContent.trim());
   const STATES = ['Banked', 'Needs work', 'Not started'];
@@ -1268,7 +1347,11 @@ function renderTiles(root, ctx) {
   // every art-forward library (iTunes included) scrolls its grid; the
   // composition itself still never scrolls. Scaffolding behaviour only.
   rowsCol.style.overflowY = 'auto';
-  rowsCol.dataset.libGrid = '1';   // the elastic library grows this column
+  // TAG THE ROW THAT HOLDS THE CELLS. In the single-row council layout the
+  // cells' parent is `lastRow`, and tagging its PARENT made every elastic
+  // measurement size the wrong box (the dashboard ended up above the grid).
+  gridHost.dataset.libGrid = '1';   // the ONE wrapping row the elastic library sizes
+  if (drawnBandH > 40) gridHost.dataset.drawnH = String(drawnBandH);
   rowsCol.style.overflowX = 'hidden';
   rowsCol.style.minHeight = '0';
   return true;
