@@ -276,13 +276,17 @@ export function renderCanonLibrary(host, ctx) {
     // an unscoped bind overwrote the path teaser with the song title and
     // reported a phantom miss. The module is the only place these belong.
     const rec = moduleIn(root) ?? root;
-    const headline = [...rec.querySelectorAll('*')].find((e) => !e.children.length
+    // AND SKIP THE EYEBROW. The 756 column sets "DO THIS NEXT" in Fraunces too
+    // (the desktop module uses the mono label face), so "the first Fraunces
+    // leaf" was the eyebrow there and the phone hero announced the song title
+    // twice, once where its own label belongs. The label knows its own name.
+    const label = bySample(rec, 'DO THIS NEXT');
+    const headline = [...rec.querySelectorAll('*')].find((e) => e !== label && !e.children.length
       && /Fraunces/.test(e.getAttribute('style') ?? '') && e.textContent.trim());
     if (headline) headline.textContent = prescription.title;
     const reason = bySample(rec, 'John Williams, arranged for two hands. Nothing banked yet, start on the easy tier.')
       ?? bySample(rec, 'last tested 4 days ago');
     if (reason) { reason.textContent = prescription.reason; reason.id = 'next-action-reason'; }
-    const label = bySample(rec, 'DO THIS NEXT');
     if (label) label.id = 'next-action-label';
     if (headline) control(headline, 3).id = 'next-action';
     const img = rec.querySelector('img[data-art]') ?? rec.querySelector('img');
@@ -447,7 +451,14 @@ function bindDashboard(root, ctx) {
   const more = bySample(root, 'Show the other 7 in Learning');
   if (more) {
     const hidden = Math.max(0, (ctx.learningTotal ?? 0) - (ctx.rows?.length ?? 0));
-    more.textContent = `Show the other ${hidden} in ${ctx.tabWord ?? 'Learning'}`;
+    const word = ctx.tabWord ?? 'Learning';
+    // THE ALBUM WALL NEEDS A DOOR EVEN WHEN NOTHING IS HIDDEN. Once the grid
+    // filled tall windows, every song fitted, this tile hid itself, and the
+    // full-screen wall became unreachable. It is a viewing mode, not just an
+    // overflow escape, so it stays and says what it does.
+    more.textContent = hidden > 0
+      ? `Show the other ${hidden} in ${word}`
+      : `See all ${ctx.learningTotal ?? 0} in ${word}`;
     const c = control(more);
     // NOT the hidden attribute: [hidden] hides via a user-agent display:none,
     // and every element in the canon carries an inline display, which wins, so
@@ -458,8 +469,8 @@ function bindDashboard(root, ctx) {
     const shown = c.style.display;
     // TAG WHY it is hidden: "nothing left to show" is not "it did not fit",
     // and the elastic sweep must not resurrect it by evicting a real tile.
-    if (hidden === 0) c.dataset.moreEmpty = '1'; else delete c.dataset.moreEmpty;
-    c.style.display = hidden === 0 ? 'none' : shown;
+    delete c.dataset.moreEmpty;      // it never hides now: the wall keeps its door
+    c.style.display = shown;
     c.style.cursor = 'pointer';
     // Mark, 2026-08-29: this tile opens the FULL-SCREEN sleeve wall (12a)
     // where the board exists; the in-place expansion stays the fallback.
@@ -858,6 +869,11 @@ function openLibraryGallery(ctx) {
     const word = span.textContent.trim();
     if (!stateVariants.has(word)) {
       stateVariants.set(word, { i: span.querySelector('i')?.getAttribute('style') ?? null,
+        // THE TICK IS NOT DECORATION. Banked's box carries a mark inside it and
+        // the other two are empty; swapping only the <i>'s style left every
+        // dealt Banked chip a bare green square, which is hue alone doing the
+        // work. The mark travels with the variant.
+        mark: span.querySelector('i')?.innerHTML ?? '',
         word: [...span.children].find((ch) => ch.tagName === 'SPAN')?.getAttribute('style') ?? null });
     }
   }
@@ -902,7 +918,9 @@ function openLibraryGallery(ctx) {
       const wordEl = [...span.children].find((ch) => ch.tagName === 'SPAN');
       if (wordEl) wordEl.textContent = song.state;
       if (v) {
-        if (v.i && span.querySelector('i')) span.querySelector('i').setAttribute('style', v.i);
+        const shape = span.querySelector('i');
+        if (v.i && shape) shape.setAttribute('style', v.i);
+        if (shape) shape.innerHTML = v.mark ?? '';
         if (v.word && wordEl) wordEl.setAttribute('style', v.word);
       }
     }
@@ -1151,16 +1169,49 @@ function renderTiles(root, ctx) {
   // A TILE IS TILE-SHAPED. The 756 column's ledger rows also carry a Fraunces
   // title, so a title-only test treated the phone library as a grid and
   // collapsed its rows into one wrapping line (the overlay caught it: 1030px
-  // tall against the drawn 1334). A tile is a narrow cell, never a full-width row.
+  // tall against the drawn 1334). Narrowness alone does not separate them
+  // either: a ledger row's TEXT SLOT is narrow AND holds the Fraunces title, so
+  // the width rule simply moved the false match one level down and the phone
+  // board still lost four of its five rows. What actually tells them apart is
+  // the aspect: a tile is a PORTRAIT cell (132 wide, 166 tall, sleeve above
+  // title), and every ledger part is wider than it is tall.
   const colW = rowsCol.getBoundingClientRect().width || 1390;
-  const isTile = (c) => c !== moreBtn && !isModule(c)
-    && c.getBoundingClientRect().width < colW * 0.4
-    && [...c.querySelectorAll('*')].some((e) => !e.children.length && /Fraunces/.test(e.getAttribute('style') ?? ''));
+  const isTile = (c) => {
+    if (c === moreBtn || isModule(c)) return false;
+    const b = c.getBoundingClientRect();
+    if (b.width >= colW * 0.4 || b.height <= b.width) return false;
+    return [...c.querySelectorAll('*')].some((e) => !e.children.length && /Fraunces/.test(e.getAttribute('style') ?? ''));
+  };
   const rowDivs = [...rowsCol.children].filter((r) => [...r.children].some(isTile) || r.contains(moreBtn));
   // THE DESIGN'S OWN BAND HEIGHT, read before a single tile is dealt. Captured
   // any later and it is the height the app itself just produced, which fed
   // straight back into capacity (46 songs dealt, no room, show-more gone).
   const drawnBandH = Math.round(rowsCol.getBoundingClientRect().height);
+  // THE ROW WAS THE RULER. The design's rows are a FIXED 166 tall and their
+  // cells stretch to fill them, which quietly SHRINKS each title line below its
+  // own line-height (19.23 against 19.55). Collapsing to one auto-height
+  // wrapping line takes the ruler away: every cell relaxes to its natural
+  // 166.55, rounds to 167, and everything below the grid sits one pixel low.
+  // 130,010 structural pixels, all of it that one pixel. So keep the ruler.
+  // Read here, BEFORE the collapse: measured after the module is appended, the
+  // row is as tall as the module (231) and the whole band inflates by 65px.
+  // Read PER ROW, because the board is not uniform: row 1 carries the
+  // recommendation module and squeezes its cells to 166, row 2 lets its cells
+  // hang to 166.55. Imposing either one on both is a redesign, not a port.
+  const drawnRows = rowDivs.map((r) => {
+    const kids = [...r.children].map((c) => c.getBoundingClientRect().height);
+    return { box: r.getBoundingClientRect().height, cell: kids.length ? Math.max(...kids) : 0 };
+  });
+  // and the two ODD CELLS keep their own drawn height rather than their line's:
+  // the board's door is 166 sitting beside 166.55 tiles, so a per-line target
+  // pushed its dashed underline half a pixel down.
+  const drawnFixed = new Map();
+  for (const r of rowDivs) for (const c of r.children) {
+    if (isModule(c) || c === moreBtn || c.contains(moreBtn)) drawnFixed.set(c, c.getBoundingClientRect().height);
+  }
+  const drawnCellH = Math.round(drawnRows[0]?.cell ?? 0);
+  const drawnPitch = rowDivs.length > 1
+    ? Math.round(rowDivs[1].getBoundingClientRect().y - rowDivs[0].getBoundingClientRect().y) : 0;
   const gridHost = rowDivs[0] ?? lastRow;
   const module = rowDivs.flatMap((r) => [...r.children]).find(isModule) ?? null;
   const tiles = rowDivs.flatMap((r) => [...r.children]).filter(isTile);
@@ -1175,9 +1226,12 @@ function renderTiles(root, ctx) {
   // row's own COLUMN gap (6px) where the design spaced its rows by 14px, so
   // every row after the first sat 7px high and the whole dashboard rode up
   // (the overlay caught it as a 7px shift). Take the container's real row gap.
+  // Prefer the PITCH the design actually drew (row 2 top minus row 1 top) less
+  // the row height, so gap and cell together reproduce the board's own rhythm.
   {
     const cs = getComputedStyle(rowsCol);
-    const drawnRowGap = parseFloat(cs.rowGap) || parseFloat(cs.gap) || 0;
+    let drawnRowGap = parseFloat(cs.rowGap) || parseFloat(cs.gap) || 0;
+    if (drawnPitch > drawnCellH) drawnRowGap = drawnPitch - drawnCellH;
     if (drawnRowGap) gridHost.style.rowGap = drawnRowGap + 'px';
   }
   const rows = [gridHost];
@@ -1197,6 +1251,11 @@ function renderTiles(root, ctx) {
     const word = span.textContent.trim();
     if (!stateVariants.has(word)) {
       stateVariants.set(word, { i: span.querySelector('i')?.getAttribute('style') ?? null,
+        // THE TICK IS NOT DECORATION. Banked's box carries a mark inside it and
+        // the other two are empty; swapping only the <i>'s style left every
+        // dealt Banked chip a bare green square, which is hue alone doing the
+        // work. The mark travels with the variant.
+        mark: span.querySelector('i')?.innerHTML ?? '',
         word: [...span.children].find((ch) => ch.tagName === 'SPAN')?.getAttribute('style') ?? null });
     }
   }
@@ -1280,7 +1339,9 @@ function renderTiles(root, ctx) {
       const wordEl = [...span.children].find((ch) => ch.tagName === 'SPAN');
       if (wordEl) wordEl.textContent = song.state;
       if (v) {
-        if (v.i && span.querySelector('i')) span.querySelector('i').setAttribute('style', v.i);
+        const shape = span.querySelector('i');
+        if (v.i && shape) shape.setAttribute('style', v.i);
+        if (shape) shape.innerHTML = v.mark ?? '';
         if (v.word && wordEl) wordEl.setAttribute('style', v.word);
       }
     }
@@ -1335,7 +1396,9 @@ function renderTiles(root, ctx) {
       const wordEl = [...span.children].find((ch) => ch.tagName === 'SPAN');
       if (wordEl) wordEl.textContent = ctx.prescription.state;
       if (v) {
-        if (v.i && span.querySelector('i')) span.querySelector('i').setAttribute('style', v.i);
+        const shape = span.querySelector('i');
+        if (v.i && shape) shape.setAttribute('style', v.i);
+        if (shape) shape.innerHTML = v.mark ?? '';
         if (v.word && wordEl) wordEl.setAttribute('style', v.word);
       }
     }
@@ -1343,16 +1406,45 @@ function renderTiles(root, ctx) {
   // CONTAINMENT (Mark's screenshot, 2026-08-29): the band the grid lives in is
   // a fixed 392px of a fixed 738px composition. More rows than the design drew
   // (show all, search) were painting straight over the practice chart and the
-  // form check below. The grid area now scrolls WITHIN its own bounds, the way
-  // every art-forward library (iTunes included) scrolls its grid; the
-  // composition itself still never scrolls. Scaffolding behaviour only.
-  rowsCol.style.overflowY = 'auto';
+  // form check below, so the band CLIPS, exactly as the board's own wrapper
+  // does. It clips rather than scrolls on purpose: a scroll container is a
+  // composited layer, and Chrome will not put LCD subpixel text inside one, so
+  // `overflow-y: auto` silently re-rendered every label in the grid with
+  // grayscale antialiasing and the overlay read 12,391 differing pixels of
+  // pure font rasterisation. Nothing overflows now in any case: the elastic
+  // plan deals only what fits and the door carries the remainder to the wall.
   // TAG THE ROW THAT HOLDS THE CELLS. In the single-row council layout the
   // cells' parent is `lastRow`, and tagging its PARENT made every elastic
   // measurement size the wrong box (the dashboard ended up above the grid).
   gridHost.dataset.libGrid = '1';   // the ONE wrapping row the elastic library sizes
   if (drawnBandH > 40) gridHost.dataset.drawnH = String(drawnBandH);
-  rowsCol.style.overflowX = 'hidden';
+  // and hand every cell, dealt ones included, the height its LINE had on the
+  // board. Corrected by DELTA, never set outright: the door is content-box with
+  // padding, so a flat height:166 made its border box 230 and shoved the
+  // dashboard down 64px. Lines past the last drawn row reuse the last one.
+  if (drawnCellH > 40) {
+    const kids = [...gridHost.children];
+    // Read EVERY line assignment before writing ANY height. Resizing a cell
+    // moves the cells after it, so a loop that measures as it goes lost the
+    // later ones out of the map, and the whole sizing pass died silently on an
+    // undefined row.
+    const tops = [...new Set(kids.map((c) => Math.round(c.getBoundingClientRect().y)))].sort((a, z) => a - z);
+    const rowFor = (i) => drawnRows[Math.min(Math.max(i, 0), drawnRows.length - 1)];
+    const plan = kids.map((c) => ({ c,
+      target: drawnFixed.get(c) ?? rowFor(tops.indexOf(Math.round(c.getBoundingClientRect().y))).cell }));
+    for (const { c, target } of plan) {
+      const cur = c.getBoundingClientRect().height;
+      if (!target || Math.abs(cur - target) < 0.01) continue;
+      c.style.height = (parseFloat(getComputedStyle(c).height) - (cur - target)) + 'px';
+    }
+    // the band is the sum of the ROW BOXES, which is not the sum of the cells:
+    // the board's second row is 166 with its cells hanging 0.55 past it
+    const gap = parseFloat(getComputedStyle(gridHost).rowGap) || 0;
+    let bandH = gap * (tops.length - 1);
+    for (let i = 0; i < tops.length; i++) bandH += rowFor(i).box;
+    if (bandH > 40) gridHost.style.height = bandH + 'px';
+  }
+  rowsCol.style.overflow = 'hidden';
   rowsCol.style.minHeight = '0';
   return true;
 }

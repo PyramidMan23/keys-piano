@@ -618,6 +618,7 @@ function canonLibraryCtx() {
   // fixed band and tiles sat ON TOP of the practice chart and the form check
   // (Mark's screenshot, 2026-08-29). The binder contains the overflow too, but
   // the default page should fill the frame it was drawn for.
+  libShelfTotal = active.rows.length;   // the plan needs to know what it can fill
   const pageSize = canonLibraryScreen() === 'library-desktop' ? libCapacity() : 5;
   const shown = state.lib.canonShowAll || q ? active.rows : active.rows.slice(0, pageSize);
 
@@ -847,21 +848,38 @@ function canonLibraryCtx() {
 // 166px rows, and a 412px recommendation module occupying the first row's head
 let lastLibCap = 0;
 const LIB_CELL = 138;        // 132 + 6 gap
-const LIB_ROW_PITCH = 172;   // 166 + 6
+const LIB_ROW_PITCH = 180;   // 166px row + the board's 14px ROW gap (its two
+                             // drawn rows span 346: 166 + 14 + 166). Using the
+                             // 6px COLUMN gap here cut every row after the first.
 const LIB_MODULE_W = 418;    // 412 + 6
 let libDrawnGridH = 346;     // the board's own grid band, captured at first render
-function libCapacity() {
-  // DETERMINISTIC, never measured. Measuring the grid we had just resized fed
-  // its own output back in: capacity ballooned, every song was dealt, and the
-  // "Show the other N" tile vanished because nothing was left to show.
+let libDashH = 206;          // the dashboard strip's natural height, captured once
+const LIB_GRID_TOP = 162;    // header 54 + tools 50 + tabs 44, off the board
+let libShelfTotal = 0;       // how many songs the active shelf actually has
+function libPlan() {
+  // WHOLE, FULL ROWS. Mark, 2026-08-30: "if we have enough songs, let the songs
+  // take up that whole black space and just leave the last square as the See
+  // all". So we never open a row we cannot completely fill: we take the tallest
+  // whole number of rows the window allows AND the shelf can fill, the door
+  // takes the final cell, and any leftover height goes to the cards, never to
+  // black. (This supersedes the clipped part-row idea from earlier today.)
   const z = Math.min(1, window.innerWidth / 1418) || 1;
-  const surplus = Math.max(0, Math.round(window.innerHeight / z) - 738);
-  const rows = Math.max(1, Math.floor((libDrawnGridH + surplus + 6) / LIB_ROW_PITCH));
+  const frameH = Math.max(738, Math.round(window.innerHeight / z));
+  const avail = Math.max(LIB_ROW_PITCH, frameH - LIB_GRID_TOP - libDashH - 14);
+  const bySpace = Math.max(1, Math.floor((avail + 14) / LIB_ROW_PITCH));
   const firstRow = Math.max(1, Math.floor((1390 - LIB_MODULE_W) / LIB_CELL));
   const otherRow = Math.max(1, Math.floor(1390 / LIB_CELL));
-  // one cell of the last row belongs to "Show the other N"
-  return Math.max(5, firstRow + (rows - 1) * otherRow - 1);
+  const cellsFor = (r) => firstRow + (r - 1) * otherRow;
+  let rows = 1;
+  for (let r = bySpace; r >= 1; r--) {
+    // the door is a DOUBLE-WIDTH cell (286px against a 132px tile), so it eats
+    // two slots, not one. Counting it as one overflowed into a fourth row that
+    // could not be filled, which is where the black came back.
+    if (cellsFor(r) - 2 <= libShelfTotal) { rows = r; break; }
+  }
+  return { rows, capacity: Math.max(1, cellsFor(rows) - 2) };
 }
+const libCapacity = () => libPlan().capacity;
 function applyLibraryAtmosphere() {
   const host = $('screen-library');
   const card = host?.firstElementChild;
@@ -872,52 +890,71 @@ function applyLibraryAtmosphere() {
   frame.style.height = target + 'px';
   // the hero/tile band is the flexible region; find it as the frame child
   // containing the grid's show-more control
-  // ELASTIC GROWTH ONLY (2026-08-30). The board IS the law at its canonical
-  // 1418x738: at that size the app changes no geometry at all, so the pixel
-  // gate can still compare the two sides. A 214px dashboard pin was tried and
-  // shifted the whole strip ~13px against the design. Only SURPLUS height
-  // (a taller window) is spent, and only on whole extra tile rows.
+  // NO DEAD BLACK BAND (council ruling 2026-08-30, Mark's third ask). The grid
+  // fills everything between the tabs and the dashboard; its last row is
+  // clipped mid-sleeve on purpose and wears a short fade so the cut reads as
+  // deliberate. When the shelf runs out of songs the dashboard FLOATS UP to
+  // meet the grid instead of leaving a hole. Values are the council's.
   const gridRow = frame.querySelector('[data-lib-grid]');
-  if (gridRow) {
+  const todayLeaf = [...frame.querySelectorAll('*')]
+    .find((e) => !e.children.length && /CHOOSE 1$/.test(e.textContent.trim()));
+  if (gridRow && todayLeaf) {
+    const content = [...frame.children].find((c) => c.contains(gridRow));
+    let dashBand = todayLeaf;
+    while (dashBand && dashBand.parentElement && dashBand.parentElement !== content) dashBand = dashBand.parentElement;
+    let gridBand = gridRow;
+    while (gridBand && gridBand.parentElement && gridBand.parentElement !== content) gridBand = gridBand.parentElement;
+
     gridRow.style.flexWrap = 'wrap';
     gridRow.style.alignContent = 'flex-start';
     gridRow.style.overflow = 'hidden';
-    // renderTiles stamps the design's own band height before dealing anything
     if (gridRow.dataset.drawnH) libDrawnGridH = Number(gridRow.dataset.drawnH) || libDrawnGridH;
-    const z = Math.min(1, window.innerWidth / 1418) || 1;
-    const surplus = Math.max(0, Math.round(window.innerHeight / z) - 738);
-    const drawn = Number(gridRow.dataset.drawnH) || 346;
-    const rows = Math.max(1, Math.floor((drawn + surplus + 6) / LIB_ROW_PITCH));
-    gridRow.style.height = surplus > 0 ? Math.round(rows * LIB_ROW_PITCH - 6) + 'px' : '';
-    // NOTHING UNREACHABLE STAYS IN THE GRID. Wrapping can push a cell past the
-    // clipped edge, where it is invisible but still in the DOM: a person (and
-    // three journeys) then "click" a tile that cannot be hit. Hide any cell
-    // that does not fully fit, and keep the show-more as the last visible one.
-    const cells = [...gridRow.children];
-    const more = cells.find((c) => /^Show the other/.test(c.textContent.trim()));
-    for (const c of cells) if (c.dataset.disp) c.style.display = c.dataset.disp;
-    const bottom = gridRow.getBoundingClientRect().bottom;
-    let lastFits = -1;
-    cells.forEach((c, i) => {
-      const r = c.getBoundingClientRect();
-      if (!(r.height > 0 && r.bottom <= bottom + 2)) {
-        if (!c.dataset.disp) c.dataset.disp = c.style.display || '';
-        c.style.display = 'none';
-      } else lastFits = i;
-    });
-    // only when it was CLIPPED, never when the app hid it because the shelf
-    // is fully shown (that swap ate the single search result, twice)
-    if (more && more.style.display === 'none' && !more.dataset.moreEmpty
-        && !(more.querySelector('[data-more-empty]')) && lastFits >= 0) {
-      const victim = cells[lastFits];
-      if (victim !== more) {
-        if (!victim.dataset.disp) victim.dataset.disp = victim.style.display || '';
-        victim.style.display = 'none';
-        more.style.display = more.dataset.disp || '';
-        gridRow.insertBefore(more, victim);
+
+    if (content && dashBand && gridBand && dashBand !== gridBand) {
+      dashBand.style.flex = '0 0 auto';
+      if (dashBand.getBoundingClientRect().height > 40) {
+        const z0 = Math.min(1, window.innerWidth / 1418) || 1;
+        libDashH = Math.round(dashBand.getBoundingClientRect().height / z0);
+      }
+      const z = Math.min(1, window.innerWidth / 1418) || 1;
+      // measured from the GRID'S OWN TOP to the content's bottom: the content
+      // column also holds the tabs row, and subtracting only the dashboard
+      // overshot by exactly the tabs' height and pushed the cards off screen.
+      // The grid's top does not depend on the grid's height, so this is not
+      // circular the way measuring the grid itself was.
+      const avail = Math.max(LIB_ROW_PITCH, Math.round(
+        (content.getBoundingClientRect().bottom - gridRow.getBoundingClientRect().top) / z) - libDashH - 14);
+      const plan = libPlan();
+      // WHOLE ROWS, PURE ARITHMETIC. The plan already decided how many rows the
+      // shelf can completely fill; measuring the grid's natural height to infer
+      // "is it clipped" kept disagreeing with it and left a fade over a row
+      // that was never partial. There is no partial row any more.
+      gridBand.style.flex = '0 0 auto';
+      const h = Math.max(166, Math.min(avail, plan.rows * LIB_ROW_PITCH - 14));
+      gridRow.style.height = h + 'px';
+      gridBand.style.height = h + 'px';
+      // leftover height belongs to the cards, never to black
+      dashBand.style.flex = h < avail - 2 ? '1 1 auto' : '0 0 auto';
+      const oldFade = gridBand.querySelector(':scope > [data-grid-fade]');
+      if (oldFade) oldFade.remove();
+
+      // The plan makes the door the FINAL cell of the last full row, so there
+      // is nothing to reposition and nothing below the cut. All this does now
+      // is undo any hiding a previous pass left behind, then stand down any
+      // cell that genuinely does not fit (a shelf smaller than one row).
+      const cells = [...gridRow.children].filter((c) => !c.dataset.gridFade);
+      for (const c of cells) if (c.dataset.disp) { c.style.display = c.dataset.disp; delete c.dataset.disp; }
+      const bottom = gridRow.getBoundingClientRect().bottom;
+      for (const c of cells) {
+        const r = c.getBoundingClientRect();
+        if (r.height > 0 && r.top >= bottom - 2) {
+          if (!c.dataset.disp) c.dataset.disp = c.style.display || '';
+          c.style.display = 'none';
+        }
       }
     }
   }
+
   // the ambient wash: one layer, colour from the hero art, under everything
   let wash = frame.querySelector(':scope > [data-lib-wash]');
   if (!wash) {

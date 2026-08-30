@@ -692,8 +692,8 @@ try {
     await boot();
     const label = await b.eval(`([...document.querySelectorAll('*')]
       .map((e) => !e.children.length && e.getBoundingClientRect().width > 0 ? e.textContent.trim() : '')
-      .find((t) => /^Show the other \\d+ in /.test(t)) ?? null)`);
-    if (!label) return ['no "Show the other N" tile on the Explore shelf'];
+      .find((t) => /^(?:Show the other|See all) \\d+ in /.test(t)) ?? null)`);
+    if (!label) return ['no door to the album wall on the Explore shelf'];
     if (await clickText(label) !== 'ok') return ['the show-more tile does not win its own hit-test'];
     await new Promise((r) => setTimeout(r, 900));
     const wall = await b.eval(`(() => {

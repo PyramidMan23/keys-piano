@@ -163,3 +163,36 @@ attribute itself is absent from the canon by design. Accepted.
     reports content-level differences inside tile artwork on the two library
     boards; their LAYOUT is proven pixel-identical (same cell x and widths on
     both sides), so what remains is art rendering, not composition.
+16. **The pixel gate is GREEN, 38/38 (2026-08-30)**, and the residual named in
+    item 15 was never "art rendering". It was four separate defects, each one
+    invisible to the other six gates:
+    - **The row was the ruler.** The board's grid rows are a fixed 166 tall and
+      their cells STRETCH to fill them, which silently shrinks each title line
+      below its own line-height (19.23 against 19.55). Collapsing the rows into
+      one wrapping line took the ruler away, every cell relaxed to its natural
+      166.55, rounded to 167, and everything below the grid sat one pixel low:
+      130,010 structural pixels for one pixel of layout. The port now reads the
+      drawn cell height PER ROW (row 1 is 166 because the module constrains it,
+      row 2 is 166.55 because nothing does) and hands each wrapped line the
+      height its row had. The module and the door keep their own drawn heights
+      rather than their line's, because the board's door is 166 beside 166.55
+      tiles.
+    - **A scroll container cannot hold LCD text.** The containment rule added
+      `overflow-y: auto` to the grid band, which makes it a composited layer,
+      and Chrome will not paint subpixel-antialiased text into one. Every label
+      in the grid quietly re-rendered in grayscale: 12,391 differing pixels of
+      pure font rasterisation, with identical geometry to three decimals. The
+      band now CLIPS instead of scrolling, which is what the board's own
+      wrapper does, and nothing overflows anyway because the elastic plan deals
+      only what fits.
+    - **A ledger row's TEXT SLOT is tile-shaped by width.** Narrowness alone
+      does not separate a tile from a ledger part, so the phone board lost four
+      of its five song rows (756x1030 against the drawn 1334). A tile is a
+      PORTRAIT cell; every ledger part is wider than it is tall.
+    - **The 756 column sets its eyebrow in Fraunces**, where the desktop module
+      uses the mono label face, so "the first Fraunces leaf" was "DO THIS NEXT"
+      and the phone hero printed the song title over its own label.
+    Two of these were half a pixel and one was a font-smoothing mode. All three
+    would have shipped behind 213 green assertions. Also fixed on the way: the
+    Banked chip's tick did not travel with its state variant, so a dealt Banked
+    row was a bare green square, which is hue alone carrying meaning.

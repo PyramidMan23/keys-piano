@@ -149,7 +149,7 @@ async function compare(b, screen, keepImages) {
   // group them into connected components (4-connected, iterative flood fill so a
   // long border run cannot blow the stack)
   let structural = 0, scattered = 0;
-  const stray = [];
+  const stray = [], shapes = [];
   const seen = new Uint8Array(w * h);
   const stack = [];
   for (let p = 0; p < diffMask.length; p++) {
@@ -169,12 +169,20 @@ async function compare(b, screen, keepImages) {
     }
     if (component.length >= MIN_RUN) {
       structural += component.length;
+      // a component's SHAPE is what diagnoses it: a 1px-tall 400px-wide run is a
+      // missing rule, a 132x132 blob is a sleeve, a 60x18 blob is a word.
+      let x0 = w, y0 = h, x1 = 0, y1 = 0;
       for (const q of component) {
-        if (stray.length >= 40000) break;
-        stray.push([Math.round((q % w) / DSF), Math.round(((q / w) | 0) / DSF)]);
+        const qx = q % w, qy = (q / w) | 0;
+        if (qx < x0) x0 = qx; if (qx > x1) x1 = qx;
+        if (qy < y0) y0 = qy; if (qy > y1) y1 = qy;
+        if (stray.length < 40000) stray.push([Math.round(qx / DSF), Math.round(qy / DSF)]);
       }
+      shapes.push({ n: component.length, x: Math.round(x0 / DSF), y: Math.round(y0 / DSF),
+        w: Math.round((x1 - x0 + 1) / DSF), h: Math.round((y1 - y0 + 1) / DSF) });
     } else scattered += component.length;
   }
+  shapes.sort((p, q) => q.n - p.n);
 
   const clusters = {};
   for (const [x, y] of stray) { const k = Math.floor(x / 30) * 30 + ',' + Math.floor(y / 30) * 30; clusters[k] = (clusters[k] ?? 0) + 1; }
@@ -183,6 +191,7 @@ async function compare(b, screen, keepImages) {
     design: `${design.box.width}x${design.box.height}`, build: `${build.box.width}x${build.box.height}`,
     sleeves: design.art.length,
     clusters: Object.entries(clusters).sort((p, q) => q[1] - p[1]).slice(0, 6),
+    shapes: shapes.slice(0, 14),
     pass: sizeOk && structural <= STRUCTURAL_BUDGET,
   };
 }
@@ -208,6 +217,10 @@ for (const r of results) {
 const bad = results.filter((r) => !r.pass);
 console.log('-'.repeat(80));
 console.log(`${results.length - bad.length}/${results.length} screens structurally identical (zero strong-difference pixels outside artwork)`);
+for (const r of bad.filter((x) => x.shapes?.length)) {
+  console.log(`\n${r.screen}: the 14 biggest chrome defects, by SHAPE (css px)`);
+  for (const s of r.shapes) console.log(`  ${String(s.n).padStart(7)} px   at ${s.x},${s.y}   ${s.w}x${s.h}`);
+}
 for (const r of bad.filter((x) => x.clusters?.length)) {
   console.log(`\n${r.screen}: chrome defects by cluster - crop these and LOOK:`);
   for (const [k, n] of r.clusters) {

@@ -1,0 +1,33 @@
+READ-ONLY. No writes, no skills, no agents. Repo C:\Users\markh\keys-piano.
+
+Mark, for the THIRD time this morning, about the desktop library home screen:
+"I do not want black empty space on the homepage. Have things fill in with as
+much of the songs as you can, because that's what adds the colour and the feel
+and the soul. Why are we going backwards?"
+
+CURRENT STATE (his screenshot, viewport about 2000x1170 CSS): header 54, tools
+50, tabs 44, then the tile grid, then a LARGE BLACK VOID of roughly 400px, then
+the four dashboard cards pinned near the bottom. The grid drew only 2 rows (the
+recommendation module + 7 sleeves, then a row holding just the "Show the other
+14" tile). Tiles are 132px sleeves, 6px column gap, 14px row gap, 166px rows.
+The recommendation module is 412x166 in the first three columns.
+
+The machinery: the app renders the design's own markup; a previous ruling of
+yours said "whole rows only, never a part row" and "the board is law at its
+canonical 1418x738, only surplus height is spent". Those two rules together are
+what produced the void: capacity was computed from a stale surplus, and any
+leftover under a whole number of rows becomes black.
+
+RULE FROM MARK, treat as non-negotiable: no dead black band on this screen at
+any window size.
+
+Answer decisively, with numbers I can implement:
+1. Should the grid FILL the space between the tabs and the dashboard exactly
+   (dealing enough songs to cover it, last row clipped mid-tile), or should the
+   dashboard float up to meet the grid, or something else? Pick one.
+2. If a part row is now allowed, how should it read so it looks deliberate
+   rather than broken: clipped mid-sleeve, a fade, or a row of shorter cells?
+3. Where must the "Show the other N" tile sit so it is always reachable?
+4. Anything about this that will look wrong on a very tall window (say 1440
+   CSS tall) or a short one (700), that I should special-case?
+Keep it short and concrete.
