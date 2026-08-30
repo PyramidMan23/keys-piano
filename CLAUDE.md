@@ -51,7 +51,13 @@ in `js/songs-imported.mjs`, never in `songs.mjs`.
 `tools/canon-geometry.mjs` · `tools/canon-samples.mjs` ·
 `tools/canon-journeys.mjs` · `tools/score-render-check.mjs` ·
 `tools/void-check.mjs` · `tools/hand-audit.mjs` ·
-`tools/finger-check.mjs` · `tools/finger-probe.mjs`
+`tools/finger-check.mjs` · `tools/finger-probe.mjs` ·
+`tools/restart-probe.mjs` · `tools/shell-check.mjs`
+
+**Bump `VERSION` in `sw.js` on every deploy**, or clients keep the cached build
+and the work never reaches Mark. `shell-check.mjs` proves the shell precaches
+everything the app imports: three modules were missing, including the one
+holding the immersive Restart button, which would have been absent offline.
 
 ## Laws
 

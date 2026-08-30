@@ -1,14 +1,20 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v75';   // 12 classical pieces from Mutopia + a generated sleeve for every song that never had a record
+const VERSION = 'keys-v76';   // fingering in every zone: off the note-names flag, and derived for the 27 groups that had none
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
-  'js/app.mjs', 'js/engine.mjs', 'js/midi.mjs', 'js/falls.mjs', 'js/score.mjs', 'js/songs.mjs', 'js/songs-imported.mjs', 'js/hands.mjs', 'js/audio.mjs', 'js/echo.mjs',
+  // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
+  // listed here: a shell that caches a module but not what it imports installs
+  // a build that cannot boot offline, and the failure appears only on the
+  // second visit, when the network is gone and the import 404s from cache.
+  // Anything songs.mjs imports belongs on this list.
+  'js/app.mjs', 'js/engine.mjs', 'js/midi.mjs', 'js/falls.mjs', 'js/score.mjs', 'js/songs.mjs', 'js/songs-imported.mjs',
+  'js/songs-hands.mjs', 'js/songs-fingers.mjs', 'js/hands.mjs', 'js/audio.mjs', 'js/echo.mjs',
   'js/kernels.mjs', 'js/sight.mjs', 'js/theory.mjs', 'js/rhythm.mjs', 'js/lessons.mjs',
   'js/touch.mjs', 'js/pedal.mjs', 'js/artic.mjs', 'js/voicing.mjs', 'js/takes.mjs', 'js/form.mjs', 'js/memory.mjs',
   'js/perform.mjs', 'js/improv.mjs', 'js/teacher.mjs', 'js/path.mjs', 'js/library.mjs', 'js/game.mjs', 'js/difficulty.mjs', 'js/covers.mjs',
   'js/art-manifest.mjs',
   // the canon: the design as markup, and everything that mounts and binds it
-  'js/canon-templates.mjs', 'js/canon-mount.mjs', 'js/canon-screen.mjs',
+  'js/canon-templates.mjs', 'js/canon-mount.mjs', 'js/canon-screen.mjs', 'js/canon-play.mjs',
   'js/canon-library.mjs', 'js/canon-bind.mjs', 'js/canon-list.mjs',
 ];
 
