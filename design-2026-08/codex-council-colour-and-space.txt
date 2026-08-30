@@ -1,0 +1,127 @@
+READ-ONLY COUNCIL. Do not write, edit or create any file. Do not spawn
+sub-reviewers and do not invoke any review skill. You may read files and run
+read-only node probes. Answer in prose with numbered rulings.
+
+You are the second seat on a two-seat design council. I am Claude, I hold the
+positions below, you rule. Where you disagree, say so plainly and say why. The
+user (Mark) will read your ruling.
+
+## The product
+
+"Keys" is Mark's personal piano-learning PWA, desktop-first, at
+C:/Users/markh/keys-piano. The UI is a strict PORT of a set of design artboards:
+the app renders the design's own extracted markup (js/canon-templates.mjs), and
+the binder code in js/canon-library.mjs is only allowed to bind DATA. It writes
+no colour, no size, no radius, no spacing. Fidelity is enforced by a pixel
+overlay gate (tools/overlay.mjs) that renders the artboard and the app side by
+side and fails on a single connected run of differing pixels outside artwork.
+As of this morning all seven gates are green, overlay 38/38.
+
+The palette today is: pure black ground (#000), hairline borders (#253129),
+off-white ink (#e9ede7), muted grey-green secondary ink (#788c82), and ONE
+accent, a mint green (#82bf9c / #2e6b47 for filled buttons). Album artwork
+supplies all the other colour on the library screen. Fonts: Fraunces (serif)
+for titles, a mono face for labels, system sans for body.
+
+Two HARD constraints, both non-negotiable:
+- **Mark is colour-blind.** No hue may be the ONLY carrier of meaning. Every
+  state must also differ by shape or word. (A green "Banked" chip has a tick
+  AND the word; that is the standard to meet.)
+- WCAG AA contrast, measured, in the theme as shipped.
+
+## QUESTION 1: should Keys have a SECOND accent colour, and where?
+
+Mark's words: "Should we add some color? ... like free play buttons,
+metronome, latency, calibration, voice, the today area, this week, practice.
+Yeah should we have a secondary color and use it sparingly and smartly? maybe
+even in the tools area."
+
+The surfaces he named:
+- The TOOLS ROW under the header: "Resume the session", "Free play",
+  "Metronome 140", "Latency calibration", "Voice Grand", "All tools". Today
+  these are identical black pills with hairline borders; only "Resume the
+  session" carries the mint accent. They are visually undifferentiated.
+- The DASHBOARD below the song grid, four cards: "TODAY / CHOOSE 1",
+  "THIS WEEK / CHOOSE 1", "PRACTICE, LAST 7 DAYS", "YOUR PATH / NEXT". Today
+  every card is a black box with a hairline border and a mono label; the only
+  colour is mint on the chosen quest and the practice bar for today.
+
+My position (rule on it):
+(a) One second accent, not two. A warm amber (~#e0a33f family) against the
+    existing mint, because amber/mint survives the common colour-blind types
+    where mint/blue or mint/red do not, and because the app already uses amber
+    once (the "No keyboard" indicator), so it is not a new idea, it is an
+    existing idea used consistently.
+(b) The second accent must mean ONE thing, everywhere, and I propose it means
+    "this is about YOU and your history" (practice, streak, path, progress) as
+    against mint which already means "act now / chosen / banked". A colour that
+    means "and also this" is decoration and will rot.
+(c) It must never be the only carrier of meaning: amber always arrives with a
+    word or an icon.
+(d) The tools row should NOT be rainbowed. Colouring six pills six ways
+    destroys the row's scannability. Better: leave them monochrome and let the
+    ONE currently-active tool carry colour.
+(e) Album art is already the colour on this screen. Adding accent colour near
+    the grid competes with the artwork, so the second accent belongs BELOW the
+    grid (dashboard) and in the header strip, not among the tiles.
+
+Rule on (a) through (e). If you think the answer is "no second colour, fix the
+hierarchy with weight and spacing instead", say that; it is a live option and
+Mark would rather hear it than be agreed with. Name the exact surfaces that
+should take the second accent and the exact ones that must not. Give me a
+one-sentence rule I can write into the design gaps file that will still be
+right in six months.
+
+## QUESTION 2: who gets the surplus height?
+
+The library composition is: header (54) + tools row (50) + tabs (44) + SONG
+GRID + DASHBOARD. The whole composition is stretched to the window height.
+The song grid is a wrapping grid of 132x132 album-art tiles in cells 132x166,
+with a 14px row gap, so a whole extra row costs exactly 180px. The dashboard's
+natural content height is 216.
+
+Measured today, with a 128-song library:
+
+  viewport     song rows   dashboard height   biggest dead gap inside a card
+  1418x738         2             216                     28   (the drawn design)
+  1418x900         2             378                    190
+  1418x1050        3             348                    160
+  1920x1080        3             378                    190
+  2560x1440        3             738                    550
+
+So every surplus pixel currently goes to the dashboard, whose cards stretch and
+open a void between their last option and their footer line. At 2560x1440 each
+card is 738 tall holding 216 of content. Mark's words, with a screenshot: "can
+we make this area shorter so we can fit one more row of songs?" and, earlier
+and repeatedly, "I do not want black empty space on the homepage ... have
+things fill in with as much of the songs as you can because that's what adds
+the colour and the feel and the soul."
+
+The hard part: after the grid takes as many WHOLE rows as fit, there is a
+remainder of 0..179px, and something must absorb it. The candidates I see:
+
+  1. Dashboard stretches (today). Produces the voids Mark is complaining about.
+  2. Dashboard pinned at 216; remainder becomes black under the last song row.
+     Trades a void inside a bordered box for a void outside one.
+  3. Dashboard pinned; remainder distributed into the grid's ROW GAP (14px
+     grows). Airy but no boxes look broken. At 3 rows and 162 left over the gap
+     would become 95px, which is too much, so it would need a cap.
+  4. Cap the dashboard's growth (say natural + 40, enough that the cards read
+     as relaxed rather than empty) and put the rest in the row gap, also
+     capped, and accept a small black remainder.
+  5. Reduce the dashboard's own drawn height (tighten the 28px gap above the
+     footer line to 14) so a row is bought sooner. This changes the ARTBOARD,
+     which means editing the design and re-running the canon pipeline, not
+     just the app. It buys the 3rd row at 1418x900, which today misses by 9px.
+
+My position: 5 plus 4, in that order. Reclaim the design's own slack first
+because that is a real gain at every size, then cap both absorbers so neither
+a card nor the ground can open a void bigger than about 40px.
+
+Rule on this. Is there an option I have not listed? Specifically: is it
+legitimate for a strict design port to CHANGE the artboard to reclaim slack,
+or does that start the drift that the pixel gate exists to prevent? Give me the
+rule for that too, because it will come up again.
+
+Keep the whole answer under 900 words. Be concrete. Where you agree with me,
+say so in one line and move on; spend the words where you disagree.

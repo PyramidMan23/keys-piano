@@ -848,12 +848,17 @@ function canonLibraryCtx() {
 // 166px rows, and a 412px recommendation module occupying the first row's head
 let lastLibCap = 0;
 const LIB_CELL = 138;        // 132 + 6 gap
-const LIB_ROW_PITCH = 180;   // 166px row + the board's 14px ROW gap (its two
-                             // drawn rows span 346: 166 + 14 + 166). Using the
-                             // 6px COLUMN gap here cut every row after the first.
+const LIB_ROW_H = 166;       // the drawn row itself
+const LIB_ROW_GAP = 14;      // the board's own gap BETWEEN rows (its two drawn
+                             // rows span 346: 166 + 14 + 166). Using the 6px
+                             // COLUMN gap here cut every row after the first.
+const LIB_ROW_GAP_MIN = 6;   // the board's own column gap: the tightest rhythm
+                             // that is still a value the design drew somewhere
+const LIB_ROW_PITCH = LIB_ROW_H + LIB_ROW_GAP;   // 180
 const LIB_MODULE_W = 418;    // 412 + 6
 let libDrawnGridH = 346;     // the board's own grid band, captured at first render
 let libDashH = 206;          // the dashboard strip's natural height, captured once
+const LIB_SEAM_MAX = 40;     // no single seam may open wider than this
 const LIB_GRID_TOP = 162;    // header 54 + tools 50 + tabs 44, off the board
 let libShelfTotal = 0;       // how many songs the active shelf actually has
 function libPlan() {
@@ -866,7 +871,16 @@ function libPlan() {
   const z = Math.min(1, window.innerWidth / 1418) || 1;
   const frameH = Math.max(738, Math.round(window.innerHeight / z));
   const avail = Math.max(LIB_ROW_PITCH, frameH - LIB_GRID_TOP - libDashH - 14);
-  const bySpace = Math.max(1, Math.floor((avail + 14) / LIB_ROW_PITCH));
+  // BUY THE ROW WITH THE GAP BEFORE BUYING IT WITH A VOID. Mark, 2026-08-30:
+  // "can we make this area shorter so we can fit one more row of songs?" At
+  // 1418x900 the third row missed by NINE pixels and the 162 left over went
+  // into the dashboard, which opened a 190px hole inside every card. Tightening
+  // the row gap from the drawn 14 to the board's own 6 costs 8px a row and buys
+  // that row outright. So: take the most rows any honest gap allows, then give
+  // back the widest gap that still fits them, so the rhythm is only ever as
+  // tight as the extra row actually cost.
+  const rowsAt = (gap) => Math.max(1, Math.floor((avail + gap) / (LIB_ROW_H + gap)));
+  const bySpace = Math.max(rowsAt(LIB_ROW_GAP), rowsAt(LIB_ROW_GAP_MIN));
   const firstRow = Math.max(1, Math.floor((1390 - LIB_MODULE_W) / LIB_CELL));
   const otherRow = Math.max(1, Math.floor(1390 / LIB_CELL));
   const cellsFor = (r) => firstRow + (r - 1) * otherRow;
@@ -877,7 +891,10 @@ function libPlan() {
     // could not be filled, which is where the black came back.
     if (cellsFor(r) - 2 <= libShelfTotal) { rows = r; break; }
   }
-  return { rows, capacity: Math.max(1, cellsFor(rows) - 2) };
+  const gap = rows > 1
+    ? Math.max(LIB_ROW_GAP_MIN, Math.min(LIB_ROW_GAP, Math.floor((avail - rows * LIB_ROW_H) / (rows - 1))))
+    : LIB_ROW_GAP;
+  return { rows, gap, capacity: Math.max(1, cellsFor(rows) - 2) };
 }
 const libCapacity = () => libPlan().capacity;
 function applyLibraryAtmosphere() {
@@ -912,6 +929,13 @@ function applyLibraryAtmosphere() {
 
     if (content && dashBand && gridBand && dashBand !== gridBand) {
       dashBand.style.flex = '0 0 auto';
+      // MEASURE THE NATURAL HEIGHT, NOT THE ONE WE LAST IMPOSED. The band now
+      // carries an explicit height (see the seam allocation below), and reading
+      // that back as "natural" is the feedback loop that has already bitten
+      // this file twice: it would ratchet the reserve up a little every pass
+      // and quietly eat a row.
+      dashBand.style.height = '';
+      dashBand.style.marginTop = '';
       if (dashBand.getBoundingClientRect().height > 40) {
         const z0 = Math.min(1, window.innerWidth / 1418) || 1;
         libDashH = Math.round(dashBand.getBoundingClientRect().height / z0);
@@ -930,11 +954,21 @@ function applyLibraryAtmosphere() {
       // "is it clipped" kept disagreeing with it and left a fade over a row
       // that was never partial. There is no partial row any more.
       gridBand.style.flex = '0 0 auto';
-      const h = Math.max(166, Math.min(avail, plan.rows * LIB_ROW_PITCH - 14));
+      gridRow.style.rowGap = plan.gap + 'px';
+      const h = Math.max(LIB_ROW_H, Math.min(avail, plan.rows * LIB_ROW_H + (plan.rows - 1) * plan.gap));
       gridRow.style.height = h + 'px';
       gridBand.style.height = h + 'px';
-      // leftover height belongs to the cards, never to black
-      dashBand.style.flex = h < avail - 2 ? '1 1 auto' : '0 0 auto';
+      // WHO GETS THE SURPLUS. Codex council, 2026-08-30: no single seam may be
+      // the remainder sink. Handing it all to the cards (the previous rule,
+      // "leftover height belongs to the cards, never to black") stretched every
+      // card to 738px at 2560x1440 and opened a 550px hole inside each one,
+      // which is the void Mark photographed. Rows are bought first, then the
+      // dashboard may relax by at most one seam's worth, then the seam above it
+      // takes one more, and only what is left over after all of that is ground.
+      const leftover = Math.max(0, avail - h);
+      const dashGrow = Math.min(LIB_SEAM_MAX, leftover);
+      dashBand.style.height = (libDashH + dashGrow) + 'px';
+      dashBand.style.marginTop = Math.min(LIB_SEAM_MAX, leftover - dashGrow) + 'px';
       const oldFade = gridBand.querySelector(':scope > [data-grid-fade]');
       if (oldFade) oldFade.remove();
 

@@ -196,3 +196,48 @@ attribute itself is absent from the canon by design. Accepted.
     would have shipped behind 213 green assertions. Also fixed on the way: the
     Banked chip's tick did not travel with its state variant, so a dealt Banked
     row was a bare green square, which is hue alone carrying meaning.
+17. **The second accent, and who gets the surplus height (2026-08-30, Claude
+    plus Codex council; brief and ruling in design-2026-08/).** Mark asked for
+    colour, "a secondary colour used sparingly and smartly", and for one more
+    row of songs.
+
+    **THE COLOUR RULE, and it is meant to still be right in six months: mint
+    marks what Mark can act on now or has just achieved; amber marks measured
+    progress accumulated over time; neither colour may communicate state
+    without an accompanying word, number or distinct shape.**
+
+    Amber is `#e0a33f`, measured at 9.48:1 on the black ground, and it lives on
+    exactly five surfaces: the header's level-progress fill, the rhythm/streak
+    marker (which keeps its tick), the practice card's total, and the practice
+    history bars, which take an amber STROKE while today's bar keeps its mint
+    FILL, so the current day differs from history by fill as well as by hue.
+    On the path card it takes the completed stage pips and the completed count.
+
+    It must NOT take: the TODAY and THIS WEEK choose-cards (those are choices,
+    and a chosen one is mint), song tiles, artwork glows, the recommendation
+    module, tabs, search, sort, "Resume the session", or any active tool.
+    Codex's reasoning, adopted: a colour that means "and also this" is
+    decoration and will rot.
+
+    ☠️ The design already spent a pale amber `#efce81` on "No keyboard", which
+    means an attention condition, not progress. Two ambers is two meanings, so
+    "No keyboard" is now neutral ink; it keeps its ring and its words, so it
+    gives up only the hue. The tools row was deliberately NOT rainbowed: its
+    problem is functional sameness, not a shortage of hues.
+
+    **THE SPACE RULE: no single seam is the remainder sink.** The old rule,
+    "leftover height belongs to the cards, never to black", stretched every
+    dashboard card to 738px at 2560x1440 and opened a 550px hole inside each
+    one, which is the void Mark photographed. The order is now: buy the most
+    whole song rows any honest row gap allows (the gap may tighten from the
+    drawn 14 to the board's own 6, which costs 8px a row and bought the third
+    row at 1418x900, where it had been missing by nine pixels); give back the
+    widest gap that still fits those rows; give the dashboard its natural
+    height plus at most 40; give the seam above it at most 40; and only what
+    survives all of that is ground. Nothing changes at the canonical 1418x738.
+
+    **AND THE RULE FOR CHANGING THE DESIGN ITSELF**, which will come up again:
+    change layout or colour only in the SOURCE artboard, as a versioned design
+    decision, then regenerate the canon and require every gate to pass against
+    the new artboard. Never patch the binder to outrun the specification. The
+    pixel gate exists to stop implementation drift, not to freeze the design.

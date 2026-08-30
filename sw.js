@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v72';   // pixel gate GREEN 38/38: grid keeps the board's row ruler, band clips instead of scrolling, 5b ledger + eyebrow restored
+const VERSION = 'keys-v73';   // amber = accumulated progress (one meaning, 9.48:1), and no single seam is the surplus-height sink: a third row of songs at 1418x900
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   'js/app.mjs', 'js/engine.mjs', 'js/midi.mjs', 'js/falls.mjs', 'js/score.mjs', 'js/songs.mjs', 'js/audio.mjs', 'js/echo.mjs',

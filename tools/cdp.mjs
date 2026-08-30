@@ -111,8 +111,15 @@ export async function launch({ width = 756, height = 1400, scale = 2, port = 933
         s.textContent = '*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}';
         document.head.appendChild(s); return true; })()`);
     },
+    // A CLIPPED shot may reach below the fold, so it needs captureBeyondViewport.
+    // An UNCLIPPED one must not: Chrome grows the page to the full content size
+    // to take it, which fires resize, and this app re-picks its whole
+    // composition on resize. Every full-page screenshot of the library was
+    // therefore of the 756 column while the measurement taken a moment earlier
+    // was of the desktop grid. The picture and the numbers disagreed, and the
+    // picture was the liar.
     async shot(clip) {
-      const params = { format: 'png', captureBeyondViewport: true };
+      const params = { format: 'png', captureBeyondViewport: !!clip };
       if (clip) params.clip = { ...clip, scale: 1 };
       const { data } = await send('Page.captureScreenshot', params);
       return Buffer.from(data, 'base64');
