@@ -189,6 +189,10 @@ export const ART = {
     "album": "Interstellar (Original Motion Picture Soundtrack) [Expanded Edition]",
     "year": "2014"
   },
+  "liebestraum-3": {
+    "generated": true,
+    "drawnFrom": "the notes of Liebestraum No. 3, Franz Liszt"
+  },
   "lost": {
     "artist": "LINKIN PARK",
     "album": "Lost Demos",

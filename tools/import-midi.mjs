@@ -115,20 +115,33 @@ console.log('hands: ' + handSource);
 const beatsPerBar = timeSig[0] * (4 / timeSig[1]);
 const groupBy = (arr, key) => { const m = new Map(); for (const x of arr) { const k = key(x); if (!m.has(k)) m.set(k, []); m.get(k).push(x); } return m; };
 
+// FOLLOW THE LINE, DON'T JUST TAKE THE TOP. The melody is usually the top
+// voice, so that was the first rule, and it broke on every Romantic piece:
+// where the right hand arpeggiates ABOVE the tune (Clair de Lune, Liebestraum,
+// the Fantaisie-Impromptu), blindly taking the highest note each time hands the
+// learner a line that leaps about, a line the composer never wrote. The audit
+// caught it and refused five tiers, correctly. So prefer the top note, but if
+// it would leap more than an octave from the note just kept and something else
+// in the chord is nearer, follow the nearer one: that is what a simplification
+// is meant to do.
 function thin(all, level) {
   if (level === 'hard') return all.map((n) => ({ ...n }));
   const byBeat = groupBy(all, (n) => n.b);
   const out = [];
-  for (const [b, g] of byBeat) {
+  let lastR = null;
+  for (const [b, g] of [...byBeat.entries()].sort((x, y) => x[0] - y[0])) {
     const R = g.filter((n) => n.h === 'R').sort((x, y) => y.m - x.m);
     const L = g.filter((n) => n.h === 'L').sort((x, y) => x.m - y.m);
-    if (level === 'medium') {
-      if (R.length) out.push({ ...R[0] });                 // the top voice
-      if (L.length) out.push({ ...L[0] });                 // the bass
-    } else {                                              // easy: melody, bass on the downbeat
-      if (R.length) out.push({ ...R[0] });
-      if (L.length && Math.abs(b % beatsPerBar) < 1e-6) out.push({ ...L[0] });
+    if (R.length) {
+      let pick = R[0];
+      if (lastR !== null && Math.abs(pick.m - lastR) > 12) {
+        const nearer = R.reduce((best, n) => Math.abs(n.m - lastR) < Math.abs(best.m - lastR) ? n : best, R[0]);
+        if (Math.abs(nearer.m - lastR) <= 12) pick = nearer;
+      }
+      out.push({ ...pick });
+      lastR = pick.m;
     }
+    if (L.length && (level === 'medium' || Math.abs(b % beatsPerBar) < 1e-6)) out.push({ ...L[0] });
   }
   return out.sort((a, b) => a.b - b.b || a.m - b.m);
 }
