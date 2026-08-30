@@ -46,8 +46,39 @@ try {
       out.push('canvas backing ' + cvs.width + 'x' + cvs.height);
       out.push('  a white key near its front edge: ' + px(Math.round(cvs.width * 0.30), Math.round(cvs.height - 20)));
       out.push('  same key higher up:              ' + px(Math.round(cvs.width * 0.30), Math.round(cvs.height * 0.80)));
-      const mod = window.__falls || null;
-      out.push('  window.__falls present: ' + !!mod);
+      // how many elements claim this id? a duplicate would mean getElementById
+      // and elementFromPoint are looking at DIFFERENT canvases
+      out.push('  elements with id freeplay-canvas: ' + document.querySelectorAll('#freeplay-canvas, [id="freeplay-canvas"]').length);
+      out.push('  the one under the pointer IS the one I read: ' + (document.elementFromPoint(700, 600) === cvs));
+      // scan a row across the bottom of the keyboard and count the colours
+      const row = Math.round(cvs.height - 24);
+      const counts = new Map();
+      const d = g.getImageData(0, row, cvs.width, 1).data;
+      for (let x = 0; x < cvs.width; x++) {
+        const k = d[x * 4] + ',' + d[x * 4 + 1] + ',' + d[x * 4 + 2];
+        counts.set(k, (counts.get(k) || 0) + 1);
+      }
+      const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+      out.push('  colours across the key row: ' + top.map(([c, n]) => c + ' x' + n).join('  |  '));
+      // The canvas is blank AND on top, which means the keyboard is DOM BEHIND
+      // it. A canvas still hit-tests even where its pixels are transparent, so
+      // elementFromPoint naming it proves nothing about what is painting.
+      const wrap = cvs.parentElement;
+      const kids = [...wrap.querySelectorAll('*')].filter((e) => {
+        const r = e.getBoundingClientRect();
+        return r.height > 40 && r.width > 4 && r.width < 60 && e !== cvs;
+      });
+      out.push('  key-shaped elements behind the canvas: ' + kids.length);
+      if (kids.length) {
+        const c0 = getComputedStyle(kids[0]);
+        out.push('    raw style: ' + (kids[0].getAttribute('style') || '(none)').slice(0, 200));
+        out.push('    its parent: <' + kids[0].parentElement.tagName.toLowerCase() + '> style=' +
+          (kids[0].parentElement.getAttribute('style') || '(none)').slice(0, 140));
+        // which canon board did this subtree come from?
+        let root = kids[0];
+        while (root && !root.dataset.canonScreen && root.parentElement) root = root.parentElement;
+        out.push('    canon board: ' + (root && root.dataset ? (root.dataset.canonScreen || '(not tagged)') : '?'));
+      }
     }
     return out.join('\\n');
   })()`));
