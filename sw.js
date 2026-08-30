@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v74';   // SCORE VIEW FIXED: the canon reset was wiping the notation's stroke, fill, colour and even rx/ry
+const VERSION = 'keys-v75';   // 12 classical pieces from Mutopia + a generated sleeve for every song that never had a record
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   'js/app.mjs', 'js/engine.mjs', 'js/midi.mjs', 'js/falls.mjs', 'js/score.mjs', 'js/songs.mjs', 'js/songs-imported.mjs', 'js/hands.mjs', 'js/audio.mjs', 'js/echo.mjs',

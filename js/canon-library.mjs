@@ -891,7 +891,12 @@ function openLibraryGallery(ctx) {
   const built = [];
   for (const song of rows) {
     const real = song.song ?? song;
-    const hasSleeve = !!song.art || !!(real.group && sleeveUrlByGroup(real.group, 512));
+    // ☠️ `real.group` alone misses every SINGLE-TIER song. Happy Birthday and the
+    // standalone scales have no `group` field, so this never looked for their
+    // sleeve at all and they kept drawing the monogram plate while every song
+    // around them had art. Everywhere else in the app the key is `group ?? id`.
+    const sleeveKey = real.group ?? real.id ?? song.id;
+    const hasSleeve = !!song.art || !!(sleeveKey && sleeveUrlByGroup(sleeveKey, 512));
     const tile = (hasSleeve || !plateTpl ? template : plateTpl).cloneNode(true);
     wall.appendChild(tile);
     built.push(tile);
@@ -1309,7 +1314,12 @@ function renderTiles(root, ctx) {
   };
   (ctx.rows ?? []).forEach((song, ti) => {
     const real = song.song ?? song;
-    const hasSleeve = !!song.art || !!(real.group && sleeveUrlByGroup(real.group, 132));
+    // ☠️ `real.group` alone misses every SINGLE-TIER song. Happy Birthday and the
+    // standalone scales have no `group` field, so this never looked for their
+    // sleeve at all and they kept drawing the monogram plate while every song
+    // around them had art. Everywhere else in the app the key is `group ?? id`.
+    const sleeveKey = real.group ?? real.id ?? song.id;
+    const hasSleeve = !!song.art || !!(sleeveKey && sleeveUrlByGroup(sleeveKey, 132));
     const tile = (hasSleeve || !plateTpl ? template : plateTpl).cloneNode(true);
     rowFor(ti).appendChild(tile);
 

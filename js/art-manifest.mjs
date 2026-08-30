@@ -2,85 +2,377 @@
 // group -> the real record its sleeve came from. Presence here means
 // art/512/<group>.jpg and art/128/<group>.jpg exist on disk.
 export const ART = {
-  "still-dre": {
-    "artist": "Dr. Dre",
-    "album": "2001",
-    "year": "1999"
+  "arabesque-1": {
+    "generated": true,
+    "drawnFrom": "the notes of Arabesque No. 1, Claude Debussy"
   },
-  "game-of-thrones": {
-    "artist": "Ramin Djawadi",
-    "album": "Game of Thrones (Music From the HBO Series)",
-    "year": "2011"
+  "arp-a-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of A Major Arpeggio, Technique drill · two octaves, both hands"
   },
-  "runaway": {
-    "artist": "Kanye West & Pusha T",
-    "album": "My Beautiful Dark Twisted Fantasy",
-    "year": "2010"
+  "arp-a-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of A Minor Arpeggio, Technique drill · two octaves, both hands"
   },
-  "faded": {
-    "artist": "Alan Walker",
-    "album": "Faded - EP",
-    "year": "2015"
+  "arp-ab-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of Ab Major Arpeggio, Technique drill · two octaves, both hands"
   },
-  "fray-save-a-life": {
-    "artist": "The Fray",
-    "album": "How to Save a Life",
-    "year": "2005"
+  "arp-b-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of B Major Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-b-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of B Minor Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-bb-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of Bb Major Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-bb-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of Bb Minor Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-c-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of C Major Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-c-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of C Minor Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-cs-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of C# Minor Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-d-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of D Major Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-d-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of D Minor Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-db-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of Db Major Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-e-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of E Major Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-e-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of E Minor Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-eb-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of Eb Major Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-eb-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of Eb Minor Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-f-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of F Major Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-f-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of F Minor Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-fs-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of F# Major Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-fs-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of F# Minor Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-g-majarp": {
+    "generated": true,
+    "drawnFrom": "the notes of G Major Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-g-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of G Minor Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "arp-gs-minarp": {
+    "generated": true,
+    "drawnFrom": "the notes of G# Minor Arpeggio, Technique drill · two octaves, both hands"
+  },
+  "bach-prelude-c": {
+    "generated": true,
+    "drawnFrom": "the notes of Prelude in C major, J.S. Bach, BWV 846"
+  },
+  "bella-ciao": {
+    "generated": true,
+    "drawnFrom": "the notes of Bella Ciao, Italian traditional"
+  },
+  "bohemian-rhapsody": {
+    "artist": "Queen",
+    "album": "A Night At The Opera",
+    "year": "1975"
+  },
+  "clair-de-lune": {
+    "generated": true,
+    "drawnFrom": "the notes of Clair de Lune, Claude Debussy"
+  },
+  "consolation-3": {
+    "generated": true,
+    "drawnFrom": "the notes of Consolation No. 3, Franz Liszt"
   },
   "empire": {
     "artist": "JAŸ-Z",
     "album": "The Blueprint 3",
     "year": "2009"
   },
-  "pirates": {
-    "artist": "Klaus Badelt",
-    "album": "\"He's a Pirate\"- End Title Theme from the Motion Picture \"Pirates of the Caribbean, The Curse of the Black Pearl\" - Single",
+  "faded": {
+    "artist": "Alan Walker",
+    "album": "Faded - EP",
+    "year": "2015"
+  },
+  "fantaisie-impromptu": {
+    "generated": true,
+    "drawnFrom": "the notes of Fantaisie-Impromptu, Chopin, Op. posth. 66"
+  },
+  "fray-save-a-life": {
+    "artist": "The Fray",
+    "album": "How to Save a Life",
+    "year": "2005"
+  },
+  "fur-elise": {
+    "artist": "Wilhelm Kempff",
+    "album": "111 Years of Deutsche Grammophon",
+    "year": "1988"
+  },
+  "game-of-thrones": {
+    "artist": "Ramin Djawadi",
+    "album": "Game of Thrones (Music From the HBO Series)",
     "year": "2011"
-  },
-  "river": {
-    "artist": "Yiruma",
-    "album": "Yiruma 2nd Album 'First Love' (The Original & the Very First Recording)",
-    "year": "2001"
-  },
-  "piano-man": {
-    "artist": "Billy Joel",
-    "album": "Piano Man",
-    "year": "1973"
   },
   "gangstas-paradise": {
     "artist": "Coolio",
     "album": "Gangsta's Paradise",
     "year": "1995"
   },
-  "lost": {
+  "goldberg-aria": {
+    "generated": true,
+    "drawnFrom": "the notes of Goldberg Variations, Aria, J.S. Bach, BWV 988"
+  },
+  "gymnopedie-1": {
+    "generated": true,
+    "drawnFrom": "the notes of Gymnopédie No. 1, Erik Satie"
+  },
+  "happy-birthday": {
+    "generated": true,
+    "drawnFrom": "the notes of Happy Birthday, Traditional"
+  },
+  "hotel-california": {
+    "artist": "Eagles",
+    "album": "Hotel California",
+    "year": "1976"
+  },
+  "in-a-gadda-da-vida": {
+    "artist": "Iron Butterfly",
+    "album": "In-A-Gadda-Da-Vida",
+    "year": "1968"
+  },
+  "in-the-end": {
     "artist": "LINKIN PARK",
-    "album": "Lost Demos",
-    "year": "2023"
-  },
-  "numb": {
-    "artist": "LINKIN PARK",
-    "album": "Meteora",
-    "year": "2003"
-  },
-  "star-wars": {
-    "artist": "John Williams & London Symphony Orchestra",
-    "album": "Star Wars: A New Hope (Original Motion Picture Score)",
-    "year": "1977"
-  },
-  "see-you-again": {
-    "artist": "Wiz Khalifa",
-    "album": "Furious 7 (Original Motion Picture Soundtrack)",
-    "year": "2015"
+    "album": "Hybrid Theory",
+    "year": "2000"
   },
   "interstellar": {
     "artist": "Hans Zimmer",
     "album": "Interstellar (Original Motion Picture Soundtrack) [Expanded Edition]",
     "year": "2014"
   },
-  "in-the-end": {
+  "lost": {
     "artist": "LINKIN PARK",
-    "album": "Hybrid Theory",
-    "year": "2000"
+    "album": "Lost Demos",
+    "year": "2023"
+  },
+  "mario": {
+    "artist": "Koji Kondo",
+    "album": "Super Mario Bros. 35 Original Soundtrack",
+    "year": "2020"
+  },
+  "moonlight-sonata": {
+    "artist": "Wilhelm Kempff",
+    "album": "Beethoven: Piano Sonatas Nos.8 \"Pathétique\", 14 \"Moonlight\", 15 \"Pastorale\" & 24 \"For Therese\"",
+    "year": "1987"
+  },
+  "nocturne-op9-2": {
+    "generated": true,
+    "drawnFrom": "the notes of Nocturne in E-flat major, Chopin, Op. 9 No. 2"
+  },
+  "numb": {
+    "artist": "LINKIN PARK",
+    "album": "Meteora",
+    "year": "2003"
+  },
+  "ode-to-joy": {
+    "artist": "Berlin Philharmonic & Herbert von Karajan",
+    "album": "Beethoven: Symphony No. 9",
+    "year": "1984"
+  },
+  "pathetique-2": {
+    "generated": true,
+    "drawnFrom": "the notes of Pathétique Sonata, 2nd movement, Beethoven, Op. 13"
+  },
+  "piano-man": {
+    "artist": "Billy Joel",
+    "album": "Piano Man",
+    "year": "1973"
+  },
+  "pirates": {
+    "artist": "Klaus Badelt",
+    "album": "\"He's a Pirate\"- End Title Theme from the Motion Picture \"Pirates of the Caribbean, The Curse of the Black Pearl\" - Single",
+    "year": "2011"
+  },
+  "prelude-e-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of Prelude in E minor, Chopin, Op. 28 No. 4"
+  },
+  "raindrop-prelude": {
+    "generated": true,
+    "drawnFrom": "the notes of Raindrop Prelude, Chopin, Op. 28 No. 15"
+  },
+  "river": {
+    "artist": "Yiruma",
+    "album": "Yiruma 2nd Album 'First Love' (The Original & the Very First Recording)",
+    "year": "2001"
+  },
+  "rondo-alla-turca": {
+    "generated": true,
+    "drawnFrom": "the notes of Rondo alla Turca, W.A. Mozart, K. 331"
+  },
+  "runaway": {
+    "artist": "Kanye West & Pusha T",
+    "album": "My Beautiful Dark Twisted Fantasy",
+    "year": "2010"
+  },
+  "scale-a-major": {
+    "generated": true,
+    "drawnFrom": "the notes of A Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-a-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of A Minor Scale, Technique drill · one octave, both hands"
+  },
+  "scale-ab-major": {
+    "generated": true,
+    "drawnFrom": "the notes of Ab Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-b-major": {
+    "generated": true,
+    "drawnFrom": "the notes of B Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-b-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of B Minor Scale, Technique drill · one octave, both hands"
+  },
+  "scale-bb-major": {
+    "generated": true,
+    "drawnFrom": "the notes of Bb Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-bb-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of Bb Minor Scale, Technique drill · one octave, both hands"
+  },
+  "scale-c-major": {
+    "generated": true,
+    "drawnFrom": "the notes of C Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-c-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of C Minor Scale, Technique drill · one octave, both hands"
+  },
+  "scale-cs-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of C# Minor Scale, Technique drill · one octave, both hands"
+  },
+  "scale-d-major": {
+    "generated": true,
+    "drawnFrom": "the notes of D Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-d-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of D Minor Scale, Technique drill · one octave, both hands"
+  },
+  "scale-db-major": {
+    "generated": true,
+    "drawnFrom": "the notes of Db Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-e-major": {
+    "generated": true,
+    "drawnFrom": "the notes of E Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-e-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of E Minor Scale, Technique drill · one octave, both hands"
+  },
+  "scale-eb-major": {
+    "generated": true,
+    "drawnFrom": "the notes of Eb Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-eb-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of Eb Minor Scale, Technique drill · one octave, both hands"
+  },
+  "scale-f-major": {
+    "generated": true,
+    "drawnFrom": "the notes of F Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-f-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of F Minor Scale, Technique drill · one octave, both hands"
+  },
+  "scale-fs-major": {
+    "generated": true,
+    "drawnFrom": "the notes of F# Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-fs-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of F# Minor Scale, Technique drill · one octave, both hands"
+  },
+  "scale-g-major": {
+    "generated": true,
+    "drawnFrom": "the notes of G Major Scale, Technique drill · one octave, both hands"
+  },
+  "scale-g-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of G Minor Scale, Technique drill · one octave, both hands"
+  },
+  "scale-gs-minor": {
+    "generated": true,
+    "drawnFrom": "the notes of G# Minor Scale, Technique drill · one octave, both hands"
+  },
+  "see-you-again": {
+    "artist": "Wiz Khalifa",
+    "album": "Furious 7 (Original Motion Picture Soundtrack)",
+    "year": "2015"
+  },
+  "stairway": {
+    "artist": "Led Zeppelin",
+    "album": "Led Zeppelin IV",
+    "year": "1971"
+  },
+  "star-wars": {
+    "artist": "John Williams & London Symphony Orchestra",
+    "album": "Star Wars: A New Hope (Original Motion Picture Score)",
+    "year": "1977"
+  },
+  "still-dre": {
+    "artist": "Dr. Dre",
+    "album": "2001",
+    "year": "1999"
+  },
+  "traumerei": {
+    "generated": true,
+    "drawnFrom": "the notes of Träumerei, Robert Schumann, Op. 15"
   },
   "what-ive-done": {
     "artist": "LINKIN PARK",
@@ -91,45 +383,5 @@ export const ART = {
     "artist": "King Gizzard & The Lizard Wizard",
     "album": "Oddments",
     "year": "2014"
-  },
-  "in-a-gadda-da-vida": {
-    "artist": "Iron Butterfly",
-    "album": "In-A-Gadda-Da-Vida",
-    "year": "1968"
-  },
-  "stairway": {
-    "artist": "Led Zeppelin",
-    "album": "Led Zeppelin IV",
-    "year": "1971"
-  },
-  "bohemian-rhapsody": {
-    "artist": "Queen",
-    "album": "A Night At The Opera",
-    "year": "1975"
-  },
-  "hotel-california": {
-    "artist": "Eagles",
-    "album": "Hotel California",
-    "year": "1976"
-  },
-  "fur-elise": {
-    "artist": "Wilhelm Kempff",
-    "album": "111 Years of Deutsche Grammophon",
-    "year": "1988"
-  },
-  "moonlight-sonata": {
-    "artist": "Wilhelm Kempff",
-    "album": "Beethoven: Piano Sonatas Nos.8 \"Pathétique\", 14 \"Moonlight\", 15 \"Pastorale\" & 24 \"For Therese\"",
-    "year": "1987"
-  },
-  "ode-to-joy": {
-    "artist": "Berlin Philharmonic & Herbert von Karajan",
-    "album": "Beethoven: Symphony No. 9",
-    "year": "1984"
-  },
-  "mario": {
-    "artist": "Koji Kondo",
-    "album": "Super Mario Bros. 35 Original Soundtrack",
-    "year": "2020"
   }
 };

@@ -1839,7 +1839,17 @@ ok('covers: deterministic, all distinct, dark-glass palette, notes-as-art, notch
     for (const size of [512, 128]) {
       assert.ok(existsSync(join(ROOT, 'art', String(size), `${g}.jpg`)), `art/${size}/${g}.jpg is on disk`);
     }
-    assert.ok(ART[g].album && ART[g].artist, `${g} names the record its sleeve came from`);
+    // Two kinds of entry, and each must be honest about which it is. A fetched
+    // sleeve names the real record it is a photograph of. A GENERATED sleeve
+    // was drawn from the piece's own notes, so it carries no artist/album/year
+    // at all: inventing a record for Bach would put a lie in the one file whose
+    // whole job is provenance.
+    if (ART[g].generated) {
+      assert.ok(ART[g].drawnFrom, `${g} is a generated sleeve but does not say what it was drawn from`);
+      assert.ok(!ART[g].album && !ART[g].artist, `${g} is generated and must not claim a record`);
+    } else {
+      assert.ok(ART[g].album && ART[g].artist, `${g} names the record its sleeve came from`);
+    }
   }
   // size bucket: row plates take the thumb, anything bigger takes the 512
   const withArt = SONGS.find((s) => (s.group ?? s.id) === 'hotel-california');
@@ -1847,11 +1857,14 @@ ok('covers: deterministic, all distinct, dark-glass palette, notes-as-art, notch
   assert.equal(C.sleeveUrl(withArt, 128), 'art/128/hotel-california.jpg');
   assert.equal(C.sleeveUrl(withArt, 256), 'art/512/hotel-california.jpg');
   // no honest recording: no sleeve, but the generated plate still has to work
+  // These never had a record. Mark asked for art on everything (2026-08-30:
+  // "make sure every song has a cover art"), so they now carry a sleeve DRAWN
+  // FROM THEIR OWN NOTES. What they must never carry is a fabricated release.
   for (const g of NO_SLEEVE) {
     const song = SONGS.find((s) => (s.group ?? s.id) === g);
     assert.ok(song, `${g} is still in the library`);
-    assert.equal(C.sleeveUrl(song, 512), null, `${g} has no invented sleeve`);
-    assert.ok(C.coverSpec(song).pts.length > 0, `${g} falls back to the note-derived plate`);
+    assert.ok(!ART[g] || ART[g].generated === true, `${g} never had a record and must not claim one`);
+    assert.ok(C.coverSpec(song).pts.length > 0, `${g} can still fall back to the note-derived plate`);
   }
   // nothing may fall between the two: a new song either gets a real sleeve or
   // is a declared no-recording case. This is the check that catches curation
