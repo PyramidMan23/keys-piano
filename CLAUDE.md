@@ -9,6 +9,19 @@ know that was built? you nearly rebuilt something we have?"
 
 **So: check this list before you say "we can't", and before you write a tool.**
 
+## Before you finish, run the worklist
+
+    node tools/worklist.mjs
+
+It lists everything Mark has asked for that is not done yet, and each item
+carries a CHECK, so "done" is a number and not a judgement call. It exists
+because of a pattern he named on 2026-08-30: find a problem, write it up well,
+move on without fixing it. Reporting is not finishing.
+
+**Work it to zero.** Fix the next OPEN item, re-run, repeat. Items marked MARK
+are blocked on a decision only he can make; they never justify stopping on the
+others. Do not stop to report progress: report once, at the end.
+
 ## What already exists
 
 **The listening lane** — `C:\Users\markh\keys-piano-tools\` (its own venv, NOT
