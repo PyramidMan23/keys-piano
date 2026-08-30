@@ -1,0 +1,71 @@
+READ-ONLY REVIEW. Do not write, edit or create any file. Do not spawn
+sub-reviewers, do not invoke any review skill. You may read files and run
+read-only node probes. Answer in prose, numbered, under 700 words.
+
+## Context
+
+"Keys" is Mark's personal piano-learning app at C:/Users/markh/keys-piano. Songs
+live in js/songs.mjs as note arrays: { b: beat, d: duration, m: midi, h: 'L'|'R' }.
+The `h` field decides which hand the app teaches him to use: it colours the
+falling notes, drives hands-separate practice, and picks the staff in score
+view. If `h` is wrong, the app teaches him the wrong fingering.
+
+I audited all 128 songs (tools/hand-audit.mjs). Findings:
+- 3 songs where one hand never plays at all
+- 7 songs with CROSSED HANDS (a right-hand note sounding below a simultaneous
+  left-hand note)
+- 24 songs where one hand leaps more than 2 octaves inside a single beat
+- 20 songs where one hand is asked to span more than 17 semitones AT ONCE
+  (worst: 29 semitones simultaneously)
+
+The cause is visible in the per-hand pitch ranges: e.g. `in-the-end` has left
+C2-E3 and right D3-B5; `interstellar` has left F1-B2 and right C3-E7. That is a
+PITCH THRESHOLD split, not an arrangement: everything above a fixed line was
+called "right hand", so the right hand inherited both the melody and the inner
+voices and became unplayable. Correctly-arranged songs in the same file (Fur
+Elise) do not have this.
+
+## What I propose to do
+
+NOT rewrite the 24 song definitions by hand (I would be inventing arrangements).
+Instead: one normalisation pass applied to SONGS at module load, which re-derives
+`h` ONLY for songs that fail the playability audit, and leaves correct songs
+untouched. The audit then runs as a gate over the exported SONGS.
+
+The algorithm, per song:
+  - group notes by onset beat
+  - keep a running "hand position" for each hand (the pitch centre of what that
+    hand last played, so a hand stays where it was)
+  - for each onset group, sort the simultaneous pitches ascending and consider
+    every split point k (lowest k notes to the left hand, the rest to the right)
+  - score each candidate split and take the cheapest:
+      * hard penalty if either hand's simultaneous span exceeds ~12 semitones
+        (an octave; 14 with a small penalty for a stretch)
+      * penalty proportional to how far each hand must MOVE from its running
+        position, so lines stay in the hand that was already playing them
+      * very large penalty for a move greater than about 2 octaves inside one
+        beat, which is what makes the current data unplayable
+      * a small penalty for leaving a hand idle when it could take notes
+  - update each hand's running position from what it just played
+
+## Rule on this
+
+1. Is the per-onset-group split with a running hand position the right model, or
+   does it need real VOICE separation (tracking sustained notes and continuing
+   lines across groups)? Name the specific failure case that would force voices.
+2. What span limit is honest for a learner? I have 12 comfortable / 14 stretch,
+   and I flag over 17 in the audit. A tenth is 16 semitones and many adults
+   cannot reach it.
+3. Sustained notes: a note with a long duration keeps a hand occupied across
+   later onset groups. My model ignores duration when scoring. How wrong is
+   that, and what is the cheapest correction that is not a full voice tracker?
+4. Is normalising at LOAD TIME defensible, or is it hiding bad source data? The
+   alternative is rewriting js/songs.mjs. Argue the maintenance case.
+5. What check would you add that would have caught the original threshold split
+   at the moment it was introduced, rather than months later? Be specific and
+   cheap enough to run on every build.
+6. Anything in my plan that will make a CORRECTLY arranged song worse. This is
+   the one that matters most: the repair must be strictly an improvement, and I
+   intend to apply it only to songs that already fail the audit.
+
+Be blunt where I am wrong.
