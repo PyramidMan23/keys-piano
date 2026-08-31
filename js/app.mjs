@@ -192,6 +192,19 @@ midi.onStatus = (text, connected) => {
 window.__simNote = (m, down = true, vel = 90) => midi.onNote?.(m, vel, down);
 window.__simCC = (cc, val) => midi.onControl?.(cc, val);
 
+// TAPPING A DRAWN KEY IS PLAYING A KEY. Mark asked for this and it had never
+// been wired: falls.mjs carried the hit-test `pickKeyAt` and nothing in the app
+// ever called it, so the library's own promise ("Screen taps. Plug the P-45 in
+// for the real thing") was untrue for anyone without a keyboard attached.
+//
+// Deliberately the SAME call __simNote makes, which is the same call the real
+// P-45 makes. A tap has to be indistinguishable from a MIDI key by the time
+// anything downstream sees it, or it would light a key without scoring the run,
+// or sound a note the take never recorded. Velocity 90 is a firm press: a screen
+// reports no velocity, and inventing a soft one would quietly change how the
+// touch diagnostic reads.
+FallsView.onKeyDefault = (m, down) => midi.onNote?.(m, 90, down);
+
 // ---------- screens ----------
 const screens = ['library', 'play', 'freeplay', 'calibrate', 'echo', 'metronome', 'rhythm', 'lessons', 'lesson', 'touch', 'takes', 'improv', 'keys12', 'path', 'task', 'trophies'];
 
@@ -2725,6 +2738,7 @@ $('btn-freeplay').addEventListener('click', () => {
   $('now-playing').textContent = 'Free play';
   sizeFreeplayStage();
   if (!fpView) fpView = new FallsView($('freeplay-canvas'));
+  window.__fpView = fpView;   // debug/test handle, same spirit as window.__falls
   // the artboard's still picture of the deck must not sit over the live one
   if (CANON_ON) hideRestingLayer($('freeplay-canvas'));
   // The design's WHAT YOU PLAYED line ships SAMPLE chords, which read as the
@@ -3377,7 +3391,21 @@ function renderTrophies() {
   });
   const xpRows = [...(state.xpLog ?? [])].reverse().slice(0, 20)
     .map((e) => ({ label: `${e.src} ${e.ref}`.trim(), xp: `+${e.xp}` }));
-  if (!(CANON_ON && bindTrophyList(trophyRows) && bindXpLog(xpRows))) {
+  // ☠️ AN EMPTY LIST MUST STILL SAY SOMETHING. The binders draw one row per
+  // item, so with nothing earned yet they drew NOTHING and Trophies was 64%
+  // black: five words on a whole screen. The app's own markup has always had
+  // this empty-state copy; only the canon path lacked it, so the better the
+  // screen looked the emptier it got. Same words in both paths, bound as DATA
+  // (canon law 6: bind data, never style), so they cannot drift apart.
+  const trophyShow = trophyRows.length ? trophyRows : [{
+    word: 'Nothing yet',
+    evidence: 'The first proof, the first playable song and the calibration all land here, each with its evidence.',
+  }];
+  const xpShow = xpRows.length ? xpRows : [{
+    label: 'No XP yet. It only comes from things that matter: proofs, playable songs, mastered sections, the quests you choose.',
+    xp: '',
+  }];
+  if (!(CANON_ON && bindTrophyList(trophyShow) && bindXpLog(xpShow))) {
   $('trophy-list').innerHTML = list.length ? list.map((b) => {
     const ev = b.evidence ?? {};
     const evText = b.id.startsWith('playable:') || b.id === 'first-playable'

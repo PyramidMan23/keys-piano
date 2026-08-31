@@ -67,13 +67,69 @@ try {
 
   for (const [name, mode] of SCREENS) {
     const opened = await b.eval(`(() => {
+      // ☠️ OPEN IT THE WAY THE APP DOES, NOT WITH __show ALONE. show() only
+      // toggles which screen is visible; the real CONTROL does the setup.
+      // Opening free play from its button is what constructs the live FallsView
+      // and calls hideRestingLayer to take the artboard's STILL PICTURE off the
+      // deck. Going in through __show left the resting artwork up with no live
+      // canvas behind it, so this gate spent weeks measuring a screen no user
+      // ever sees and calling it 40.5% empty. Click the button where one exists.
       if (typeof window.__show !== 'function') return 'no __show';
-      window.__show(${JSON.stringify(name)});
+      const want = ${JSON.stringify(name)};
+      // ☠️ THE PLAY SCREEN IS REACHED BY OPENING A SONG, and nothing else builds
+      // its deck: under __show, window.__falls and window.__engine are both
+      // FALSE, so this gate photographed a play screen with no live canvas at
+      // all and reported 45% of it empty. Same class of error as free play.
+      // Click a real song row, which is the only way a person gets here.
+      if (want === 'play') {
+        const row = [...document.querySelectorAll('*')].find((e) => !e.children.length
+          && /^(F\\u00fcr Elise|Still D\\.R\\.E\\.)$/.test(e.textContent.trim())
+          && e.getBoundingClientRect().width > 0);
+        const hit = row && (row.closest('button, a, [role="button"]') || row.parentElement);
+        if (hit) hit.click();
+      }
+      const btn = document.getElementById('btn-' + want);
+      if (btn) btn.click(); else if (want !== 'play') window.__show(want);
+      if (want === 'play' && !document.getElementById('screen-play')?.matches(':not([hidden])')) window.__show('play');
       const s = document.getElementById('screen-' + ${JSON.stringify(name)});
       return s && getComputedStyle(s).display !== 'none' ? 'ok' : 'not shown';
     })()`);
     if (mode === 'score') await b.eval(`document.getElementById('mode-score')?.click(); true`);
     await new Promise((r) => setTimeout(r, 650));
+
+    // ☠️ MEASURE THE SCREEN IN USE, NOT WAITING TO BE USED. The play deck is a
+    // canvas that is CORRECTLY empty until notes fall, so photographing it at
+    // rest and calling 45% of it a void is measuring the wrong moment: the
+    // learner never looks at that state for long. Wind the engine on and draw a
+    // real frame, which is exactly what the app does a moment later anyway.
+    // Screens that wait behind a Start button get the same treatment.
+    // A screen that waits behind a Start button is not empty, it is WAITING.
+    // Rhythm tap and the Touch diagnostic both open on an instruction card with
+    // the activity area blank until you begin, so press begin, the same as the
+    // play deck is wound on below.
+    if (name === 'rhythm' || name === 'touch' || name === 'calibrate') {
+      await b.eval(`(() => {
+        const s = document.getElementById('screen-' + ${JSON.stringify(name)});
+        if (!s) return 'no screen';
+        const go = [...s.querySelectorAll('*')].find((e) => !e.children.length
+          && /^(Start|Begin|Start over|\\u25b6)$/i.test(e.textContent.trim())
+          && e.getBoundingClientRect().width > 0);
+        const hit = go && (go.closest('button, a, [role="button"]') || go);
+        if (hit) { hit.click(); return 'started'; }
+        return 'no start control';
+      })()`);
+      await new Promise((r) => setTimeout(r, 700));
+    }
+    if (name === 'play' && !mode) {
+      await b.eval(`(() => {
+        const f = window.__falls, e = window.__engine;
+        if (!f || !e) return 'no deck';
+        e.t = 4;                       // four beats in: notes are on screen
+        f.draw(e);
+        return 'drawn';
+      })()`);
+      await new Promise((r) => setTimeout(r, 120));
+    }
     if (opened !== 'ok') { rows.push({ name: name + (mode ? ':' + mode : ''), verdict: 'NOT REACHED', detail: opened }); continue; }
 
     // the CONTENT box: the canon card if there is one, else the screen itself

@@ -206,6 +206,72 @@ export class FallsView {
     this.spriteAmber = makeGlowSprite(240, 168, 50);
     this.spriteCyan = makeGlowSprite(94, 224, 242);
     this.spriteWhite = makeGlowSprite(255, 244, 220);
+    // ☠️ A STATIC DEFAULT, because there are SEVEN FallsView instances (play,
+    // free play, lessons x2, takes, improv, echo) and wiring them one at a time
+    // is how one of them silently stays dead. The app sets
+    // FallsView.onKeyDefault once at boot and every keyboard becomes playable,
+    // including any added later.
+    this.onKey = FallsView.onKeyDefault || null;
+    this._touch = new Map();    // pointerId -> midi, so multi-touch chords work
+    this._bindTouch();
+  }
+
+  // TAP THE KEYS TO PLAY THEM. Mark asked for this and it was never built: the
+  // hit-test `pickKeyAt` has sat here unused, its comment claiming the lessons
+  // use it, and nothing in the app ever called it. The library screen already
+  // tells him "Screen taps. Plug the P-45 in for the real thing", so screen taps
+  // are supposed to BE the no-keyboard input mode.
+  //
+  // ☠️ ROUTED THROUGH THE SAME `onKey` THE REAL P-45 USES, never a private
+  // sound-playing shortcut. A tap has to be indistinguishable from a MIDI key
+  // downstream or it would light the keyboard but not score, or make a noise
+  // that the run never counted. One input path, one set of behaviours.
+  //
+  // Sliding a finger across the keys sounds them in turn, the way a real
+  // keyboard does, and multi-touch works because each pointer keeps its own
+  // note: a chord is several pointers, and releasing one must not silence the
+  // others.
+  _bindTouch() {
+    const c = this.canvas;
+    const pick = (ev) => {
+      const r = c.getBoundingClientRect();
+      if (!r.width || !r.height || !this.keyX) return null;
+      // rect is in CSS pixels and already accounts for any board `zoom`, so the
+      // ratio maps a screen point into the same space the keys were laid out in
+      const x = (ev.clientX - r.left) * (this.w / r.width);
+      const y = (ev.clientY - r.top) * (this.h / r.height);
+      return this.pickKeyAt(x, y, this.h - this.kbH, this.kbH);
+    };
+    const down = (ev) => {
+      const m = pick(ev);
+      if (m == null) return;
+      ev.preventDefault();
+      try { c.setPointerCapture(ev.pointerId); } catch { /* not all pointers can be captured */ }
+      this._touch.set(ev.pointerId, m);
+      this.onKey?.(m, true);
+    };
+    const move = (ev) => {
+      if (!this._touch.has(ev.pointerId)) return;
+      const was = this._touch.get(ev.pointerId);
+      const m = pick(ev);
+      if (m === was) return;
+      this.onKey?.(was, false);
+      if (m == null) this._touch.delete(ev.pointerId);
+      else { this._touch.set(ev.pointerId, m); this.onKey?.(m, true); }
+    };
+    const up = (ev) => {
+      const m = this._touch.get(ev.pointerId);
+      if (m == null) return;
+      this._touch.delete(ev.pointerId);
+      this.onKey?.(m, false);
+    };
+    c.addEventListener('pointerdown', down);
+    c.addEventListener('pointermove', move);
+    c.addEventListener('pointerup', up);
+    c.addEventListener('pointercancel', up);
+    // a pointer that leaves the canvas mid-press must not leave the note stuck on
+    c.addEventListener('pointerleave', up);
+    c.style.touchAction = 'none';   // or the browser scrolls instead of playing
   }
 
   resize() {
@@ -216,7 +282,7 @@ export class FallsView {
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     this.w = r.width;
     this.h = r.height;
-    this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
+this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
     this._layoutKeys();
     this._makeVignette();
   }
