@@ -395,7 +395,16 @@ export function unpedal(notes, bpm = 120) {
 
 export function repairSplit(notes, bpm = 120) {
   let moved = 0;
-  for (let pass = 0; pass < 2000; pass++) {
+  // ☠️ A HILL-CLIMB NEEDS A BUDGET, NOT JUST A LIMIT. 2000 passes is fine on a
+  // 500-note song and pathological on a dense one: each pass rescans the fault
+  // list and re-evaluates violations per trial move, so the cost grows with the
+  // SQUARE of how wrong the song is. Un Sospiro sat in this loop for 45 minutes
+  // during a re-import and had to be killed. The climb converges long before the
+  // cap on anything healthy, so the cap only ever bites where it is running away
+  // and producing little: scale it to the song and stop pretending the last few
+  // hundred passes were going to find something.
+  const budget = Math.max(120, Math.min(2000, Math.round(120000 / Math.max(1, notes.length))));
+  for (let pass = 0; pass < budget; pass++) {
     const bad = violations(notes, bpm);
     if (!bad.length) break;
     let acted = false;
