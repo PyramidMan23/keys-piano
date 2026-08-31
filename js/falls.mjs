@@ -43,6 +43,10 @@ const DECK = {
   longNote: { headBeats: 1.0, tailAlpha: 0.30, thresholdBeats: 1.25, scanStep: 6, scanPx: 1, edgePx: 1, edgeAlpha: 0.55 },
 };
 
+// How far a pressed key sinks. Two pixels: enough for the shadow above it to
+// read, small enough that a fast passage does not look like it is bouncing.
+const KEY_DIP = 2;
+
 const WHITE_PCS = [0, 2, 4, 5, 7, 9, 11];
 const LETTERS = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 export const LOW = 21, HIGH = 108;
@@ -248,6 +252,12 @@ export class FallsView {
       ev.preventDefault();
       try { c.setPointerCapture(ev.pointerId); } catch { /* not all pointers can be captured */ }
       this._touch.set(ev.pointerId, m);
+      // ☠️ ONLY A REAL FINGER GETS A BUZZ. A mouse cannot feel one, and firing
+      // the motor on every click on a laptop is a battery drain nobody asked
+      // for; `pointerType` is the only honest test of whether a hand is on the
+      // glass. 8ms because that reads as the key meeting its bed, where anything
+      // past ~20ms reads as a phone notification, which is the wrong instrument.
+      if (ev.pointerType === 'touch') { try { navigator.vibrate?.(8); } catch { /* unsupported */ } }
       this.onKey?.(m, true);
     };
     const move = (ev) => {
@@ -1017,6 +1027,25 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
     ctx.globalAlpha = 1;
   }
 
+  // A KEY THAT IS DOWN SHOULD LOOK DOWN. Mark, 2026-08-31: "can we make the
+  // feeling of pressing the buttons better? it'll add more soul and life."
+  //
+  // A pressed key already changed COLOUR, which reads as "selected", not as
+  // "pressed": nothing moved, so the keyboard felt like a diagram of a piano
+  // rather than a piano. A real key pivots at the back, so the front edge drops
+  // furthest and the far end barely moves. Two pixels is enough - the eye reads
+  // depth from the SHADOW appearing above the key far more than from the travel.
+  //
+  // The dip settles over ~60ms rather than snapping, because an instant jump
+  // reads as a glitch while a fast ease reads as weight. It springs back
+  // immediately on release: a key returning slowly feels sticky, which is the
+  // one thing a real key never is.
+  _keyDip(m, now) {
+    const at = this.pressedAt.get(m);
+    if (at == null) return 0;
+    return KEY_DIP * Math.min(1, (now - at) / 60);
+  }
+
   _drawKeyboard(top, now = performance.now()) {
     const { ctx, kbH } = this;
     this.flashes = this.flashes.filter((f) => f.until > now);
@@ -1028,6 +1057,15 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
       if (!k.white) continue;
       const down = this.pressed.has(m);
       const hand = down ? this.pressed.get(m) : null;
+      const dip = down ? this._keyDip(m, now) : 0;
+      // the gap the key falls away from: a thin dark band above it. THIS, not
+      // the two pixels of travel, is what the eye actually reads as depth.
+      if (dip > 0.2) {
+        ctx.fillStyle = `rgba(0,0,0,${0.55 * (dip / KEY_DIP)})`;
+        ctx.fillRect(k.x + 0.5, top, k.w - 1, dip + 1.5);
+      }
+      ctx.save();
+      ctx.translate(0, dip);
       const fl = flashOf(m);
       if (fl?.type === 'wrong') {
         ctx.fillStyle = COLORS.wrong;
@@ -1074,6 +1112,7 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
         const name = m % 12 === 0 ? letter + (Math.floor(m / 12) - 1) : letter;
         ctx.fillText(name, k.x + k.w / 2, top + kbH - 8);
       }
+      ctx.restore();
     }
     // landmark anchor (lessons): middle C wears a dot + name so the learner
     // always has a fixed point to count from, even when key names are off
@@ -1099,6 +1138,10 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
       const hand = down ? this.pressed.get(m) : null;
       const fl = flashOf(m);
       const bh = kbH * 0.62;
+      // a black key sits proud of the white ones, so it dips a little further
+      const bdip = down ? this._keyDip(m, now) * 1.4 : 0;
+      ctx.save();
+      ctx.translate(0, bdip);
       const impChord = this.improv && !down && this.improv.chordPcs.has(m % 12);
       const impScale = this.improv && !down && !impChord && this.improv.scalePcs.has(m % 12);
       ctx.fillStyle = fl?.type === 'wrong' ? COLORS.wrong
@@ -1125,6 +1168,7 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
         ctx.font = `bold ${Math.min(9, k.w * 0.5)}px system-ui`;
         ctx.fillText(LETTERS[m % 12], k.x + k.w / 2, top + bh - 6);
       }
+      ctx.restore();
     }
   }
 }

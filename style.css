@@ -837,3 +837,64 @@ button:disabled { opacity: 0.35; cursor: default; }
   --accent: #2e6b47;   /* 5.62:1 on the cream page */
 }
 .score-wrap.dimmed { opacity: 0.5; }
+
+/* ── PRESS FEEL ───────────────────────────────────────────────────────────────
+   Mark, 2026-08-31: "can we make the feeling of pressing the buttons better?
+   i feel like it'll add more soul and life to the app."
+
+   He was right that it was missing: the whole stylesheet had FOUR :active rules,
+   all scale-only, so most of the app registered a tap with no acknowledgement at
+   all. A control that does not answer feels broken even when it works, and on a
+   touch screen it is the only confirmation the finger ever gets.
+
+   ☠️ THIS BLOCK LIVES AFTER THE CANON RESET ON PURPOSE. `.canon-root *{all:
+   revert}` is UNLAYERED, so it beats any layered rule regardless of specificity
+   and would erase every press state on the canon screens - which is most of the
+   app. Same reason .score-wrap sits down here. Putting this in @layer app would
+   look correct in the file and do nothing on screen.
+
+   The values, and why:
+   - 60ms out, ~0ms in. A press must feel INSTANT and the release can settle;
+     the reverse is what makes a UI feel laggy even at 60fps.
+   - scale(.97) plus a 1px drop. Scale alone reads as a zoom, translation alone
+     reads as a slide; together they read as something being pushed.
+   - brightness(.92) so it also reads for anyone who cannot see the 3% of size,
+     and so it survives on a control whose transform is already spoken for.
+   No hue is used to carry the press: Mark is colour-blind and that is a law. */
+/* ☠️ !important, AND HERE IS THE ARITHMETIC THAT FORCES IT. The reset above is
+   `.canon-root *:not(#score-wrap, #score-wrap *, #cp-again, #cp-again *)`, and
+   :not() TAKES THE SPECIFICITY OF ITS HEAVIEST ARGUMENT - those are IDs - so the
+   whole compound scores (1,1,0). A class-based `.canon-root button:active` is
+   (0,2,1) and loses to it every time, in source order or not. I proved that the
+   slow way: the rules were in the CSSOM, the selector matched, no inline style
+   shadowed them, and the computed transform was still `none` even with :active
+   FORCED through CDP. Nothing about the rule was wrong; it was simply outranked.
+   This is the fourth time that reset has eaten app styling. */
+.canon-root button:active,
+.canon-root [role="button"]:active,
+.canon-root a:active,
+button:active:not(:disabled),
+[role="button"]:active,
+.tool:active:not(:disabled), .level-btn:active, .ghost:active, .seg-btn:active,
+.song-card:active, .next-action:active, .lesson-card:active:not(:disabled) {
+  transform: scale(0.97) translateY(1px) !important;
+  filter: brightness(0.92) !important;
+  transition: transform 60ms ease-out, filter 60ms ease-out !important;
+}
+/* the release: slower than the press, so it settles rather than snaps back */
+.canon-root button, .canon-root [role="button"], button, [role="button"],
+.song-card, .next-action, .lesson-card, .tool, .level-btn, .ghost, .seg-btn {
+  transition: transform 140ms cubic-bezier(.2,.8,.3,1), filter 140ms ease-out;
+}
+/* A card is a bigger object, so it moves LESS: the same 3% on a 300px card is
+   9px of travel and reads as the layout collapsing rather than a press. */
+.canon-root .dv-card:active, .song-card:active, .lesson-card:active:not(:disabled) {
+  transform: scale(0.992) translateY(1px) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* the brightness still answers the tap; only the movement goes */
+  .canon-root button:active, button:active:not(:disabled), [role="button"]:active,
+  .song-card:active, .next-action:active, .lesson-card:active:not(:disabled) {
+    transform: none !important;
+  }
+}
