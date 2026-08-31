@@ -52,7 +52,14 @@ in `js/songs-imported.mjs`, never in `songs.mjs`.
 `tools/canon-journeys.mjs` · `tools/score-render-check.mjs` ·
 `tools/void-check.mjs` · `tools/hand-audit.mjs` ·
 `tools/finger-check.mjs` · `tools/finger-probe.mjs` ·
-`tools/restart-probe.mjs` · `tools/shell-check.mjs`
+`tools/restart-probe.mjs` · `tools/shell-check.mjs` ·
+`tools/press-probe.mjs` · `tools/seek-probe.mjs`
+
+`tools/surface-check.mjs` is RED, and was red on keys-v88 before any of the
+transport work (2/8 drawn surfaces have any ink; the theory-task keyboard
+paints nothing at all). It is a real defect and NOT a regression - proven by
+running it against the shipped files - so do not spend a session hunting for
+what you broke. Fix it on its own or leave it, but know which it is.
 
 **Bump `VERSION` in `sw.js` on every deploy**, or clients keep the cached build
 and the work never reaches Mark. `shell-check.mjs` proves the shell precaches

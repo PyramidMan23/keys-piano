@@ -279,6 +279,7 @@ function show(name) {
   if (hearBtn) hearBtn.textContent = '▶ Hear it';
   falls?.pressed.clear();
   if (falls) falls.banner = null;
+  disarmTransport(); // ...and with it the scrub bar
   echoView?.pressed.clear();
   // abandonment: leaving mid-song is exactly the signal the usage gate wants
   if (active === 'play' && name !== 'play' && engine && !engine.finished) {
@@ -2628,6 +2629,52 @@ $('chunk-next').addEventListener('click', () => setChunk(chunkIdx === null ? 0 :
 $('chunk-size').addEventListener('change', () => { if (chunkIdx !== null) setChunk(chunkIdx); });
 
 // ---------- hear-it preview ----------
+// The watch covers the whole song, or the chosen section/chunk. Kept apart from
+// the seek so scrubbing can never escape the range you asked to hear.
+let demoWatch = null; // {startBeat, endBeat}
+
+// Start, or RE-start, the watch at `fromBeat`.
+//
+// ☠️ REBUILD BOTH CLOCKS FROM THE SAME BEAT. Watching runs two independent
+// clocks, started together and never spoken to each other since: the engine
+// counts BEATS and drives the falls, while the audio scheduler counts SECONDS
+// from its own t0. Nothing reconciles them, so moving one alone is not a seek,
+// it is a desync - the picture jumps and the sound carries on from where it
+// was. That is why this throws BOTH away and builds a fresh pair off one
+// number, rather than trying to nudge the running ones into agreement.
+function runDemoFrom(fromBeat) {
+  const start = Math.max(demoWatch.startBeat, fromBeat);
+  const notes = song.notes.filter((n) =>
+    n.b >= start && n.b < demoWatch.endBeat && (hand === 'both' || n.h === hand));
+  if (!notes.length) { previewStop?.(); stopDemo(); return false; }
+  previewStop?.();
+  demoEngine = new Engine(song, {
+    hand,
+    tempo: (+$('tempo').value) / 100,
+    waitMode: false,
+    loop: { start, end: demoWatch.endBeat },
+    calOffsetMs: 0,
+  });
+  window.__demo = demoEngine; // probe lever
+  falls.pressed.clear(); // a seek must not strand a key lit by a skipped note
+  // demoEngine's OWN msPerBeat, not the practice engine's: it is the clock the
+  // falls are drawn from, so it is the one the audio has to match.
+  // `start` as the anchor keeps any silence you land in - see playPreview.
+  previewStop = playPreview(notes, demoEngine.msPerBeat(), (m, downState) => {
+    if (downState) falls.keyDown(m); else falls.keyUp(m);
+  }, () => {
+    stopDemo();
+  }, start);
+  return true;
+}
+
+// Seek to a fraction of the watched range. Only ever reachable while watching.
+function seekDemo(frac) {
+  if (!previewActive || !demoWatch) return;
+  const span = demoWatch.endBeat - demoWatch.startBeat;
+  runDemoFrom(demoWatch.startBeat + Math.max(0, Math.min(1, frac)) * span);
+}
+
 $('btn-hear').addEventListener('click', () => {
   if (previewActive) {
     previewStop?.();
@@ -2638,37 +2685,57 @@ $('btn-hear').addEventListener('click', () => {
   const range = chunkIdx !== null
     ? (() => { const c = chunkRange(song, chunkIdx, chunkBars()); return { startBeat: c.start, endBeat: c.end }; })()
     : secIdx === '' ? null : song.sections[+secIdx];
-  const notes = song.notes.filter((n) =>
-    (!range || (n.b >= range.startBeat && n.b < range.endBeat)) &&
-    (hand === 'both' || n.h === hand));
-  if (!notes.length) return;
+  demoWatch = range ? { startBeat: range.startBeat, endBeat: range.endBeat }
+    : { startBeat: 0, endBeat: Math.max(...song.notes.map((n) => n.b + n.d)) };
   previewActive = true;
   $('btn-hear').textContent = '■ Stop';
-  // the follow-along engine: same song, same loop, timed mode, its own clock
-  demoEngine = new Engine(song, {
-    hand,
-    tempo: (+$('tempo').value) / 100,
-    waitMode: false,
-    loop: range ? { start: range.startBeat, end: range.endBeat } : null,
-    calOffsetMs: 0,
-  });
-  window.__demo = demoEngine; // probe lever
   falls.banner = '▶ WATCHING: the song plays itself';
+  falls.seekable = true; // the hairline becomes a scrub bar you can drag
+  falls.onSeek = seekDemo;
+  // the bar spans the WHOLE watch and stays put, even though each seek rebuilds
+  // the engine around a new start beat
+  falls.transport = { start: demoWatch.startBeat, end: demoWatch.endBeat };
   fadePlayCover();
   jlog('demo_play', { id: song.id, sec: $('section-select').value });
-  previewStop = playPreview(notes, engine.msPerBeat(), (m, downState) => {
-    if (downState) falls.keyDown(m); else falls.keyUp(m);
-  }, () => {
-    stopDemo();
-  });
+  runDemoFrom(demoWatch.startBeat);
 });
+
+// ← / → skip, the way every media player does it. This is also the scrub bar's
+// only keyboard reach: it is drawn on a canvas, so it can never be tabbed to.
+const SKIP_S = 5;
+window.addEventListener('keydown', (ev) => {
+  if (!previewActive || !demoEngine || !demoWatch) return;
+  if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
+  if (/^(INPUT|TEXTAREA|SELECT)$/.test(ev.target?.tagName ?? '')) return;
+  ev.preventDefault();
+  const dBeats = ((SKIP_S * 1000) / demoEngine.msPerBeat()) * (ev.key === 'ArrowRight' ? 1 : -1);
+  runDemoFrom(Math.max(demoWatch.startBeat, demoEngine.beat + dBeats));
+});
+
 function stopDemo() {
   if (!previewActive && !demoEngine) return; // idempotent (manual stop + onDone)
   previewActive = false;
   demoEngine = null;
+  demoWatch = null;
   $('btn-hear').textContent = '▶ Hear it';
   if (falls) { falls.banner = null; falls.pressed.clear(); }
+  disarmTransport();
   if (active === 'play') rebuildEngine(); // clean, armed restart, watched it, now play it
+}
+
+// ☠️ THE BAR GOES BACK TO BEING A HAIRLINE, AND THERE ARE TWO WAYS OUT of a
+// watch: the Stop button (stopDemo) and simply leaving the screen, which tears
+// the demo down on its own several hundred lines away. Leave either path out
+// and practice inherits a scrub handle, which would let a run skip the bars it
+// then claims to have played clean. One function, called by both, because the
+// duplicated-teardown is exactly the shape that goes stale.
+function disarmTransport() {
+  if (!falls) return;
+  falls.seekable = false;
+  falls.onSeek = null;
+  falls.transport = null;
+  falls._scrub = null;
+  falls._scrubId = null;
 }
 
 function syncModeButtons() {

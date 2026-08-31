@@ -57,6 +57,7 @@ export const COLORS = {
   bg: '#000000',   // was #000002; true black, matching the app ground (2026-08-29)
   laneLine: '#10141b',
   bar: '#151a23',
+  // (transport constants live below COLORS; see _drawTransport)
   hit: '#e8e4da',
   right: '#f0a832',
   rightGlow: 'rgba(240, 168, 50, 0.55)',
@@ -168,6 +169,20 @@ function makeGlowSprite(r, g, b) {
   return c;
 }
 
+// ---- transport bar (watching only) ----
+const TRANSPORT_H = 26;    // what is DRAWN
+// ☠️ AND WHAT IS TOUCHED IS 44, NOT 26. A 4px line is a fine thing to look at
+// and an impossible thing to hit with a thumb; the 44px floor is a hard rule
+// and a scrub bar is the exact control that tempts you to break it. The extra
+// 18px is invisible dead space below the bar, and it only steals from the top
+// of the note lane while watching, where no note is being judged anyway.
+const TRANSPORT_HIT = 44;
+const TRANSPORT_PAD = 14;  // the handle needs room to sit at 0% and at 100%
+const clock = (s) => {
+  const t = Math.max(0, Math.round(s));
+  return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`;
+};
+
 export class FallsView {
   constructor(canvas) {
     this.canvas = canvas;
@@ -217,6 +232,14 @@ export class FallsView {
     // including any added later.
     this.onKey = FallsView.onKeyDefault || null;
     this._touch = new Map();    // pointerId -> midi, so multi-touch chords work
+    // transport (Mark 2026-08-31): while WATCHING, the hairline progress line
+    // becomes a scrub bar you can drag, the way any media player behaves. Off
+    // during practice on purpose - see _drawTransport.
+    this.seekable = false;
+    this.onSeek = null;         // (frac 0..1) => void, committed on release
+    this.transport = null;      // {start,end} beats the bar spans; see _drawTransport
+    this._scrub = null;         // frac being dragged right now, else null
+    this._scrubId = null;       // the pointer doing the dragging
     this._bindTouch();
   }
 
@@ -246,7 +269,29 @@ export class FallsView {
       const y = (ev.clientY - r.top) * (this.h / r.height);
       return this.pickKeyAt(x, y, this.h - this.kbH, this.kbH);
     };
+    // where along the bar is this pointer, 0..1
+    const frac = (ev) => {
+      const r = c.getBoundingClientRect();
+      if (!r.width) return 0;
+      const x = (ev.clientX - r.left) * (this.w / r.width);
+      return Math.max(0, Math.min(1, (x - TRANSPORT_PAD) / Math.max(1, this.w - TRANSPORT_PAD * 2)));
+    };
+    const onBar = (ev) => {
+      if (!this.seekable || !this.onSeek) return false;
+      const r = c.getBoundingClientRect();
+      if (!r.height) return false;
+      return (ev.clientY - r.top) * (this.h / r.height) <= TRANSPORT_HIT;
+    };
     const down = (ev) => {
+      // the bar is checked FIRST or the top of the note lane swallows the drag
+      if (onBar(ev)) {
+        ev.preventDefault();
+        try { c.setPointerCapture(ev.pointerId); } catch { /* not all pointers can be captured */ }
+        this._scrubId = ev.pointerId;
+        this._scrub = frac(ev);
+        if (ev.pointerType === 'touch') { try { navigator.vibrate?.(8); } catch { /* unsupported */ } }
+        return;
+      }
       const m = pick(ev);
       if (m == null) return;
       ev.preventDefault();
@@ -261,6 +306,7 @@ export class FallsView {
       this.onKey?.(m, true);
     };
     const move = (ev) => {
+      if (ev.pointerId === this._scrubId) { this._scrub = frac(ev); return; }
       if (!this._touch.has(ev.pointerId)) return;
       const was = this._touch.get(ev.pointerId);
       const m = pick(ev);
@@ -270,6 +316,17 @@ export class FallsView {
       else { this._touch.set(ev.pointerId, m); this.onKey?.(m, true); }
     };
     const up = (ev) => {
+      if (ev.pointerId === this._scrubId) {
+        const f = this._scrub;
+        // ☠️ CLEAR THE DRAG BEFORE THE SEEK, not after. onSeek rebuilds the
+        // engine and the very next frame reads this._scrub; leave it set and
+        // the bar paints where the finger was rather than where the song now
+        // is, which reads as the seek having missed.
+        this._scrubId = null;
+        this._scrub = null;
+        if (f != null) this.onSeek?.(f);
+        return;
+      }
       const m = this._touch.get(ev.pointerId);
       if (m == null) return;
       this._touch.delete(ev.pointerId);
@@ -657,13 +714,64 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
       if (this._budgetStrikes.reduce((a, v) => a + v, 0) >= 8) this.reduced = true; // latched
     }
 
-    const prog = Math.min(1, (engine.beat - engine.startBeat) / (engine.endBeat - engine.startBeat));
-    ctx.fillStyle = 'rgba(232,228,218,0.12)';
-    ctx.fillRect(0, 0, w, 3);
-    ctx.fillStyle = COLORS.right;
-    ctx.fillRect(0, 0, w * prog, 3);
+    const span = engine.endBeat - engine.startBeat;
+    const prog = span > 0 ? Math.min(1, (engine.beat - engine.startBeat) / span) : 0;
+    this._drawTransport(w, prog, engine);
 
     if (this._vig) ctx.drawImage(this._vig, 0, 0, w, h);
+  }
+
+  // The progress line, in two guises.
+  //
+  // PRACTICE keeps the 3px hairline it has always had. A scrub bar there would
+  // be an invitation to cheat your own scoring: the run's stats, streak and
+  // proof all assume one unbroken pass, and there is no honest reading of
+  // "clean 100%" for a bar you skipped. So the handle only exists while
+  // watching, where nothing is being scored and you are an audience.
+  _drawTransport(w, prog, engine) {
+    const { ctx } = this;
+    if (!this.seekable) {
+      ctx.fillStyle = 'rgba(232,228,218,0.12)';
+      ctx.fillRect(0, 0, w, 3);
+      ctx.fillStyle = COLORS.right;
+      ctx.fillRect(0, 0, w * prog, 3);
+      return;
+    }
+    // ☠️ MEASURE THE WHOLE WATCH, NOT THE ENGINE'S RANGE. Seeking rebuilds the
+    // engine with the seek point as its loop start, so engine.startBeat becomes
+    // "where you jumped to" and this bar would silently re-scale to the part
+    // still to come: after a seek to 9% the handle snapped back near zero and
+    // "3:01" was the time REMAINING, not the song. Every number was internally
+    // consistent and the bar was a liar. `transport` is the range the watch
+    // covers and it never moves while the watch is running.
+    const tr = this.transport;
+    const base = tr ? tr.start : engine.startBeat;
+    const span = (tr ? tr.end : engine.endBeat) - base;
+    const p = span > 0 ? Math.max(0, Math.min(1, (engine.beat - base) / span)) : 0;
+    // dragging shows where the finger IS, not where the song still is
+    const shown = this._scrub != null ? this._scrub : p;
+    const pad = TRANSPORT_PAD, tw = Math.max(1, w - pad * 2), y = 13;
+    ctx.save();
+    ctx.fillStyle = 'rgba(0,0,0,0.62)';
+    ctx.fillRect(0, 0, w, TRANSPORT_H);
+    ctx.fillStyle = 'rgba(232,228,218,0.20)';
+    ctx.fillRect(pad, y - 2, tw, 4);
+    ctx.fillStyle = COLORS.right;
+    ctx.fillRect(pad, y - 2, tw * shown, 4);
+    // the handle grows under the finger so you can see you have hold of it
+    ctx.beginPath();
+    ctx.arc(pad + tw * shown, y, this._scrub != null ? 8 : 5.5, 0, Math.PI * 2);
+    ctx.fillStyle = this._scrub != null ? COLORS.rightBright : COLORS.right;
+    ctx.fill();
+    const total = (span * engine.msPerBeat()) / 1000;
+    ctx.font = '700 10px ui-monospace,Menlo,monospace';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = 'rgba(232,228,218,0.72)';
+    ctx.textAlign = 'left';
+    ctx.fillText(clock(total * shown), pad, y + 15);
+    ctx.textAlign = 'right';
+    ctx.fillText(clock(total), pad + tw, y + 15);
+    ctx.restore();
   }
 
   // static vignette, rebuilt only on resize, frames the stage for free

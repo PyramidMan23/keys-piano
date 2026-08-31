@@ -149,7 +149,15 @@ function voice(bus, when, midi, durS, gainMul) {
 
 // notes: song-format; msPerBeat at preview tempo.
 // onKey(midi, isDown) mirrors onto the on-screen keyboard. Returns stop().
-export function playPreview(notes, msPerBeat, onKey, onDone) {
+//
+// `anchorBeat` is the beat that lands at t0, and it exists for scrubbing.
+// Default null means "the first note sounds immediately", which is right for a
+// lesson prompt and WRONG for a seek: land on bar 9 when the next note is half
+// a bar later and the audio fires at once while the falls still have half a bar
+// to travel. Picture and sound then sit apart by exactly the silence you seeked
+// into, for the rest of the song, because neither clock ever re-checks the
+// other. Passing the seek beat keeps that silence and the two stay married.
+export function playPreview(notes, msPerBeat, onKey, onDone, anchorBeat = null) {
   stopPreview();
   const sess = { stopped: false, oscs: [], timers: [], next: 0, bus: null };
   current = sess;
@@ -160,7 +168,7 @@ export function playPreview(notes, msPerBeat, onKey, onDone) {
     sess.bus.gain.value = 1;
     sess.bus.connect(comp);
 
-    const startBeat = Math.min(...notes.map((n) => n.b));
+    const startBeat = anchorBeat ?? Math.min(...notes.map((n) => n.b));
     const song = [...notes]
       .map((n) => ({ atS: ((n.b - startBeat) * msPerBeat) / 1000, durS: (n.d * msPerBeat) / 1000, m: n.m, h: n.h, v: n.v }))
       .sort((a, b) => a.atS - b.atS);
