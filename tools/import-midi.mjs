@@ -280,3 +280,49 @@ export const IMPORTED = ${JSON.stringify(all, null, 1)};
 `;
 writeFileSync(OUT, body);
 console.log(`\nwrote js/songs-imported.mjs: ${all.length} songs (${built.length} from this file)`);
+
+// ☠️ A RE-IMPORT ORPHANS ITS OWN CORRECTIONS, AND THE APP THEN REFUSES TO LOAD.
+// js/songs-hands.mjs and js/songs-fingers.mjs are keyed to a song's exact note
+// count, deliberately, so an edited song fails loudly instead of being silently
+// mis-handed. Re-importing x-files through the corrected importer changed it
+// from 968 notes to 601, and the very next load threw "x-files has 601 notes but
+// its correction expects 968". The assertion did its job; the importer should
+// not have created the situation. Anything this run rewrote gets its stale
+// entries dropped here, and the tools that regenerate them are named.
+{
+  const ids = new Set(built.map((s) => s.id));
+  const touched = [];
+  for (const [file, key, tool] of [
+    ['songs-hands.mjs', 'REHANDED', 'tools/rehand-safe.mjs'],
+    ['songs-fingers.mjs', 'FINGERS', 'tools/finger.mjs'],
+  ]) {
+    const p = new URL('../js/' + file, import.meta.url);
+    if (!existsSync(p)) continue;
+    const src = readFileSync(p, 'utf8');
+    const at = src.indexOf(`export const ${key}`);
+    if (at < 0) continue;
+    let obj;
+    try { obj = JSON.parse(src.slice(src.indexOf('=', at) + 1).trim().replace(/;$/, '')); } catch { continue; }
+    const keep = {}; let dropped = 0;
+    for (const [id, fix] of Object.entries(obj)) {
+      const song = built.find((s) => s.id === id);
+      const stale = ids.has(id) && song && song.notes.length !== (fix.notes ?? fix.n);
+      // ☠️ ONLY THIS IMPORT'S OWN GROUP. `all` holds the IMPORTED songs, so
+      // "not in all" is true of every CURATED song too, and the first version of
+      // this check quietly deleted 39 fingering entries and 11 hand corrections
+      // for songs this import never touched. A cleanup that reaches outside what
+      // it just rewrote is not a cleanup. Confined to ids belonging to this
+      // group, which is exactly what a re-import can orphan (a group that came
+      // back with fewer tiers leaves entries for tiers that no longer exist).
+      const mine = id === group || id.startsWith(group + '-');
+      const orphan = mine && !all.some((s) => s.id === id);
+      if (stale || orphan) { dropped++; continue; }
+      keep[id] = fix;
+    }
+    if (dropped) {
+      writeFileSync(p, src.slice(0, at) + `export const ${key} = ${JSON.stringify(keep, null, 1)};\n`);
+      touched.push(`${file}: dropped ${dropped} stale (re-run ${tool})`);
+    }
+  }
+  for (const t of touched) console.log('  ' + t);
+}
