@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v80';   // a sleeve on every song, 16/16 screens clean, and 11 one-tier songs down to 3
+const VERSION = 'keys-v81';   // tier reasons recorded, sleeves on every song, 16/16 screens
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

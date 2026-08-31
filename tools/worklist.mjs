@@ -15,6 +15,7 @@
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { SONGS } from '../js/songs.mjs';
+import { TIERS_REFUSED as REFUSED } from '../js/tiers-refused.mjs';
 
 const ROOT = join(import.meta.dirname, '..');
 const fast = process.argv.includes('--fast');
@@ -96,9 +97,19 @@ const ITEMS = [
         byGroup.get(g).push(s.level || 'single');
       }
       const thin = [...byGroup.entries()].filter(([, v]) => v.length < 3);
-      return { ok: !thin.length, detail: thin.length
-        ? `${thin.length} pieces short of three tiers: ${thin.map(([g, v]) => `${g}[${v.join(',')}]`).join(' ')}`
-        : 'all imported pieces have three tiers' };
+      // ☠️ THE ITEM SAYS "OR A RECORDED REASON IT CANNOT", and that half was
+      // never honoured: the importer printed its refusal once to a terminal and
+      // it was gone, so a missing tier looked identical to a tier nobody tried.
+      // js/tiers-refused.mjs now carries a MEASURED reason per piece ("188 chords
+      // wider than 14 semitones, 37 moments with the hands crossed"), which is
+      // the difference between an unfinished job and a decision with evidence.
+      // A piece is only accepted here if its reason is actually recorded.
+      const unexplained = thin.filter(([g]) => !REFUSED[g]);
+      return { ok: !unexplained.length, detail: unexplained.length
+        ? `${unexplained.length} pieces short of three tiers with NO recorded reason: ${unexplained.map(([g, v]) => `${g}[${v.join(',')}]`).join(' ')}`
+        : thin.length
+          ? `${byGroup.size - thin.length} pieces have all three tiers; the other ${thin.length} each carry a measured reason they cannot (js/tiers-refused.mjs)`
+          : 'all imported pieces have three tiers' };
     },
   },
   {
