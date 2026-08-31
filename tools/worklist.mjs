@@ -28,11 +28,16 @@ const REQUESTED = [
   ['gymnopedie-1', 'Gymnopedie No.1'], ['fur-elise', 'Fur Elise'], ['consolation-3', 'Consolation No.3'],
   ['bach-prelude-c', 'Prelude in C'], ['pathetique-2', 'Pathetique 2nd mvt'], ['liebestraum-3', 'Liebestraum No.3'],
   ['fantaisie-impromptu', 'Fantaisie-Impromptu'], ['prelude-e-minor', 'Prelude in E minor'],
-  ['rach-pc2-2', 'Rachmaninoff PC2 2nd mvt'], ['raindrop-prelude', 'Raindrop Prelude'], ['traumerei', 'Traumerei'],
+  // ☠️ THESE IDS MUST MATCH THE LIBRARY, and three of them did not: this list
+  // said rach-pc2-2, disney-intro and never-gonna while the songs went in as
+  // rachmaninoff-pc2, disney-star and never-gonna-2. All three were PRESENT and
+  // reported MISSING, which is the worst way for a checklist to be wrong: it
+  // sends you to redo finished work. Checked against the real groups 2026-08-31.
+  ['rachmaninoff-pc2', 'Rachmaninoff PC2 2nd mvt'], ['raindrop-prelude', 'Raindrop Prelude'], ['traumerei', 'Traumerei'],
   ['rondo-alla-turca', 'Rondo alla Turca'], ['arabesque-1', 'Arabesque No.1'], ['goldberg-aria', 'Goldberg Aria'],
   ['mozart-pc21-2', 'Mozart PC21 2nd mvt'], ['un-sospiro', 'Un Sospiro'], ['light-of-the-seven', 'Light of the Seven'],
-  ['overwatch', 'Overwatch theme'], ['disney-intro', 'Disney intro'], ['next-episode', 'Dr Dre, The Next Episode'],
-  ['x-files', 'X-Files theme'], ['coffin-dance', 'Coffin Dance'], ['never-gonna', 'Never Gonna Give You Up'],
+  ['overwatch', 'Overwatch theme'], ['disney-star', 'Disney intro'], ['next-episode', 'Dr Dre, The Next Episode'],
+  ['x-files', 'X-Files theme'], ['coffin-dance', 'Coffin Dance'], ['never-gonna-2', 'Never Gonna Give You Up'],
   ['jaws', 'Jaws theme'], ['imperial-march', 'Imperial March'], ['gladiator', 'Gladiator'],
 ];
 
@@ -52,7 +57,22 @@ const ITEMS = [
   {
     id: 'compilation',
     what: 'The 23-song compilation video has been worked through',
-    check: () => ({ ok: false, detail: 'never started. https://www.youtube.com/watch?v=ssN7_u08HFY needs its track list read, then each song sourced' }),
+    // ☠️ THIS WAS HARDCODED `ok: false`. It never checked anything, so it went on
+    // reporting "never started" after all 23 pieces were in, which is a checklist
+    // asserting a fact rather than measuring one. The video's own chapter markers
+    // named these, so they are the yardstick.
+    check: () => {
+      const want = ['passacaglia', 'comptine', 'valzer-d-inverno', 'pain', 'van-gogh', 'icarus',
+        'idea-10', 'now-we-are-free', 'mia-sebastian', 'last-waltz', 'i-wanted-to-leave',
+        'little-things', 'la-petite-fille', 'gray-day', 'lauras-dance', 'see-you-tomorrow',
+        'idea-12', 'beanie', 'where-is-my-mind', 'afterglow', 'mariage-d-amour',
+        'say-yes-to-heaven', 'i-giorni'];
+      const have = [...groups];
+      const missing = want.filter((w) => !have.some((g) => g.includes(w)));
+      return { ok: !missing.length, detail: missing.length
+        ? `${want.length - missing.length}/23 in. Missing: ${missing.join(', ')}`
+        : 'all 23 pieces from the compilation are in' };
+    },
   },
   {
     id: 'hands',
@@ -121,8 +141,10 @@ const ITEMS = [
   {
     id: 'friday-night',
     what: '"friday night" identified and added',
-    needsMark: true,
-    check: () => ({ ok: false, detail: 'Mark said "friday night" mid-flow and I never learned which song he meant' }),
+    // RULED by Mark 2026-08-31: "ignore friday night". It stays listed because
+    // the ask was real and the record should show what happened to it, but it is
+    // closed and must not be counted as outstanding or raised again.
+    check: () => ({ ok: true, detail: 'CLOSED: Mark said to ignore it (2026-08-31). Last Friday Night, Katy Perry, is in the library as a guess' }),
   },
   {
     id: 'form-check',
