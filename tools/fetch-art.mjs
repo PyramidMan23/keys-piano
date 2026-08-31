@@ -87,6 +87,48 @@ const WANT = {
   'passacaglia':        { term: 'Passacaglia Handel Halvorsen',               artist: '',               track: 'passacaglia' },
   'un-sospiro':         { term: 'Liszt Un Sospiro Concert Etude No. 3',       artist: '',               track: 'sospiro' },
   'rachmaninoff-pc2':   { term: 'Rachmaninoff Piano Concerto No. 2 Adagio sostenuto', artist: '',       track: 'concerto no. 2' },
+
+  // ---- the classical wave. Mark: "some of them are classical old songs, surely
+  // we can get a photo that represents that song? I pretty much only want a
+  // generic photo if it's a chord or a scale."
+  //
+  // ⚖️ CODEX DISSENTS AND ITS OBJECTION IS RECORDED, NOT BURIED: a classical
+  // album cover is ONE PERFORMER'S recording, not the piece. A beginner choosing
+  // "Clair de Lune" is not choosing Kempff. It wanted scene art representing the
+  // work instead — moonlit water, rain on glass — and called the three existing
+  // Kempff/Karajan sleeves "evidence the mapping already conflates composition
+  // with recording" rather than a precedent to extend.
+  //
+  // Overruled deliberately, on Mark's explicit preference for HIS app: fur-elise
+  // has carried Kempff's Deutsche Grammophon sleeve for days and he never
+  // objected to that one, he objected to the generative plates beside it. The
+  // artist field is left empty for these so ANY credible performer passes and
+  // the check falls on the WORK, which is the honest half of Codex's point.
+  'clair-de-lune':      { term: 'Debussy Clair de Lune Suite bergamasque',    artist: '',               track: 'clair de lune' },
+  'gymnopedie-1':       { term: 'Satie Gymnopedie No. 1',                     artist: '',               track: 'gymnop' },
+  'arabesque-1':        { term: 'Debussy Arabesque No. 1 Deux Arabesques',    artist: '',               track: 'arabesque' },
+  'bach-prelude-c':     { term: 'Bach Prelude in C major Well-Tempered Clavier Book 1', artist: '',     track: 'prelude' },
+  'nocturne-op9-2':     { term: 'Chopin Nocturne in E-flat major Op. 9 No. 2', artist: '',              track: 'nocturne' },
+  'liebestraum-3':      { term: 'Liszt Liebestraum No. 3 Dream of Love',      artist: '',               track: 'liebestraum' },
+  'traumerei':          { term: 'Schumann Traumerei Kinderszenen',            artist: '',               track: 'ume' },
+  'rondo-alla-turca':   { term: 'Mozart Rondo alla Turca Turkish March Sonata K331', artist: '',        track: 'turca' },
+  'fantaisie-impromptu': { term: 'Chopin Fantaisie-Impromptu Op. 66',         artist: '',               track: 'impromptu' },
+  'raindrop-prelude':   { term: 'Chopin Raindrop Prelude Op. 28 No. 15',      artist: '',               track: 'prelude' },
+  'goldberg-aria':      { term: 'Bach Goldberg Variations Aria',              artist: '',               track: 'aria' },
+  'pathetique-2':       { term: 'Beethoven Pathetique Sonata Adagio cantabile', artist: '',             track: 'adagio cantabile' },
+  'consolation-3':      { term: 'Liszt Consolation No. 3 in D-flat major',    artist: '',               track: 'consolation' },
+  'mozart-pc21-2':      { term: 'Mozart Piano Concerto No. 21 Andante Elvira Madigan', artist: '',      track: 'andante' },
+  'prelude-e-minor':    { term: 'Chopin Prelude in E minor Op. 28 No. 4',     artist: '',               track: 'prelude' },
+
+  // and the ones with a plain modern release, which nobody disputes
+  'mia-sebastian':      { term: "Mia and Sebastian's Theme La La Land Justin Hurwitz", artist: 'hurwitz', track: 'mia' },
+  // ☠️ the extra word 'piano' returned ZERO results for two of these. A search
+  // term is not a description: every word narrows it, and 'Afterglow Clavier'
+  // finds the single that 'Afterglow Clavier piano' cannot.
+  'afterglow':          { term: 'Afterglow Clavier',                          artist: 'clavier',        track: 'afterglow' },
+  'gray-day':           { term: 'Gray Day Clavier piano',                     artist: 'clavier',        track: 'gray day' },
+  'last-waltz':         { term: 'Last Waltz Clavier',                         artist: 'clavier',        track: 'last waltz' },
+  'pain':               { term: 'Pain Clavier',                               artist: 'clavier',        track: 'pain' },
 };
 
 // iTunes has no honest release for these, so they come from MusicBrainz +

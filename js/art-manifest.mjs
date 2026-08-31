@@ -3,12 +3,14 @@
 // art/512/<group>.jpg and art/128/<group>.jpg exist on disk.
 export const ART = {
   "afterglow": {
-    "generated": true,
-    "drawnFrom": "the notes of Afterglow, Clavier"
+    "artist": "Clavier",
+    "album": "Afterglow - Single",
+    "year": "2024"
   },
   "arabesque-1": {
-    "generated": true,
-    "drawnFrom": "the notes of Arabesque No. 1, Claude Debussy"
+    "artist": "François-Joël Thiollier",
+    "album": "Debussy: Clair de Lune and Other Piano Favorites",
+    "year": "1987"
   },
   "arp-a-majarp": {
     "generated": true,
@@ -107,8 +109,9 @@ export const ART = {
     "drawnFrom": "the notes of G# Minor Arpeggio, Technique drill · two octaves, both hands"
   },
   "bach-prelude-c": {
-    "generated": true,
-    "drawnFrom": "the notes of Prelude in C major, J.S. Bach, BWV 846"
+    "artist": "Edward Aldwell",
+    "album": "J.S. Bach: The Well-Tempered Clavier, Book I, Preludes and Fugues, S. 846-869",
+    "year": "2005"
   },
   "beanie": {
     "artist": "Chezile",
@@ -125,8 +128,9 @@ export const ART = {
     "year": "1975"
   },
   "clair-de-lune": {
-    "generated": true,
-    "drawnFrom": "the notes of Clair de Lune, Claude Debussy"
+    "artist": "The Arts Symphonic Orchestra, Robert Emery & Claude Debussy",
+    "album": "The Rhythm of Life",
+    "year": "2019"
   },
   "coffin-dance": {
     "artist": "Vicetone & Tony Igy",
@@ -139,8 +143,9 @@ export const ART = {
     "year": "2001"
   },
   "consolation-3": {
-    "generated": true,
-    "drawnFrom": "the notes of Consolation No. 3, Franz Liszt"
+    "artist": "Sheku Kanneh-Mason & James Baillieu",
+    "album": "Liszt: Consolation No. 3, S. 172 (Arr. for Cello & Piano by Swert) - Single",
+    "year": "2024"
   },
   "disney-star": {
     "artist": "Cliff Edwards",
@@ -158,8 +163,9 @@ export const ART = {
     "year": "2015"
   },
   "fantaisie-impromptu": {
-    "generated": true,
-    "drawnFrom": "the notes of Fantaisie-Impromptu, Chopin, Op. posth. 66"
+    "artist": "Paolo Ceccarini",
+    "album": "Chopin: Fantaisie-impromptu, Op. 66 - Single",
+    "year": "2024"
   },
   "fray-save-a-life": {
     "artist": "The Fray",
@@ -187,16 +193,19 @@ export const ART = {
     "year": "2000"
   },
   "goldberg-aria": {
-    "generated": true,
-    "drawnFrom": "the notes of Goldberg Variations, Aria, J.S. Bach, BWV 988"
+    "artist": "Miki Skuta",
+    "album": "Johann Sebastian Bach - Goldberg Variations, BWV 988",
+    "year": "2004"
   },
   "gray-day": {
-    "generated": true,
-    "drawnFrom": "the notes of Gray Day, Clavier"
+    "artist": "Clavier & Michael Piano",
+    "album": "Gray Day - Single",
+    "year": "2025"
   },
   "gymnopedie-1": {
-    "generated": true,
-    "drawnFrom": "the notes of Gymnopédie No. 1, Erik Satie"
+    "artist": "Mark Isaacs",
+    "album": "Intimacies",
+    "year": "2020"
   },
   "happy-birthday": {
     "generated": true,
@@ -268,8 +277,9 @@ export const ART = {
     "year": "2010"
   },
   "last-waltz": {
-    "generated": true,
-    "drawnFrom": "the notes of Last Waltz, Clavier"
+    "artist": "Clavier",
+    "album": "Last Waltz - Single",
+    "year": "2025"
   },
   "lauras-dance": {
     "artist": "Mirko Dukanovic",
@@ -277,8 +287,9 @@ export const ART = {
     "year": "2025"
   },
   "liebestraum-3": {
-    "generated": true,
-    "drawnFrom": "the notes of Liebestraum No. 3, Franz Liszt"
+    "artist": "Waffle Cakes",
+    "album": "Classical Dreams",
+    "year": "2026"
   },
   "light-of-the-seven": {
     "artist": "Ramin Djawadi",
@@ -306,12 +317,9 @@ export const ART = {
     "year": "2020"
   },
   "mia-sebastian": {
-    "generated": true,
-    "drawnFrom": "the notes of Mia and Sebastian's Theme, Justin Hurwitz"
-  },
-  "mia-sebastian-s-theme": {
-    "generated": true,
-    "drawnFrom": "the notes of Mia & Sebastian’s Theme, Justin Hurwitz"
+    "artist": "Justin Hurwitz",
+    "album": "La La Land (Original Motion Picture Soundtrack)",
+    "year": "2016"
   },
   "moonlight-sonata": {
     "artist": "Wilhelm Kempff",
@@ -319,8 +327,9 @@ export const ART = {
     "year": "1987"
   },
   "mozart-pc21-2": {
-    "generated": true,
-    "drawnFrom": "the notes of Piano Concerto No. 21, 2nd movement, W.A. Mozart, K. 467"
+    "artist": "András Ligeti & Jenő Jandó",
+    "album": "Adagio Chillout",
+    "year": "1987"
   },
   "never-gonna-2": {
     "artist": "Rick Astley",
@@ -333,8 +342,9 @@ export const ART = {
     "year": "1999"
   },
   "nocturne-op9-2": {
-    "generated": true,
-    "drawnFrom": "the notes of Nocturne in E-flat major, Chopin, Op. 9 No. 2"
+    "artist": "Daniel Pollack",
+    "album": "\"Passionate Kiss\" ~ Romantic Piano Music",
+    "year": "1997"
   },
   "numb": {
     "artist": "LINKIN PARK",
@@ -352,8 +362,9 @@ export const ART = {
     "year": "2016"
   },
   "pain": {
-    "generated": true,
-    "drawnFrom": "the notes of Pain, Clavier"
+    "artist": "Clavier",
+    "album": "pain. - Single",
+    "year": "2025"
   },
   "passacaglia": {
     "artist": "Rekha's Piano",
@@ -361,8 +372,9 @@ export const ART = {
     "year": "2025"
   },
   "pathetique-2": {
-    "generated": true,
-    "drawnFrom": "the notes of Pathétique Sonata, 2nd movement, Beethoven, Op. 13"
+    "artist": "Adolf Drescher",
+    "album": "Beethoven \"Pathetique\" Sonata No. 8 in C Minor, Op. 13 - Single",
+    "year": "2019"
   },
   "piano-man": {
     "artist": "Billy Joel",
@@ -375,8 +387,9 @@ export const ART = {
     "year": "2011"
   },
   "prelude-e-minor": {
-    "generated": true,
-    "drawnFrom": "the notes of Prelude in E minor, Chopin, Op. 28 No. 4"
+    "artist": "Dagmar Krug",
+    "album": "Chopin: Prélude in E Minor, Op. 28 No. 4 - Single",
+    "year": "2013"
   },
   "rachmaninoff-pc2": {
     "artist": "Jayson Gillham, The Melbourne Symphony Orchestra & Benjamin Northey",
@@ -384,8 +397,9 @@ export const ART = {
     "year": "2001"
   },
   "raindrop-prelude": {
-    "generated": true,
-    "drawnFrom": "the notes of Raindrop Prelude, Chopin, Op. 28 No. 15"
+    "artist": "Eric Lu",
+    "album": "Chopin: 24 Préludes - Brahms: Intermezzo, Op. 117 No. 1 - Schumann: Ghost Variations",
+    "year": "2020"
   },
   "river": {
     "artist": "Yiruma",
@@ -393,8 +407,9 @@ export const ART = {
     "year": "2001"
   },
   "rondo-alla-turca": {
-    "generated": true,
-    "drawnFrom": "the notes of Rondo alla Turca, W.A. Mozart, K. 331"
+    "artist": "Anne Queffélec",
+    "album": "Mozart: Sonates pour piano",
+    "year": "2019"
   },
   "runaway": {
     "artist": "Kanye West & Pusha T",
@@ -528,8 +543,9 @@ export const ART = {
     "year": "1999"
   },
   "traumerei": {
-    "generated": true,
-    "drawnFrom": "the notes of Träumerei, Robert Schumann, Op. 15"
+    "artist": "Gheorghe Zamfir, Harry van Hoof & Harry van Hoof Orkest",
+    "album": "The Lonely Shepherd",
+    "year": "1980"
   },
   "un-sospiro": {
     "artist": "Daniil Trifonov",
