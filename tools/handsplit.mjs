@@ -123,6 +123,106 @@ export function splitHands(notes) {
   return out;
 }
 
+// THE HELD-AWARE SPLIT. This is the one that works.
+//
+// `splitHands` above groups by ONSET and is blind to notes still sounding, which
+// is why it wrecked sustained music (light-of-the-seven 209 -> 872). This carries
+// the sounding set in the search state, so a hand is never handed a note while it
+// is already holding something it cannot hold that note with.
+//
+// A beam rather than exact DP: every still-held note adds an assignment the state
+// must remember, so the exact lattice explodes. Keeping the best K states after
+// merging equivalents is the standard answer and is more than enough here.
+//
+// ☠️ CROSSINGS ARE IMPOSSIBLE BY CONSTRUCTION, not discouraged by a cost. Each
+// event's notes are split at ONE pitch cut: everything below goes left, above
+// goes right. That is the whole reason to do this - `repairHands` produced 159
+// crossings on overwatch and 114 on x-files, which is what refused their tiers,
+// and no hill-climb of single-note moves can reliably undo that many.
+const BEAM = 24;
+
+export function splitHeld(notes, bpm = 120) {
+  const idx = notes.map((n, i) => i).sort((a, b) => notes[a].b - notes[b].b || notes[a].m - notes[b].m);
+  const events = [];
+  for (const i of idx) {
+    const last = events[events.length - 1];
+    if (last && Math.abs(notes[last.is[0]].b - notes[i].b) < 1e-6) last.is.push(i);
+    else events.push({ is: [i], b: notes[i].b });
+  }
+  if (!events.length) return notes.map(() => 'R');
+
+  const secPerBeat = 60 / (bpm || 120);
+  // a state: what each hand still holds, where each hand is, the running cost,
+  // and a back-pointer chain of this event's cuts so the path can be rebuilt
+  let beam = [{ held: [], lc: null, rc: null, cost: 0, cut: 0, back: -1 }];
+  const layers = [];
+
+  for (let e = 0; e < events.length; e++) {
+    const ev = events[e];
+    const ps = ev.is.map((i) => notes[i].m);          // ascending
+    const next = [];
+    for (let s = 0; s < beam.length; s++) {
+      const st = beam[s];
+      // drop what has stopped sounding by now
+      const held = st.held.filter((h) => h.until > ev.b + 1e-6);
+      for (let cut = 0; cut <= ps.length; cut++) {
+        const newL = ps.slice(0, cut), newR = ps.slice(cut);
+        const heldL = held.filter((h) => h.h === 'L').map((h) => h.m);
+        const heldR = held.filter((h) => h.h === 'R').map((h) => h.m);
+        const actL = [...heldL, ...newL].sort((a, b) => a - b);
+        const actR = [...heldR, ...newR].sort((a, b) => a - b);
+        // ☠️ THE HELD NOTES ARE PART OF THE CHORD. This is the whole point: a
+        // hand holding a low bass note cannot also take a note a twelfth above
+        // it, however comfortable the new notes look on their own.
+        if (!holdable([...new Set(actL)], 'L') || !holdable([...new Set(actR)], 'R')) continue;
+        // and the hands must not overlap in pitch at this instant
+        if (actL.length && actR.length && actL[actL.length - 1] > actR[0]) continue;
+
+        const lc = actL.length ? actL.reduce((a, c) => a + c, 0) / actL.length : st.lc;
+        const rc = actR.length ? actR.reduce((a, c) => a + c, 0) / actR.length : st.rc;
+        // how far each hand had to move, per second, so a leap is only costly
+        // when there was no time for it
+        const dt = Math.max(0.05, (ev.b - (st.b ?? ev.b)) * secPerBeat);
+        const dl = st.lc !== null && lc !== null ? Math.abs(lc - st.lc) : 0;
+        const dr = st.rc !== null && rc !== null ? Math.abs(rc - st.rc) : 0;
+        const speed = (dl + dr) / dt;
+        const cost = st.cost + dl + dr + (speed > TRAVEL_MAX ? (speed - TRAVEL_MAX) * 0.5 : 0);
+
+        const keep = held.slice();
+        ev.is.forEach((i, k) => {
+          const n = notes[i];
+          keep.push({ m: n.m, h: k < cut ? 'L' : 'R', until: n.b + n.d });
+        });
+        next.push({ held: keep, lc, rc, cost, cut, back: s, b: ev.b });
+      }
+    }
+    if (!next.length) {
+      // ☠️ NEVER DROP AN EVENT. If nothing is legal (a moment genuinely beyond
+      // two hands), take the least bad split rather than losing the notes, and
+      // let the audit report it honestly.
+      const st = beam[0];
+      const cut = Math.max(0, Math.min(ps.length, Math.ceil(ps.length / 2)));
+      const keep = [];
+      ev.is.forEach((i, k) => { const n = notes[i]; keep.push({ m: n.m, h: k < cut ? 'L' : 'R', until: n.b + n.d }); });
+      next.push({ held: keep, lc: st.lc, rc: st.rc, cost: st.cost + 500, cut, back: 0, b: ev.b });
+    }
+    next.sort((a, b) => a.cost - b.cost);
+    beam = next.slice(0, BEAM);
+    layers.push(beam);
+  }
+
+  // walk the cheapest path back
+  const out = new Array(notes.length).fill('R');
+  let k = 0;
+  for (let e = layers.length - 1; e >= 0; e--) {
+    const st = layers[e][k];
+    events[e].is.forEach((i, j) => { out[i] = j < st.cut ? 'L' : 'R'; });
+    k = st.back;
+    if (k < 0) k = 0;
+  }
+  return out;
+}
+
 // ☠️ "AT ONCE" MEANS STILL SOUNDING, NOT STARTING TOGETHER. The pass above
 // groups notes by ONSET, and by that measure imperial-march had one note per
 // hand at a time and looked perfect, while hand-audit reported "6 keys down in

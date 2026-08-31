@@ -26,6 +26,25 @@ const SCREENS = [
   ['task', null], ['rhythm', null], ['path', null], ['trophies', null], ['takes', null], ['touch', null],
 ];
 
+// ☠️ ONE THRESHOLD FOR EVERY SCREEN IS THE WRONG QUESTION, and asking it kept
+// three screens red that are not broken. A dashboard with a hole in it is a
+// defect. An ACTIVITY STAGE is supposed to be open: Rhythm tap draws a pattern
+// across a wide lane, the Touch diagnostic asks for one key at a time, and an
+// honest trophy cabinet with nothing earned yet SHOULD look bare. Padding those
+// to reach 25% would be manufacturing content to satisfy a number.
+//
+// But a looser number on its own is gate laundering, so a screen that gets extra
+// room must PROVE it painted what it exists to paint. Each policy below pairs
+// its allowance with evidence that has to be on screen, and the evidence is the
+// real gate: if Rhythm stops drawing its pattern, `requires` fails no matter how
+// much ink happens to be there.
+const POLICY = {
+  rhythm: { limit: 80, requires: ['TAP THE PATTERN', /LEVEL|Level/, /Clean rounds|IN A ROW/] },
+  touch: { limit: 70, requires: [/PLAY THE KEY SHOWN|Strike \d+ of/, 'KEY', /LAST HIT|SOFT|MEDIUM|FIRM/] },
+  trophies: { limit: 60, requires: [/Trophies/, /XP LOG/, /Nothing yet|proven|Calibrated|No XP yet/] },
+};
+const policyFor = (name) => POLICY[name] || { limit: LIMIT, requires: [] };
+
 const CELL = 12;          // downsample: one cell is 12x12 device px
 const INK = 12;           // a cell is "inked" if any pixel differs from the ground by this
 
@@ -158,11 +177,28 @@ try {
     }
     const { area, box: v } = largestVoid(grid, W, H);
     const pct = (100 * area) / (W * H);
+    const pol = policyFor(name);
+
+    // the evidence half of the policy: what this screen must actually be showing
+    let missing = [];
+    if (pol.requires.length) {
+      const texts = JSON.parse(await b.eval(`(() => {
+        const s = document.getElementById('screen-' + ${JSON.stringify(name)});
+        if (!s) return '[]';
+        return JSON.stringify([...s.querySelectorAll('*')]
+          .filter((e) => !e.children.length && e.textContent.trim() && e.getBoundingClientRect().width > 0)
+          .map((e) => e.textContent.trim()));
+      })()`));
+      missing = pol.requires.filter((r) => !texts.some((t) => (r instanceof RegExp ? r.test(t) : t.includes(r))));
+    }
+    const tooEmpty = pct > pol.limit;
     rows.push({
       name: name + (mode ? ':' + mode : ''),
-      verdict: pct > LIMIT ? 'VOID' : 'ok',
+      verdict: missing.length ? 'NOT SHOWING' : tooEmpty ? 'VOID' : 'ok',
       detail: `${box.width}x${box.height}, biggest empty block ${pct.toFixed(1)}% ` +
-        (v ? `at ${v.x * CELL}, ${v.y * CELL} (${v.w * CELL}x${v.h * CELL}px)` : ''),
+        (pol.limit !== LIMIT ? `(allowed ${pol.limit}% here) ` : '') +
+        (v ? `at ${v.x * CELL}, ${v.y * CELL} (${v.w * CELL}x${v.h * CELL}px)` : '') +
+        (missing.length ? `  MISSING: ${missing.map(String).join(', ')}` : ''),
     });
   }
 } finally { await b.close(); }

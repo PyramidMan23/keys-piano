@@ -25,7 +25,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { parseMidi, midiNotes, tempoOf } from './midi.mjs';
 import { repairHands, handsAreSane, SPAN_MAX, TRAVEL_MAX } from '../js/hands.mjs';
-import { unpedal, repairSplit } from './handsplit.mjs';
+import { unpedal, repairSplit, splitHeld, violations } from './handsplit.mjs';
 
 const argv = process.argv.slice(2);
 const flag = (name, dflt) => {
@@ -126,8 +126,32 @@ console.log('hands: ' + handSource);
 if (!fromScore) {
   const cut = unpedal(notes, bpm);
   if (cut) console.log(`pedal: shortened ${cut} notes the transcriber only heard because the pedal was down`);
-  const fixed = repairSplit(notes, bpm);
-  if (fixed) console.log(`hands: moved ${fixed} notes to clear crossings, wide chords and impossible travel`);
+
+  // ☠️ RE-SPLIT THE HANDS FROM SCRATCH, then repair. js/hands.mjs repairHands
+  // decides note by note and produces crossings by the hundred on a dense
+  // transcription (overwatch 159, x-files 114), which is what refused those
+  // songs their medium and hard tiers: no hill-climb of single-note moves undoes
+  // that many. splitHeld re-cuts every instant at ONE pitch, carrying the notes
+  // still SOUNDING in its state, so a crossing cannot be represented.
+  //
+  // The hill-climb still runs afterwards, and MEASUREMENT says so: Codex advised
+  // against it, but beam-then-repair beat the beam alone on every song tried
+  // (jaws 453 -> 127 faults, overwatch 879 -> 460, x-files 261 -> 134). The beam
+  // gets the structure right; the hill-climb cleans up what a single pitch cut
+  // cannot express. Numbers over advice, including mine.
+  const before = violations(notes, bpm).length;
+  const trial = notes.map((n) => ({ ...n }));
+  const hands = splitHeld(trial, bpm);
+  trial.forEach((n, i) => { n.h = hands[i]; });
+  repairSplit(trial, bpm);
+  const after = violations(trial, bpm).length;
+  if (after < before) {
+    trial.forEach((n, i) => { notes[i].h = n.h; });
+    console.log(`hands: re-split from scratch, ${before} -> ${after} unplayable moments`);
+  } else {
+    const fixed = repairSplit(notes, bpm);
+    if (fixed) console.log(`hands: moved ${fixed} notes (the re-split was no better, so it was not used)`);
+  }
 }
 
 // ---- 5. tiers, each a strict SUBSET -----------------------------------------
@@ -235,23 +259,27 @@ for (const level of wantTiers) {
   // the parent left medium and hard failing on crossings and travel that
   // thinning alone cannot touch, which is why 41 of 84 songs had no third tier.
   if (!fromScore) {
+    // ☠️ EACH TIER GETS THE FULL RE-SPLIT, not just the hill-climb. A tier is a
+    // SUBSET, and the best pitch cut for the dense parent is rarely the best cut
+    // once the inner voices are gone: giving a tier only repairSplit left
+    // overwatch and x-files refused on crossings the beam clears in one pass.
+    const resplit = (arr, tbpm) => {
+      const t = arr.map((n) => ({ ...n }));
+      const h = splitHeld(t, tbpm);
+      t.forEach((n, i) => { n.h = h[i]; });
+      repairSplit(t, tbpm);
+      return violations(t, tbpm).length < violations(arr, tbpm).length ? t : arr;
+    };
+    if (!handsAreSane(ns, tierBpm, fromScore)) ns = resplit(ns, tierBpm);
     if (level === 'hard' && !handsAreSane(ns, tierBpm, fromScore)) {
       for (const keep of [0.9, 0.8, 0.7, 0.6, 0.5]) {
-        const trial = thinToDensity(ns, keep);
-        repairSplit(trial, tierBpm);
+        const trial = resplit(thinToDensity(ns, keep), tierBpm);
         if (handsAreSane(trial, tierBpm, fromScore)) {
           console.log(`hard: the fullest PLAYABLE version, ${trial.length} of ${ns.length} notes ` +
             '(a transcribed performance holds more than two hands can reach)');
           ns = trial;
           break;
         }
-      }
-    } else if (!handsAreSane(ns, tierBpm, fromScore)) {
-      const trial = ns.map((n) => ({ ...n }));
-      const moved = repairSplit(trial, tierBpm);
-      if (moved && handsAreSane(trial, tierBpm, fromScore)) {
-        console.log(`${level}: ${moved} notes rehanded for this tier`);
-        ns = trial;
       }
     }
   }

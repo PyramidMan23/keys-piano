@@ -7,7 +7,7 @@
 import { readFileSync } from 'node:fs';
 import { parseMidi, midiNotes, tempoOf } from './midi.mjs';
 import { repairHands } from '../js/hands.mjs';
-import { unpedal, repairSplit, splitHands, violations } from './handsplit.mjs';
+import { unpedal, repairSplit, splitHands, splitHeld, violations } from './handsplit.mjs';
 
 const DIRS = ['C:/Users/markh/keys-piano-tools/workshop', 'C:/Users/markh/keys-piano-tools/workshop/comp', 'C:/Users/markh/keys-piano-tools/workshop/full'];
 const tally = (ns, bpm) => {
@@ -46,7 +46,23 @@ for (const slug of process.argv.slice(2)) {
   b.forEach((n, i) => { n.h = hands[i]; });
   repairSplit(b, bpm);
 
+  // C: the held-aware beam, deliberately with NO repairSplit after it, so the
+  // number is the beam's own work and not the hill-climb's
+  const c = notes.map((n) => ({ ...n }));
+  repairHands(c, bpm); unpedal(c, bpm);
+  const hc = splitHeld(c, bpm);
+  c.forEach((n, i) => { n.h = hc[i]; });
+
+  // D: the beam, then the hill-climb, to see whether it still adds anything
+  const d = notes.map((n) => ({ ...n }));
+  repairHands(d, bpm); unpedal(d, bpm);
+  const hd = splitHeld(d, bpm);
+  d.forEach((n, i) => { n.h = hd[i]; });
+  repairSplit(d, bpm);
+
   console.log(`\n${slug}  (${notes.length} notes, ${bpm}bpm)`);
-  console.log(`  incumbent   ${show(tally(a, bpm))}`);
-  console.log(`  contiguous  ${show(tally(b, bpm))}`);
+  console.log(`  incumbent      ${show(tally(a, bpm))}`);
+  console.log(`  contiguous     ${show(tally(b, bpm))}`);
+  console.log(`  held-beam      ${show(tally(c, bpm))}`);
+  console.log(`  beam + repair  ${show(tally(d, bpm))}`);
 }
