@@ -41,31 +41,60 @@ const raw = JSON.parse(await import('node:child_process').then(({ execFileSync }
   `], { encoding: 'utf8', env: { ...process.env, KEYS_RAW_FINGERS: '1' } })));
 const authored = new Set(raw);
 
-const { SONGS } = await import('file:///' + join(ROOT, 'js', 'songs.mjs').replace(/\\/g, '/'));
+// ☠️ READ THE LIBRARY RAW, THEN RE-APPLY THE EXISTING CORRECTION BY HAND.
+// songs.mjs applies REHANDED and then RE-SORTS song.notes, so a tool that reads
+// the finished library sees an order the authored data does not have; move lists
+// computed against it broke the app on load ("interstellar-easy: a hand
+// correction matched 0 notes at beat 18.75"). The first fix was to SKIP any song
+// that already carried a correction, which was safe but far too blunt: once the
+// roam fault was added to the objective it blocked 79 songs from improving at
+// all, including the ones Mark actually complains about.
+//
+// So compose instead of skip. Read the AUTHORED notes, apply the existing moves
+// in memory exactly as songs.mjs does (and deliberately WITHOUT its sort), run
+// the repair on top, then emit ONE move list from authored to final. Matching is
+// by beat, pitch and origin hand rather than by index, so the sort is irrelevant
+// and a stale entry still fails loudly instead of silently mis-handing.
+const { SONGS } = JSON.parse(await import('node:child_process').then(({ execFileSync }) =>
+  execFileSync(process.execPath, ['--input-type=module', '-e', `
+    import { SONGS } from ${JSON.stringify('file:///' + join(ROOT, 'js', 'songs.mjs').replace(/\\\\/g, '/'))};
+    console.log(JSON.stringify({ SONGS: SONGS.map((s) => ({ id: s.id, bpm: s.bpm, notes: s.notes })) }));
+  `], { encoding: 'utf8', maxBuffer: 1 << 28, env: { ...process.env, KEYS_RAW_HANDS: '1', KEYS_RAW_FINGERS: '1' } })));
 
-// ☠️ A SONG THAT ALREADY CARRIES A CORRECTION IS OFF LIMITS, and this cost a
-// broken library to learn. songs.mjs applies REHANDED and then RE-SORTS the
-// notes, so what this tool reads for such a song is the CORRECTED, RESORTED
-// order, not the authored one. Moves computed against that and merged back into
-// the same artifact describe notes that no longer exist in the authored data:
-// on the next load `interstellar-easy` threw "a hand correction matched 0 notes
-// at beat 18.75". The length-and-identity assertion in songs.mjs caught it
-// loudly, which is exactly what it is for, but the tool should never have
-// produced it. An existing correction is also already proven by
-// tools/correction-check.mjs, so replacing it blind would throw away verified work.
+// the corrections already shipping, re-applied above so this pass improves on
+// them rather than ignoring or clobbering them
 const { REHANDED } = await import('file:///' + join(ROOT, 'js', 'songs-hands.mjs').replace(/\\/g, '/'));
 
 const fixes = {};
 let better = 0, skipped = 0;
 for (const song of SONGS) {
   if (!song.notes || song.notes.length < 20) continue;
-  const before = violations(song.notes, song.bpm || 120).length;
+  const work = song.notes.map((n) => ({ ...n }));
+  // re-apply the existing correction on top of the AUTHORED hands, the same way
+  // songs.mjs does, so the repair below starts from the shipped state
+  const prior = REHANDED[song.id];
+  if (prior) {
+    if (song.notes.length !== prior.notes) {
+      console.log(`  ${song.id.padEnd(26)} left alone: its correction expects ${prior.notes} notes, song has ${song.notes.length}`);
+      skipped++; continue;
+    }
+    let ok = true;
+    for (const mv of prior.moves || []) {
+      const hits = work.filter((n) => n.b === mv.b && n.m === mv.m && n.h === mv.from);
+      if (hits.length !== 1) { ok = false; break; }
+      hits[0].h = mv.to;
+    }
+    if (!ok) { console.log(`  ${song.id.padEnd(26)} left alone: its existing correction no longer matches`); skipped++; continue; }
+  }
+  // ☠️ MEASURED AGAINST THE SHIPPED STATE, not the authored one. `work` now
+  // holds what the learner actually receives; comparing the repair against raw
+  // authored hands would credit this tool with the previous correction's work
+  // and could let a change through that is worse than what already ships.
+  const shipped = work.map((n) => ({ ...n }));
+  const before = violations(shipped, song.bpm || 120).length;
   if (!before) continue;
   if (authored.has(song.id)) { console.log(`  ${song.id.padEnd(26)} left alone: authored fingering`); skipped++; continue; }
   if (pinned(song.id)) { console.log(`  ${song.id.padEnd(26)} left alone: the suite pins something about it`); skipped++; continue; }
-  if (REHANDED[song.id]) { console.log(`  ${song.id.padEnd(26)} left alone: already carries a verified correction`); skipped++; continue; }
-
-  const work = song.notes.map((n) => ({ ...n }));
   repairSplit(work, song.bpm || 120);
   const after = violations(work, song.bpm || 120).length;
   if (after >= before) { console.log(`  ${song.id.padEnd(26)} no safe move (${before} moments)`); continue; }
@@ -89,7 +118,7 @@ for (const song of SONGS) {
     }
     return w;
   };
-  const roamBefore = roam(song.notes), roamAfter = roam(work);
+  const roamBefore = roam(shipped), roamAfter = roam(work);
   if (roamAfter > roamBefore) {
     console.log(`  ${song.id.padEnd(26)} refused: reach would go ${roamBefore} -> ${roamAfter} semitones`);
     continue;

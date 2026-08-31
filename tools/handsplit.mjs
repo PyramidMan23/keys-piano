@@ -186,6 +186,25 @@ export function violations(notes, bpm = 120) {
       if (lo.m > hi.m) out.push({ kind: 'cross', beat, h: 'L', active: [lo, hi] });
     }
   }
+  // ☠️ AND THE BIGGEST FAULT OF ALL: HOW FAR THE HAND ROAMS INSIDE ONE BEAT.
+  // This is the one Mark actually feels ("the range on the left hand seemed like
+  // it was very far apart ... only about eight keys apart on the version I did"),
+  // and it is the largest category in hand-audit at 105 moments. The `span`
+  // check above only sees notes SOUNDING together; this sees the hand travelling
+  // across a beat, which is what a player experiences as a lunge. Repairing
+  // without it left the biggest category untouched, and tools/correction-check
+  // measures exactly this, so ignoring it also risked trading it away silently.
+  for (const h of ['L', 'R']) {
+    const hn = notes.filter((n) => n.h === h).sort((a, b) => a.b - b.b);
+    for (let i = 0; i < hn.length; i++) {
+      let lo = hn[i], hi = hn[i];
+      for (let j = i + 1; j < hn.length && hn[j].b - hn[i].b <= 1; j++) {
+        if (hn[j].m < lo.m) lo = hn[j];
+        if (hn[j].m > hi.m) hi = hn[j];
+      }
+      if (hi.m - lo.m > SPAN_MAX) out.push({ kind: 'roam', beat: hn[i].b, h, active: [lo, hi] });
+    }
+  }
   // and no hand may fly further than a hand can move
   for (const h of ['L', 'R']) {
     const hn = notes.filter((n) => n.h === h).sort((a, b) => a.b - b.b);
@@ -292,7 +311,7 @@ export function repairSplit(notes, bpm = 120) {
       // few more trial evaluations and each is still accepted only if the TOTAL
       // fault count strictly drops, so widening can never make things worse.
       const sorted = v.active.slice().sort((a, b) => a.m - b.m);
-      const cands = v.kind === 'cross' || v.kind === 'travel'
+      const cands = v.kind === 'cross' || v.kind === 'travel' || v.kind === 'roam'
         ? v.active.slice()
         : [v.h === 'L' ? sorted[sorted.length - 1] : sorted[0], ...sorted];
       for (const note of cands) {
