@@ -316,6 +316,11 @@ export const ART = {
     "album": "Super Mario Bros. 35 Original Soundtrack",
     "year": "2020"
   },
+  "married-life": {
+    "artist": "Michael Giacchino",
+    "album": "Up (Soundtrack from the Motion Picture)",
+    "year": "2009"
+  },
   "mia-sebastian": {
     "artist": "Justin Hurwitz",
     "album": "La La Land (Original Motion Picture Soundtrack)",

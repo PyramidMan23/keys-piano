@@ -128,6 +128,7 @@ const WANT = {
   'afterglow':          { term: 'Afterglow Clavier',                          artist: 'clavier',        track: 'afterglow' },
   'gray-day':           { term: 'Gray Day Clavier piano',                     artist: 'clavier',        track: 'gray day' },
   'last-waltz':         { term: 'Last Waltz Clavier',                         artist: 'clavier',        track: 'last waltz' },
+  'married-life':       { term: 'Married Life Up Michael Giacchino',        artist: 'giacchino',      track: 'married life' },
   'pain':               { term: 'Pain Clavier',                               artist: 'clavier',        track: 'pain' },
 };
 
