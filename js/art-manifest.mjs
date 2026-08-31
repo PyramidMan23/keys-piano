@@ -2,6 +2,10 @@
 // group -> the real record its sleeve came from. Presence here means
 // art/512/<group>.jpg and art/128/<group>.jpg exist on disk.
 export const ART = {
+  "afterglow": {
+    "generated": true,
+    "drawnFrom": "the notes of Afterglow, Clavier"
+  },
   "arabesque-1": {
     "generated": true,
     "drawnFrom": "the notes of Arabesque No. 1, Claude Debussy"
@@ -106,6 +110,10 @@ export const ART = {
     "generated": true,
     "drawnFrom": "the notes of Prelude in C major, J.S. Bach, BWV 846"
   },
+  "beanie": {
+    "generated": true,
+    "drawnFrom": "the notes of Beanie, Chezile"
+  },
   "bella-ciao": {
     "generated": true,
     "drawnFrom": "the notes of Bella Ciao, Italian traditional"
@@ -119,9 +127,21 @@ export const ART = {
     "generated": true,
     "drawnFrom": "the notes of Clair de Lune, Claude Debussy"
   },
+  "coffin-dance": {
+    "generated": true,
+    "drawnFrom": "the notes of Astronomia, Tony Igy"
+  },
+  "comptine": {
+    "generated": true,
+    "drawnFrom": "the notes of Comptine d'un autre ete, Yann Tiersen"
+  },
   "consolation-3": {
     "generated": true,
     "drawnFrom": "the notes of Consolation No. 3, Franz Liszt"
+  },
+  "disney-star": {
+    "generated": true,
+    "drawnFrom": "the notes of When You Wish Upon a Star, Leigh Harline"
   },
   "empire": {
     "artist": "JAŸ-Z",
@@ -157,9 +177,17 @@ export const ART = {
     "album": "Gangsta's Paradise",
     "year": "1995"
   },
+  "gladiator": {
+    "generated": true,
+    "drawnFrom": "the notes of Now We Are Free, Hans Zimmer"
+  },
   "goldberg-aria": {
     "generated": true,
     "drawnFrom": "the notes of Goldberg Variations, Aria, J.S. Bach, BWV 988"
+  },
+  "gray-day": {
+    "generated": true,
+    "drawnFrom": "the notes of Gray Day, Clavier"
   },
   "gymnopedie-1": {
     "generated": true,
@@ -173,6 +201,30 @@ export const ART = {
     "artist": "Eagles",
     "album": "Hotel California",
     "year": "1976"
+  },
+  "i-giorni": {
+    "generated": true,
+    "drawnFrom": "the notes of I Giorni, Ludovico Einaudi"
+  },
+  "i-wanted-to-leave": {
+    "generated": true,
+    "drawnFrom": "the notes of I Wanted to Leave, SYML"
+  },
+  "icarus": {
+    "generated": true,
+    "drawnFrom": "the notes of Icarus, Tony Ann"
+  },
+  "idea-10": {
+    "generated": true,
+    "drawnFrom": "the notes of Idea 10, Gibran Alcocer"
+  },
+  "idea-12": {
+    "generated": true,
+    "drawnFrom": "the notes of Idea 12, Gibran Alcocer"
+  },
+  "imperial-march": {
+    "generated": true,
+    "drawnFrom": "the notes of The Imperial March, John Williams"
   },
   "in-a-gadda-da-vida": {
     "artist": "Iron Butterfly",
@@ -189,6 +241,26 @@ export const ART = {
     "album": "Interstellar (Original Motion Picture Soundtrack) [Expanded Edition]",
     "year": "2014"
   },
+  "jaws": {
+    "generated": true,
+    "drawnFrom": "the notes of Jaws, John Williams"
+  },
+  "la-petite-fille": {
+    "generated": true,
+    "drawnFrom": "the notes of La Petite Fille de la Mer, Vangelis"
+  },
+  "last-friday-night": {
+    "generated": true,
+    "drawnFrom": "the notes of Last Friday Night, Katy Perry"
+  },
+  "last-waltz": {
+    "generated": true,
+    "drawnFrom": "the notes of Last Waltz, Clavier"
+  },
+  "lauras-dance": {
+    "generated": true,
+    "drawnFrom": "the notes of Laura's Dance, Mirko Dukanovic"
+  },
   "liebestraum-3": {
     "generated": true,
     "drawnFrom": "the notes of Liebestraum No. 3, Franz Liszt"
@@ -197,15 +269,27 @@ export const ART = {
     "generated": true,
     "drawnFrom": "the notes of Light of the Seven, Ramin Djawadi"
   },
+  "little-things": {
+    "generated": true,
+    "drawnFrom": "the notes of Little Things, Adrian Berenguer"
+  },
   "lost": {
     "artist": "LINKIN PARK",
     "album": "Lost Demos",
     "year": "2023"
   },
+  "mariage-d-amour": {
+    "generated": true,
+    "drawnFrom": "the notes of Mariage d'Amour, Paul de Senneville"
+  },
   "mario": {
     "artist": "Koji Kondo",
     "album": "Super Mario Bros. 35 Original Soundtrack",
     "year": "2020"
+  },
+  "mia-sebastian": {
+    "generated": true,
+    "drawnFrom": "the notes of Mia and Sebastian's Theme, Justin Hurwitz"
   },
   "moonlight-sonata": {
     "artist": "Wilhelm Kempff",
@@ -216,9 +300,21 @@ export const ART = {
     "generated": true,
     "drawnFrom": "the notes of Piano Concerto No. 21, 2nd movement, W.A. Mozart, K. 467"
   },
+  "never-gonna-2": {
+    "generated": true,
+    "drawnFrom": "the notes of Never Gonna Give You Up, Stock Aitken Waterman"
+  },
+  "next-episode": {
+    "generated": true,
+    "drawnFrom": "the notes of The Next Episode, Dr. Dre"
+  },
   "nocturne-op9-2": {
     "generated": true,
     "drawnFrom": "the notes of Nocturne in E-flat major, Chopin, Op. 9 No. 2"
+  },
+  "now-we-are-free": {
+    "generated": true,
+    "drawnFrom": "the notes of Now We Are Free, Hans Zimmer"
   },
   "numb": {
     "artist": "LINKIN PARK",
@@ -229,6 +325,18 @@ export const ART = {
     "artist": "Berlin Philharmonic & Herbert von Karajan",
     "album": "Beethoven: Symphony No. 9",
     "year": "1984"
+  },
+  "overwatch": {
+    "generated": true,
+    "drawnFrom": "the notes of Overwatch, Derek Duke"
+  },
+  "pain": {
+    "generated": true,
+    "drawnFrom": "the notes of Pain, Clavier"
+  },
+  "passacaglia": {
+    "generated": true,
+    "drawnFrom": "the notes of Passacaglia, Handel Halvorsen"
   },
   "pathetique-2": {
     "generated": true,
@@ -248,6 +356,10 @@ export const ART = {
     "generated": true,
     "drawnFrom": "the notes of Prelude in E minor, Chopin, Op. 28 No. 4"
   },
+  "rachmaninoff-pc2": {
+    "generated": true,
+    "drawnFrom": "the notes of Piano Concerto No. 2 (2nd Movement), Sergei Rachmaninoff"
+  },
   "raindrop-prelude": {
     "generated": true,
     "drawnFrom": "the notes of Raindrop Prelude, Chopin, Op. 28 No. 15"
@@ -265,6 +377,10 @@ export const ART = {
     "artist": "Kanye West & Pusha T",
     "album": "My Beautiful Dark Twisted Fantasy",
     "year": "2010"
+  },
+  "say-yes-to-heaven": {
+    "generated": true,
+    "drawnFrom": "the notes of Say Yes to Heaven, Lana Del Rey"
   },
   "scale-a-major": {
     "generated": true,
@@ -367,6 +483,10 @@ export const ART = {
     "album": "Furious 7 (Original Motion Picture Soundtrack)",
     "year": "2015"
   },
+  "see-you-tomorrow": {
+    "generated": true,
+    "drawnFrom": "the notes of See You Tomorrow, Evgeny Grinko"
+  },
   "stairway": {
     "artist": "Led Zeppelin",
     "album": "Led Zeppelin IV",
@@ -386,14 +506,34 @@ export const ART = {
     "generated": true,
     "drawnFrom": "the notes of Träumerei, Robert Schumann, Op. 15"
   },
+  "un-sospiro": {
+    "generated": true,
+    "drawnFrom": "the notes of Un Sospiro, Franz Liszt"
+  },
+  "valzer-d-inverno": {
+    "generated": true,
+    "drawnFrom": "the notes of Valzer d'Inverno, Andrea Vanzo"
+  },
+  "van-gogh": {
+    "generated": true,
+    "drawnFrom": "the notes of Van Gogh, Virginio Aiello"
+  },
   "what-ive-done": {
     "artist": "LINKIN PARK",
     "album": "Minutes to Midnight",
     "year": "2007"
   },
+  "where-is-my-mind": {
+    "generated": true,
+    "drawnFrom": "the notes of Where Is My Mind, Maxence Cyrin"
+  },
   "work-this-time": {
     "artist": "King Gizzard & The Lizard Wizard",
     "album": "Oddments",
     "year": "2014"
+  },
+  "x-files": {
+    "generated": true,
+    "drawnFrom": "the notes of The X-Files, Mark Snow"
   }
 };
