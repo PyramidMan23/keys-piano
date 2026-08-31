@@ -87,6 +87,17 @@ const ITEMS = [
     needsBrowser: true,
     check: () => {
       const out = run('void-check.mjs');
+      // ☠️ FAIL CLOSED. `run` swallows a crash and hands back the stack trace as
+      // ordinary output, and a stack trace contains no "VOID" lines, so a gate
+      // that NEVER RAN was reported green. That is the third outcome every gate
+      // has and this one could not express: not clean, not dirty, but "the check
+      // did not happen" (Codex found it, 2026-08-31). Demand the summary line
+      // void-check prints on every successful run; absence is a failure, not
+      // silence meaning consent.
+      if (!/screens have no large empty region/.test(out)) {
+        return { ok: false, detail: 'void-check DID NOT RUN (no summary line). Output began: ' +
+          (out.trim().split('\n')[0] || '(nothing)').slice(0, 120) };
+      }
       const bad = [...out.matchAll(/^(\S+)\s+VOID/gm)].map((m) => m[1]);
       return { ok: !bad.length, detail: bad.length ? `${bad.length} screens with a hole: ${bad.join(', ')}` : 'no screen has a hole' };
     },
