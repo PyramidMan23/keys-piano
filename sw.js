@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v79';   // tap the keys to play them, free play and the play deck no longer void, full-length compilation takes
+const VERSION = 'keys-v80';   // a sleeve on every song, 16/16 screens clean, and 11 one-tier songs down to 3
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
