@@ -25,6 +25,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { parseMidi, midiNotes, tempoOf } from './midi.mjs';
 import { repairHands, handsAreSane, SPAN_MAX, TRAVEL_MAX } from '../js/hands.mjs';
+import { unpedal, repairSplit } from './handsplit.mjs';
 
 const argv = process.argv.slice(2);
 const flag = (name, dflt) => {
@@ -110,6 +111,24 @@ if (parts.length === 2) {
   handSource = 'derived by js/hands.mjs (the file carried no staff information)';
 }
 console.log('hands: ' + handSource);
+
+// ---- 4b. the pedal is not a finger -----------------------------------------
+// A machine transcription reports what it HEARD, and with the sustain pedal
+// down that is far longer than any finger held the key: Codex measured 15.6% to
+// 75.8% of note offsets in these files landing while the pedal was down, with
+// every file topping out at the model's own ~6 second ceiling. Handed straight
+// to the tier audit that reads as one hand holding six and seven keys at once,
+// which is why Imperial March arrived with 70 unplayable moments and why its
+// medium and hard tiers were both refused.
+//
+// Only when the FILE did not tell us the hands: a properly engraved score has
+// real durations and must never be touched by this.
+if (!fromScore) {
+  const cut = unpedal(notes, bpm);
+  if (cut) console.log(`pedal: shortened ${cut} notes the transcriber only heard because the pedal was down`);
+  const fixed = repairSplit(notes, bpm);
+  if (fixed) console.log(`hands: moved ${fixed} notes to clear crossings, wide chords and impossible travel`);
+}
 
 // ---- 5. tiers, each a strict SUBSET -----------------------------------------
 const beatsPerBar = timeSig[0] * (4 / timeSig[1]);

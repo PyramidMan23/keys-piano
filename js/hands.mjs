@@ -22,7 +22,11 @@
 
 export const SPAN_OK = 12;        // an octave: comfortable for an adult hand
 export const SPAN_STRETCH = 14;   // a ninth: reachable, penalised
-export const SPAN_MAX = 16;       // a tenth. An eleventh is not a chord, it is two hands.
+// ☠️ MUST MATCH tools/hand-audit.mjs. This was 16 while the shipping audit used
+// 14, so the importer approved 15- and 16-semitone shapes that the audit then
+// condemned: a song could pass the gate that admitted it and fail the gate that
+// judges the library. The stricter of two disagreeing limits wins, always.
+export const SPAN_MAX = 14;       // a ninth. A tenth is a stretch, an eleventh is two hands.
 // TRAVEL, NOT LEAP SIZE. The first version of this rule said "more than two
 // octaves inside one beat", which ignores tempo: at 63bpm a beat is 950ms and a
 // hand crosses two octaves in that comfortably, so the rule condemned playable
