@@ -7,6 +7,7 @@
 import { IMPORTED } from './songs-imported.mjs';
 import { REHANDED } from './songs-hands.mjs';
 import { FINGERS } from './songs-fingers.mjs';
+import { FIXED } from './songs-fixed.mjs';
 
 export const SONGS = [
   {
@@ -2778,6 +2779,48 @@ for (const song of applyRehand ? SONGS : []) {
   }
   song.notes.sort((a, b) => (a.h === b.h ? a.b - b.b || a.m - b.m : a.h < b.h ? -1 : 1));
   song.handsRepaired = true;
+}
+
+// THE LAST MOMENTS A HAND COULD NOT PLAY. See tools/fix-defects.mjs.
+//
+// Two kinds, and the first is most of them: a note still SOUNDING from earlier
+// while the same hand plays something far away. The pianist's finger left that
+// key long ago; only the data said otherwise. Shortening it changes no pitch, no
+// hand and no fingering, which is why it is tried first and why it is safe even
+// on an arrangement with authored fingering. The rest needed a note moved to the
+// other hand, and that is never applied where fingering is authored (law 3).
+//
+// ☠️ RUNS BEFORE THE FINGERING BELOW. A moved note's finger number belonged to
+// the hand it left, so the fingering has to be derived after this, not before.
+// KEYS_RAW_FIXED lets tools/fix-defects.mjs read the library WITHOUT its own
+// output applied. Without it the tool cannot run once it has written a bad
+// file: the library throws on load, so the tool that would correct it cannot
+// read the library. Every generated artifact here needs that escape hatch.
+const applyFixed = !(typeof process !== 'undefined' && process.env
+  && (process.env.KEYS_RAW_HANDS || process.env.KEYS_RAW_FIXED));
+for (const song of applyFixed ? SONGS : []) {
+  const fix = FIXED[song.id];
+  if (!fix) continue;
+  if (song.notes.length !== fix.notes) {
+    throw new Error(`${song.id} has ${song.notes.length} notes but its defect fix expects ${fix.notes}: re-run tools/fix-defects.mjs`);
+  }
+  for (const mv of fix.moves ?? []) {
+    const hits = song.notes.filter((n) => n.b === mv.b && n.m === mv.m && n.h === mv.from);
+    if (hits.length !== 1) throw new Error(`${song.id}: a defect fix matched ${hits.length} notes at beat ${mv.b}, expected exactly 1: re-run tools/fix-defects.mjs`);
+    hits[0].h = mv.to;
+    delete hits[0].f;              // its finger number belonged to the other hand
+  }
+  for (const du of fix.durations ?? []) {
+    const hits = song.notes.filter((n) => n.b === du.b && n.m === du.m);
+    if (hits.length !== 1) throw new Error(`${song.id}: a release matched ${hits.length} notes at beat ${du.b}, expected exactly 1: re-run tools/fix-defects.mjs`);
+    hits[0].d = du.d;
+  }
+  // ☠️ RE-SORT, exactly as the hand-correction block above does. Moving a note
+  // between hands breaks the per-hand ordering the app relies on, and the
+  // suite caught it immediately: 'gangstas-paradise-hard: notes not sorted for
+  // hand R at b=0'. Any pass that changes `h` owes the library this line.
+  song.notes.sort((a, b) => (a.h === b.h ? a.b - b.b || a.m - b.m : a.h < b.h ? -1 : 1));
+  song.defectsFixed = true;
 }
 
 // WHICH FINGER ON WHICH NOTE, for the songs that shipped without any. See
