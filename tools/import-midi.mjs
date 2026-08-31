@@ -143,6 +143,35 @@ const groupBy = (arr, key) => { const m = new Map(); for (const x of arr) { cons
 // it would leap more than an octave from the note just kept and something else
 // in the chord is nearer, follow the nearer one: that is what a simplification
 // is meant to do.
+// REDUCE A PERFORMANCE TO SOMETHING TWO HANDS CAN HOLD, by dropping the notes
+// an arranger drops first: the INNER voices. The top of a chord carries the
+// melody and the bottom carries the harmony, so both stay; the filling in
+// between is what makes a transcribed chord ten notes wide and unplayable.
+// Order of sacrifice is by how buried a note is, so the fullest moments thin
+// first and a sparse passage is left untouched.
+function thinToDensity(all, keepFraction) {
+  const target = Math.max(8, Math.round(all.length * keepFraction));
+  if (all.length <= target) return all.map((n) => ({ ...n }));
+  const byMoment = new Map();
+  for (const n of all) {
+    const k = n.b + ':' + n.h;
+    if (!byMoment.has(k)) byMoment.set(k, []);
+    byMoment.get(k).push(n);
+  }
+  const rank = new Map();
+  for (const group of byMoment.values()) {
+    const sorted = group.slice().sort((a, b) => a.m - b.m);
+    sorted.forEach((n, i) => {
+      // 0 = an outer voice, keep at all costs; higher = more buried
+      const depth = Math.min(i, sorted.length - 1 - i);
+      rank.set(n, depth * 100 + sorted.length);
+    });
+  }
+  const order = all.slice().sort((a, b) => (rank.get(b) ?? 0) - (rank.get(a) ?? 0));
+  const drop = new Set(order.slice(0, all.length - target).filter((n) => (rank.get(n) ?? 0) >= 100));
+  return all.filter((n) => !drop.has(n)).map((n) => ({ ...n }));
+}
+
 function thin(all, level) {
   if (level === 'hard') return all.map((n) => ({ ...n }));
   const byBeat = groupBy(all, (n) => n.b);
@@ -184,9 +213,48 @@ function sectionsFor(ns) {
 const built = [];
 const problems = [];
 for (const level of wantTiers) {
-  const ns = thin(notes, level);
+  let ns = thin(notes, level);
   if (ns.length < 8) { problems.push(`${level}: only ${ns.length} notes survived thinning`); continue; }
   const tierBpm = Math.round(bpm * TEMPO_OF[level]);
+
+  // ☠️ AN ARRANGEMENT IS A REDUCTION OF A PERFORMANCE, NOT A COPY OF IT.
+  // Mark asked for every song "easy medium hard" and only 43 of 84 have three,
+  // because `hard` was defined as EVERY transcribed note. A concert performance
+  // captured by a listening model is not a piano arrangement: it holds notes no
+  // two hands can reach, so hard failed the audit and the whole tier vanished.
+  // Defining hard as the fullest PLAYABLE version instead is honest - it is
+  // still a strict subset of the verified notes, so it can only be thin, never
+  // false, which is the same guarantee easy and medium already carry.
+  //
+  // Only for a machine transcription. Where the file gave us the hands, the
+  // score is the authority and its own notes are never quietly dropped.
+  // ☠️ EACH TIER NEEDS ITS OWN HAND REPAIR. repairSplit runs once on the full
+  // note set, but every tier is a SUBSET of it, and removing notes changes which
+  // hand should hold what: a crossing that was unavoidable in the dense original
+  // is often trivially fixable once the inner voices are gone. Repairing only
+  // the parent left medium and hard failing on crossings and travel that
+  // thinning alone cannot touch, which is why 41 of 84 songs had no third tier.
+  if (!fromScore) {
+    if (level === 'hard' && !handsAreSane(ns, tierBpm, fromScore)) {
+      for (const keep of [0.9, 0.8, 0.7, 0.6, 0.5]) {
+        const trial = thinToDensity(ns, keep);
+        repairSplit(trial, tierBpm);
+        if (handsAreSane(trial, tierBpm, fromScore)) {
+          console.log(`hard: the fullest PLAYABLE version, ${trial.length} of ${ns.length} notes ` +
+            '(a transcribed performance holds more than two hands can reach)');
+          ns = trial;
+          break;
+        }
+      }
+    } else if (!handsAreSane(ns, tierBpm, fromScore)) {
+      const trial = ns.map((n) => ({ ...n }));
+      const moved = repairSplit(trial, tierBpm);
+      if (moved && handsAreSane(trial, tierBpm, fromScore)) {
+        console.log(`${level}: ${moved} notes rehanded for this tier`);
+        ns = trial;
+      }
+    }
+  }
   // WHOSE WORK IS BEING JUDGED. When the hands came off an engraved score and
   // the notes are the score's own (hard = everything), there is nothing of ours
   // left to check: it is a published piece that pianists play, and refusing it
@@ -305,8 +373,14 @@ console.log(`\nwrote js/songs-imported.mjs: ${all.length} songs (${built.length}
     try { obj = JSON.parse(src.slice(src.indexOf('=', at) + 1).trim().replace(/;$/, '')); } catch { continue; }
     const keep = {}; let dropped = 0;
     for (const [id, fix] of Object.entries(obj)) {
-      const song = built.find((s) => s.id === id);
-      const stale = ids.has(id) && song && song.notes.length !== (fix.notes ?? fix.n);
+      // ☠️ A RE-IMPORT REWRITES THE NOTES, SO EVERY CORRECTION FOR IT IS STALE,
+      // not just the ones whose COUNT changed. That was the first version and it
+      // was not enough: re-importing last-friday-night produced the same number
+      // of notes with different content, the count check passed, and the next
+      // load threw "a hand correction matched 0 notes at beat 348.25". Matching
+      // on a count is matching on a coincidence. Anything this run rewrote loses
+      // its correction outright and gets a fresh one from rehand-safe/finger.
+      const stale = ids.has(id);
       // ☠️ ONLY THIS IMPORT'S OWN GROUP. `all` holds the IMPORTED songs, so
       // "not in all" is true of every CURATED song too, and the first version of
       // this check quietly deleted 39 fingering entries and 11 hand corrections
