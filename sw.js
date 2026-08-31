@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v83';   // 1,846 unplayable moments cleared; 4 impossible reaches left
+const VERSION = 'keys-v84';   // real record sleeves for 56 songs: the Overwatch OST, Dr Dre's 2001, Amelie, Jaws
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

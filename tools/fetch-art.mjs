@@ -50,6 +50,43 @@ const WANT = {
   'fur-elise':          { term: 'Beethoven Fur Elise Wilhelm Kempff Deutsche Grammophon', artist: '',    track: 'elise' },
   'moonlight-sonata':   { term: 'Beethoven Piano Sonata No. 14 Moonlight Adagio sostenuto Kempff', artist: '', track: 'sonata' },
   'ode-to-joy':         { term: 'Beethoven Symphony No. 9 Choral Karajan Berlin Philharmonic', artist: '', track: 'symphony no. 9' },
+
+  // ---- the 2026-08-31 wave. Mark, looking at the Explore shelf: "we can put
+  // the Overwatch logo there for example, the next episode single cover etc,
+  // why do so many of them just have a generic photo?" Fair: every song added in
+  // the last two days got a generative plate because none of them had an entry
+  // here, and this map is hand-written on purpose. Each one still has to pass
+  // the artist/track check below, so a wrong sleeve is rejected, not substituted.
+  'next-episode':       { term: 'The Next Episode Dr. Dre Snoop Dogg 2001',   artist: 'dr. dre',        track: 'next episode' },
+  'overwatch':          { term: 'Overwatch Original Game Soundtrack Derek Duke', artist: 'duke',        track: 'overwatch' },
+  'gladiator':          { term: 'Now We Are Free Gladiator Hans Zimmer Lisa Gerrard', artist: 'zimmer', track: 'now we are free' },
+  'x-files':            { term: 'The X-Files Main Title Theme Mark Snow',     artist: 'snow',           track: 'x-files' },
+  'jaws':               { term: 'Jaws Main Title John Williams',              artist: 'williams',       track: 'jaws' },
+  'imperial-march':     { term: 'The Imperial March Star Wars Empire Strikes Back John Williams', artist: 'williams', track: 'imperial march' },
+  'never-gonna-2':      { term: 'Never Gonna Give You Up Rick Astley',        artist: 'astley',         track: 'never gonna give you up' },
+  'last-friday-night':  { term: 'Last Friday Night T.G.I.F. Katy Perry Teenage Dream', artist: 'katy perry', track: 'last friday night' },
+  'coffin-dance':       { term: 'Astronomia Tony Igy',                        artist: 'igy',            track: 'astronomia' },
+  'say-yes-to-heaven':  { term: 'Say Yes to Heaven Lana Del Rey',             artist: 'lana del rey',   track: 'say yes to heaven' },
+  'light-of-the-seven': { term: 'Light of the Seven Game of Thrones Season 6 Ramin Djawadi', artist: 'djawadi', track: 'light of the seven' },
+  'i-giorni':           { term: 'I Giorni Ludovico Einaudi',                  artist: 'einaudi',        track: 'giorni' },
+  'comptine':           { term: "Comptine d'un autre ete Yann Tiersen Amelie", artist: 'tiersen',       track: 'comptine' },
+  'la-petite-fille':    { term: 'La Petite Fille de la Mer Vangelis',         artist: 'vangelis',       track: 'petite fille' },
+  'mariage-d-amour':    { term: "Mariage d'Amour Paul de Senneville Richard Clayderman", artist: '',    track: 'mariage' },
+  'where-is-my-mind':   { term: 'Where Is My Mind Maxence Cyrin Novo Piano',  artist: 'cyrin',          track: 'where is my mind' },
+  'beanie':             { term: 'Beanie Chezile',                            artist: 'chezile',        track: 'beanie' },
+  'idea-10':            { term: 'Idea 10 Gibran Alcocer',                     artist: 'alcocer',        track: 'idea 10' },
+  'idea-12':            { term: 'Idea 12 Gibran Alcocer',                     artist: 'alcocer',        track: 'idea 12' },
+  'icarus':             { term: 'Icarus Tony Ann',                            artist: 'tony ann',       track: 'icarus' },
+  'see-you-tomorrow':   { term: 'See You Tomorrow Evgeny Grinko',             artist: 'grinko',         track: 'see you tomorrow' },
+  'i-wanted-to-leave':  { term: 'I Wanted to Leave SYML',                     artist: 'syml',           track: 'i wanted to leave' },
+  'disney-star':        { term: 'When You Wish Upon a Star Pinocchio Cliff Edwards', artist: '',        track: 'wish upon a star' },
+  'valzer-d-inverno':   { term: "Valzer d'Inverno Andrea Vanzo",              artist: 'vanzo',          track: 'valzer' },
+  'little-things':      { term: 'Little Things Adrian Berenguer',            artist: 'berenguer',      track: 'little things' },
+  'lauras-dance':       { term: "Laura's Dance Mirko Dukanovic",              artist: 'dukanovic',      track: 'dance' },
+  'van-gogh':           { term: 'Van Gogh Virginio Aiello piano',             artist: 'aiello',         track: 'van gogh' },
+  'passacaglia':        { term: 'Passacaglia Handel Halvorsen',               artist: '',               track: 'passacaglia' },
+  'un-sospiro':         { term: 'Liszt Un Sospiro Concert Etude No. 3',       artist: '',               track: 'sospiro' },
+  'rachmaninoff-pc2':   { term: 'Rachmaninoff Piano Concerto No. 2 Adagio sostenuto', artist: '',       track: 'concerto no. 2' },
 };
 
 // iTunes has no honest release for these, so they come from MusicBrainz +
