@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v77';   // Play again moved off the keyboard to the empty top strip, and its icon given back its ink
+const VERSION = 'keys-v78';   // 80 songs: the 23-piece compilation, all 19 classical titles, and 73 songs' hands repaired
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
