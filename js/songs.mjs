@@ -8,6 +8,7 @@ import { IMPORTED } from './songs-imported.mjs';
 import { REHANDED } from './songs-hands.mjs';
 import { FINGERS } from './songs-fingers.mjs';
 import { FIXED } from './songs-fixed.mjs';
+import { QUARANTINE } from './songs-quarantine.mjs';
 
 export const SONGS = [
   {
@@ -2851,6 +2852,28 @@ for (const song of applyFingers ? SONGS : []) {
   });
   song.fingeringDerived = true;
 }
+
+// ---- quarantine (Mark, 2026-09-01: "quarantine the unplayable tiers") ------
+// The hand audit condemned these tiers as unplayable and their measured reasons
+// live in js/songs-quarantine.mjs. They stay in SONGS - tests pin musical facts
+// about them, tools regenerate against them, and the data is the recoverable
+// artifact - but they are stamped so nothing shows them to a learner.
+//
+// KEYS_RAW_QUARANTINE lets tools/quarantine.mjs audit the raw library when
+// regenerating the list; without it, a quarantine-aware audit would see zero
+// findings and regenerate an empty quarantine, silently releasing every tier.
+const applyQuarantine = !(typeof process !== 'undefined' && process.env && process.env.KEYS_RAW_QUARANTINE);
+for (const song of applyQuarantine ? SONGS : []) {
+  const q = QUARANTINE[song.id];
+  if (q) song.quarantined = q.why;
+}
+
+// THE SHELF: what a learner may be offered. The app imports this as its SONGS
+// (`import { SHELF as SONGS }`), so every read site - library, tier chips,
+// continue cards, paths - inherits the filter from one line. Tools and tests
+// keep the full SONGS export on purpose: a quarantined tier is a decision with
+// evidence, not deleted music.
+export const SHELF = SONGS.filter((s) => !s.quarantined);
 
 export function songEndBeat(song) {
   return Math.max(...song.notes.map((n) => n.b + n.d));

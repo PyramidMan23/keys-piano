@@ -54,7 +54,16 @@ const showAll = process.argv.includes('--all');
 const onlyId = process.argv[process.argv.indexOf('--id') + 1];
 
 const findings = [];
-const list = onlyId && process.argv.includes('--id') ? SONGS.filter((s) => s.id === onlyId) : SONGS;
+// A quarantined tier is a RECORDED DECISION, not news: its condemnation and
+// measured reason live in js/songs-quarantine.mjs, it is off the shelf, and
+// re-reporting it every run would bury any NEW defect under 77 known ones.
+// The 08-31 council: "the gate then genuinely fails on any NEW unambiguous
+// defect, which is the only way it stays honest." Skipping the known set is
+// what makes that true. tools/quarantine.mjs regenerates the list from the RAW
+// library via KEYS_RAW_QUARANTINE, so nothing is ever grandfathered invisibly.
+const quarantined = SONGS.filter((s) => s.quarantined);
+const judged = SONGS.filter((s) => !s.quarantined);
+const list = onlyId && process.argv.includes('--id') ? SONGS.filter((s) => s.id === onlyId) : judged;
 
 // One song in, its findings out. Extracted from the loop so the FIXTURE at the
 // bottom can run the real audit over a song built to be broken, rather than a
@@ -250,7 +259,8 @@ for (const f of findings) {
   if (!byKind.has(f.kind)) byKind.set(f.kind, []);
   byKind.get(f.kind).push(f);
 }
-console.log(`${list.length} songs audited\n`);
+console.log(`${list.length} songs audited`
+  + (quarantined.length && !onlyId ? `; ${quarantined.length} quarantined tiers not judged (recorded decisions, js/songs-quarantine.mjs)` : '') + '\n');
 for (const [kind, l] of [...byKind.entries()].sort((a, b) => b[1].length - a[1].length)) {
   console.log(`### ${kind.toUpperCase()}  (${l.length})`);
   for (const f of (showAll ? l : l.slice(0, 10))) console.log(`  ${f.song.padEnd(26)} ${f.detail}`);

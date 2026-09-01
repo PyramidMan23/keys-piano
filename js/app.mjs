@@ -2,7 +2,12 @@
 // Council defaults: falling notes is the default surface; a song section only
 // counts as "learned" after at least one score-mode pass (Codex's mechanic).
 
-import { SONGS, validateSong, LADDER } from './songs.mjs';
+// SHELF, not SONGS: the playable library. Quarantined tiers (unplayable hand
+// assignments, each carrying its measured reason in js/songs-quarantine.mjs)
+// remain in the full SONGS export for tools and tests, but the app must never
+// offer one to a learner - a wrong hand teaches a wrong hand. This one import
+// line filters every read site: library, tier chips, continue cards, paths.
+import { SHELF as SONGS, validateSong, LADDER } from './songs.mjs';
 import { ContinuityTracker } from './perform.mjs';
 import { LOOPS, chordAt, compNotes } from './improv.mjs';
 import { Engine, medianOffset, chunkRange, timingSummary, biasText } from './engine.mjs';
