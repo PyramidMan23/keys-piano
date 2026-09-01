@@ -69,11 +69,6 @@ export const TIERS_REFUSED = {
   "notes": 1373,
   "why": "a fuller arrangement of this recording asks for 86 chords wider than 14 semitones, 24 moments with the hands crossed, 31 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
- "la-petite-fille-de-la-mer": {
-  "tiers": 2,
-  "notes": 1489,
-  "why": "a fuller arrangement of this recording asks for 45 chords wider than 14 semitones, 5 moments with the hands crossed, so the audit refused it rather than ship an unplayable tier"
- },
  "last-waltz": {
   "tiers": 2,
   "notes": 1149,
@@ -93,10 +88,10 @@ export const TIERS_REFUSED = {
   "notes": 1739,
   "why": "a fuller arrangement of this recording asks for 58 chords wider than 14 semitones, 19 moments with the hands crossed, 9 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
- "mia-sebastian-s-theme": {
+ "married-life": {
   "tiers": 2,
-  "notes": 767,
-  "why": "a fuller arrangement of this recording asks for 82 chords wider than 14 semitones, 35 moments with the hands crossed, 4 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
+  "notes": 713,
+  "why": "a fuller arrangement of this recording asks for 38 chords wider than 14 semitones, 14 moments with the hands crossed, 5 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
  "never-gonna-2": {
   "tiers": 2,
