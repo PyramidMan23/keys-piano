@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v89';   // scrub bar while watching: drag or arrow-key to seek, sound follows
+const VERSION = 'keys-v90';   // surface-check green 8/8: the gate opened screens with __show, which never runs the handler that paints them
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

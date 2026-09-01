@@ -10,22 +10,56 @@
 // For each drawn surface it asserts: the box is not collapsed, and there are
 // actual non-background pixels inside it.
 //
+// ☠️ OPEN EVERY SCREEN THROUGH ITS OWN CONTROL, NEVER `__show` ALONE. `show()`
+// only toggles which screen is hidden. Every one of these canvases is built,
+// sized and painted by the CONTROL HANDLER: `btn-freeplay` is what constructs
+// the FallsView, stands the artboard's resting picture down and draws; the
+// theory keyboard is not painted until a drill actually starts. Reached through
+// `__show` alone, six of the eight surfaces reported "0 inked px", and that was
+// written into CLAUDE.md as a known-red APP defect. It was not one: opened the
+// way a person opens them, all six paint 97-99% ink (measured 2026-09-01). The
+// bug was here, in the gate. void-check.mjs already carries a tombstone for the
+// identical mistake, so this is the second time the same lie was measured.
+//
+// A route is therefore not convenience, it IS the measurement. A surface whose
+// control is missing fails as NO CONTROL and never falls back to `__show`,
+// because the fallback is how the gate came to photograph screens no user had
+// ever opened and call them defects.
+//
 // Usage: node tools/surface-check.mjs
 import { launch } from './cdp.mjs';
 
 const day = (o) => { const x = new Date(); x.setDate(x.getDate() - o);
   return x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0'); };
 
-// screen id -> [surface selector, how to reach it]
+// screen id -> [surface selector, and the taps a person makes to get there]
+//
+// A step is `{ id }` for a control that has one, or `{ text }` for one the
+// design only labels in words. Clicking the id is not a back door: the canon
+// library's own tool rows forward to these very ids
+// (`canon-library.mjs` -> `ctx.onTool` -> `el.click()`), so it is the user's tap.
 const SURFACES = [
-  { screen: 'screen-play', sel: '#falls', label: 'falling-notes deck' },
-  { screen: 'screen-play', sel: '#score-wrap svg', label: 'score notation', mode: 'score' },
-  { screen: 'screen-freeplay', sel: '#freeplay-canvas', label: 'free play keys' },
-  { screen: 'screen-echo', sel: '#echo-canvas', label: 'melody echo keys' },
-  { screen: 'screen-calibrate', sel: '#cal-canvas', label: 'latency trace' },
-  { screen: 'screen-improv', sel: '#improv-canvas', label: 'improv keys' },
-  { screen: 'screen-lesson', sel: '#lesson-keys', label: 'lesson keyboard' },
-  { screen: 'screen-task', sel: '#task-keys', label: 'theory task keyboard' },
+  { screen: 'screen-play', sel: '#falls', label: 'falling-notes deck',
+    open: [{ text: 'Resume the session' }] },
+  { screen: 'screen-play', sel: '#score-wrap svg', label: 'score notation',
+    open: [{ text: 'Resume the session' }, { id: 'mode-score' }] },
+  { screen: 'screen-freeplay', sel: '#freeplay-canvas', label: 'free play keys',
+    open: [{ id: 'btn-freeplay' }] },
+  { screen: 'screen-echo', sel: '#echo-canvas', label: 'melody echo keys',
+    open: [{ id: 'btn-echo' }] },
+  // the trace is a moving bar over a hit line, painted by runCalibration() the
+  // moment the screen opens: sparse on purpose, and honestly so
+  { screen: 'screen-calibrate', sel: '#cal-canvas', label: 'latency trace',
+    open: [{ id: 'btn-calibrate' }] },
+  { screen: 'screen-improv', sel: '#improv-canvas', label: 'improv keys',
+    open: [{ id: 'btn-improv' }] },
+  { screen: 'screen-lesson', sel: '#lesson-keys', label: 'lesson keyboard',
+    open: [{ id: 'btn-lessons' }, { text: 'Continue here' }] },
+  // ☠️ THE THEORY KEYBOARD IS NOT PAINTED BY ARRIVING. openTaskScreen() hides
+  // the stage and puts the pre-start invite up instead; only runTask() ->
+  // setKeyboard() sizes and draws it. Press Start, the same as the learner.
+  { screen: 'screen-task', sel: '#task-keys', label: 'theory task keyboard',
+    open: [{ id: 'btn-path' }, { id: 'path-go' }, { id: 'task-start' }] },
 ];
 
 const b = await launch({ width: 1600, height: 950, scale: 1, port: 9580 });
@@ -41,28 +75,42 @@ try {
   await b.goto('http://localhost:4180/index.html?canon=1');
   await new Promise((r) => setTimeout(r, 2200));
 
-  // open the play screen through the app's own return loop
-  await b.eval(`(() => {
-    const hits = [...document.querySelectorAll('*')].filter((e) => !e.children.length
-      && e.textContent.trim() === 'Resume the session' && e.getBoundingClientRect().width > 0);
-    for (const el of hits.reverse()) { const c = el.closest('button, a, [role="button"]') || el; c.click(); return true; }
-    return false;
-  })()`);
-  await new Promise((r) => setTimeout(r, 1800));
-
   for (const s of SURFACES) {
-    // show the screen the app's own way, then the mode if one is asked for
-    await b.eval(`(() => { const n = ${JSON.stringify(s.screen.replace('screen-', ''))};
-      if (typeof window.__show === 'function') { window.__show(n); return 'shown ' + n; }
-      return 'no __show hook'; })()`).catch(() => {});
-    if (s.mode === 'score') await b.eval(`document.getElementById('mode-score')?.click(); true`);
-    await new Promise((r) => setTimeout(r, 700));
+    // home first, so every route starts where a person starts
+    await b.eval(`(() => { document.getElementById('btn-home')?.click(); return true; })()`).catch(() => {});
+    await new Promise((r) => setTimeout(r, 500));
+
+    // walk the route. A control that is not there fails the row; it never
+    // licenses a fall back to __show, which is the fabrication this gate
+    // shipped for weeks.
+    const trace = [];
+    let missing = null;
+    for (const step of s.open) {
+      const did = await b.eval(`(() => {
+        const step = ${JSON.stringify(step)};
+        const el = step.id ? document.getElementById(step.id)
+          : [...document.querySelectorAll('*')].reverse().find((e) => !e.children.length
+              && e.textContent.trim() === step.text && e.getBoundingClientRect().width > 0);
+        if (!el) return 'MISSING';
+        (el.closest('button, a, [role="button"]') || el).click();
+        return 'ok';
+      })()`);
+      trace.push((step.id ?? step.text) + (did === 'ok' ? '' : '!'));
+      if (did !== 'ok') { missing = step.id ?? step.text; break; }
+      await new Promise((r) => setTimeout(r, 800));
+    }
+    const route = trace.join(' > ');
+    if (missing) {
+      rows.push({ label: s.label, verdict: 'NO CONTROL', detail: `route ${route}: nothing to click for "${missing}"` });
+      continue;
+    }
+    await new Promise((r) => setTimeout(r, 500));
     rows.push(JSON.parse(await b.eval(`(() => {
       // PROVE THE SCREEN WAS REACHED FIRST. A canvas on a screen that never
       // opened reads blank too, and reporting that as a defect would be a lie.
       const screen = document.getElementById(${JSON.stringify(s.screen)});
       const shown = screen && getComputedStyle(screen).display !== 'none' && !screen.hidden;
-      if (!shown) return JSON.stringify({ label: ${JSON.stringify(s.label)}, verdict: 'NOT REACHED', detail: 'the ${s.screen} screen never opened, so its surface was not judged' });
+      if (!shown) return JSON.stringify({ label: ${JSON.stringify(s.label)}, verdict: 'NOT REACHED', detail: 'route ${route} left the ${s.screen} screen closed, so its surface was not judged' });
       const el = document.querySelector(${JSON.stringify(s.sel)});
       if (!el) return JSON.stringify({ label: ${JSON.stringify(s.label)}, verdict: 'MISSING', detail: 'no element for ${s.sel}' });
       const r = el.getBoundingClientRect();
@@ -95,7 +143,8 @@ try {
       }
       const pct = total ? (100 * ink / total) : 0;
       return JSON.stringify({ label: ${JSON.stringify(s.label)}, box,
-        verdict: ink < 8 ? 'BLANK' : 'ok', detail: box + '  ' + ink + (el.tagName === 'CANVAS' ? ' inked px (' + pct.toFixed(1) + '%)' : ' drawn nodes') });
+        verdict: ink < 8 ? 'BLANK' : 'ok',
+        detail: box + '  ' + ink + (el.tagName === 'CANVAS' ? ' inked px (' + pct.toFixed(1) + '%)' : ' drawn nodes') + '  via ${route}' });
     })()`)));
   }
 } finally { await b.close(); }

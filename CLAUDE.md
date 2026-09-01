@@ -53,13 +53,25 @@ in `js/songs-imported.mjs`, never in `songs.mjs`.
 `tools/void-check.mjs` · `tools/hand-audit.mjs` ·
 `tools/finger-check.mjs` · `tools/finger-probe.mjs` ·
 `tools/restart-probe.mjs` · `tools/shell-check.mjs` ·
-`tools/press-probe.mjs` · `tools/seek-probe.mjs`
+`tools/press-probe.mjs` · `tools/seek-probe.mjs` · `tools/surface-check.mjs`
 
-`tools/surface-check.mjs` is RED, and was red on keys-v88 before any of the
-transport work (2/8 drawn surfaces have any ink; the theory-task keyboard
-paints nothing at all). It is a real defect and NOT a regression - proven by
-running it against the shipped files - so do not spend a session hunting for
-what you broke. Fix it on its own or leave it, but know which it is.
+☠️ **`surface-check.mjs` was red for weeks and the app was never at fault.** It
+read 2/8, and the note here said "the theory-task keyboard paints nothing at
+all". That sentence was false. The gate opened each screen with `window.__show`,
+which only toggles which screen is hidden; every one of those canvases is built,
+sized and painted by its CONTROL HANDLER, and the theory keyboard is not drawn
+until a drill actually starts. Opened the way a person opens them - the tool
+row, Continue here, path > Start - the same six surfaces paint 97 to 99% ink,
+unchanged app code (2026-09-01). Fixed in the gate; it now walks a real route
+per surface and fails as NO CONTROL rather than falling back to `__show`.
+
+Two things to carry out of that. **A gate can be the thing that is broken**, and
+this one had already been caught making the identical mistake: `void-check.mjs`
+carries a tombstone saying `__show` leaves `window.__falls` false and the deck
+unbuilt. The lesson was written down and then not applied one file over. And
+**a red gate whose diagnosis nobody re-derived becomes a fact**: "the theory-task
+keyboard paints nothing" sat in this file as settled truth, which is exactly what
+stopped anyone opening the screen to look.
 
 **Bump `VERSION` in `sw.js` on every deploy**, or clients keep the cached build
 and the work never reaches Mark. `shell-check.mjs` proves the shell precaches
