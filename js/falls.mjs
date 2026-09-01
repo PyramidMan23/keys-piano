@@ -504,7 +504,19 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
     const tracked = engine.song.barBeats;
     const lines = tracked
       ? tracked.filter((b) => b >= beat - 1 && b < beat + this.lookaheadBeats + 1)
-      : (() => { const out = []; for (let b = Math.ceil(beat); b < beat + this.lookaheadBeats + 1; b++) if ((b % engine.song.timeSig[0]) === 0) out.push(b); return out; })();
+      : (() => {
+        // ☠️ timeSig[0] IS NOT BEATS-PER-BAR UNLESS THE DENOMINATOR IS 4.
+        // Note beats are quarter notes everywhere in this app, so a 2/2 bar is
+        // FOUR of them and a 12/8 bar is six. Using the numerator raw drew
+        // Moonlight a bar line every two quarters instead of four - twice as
+        // many bars as Beethoven wrote - and did the same to Clair de Lune
+        // (9/8) and the Op.9 nocturne (12/8). The same conversion already
+        // lives in import-midi.mjs and the corpus harness.
+        const per = engine.song.timeSig[0] * (4 / engine.song.timeSig[1]);
+        const out = [];
+        for (let k = Math.ceil(beat / per); k * per < beat + this.lookaheadBeats + 1; k++) out.push(k * per);
+        return out;
+      })();
     for (const b of lines) {
       const y = fallH - (b - beat) * pxPerBeat;
       const isChunkEdge = this.chunkBeats && b % this.chunkBeats === 0;

@@ -43,16 +43,36 @@ const PAIRS = [
   ['goldberg-aria', 'perf-goldberg-aria', 'score-bwv-988-aria.mid', 3],
 ];
 
-const events = (list, toSec) => {
-  const by = new Map();
-  for (const x of list) {
-    const k = Math.round(x.b * 96);
-    if (!by.has(k)) by.set(k, { t: toSec(x.b), ps: new Set() });
-    by.get(k).ps.add(x.m % 12);
+// ☠️ A PIANIST'S CHORD IS NOT ONE ONSET IN A TRANSCRIPTION. Grouping by exact
+// time put each note of a rolled chord in its own event: at 1/96 of a beat the
+// window is 5ms, so a chord spread over 30ms became six events where the score
+// has one. Every comparison then pitted a single note against a full chord and
+// the alignment cost stayed high on all the chordal pieces - Traumerei read
+// 0.93, "almost nothing in common", for a correct transcription of the correct
+// piece. Events are grouped with a real tolerance instead.
+const events = (list, toSec, tolSec) => {
+  const rows = list.map((x) => ({ t: toSec(x.b), pc: x.m % 12 })).sort((a, b) => a.t - b.t);
+  const out = [];
+  for (const r of rows) {
+    const last = out[out.length - 1];
+    if (last && r.t - last.t <= tolSec) last.ps.add(r.pc);
+    else out.push({ t: r.t, ps: new Set([r.pc]) });
   }
-  return [...by.values()].sort((a, b) => a.t - b.t);
+  return out;
 };
-const cost = (a, b) => { let i = 0; for (const x of a.ps) if (b.ps.has(x)) i++; return 1 - i / Math.max(a.ps.size, b.ps.size); };
+// ☠️ AND COMPARE BY THE SMALLER SET. A performance moment that plays three of
+// a chord's four notes has not disagreed with the score; it is a subset, which
+// is what pedalling, voicing and a transcriber's misses all produce. Dividing
+// by the LARGER set punished that as though it were a wrong note.
+const cost = (a, b) => {
+  let i = 0;
+  for (const x of a.ps) if (b.ps.has(x)) i++;
+  const base = 1 - i / Math.min(a.ps.size, b.ps.size);
+  // a little penalty for very different sizes, so a lone note cannot match
+  // every chord it happens to belong to
+  const gap = Math.abs(a.ps.size - b.ps.size) / Math.max(a.ps.size, b.ps.size);
+  return Math.min(1, base + 0.15 * gap);
+};
 const f1 = (est, truth, tol) => {
   let hit = 0; const used = new Set();
   for (const e of est) {
@@ -71,24 +91,40 @@ for (const [group, stem, scoreFile, meterTrue] of PAIRS) {
   const scoreNotes = midiNotes(parseMidi(readFileSync(`${W}/${scoreFile}`)));
   const perf = midiNotes(parseMidi(readFileSync(`${W}/${stem}.mid`)));
   const sidecar = JSON.parse(readFileSync(`${W}/${stem}.beats.json`, 'utf8'));
-  const P = events(perf, (b) => b * 0.5);
-  const S = events(scoreNotes, (b) => b);
-  const ratio = P.length / S.length;
-  // ☠️ SAME PIECE, OR THE TRUTH IS FICTION. Gate 0's first run scored 0.187
-  // because a 17-minute recording of a whole sonata was aligned to a score of
-  // one movement, and the harness aligned it happily.
-  if (ratio > 2.4 || ratio < 0.4) { rows.push({ group, note: `not the same piece (${P.length} vs ${S.length} events)` }); continue; }
-
-  // DTW
-  const n = P.length, m = S.length, band = Math.max(40, Math.round(m * 0.14));
-  const D = Array.from({ length: n + 1 }, () => new Float64Array(m + 1).fill(Infinity)); D[0][0] = 0;
+  const P = events(perf, (b) => b * 0.5, 0.05);   // 50ms: a struck chord, not six events
+  const S = events(scoreNotes, (b) => b, 0.02);   // the score's own simultaneity
+  // ☠️ SUBSEQUENCE DTW, NOT WHOLE-TO-WHOLE. A performance is rarely the same
+  // EXTENT as the score: Rousseau plays all 78 bars of the Gymnopedie where
+  // Mutopia's file holds 47, and the Goldberg Aria is played with both repeats
+  // (A A B B) against a score of A B. Forcing the two to align end to end made
+  // the harness refuse all three as "not the same piece" - true of their
+  // lengths, false of their music. Free start and free end on the PERFORMANCE
+  // axis lets the whole score align to whatever contiguous span of the playing
+  // actually contains it, and a repeat is simply skipped.
+  //
+  // The band is gone with it: a subsequence path is not near the diagonal, and
+  // these matrices are small enough (under a million cells) to fill entirely.
+  const n = P.length, m = S.length;
+  const D = Array.from({ length: n + 1 }, () => new Float64Array(m + 1).fill(Infinity));
+  for (let i = 0; i <= n; i++) D[i][0] = 0;          // start anywhere in the performance
   for (let i = 1; i <= n; i++) {
-    const c0 = Math.max(1, Math.round((i / n) * m) - band), c1 = Math.min(m, Math.round((i / n) * m) + band);
-    for (let j = c0; j <= c1; j++) D[i][j] = cost(P[i - 1], S[j - 1]) + Math.min(D[i - 1][j - 1], D[i - 1][j] + 0.4, D[i][j - 1] + 0.4);
+    for (let j = 1; j <= m; j++) {
+      D[i][j] = cost(P[i - 1], S[j - 1]) + Math.min(D[i - 1][j - 1], D[i - 1][j] + 0.4, D[i][j - 1] + 0.4);
+    }
   }
-  const pairs = []; let i = n, j = m;
+  let endI = 1;
+  for (let i = 2; i <= n; i++) if (D[i][m] < D[endI][m]) endI = i;   // end anywhere
+  const pairs = []; let i = endI, j = m;
   while (i > 0 && j > 0) { const d = D[i - 1][j - 1], u = D[i - 1][j], l = D[i][j - 1]; if (d <= u && d <= l) { pairs.push([P[i - 1].t, S[j - 1].t]); i--; j--; } else if (u <= l) i--; else j--; }
   pairs.reverse();
+
+  // ☠️ AND JUDGE THE MATCH BY ITS COST, NOT BY COUNTING EVENTS. The old ratio
+  // test was a proxy for "same piece" and it rejected three real matches while
+  // it would still accept a wrong piece of similar length. Mean alignment cost
+  // is the direct measure: 0 means every matched moment shared its pitches, 1
+  // means none did.
+  const meanCost = D[endI][m] / Math.max(1, pairs.length);
+  if (meanCost > 0.55) { rows.push({ group, note: `alignment is poor (mean cost ${meanCost.toFixed(2)}) - probably not this score` }); continue; }
   const tt = pairs.map((p) => p[0]), sb = pairs.map((p) => p[1]);
   const at = (beat) => {
     if (beat <= sb[0]) return tt[0];
@@ -124,6 +160,14 @@ for (const [group, stem, scoreFile, meterTrue] of PAIRS) {
     const g = []; for (let k = 1; k < dn.length; k++) g.push(dn[k] - dn[k - 1]);
     g.sort((a, b) => a - b); barSec = g[Math.floor(g.length / 2)];
   }
+  // ☠️ SCORE ONLY WHERE TRUTH EXISTS. The tracker runs over the WHOLE
+  // recording, but the score aligns to a span of it - Rousseau plays 245s of
+  // Gymnopedie against a 47-bar score covering 125s. Counting the tracker's
+  // bars outside that span as false positives punishes it for music the truth
+  // never described: it read 75 bars against 47 and lost precision for being
+  // right about the rest of the piece.
+  const t0 = pairs[0][0], t1 = pairs[pairs.length - 1][0];
+  dn = dn.filter((t) => t >= t0 - 0.2 && t <= t1 + 0.2);
   rows.push({
     group,
     meterTrue,
@@ -144,6 +188,8 @@ for (const [group, stem, scoreFile, meterTrue] of PAIRS) {
     barSec: barSec ? +barSec.toFixed(2) : null,
     impliedBpm: barSec && meta.ok ? +(60 / (barSec / meterTrue)).toFixed(0) : null,
     heardBpm: meta.ok ? meta.beatBpm : null,
+    matchCost: +meanCost.toFixed(3),
+    spanS: +(pairs[pairs.length - 1][0] - pairs[0][0]).toFixed(0),
   });
 }
 
@@ -151,7 +197,7 @@ console.log('piece                 meter        beatF1  barF1   bars(got/true)  
 for (const r of rows) {
   if (r.note) { console.log(`${r.group.padEnd(21)} ${r.note}`); continue; }
   const mk = r.meterOk ? '✓' : '✗';
-  console.log(`${r.group.padEnd(21)} ${String(r.meterGot ?? '?')}/4 vs ${r.meterTrue}/4 ${mk}  ${String(r.beatF1).padStart(6)}  ${String(r.barF1).padStart(5)}   ${String(r.gotBars).padStart(4)}/${String(r.truthBars).padEnd(4)}${r.halved ? ' halved' : '       '}  ${r.impliedBpm}bpm vs ${r.heardBpm}bpm`);
+  console.log(`${r.group.padEnd(21)} ${String(r.meterGot ?? '?')}/4 vs ${r.meterTrue}/4 ${mk}  ${String(r.beatF1).padStart(6)}  ${String(r.barF1).padStart(5)}   ${String(r.gotBars).padStart(4)}/${String(r.truthBars).padEnd(4)}${r.halved ? ' halved' : '       '}  ${r.impliedBpm}bpm vs ${r.heardBpm}bpm  cost ${r.matchCost} span ${r.spanS}s`);
 }
 const scored = rows.filter((r) => !r.note);
 if (scored.length) {
