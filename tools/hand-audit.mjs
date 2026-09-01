@@ -88,6 +88,7 @@ function auditSong(song) {
   // sweep line: what is each hand still holding at this moment
   let held = [];
   let last = { L: null, R: null, beat: null };
+  const lastBeat = { L: null, R: null };   // per hand: see the travel rule below
   let crossed = 0, crossedEg = null, over = 0, overEg = null, fingers = 0, fingerEg = null;
   let travel = 0, travelEg = null;
 
@@ -108,18 +109,31 @@ function auditSong(song) {
         if (!fingerEg) fingerEg = `beat ${beat}: ${new Set(active).size} keys down in one hand`;
       }
       // movement between hand CLUSTERS, in real seconds
+      //
+      // ☠️ FROM WHEN *THIS HAND* LAST MOVED, NOT FROM THE LAST ONSET ANYWHERE.
+      // `last.beat` advanced on every beat either hand played, so a leap was
+      // timed from whatever the OTHER hand did in between. Married Life's left
+      // hand leaves F3-D4 at beat 148.75 and reaches B1 at 149.5 - three
+      // quarters of a beat, 375ms, an easy 61 st/s - but the right hand plays
+      // at 149.25, so this measured 125ms and called it 180 st/s. Every leap
+      // over a texture where the hands alternate was over-reported, which is
+      // most piano writing, and it held Married Life's Hard tier off the shelf
+      // for eight leaps a pianist makes without thinking. tools/fix-defects
+      // measured the same thing correctly (note-pair to note-pair), which is
+      // why the two disagreed about songs neither could fix.
       const centre = (active[0] + active[active.length - 1]) / 2;
-      if (last[h] !== null && last.beat !== null) {
-        const secs = (beat - last.beat) * 60 / bpm;
+      if (last[h] !== null && lastBeat[h] !== null) {
+        const secs = (beat - lastBeat[h]) * 60 / bpm;
         if (secs > 0) {
           const rate = Math.abs(centre - last[h]) / secs;
           if (rate > TRAVEL_MAX) {
             travel++;
-            if (!travelEg) travelEg = `beat ${last.beat} to ${beat}: ${h === 'L' ? 'left' : 'right'} hand must cover ${Math.round(Math.abs(centre - last[h]))} semitones in ${Math.round(secs * 1000)}ms`;
+            if (!travelEg) travelEg = `beat ${lastBeat[h]} to ${beat}: ${h === 'L' ? 'left' : 'right'} hand must cover ${Math.round(Math.abs(centre - last[h]))} semitones in ${Math.round(secs * 1000)}ms`;
           }
         }
       }
       last[h] = centre;
+      lastBeat[h] = beat;
     }
     const l = group.filter((n) => n.h === 'L').map((n) => n.m);
     const r = group.filter((n) => n.h === 'R').map((n) => n.m);

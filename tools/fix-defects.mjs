@@ -53,7 +53,17 @@ function defects(notes, bpm) {
     const hn = notes.filter((n) => n.h === h).sort((a, b) => a.b - b.b);
     for (let i = 0; i < hn.length; i++) {
       let lo = hn[i], hi = hn[i];
-      for (let j = i + 1; j < hn.length && hn[j].b - hn[i].b <= 1; j++) {
+      // ☠️ AND THE SAME TWO TOOLS DISAGREED ABOUT THE *WINDOW*, NOT ONLY THE
+      // THRESHOLD. The audit sweeps HELD notes: a note counts against its hand
+      // until b+d, however long that is. This paired only notes ONSETTING
+      // within a beat of each other, so Married Life's F6 - held six beats by
+      // the pedal - was invisible when F2 arrived 4.5 beats later, and the
+      // 48-semitone right hand the audit condemned could never be found here,
+      // let alone fixed. The window is now the note's own sounding life (still
+      // at least a beat, so sequential sweeps are unchanged), which is the same
+      // span of time the audit judges.
+      const reach = Math.max(hn[i].b + hn[i].d, hn[i].b + 1);
+      for (let j = i + 1; j < hn.length && hn[j].b < reach - 1e-6; j++) {
         if (hn[j].m < lo.m) lo = hn[j];
         if (hn[j].m > hi.m) hi = hn[j];
       }

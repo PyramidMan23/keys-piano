@@ -89,11 +89,6 @@ export const TIERS_REFUSED = {
   "notes": 1739,
   "why": "a fuller arrangement of this recording asks for 58 chords wider than 14 semitones, 19 moments with the hands crossed, 9 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
- "married-life": {
-  "tiers": 2,
-  "notes": 713,
-  "why": "a fuller arrangement of this recording asks for 38 chords wider than 14 semitones, 14 moments with the hands crossed, 5 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
- },
  "moonlight-sonata": {
   "tiers": 2,
   "notes": 1142,
@@ -111,8 +106,8 @@ export const TIERS_REFUSED = {
  },
  "overwatch": {
   "tiers": 2,
-  "notes": 1761,
-  "why": "a fuller arrangement of this recording asks for 198 chords wider than 14 semitones, 45 moments with the hands crossed, 46 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
+  "notes": 3882,
+  "why": "a fuller arrangement of this recording asks for 503 chords wider than 14 semitones, 94 moments with the hands crossed, 66 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
  "passacaglia": {
   "tiers": 2,

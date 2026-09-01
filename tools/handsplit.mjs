@@ -345,6 +345,41 @@ export function violations(notes, bpm = 120) {
 //      it holds whatever the cause.
 //
 // Durations only: no note is added, removed, re-pitched or re-handed.
+// LET THE FINGER LEAVE THE KEY. A transcription reports what it HEARD, so a
+// note the pedal kept ringing arrives with a duration no finger held, and the
+// audit then judges the hand as still holding it: Married Life's F6 "lasts" six
+// beats, so when F2 arrives 4.5 beats later the right hand is holding 48
+// semitones and the whole tier is condemned as unplayable.
+//
+// unpedal() above catches only the transcriber's 6-second TIMEOUT. This catches
+// the musical case: wherever two notes in one hand sound together across more
+// than a hand can hold, the earlier one is released as the later one is struck.
+// No pitch, no hand and no finger changes, so it is safe anywhere - it only
+// says the finger came off sooner, which is what actually happened.
+//
+// ☠️ THE IMPORTER JUDGED TIERS BEFORE ANY OF THIS COULD RUN. tools/fix-defects
+// applies the same release, but only to the SHIPPED library - long after
+// import-midi has already refused a tier and thrown it away. That is why 28
+// pieces carried "the audit refused it" reasons that were really pedal
+// artifacts, and why Married Life had no Hard tier for Mark to grow into.
+// Same repair, now available on both sides of the import.
+export function releaseOverlaps(notes, bpm = 120, spanMax = SPAN_MAX, minDur = 0.25) {
+  let cut = 0;
+  for (const h of ['L', 'R']) {
+    const hn = notes.filter((n) => n.h === h).sort((a, b) => a.b - b.b);
+    for (let i = 0; i < hn.length; i++) {
+      for (let j = i + 1; j < hn.length; j++) {
+        const a = hn[i], b = hn[j];
+        if (b.b >= a.b + a.d - 1e-6) break;          // sorted: nothing later overlaps a
+        if (Math.abs(b.m - a.m) <= spanMax) continue; // within one hand's reach
+        const nd = +(b.b - a.b).toFixed(4);
+        if (nd >= minDur && nd < a.d) { a.d = nd; cut++; }
+      }
+    }
+  }
+  return cut;
+}
+
 export function unpedal(notes, bpm = 120) {
   let cut = 0;
   // FIRST, the notes the model timed out on. At the transcriber's fixed 120bpm

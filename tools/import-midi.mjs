@@ -25,7 +25,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { parseMidi, midiNotes, tempoOf } from './midi.mjs';
 import { repairHands, handsAreSane, SPAN_MAX, TRAVEL_MAX } from '../js/hands.mjs';
-import { unpedal, repairSplit, splitHeld, violations } from './handsplit.mjs';
+import { unpedal, repairSplit, splitHeld, violations, releaseOverlaps } from './handsplit.mjs';
 
 const argv = process.argv.slice(2);
 const flag = (name, dflt) => {
@@ -126,6 +126,12 @@ console.log('hands: ' + handSource);
 if (!fromScore) {
   const cut = unpedal(notes, bpm);
   if (cut) console.log(`pedal: shortened ${cut} notes the transcriber only heard because the pedal was down`);
+  // and the musical case unpedal cannot see: a note still ringing under one the
+  // same hand must now strike, across more than a hand can hold. Released here,
+  // BEFORE the tier gate judges, or a whole tier is refused for a sustain the
+  // pianist never held (see releaseOverlaps in handsplit.mjs).
+  const freed = releaseOverlaps(notes, bpm);
+  if (freed) console.log(`pedal: released ${freed} holds one hand could not have kept under the next note`);
 
   // ☠️ RE-SPLIT THE HANDS FROM SCRATCH, then repair. js/hands.mjs repairHands
   // decides note by note and produces crossings by the hundred on a dense
@@ -391,6 +397,15 @@ console.log(`\nwrote js/songs-imported.mjs: ${all.length} songs (${built.length}
   for (const [file, key, tool] of [
     ['songs-hands.mjs', 'REHANDED', 'tools/rehand-safe.mjs'],
     ['songs-fingers.mjs', 'FINGERS', 'tools/finger.mjs'],
+    // ☠️ AND songs-fixed.mjs, WHICH WAS MISSING FROM THIS VERY LIST while the
+    // comment below warned that a re-import "orphans its own corrections and
+    // the app then REFUSES TO LOAD". Of the three overlays, this is the only
+    // one that throws: js/songs.mjs asserts a defect fix's note count and dies
+    // on a mismatch. Re-importing Married Life from a fuller performance took
+    // it from 439 notes to 891 and the whole library stopped loading, with the
+    // stale entry pointing at music that no longer existed. A list of files to
+    // clean that omits the one that breaks the app is the wrong list.
+    ['songs-fixed.mjs', 'FIXED', 'tools/fix-defects.mjs'],
   ]) {
     const p = new URL('../js/' + file, import.meta.url);
     if (!existsSync(p)) continue;

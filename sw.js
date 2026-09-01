@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v96';   // Fur Elise's G#3 is back in the left hand; two rulers aligned, 14 tiers acquitted
+const VERSION = 'keys-v97';   // Married Life all 3 tiers, Overwatch from Mark's own video, travel timed per hand: 25 tiers freed
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
