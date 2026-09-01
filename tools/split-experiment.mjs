@@ -20,9 +20,22 @@ const show = (t) => `total ${String(t.total).padStart(4)}  roam ${String(t.roam 
   `  span ${String(t.span || 0).padStart(3)}  keys ${String(t.keys || 0).padStart(3)}` +
   `  cross ${String(t.cross || 0).padStart(4)}  travel ${String(t.travel || 0).padStart(3)}`;
 
-for (const slug of process.argv.slice(2)) {
-  let file = null;
-  for (const d of DIRS) { try { readFileSync(d + '/' + slug + '.mid'); file = d + '/' + slug + '.mid'; break; } catch {} }
+for (const arg of process.argv.slice(2)) {
+  // `slug` searches the workshop; `slug=path/to.mid` names the file outright
+  const [slug, explicit] = arg.split('=');
+  // absolute wins; anything else is read relative to the workshop, not the cwd
+  let file = explicit ? (/^([A-Za-z]:|\/)/.test(explicit) ? explicit : DIRS[0] + '/' + explicit) : null;
+  // ☠️ FIRST MATCH IN DIRS ORDER IS NOT THE SOURCE THAT SHIPPED. There are up
+  // to three arrangements of a piece in the workshop - a compilation excerpt in
+  // comp/, a full performance in full/, and sometimes a loose one at the top -
+  // and this took whichever it found first. For Comptine that was comp/ at
+  // 1,069 notes, while the song in the app was built from full/ at 2,465. The
+  // tool then reported "incumbent: 4 violations" for an arrangement less than
+  // half the size of the one that is actually broken, which is a comparison
+  // against a different piece of music wearing the same name. It now prints the
+  // file and its note count on every line, so that mismatch is visible instead
+  // of silently flattering whichever splitter is being judged.
+  if (!file) for (const d of DIRS) { try { readFileSync(d + '/' + slug + '.mid'); file = d + '/' + slug + '.mid'; break; } catch { /* try the next dir */ } }
   if (!file) { console.log(`${slug}: no .mid found`); continue; }
   const mid = parseMidi(readFileSync(file));
   const raw = midiNotes(mid);
@@ -60,7 +73,7 @@ for (const slug of process.argv.slice(2)) {
   d.forEach((n, i) => { n.h = hd[i]; });
   repairSplit(d, bpm);
 
-  console.log(`\n${slug}  (${notes.length} notes, ${bpm}bpm)`);
+  console.log(`\n${slug}  (${notes.length} notes, ${bpm}bpm)  <- ${file.split('workshop/')[1] ?? file}`);
   console.log(`  incumbent      ${show(tally(a, bpm))}`);
   console.log(`  contiguous     ${show(tally(b, bpm))}`);
   console.log(`  held-beam      ${show(tally(c, bpm))}`);

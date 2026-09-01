@@ -213,7 +213,15 @@ function auditSong(song) {
     // clean split that is ALSO unplayable: a real arranger's hands separate
     // neatly AND stay within reach, a threshold does the first and not the
     // second. Both, or it is not evidence.
-    if (bestPurity > 0.985 && (over || travel || fingers || crossed)) {
+    // ☠️ AND THE FIX ABOVE LEFT THE EXEMPTION OUT, so it went on accusing the
+    // Op.9 nocturne anyway - `nocturne-op9-2`, source "Mutopia, ChopinFF/O9",
+    // hands taken straight off the engraved score. Chopin did not cut his own
+    // nocturne with a script. Its three sibling rules all carry `!fromScore`
+    // and this one did not, which made the exemption LEAK: a score-sourced song
+    // is excused from "chord no hand can hold", so `over` stays non-zero and
+    // unreported, and that same unreported count then powers this accusation.
+    // An exemption that only some rules honour is not an exemption.
+    if (bestPurity > 0.985 && (over || travel || fingers || crossed) && !fromScore) {
       add('threshold split', `${(bestPurity * 100).toFixed(1)}% of notes fall on one side of ${name(bestCut)}, ` +
         'and the result is unplayable: a script cut this by pitch');
     }
@@ -299,6 +307,27 @@ if (!process.argv.includes('--id')) {
   untouched.id = 'fixture:clair-de-lune-as-engraved';
   const caughtGood = auditSong(untouched);
 
+  // THIRD ARM: the same corruption, but claiming an engraved source.
+  //
+  // Three rules already excuse a score-sourced song, on the ground that the
+  // hands are the composer's and not a script's. The threshold-split rule was
+  // missing that guard, so it went on accusing `nocturne-op9-2` - real Mutopia
+  // Chopin - of having been "cut by a script", and did it using the very
+  // over-wide chords the sibling rule had already excused. This arm pins the
+  // exemption as UNIFORM: whatever provenance buys a song, it buys it from
+  // every rule or from none.
+  //
+  // It is deliberately uncomfortable, and that is the point: it means a false
+  // "Mutopia" in a source line really would hide a cut. That is the price of
+  // trusting provenance at all, it was already being paid by three rules, and
+  // anyone who decides the price is too high should change all four together -
+  // at which point this fixture is what tells them they have.
+  const cutButScored = clone(good);
+  cutButScored.id = 'fixture:clair-de-lune-cut-but-claiming-a-score';
+  cutButScored.source = 'Mutopia, DebussyC/L75';
+  for (const n of cutButScored.notes) n.h = n.m < 60 ? 'L' : 'R';
+  const caughtScored = auditSong(cutButScored);
+
   // a fixture that changed nothing tests nothing, and that is how the first one
   // passed review while being vacuous. Say what the cut actually did.
   if (moved < cut.notes.length * 0.05) {
@@ -314,6 +343,7 @@ if (!process.argv.includes('--id')) {
   console.log(`  the cut moved ${moved} of ${cut.notes.length} notes across hands`);
   console.log(`  ${cut.id.padEnd(38)} ${caughtCut.length ? 'condemned (' + [...new Set(caughtCut.map((f) => f.kind))].join(', ') + ')' : 'SAID NOTHING'}`);
   console.log(`  ${untouched.id.padEnd(38)} ${caughtGood.length ? 'CONDEMNED (' + [...new Set(caughtGood.map((f) => f.kind))].join(', ') + ')' : 'clean'}`);
+  console.log(`  ${cutButScored.id.padEnd(38)} ${caughtScored.length ? 'CONDEMNED (' + [...new Set(caughtScored.map((f) => f.kind))].join(', ') + ')' : 'clean (the exemption holds)'}`);
   if (!caughtCut.length) {
     console.log('');
     console.log('GUARD FAILED. A hand split at a fixed pitch went unnoticed. That is Law 2,');
@@ -325,6 +355,15 @@ if (!process.argv.includes('--id')) {
     console.log('');
     console.log('GUARD FAILED. A correctly arranged song was condemned. A limit above is now');
     console.log('stricter than real piano writing, which is how this gate came to accuse Chopin.');
+    process.exit(2);
+  }
+  if (caughtScored.length) {
+    console.log('');
+    console.log('GUARD FAILED. A score-sourced song was condemned, so the provenance exemption is');
+    console.log(`not uniform: ${[...new Set(caughtScored.map((f) => f.kind))].join(', ')}.`);
+    console.log('Every rule that judges playability must honour !fromScore, or a song excused by');
+    console.log('one rule gets convicted by another on the same evidence. That is how this gate');
+    console.log('accused the Op.9 nocturne of being cut by a script.');
     process.exit(2);
   }
 }
