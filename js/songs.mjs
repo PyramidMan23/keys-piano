@@ -9,6 +9,7 @@ import { REHANDED } from './songs-hands.mjs';
 import { FINGERS } from './songs-fingers.mjs';
 import { FIXED } from './songs-fixed.mjs';
 import { QUARANTINE } from './songs-quarantine.mjs';
+import { METER } from './songs-meter.mjs';
 
 export const SONGS = [
   {
@@ -2848,7 +2849,16 @@ for (const song of applyQuarantine ? SONGS : []) {
 // note timing is real (it came from the performance); only the bar-and-count
 // story is unearned. Engraved scores and hand-set meters are exempt - their
 // meter is a fact, not a default.
+// Meter HEARD from the recording (keys-piano-tools/write-meter.mjs) outranks the
+// transcriber's 4/4 default. Only songs whose evidence separated clearly appear
+// in METER; everything else stays free time, which is the honest state.
 for (const song of SONGS) {
+  const m = METER[song.group ?? song.id];
+  if (m) {
+    song.timeSig = [m.meter, 4];
+    song.meterVerified = `heard from the recording: ${m.meter}/4, margin ${m.margin}`;
+    song.heardBeatBpm = m.beatBpm;
+  }
   if (/machine transcription/i.test(song.source || '') && !song.meterVerified) song.freeTime = true;
 }
 
