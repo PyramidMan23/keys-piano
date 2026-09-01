@@ -93,6 +93,11 @@ export const TIERS_REFUSED = {
   "notes": 713,
   "why": "a fuller arrangement of this recording asks for 38 chords wider than 14 semitones, 14 moments with the hands crossed, 5 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
+ "moonlight-sonata": {
+  "tiers": 2,
+  "notes": 1142,
+  "why": "a fuller arrangement of this recording asks for 5 chords wider than 14 semitones, so the audit refused it rather than ship an unplayable tier"
+ },
  "never-gonna-2": {
   "tiers": 2,
   "notes": 272,

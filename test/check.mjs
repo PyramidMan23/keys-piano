@@ -20,13 +20,17 @@ for (const s of SONGS) {
 {
   const imported = SONGS.filter((s) => s.handAssignment === 'generated');
   const curated = SONGS.filter((s) => s.handAssignment !== 'generated');
-  assert.equal(curated.length, 128); // 102 + Fur Elise full (2 tiers) + 24 arpeggio drills
+  // 2026-09-01: 128 -> 125. The three hand-authored Moonlight streams (the
+  // Law-1 era: typed against a video, all condemned by the hand audit) were
+  // replaced by an IMPORT from the engraved score, so they left the curated
+  // count and re-entered as generated-with-provenance.
+  assert.equal(curated.length, 125); // 99 + Fur Elise full (2 tiers) + 24 arpeggio drills
   for (const s of imported) assert.ok(s.source, `${s.id} is generated but names no source`);
   ok(`${curated.length} curated songs, ${imported.length} imported, all with provenance`);
 }
 
 // --- Hard tier: denser than Medium, octave/arpeggio figuration present ---
-for (const grp of ['gangstas-paradise', 'faded', 'river', 'still-dre', 'game-of-thrones', 'runaway', 'pirates', 'piano-man', 'empire', 'fray-save-a-life', 'lost', 'numb', 'mario', 'moonlight-sonata', 'bella-ciao', 'see-you-again', 'interstellar', 'in-the-end', 'what-ive-done', 'work-this-time', 'in-a-gadda-da-vida', 'stairway', 'bohemian-rhapsody', 'hotel-california']) {
+for (const grp of ['gangstas-paradise', 'faded', 'river', 'still-dre', 'game-of-thrones', 'runaway', 'pirates', 'piano-man', 'empire', 'fray-save-a-life', 'lost', 'numb', 'mario', /* moonlight-sonata left this list 2026-09-01: its Medium tier was REFUSED by the playability audit (recorded in js/tiers-refused.mjs), so there is no Medium to compare against; its own pins live in the transcription block */ 'bella-ciao', 'see-you-again', 'interstellar', 'in-the-end', 'what-ive-done', 'work-this-time', 'in-a-gadda-da-vida', 'stairway', 'bohemian-rhapsody', 'hotel-california']) {
   const med = SONGS.find((s) => s.group === grp && s.level === 'Medium');
   const hard = SONGS.find((s) => s.group === grp && s.level === 'Hard');
   assert.ok(hard, `${grp} has a Hard tier`);
@@ -93,7 +97,9 @@ assert.deepEqual(pm.notes.filter((n) => n.h === 'L').slice(0, 5).map((n) => n.m)
 const gp = SONGS.find((s) => s.id === 'gangstas-paradise');
 const gpChorus = gp.notes.filter((n) => n.h === 'R' && n.b === 48).map((n) => n.m).sort((a, b) => a - b);
 assert.deepEqual(gpChorus, [60, 63, 67], 'Gangsta chorus opens on a Cm triad');
-assert.ok(SONGS.filter((s) => s.level === 'Easy' && s.handAssignment !== 'generated').length === 26, 'all multi-level curated groups have Easy variants');
+// 26 -> 25 on 2026-09-01: moonlight-sonata-easy moved from the curated
+// streams to a score-sourced import, so it counts as generated now.
+assert.ok(SONGS.filter((s) => s.level === 'Easy' && s.handAssignment !== 'generated').length === 25, 'all multi-level curated groups have Easy variants');
 ok('new songs match their verified transcriptions (Pirates, River, Piano Man, Gangsta)');
 
 // --- signed timing feedback (council 08-24) ---
@@ -1437,22 +1443,26 @@ ok('verdicts: perfect centred, early left, late right, heavy doubles');
 
 // --- 2026-08-28 wave: transcription pins (sources in songs.mjs header) ---
 {
-  const moon = SONGS.find((s) => s.id === 'moonlight-sonata');
-  const moonR = moon.notes.filter((x) => x.h === 'R').sort((a, b) => a.b - b.b);
-  assert.deepEqual(moonR.slice(0, 3).map((x) => x.m), [52, 57, 60], 'Moonlight opens on the E3-A3-C4 triplet (Am)');
-  assert.deepEqual(moon.notes.filter((x) => x.h === 'L' && x.b === 0).map((x) => x.m), [45], 'Moonlight bass starts on A2');
-  assert.ok(moon.notes.some((x) => x.b >= 16 && x.b < 20 && x.m % 12 === 8), 'bar 5 carries G# — the V7 harmony');
+  // Moonlight, re-sourced 2026-09-01 on Mark's word ("rework moonlight sonata
+  // so i can play it"). The old hand-authored A-minor streams asked the right
+  // hand to HOLD 15-semitone chords and all three tiers were condemned by the
+  // hand audit; these tiers come from the engraved score (Mutopia,
+  // BeethovenLv/O27 No.2 mvt 1) with the hands read off the staves themselves,
+  // so every pin below is a fact of Beethoven's text, not of an arrangement.
+  // The Medium tier is deliberately ABSENT: the playability audit refused it
+  // (5 chords wider than 14 semitones) and js/tiers-refused.mjs records why.
   const moonHard = SONGS.find((s) => s.id === 'moonlight-sonata-hard');
+  assert.ok(/Mutopia/.test(moonHard.source), 'Moonlight cites its engraved source');
+  const hardR = moonHard.notes.filter((x) => x.h === 'R').sort((a, b) => a.b - b.b || a.m - b.m);
+  assert.deepEqual(hardR.slice(0, 3).map((x) => x.m), [56, 61, 64], 'opens on G#3-C#4-E4 — Beethoven\'s own triplet');
+  assert.deepEqual(moonHard.notes.filter((x) => x.h === 'L' && x.b === 0).map((x) => x.m).sort((a, b) => a - b), [37, 49], 'bass = C#2+C#3 octave, as engraved');
   const lows = moonHard.notes.filter((x) => x.h === 'L');
   const octavePairs = lows.filter((x) => lows.some((y) => y.b === x.b && y.m === x.m - 12)).length;
-  assert.ok(octavePairs >= 80, `Hard LH plays octaves (${octavePairs} pairs)`);
-  // Hard = the ORIGINAL C# minor (Rousseau performance match, 2026-08-28):
-  // opening triplet G#3-C#4-E4 over the C#3/C#2 bass octave
-  const hardR = moonHard.notes.filter((x) => x.h === 'R').sort((a, b) => a.b - b.b);
-  assert.deepEqual(hardR.slice(0, 3).map((x) => x.m), [56, 61, 64], 'Hard opens G#-C#-E — Beethoven\'s own pitches');
-  assert.deepEqual(moonHard.notes.filter((x) => x.h === 'L' && x.b === 0).map((x) => x.m).sort((a, b) => a - b), [37, 49], 'bass = C#2+C#3 octave, as performed');
+  assert.ok(octavePairs >= 100, `Hard LH plays the score's octaves (${octavePairs} pairs)`);
   const moonEasy = SONGS.find((s) => s.id === 'moonlight-sonata-easy');
-  assert.ok(songEndBeat(moonEasy) <= 63 && moonEasy.notes.length > 150, 'Easy is the opening excerpt');
+  const easyR = moonEasy.notes.filter((x) => x.h === 'R').sort((a, b) => a.b - b.b || a.m - b.m);
+  assert.deepEqual(easyR.slice(0, 3).map((x) => x.m), [56, 61, 64], 'Easy keeps the real opening: thinned, never transposed');
+  assert.ok(songEndBeat(moonEasy) > 270 && moonEasy.notes.length > 500, 'Easy is the whole movement, thinned');
 
   const bella = SONGS.find((s) => s.id === 'bella-ciao-easy');
   const bellaR = bella.notes.filter((x) => x.h === 'R').sort((a, b) => a.b - b.b);

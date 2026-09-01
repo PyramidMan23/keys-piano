@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v93';   // 77 unplayable tiers quarantined on Mark's word; the shelf is now provably clean
+const VERSION = 'keys-v94';   // Moonlight reworked from the engraved score: real hands, back on the shelf
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

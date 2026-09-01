@@ -156,15 +156,6 @@ export const QUARANTINE = {
  "mia-sebastian-hard": {
   why: "chord no hand can hold: 7 of 246 onsets; e.g. beat 40.75: left hand holding E3 to G#4, 16 semitones",
  },
- "moonlight-sonata": {
-  why: "chord no hand can hold: 21 of 761 onsets; e.g. beat 27: right hand holding D3 to F4, 15 semitones; split by a pitch threshold: 98.5% of notes fall on one side of C3, and the result is unplayable: a script cut this by pitch",
- },
- "moonlight-sonata-easy": {
-  why: "chord no hand can hold: 4 of 174 onsets; e.g. beat 27: right hand holding D3 to F4, 15 semitones",
- },
- "moonlight-sonata-hard": {
-  why: "chord no hand can hold: 39 of 761 onsets; e.g. beat 14.333: left hand holding G#1 to G#3, 24 semitones; split by a pitch threshold: 99.5% of notes fall on one side of E3, and the result is unplayable: a script cut this by pitch",
- },
  "next-episode": {
   why: "chord no hand can hold: 16 of 1021 onsets; e.g. beat 217.75: left hand holding D3 to F4, 15 semitones; hand cannot travel that fast: 23 of 1021 onsets; e.g. beat 108.25 to 109: right hand must cover 75 semitones in 441ms",
  },
