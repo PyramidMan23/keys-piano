@@ -5624,6 +5624,18 @@ export const FIXED = {
    }
   ]
  },
+ "married-life": {
+  "notes": 439,
+  "moves": [
+   {
+    "b": 120.75,
+    "m": 59,
+    "from": "R",
+    "to": "L"
+   }
+  ],
+  "durations": []
+ },
  "mozart-pc21-2-hard": {
   "notes": 2474,
   "moves": [
@@ -5711,45 +5723,6 @@ export const FIXED = {
    {
     "b": 299.5,
     "m": 100,
-    "d": 0.75
-   }
-  ]
- },
- "now-we-are-free": {
-  "notes": 512,
-  "moves": [],
-  "durations": [
-   {
-    "b": 117,
-    "m": 38,
-    "d": 1
-   },
-   {
-    "b": 272.5,
-    "m": 95,
-    "d": 0.75
-   }
-  ]
- },
- "now-we-are-free-hard": {
-  "notes": 638,
-  "moves": [
-   {
-    "b": 273.25,
-    "m": 26,
-    "from": "R",
-    "to": "L"
-   }
-  ],
-  "durations": [
-   {
-    "b": 117,
-    "m": 38,
-    "d": 1
-   },
-   {
-    "b": 272.5,
-    "m": 95,
     "d": 0.75
    }
   ]
@@ -6247,27 +6220,6 @@ export const FIXED = {
    }
   ]
  },
- "un-sospiro-easy": {
-  "notes": 1284,
-  "moves": [],
-  "durations": [
-   {
-    "b": 258,
-    "m": 93,
-    "d": 1
-   },
-   {
-    "b": 260.25,
-    "m": 88,
-    "d": 0.75
-   },
-   {
-    "b": 419,
-    "m": 84,
-    "d": 0.5
-   }
-  ]
- },
  "valzer-d-inverno": {
   "notes": 849,
   "moves": [],
@@ -6294,6 +6246,17 @@ export const FIXED = {
    }
   ]
  },
+ "valzer-d-inverno-easy": {
+  "notes": 519,
+  "moves": [],
+  "durations": [
+   {
+    "b": 120,
+    "m": 53,
+    "d": 0.5
+   }
+  ]
+ },
  "van-gogh-hard": {
   "notes": 855,
   "moves": [],
@@ -6304,18 +6267,6 @@ export const FIXED = {
     "d": 1
    }
   ]
- },
- "x-files-easy": {
-  "notes": 555,
-  "moves": [
-   {
-    "b": 323.5,
-    "m": 69,
-    "from": "R",
-    "to": "L"
-   }
-  ],
-  "durations": []
  },
  "x-files-hard": {
   "notes": 1174,

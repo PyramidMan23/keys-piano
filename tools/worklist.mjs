@@ -68,7 +68,16 @@ const ITEMS = [
         'little-things', 'la-petite-fille', 'gray-day', 'lauras-dance', 'see-you-tomorrow',
         'idea-12', 'beanie', 'where-is-my-mind', 'afterglow', 'mariage-d-amour',
         'say-yes-to-heaven', 'i-giorni'];
-      const have = [...groups];
+      // ☠️ AND THEN IT SEARCHED IDS ONLY, which is a second way to assert
+      // rather than measure. "Now We Are Free" is in the app with all three
+      // tiers; it shipped as `gladiator` because Mark sent the Gladiator link
+      // and the piece was named after the film. The check reported it MISSING
+      // for as long as it existed, and the fix would have been to import a song
+      // that was already there. A piece is present if the LIBRARY holds it
+      // under any name it goes by, so match the titles too.
+      const slug = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      const have = [...groups, ...SONGS.map((s) => slug(s.title))];
       const missing = want.filter((w) => !have.some((g) => g.includes(w)));
       return { ok: !missing.length, detail: missing.length
         ? `${want.length - missing.length}/23 in. Missing: ${missing.join(', ')}`

@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v90';   // surface-check green 8/8: the gate opened screens with __show, which never runs the handler that paints them
+const VERSION = 'keys-v91';   // hand defects 133 -> 78: the generated files were stale, rebuilt in order
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
