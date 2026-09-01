@@ -116102,7 +116102,7 @@ export const IMPORTED = [
   "group": "fantaisie-impromptu",
   "level": "Easy",
   "title": "Fantaisie-Impromptu",
-  "composer": "Chopin, Op. posth. 66",
+  "composer": "Chopin · from the engraved score",
   "bpm": 85,
   "timeSig": [
    4,
@@ -116110,7 +116110,7 @@ export const IMPORTED = [
   ],
   "beatUnit": 4,
   "handAssignment": "generated",
-  "source": "Mutopia Project, ChopinFF/O66/chopin_fantaisie-impromptu",
+  "source": "Mutopia, ChopinFF/O66 (engraved score, staves are the hands)",
   "sections": [
    {
     "name": "A, bars 1 to 16",
@@ -126456,7 +126456,7 @@ export const IMPORTED = [
   "group": "fantaisie-impromptu",
   "level": "Hard",
   "title": "Fantaisie-Impromptu",
-  "composer": "Chopin, Op. posth. 66",
+  "composer": "Chopin · from the engraved score",
   "bpm": 121,
   "timeSig": [
    4,
@@ -126464,7 +126464,7 @@ export const IMPORTED = [
   ],
   "beatUnit": 4,
   "handAssignment": "generated",
-  "source": "Mutopia Project, ChopinFF/O66/chopin_fantaisie-impromptu",
+  "source": "Mutopia, ChopinFF/O66 (engraved score, staves are the hands)",
   "sections": [
    {
     "name": "A, bars 1 to 16",

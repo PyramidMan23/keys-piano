@@ -201,7 +201,14 @@ function auditSong(song) {
   if (systemic(over, onsets) && !fromScore) add('chord no hand can hold', `${over} of ${onsets} onsets; e.g. ${overEg}`);
   if (systemic(fingers, onsets) && !fromScore) add('more than five keys in one hand', `${fingers} of ${onsets} onsets; e.g. ${fingerEg}`);
   if (systemic(crossed, onsets)) add('crossed hands', `${crossed} of ${onsets} onsets; e.g. ${crossedEg}`);
-  if (systemic(travel, onsets)) add('hand cannot travel that fast', `${travel} of ${onsets} onsets; e.g. ${travelEg}`);
+  // Travel joins the score exemption (2026-09-01, the Fantaisie-Impromptu
+  // import). The 120 st/s ceiling was derived to catch hands a SCRIPT invented;
+  // Chopin's engraved left hand covers 17 semitones in 124ms at his tempo, 34
+  // times, and pianists demonstrably play it - the leap is real repertoire, not
+  // an assignment error. The one rule deliberately NOT exempted is crossed
+  // hands: in an imported score that means the staves were mis-read, which is
+  // OUR bug class, and no provenance excuses it.
+  if (systemic(travel, onsets) && !fromScore) add('hand cannot travel that fast', `${travel} of ${onsets} onsets; e.g. ${travelEg}`);
 
   // THRESHOLD SPLIT: do the hands separate almost perfectly at a fixed pitch?
   const L = notes.filter((n) => n.h === 'L').map((n) => n.m);

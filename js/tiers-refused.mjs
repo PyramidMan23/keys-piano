@@ -34,7 +34,8 @@ export const TIERS_REFUSED = {
  },
  "fantaisie-impromptu": {
   "tiers": 2,
-  "why": "the source recording is no longer on disk"
+  "notes": 3013,
+  "why": "a fuller arrangement of this recording asks for 2 chords wider than 14 semitones, 43 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
  "goldberg-aria": {
   "tiers": 2,

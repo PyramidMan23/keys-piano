@@ -9,9 +9,6 @@ export const QUARANTINE = {
  "afterglow": {
   why: "hand cannot travel that fast: 10 of 455 onsets; e.g. beat 0.5 to 0.75: left hand must cover 35 semitones in 179ms",
  },
- "arabesque-1-hard": {
-  why: "hand cannot travel that fast: 11 of 1009 onsets; e.g. beat 8.75 to 9: right hand must cover 17 semitones in 114ms",
- },
  "bella-ciao-hard": {
   why: "chord no hand can hold: 21 of 460 onsets; e.g. beat 2.5: left hand holding B1 to E3, 17 semitones; split by a pitch threshold: 100.0% of notes fall on one side of A#3, and the result is unplayable: a script cut this by pitch",
  },
@@ -33,20 +30,11 @@ export const QUARANTINE = {
  "comptine-easy": {
   why: "split by a pitch threshold: 99.7% of notes fall on one side of C4, and the result is unplayable: a script cut this by pitch",
  },
- "consolation-3-hard": {
-  why: "hand cannot travel that fast: 9 of 766 onsets; e.g. beat 106.75 to 107: right hand must cover 24 semitones in 167ms",
- },
  "disney-star": {
   why: "chord no hand can hold: 39 of 716 onsets; e.g. beat 11: right hand holding G4 to C6, 17 semitones; hand cannot travel that fast: 10 of 716 onsets; e.g. beat 10.75 to 11: left hand must cover 24 semitones in 147ms",
  },
  "disney-star-hard": {
   why: "chord no hand can hold: 59 of 716 onsets; e.g. beat 11: right hand holding D#4 to C6, 21 semitones; hand cannot travel that fast: 12 of 716 onsets; e.g. beat 10.75 to 11: left hand must cover 24 semitones in 125ms; more than five keys in one hand: 8 of 716 onsets; e.g. beat 20.5: 6 keys down in one hand",
- },
- "fantaisie-impromptu-easy": {
-  why: "hand cannot travel that fast: 20 of 1610 onsets; e.g. beat 25.75 to 26: left hand must cover 44 semitones in 176ms",
- },
- "fantaisie-impromptu-hard": {
-  why: "hand cannot travel that fast: 31 of 1992 onsets; e.g. beat 27.75 to 28: left hand must cover 17 semitones in 124ms",
  },
  "gangstas-paradise-hard": {
   why: "chord no hand can hold: 104 of 751 onsets; e.g. beat 2: right hand holding G#4 to D6, 18 semitones",
@@ -130,7 +118,7 @@ export const QUARANTINE = {
   why: "chord no hand can hold: 7 of 477 onsets; e.g. beat 29.75: left hand holding D#2 to G3, 16 semitones",
  },
  "liebestraum-3-hard": {
-  why: "hand cannot travel that fast: 30 of 1066 onsets; e.g. beat 18.5 to 19: left hand must cover 27 semitones in 217ms; crossed hands: 21 of 1066 onsets; e.g. beat 395: right hand on D#4 under left hand on C6",
+  why: "crossed hands: 21 of 1066 onsets; e.g. beat 395: right hand on D#4 under left hand on C6",
  },
  "light-of-the-seven": {
   why: "chord no hand can hold: 28 of 1578 onsets; e.g. beat 58: left hand holding C2 to C4, 24 semitones",
@@ -158,9 +146,6 @@ export const QUARANTINE = {
  },
  "next-episode": {
   why: "chord no hand can hold: 16 of 1021 onsets; e.g. beat 217.75: left hand holding D3 to F4, 15 semitones; hand cannot travel that fast: 23 of 1021 onsets; e.g. beat 108.25 to 109: right hand must cover 75 semitones in 441ms",
- },
- "nocturne-op9-2-hard": {
-  why: "hand cannot travel that fast: 17 of 534 onsets; e.g. beat 20.25 to 20.5: left hand must cover 24 semitones in 161ms",
  },
  "overwatch": {
   why: "chord no hand can hold: 30 of 816 onsets; e.g. beat 16: left hand holding F1 to G3, 26 semitones; hand cannot travel that fast: 16 of 816 onsets; e.g. beat 35.5 to 36: right hand must cover 53 semitones in 294ms",
