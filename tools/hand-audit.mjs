@@ -237,7 +237,16 @@ function auditSong(song) {
     // is excused from "chord no hand can hold", so `over` stays non-zero and
     // unreported, and that same unreported count then powers this accusation.
     // An exemption that only some rules honour is not an exemption.
-    if (bestPurity > 0.985 && (over || travel || fingers || crossed) && !fromScore) {
+    // ☠️ AND ITS "UNPLAYABLE" ARM MUST USE THE SAME BAR AS THE RULES IT BORROWS
+    // FROM. This read the RAW counters, so ONE sub-systemic blemish - a count
+    // every direct rule dismisses under systemic()'s floor of 3 - was enough to
+    // convict a 100%-pure split. It convicted fur-elise-full that way: the
+    // audit's own fixture comment calls Fur Elise "the cleanest evidence that a
+    // clean split is not itself a defect", and this rule condemned its Medium
+    // tier over a single leftover moment. A blemish is not a defect (165860d),
+    // and evidence too weak for the rule that owns it is too weak to borrow.
+    if (bestPurity > 0.985 && (systemic(over, onsets) || systemic(travel, onsets)
+      || systemic(fingers, onsets) || systemic(crossed, onsets)) && !fromScore) {
       add('threshold split', `${(bestPurity * 100).toFixed(1)}% of notes fall on one side of ${name(bestCut)}, ` +
         'and the result is unplayable: a script cut this by pitch');
     }

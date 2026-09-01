@@ -10,25 +10,19 @@ export const QUARANTINE = {
   why: "hand cannot travel that fast: 10 of 455 onsets; e.g. beat 0.5 to 0.75: left hand must cover 35 semitones in 179ms",
  },
  "bella-ciao-hard": {
-  why: "chord no hand can hold: 21 of 460 onsets; e.g. beat 2.5: left hand holding B1 to E3, 17 semitones; split by a pitch threshold: 100.0% of notes fall on one side of A#3, and the result is unplayable: a script cut this by pitch",
+  why: "chord no hand can hold: 18 of 460 onsets; e.g. beat 2.5: left hand holding B1 to E3, 17 semitones; split by a pitch threshold: 99.9% of notes fall on one side of A#3, and the result is unplayable: a script cut this by pitch",
  },
  "bohemian-rhapsody": {
-  why: "chord no hand can hold: 22 of 885 onsets; e.g. beat 33.5: right hand holding D3 to F#4, 16 semitones; split by a pitch threshold: 99.4% of notes fall on one side of G#2, and the result is unplayable: a script cut this by pitch",
+  why: "chord no hand can hold: 12 of 885 onsets; e.g. beat 191.5: right hand holding C3 to G4, 19 semitones; split by a pitch threshold: 98.9% of notes fall on one side of G#2, and the result is unplayable: a script cut this by pitch",
  },
  "bohemian-rhapsody-hard": {
-  why: "chord no hand can hold: 25 of 885 onsets; e.g. beat 33.5: right hand holding D3 to F#4, 16 semitones; split by a pitch threshold: 98.9% of notes fall on one side of D3, and the result is unplayable: a script cut this by pitch",
+  why: "chord no hand can hold: 16 of 885 onsets; e.g. beat 116.5: left hand holding G1 to C3, 17 semitones",
  },
  "coffin-dance": {
   why: "hand cannot travel that fast: 13 of 1009 onsets; e.g. beat 5.25 to 5.5: right hand must cover 60 semitones in 147ms",
  },
  "coffin-dance-easy": {
   why: "hand cannot travel that fast: 19 of 842 onsets; e.g. beat 5.75 to 6: left hand must cover 46 semitones in 179ms",
- },
- "comptine": {
-  why: "split by a pitch threshold: 98.9% of notes fall on one side of D#4, and the result is unplayable: a script cut this by pitch",
- },
- "comptine-easy": {
-  why: "split by a pitch threshold: 99.7% of notes fall on one side of C4, and the result is unplayable: a script cut this by pitch",
  },
  "disney-star": {
   why: "chord no hand can hold: 39 of 716 onsets; e.g. beat 11: right hand holding G4 to C6, 17 semitones; hand cannot travel that fast: 10 of 716 onsets; e.g. beat 10.75 to 11: left hand must cover 24 semitones in 147ms",
@@ -37,7 +31,7 @@ export const QUARANTINE = {
   why: "chord no hand can hold: 59 of 716 onsets; e.g. beat 11: right hand holding D#4 to C6, 21 semitones; hand cannot travel that fast: 12 of 716 onsets; e.g. beat 10.75 to 11: left hand must cover 24 semitones in 125ms; more than five keys in one hand: 8 of 716 onsets; e.g. beat 20.5: 6 keys down in one hand",
  },
  "gangstas-paradise-hard": {
-  why: "chord no hand can hold: 104 of 751 onsets; e.g. beat 2: right hand holding G#4 to D6, 18 semitones",
+  why: "chord no hand can hold: 73 of 751 onsets; e.g. beat 4: right hand holding G4 to B5, 16 semitones",
  },
  "gladiator-hard": {
   why: "chord no hand can hold: 16 of 710 onsets; e.g. beat 117: left hand holding D1 to D3, 24 semitones",
@@ -49,43 +43,28 @@ export const QUARANTINE = {
   why: "more than five keys in one hand: 10 of 378 onsets; e.g. beat 96.25: 6 keys down in one hand",
  },
  "hotel-california": {
-  why: "chord no hand can hold: 33 of 996 onsets; e.g. beat 33: right hand holding C3 to E4, 16 semitones",
- },
- "hotel-california-easy": {
-  why: "split by a pitch threshold: 98.7% of notes fall on one side of D#3, and the result is unplayable: a script cut this by pitch",
+  why: "chord no hand can hold: 17 of 996 onsets; e.g. beat 39: right hand holding C3 to E4, 16 semitones",
  },
  "hotel-california-hard": {
-  why: "chord no hand can hold: 35 of 497 onsets; e.g. beat 2.5: right hand holding E3 to G#4, 16 semitones; more than five keys in one hand: 5 of 497 onsets; e.g. beat 90.5: 6 keys down in one hand",
+  why: "chord no hand can hold: 23 of 497 onsets; e.g. beat 26: right hand holding B2 to E4, 17 semitones; more than five keys in one hand: 5 of 497 onsets; e.g. beat 90.5: 6 keys down in one hand",
  },
  "i-giorni-hard": {
-  why: "chord no hand can hold: 20 of 1297 onsets; e.g. beat 228.5: left hand holding G2 to B3, 16 semitones",
- },
- "i-wanted-to-leave": {
-  why: "split by a pitch threshold: 98.6% of notes fall on one side of G#3, and the result is unplayable: a script cut this by pitch",
+  why: "chord no hand can hold: 14 of 1297 onsets; e.g. beat 532: left hand holding D2 to A3, 19 semitones",
  },
  "i-wanted-to-leave-hard": {
-  why: "chord no hand can hold: 26 of 639 onsets; e.g. beat 171: right hand holding D#4 to C6, 21 semitones",
- },
- "idea-10": {
-  why: "chord no hand can hold: 13 of 527 onsets; e.g. beat 45.25: left hand holding F2 to A3, 16 semitones; split by a pitch threshold: 98.6% of notes fall on one side of C#4, and the result is unplayable: a script cut this by pitch",
+  why: "chord no hand can hold: 17 of 639 onsets; e.g. beat 171: right hand holding D#4 to C6, 21 semitones",
  },
  "idea-10-hard": {
-  why: "chord no hand can hold: 10 of 527 onsets; e.g. beat 49.75: left hand holding D#2 to A#3, 19 semitones; hand cannot travel that fast: 23 of 527 onsets; e.g. beat 40.75 to 41: left hand must cover 16 semitones in 125ms",
+  why: "chord no hand can hold: 8 of 527 onsets; e.g. beat 49.75: left hand holding D#2 to A#3, 19 semitones; hand cannot travel that fast: 23 of 527 onsets; e.g. beat 40.75 to 41: left hand must cover 16 semitones in 125ms",
  },
  "idea-12": {
-  why: "chord no hand can hold: 34 of 566 onsets; e.g. beat 1.25: left hand holding C#2 to G#3, 19 semitones; hand cannot travel that fast: 22 of 566 onsets; e.g. beat 19.5 to 19.75: left hand must cover 19 semitones in 147ms",
+  why: "chord no hand can hold: 33 of 566 onsets; e.g. beat 1.25: left hand holding C#2 to G#3, 19 semitones; hand cannot travel that fast: 22 of 566 onsets; e.g. beat 19.5 to 19.75: left hand must cover 19 semitones in 147ms",
  },
  "imperial-march": {
-  why: "chord no hand can hold: 23 of 916 onsets; e.g. beat 59.75: right hand holding G#3 to D#5, 19 semitones; hand cannot travel that fast: 23 of 916 onsets; e.g. beat 109.5 to 109.75: left hand must cover 36 semitones in 147ms",
- },
- "imperial-march-easy": {
-  why: "split by a pitch threshold: 99.1% of notes fall on one side of D#3, and the result is unplayable: a script cut this by pitch",
- },
- "in-a-gadda-da-vida-hard": {
-  why: "split by a pitch threshold: 100.0% of notes fall on one side of G#3, and the result is unplayable: a script cut this by pitch",
+  why: "chord no hand can hold: 22 of 916 onsets; e.g. beat 59.75: right hand holding G#3 to D#5, 19 semitones; hand cannot travel that fast: 23 of 916 onsets; e.g. beat 109.5 to 109.75: left hand must cover 36 semitones in 147ms",
  },
  "in-the-end": {
-  why: "chord no hand can hold: 38 of 651 onsets; e.g. beat 44.5: right hand holding G3 to B4, 16 semitones",
+  why: "chord no hand can hold: 30 of 651 onsets; e.g. beat 44.5: right hand holding G3 to B4, 16 semitones",
  },
  "in-the-end-easy": {
   why: "chord no hand can hold: 8 of 89 onsets; e.g. beat 34: left hand holding E2 to G3, 15 semitones",
@@ -105,29 +84,11 @@ export const QUARANTINE = {
  "la-petite-fille-hard": {
   why: "chord no hand can hold: 31 of 944 onsets; e.g. beat 34.5: left hand holding C#3 to F4, 16 semitones",
  },
- "last-friday-night": {
-  why: "split by a pitch threshold: 99.9% of notes fall on one side of E3, and the result is unplayable: a script cut this by pitch",
- },
- "last-friday-night-easy": {
-  why: "split by a pitch threshold: 99.7% of notes fall on one side of E3, and the result is unplayable: a script cut this by pitch",
- },
- "last-friday-night-hard": {
-  why: "split by a pitch threshold: 100.0% of notes fall on one side of E3, and the result is unplayable: a script cut this by pitch",
- },
- "last-waltz": {
-  why: "chord no hand can hold: 7 of 477 onsets; e.g. beat 29.75: left hand holding D#2 to G3, 16 semitones",
- },
  "liebestraum-3-hard": {
   why: "crossed hands: 21 of 1066 onsets; e.g. beat 395: right hand on D#4 under left hand on C6",
  },
- "light-of-the-seven": {
-  why: "chord no hand can hold: 28 of 1578 onsets; e.g. beat 58: left hand holding C2 to C4, 24 semitones",
- },
  "light-of-the-seven-hard": {
-  why: "chord no hand can hold: 47 of 1578 onsets; e.g. beat 58: left hand holding C2 to C5, 36 semitones",
- },
- "little-things": {
-  why: "chord no hand can hold: 5 of 464 onsets; e.g. beat 110.25: right hand holding G4 to B5, 16 semitones",
+  why: "chord no hand can hold: 34 of 1578 onsets; e.g. beat 58: left hand holding C2 to C5, 36 semitones",
  },
  "lost-hard": {
   why: "crossed hands: 4 of 299 onsets; e.g. beat 71.5: right hand on D4 under left hand on F4",
@@ -145,10 +106,10 @@ export const QUARANTINE = {
   why: "chord no hand can hold: 7 of 246 onsets; e.g. beat 40.75: left hand holding E3 to G#4, 16 semitones",
  },
  "next-episode": {
-  why: "chord no hand can hold: 16 of 1021 onsets; e.g. beat 217.75: left hand holding D3 to F4, 15 semitones; hand cannot travel that fast: 23 of 1021 onsets; e.g. beat 108.25 to 109: right hand must cover 75 semitones in 441ms",
+  why: "chord no hand can hold: 13 of 1021 onsets; e.g. beat 217.75: left hand holding D3 to F4, 15 semitones; hand cannot travel that fast: 23 of 1021 onsets; e.g. beat 108.25 to 109: right hand must cover 75 semitones in 441ms",
  },
  "overwatch": {
-  why: "chord no hand can hold: 30 of 816 onsets; e.g. beat 16: left hand holding F1 to G3, 26 semitones; hand cannot travel that fast: 16 of 816 onsets; e.g. beat 35.5 to 36: right hand must cover 53 semitones in 294ms",
+  why: "chord no hand can hold: 26 of 816 onsets; e.g. beat 16: left hand holding F1 to G3, 26 semitones; hand cannot travel that fast: 15 of 816 onsets; e.g. beat 35.5 to 36: right hand must cover 53 semitones in 294ms",
  },
  "overwatch-easy": {
   why: "hand cannot travel that fast: 7 of 672 onsets; e.g. beat 42 to 42.25: right hand must cover 36 semitones in 179ms",
@@ -160,19 +121,19 @@ export const QUARANTINE = {
   why: "chord no hand can hold: 60 of 614 onsets; e.g. beat 70.25: left hand holding A#1 to A#3, 24 semitones",
  },
  "passacaglia-hard": {
-  why: "chord no hand can hold: 17 of 658 onsets; e.g. beat 41.25: left hand holding A2 to E4, 19 semitones",
+  why: "chord no hand can hold: 16 of 658 onsets; e.g. beat 41.25: left hand holding A2 to E4, 19 semitones",
  },
  "piano-man-hard": {
   why: "crossed hands: 10 of 39 onsets; e.g. beat 4: right hand on F4 under left hand on G4",
  },
  "rachmaninoff-pc2": {
-  why: "chord no hand can hold: 129 of 2780 onsets; e.g. beat 105.25: left hand holding E2 to F4, 25 semitones; hand cannot travel that fast: 32 of 2780 onsets; e.g. beat 125.25 to 125.5: left hand must cover 22 semitones in 147ms",
+  why: "chord no hand can hold: 112 of 2780 onsets; e.g. beat 105.25: left hand holding E2 to F4, 25 semitones; hand cannot travel that fast: 32 of 2780 onsets; e.g. beat 125.25 to 125.5: left hand must cover 22 semitones in 147ms",
  },
  "rachmaninoff-pc2-hard": {
-  why: "chord no hand can hold: 191 of 2780 onsets; e.g. beat 18.25: left hand holding F1 to C3, 19 semitones; hand cannot travel that fast: 40 of 2780 onsets; e.g. beat 125.25 to 125.5: left hand must cover 22 semitones in 125ms",
+  why: "chord no hand can hold: 167 of 2780 onsets; e.g. beat 18.25: left hand holding F1 to C3, 19 semitones; hand cannot travel that fast: 40 of 2780 onsets; e.g. beat 125.25 to 125.5: left hand must cover 22 semitones in 125ms",
  },
  "say-yes-to-heaven": {
-  why: "chord no hand can hold: 50 of 943 onsets; e.g. beat 96.5: right hand holding C#5 to B6, 22 semitones",
+  why: "chord no hand can hold: 31 of 943 onsets; e.g. beat 96.5: right hand holding C#5 to B6, 22 semitones",
  },
  "see-you-again-hard": {
   why: "crossed hands: 33 of 618 onsets; e.g. beat 15.5: right hand on D3 under left hand on B3",
@@ -181,28 +142,25 @@ export const QUARANTINE = {
   why: "hand roams too far in one beat: left hand covers over 44 semitones inside a beat on 4 of 289 notes, worst 48; beat 200: C#3 up to C#7",
  },
  "stairway": {
-  why: "chord no hand can hold: 163 of 1165 onsets; e.g. beat 2: right hand holding G#3 to B4, 15 semitones",
+  why: "chord no hand can hold: 127 of 1165 onsets; e.g. beat 37.5: right hand holding E4 to A5, 17 semitones",
  },
  "stairway-easy": {
-  why: "chord no hand can hold: 29 of 171 onsets; e.g. beat 2: right hand holding G#3 to B4, 15 semitones",
+  why: "chord no hand can hold: 14 of 171 onsets; e.g. beat 37.5: right hand holding E4 to A5, 17 semitones",
  },
  "stairway-hard": {
-  why: "chord no hand can hold: 81 of 1165 onsets; e.g. beat 37.5: right hand holding E4 to A5, 17 semitones",
+  why: "chord no hand can hold: 65 of 1165 onsets; e.g. beat 37.5: right hand holding E4 to A5, 17 semitones",
  },
  "star-wars-hard": {
   why: "chord no hand can hold: 3 of 177 onsets; e.g. beat 84: left hand holding C2 to D#3, 15 semitones; split by a pitch threshold: 100.0% of notes fall on one side of F#4, and the result is unplayable: a script cut this by pitch",
  },
  "un-sospiro": {
-  why: "chord no hand can hold: 143 of 1975 onsets; e.g. beat 19.75: left hand holding C#2 to F3, 16 semitones; hand cannot travel that fast: 22 of 1975 onsets; e.g. beat 132 to 132.25: right hand must cover 21 semitones in 147ms",
- },
- "valzer-d-inverno": {
-  why: "chord no hand can hold: 16 of 578 onsets; e.g. beat 56.75: left hand holding D#2 to G3, 16 semitones",
+  why: "chord no hand can hold: 106 of 1975 onsets; e.g. beat 36: right hand holding C#2 to G#4, 31 semitones; hand cannot travel that fast: 23 of 1975 onsets; e.g. beat 132 to 132.25: right hand must cover 21 semitones in 147ms",
  },
  "what-ive-done": {
-  why: "chord no hand can hold: 41 of 591 onsets; e.g. beat 39: right hand holding D3 to A4, 19 semitones",
+  why: "chord no hand can hold: 26 of 591 onsets; e.g. beat 39: right hand holding D3 to A4, 19 semitones",
  },
  "what-ive-done-hard": {
-  why: "chord no hand can hold: 114 of 640 onsets; e.g. beat 40: right hand holding C4 to C6, 24 semitones",
+  why: "chord no hand can hold: 113 of 640 onsets; e.g. beat 40: right hand holding C4 to C6, 24 semitones",
  },
  "where-is-my-mind": {
   why: "chord no hand can hold: 10 of 378 onsets; e.g. beat 16.5: left hand holding E2 to G#3, 16 semitones",

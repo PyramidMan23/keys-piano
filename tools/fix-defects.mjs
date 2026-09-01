@@ -18,6 +18,7 @@
 import { writeFileSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { holdable } from './handsplit.mjs';
+import { SPAN_MAX } from '../js/hands.mjs';
 
 const ROAM_MAX = 18, TRAVEL_MAX = 120, MIN_DUR = 0.25;
 const ROOT = join(import.meta.dirname, '..');
@@ -57,8 +58,17 @@ function defects(notes, bpm) {
         if (hn[j].m > hi.m) hi = hn[j];
       }
       const span = hi.m - lo.m;
-      if (span <= ROAM_MAX) continue;
       const overlap = lo.b < hi.b + hi.d - 1e-6 && hi.b < lo.b + lo.d - 1e-6;
+      // ☠️ TWO TOOLS, TWO RULERS, AND A CRACK BETWEEN THEM. This skipped any
+      // span up to ROAM_MAX (18) while the hand audit condemns a HELD span over
+      // SPAN_MAX (14, js/hands.mjs). Fur Elise's bass ringing under the left
+      // hand's G#3 is span 16: too small for this tool to repair, big enough
+      // for the audit to condemn - nothing could ever clear it, and the 08-31
+      // wave "resolved" the deadlock by exiling G#3 to the right hand, which
+      // changed the music Mark had already learned. A held-together span is
+      // judged by what a hand can HOLD; only a sequential sweep gets the
+      // looser roaming allowance.
+      if (span <= (overlap ? SPAN_MAX : ROAM_MAX)) continue;
       const gapSec = (Math.abs(hi.b - lo.b) / bpm) * 60;
       const speed = gapSec > 0 ? span / gapSec : Infinity;
       if (overlap || speed > TRAVEL_MAX) out.push({ h, lo, hi, span, overlap });
