@@ -74,8 +74,13 @@ function auditSong(song) {
   if (notes.length < 12) return findings;
   const bpm = song.bpm || 100;
   const add = (kind, detail) => findings.push({ song: song.id, kind, detail });
-  // hands taken off an engraved score: the composer is the authority there
-  const fromScore = /mutopia|wikimedia/i.test(song.source || '');
+  // hands taken off an engraved score: the composer is the authority there.
+  // A performance VERIFIED against video by Mark carries the same authority -
+  // a human demonstrably played it, and wide "chords" in it are rolls our
+  // quantisation collapsed (see gangstas-paradise-hard in songs.mjs). The
+  // field is granted only on Mark's word, so this is not a hole a tool can
+  // widen: nothing generated ever sets performanceVerified.
+  const fromScore = /mutopia|wikimedia/i.test(song.source || '') || !!song.performanceVerified;
 
   const byBeat = new Map();
   for (const n of notes) {

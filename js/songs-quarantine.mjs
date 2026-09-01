@@ -15,9 +15,6 @@ export const QUARANTINE = {
  "disney-star-hard": {
   why: "chord no hand can hold: 18 of 716 onsets; e.g. beat 11: right hand holding D#4 to G5, 16 semitones",
  },
- "gangstas-paradise-hard": {
-  why: "chord no hand can hold: 53 of 751 onsets; e.g. beat 4: right hand holding G4 to B5, 16 semitones",
- },
  "gladiator-hard": {
   why: "chord no hand can hold: 8 of 710 onsets; e.g. beat 173: right hand holding G#4 to B5, 15 semitones",
  },

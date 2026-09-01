@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v97';   // Married Life all 3 tiers, Overwatch from Mark's own video, travel timed per hand: 25 tiers freed
+const VERSION = 'keys-v98';   // gp-hard back on Mark's word; 76 transcribed songs honestly labelled free time; tempo lane Gate 0 passed
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

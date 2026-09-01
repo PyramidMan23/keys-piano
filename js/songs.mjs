@@ -1493,6 +1493,17 @@ SONGS.push(
   {
     id: 'gangstas-paradise-hard', group: 'gangstas-paradise', level: 'Hard',
     title: "Gangsta's Paradise", composer: 'Coolio · cover-style arrangement',
+    // A VERIFIED PERFORMANCE IS AN AUTHORITY, like an engraved score. Mark,
+    // 2026-09-01: "I looked at Gangsta's Paradise... there was one that matched
+    // the YouTube video perfectly" - the PianoX cover this was curated against
+    // (16th-council listening lane, 2026-08-28). Its 53 "chords no hand can
+    // hold" are wide voicings a real pianist demonstrably PLAYED on camera,
+    // rolled - and our 1/4-beat quantisation collapses a roll into a fake
+    // struck-together chord. The audit already accepts exactly this from a
+    // score ("the score says so, so they are rolled, not grabbed"); a checked
+    // performance earns the same. This field grants that exemption, and it is
+    // set ONLY on Mark's word per song, never by a tool.
+    performanceVerified: 'PianoX cover on video; match confirmed by Mark 2026-09-01',
     bpm: 80, timeSig: [4, 4], beatUnit: 4,
     sections: [
       { name: 'Bell intro (octaves)', startBeat: 0, endBeat: 16 },
@@ -2826,6 +2837,19 @@ const applyQuarantine = !(typeof process !== 'undefined' && process.env && proce
 for (const song of applyQuarantine ? SONGS : []) {
   const q = QUARANTINE[song.id];
   if (q) song.quarantined = q.why;
+}
+
+// ---- free time (council 2026-09-01: tempo/meter gates) ---------------------
+// The transcriber emits NO tempo and NO meter, so every machine-transcribed
+// song wears an arbitrary 120bpm 4/4 grid. Mark caught it by ear: Married Life
+// is a 3/4 waltz shown in fours. Until a song's pulse is confirmed against the
+// tempo lane's thresholds (keys-piano-tools/tempo-truth.mjs), its grid must
+// not present itself as meter: it is labelled FREE TIME in the app. Relative
+// note timing is real (it came from the performance); only the bar-and-count
+// story is unearned. Engraved scores and hand-set meters are exempt - their
+// meter is a fact, not a default.
+for (const song of SONGS) {
+  if (/machine transcription/i.test(song.source || '') && !song.meterVerified) song.freeTime = true;
 }
 
 // THE SHELF: what a learner may be offered. The app imports this as its SONGS

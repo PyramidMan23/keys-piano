@@ -1251,7 +1251,9 @@ function startSong(s, { asScorePass = false } = {}) {
   $('btn-hear').disabled = sightMode;
   $('btn-train').disabled = sightMode;
   show('play');
-  $('now-playing').textContent = `${s.title}${s.level ? ' · ' + s.level : ''} · ${s.composer.replace(' · easy arrangement', '')} · D${difficultyScore(s)} ${difficultyBand(difficultyScore(s))}`;
+  // "free time": this song's grid is the transcriber's default, not measured
+  // meter, so the app must not sell it as bars-and-counts (council 2026-09-01).
+  $('now-playing').textContent = `${s.title}${s.level ? ' · ' + s.level : ''} · ${s.composer.replace(' · easy arrangement', '')} · D${difficultyScore(s)} ${difficultyBand(difficultyScore(s))}${s.freeTime ? ' · free time' : ''}`;
   renderSections();
   $('section-select').value = '';
   chunkIdx = null; syncChunkLabel();
