@@ -74,6 +74,30 @@ unbuilt. The lesson was written down and then not applied one file over. And
 keyboard paints nothing" sat in this file as settled truth, which is exactly what
 stopped anyone opening the screen to look.
 
+**The tempo lane** — `keys-piano-tools/`, mirrored to `tools/tempo-lane/`. The
+transcriber emits NO tempo and NO meter, so without this every transcribed song
+wears an arbitrary 120bpm 4/4 grid (Mark caught it: Married Life is a waltz).
+
+    pulse.py <wav> <out.beats.json>     librosa beat track + accents (the ear)
+    meter.mjs                           bar first from harmony+bass, then the beat
+    downbeat.mjs                        DP bar-line tracker + chooseBar + unfoldPhrase
+    write-meter.mjs                     -> js/songs-meter.mjs   (time signatures)
+    write-bars.mjs                      -> js/songs-bars.mjs    (bar lines)
+    corpus.mjs                          the ground-truth harness, run it after ANY change
+
+☠️ **GROUND TRUTH IS FREE AND WE ALREADY OWN IT.** For pieces with a Mutopia
+score AND a recording, DTW-aligning the two transfers the score's real beats
+onto rubato playing. `corpus.mjs` does this and scores the lane against the
+thresholds committed before any of it ran: beat F1 ≥ 0.75, downbeat F1 ≥ 0.60.
+Grade against the SCORE MIDI, never the library's imported copy — the import
+quantises to a 1/4-beat grid, and truth that has been through the pipeline is
+not truth (it read 0.442 where the real answer was 0.872).
+
+☠️ **A SONG ONLY GETS BARS IF TWO INDEPENDENT READINGS AGREE.** The bar map's
+implied tempo must match the meter model's heard tempo within 15%, or nothing
+is drawn. Six of seven songs are refused by that rule and each refusal says
+why; a regular PHRASE is indistinguishable from a long bar without it.
+
 **Bump `VERSION` in `sw.js` on every deploy**, or clients keep the cached build
 and the work never reaches Mark. `shell-check.mjs` proves the shell precaches
 everything the app imports: three modules were missing, including the one

@@ -154,6 +154,13 @@ export function chooseBar(beats, barSignal, candidateSecs, opts = {}) {
 //
 // Halving Married Life gives 0.975s, which is the 0.98s I measured directly
 // from the spacing of Kyle's bass roots - an independent check that agrees.
+// ☠️ NEGATIVE RESULT, KEPT ON PURPOSE: dividing by 3 and 4 as well as 2 does
+// NOT recover the pieces that fail. Against engraved-score truth the tracker
+// returns 33 bars where Arabesque has 106 and 24 where the Rondo has 128, and
+// generalising this to divisors {2,3,4} changed neither number - the inserted
+// lines score below the bass bar, because in those performances the bass is
+// not marking the missing downbeats at all. The limit is the evidence, not the
+// arithmetic, so the code stays at the one division the corpus supports.
 export function unfoldPhrase(beats, bassZ, chosen, opts = {}) {
   const RATIO = opts.ratio ?? 0.5;
   const dn = chosen.downbeats;
