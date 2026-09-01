@@ -496,8 +496,16 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
 
     const pxPerBeat = fallH / this.lookaheadBeats;
     const beat = engine.beat;
-    for (let b = Math.ceil(beat); b < beat + this.lookaheadBeats + 1; b++) {
-      if ((b % engine.song.timeSig[0]) !== 0) continue;
+    // ☠️ REAL BARS ARE NOT EVENLY SPACED. Where the tempo lane tracked bar
+    // lines from the recording (js/songs-bars.mjs), draw THOSE - a pianist
+    // breathes, so an evenly-spaced grid drifts away from the music within a
+    // page. The modulo rule below stays for curated songs, whose beats really
+    // are a uniform grid because a human typed them that way.
+    const tracked = engine.song.barBeats;
+    const lines = tracked
+      ? tracked.filter((b) => b >= beat - 1 && b < beat + this.lookaheadBeats + 1)
+      : (() => { const out = []; for (let b = Math.ceil(beat); b < beat + this.lookaheadBeats + 1; b++) if ((b % engine.song.timeSig[0]) === 0) out.push(b); return out; })();
+    for (const b of lines) {
       const y = fallH - (b - beat) * pxPerBeat;
       const isChunkEdge = this.chunkBeats && b % this.chunkBeats === 0;
       ctx.fillStyle = isChunkEdge ? COLORS.hit : COLORS.bar;

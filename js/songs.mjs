@@ -10,6 +10,7 @@ import { FINGERS } from './songs-fingers.mjs';
 import { FIXED } from './songs-fixed.mjs';
 import { QUARANTINE } from './songs-quarantine.mjs';
 import { METER } from './songs-meter.mjs';
+import { BARS } from './songs-bars.mjs';
 
 export const SONGS = [
   {
@@ -2858,6 +2859,11 @@ for (const song of SONGS) {
     song.timeSig = [m.meter, 4];
     song.meterVerified = `heard from the recording: ${m.meter}/4, margin ${m.margin}`;
     song.heardBeatBpm = m.beatBpm;
+    // Bar lines tracked from the recording, in this song's own beat units.
+    // Irregular on purpose: a human's bars are not evenly spaced, and drawing
+    // them evenly is what made Married Life feel wrong in the first place.
+    const bm = BARS[song.group ?? song.id];
+    if (bm) song.barBeats = bm.bars;
   }
   if (/machine transcription/i.test(song.source || '') && !song.meterVerified) song.freeTime = true;
 }

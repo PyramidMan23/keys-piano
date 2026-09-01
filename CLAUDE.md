@@ -53,7 +53,8 @@ in `js/songs-imported.mjs`, never in `songs.mjs`.
 `tools/void-check.mjs` · `tools/hand-audit.mjs` ·
 `tools/finger-check.mjs` · `tools/finger-probe.mjs` ·
 `tools/restart-probe.mjs` · `tools/shell-check.mjs` ·
-`tools/press-probe.mjs` · `tools/seek-probe.mjs` · `tools/surface-check.mjs`
+`tools/press-probe.mjs` · `tools/seek-probe.mjs` · `tools/surface-check.mjs` ·
+`tools/bars-probe.mjs`
 
 ☠️ **`surface-check.mjs` was red for weeks and the app was never at fault.** It
 read 2/8, and the note here said "the theory-task keyboard paints nothing at

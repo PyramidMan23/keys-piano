@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v99';   // meter HEARD from the recording: Married Life counts in three
+const VERSION = 'keys-v100';  // bar lines tracked from the recording: Married Life draws real bars
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
@@ -8,7 +8,7 @@ const SHELL = [
   // second visit, when the network is gone and the import 404s from cache.
   // Anything songs.mjs imports belongs on this list.
   'js/app.mjs', 'js/engine.mjs', 'js/midi.mjs', 'js/falls.mjs', 'js/score.mjs', 'js/songs.mjs', 'js/songs-imported.mjs',
-  'js/songs-hands.mjs', 'js/songs-fingers.mjs', 'js/songs-fixed.mjs', 'js/songs-quarantine.mjs', 'js/songs-meter.mjs', 'js/hands.mjs', 'js/audio.mjs', 'js/echo.mjs',
+  'js/songs-hands.mjs', 'js/songs-fingers.mjs', 'js/songs-fixed.mjs', 'js/songs-quarantine.mjs', 'js/songs-meter.mjs', 'js/songs-bars.mjs', 'js/hands.mjs', 'js/audio.mjs', 'js/echo.mjs',
   'js/kernels.mjs', 'js/sight.mjs', 'js/theory.mjs', 'js/rhythm.mjs', 'js/lessons.mjs',
   'js/touch.mjs', 'js/pedal.mjs', 'js/artic.mjs', 'js/voicing.mjs', 'js/takes.mjs', 'js/form.mjs', 'js/memory.mjs',
   'js/perform.mjs', 'js/improv.mjs', 'js/teacher.mjs', 'js/path.mjs', 'js/library.mjs', 'js/game.mjs', 'js/difficulty.mjs', 'js/covers.mjs',
