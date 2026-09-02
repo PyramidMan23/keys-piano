@@ -226,3 +226,18 @@ assignments are right.
 - What would change this: per-frame identity re-anchoring (thumb-side geometry
   when both hands are visible, palm orientation), and a bar reader that tracks
   each bar as an object down the lane rather than sampling one band.
+
+## Full-video numbers (Zelda, 590s, 60fps): CLOSE, NOT YET
+- Track identity held for the whole performance: track0 = R (label 99%, right of
+  the other 100%), track1 = L (98% / 96%), 32.8k frames each.
+- 4501 notes: assigned 4290 (L 2020, R 2270), unresolved 211 = **4.7%**, under
+  the 5% gate (100 "both hands within reach", 111 "no fingertip close enough").
+  Five assigned notes have the left hand sounding above a simultaneous right,
+  which a pitch split could never produce: the reader is reading hands.
+- What still blocks import: (1) the 211 unresolved notes have no lawful hand
+  and must be resolved by a human or stay out (they block import by contract);
+  (2) the bar reader's recall in dense passages (0.60 in the worst 30s window)
+  means a Hard tier would be MISSING notes in the fast runs; (3) 41 human
+  labels against the 100 the plan requires. Fix (2) first (track each bar as an
+  object down the lane so consecutive same-key bars do not merge), then label,
+  then decide.
