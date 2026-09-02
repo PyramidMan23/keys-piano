@@ -1,0 +1,27 @@
+{
+ "id": "sheet-music-boss-embers",
+ "renderer": "Embers (https://embers.app), used by the Sheet Music Boss channel",
+ "provenanceOfColours": "MEASURED from this template rendered keyboard, not inferred from pitch. A pressed key deviates from its rest colour by 120-314 in RGB distance; an unpressed one by at most 23. Red tint versus cool-grey tint separates on redness (R-B)/R at roughly 0.5-1.0 versus about -0.08. Which colour is which HAND is deliberately NOT recorded here.",
+ "classes": [
+  {
+   "name": "red",
+   "test": "redness >= 0.30"
+  },
+  {
+   "name": "grey",
+   "test": "redness <= 0.12"
+  }
+ ],
+ "rednessRed": 0.3,
+ "rednessGrey": 0.12,
+ "hysteresisFrames": 2,
+ "settleFramesAfterSceneBreak": 12,
+ "sceneMinShare": 0.8,
+ "handMapping": null,
+ "handMappingNote": "null on purpose. Colour -> hand requires evidence outside pitch (the channel's own documentation, a same-template video showing real hands, or Mark's eyes on an excerpt). Filling this in from mean pitch would be the pitch-split law wearing a fake moustache.",
+ "pressDeviation": 60,
+ "pressDeviationNote": "Euclidean RGB distance from the key own rest colour. Measured: 120-314 when pressed, at most 23 when not. 60 sits in the empty middle of that gap.",
+ "onsetLatencyMs": 95,
+ "onsetLatencyNote": "MEASURED against a transcription of this video own audio: 243 of 261 matched onsets sat at 90-100ms, median 95ms, and applying it leaves a median residual of 4ms (p90 8ms). The key tint therefore lights ~95ms BEFORE the note sounds in this render. LOCKED here; it must be tested unchanged on held-out footage before it is trusted on another video.",
+ "maxSimultaneousKeys": 10
+}
