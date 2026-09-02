@@ -211,3 +211,18 @@ assignments are right.
   (#158, D5, claimed R, thumb reads left). Overwatch 6 tiles, 5 agree, 1
   ambiguous. Labels in `labels.json`. This is 47 labels against the 100 per
   video the plan requires; it is evidence, not a corpus.
+
+## Full-video numbers (Overwatch, 334s, 25fps): NO-GO
+- Bar lane vs audio: 1787 video / ~3900 audio, precision 0.438, recall 0.200,
+  best latency came out NEGATIVE (-118ms), i.e. the alignment is not real. The
+  bars are small (short notes at 146px/s are 10-20px tall), the source is 25fps,
+  and the camera is farther and dimmer: the band-occupancy reader is the wrong
+  instrument for this render.
+- Track identity: over the full video the two witnesses fall to 66% / 61% and
+  65% / 73% (the hands cross and leave the frame, and the wrist-continuity
+  tracker swaps them). The clip's 97-98% did not survive the whole performance.
+  8.4% of notes came back unresolved, but with identity that weak the 91.6%
+  "resolved" are not trustworthy either. Nothing from Overwatch imports.
+- What would change this: per-frame identity re-anchoring (thumb-side geometry
+  when both hands are visible, palm orientation), and a bar reader that tracks
+  each bar as an object down the lane rather than sampling one band.
