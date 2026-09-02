@@ -514,7 +514,8 @@ ok('rhythm: tap windows, extras, clean detection');
 
 // --- lessons curriculum ---
 const { LESSONS, StaffDrill, TogetherDrill } = await import('../js/lessons.mjs');
-assert.equal(LESSONS.length, 11, 'eleven lessons');
+// 11 reading lessons + the two technique lessons appended 2026-09-02
+assert.equal(LESSONS.length, 13, 'thirteen lessons');
 for (const les of LESSONS) {
   assert.ok(les.title && Array.isArray(les.steps) && les.steps.length >= 2, `${les.id} teaches in micro-steps`);
   assert.ok(les.steps.join(' ').length > 120, `${les.id} has real teaching text`);
@@ -1125,8 +1126,13 @@ ok('keyboard hit-test: whites, blacks-on-top, edges, misses');
 
 // --- lesson teach data: worked examples + verified videos ---
 for (const les of LESSONS) {
-  assert.ok(les.video?.url?.startsWith('https://www.youtube.com/watch?v='), `${les.id} carries a video link`);
-  assert.ok(les.video.title.length > 5, `${les.id} video is titled`);
+  // a video is OPTIONAL, but a video that exists must be one of the hand
+  // oEmbed-checked links: an unverified URL is worse than no escape hatch, so
+  // the two technique lessons carry none at all.
+  if (les.video) {
+    assert.ok(les.video.url.startsWith('https://www.youtube.com/watch?v='), `${les.id} carries a video link`);
+    assert.ok(les.video.title.length > 5, `${les.id} video is titled`);
+  }
   if (les.drill.type === 'rhythm-gate') { assert.equal(les.ex, null); continue; }
   assert.ok(les.ex && les.ex.m >= 21 && les.ex.m <= 108, `${les.id} has a worked example`);
   if (les.drill.type === 'staff') {
@@ -1138,6 +1144,88 @@ for (const les of LESSONS) {
 assert.deepEqual(LESSONS.find((l2) => l2.id === 'intervals').exChord, [60, 64]);
 assert.deepEqual(LESSONS.find((l2) => l2.id === 'triads').exChord, [60, 64, 67]);
 ok('lessons: micro-steps, in-pool worked examples, verified video links');
+
+// ============ lesson -> song bridge (2026-09-02) ============
+// The song a finished lesson points at is CHOSEN by code from the shipped
+// shelf, so this test pins the RULE with the real library, not a hand list.
+{
+  const { bridgeSongFor, cumulativeTaughtMidis, lessonTaughtMidis } = await import('../js/lessons.mjs');
+  const { SHELF } = await import('../js/songs.mjs');
+  // a lesson that has taught too few notes offers NOTHING, never a placeholder
+  assert.equal(bridgeSongFor('middle-c', SHELF), null, 'one note bridges to no song');
+  assert.equal(bridgeSongFor('treble-lines', SHELF), null, 'five treble lines still bridge to nothing');
+  // by the landmark-Cs lesson the treble spaces are taught and a real song fits
+  const cs = bridgeSongFor('the-cs', SHELF);
+  assert.equal(cs.id, 'river-easy', 'the landmark-Cs lesson bridges to River Flows in You (Easy)');
+  // the PROPERTY, not just the name: every right-hand note is inside what has
+  // been taught, so a library change fails loudly instead of picking silently
+  const taught = cumulativeTaughtMidis('the-cs');
+  const rh = cs.notes.filter((nn) => nn.h === 'R');
+  assert.ok(rh.length > 0 && rh.every((nn) => taught.has(nn.m)), 'the bridged right hand is entirely taught');
+  assert.ok(!cs.quarantined, 'a quarantined tier can never be bridged to');
+  // Easy first, then the shortest right hand: nothing shorter and Easy exists
+  const shorter = SHELF.filter((s2) => s2.level === 'Easy' && s2 !== cs
+    && s2.notes.filter((nn) => nn.h === 'R').length < rh.length
+    && s2.notes.filter((nn) => nn.h === 'R').every((nn) => taught.has(nn.m)));
+  assert.deepEqual(shorter, [], 'the bridge picks the shortest qualifying Easy right hand');
+  // an id outside the curriculum earns no bridge at all
+  assert.equal(bridgeSongFor('not-a-lesson', SHELF), null, 'unknown lesson ids bridge to nothing');
+  assert.ok(lessonTaughtMidis(LESSONS[0]).includes(60), 'lesson 1 teaches middle C');
+  ok('bridge: chosen by rule from the shelf, right hand inside what was taught, no placeholder');
+}
+
+// ============ technique track: the honest pass rubric ============
+// The keyboard reports keys, not fingers. Pass = the right notes, in order,
+// with even spacing. Nothing here claims to judge fingering.
+{
+  const { evenEnough, EVEN_TOL, buildLevels, LevelRunner } = await import('../js/lessons.mjs');
+  assert.equal(EVEN_TOL, 0.40, 'the evenness tolerance is stated in code');
+  assert.equal(evenEnough([0, 100, 200, 300]), true, 'a steady run is even');
+  assert.equal(evenEnough([0, 1000, 2000, 3000]), true, 'SLOW and steady is even: the tolerance is relative');
+  assert.equal(evenEnough([0, 100, 200, 400]), false, 'a doubled gap is not even');
+  assert.equal(evenEnough([0, 100]), true, 'one gap has nothing to be uneven against');
+  assert.equal(evenEnough([0, 0, 0]), false, 'simultaneous notes are not a run');
+  assert.equal(evenEnough([0, 100, 200, 260]), true, 'a 40% short gap is exactly inside tolerance');
+  assert.equal(evenEnough([0, 100, 200, 259]), false, 'past the tolerance it fails');
+  // the two technique lessons: level shape, evenness on the graded levels only
+  for (const id of ['five-finger', 'c-major-scale']) {
+    const les = LESSONS.find((l2) => l2.id === id);
+    assert.equal(les.drill.type, 'technique', `${id} is a technique drill`);
+    assert.ok(!les.video, `${id} ships no unverified video`);
+    assert.ok(les.steps.some((s2) => /cannot see your hands/.test(s2)),
+      `${id} tells the learner the app cannot see fingers`);
+    for (const r of les.drill.runs) {
+      assert.equal(r.ms.length, r.fs.length, `${id}: every note in a run carries a finger number`);
+      assert.ok(r.fs.every((f2) => f2 >= 1 && f2 <= 5), `${id}: finger numbers are 1..5`);
+      assert.ok(les.game.mixed.some((mx) => lessonItemKeyOf(mx) === lessonItemKeyOf(r)),
+        `${id}: every drill run appears in the mix round`);
+    }
+    const lv = buildLevels(les);
+    assert.ok(lv.slice(0, -1).every((l2) => l2.even === true), `${id}: graded levels judge evenness`);
+    assert.ok(!lv[lv.length - 1].even, `${id}: the melody payoff is a victory lap, never an evenness test`);
+  }
+  // the C scale's notes and fingering come from the shipped scale-c-major song
+  const scaleSong = SONGS.find((s2) => s2.id === 'scale-c-major');
+  const songUp = scaleSong.notes.filter((nn) => nn.h === 'R').slice(0, 8);
+  const lesUp = LESSONS.find((l2) => l2.id === 'c-major-scale').drill.runs.find((r) => r.ms.length === 8 && r.ms[0] === 60);
+  assert.deepEqual(lesUp.ms, songUp.map((nn) => nn.m), 'the taught scale is the shipped scale');
+  assert.deepEqual(lesUp.fs, songUp.map((nn) => nn.f), 'the taught fingering is the shipped fingering, not invented');
+  // a run played in time passes; the same notes played lumpily do not
+  const les5 = LESSONS.find((l2) => l2.id === 'five-finger');
+  const run = les5.drill.runs[0];
+  const play = (gaps) => {
+    const r = new LevelRunner(buildLevels(les5), () => 0.01);
+    let t = 0, out = null;
+    r.note(run.ms[0], true, t);
+    for (let i = 1; i < run.ms.length; i++) { t += gaps[i - 1]; out = r.note(run.ms[i], true, t); }
+    return out;
+  };
+  assert.equal(play([300, 300, 300, 300]).ok, true, 'even run passes');
+  const bad = play([300, 300, 300, 900]);
+  assert.equal(bad.ok, false, 'right notes, lumpy timing: not a pass');
+  assert.equal(bad.uneven, true, 'and the miss says WHY, so the coaching can be honest');
+  ok('technique: EVEN_TOL 0.40 rubric, fingering read from shipped data, evenness judged on notes only');
+}
 
 
 // --- Super Mario Bros. theme: the notes the three sources agree on ---

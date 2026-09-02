@@ -24,7 +24,7 @@ import { MEM_STAGES, memCues, memAdvance, randomStartBar } from './memory.mjs';
 import { makeExercise, judgeSight } from './sight.mjs';
 import { matchCard, CardTask } from './theory.mjs';
 import { pickPattern, RhythmRound } from './rhythm.mjs';
-import { LESSONS, StaffDrill, TogetherDrill, PhraseDrill, PHRASES, pickReviewItems, lessonKeyRange, buildLevels, LevelRunner, lessonItemKeyOf } from './lessons.mjs';
+import { LESSONS, StaffDrill, TogetherDrill, PhraseDrill, PHRASES, pickReviewItems, lessonKeyRange, buildLevels, LevelRunner, lessonItemKeyOf, bridgeSongFor } from './lessons.mjs';
 import { installPath } from './path.mjs';
 import { makeCountCells } from './rhythm.mjs';
 import { TouchDiagnostic, buildCalibration, ZONES } from './touch.mjs';
@@ -1245,15 +1245,16 @@ function comboFlash(n) {
   el.classList.add('go');
 }
 
-function startSong(s, { asScorePass = false } = {}) {
+function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   jlog('song_start', { id: s.id, sight: !!s.sightRead });
   pathSessionUntil = 0; // an ordinary open carries no prescribed timebox
   song = s;
   sightMode = !!s.sightRead;
   scorePassFlag = asScorePass;
   viewMode = (asScorePass || sightMode) ? 'score' : 'falls';
-  hand = 'both';
-  document.querySelectorAll('.hand-btn').forEach((x) => (x.dataset.on = String(x.dataset.hand === 'both')));
+  // the lesson bridge opens a song on the hand the lesson can actually read
+  hand = playHand;
+  document.querySelectorAll('.hand-btn').forEach((x) => (x.dataset.on = String(x.dataset.hand === hand)));
   if (CANON_ON) syncHandCells();
   // sight reading is score-led by definition: no falls, no hearing it first
   $('mode-falls').disabled = sightMode;
@@ -1727,6 +1728,23 @@ function renderLessonList() {
       return row;
     });
     const bound = bindLessonList(rows);
+    // ☠️ THE HEADER COUNT WAS NEVER BOUND. The board drew "1 OF 11 COMPLETE"
+    // as a sample and it happened to match the curriculum's length, so nobody
+    // noticed: with nothing completed it still read 1, and the moment the two
+    // technique lessons were appended it read 11 out of 13. Bind both halves
+    // to the real numbers. Data only; the design keeps its shape and place.
+    {
+      const headRoot = $('screen-lessons')?.firstElementChild;
+      const heads = headRoot ? [...headRoot.querySelectorAll('*')]
+        .filter((e) => !e.children.length && e.textContent.trim() && !e.closest('#lesson-list')) : [];
+      const total = heads.find((e) => /^OF \d+ COMPLETE$/i.test(e.textContent.trim()));
+      if (total) {
+        total.textContent = `OF ${LESSONS.length} COMPLETE`;
+        const before = heads.slice(0, heads.indexOf(total)).reverse();
+        const count = before.find((e) => /^\d+$/.test(e.textContent.trim()));
+        if (count) count.textContent = String(LESSONS.filter((les) => done[les.id]).length);
+      }
+    }
     // The redrawn 11a carries a CONTINUE HERE hero above the list: bind it to
     // the next Ready lesson (number, title, its own capability line as the
     // child-plain promise) and wire the one filled-green button. No Ready
@@ -1789,7 +1807,9 @@ function lessonStaveSong(items) {
   return {
     id: 'lesson-prompt', title: '', bpm: 60, timeSig: [4, 4], beatUnit: 4, sections: [],
     noTimeSig: true, // a drill prompt has no meter; the 4/4 read as "octave 4"
-    notes: items.map(({ m, h, b }) => ({ b: b ?? 0, d: b != null ? 1 : 4, m, h })),
+    // f rides along: ScoreView already draws a finger number when a note has
+    // one, which is the whole of the technique lessons' fingering display
+    notes: items.map(({ m, h, b, f }) => ({ b: b ?? 0, d: b != null ? 1 : 4, m, h, f })),
   };
 }
 function showLessonPrompt(items) {
@@ -1827,6 +1847,7 @@ function lessonMidis(les) {
   const d = les.drill;
   if (d.type === 'staff') out.push(...d.pool.map((p) => p.m));
   else if (d.type === 'phrase') for (const ph of PHRASES) out.push(...ph.ms);
+  else if (d.type === 'technique') for (const r of d.runs) out.push(...r.ms);
   else if (d.items) for (const it of d.items) out.push(...it);
   return out;
 }
@@ -1847,7 +1868,7 @@ function whichKeyHint(pressed, exp) {
 // draw one drill item (any shape) on the stave
 function promptItems(it) {
   if (Array.isArray(it)) return it.map((m) => ({ m, h: m < 60 ? 'L' : 'R' }));
-  if (it.ms) return it.ms.map((m, i) => ({ m, h: it.h, b: i }));
+  if (it.ms) return it.ms.map((m, i) => ({ m, h: it.h, b: i, f: it.fs?.[i] }));
   return [it];
 }
 function showCurrentPrompt() {
@@ -1888,9 +1909,17 @@ function openLesson(les) {
   $('lesson-title').textContent = les.title;
   $('lesson-body').textContent = '';
   $('lesson-steps').innerHTML = les.steps.map((s) => `<li>${s}</li>`).join('');
-  $('lesson-video').innerHTML = `Still confused? <a href="${les.video.url}" target="_blank" rel="noopener">Watch: ${les.video.title}</a> (free, opens YouTube)`;
+  // not every lesson has a hand-verified video, and an unverified link is worse
+  // than none: the technique lessons carry no video field at all
+  $('lesson-video').innerHTML = les.video
+    ? `Still confused? <a href="${les.video.url}" target="_blank" rel="noopener">Watch: ${les.video.title}</a> (free, opens YouTube)`
+    : '';
   $('lesson-nomidi').hidden = $('midi-status').dataset.connected === 'true';
-  $('lesson-rhythm-link').hidden = les.drill.type !== 'rhythm-gate';
+  // the action button is shared with the song bridge: put its own word back
+  const actionBtn = $('lesson-rhythm-link');
+  delete actionBtn.dataset.bridge;
+  if (actionBtn.dataset.label) setTextKeeping(actionBtn, actionBtn.dataset.label);
+  actionBtn.hidden = les.drill.type !== 'rhythm-gate';
   $('lesson-phase').textContent = '';
   $('lesson-stave').innerHTML = '';
   lessonScore = null;
@@ -1956,6 +1985,9 @@ function enterLevel() {
   lessonView.kbLetters = lv.labels !== false;
   const it = lessonRunner.current;
   const how = Array.isArray(it) ? 'Play the notes shown TOGETHER.'
+    // a technique level says its rubric every time it opens: notes and spacing
+    // are all the keyboard reports, and the fingering stays the player's job
+    : lv.even ? 'Play the run in order, evenly spaced. The app checks the notes and the spacing; it cannot see your fingers, so follow the numbers yourself.'
     : it?.ms ? 'Play the phrase in order.'
     : 'Read the note, play it.';
   // ELI5 first-contact line (Codex): the slot ledger is five shapes and a
@@ -2036,7 +2068,21 @@ function completeLesson() {
     playPreview(notes, 140, null, null);
   }
   lessonRunner = null;
-  setTimeout(() => { if (active === 'lesson') { show('lessons'); renderLessonList(); } }, 2600);
+  // THE BRIDGE (2026-09-02): one offer of real music the learner can now read,
+  // chosen by bridgeSongFor from the shipped library, never hand-listed and
+  // never a placeholder. It reuses the canon's own action button because that
+  // is the only action slot the lesson board draws.
+  const bridge = bridgeSongFor(lessonDef.id, SONGS);
+  if (bridge) {
+    const btn = $('lesson-rhythm-link');
+    btn.dataset.label ??= (btn.textContent || '').trim();
+    btn.dataset.bridge = bridge.id;
+    setTextKeeping(btn, `Now play: ${bridge.title} (right hand)`);
+    btn.hidden = false;
+  }
+  // an offer that vanishes cannot be taken, so the auto-return only runs when
+  // there is nothing on offer; with one up, Back and the offer are the exits
+  if (!bridge) setTimeout(() => { if (active === 'lesson') { show('lessons'); renderLessonList(); } }, 2600);
 }
 
 function lessonNote(m, isDown, mode = 'midi') {
@@ -2068,9 +2114,13 @@ function lessonNote(m, isDown, mode = 'midi') {
     const exp = lessonRunner.expected();
     lessonView.targets = new Set(exp);
     const expNames = exp.map(noteName).join(' + ');
-    setTextKeeping($('lesson-msg'), (item?.ms
-      ? `You pressed ${noteName(m)}. The phrase restarts on ${expNames}, lit below.`
-      : `You pressed ${noteName(m)}. The note asked is ${expNames}, lit below.`) + whichKeyHint(m, exp));
+    // an uneven run got every note right: say that, and say what was measured.
+    // The app checks notes and spacing, nothing else, and never the fingering.
+    setTextKeeping($('lesson-msg'), res.uneven
+      ? `All the right notes, but the gaps between them were uneven. Slow down and space them like a clock, then start again on ${expNames}, lit below. The app checks the notes and the spacing only: your fingering is yours to watch.`
+      : (item?.ms
+        ? `You pressed ${noteName(m)}. The phrase restarts on ${expNames}, lit below.`
+        : `You pressed ${noteName(m)}. The note asked is ${expNames}, lit below.`) + whichKeyHint(m, exp));
     updateLessonHud();
     return;
   }
@@ -2227,7 +2277,15 @@ $('btn-lessons').addEventListener('click', () => {
 });
 $('btn-review').addEventListener('click', startReview);
 $('lesson-back').addEventListener('click', () => { show('lessons'); renderLessonList(); });
-$('lesson-rhythm-link').addEventListener('click', () => $('btn-rhythm').click());
+$('lesson-rhythm-link').addEventListener('click', (e) => {
+  // one button, two jobs: the rhythm gate's link, and the finished lesson's
+  // "Now play" bridge. The bridge opens the song through startSong, the same
+  // path every other open in the app uses.
+  const id = e.currentTarget.dataset.bridge;
+  if (!id) { $('btn-rhythm').click(); return; }
+  const s = SONGS.find((x) => x.id === id);
+  if (s) startSong(s, { playHand: 'R' });
+});
 
 // ---------- rhythm tap ----------
 let rhythmRound = null, rhythmT0 = 0, rhythmRecording = false;

@@ -28,6 +28,31 @@ const VID_INTERVALS = { url: 'https://www.youtube.com/watch?v=GqKxN0Znojw', titl
 const VID_TRIADS = { url: 'https://www.youtube.com/watch?v=P28KMjSNQYg', title: 'Master Major and Minor Triads' };
 const VID_NOTE_VALUES = { url: 'https://www.youtube.com/watch?v=vMZv0j8_3Wg', title: 'Understanding Note Values' };
 
+// ---- technique track (2026-09-02) ------------------------------------------
+// C position. The right-hand five-finger fingering is ERGONOMIC and forced
+// (five white keys, five fingers, nothing moves), which Law 5 allows. The
+// LEFT-hand numbers are not derived at all: they are read off the shipped
+// scale-c-major song, whose left hand starts C3 with finger 5 and reaches G3
+// with the thumb.
+const RH_UP = { h: R, ms: [60, 62, 64, 65, 67], fs: [1, 2, 3, 4, 5] };
+const RH_DOWN = { h: R, ms: [67, 65, 64, 62, 60], fs: [5, 4, 3, 2, 1] };
+const LH_UP = { h: L, ms: [48, 50, 52, 53, 55], fs: [5, 4, 3, 2, 1] };
+const LH_DOWN = { h: L, ms: [55, 53, 52, 50, 48], fs: [1, 2, 3, 4, 5] };
+
+// Right-hand C major, one octave. Notes AND fingering are read off the shipped
+// scale-c-major song (js/songs.mjs), which carries authored fingering: the
+// thumb passes UNDER between E4 and F4 going up, and the third finger crosses
+// back OVER the thumb between F4 and E4 coming down. Nothing here was invented.
+const SCALE_LOW = { h: R, ms: [60, 62, 64, 65], fs: [1, 2, 3, 1] };
+const SCALE_HIGH = { h: R, ms: [65, 67, 69, 71, 72], fs: [1, 2, 3, 4, 5] };
+const SCALE_UP = { h: R, ms: [60, 62, 64, 65, 67, 69, 71, 72], fs: [1, 2, 3, 1, 2, 3, 4, 5] };
+const SCALE_DOWN = { h: R, ms: [72, 71, 69, 67, 65, 64, 62, 60], fs: [5, 4, 3, 2, 1, 3, 2, 1] };
+
+// The sentence every technique lesson says out loud, because the rubric must
+// never sound like more than it is (11th council: performance evidence, never
+// technique verdicts).
+const HONEST_RUBRIC = 'What the app checks: the notes, in order, and how evenly you space them. That is all a keyboard can report, because it sees keys and not fingers. It cannot see your hands, so the fingering is on you: the numbers are printed with the notes on the stave.';
+
 export const LESSONS = [
   {
     id: 'middle-c',
@@ -272,6 +297,71 @@ export const LESSONS = [
     video: VID_NOTE_VALUES,
     drill: { type: 'rhythm-gate' },
   },
+  // ---- technique: what your HANDS do, not what the page says ----------------
+  // No video field on either of these: every link in this file was oEmbed-checked
+  // by hand, and there is no verified one for these two, so they carry none
+  // rather than a guessed URL.
+  {
+    id: 'five-finger',
+    title: 'Five fingers in C position',
+    steps: [
+      'Time to think about the HAND, not just the note. Fingers are numbered the same on both hands: thumb 1, index 2, middle 3, ring 4, little finger 5.',
+      'C position, right hand: thumb on middle C, then one finger per white key going right. 1 on C4, 2 on D4, 3 on E4, 4 on F4, 5 on G4. Nothing reaches, nothing moves. Play up 1-2-3-4-5, then back down 5-4-3-2-1.',
+      'The left hand mirrors it an octave lower: little finger 5 on C3, 4 on D3, 3 on E3, 2 on F3, thumb 1 on G3. Going RIGHT in the left hand counts the numbers DOWN.',
+      'Space the notes like a slow clock, one every second is plenty. Slow and even beats fast and lumpy every time, and evenness is the thing this drill is actually for.',
+      HONEST_RUBRIC,
+      'Worked example: the key lit below is middle C, played by the right thumb, finger 1. That is where the first run starts.',
+    ],
+    ex: { m: 60, h: R },
+    drill: { type: 'technique', runs: [RH_UP, RH_DOWN, LH_UP, LH_DOWN] },
+    game: {
+      intro: [
+        { pool: [RH_UP], focus: RH_UP, name: 'Right hand up, 1 to 5' },
+        { pool: [RH_UP, RH_DOWN], focus: RH_DOWN, name: 'Right hand back down' },
+        { pool: [LH_UP], focus: LH_UP, name: 'Left hand, 5 up to the thumb' },
+        { pool: [LH_UP, LH_DOWN], focus: LH_DOWN, name: 'Left hand back down' },
+      ],
+      mixed: [RH_UP, RH_DOWN, LH_UP, LH_DOWN],
+      // the payoff is one hand's round trip, note by note, the same shape every
+      // other lesson's melody level uses (single notes, targets lit)
+      melody: [
+        { m: 60, h: R, f: 1 }, { m: 62, h: R, f: 2 }, { m: 64, h: R, f: 3 }, { m: 65, h: R, f: 4 },
+        { m: 67, h: R, f: 5 }, { m: 65, h: R, f: 4 }, { m: 64, h: R, f: 3 }, { m: 62, h: R, f: 2 },
+        { m: 60, h: R, f: 1 },
+      ],
+      capability: 'You can now play a five-finger C position with either hand, evenly.',
+    },
+  },
+  {
+    id: 'c-major-scale',
+    title: 'The C major scale, right hand',
+    steps: [
+      'Five fingers, eight notes: the hand has to move. The trick is the THUMB UNDER, and it happens in the same place every time.',
+      'Going up from middle C: 1 on C4, 2 on D4, 3 on E4, then the thumb travels under those fingers and lands on F4 as 1 again. From there 2 on G4, 3 on A4, 4 on B4, 5 on C5.',
+      'So the full run up is 1-2-3, 1-2-3-4-5, and the join is between E and F. Coming down it reverses: 5-4-3-2-1 down to F4, then the third finger crosses back over the thumb onto E4, and 3-2-1 finishes on middle C.',
+      'Keep the thumb moving under EARLY, while fingers 2 and 3 are still playing, so the crossing makes no gap. A bump in the timing at F is the usual sign the thumb left late.',
+      HONEST_RUBRIC,
+      'Worked example: the key lit below is middle C, right thumb, finger 1. The scale starts and ends there.',
+    ],
+    ex: { m: 60, h: R },
+    drill: { type: 'technique', runs: [SCALE_LOW, SCALE_HIGH, SCALE_UP, SCALE_DOWN] },
+    game: {
+      intro: [
+        { pool: [SCALE_LOW], focus: SCALE_LOW, name: 'Up to the crossing: 1-2-3-1' },
+        { pool: [SCALE_HIGH], focus: SCALE_HIGH, name: 'From the thumb up: 1-2-3-4-5' },
+        { pool: [SCALE_LOW, SCALE_UP], focus: SCALE_UP, name: 'The whole octave up' },
+        { pool: [SCALE_UP, SCALE_DOWN], focus: SCALE_DOWN, name: 'And back down' },
+      ],
+      mixed: [SCALE_LOW, SCALE_HIGH, SCALE_UP, SCALE_DOWN],
+      melody: [
+        { m: 60, h: R, f: 1 }, { m: 62, h: R, f: 2 }, { m: 64, h: R, f: 3 }, { m: 65, h: R, f: 1 },
+        { m: 67, h: R, f: 2 }, { m: 69, h: R, f: 3 }, { m: 71, h: R, f: 4 }, { m: 72, h: R, f: 5 },
+        { m: 71, h: R, f: 4 }, { m: 69, h: R, f: 3 }, { m: 67, h: R, f: 2 }, { m: 65, h: R, f: 1 },
+        { m: 64, h: R, f: 3 }, { m: 62, h: R, f: 2 }, { m: 60, h: R, f: 1 },
+      ],
+      capability: 'You can now play C major up and down, one octave, with the thumb under at F.',
+    },
+  },
 ];
 
 // ---- lessons as a game (9th council, 2026-08-25) ----
@@ -291,6 +381,85 @@ export function lessonItemKeyOf(it) {
   return `s:${it.m}|${it.h}`;
 }
 
+// ---- the lesson-to-song bridge (2026-09-02) --------------------------------
+// A finished lesson should point at real music, not a certificate. The song is
+// CHOSEN, never hand-listed: the first shipped song whose RIGHT HAND lies
+// entirely inside the notes taught so far. Right hand only, because the app
+// opens a song on one hand (engine.buildGroups filters on it) and the left hand
+// of a song this reader can read may still be far past them.
+
+// every midi a lesson asks for: worked example, drill and its game levels
+export function lessonTaughtMidis(les) {
+  const out = [];
+  const add = (it) => {
+    if (Array.isArray(it)) out.push(...it);
+    else if (it?.ms) out.push(...it.ms);
+    else if (it?.m != null) out.push(it.m);
+  };
+  if (les.ex) out.push(les.ex.m);
+  if (les.exChord) out.push(...les.exChord);
+  const d = les.drill;
+  if (d.type === 'staff') out.push(...d.pool.map((p) => p.m));
+  else if (d.type === 'phrase') for (const ph of PHRASES) out.push(...ph.ms);
+  else if (d.type === 'technique') for (const r of d.runs) out.push(...r.ms);
+  else if (d.items) for (const it of d.items) out.push(...it);
+  const g = les.game;
+  if (g) {
+    for (const iv of g.intro) { iv.pool.forEach(add); add(iv.focus); }
+    g.mixed.forEach(add);
+    g.melody.forEach(add);
+  }
+  return out;
+}
+
+// everything taught by this lesson and every lesson before it
+export function cumulativeTaughtMidis(lessonId, lessons = LESSONS) {
+  const set = new Set();
+  for (const les of lessons) {
+    for (const m of lessonTaughtMidis(les)) set.add(m);
+    if (les.id === lessonId) return set;
+  }
+  return null; // an id that is not in the curriculum earns no bridge
+}
+
+// the one song to offer after this lesson, or null. Never a placeholder.
+export function bridgeSongFor(lessonId, songs) {
+  const set = cumulativeTaughtMidis(lessonId);
+  if (!set) return null;
+  const fits = [];
+  for (const s of songs) {
+    const rh = s.notes.filter((n) => n.h === 'R');
+    if (!rh.length) continue;
+    if (!rh.every((n) => set.has(n.m))) continue;
+    fits.push({ s, n: rh.length });
+  }
+  if (!fits.length) return null;
+  // Easy tier first, then the shortest right hand, then the id so the choice is
+  // deterministic. Preferring Easy is also what keeps the level-less technique
+  // drills (the scales and arpeggios) from winning on shortness alone.
+  fits.sort((a, b) => (a.s.level === 'Easy' ? 0 : 1) - (b.s.level === 'Easy' ? 0 : 1)
+    || a.n - b.n
+    || (a.s.id < b.s.id ? -1 : 1));
+  return fits[0].s;
+}
+
+// ---- the technique rubric: only what a keyboard can actually report ---------
+// The keyboard sends KEYS, not FINGERS, so a technique run is judged on the
+// notes, their order, and their SPACING, and the copy says exactly that.
+// EVEN_TOL 0.40: every gap between consecutive notes must sit within +-40% of
+// that run's OWN median gap. It is measured against the learner's own speed, so
+// playing slowly is never a failure, and it is deliberately loose: this is a
+// wobble detector for a beginner, not a metronome test.
+export const EVEN_TOL = 0.40;
+export function evenEnough(times, tol = EVEN_TOL) {
+  if (times.length < 3) return true;       // one gap has nothing to be even against
+  const gaps = times.slice(1).map((t, i) => t - times[i]);
+  const sorted = [...gaps].sort((a, b) => a - b);
+  const med = sorted[(sorted.length - 1) >> 1]; // lower median: no interpolation
+  if (!(med > 0)) return false;            // simultaneous notes are not a run
+  return gaps.every((g) => Math.abs(g - med) <= tol * med);
+}
+
 // materialize a lesson's authored game metadata into runnable levels
 export function buildLevels(les) {
   const g = les.game;
@@ -298,8 +467,11 @@ export function buildLevels(les) {
   const type = les.drill.type;
   const prompts = type === 'staff' ? 5 : type === 'together' ? 4 : 3;
   const pass = type === 'staff' ? 4 : type === 'together' ? 3 : 2;
-  const levels = g.intro.map((iv) => ({ pool: iv.pool, focus: iv.focus, name: iv.name, labels: true, prompts, pass }));
-  levels.push({ pool: g.mixed, name: 'Mix round', labels: false, prompts, pass, mixed: true });
+  // technique levels add the evenness check to the note check. The melody
+  // payoff never carries it: that level is the victory lap and always finishes.
+  const even = type === 'technique';
+  const levels = g.intro.map((iv) => ({ pool: iv.pool, focus: iv.focus, name: iv.name, labels: true, prompts, pass, even }));
+  levels.push({ pool: g.mixed, name: 'Mix round', labels: false, prompts, pass, mixed: true, even });
   levels.push({ melody: g.melody, name: 'The melody', labels: false });
   return levels;
 }
@@ -325,6 +497,7 @@ export class LevelRunner {
     this.missedCurrent = false;
     this.down.clear();
     this.seqIdx = 0;
+    this.times = [];
     if (lv.melody) {
       this.queue = [...lv.melody];
       this.slots = this.queue.map(() => 'todo');
@@ -367,20 +540,34 @@ export class LevelRunner {
     if (!isDown) return null;
     if (it.ms) {
       if (midi === it.ms[this.seqIdx]) {
+        (this.times ??= []).push(now);
         this.seqIdx++;
-        return this.seqIdx >= it.ms.length ? true : 'part';
+        if (this.seqIdx < it.ms.length) return 'part';
+        // a technique level judges the SPACING too, on the run just played
+        const even = !this.level?.even || evenEnough(this.times);
+        this.times = [];
+        if (even) return true;
+        this.seqIdx = 0; // the notes were right: the RUN restarts, from the top
+        return 'uneven';
       }
       this.seqIdx = 0; // wrong note restarts the phrase, like reading practice
+      this.times = [];
       return false;
     }
     return midi === it.m;
   }
 
-  note(midi, isDown) {
+  // `now` is injectable for the same reason `rng` is: a timing rubric that can
+  // only be exercised at wall-clock speed is a rubric nothing tests
+  note(midi, isDown, now = Date.now()) {
     if (this.done || !this.level) return { ok: null, done: true };
     const lv = this.level;
     const it = this.current;
-    const r = this._judge(midi, isDown, it);
+    const r0 = this._judge(midi, isDown, it, now);
+    // right notes, wrong spacing: a miss like any other, but the coaching line
+    // has to say WHICH thing was wrong or the learner cannot fix it
+    const r = r0 === 'uneven' ? false : r0;
+    this.uneven = r0 === 'uneven';
     if (r === null || r === 'part') return { ok: r === 'part' ? true : null, part: r === 'part', done: false };
     if (r === false) {
       const firstMiss = !this.missedCurrent;
@@ -395,7 +582,7 @@ export class LevelRunner {
           this.slotOf.splice(pos, 0, this.slotOf[this.qi]);
         }
       }
-      return { ok: false, firstMiss, done: false };
+      return { ok: false, firstMiss, uneven: this.uneven, done: false };
     }
     // prompt complete
     const firstAttempt = !this.missedCurrent;

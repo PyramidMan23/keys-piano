@@ -39,6 +39,21 @@ const SCREENS = [
 // real gate: if Rhythm stops drawing its pattern, `requires` fails no matter how
 // much ink happens to be there.
 const POLICY = {
+  // ☠️ THE LESSONS INDEX IS A LIST, AND ITS GUTTER IS DRAWN, NOT MISSING.
+  // Measured 2026-09-02, when the two technique lessons took the curriculum
+  // from 11 rows to 13: the same screen went from 10.1% to 40.6% empty without
+  // a single pixel of content being lost. The list has a FIXED height, so more
+  // lessons means shorter rows, and at 13 rows every title happens to end left
+  // of x=384, which merges the whitespace between a left-aligned title and its
+  // right-aligned state chip into one tall rectangle. The design drew that
+  // gutter, and it draws a hairline under every row that this gate's INK
+  // threshold (12) is too coarse to see, so the rectangle it finds is emptier
+  // than the screen a person looks at.
+  // The allowance is therefore paired with evidence that is STRONGER than the
+  // ink number was: the hero, the first lesson, the state vocabulary and the
+  // LAST row of the curriculum all have to be on screen, so a list that
+  // silently truncates or fails to bind still fails here.
+  lessons: { limit: 50, requires: [/CONTINUE HERE/, /Middle C and the grand staff/, /Ready|Complete/, /The C major scale, right hand/, /OF \d+ COMPLETE/] },
   rhythm: { limit: 80, requires: ['TAP THE PATTERN', /LEVEL|Level/, /Clean rounds|IN A ROW/] },
   touch: { limit: 70, requires: [/PLAY THE KEY SHOWN|Strike \d+ of/, 'KEY', /LAST HIT|SOFT|MEDIUM|FIRM/] },
   trophies: { limit: 60, requires: [/Trophies/, /XP LOG/, /Nothing yet|proven|Calibrated|No XP yet/] },
