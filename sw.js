@@ -1,7 +1,7 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v105';  // keyboard-neutral copy (no more P-45 in user-facing text)
+const VERSION = 'keys-v106';  // PNG install icons (192/512) so Chrome offers Install
 const SHELL = [
-  '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
+  '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
   // listed here: a shell that caches a module but not what it imports installs
   // a build that cannot boot offline, and the failure appears only on the
