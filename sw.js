@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v103';  // tempoOf = beats over time (Fantaisie 131, Traumerei 53); video hands can never be re-split
+const VERSION = 'keys-v104';  // Silksong sleeve drawn from its own notes
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

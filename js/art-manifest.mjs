@@ -532,6 +532,10 @@ export const ART = {
     "album": "Orange Marmalade",
     "year": "2021"
   },
+  "silksong": {
+    "generated": true,
+    "drawnFrom": "the notes of Silksong (Main Theme), Christopher Larkin · arr. Sheet Music Boss"
+  },
   "stairway": {
     "artist": "Led Zeppelin",
     "album": "Led Zeppelin IV",
