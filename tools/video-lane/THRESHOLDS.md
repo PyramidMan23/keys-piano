@@ -106,3 +106,26 @@ Timing after the locked 95ms latency: median onset error **4ms**, p90 8ms.
 `handMapping` in the template profile is null. Red versus grey is measured and
 separable; WHICH IS THE LEFT HAND is not established, and it must not be inferred
 from pitch. Nothing gets imported until that comes from evidence outside pitch.
+
+---
+
+# PHASE 2 RESULT — Silksong imported, 2026-09-02
+
+- **Hand mapping established from evidence outside pitch:** the arranger's own
+  published score (Musicnotes MN0304368, `silksong/score-preview.png`). Bar 1:
+  treble = E5 then the B4+D5 dyad, bass = held A3 with E4 off-beat. The video
+  paints those treble notes red and those bass notes grey. `handMapping`
+  {red: R, white: L} recorded in the template with this citation.
+- **Seconds -> beats:** a rendered video is played from a MIDI at a fixed tempo,
+  so the grid is a hypothesis to TEST. At the score's quarter = 70 in 2/4, the
+  264 onsets snap with mean move 0.015 beat, worst 0.119 (committed refusal:
+  mean >= 0.12 or worst >= 0.45). Metronomic. `to-import.mjs` refuses otherwise.
+- **Importer:** `--video-hands` takes the two tracks as hands and nothing else a
+  score would earn (fromScore false, pedal fix runs, Hard faces the audit). All
+  three tiers passed: Easy 140 / Medium 199 / Hard 264 notes, 49 / 60 / 70 bpm,
+  `provenance: 'video-authored-hands'`. Shipped in keys-v102.
+- **Templates that do NOT carry hands:** Erik C 'Piano Man' (Zelda) and Patrik
+  Pietschmann (Overwatch) render over a REAL keyboard with real hands, and their
+  bar colour is a left-to-right gradient by pitch position, not by hand. The
+  lane can read pitch and time from them; it cannot read hands, and it must not
+  infer them from pitch. Those songs need hands from another source.
