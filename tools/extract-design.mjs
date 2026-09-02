@@ -23,10 +23,10 @@ import { writeFileSync, mkdirSync } from 'node:fs';
 // and refuse anything that still looks like a token.
 export function resolveDesignBindings(html) {
   const out = html
-    .replace(/s*on[a-z]+="{{s*noops*}}"/gi, '')
-    .replace(/s*checked="{{s*boxOns*}}"/gi, ' checked')
-    .replace(/s*checked="{{s*boxOffs*}}"/gi, '');
-  const left = out.match(/{{[^}]*}}/g);
+    .replace(/\s*on[a-z]+="\{\{\s*noop\s*\}\}"/gi, '')
+    .replace(/\s*checked="\{\{\s*boxOn\s*\}\}"/gi, ' checked')
+    .replace(/\s*checked="\{\{\s*boxOff\s*\}\}"/gi, '');
+  const left = out.match(/\{\{[^}]*\}\}/g);
   if (left) throw new Error('unresolved design bindings: ' + [...new Set(left)].join(', '));
   return out;
 }

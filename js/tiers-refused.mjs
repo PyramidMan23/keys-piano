@@ -13,7 +13,7 @@ export const TIERS_REFUSED = {
  "bach-prelude-c": {
   "tiers": 2,
   "notes": 549,
-  "why": "engraved score, hands from the staves; Medium missing because no note count between 448 (Easy) and 549 (Hard) is a step down from both, or every cut that reaches it fails the playability audit as the staves label the hands"
+  "why": "engraved score, hands from the staves; Medium missing because no note count between 448 (Easy) and 549 (Hard) is a step down from both, or every cut that reaches it either fails the playability audit as the staves label the hands or does not sit between its neighbours on the library's difficulty scale"
  },
  "beanie": {
   "tiers": 2,
@@ -78,7 +78,7 @@ export const TIERS_REFUSED = {
  "moonlight-sonata": {
   "tiers": 2,
   "notes": 1142,
-  "why": "engraved score, hands from the staves; Medium missing because no note count between 770 (Easy) and 1142 (Hard) is a step down from both, or every cut that reaches it fails the playability audit as the staves label the hands"
+  "why": "engraved score, hands from the staves; Medium missing because no note count between 770 (Easy) and 1142 (Hard) is a step down from both, or every cut that reaches it either fails the playability audit as the staves label the hands or does not sit between its neighbours on the library's difficulty scale"
  },
  "never-gonna-2": {
   "tiers": 2,

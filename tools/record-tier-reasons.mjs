@@ -57,7 +57,7 @@ for (const [g, tiers] of thin) {
     const missing = ['Easy', 'Medium', 'Hard'].filter((l) => !by[l]).join(' and ');
     const why = missing === 'Easy'
       ? `engraved score, hands from the staves; Easy missing because no cut reaches under ${Math.ceil(by.Medium * 0.85) - 1} notes (a step down from Medium's ${by.Medium}) without dropping a beat's melody or bass`
-      : `engraved score, hands from the staves; ${missing} missing because no note count between ${lo} (Easy) and ${hi} (Hard) is a step down from both, or every cut that reaches it fails the playability audit as the staves label the hands`;
+      : `engraved score, hands from the staves; ${missing} missing because no note count between ${lo} (Easy) and ${hi} (Hard) is a step down from both, or every cut that reaches it either fails the playability audit as the staves label the hands or does not sit between its neighbours on the library's difficulty scale`;
     reasons[g] = { tiers: tiers.length, notes: hi, why };
     continue;
   }

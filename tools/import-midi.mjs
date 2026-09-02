@@ -417,7 +417,8 @@ if (fromScore) {
     }
     const tierBpm = Math.round(bpm * TEMPO_OF[lvl.toLowerCase()]);
     let made = null, audited = 0;
-    for (let target = hi; target >= lo; target -= Math.max(1, Math.round(notes.length / 100))) {
+    // every count in the band, so a refusal means every cut was tried, not a sample of them
+    for (let target = hi; target >= lo; target--) {
       for (const cut of [thinToDensity, thinByBeat]) {
         const ns = cut(notes, target / notes.length);
         if (ns.length < lo || ns.length > hi) continue;
