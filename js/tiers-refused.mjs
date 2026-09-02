@@ -10,13 +10,10 @@ export const TIERS_REFUSED = {
   "notes": 1893,
   "why": "a fuller arrangement of this recording asks for 103 chords wider than 14 semitones, 27 moments with the hands crossed, 72 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
- "arabesque-1": {
-  "tiers": 2,
-  "why": "the source recording is no longer on disk"
- },
  "bach-prelude-c": {
   "tiers": 2,
-  "why": "the source recording is no longer on disk"
+  "notes": 549,
+  "why": "engraved score, hands from the staves; Medium missing because no note count between 448 (Easy) and 549 (Hard) is a step down from both, or every cut that reaches it fails the playability audit as the staves label the hands"
  },
  "beanie": {
   "tiers": 2,
@@ -28,19 +25,6 @@ export const TIERS_REFUSED = {
   "notes": 2697,
   "why": "a fuller arrangement of this recording asks for 83 chords wider than 14 semitones, 24 moments with the hands crossed, 46 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
- "consolation-3": {
-  "tiers": 2,
-  "why": "the source recording is no longer on disk"
- },
- "fantaisie-impromptu": {
-  "tiers": 2,
-  "notes": 3013,
-  "why": "a fuller arrangement of this recording asks for 2 chords wider than 14 semitones, 43 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
- },
- "goldberg-aria": {
-  "tiers": 2,
-  "why": "the source recording is no longer on disk"
- },
  "gray-day": {
   "tiers": 2,
   "notes": 488,
@@ -48,7 +32,8 @@ export const TIERS_REFUSED = {
  },
  "gymnopedie-1": {
   "tiers": 2,
-  "why": "the source recording is no longer on disk"
+  "notes": 282,
+  "why": "engraved score, hands from the staves; Easy missing because no cut reaches under 132 notes (a step down from Medium's 156) without dropping a beat's melody or bass"
  },
  "icarus": {
   "tiers": 1,
@@ -77,7 +62,8 @@ export const TIERS_REFUSED = {
  },
  "liebestraum-3": {
   "tiers": 2,
-  "why": "the source recording is no longer on disk"
+  "notes": 1851,
+  "why": "a fuller arrangement of this recording asks for 19 chords wider than 14 semitones, 5 moments with the hands crossed, 16 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
  "little-things": {
   "tiers": 2,
@@ -92,7 +78,7 @@ export const TIERS_REFUSED = {
  "moonlight-sonata": {
   "tiers": 2,
   "notes": 1142,
-  "why": "a fuller arrangement of this recording asks for 5 chords wider than 14 semitones, so the audit refused it rather than ship an unplayable tier"
+  "why": "engraved score, hands from the staves; Medium missing because no note count between 770 (Easy) and 1142 (Hard) is a step down from both, or every cut that reaches it fails the playability audit as the staves label the hands"
  },
  "never-gonna-2": {
   "tiers": 2,

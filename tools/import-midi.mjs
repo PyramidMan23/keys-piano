@@ -24,6 +24,7 @@
 // rewritten by a tool, and provenance must survive.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { parseMidi, midiNotes, tempoOf } from './midi.mjs';
+import { difficultyScore } from '../js/difficulty.mjs';
 import { repairHands, handsAreSane, SPAN_MAX, TRAVEL_MAX } from '../js/hands.mjs';
 import { unpedal, repairSplit, splitHeld, violations, releaseOverlaps } from './handsplit.mjs';
 
@@ -202,6 +203,39 @@ function thinToDensity(all, keepFraction) {
   return all.filter((n) => !drop.has(n)).map((n) => ({ ...n }));
 }
 
+// thinToDensity only knows how to drop the INNER VOICES of a chord, and an
+// arpeggiated score has almost none: the Arabesque's 1444 notes hold fewer
+// than 20 that are neither the top nor the bottom of their moment, so no
+// density it can reach is a step down from Hard. This thins within a BEAT
+// instead. Per beat and hand it protects the highest note (the melody's
+// contour) and the lowest (the bass), and ranks the rest by how deep in the
+// beat and how buried they sit, dropping the latest, most buried first. An
+// arpeggio becomes a sparser arpeggio with the same outline; nothing is ever
+// added, so every note is still the composer's.
+function thinByBeat(all, keepFraction) {
+  const target = Math.max(8, Math.round(all.length * keepFraction));
+  if (all.length <= target) return all.map((n) => ({ ...n }));
+  const byBeat = new Map();
+  for (const n of all) {
+    const k = Math.floor(n.b) + ':' + n.h;
+    if (!byBeat.has(k)) byBeat.set(k, []);
+    byBeat.get(k).push(n);
+  }
+  const rank = new Map();
+  for (const group of byBeat.values()) {
+    const sorted = group.slice().sort((a, b) => a.m - b.m);
+    const hi = sorted[sorted.length - 1], lo = sorted[0];
+    sorted.forEach((n, i) => {
+      if (n === hi || n === lo) { rank.set(n, 0); return; }
+      const depth = Math.min(i, sorted.length - 1 - i);
+      rank.set(n, 100 + Math.round((n.b - Math.floor(n.b)) * 10) + depth);
+    });
+  }
+  const order = all.slice().sort((a, b) => (rank.get(b) ?? 0) - (rank.get(a) ?? 0));
+  const drop = new Set(order.slice(0, all.length - target).filter((n) => (rank.get(n) ?? 0) >= 100));
+  return all.filter((n) => !drop.has(n)).map((n) => ({ ...n }));
+}
+
 function thin(all, level) {
   if (level === 'hard') return all.map((n) => ({ ...n }));
   const byBeat = groupBy(all, (n) => n.b);
@@ -348,6 +382,80 @@ for (const p of problems) console.log('REFUSED  ' + p);
   built.push(...keep);
 }
 for (const p of problems.slice(-3)) if (/not a step down/.test(p)) console.log('DROPPED  ' + p);
+
+// ---- 7b. fill a missing tier FROM THE SCORE, by density --------------------
+// ☠️ "TOP NOTE PER BEAT" IS NOT A MEDIUM FOR AN ENGRAVED SCORE. thin('medium')
+// keeps the top right-hand note and one bass note per beat, which on a piece
+// that is already a single line (Bach's C major prelude, the Fantaisie, the
+// Arabesque) is nearly every note of Hard, so the tier was dropped as "not a
+// step down"; and on the Moonlight and the Consolation it invented a leap the
+// composer never wrote and failed the audit. Seven of Mark's requested
+// classics sat at two tiers because of it.
+//
+// A score's Hard is the composer's own notes, so a tier between two survivors
+// can be cut by DENSITY instead: thinToDensity drops the most buried voices
+// first and never an outer one, so the result is a strict subset that keeps
+// the melody and the bass; its count must land in the band that keeps it a
+// step down from the tier above AND leaves the tier below a step down from it;
+// and it faces the same playability audit as every tier we make. Where no
+// such band exists (the Bach prelude's Easy is already 82% of its Hard) the
+// piece honestly keeps two tiers, and the reason is recorded.
+if (fromScore) {
+  const order = ['Easy', 'Medium', 'Hard'];
+  const count = (lvl) => built.find((t) => t.level === lvl)?.notes.length;
+  for (const lvl of ['Medium', 'Easy']) {
+    if (!wantTiers.includes(lvl.toLowerCase()) || count(lvl)) continue;
+    const i = order.indexOf(lvl);
+    const above = order.slice(i + 1).map(count).find(Boolean);
+    const below = order.slice(0, i).reverse().map(count).find(Boolean);
+    if (!above) continue;
+    const hi = Math.ceil(above * 0.85) - 1;
+    const lo = below ? Math.floor(below / 0.85) + 1 : 8;
+    if (lo > hi) {
+      problems.push(`${lvl.toLowerCase()}: no note count between ${below} and ${above} would be a step down from both neighbours, so the piece keeps its tiers as they are`);
+      continue;
+    }
+    const tierBpm = Math.round(bpm * TEMPO_OF[lvl.toLowerCase()]);
+    let made = null, audited = 0;
+    for (let target = hi; target >= lo; target -= Math.max(1, Math.round(notes.length / 100))) {
+      for (const cut of [thinToDensity, thinByBeat]) {
+        const ns = cut(notes, target / notes.length);
+        if (ns.length < lo || ns.length > hi) continue;
+        if (!handsAreSane(ns, tierBpm, fromScore)) { audited++; continue; }
+        // ☠️ FEWER NOTES IS NOT EASIER. The library's own difficulty score is
+        // what the tier ladder is ranked by, and thinning the Fantaisie's right
+        // hand toward the beats scored 8.2 against its Hard's 8.1: with the
+        // off-beat notes gone, more of what is left lands with the left hand,
+        // and hands-together is harder. A tier must sit between its neighbours
+        // on that scale too, or it is not the step it claims to be.
+        const score = difficultyScore({ notes: ns, bpm: tierBpm });
+        const aboveScore = difficultyScore(built.find((t) => t.notes.length === above));
+        const belowTier = below ? built.find((t) => t.notes.length === below) : null;
+        if (!(score < aboveScore) || (belowTier && !(score > difficultyScore(belowTier)))) { audited++; continue; }
+        made = ns; break;
+      }
+      if (made) break;
+    }
+    if (!made) {
+      problems.push(audited
+        ? `${lvl.toLowerCase()}: every cut between ${lo} and ${hi} notes either fails the playability audit as the score labels the hands (the Moonlight writes the right hand's triplets in the bass staff) or does not land between its neighbours on the difficulty scale`
+        : `${lvl.toLowerCase()}: no cut can reach ${lo} to ${hi} notes without dropping a beat's melody or bass, so the piece keeps its tiers as they are`);
+      continue;
+    }
+    const tid = lvl === 'Easy' ? id + '-easy' : id;
+    console.log(`${lvl.toLowerCase()}: cut from the score by density, ${made.length} of ${notes.length} notes (a step down from ${above}${below ? `, and ${below} is a step down from it` : ''})`);
+    built.push({
+      id: tid, group, level: lvl,
+      title, composer, bpm: tierBpm, timeSig, beatUnit: timeSig[1],
+      handAssignment: 'generated', source,
+      sections: sectionsFor(made),
+      notes: made.map((n) => ({ b: n.b, d: +n.d.toFixed(4), m: n.m, h: n.h })),
+    });
+    built.sort((a, b) => order.indexOf(a.level) - order.indexOf(b.level));
+    console.log(`ok       ${tid.padEnd(30)} ${made.length} notes, ${tierBpm}bpm`);
+  }
+  for (const p of problems.slice(-2)) if (/no note count|every cut between|no cut can reach/.test(p)) console.log('REFUSED  ' + p);
+}
 for (const s of built) console.log(`ok       ${s.id.padEnd(28)} ${String(s.notes.length).padStart(5)} notes, ${s.bpm}bpm, ${s.sections.length} sections`);
 if (!built.length) { console.log('\nnothing written: no tier passed the audit'); process.exit(1); }
 // ONE SURVIVING TIER IS NOT AN "EASY" TIER. If the audit refuses the fuller
@@ -365,12 +473,16 @@ if (has('dry')) { console.log('\n--dry: nothing written'); process.exit(0); }
 // ---- 8. write, merging by id ------------------------------------------------
 const OUT = new URL('../js/songs-imported.mjs', import.meta.url);
 let existing = [];
+const previousNotes = new Map();
 if (existsSync(OUT)) {
   const m = await import(OUT.href + '?t=' + Date.now());
   // Drop everything from THIS GROUP, not just matching ids: a re-import can
   // rename a tier (a single surviving tier loses its level and takes the base
   // id), and an id-only filter then leaves the old entry behind as a duplicate.
   existing = (m.IMPORTED || []).filter((s) => (s.group ?? s.id) !== group);
+  // what this group's tiers looked like BEFORE this run, so an unchanged tier
+  // can keep the corrections that were written against exactly these notes
+  for (const sng of (m.IMPORTED || []).filter((s) => (s.group ?? s.id) === group)) previousNotes.set(sng.id, JSON.stringify(sng.notes));
 }
 const all = [...existing, ...built].sort((a, b) => a.id.localeCompare(b.id));
 const body = `// GENERATED by tools/import-midi.mjs. Do not hand-edit: re-import instead.
@@ -423,7 +535,16 @@ console.log(`\nwrote js/songs-imported.mjs: ${all.length} songs (${built.length}
       // load threw "a hand correction matched 0 notes at beat 348.25". Matching
       // on a count is matching on a coincidence. Anything this run rewrote loses
       // its correction outright and gets a fresh one from rehand-safe/finger.
-      const stale = ids.has(id);
+      // ☠️ AND A TIER THAT CAME BACK NOTE-FOR-NOTE IDENTICAL IS NOT STALE. The
+      // rule above dropped every correction for every id this run rewrote, even
+      // when the rewrite produced exactly the notes it replaced. Adding a Medium
+      // to the Arabesque would have thrown away the hand corrections on its
+      // untouched Easy and Hard, and nothing in tools/rebuild.mjs regenerates
+      // songs-hands.mjs, so the shipped hands would have silently changed. The
+      // count was a coincidence; the full note list is the thing itself.
+      const rewritten = ids.has(id);
+      const identical = rewritten && previousNotes.get(id) === JSON.stringify(built.find((s) => s.id === id)?.notes);
+      const stale = rewritten && !identical;
       // ☠️ ONLY THIS IMPORT'S OWN GROUP. `all` holds the IMPORTED songs, so
       // "not in all" is true of every CURATED song too, and the first version of
       // this check quietly deleted 39 fingering entries and 11 hand corrections

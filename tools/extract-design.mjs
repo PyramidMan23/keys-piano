@@ -12,6 +12,24 @@
 // Run: node tools/extract-design.mjs
 import { launch } from './cdp.mjs';
 import { writeFileSync, mkdirSync } from 'node:fs';
+
+// ☠️ CLAUDE DESIGN'S OWN BINDING TOKENS ARE NOT MARKUP. The prototype carries
+// onChange="{{ noop }}" and checked="{{ boxOn }}" / "{{ boxOff }}" - template
+// placeholders the design tool would have filled. Left as-is they ship, and a
+// browser reads onchange="{{ noop }}" as an inline handler whose body is the
+// identifier noop: every toggle of "Wait for me" threw ReferenceError, 165 times
+// in the journal. And any non-empty checked= attribute means CHECKED, so a box
+// the design shows "off" rendered ticked. Resolve them here, at the source,
+// and refuse anything that still looks like a token.
+export function resolveDesignBindings(html) {
+  const out = html
+    .replace(/s*on[a-z]+="{{s*noops*}}"/gi, '')
+    .replace(/s*checked="{{s*boxOns*}}"/gi, ' checked')
+    .replace(/s*checked="{{s*boxOffs*}}"/gi, '');
+  const left = out.match(/{{[^}]*}}/g);
+  if (left) throw new Error('unresolved design bindings: ' + [...new Set(left)].join(', '));
+  return out;
+}
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -105,7 +123,7 @@ try {
                box: { w: Math.round(card.getBoundingClientRect().width), h: Math.round(card.getBoundingClientRect().height) } };
     })()`);
 
-    writeFileSync(join(OUT, `${key}.html`), data.html);
+    writeFileSync(join(OUT, `${key}.html`), resolveDesignBindings(data.html));
     writeFileSync(join(OUT, `${key}.json`), JSON.stringify({ screen: key, box: data.box, inherited: data.inherited, nodes: data.nodes }, null, 1));
     const painted = data.nodes.filter((n) => n.paints).length;
     const texts = data.nodes.filter((n) => n.text).length;

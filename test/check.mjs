@@ -2083,6 +2083,9 @@ ok('no decoy modules in the repo root shadowing a shipped js/ module');
   assert.ok(!canon.includes('393PX FOLD'), 'the artboard fold annotation must never ship');
   assert.ok(!canon.includes('dv-opt'), 'the design-tool export wrapper must never ship');
   assert.ok(!canon.includes('data:image/'), 'sleeves must be bound from art/, never inlined into the shell');
+  // onchange="{{ noop }}" shipped and threw ReferenceError on every toggle of
+  // Wait for me (165 journal errors); checked="{{ boxOff }}" rendered ticked.
+  assert.ok(!/{{[^}]*}}/.test(canon), 'design binding tokens ({{ noop }}, {{ boxOn }}) must be resolved before the canon ships');
   ok('canon: ' + screens.length + ' screens generated, no design-tool chrome, no inlined artwork');
 }
 

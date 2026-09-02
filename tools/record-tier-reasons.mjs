@@ -20,7 +20,7 @@ import { unpedal, splitHeld } from './handsplit.mjs';
 
 const ROOT = join(import.meta.dirname, '..');
 const { SONGS } = await import('file:///' + join(ROOT, 'js', 'songs.mjs').replace(/\\/g, '/'));
-const DIRS = ['C:/Users/markh/keys-piano-tools/workshop/full', 'C:/Users/markh/keys-piano-tools/workshop/comp', 'C:/Users/markh/keys-piano-tools/workshop'];
+const DIRS = ['C:/Users/markh/keys-piano-tools/midi', 'C:/Users/markh/keys-piano-tools/workshop/full', 'C:/Users/markh/keys-piano-tools/workshop/comp', 'C:/Users/markh/keys-piano-tools/workshop'];
 
 const byGroup = new Map();
 for (const s of SONGS) {
@@ -45,6 +45,22 @@ const findMid = (g) => {
 const reasons = {};
 for (const [g, tiers] of thin) {
   const file = findMid(g);
+  // ☠️ AN ENGRAVED SCORE IS NOT A RECORDING THAT WENT MISSING. Seven Mutopia
+  // pieces sat at two tiers and this file said "the source recording is no
+  // longer on disk" for every one of them, because it only looked in the
+  // workshop. Their real reason is arithmetic: a tier is a step down only
+  // under 85% of the tier above, and when Easy is already 82% of Hard (Bach's
+  // C major prelude) no Medium count exists that is a step down from both.
+  if (/Mutopia|engraved/i.test(tiers[0].source || '')) {
+    const by = Object.fromEntries(tiers.map((t) => [t.level, t.notes.length]));
+    const hi = by.Hard, lo = by.Easy ?? by.Medium;
+    const missing = ['Easy', 'Medium', 'Hard'].filter((l) => !by[l]).join(' and ');
+    const why = missing === 'Easy'
+      ? `engraved score, hands from the staves; Easy missing because no cut reaches under ${Math.ceil(by.Medium * 0.85) - 1} notes (a step down from Medium's ${by.Medium}) without dropping a beat's melody or bass`
+      : `engraved score, hands from the staves; ${missing} missing because no note count between ${lo} (Easy) and ${hi} (Hard) is a step down from both, or every cut that reaches it fails the playability audit as the staves label the hands`;
+    reasons[g] = { tiers: tiers.length, notes: hi, why };
+    continue;
+  }
   if (!file) { reasons[g] = { tiers: tiers.length, why: 'the source recording is no longer on disk' }; continue; }
   let notes, bpm;
   try {
