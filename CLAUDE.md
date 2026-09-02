@@ -35,6 +35,39 @@ the hermes one). Turns audio into MIDI:
 - **Law (16th council, 2026-08-28): a transcription is EVIDENCE, not a song.**
   It may verify and flag. It never ships unreviewed, and it never decides hands.
 
+**The watching lane** — `tools/video-lane/` (mirrored from
+`keys-piano-tools/video-lane/`). A YouTube falling-note video to notes, times and
+a per-note COLOUR, which is the hand information audio throws away:
+
+    calibrate.mjs <frames...> --out geometry.json    the 88-key grid, FITTED
+    extract.mjs <video> <geometry> <template>        key tint -> events
+    compare.mjs <events.json> <transcribed.mid>      consistency vs the audio
+    templates/*.json                                 per-renderer profile
+
+- ☠️ **Read the KEY TINT on the drawn keyboard, NOT the falling bars.** Watching
+  a band above the strike line scored F1 0.383. This renderer throws particle
+  spray as bright as the bars (225-254) plus a ~10px bloom, so ONE note lit five
+  key columns and a moment with three notes read as thirteen. The keyboard is one
+  key wide by construction, is clear of the particles, and lights at the strike.
+- ☠️ **A key's own median is not its rest colour if it is mostly down.** A3 is
+  held ~88% of Silksong, so its median WAS the pressed tint and detection
+  inverted: it reported the release gaps, 33 events, none at the right moment.
+  Rest comes from the key TYPE (all whites ~(216,220,228)), per key only when
+  that key agrees with its type.
+- ☠️ **ffmpeg silently rounds an odd crop height down** (yuv420p needs even
+  dimensions). A 231-row request gave 230-row frames and every frame slipped one
+  row against the next. Even geometry, and assert the size showinfo reports.
+- ☠️ **The frame is not always the piano.** The title card read as 50 notes at
+  once. Scene gate, settle after the dissolve, and a ten-finger gate: no
+  performance strikes more than 10 keys in one frame.
+- ☠️ **Never fill a missing key from its neighbour's width.** That put a white
+  key on top of black key 63. Fit the grid (residual 0.7px) and refuse if it
+  does not fit.
+- **`handMapping` is null and stays null until a human says.** Colour -> hand
+  must come from evidence OUTSIDE pitch. "The lower cluster is the left hand" is
+  Law 2 wearing a fake moustache.
+- Results, gates and the one failing number: `tools/video-lane/THRESHOLDS.md`.
+
 **The importer** — `tools/import-midi.mjs`, `tools/midi.mjs` (a dependency-free
 SMF reader and a small writer for fixtures). MIDI to a Keys song, three tiers,
 each a strict SUBSET of the verified notes. It takes hands from the file's own
