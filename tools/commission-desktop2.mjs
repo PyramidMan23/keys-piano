@@ -115,7 +115,7 @@ a.push('- THE SONG GRID, the new heart: a large album-art grid of sample songs (
 a.push('- Sort segment, labels exactly "Weakest" and "A to Z".');
 a.push('- A real <input type="search"> with placeholder exactly "Search all songs".');
 a.push('- Status: exactly "LVL 1", "80/100", "1 day rhythm", "best 1".');
-a.push('- Keyboard state: exactly "No keyboard" and "Screen taps. Plug the P-45 in for the real thing."');
+a.push('- Keyboard state: exactly "No keyboard" and "Screen taps. Plug your keyboard in for the real thing."');
 a.push('- Carry on: exactly "Resume the session" with sub-line sample "Chords from a symbol".');
 a.push('- Tools, visible at a glance (not buried): quick entries exactly "Free play", "Metronome", "Latency calibration", "Voice" (readout sample "Grand", metronome readout sample "140"), and one control reading exactly "All tools".');
 a.push('- Quests: header sample "1 of 3 done", rows exactly "Master a section", "10 real minutes, done", "One clean run" with XP values, middle row drawn done (shape plus word).');

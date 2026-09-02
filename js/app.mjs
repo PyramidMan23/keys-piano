@@ -179,7 +179,7 @@ function syncInputChip(detail) {
   const el = $('midi-status');
   const connected = el.dataset.connected === 'true';
   el.textContent = !connected
-    ? 'Screen taps · plug the P-45 in for the real thing'
+    ? 'Screen taps · plug your keyboard in for the real thing'
     : state.calibratedAt ? 'MIDI · calibrated ✓' : 'MIDI · uncalibrated, run Latency calibration';
   if (detail) el.title = detail;
 }
@@ -187,7 +187,7 @@ midi.onStatus = (text, connected) => {
   const el = $('midi-status');
   el.dataset.connected = String(connected);
   syncInputChip(text);
-  // the drawn "P-45 connected / No keyboard" module binds at render time:
+  // the drawn "Keyboard connected / No keyboard" module binds at render time:
   // plugging in while parked on the library must repaint it (Codex parity B5)
   if (CANON_ON && !$('screen-library').hidden) renderLibrary();
 };
@@ -199,7 +199,7 @@ window.__simCC = (cc, val) => midi.onControl?.(cc, val);
 
 // TAPPING A DRAWN KEY IS PLAYING A KEY. Mark asked for this and it had never
 // been wired: falls.mjs carried the hit-test `pickKeyAt` and nothing in the app
-// ever called it, so the library's own promise ("Screen taps. Plug the P-45 in
+// ever called it, so the library's own promise ("Screen taps. Plug your keyboard in
 // for the real thing") was untrue for anyone without a keyboard attached.
 //
 // Deliberately the SAME call __simNote makes, which is the same call the real
@@ -680,8 +680,8 @@ function canonLibraryCtx() {
     voiceName: voiceModeLabel(voiceInfo().mode),
     // the app's single source of truth for whether a keyboard is plugged in
     keyboard: ($('midi-status')?.dataset.connected === 'true')
-      ? { title: 'P-45 connected', sub: 'Real keys, real velocity.' }
-      : { title: 'No keyboard', sub: 'Screen taps. Plug the P-45 in for the real thing.' },
+      ? { title: 'Keyboard connected', sub: 'Real keys, real velocity.' }
+      : { title: 'No keyboard', sub: 'Screen taps. Plug your keyboard in for the real thing.' },
 
     // The freeze offer (CANON-GAPS Gap C): same humane rules as renderGameRow,
     // offered never forced, and a decline holds for the day.

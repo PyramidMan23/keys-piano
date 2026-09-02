@@ -35,7 +35,7 @@ export class MidiInput {
       bound++;
     }
     if (bound > 0) this._status(`Connected: ${this.deviceName}`, true);
-    else this._status('No MIDI keyboard found. Plug in the P-45 (USB TO HOST) and switch it on.', false);
+    else this._status('No MIDI keyboard found. Plug in your MIDI keyboard by USB and switch it on.', false);
   }
 
   _message(e) {

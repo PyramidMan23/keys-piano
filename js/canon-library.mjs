@@ -437,7 +437,7 @@ function bindDashboard(root, ctx) {
   T('Grand', ctx.voiceName);
   if (ctx.keyboard) {
     T('No keyboard', ctx.keyboard.title);
-    T('Screen taps. Plug the P-45 in for the real thing.', ctx.keyboard.sub);
+    T('Screen taps. Plug your keyboard in for the real thing.', ctx.keyboard.sub);
   }
 
   // The table header names the ACTIVE tab and carries its count. Before this

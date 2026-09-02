@@ -35,7 +35,7 @@ export const LESSONS = [
     steps: [
       'Piano music lives on TWO staves joined together: the top one (treble) is mostly your right hand, the bottom one (bass) is mostly your left.',
       'The keyboard is just 7 letters, C D E F G A B, repeated over and over. Each repeat is an OCTAVE, and the number says which repeat: middle C is C4, the next C to the right is C5, the one to the left is C3. Same letter + different number = a different key.',
-      'Middle C is the C nearest the middle of your P-45. On paper it sits BETWEEN the two staves, on its own little line (a ledger line). It wears a dot on the keyboard below: count from it whenever you are lost.',
+      'Middle C is the C nearest the middle of your keyboard. On paper it sits BETWEEN the two staves, on its own little line (a ledger line). It wears a dot on the keyboard below: count from it whenever you are lost.',
       'Worked example: the note lit on the keyboard below is middle C. That exact key is what the drill will ask for.',
     ],
     ex: { m: 60, h: R },
