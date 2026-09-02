@@ -13,7 +13,13 @@
 // here ONCE by scanning offsets for the best match, then reported so it can be
 // locked into the template profile and tested unchanged on held-out footage.
 import { readFileSync } from 'node:fs';
-import { parseMidi, midiNotes } from '../../keys-piano/tools/midi.mjs';
+// this folder lives twice: in the app repo as tools/video-lane (midi.mjs is one
+// level up) and in keys-piano-tools (the app copy is a sibling tree). Resolve
+// whichever exists rather than hard-coding one and dying in the other.
+import { existsSync } from 'node:fs';
+const MIDI = [new URL('../midi.mjs', import.meta.url), new URL('../../keys-piano/tools/midi.mjs', import.meta.url)].find((u) => existsSync(u));
+if (!MIDI) { console.error('cannot find tools/midi.mjs from ' + import.meta.url); process.exit(2); }
+const { parseMidi, midiNotes } = await import(MIDI.href);
 
 const [eventsPath, midPath] = process.argv.slice(2);
 const ev = JSON.parse(readFileSync(eventsPath, 'utf8'));

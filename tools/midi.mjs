@@ -117,13 +117,17 @@ export function tempoOf(mid, lastTick = null) {
   // two-bar slow-down set the number for a whole piece (Traumerei read 47
   // against its marked 60). Each tempo counts for the span it actually rules.
   const end = lastTick ?? Math.max(...mid.tracks.map((t) => t.events.length ? t.events[t.events.length - 1].tick : 0), mid.tempos[mid.tempos.length - 1].tick + 1);
-  let num = 0, den = 0;
+  // ☠️ AND WEIGHTED BY TIME MEANS TOTAL BEATS OVER TOTAL TIME, not the mean of
+  // the bpm values by tick span (Codex: four beats at 60 then four at 120 is
+  // 8 beats in 6 seconds = 80, and the span-weighted mean says 90). The
+  // number that makes the piece last as long as it really does is the one.
+  let ticks = 0, us = 0;
   for (let i = 0; i < mid.tempos.length; i++) {
     const span = Math.max(0, (i + 1 < mid.tempos.length ? mid.tempos[i + 1].tick : end) - mid.tempos[i].tick);
-    num += (60000000 / mid.tempos[i].usPerQuarter) * span; den += span;
+    ticks += span; us += span * mid.tempos[i].usPerQuarter;
   }
   const bpms = mid.tempos.map((t) => 60000000 / t.usPerQuarter);
-  return { bpm: Math.round(den ? num / den : bpms[0]),
+  return { bpm: Math.round(us ? 60000000 * ticks / us : bpms[0]),
     min: Math.round(Math.min(...bpms)), max: Math.round(Math.max(...bpms)), changes: mid.tempos.length - 1 };
 }
 

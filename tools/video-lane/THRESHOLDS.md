@@ -129,3 +129,15 @@ from pitch. Nothing gets imported until that comes from evidence outside pitch.
   bar colour is a left-to-right gradient by pitch position, not by hand. The
   lane can read pitch and time from them; it cannot read hands, and it must not
   infer them from pitch. Those songs need hands from another source.
+- **Durations (Codex round 3):** the plan held tint lengths untrusted until
+  proven. Proven now against the published score at quarter = 70: treble
+  quarters read 1.11-1.28 beats, the bass half note 1.67-1.81, and five repeats
+  of each figure agree to within 0.02 beat. That is a note-off, not a trail.
+  Recorded as `durationSemantics` in the template; durations still face
+  quantisation, unpedal and the audit.
+- **Codex round 3 fixes:** the importer can no longer re-split video hands
+  (the transcription repair path is skipped; the per-tier resplit is identity);
+  `to-import.mjs` refuses any colour the template does not map, requires
+  `--bpm-source`, resolves `midi.mjs` in both copies of this folder, and says
+  plainly that the grid fit tests metronomicity at a GIVEN tempo (35, 70, 140
+  and 210 all fit; the number is the arranger's, not the fit's).

@@ -68,6 +68,39 @@ ok(/^ok\s+roundtrip-test-hard/m.test(out), 'the importer refused a song it was h
   ok(/hands: derived by js\/hands\.mjs/.test(o2), 'a file with no staff information should fall back to the algorithm:\n' + o2);
 }
 
+// 4. video hands that cross are REFUSED, never re-split. Codex planted this
+// one: a two-track file whose tracks are the hands a renderer painted, with a
+// passage deliberately swapped so the hands cross. Before the fix the importer
+// printed "hands: re-split from scratch, 8 -> 0" and shipped its own pitch
+// split under the video's name. Now --video-hands keeps the tracks as hands
+// and the audit refuses the tier; the defect is reported, not repaired away.
+{
+  // a real crossing: at the first eight moments where BOTH hands sound, give
+  // the low notes to the right hand and the high notes to the left. Swapping
+  // isolated notes is not a crossing (the audit judges moments, and a lone
+  // note has nothing to cross), which is how the first draft of this fixture
+  // passed and proved nothing.
+  const both = [...new Set(song.notes.map((n) => n.b))].filter((b) => {
+    const at = song.notes.filter((n) => n.b === b);
+    return at.some((n) => n.h === 'L') && at.some((n) => n.h === 'R');
+  }).slice(0, 8);
+  const crossed = song.notes.map((n) => ({ ...n, track: both.includes(n.b) ? (n.h === 'L' ? 1 : 0) : (n.h === 'L' ? 0 : 1) }));
+  ok(both.length === 8, 'the fixture needs eight hands-together moments to plant crossings in');
+  const vidMid = join(dir, 'video-crossed.mid');
+  writeFileSync(vidMid, writeMidi({ notes: crossed, bpm: song.bpm, timeSig: song.timeSig, tracks: 2 }));
+  // a refusal exits 1, which is the point; keep its output either way
+  let o3;
+  try {
+    o3 = execFileSync(process.execPath, [
+      join(import.meta.dirname, '..', 'tools', 'import-midi.mjs'), vidMid, '--video-hands',
+      '--id', 'video-test', '--title', 'Video crossed', '--bpm', String(song.bpm), '--tiers', 'hard', '--dry',
+    ], { encoding: 'utf8' });
+  } catch (e) { o3 = String(e.stdout ?? '') + String(e.stderr ?? ''); }
+  ok(/hands: the video's own hand colours/.test(o3), 'the importer did not take the video tracks as hands:\n' + o3);
+  ok(!/re-split|moved \d+ notes/.test(o3), 'the importer rewrote video hands instead of leaving them:\n' + o3);
+  ok(/REFUSED\s+hard: FAILS the playability audit/.test(o3), 'planted crossed video hands must be refused by the audit, not shipped:\n' + o3);
+}
+
 rmSync(dir, { recursive: true, force: true });
 console.log(fails.length ? 'IMPORT ROUND TRIP FAILED' : 'import round trip: notes, timing and hands all survive');
 for (const f of fails) console.log('  FAIL  ' + f);

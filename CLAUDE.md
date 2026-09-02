@@ -66,6 +66,19 @@ a per-note COLOUR, which is the hand information audio throws away:
 - **`handMapping` is null and stays null until a human says.** Colour -> hand
   must come from evidence OUTSIDE pitch. "The lower cluster is the left hand" is
   Law 2 wearing a fake moustache.
+- `to-import.mjs <events> <template> --bpm N --bpm-source "..." --meter M` writes
+  the two-track MIDI; `import-midi.mjs --video-hands` takes the tracks as hands
+  and NOTHING else a score would earn (fromScore false, pedal fix runs, Hard
+  faces the audit, the transcription re-split never touches them).
+- ☠️ **The grid fit cannot prove the tempo.** Onsets on a quarter-beat grid at
+  70 fit at 35, 140 and 210 too. The bpm is a fact from outside (the
+  arranger's marking) and `--bpm-source` says where; the fit only proves the
+  render is metronomic at it.
+- ☠️ **Colour is hand only when the renderer says so.** Sheet Music Boss /
+  Embers paints by hand (mapping proven from the arranger's own published
+  score). Erik C and Patrik Pietschmann paint a left-to-right gradient by pitch
+  over a REAL keyboard: notes and timing readable, hands NOT. Never fill that
+  gap from pitch.
 - Results, gates and the one failing number: `tools/video-lane/THRESHOLDS.md`.
 
 **The importer** — `tools/import-midi.mjs`, `tools/midi.mjs` (a dependency-free

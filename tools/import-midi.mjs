@@ -146,6 +146,13 @@ if (!fromScore) {
   // pianist never held (see releaseOverlaps in handsplit.mjs).
   const freed = releaseOverlaps(notes, bpm);
   if (freed) console.log(`pedal: released ${freed} holds one hand could not have kept under the next note`);
+}
+// ☠️ VIDEO HANDS ARE AUTHORED. The re-split below exists for transcriptions,
+// whose hands are ours to guess. A video's hands were painted by the arranger,
+// and Codex showed this block would overwrite them the moment they crossed
+// ("re-split from scratch, 8 -> 0"): the exact pitch split the law forbids,
+// wearing the importer's own clothes. Only a transcription reaches it.
+if (!fromScore && !videoHands) {
 
   // ☠️ RE-SPLIT THE HANDS FROM SCRATCH, then repair. js/hands.mjs repairHands
   // decides note by note and produces crossings by the hundred on a dense
@@ -316,7 +323,7 @@ for (const level of wantTiers) {
     // SUBSET, and the best pitch cut for the dense parent is rarely the best cut
     // once the inner voices are gone: giving a tier only repairSplit left
     // overwatch and x-files refused on crossings the beam clears in one pass.
-    const resplit = (arr, tbpm) => {
+    const resplit = videoHands ? (arr) => arr : (arr, tbpm) => {
       const t = arr.map((n) => ({ ...n }));
       const h = splitHeld(t, tbpm);
       t.forEach((n, i) => { n.h = h[i]; });

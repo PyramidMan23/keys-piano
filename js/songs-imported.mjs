@@ -128802,7 +128802,7 @@ export const IMPORTED = [
   "level": "Medium",
   "title": "Fantaisie-Impromptu",
   "composer": "Chopin · from the engraved score",
-  "bpm": 122,
+  "bpm": 111,
   "timeSig": [
    4,
    4
@@ -142522,7 +142522,7 @@ export const IMPORTED = [
   "level": "Easy",
   "title": "Fantaisie-Impromptu",
   "composer": "Chopin · from the engraved score",
-  "bpm": 100,
+  "bpm": 92,
   "timeSig": [
    4,
    4
@@ -152876,7 +152876,7 @@ export const IMPORTED = [
   "level": "Hard",
   "title": "Fantaisie-Impromptu",
   "composer": "Chopin · from the engraved score",
-  "bpm": 143,
+  "bpm": 131,
   "timeSig": [
    4,
    4
@@ -722150,7 +722150,7 @@ export const IMPORTED = [
   "level": "Medium",
   "title": "Träumerei",
   "composer": "Robert Schumann, Op. 15",
-  "bpm": 46,
+  "bpm": 45,
   "timeSig": [
    4,
    4
@@ -723635,7 +723635,7 @@ export const IMPORTED = [
   "level": "Easy",
   "title": "Träumerei",
   "composer": "Robert Schumann, Op. 15",
-  "bpm": 38,
+  "bpm": 37,
   "timeSig": [
    4,
    4
@@ -724562,7 +724562,7 @@ export const IMPORTED = [
   "level": "Hard",
   "title": "Träumerei",
   "composer": "Robert Schumann, Op. 15",
-  "bpm": 54,
+  "bpm": 53,
   "timeSig": [
    4,
    4
