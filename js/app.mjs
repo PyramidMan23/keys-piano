@@ -1,3 +1,7 @@
+// PWA install: Chrome fires beforeinstallprompt once, before any later
+// script can listen. Capture it at boot so the app can offer Install itself.
+window.addEventListener('beforeinstallprompt', (e) => { window.__installPrompt = e; });
+
 // App wiring: screens, engine loop, stats, streaks, results.
 // Council defaults: falling notes is the default surface; a song section only
 // counts as "learned" after at least one score-mode pass (Codex's mechanic).
