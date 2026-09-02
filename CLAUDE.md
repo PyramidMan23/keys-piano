@@ -131,6 +131,23 @@ implied tempo must match the meter model's heard tempo within 15%, or nothing
 is drawn. Six of seven songs are refused by that rule and each refusal says
 why; a regular PHRASE is indistinguishable from a long bar without it.
 
+☠️ **Claude Design's binding tokens are not markup, and they shipped.** The
+prototype carries `onChange="{{ noop }}"` and `checked="{{ boxOn }}"` /
+`"{{ boxOff }}"`. A browser reads the first as an inline handler whose body is
+the identifier `noop` (165 ReferenceErrors in the journal, one per toggle of
+Wait for me) and any non-empty `checked=` as CHECKED, so a box the design shows
+off rendered ticked. `extract-design.mjs` resolves them at the source, the
+generator refuses a token that reaches it, and `check.mjs` asserts none ship.
+
+☠️ **"The source recording is no longer on disk" was never true of a score.**
+`record-tier-reasons.mjs` only looked in the workshop, so seven Mutopia pieces
+carried a false reason for their missing Medium. The true one was arithmetic: a
+tier is a step down only under 85% of the tier above, and `thin('medium')` on
+an arpeggiated score keeps nearly every note. The importer now cuts a missing
+tier FROM THE SCORE (beat-window, melody and bass protected, strict subset,
+audit, and the library's own difficulty ordering). Where no band exists the
+piece keeps two tiers and says why.
+
 **Bump `VERSION` in `sw.js` on every deploy**, or clients keep the cached build
 and the work never reaches Mark. `shell-check.mjs` proves the shell precaches
 everything the app imports: three modules were missing, including the one
