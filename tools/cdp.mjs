@@ -23,6 +23,9 @@ export async function launch({ width = 756, height = 1400, scale = 2, port = 933
     '--force-device-scale-factor=' + scale,
     '--disable-gpu', '--no-first-run', '--no-default-browser-check',
     '--disable-extensions', '--mute-audio',
+    // navigator.webdriver === true inside the page, so app.mjs jlog() drops every
+    // event a gate produces (2026-09-02: tools had polluted the practice journal)
+    '--enable-automation',
     'about:blank',
   ], { stdio: 'ignore' });
 

@@ -157,7 +157,12 @@ function streakLen() {
 // ---------- practice journal (council 2026-08-23: decision-relevant events
 // only, self-logged because hand-journaling corrupts the usage test) ----------
 const jbuf = [];
+// Headless Chrome (every gate in tools/ goes through tools/cdp.mjs) reports
+// navigator.webdriver === true. Tool runs must never land in the journal: by
+// 2026-09-02 they had written 5,700 fake session starts into the one file
+// that is meant to be read before building anything.
 function jlog(e, data = {}) {
+  if (navigator.webdriver) return;
   jbuf.push({ v: 1, t: Date.now(), e, ...data });
   if (jbuf.length >= 25) jflush();
 }
