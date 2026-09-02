@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v101';  // design binding tokens resolved (no more noop ReferenceErrors); Medium tiers for Arabesque, Consolation, Goldberg, Fantaisie
+const VERSION = 'keys-v102';  // the phantom 120: every engraved score now at its marked tempo; Silksong from the video lane (E/M/H)
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

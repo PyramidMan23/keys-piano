@@ -69,6 +69,13 @@ export function parseMidi(buf) {
   }
 
   tempos.sort((a, b) => a.tick - b.tick);
+  // ☠️ THE PHANTOM 120. The default above is the spec's fallback for a file that
+  // never states a tempo. A file that DOES state one at tick 0 was keeping the
+  // default beside it, and tempoOf then averaged the two: Clair de Lune's
+  // marked 60 shipped as 90, the Pathetique's 36 as 78, and every engraved
+  // score in the library was taught too fast. A stated tempo replaces the
+  // fallback; it never sits next to it.
+  if (tempos.length > 1 && tempos[1].tick === 0) tempos.splice(0, 1);
   return { format, ticksPerQuarter, timeSig, tempos, tracks };
 }
 
@@ -104,9 +111,19 @@ export function midiNotes(mid) {
 
 // The average tempo in bpm. A piece with a big rubato tempo map cannot be
 // taught at one number, so the caller is told the spread and decides.
-export function tempoOf(mid) {
+export function tempoOf(mid, lastTick = null) {
+  // ☠️ WEIGHTED BY TIME, NOT BY COUNT. A rubato score writes a tempo meta
+  // every few ticks through a ritardando; counting those equally let a
+  // two-bar slow-down set the number for a whole piece (Traumerei read 47
+  // against its marked 60). Each tempo counts for the span it actually rules.
+  const end = lastTick ?? Math.max(...mid.tracks.map((t) => t.events.length ? t.events[t.events.length - 1].tick : 0), mid.tempos[mid.tempos.length - 1].tick + 1);
+  let num = 0, den = 0;
+  for (let i = 0; i < mid.tempos.length; i++) {
+    const span = Math.max(0, (i + 1 < mid.tempos.length ? mid.tempos[i + 1].tick : end) - mid.tempos[i].tick);
+    num += (60000000 / mid.tempos[i].usPerQuarter) * span; den += span;
+  }
   const bpms = mid.tempos.map((t) => 60000000 / t.usPerQuarter);
-  return { bpm: Math.round(bpms.reduce((a, c) => a + c, 0) / bpms.length),
+  return { bpm: Math.round(den ? num / den : bpms[0]),
     min: Math.round(Math.min(...bpms)), max: Math.round(Math.max(...bpms)), changes: mid.tempos.length - 1 };
 }
 

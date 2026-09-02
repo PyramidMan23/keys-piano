@@ -98,7 +98,20 @@ for (const n of notes) {
   byTrack.get(k).push(n);
 }
 const parts = [...byTrack.entries()].filter(([, v]) => v.length >= notes.length * 0.15);
-if (parts.length === 2) {
+// ☠️ VIDEO HANDS ARE EVIDENCE, NOT AN ENGRAVED SCORE. tools/video-lane writes a
+// two-track file whose tracks are the hands the renderer painted, so the
+// two-parts rule below would read it as a score and set fromScore: skipping
+// the pedal fix, exempting Hard from the playability audit, and letting the
+// 15% rule drop a sparse hand. --video-hands takes the tracks as hands (track
+// 0 = left, by contract) and NOTHING else a score would earn.
+const videoHands = has('video-hands');
+if (videoHands) {
+  const trackOf = (n) => n.track;
+  const ts = [...new Set(notes.map(trackOf))].sort((a, b) => a - b);
+  if (ts.length !== 2) { console.error(`REFUSE: --video-hands needs exactly two note tracks, found ${ts.length}`); process.exit(1); }
+  for (const n of notes) n.h = trackOf(n) === ts[0] ? 'L' : 'R';
+  handSource = `the video's own hand colours (${notes.filter((n) => n.h === 'L').length} left, ${notes.filter((n) => n.h === 'R').length} right); fromScore stays false`;
+} else if (parts.length === 2) {
   // two real parts: the lower one is the left hand. This is the file telling us,
   // not us guessing, and it is the only evidence worth more than the algorithm.
   const mean = (v) => v.reduce((a, c) => a + c.m, 0) / v.length;
@@ -348,7 +361,9 @@ for (const level of wantTiers) {
     id: level === 'hard' ? id + '-hard' : level === 'easy' ? id + '-easy' : id,
     group, level: level[0].toUpperCase() + level.slice(1),
     title, composer, bpm: tierBpm, timeSig, beatUnit: timeSig[1],
-    handAssignment: 'generated', source,
+    // handAssignment stays 'generated' because four tools key on it; the video
+    // provenance rides in its own field and in the source string
+    handAssignment: 'generated', ...(videoHands ? { provenance: 'video-authored-hands' } : {}), source,
     sections: sectionsFor(ns),
     notes: ns.map((n) => ({ b: n.b, d: +n.d.toFixed(4), m: n.m, h: n.h })),
   });

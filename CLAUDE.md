@@ -148,6 +148,14 @@ tier FROM THE SCORE (beat-window, melody and bass protected, strict subset,
 audit, and the library's own difficulty ordering). Where no band exists the
 piece keeps two tiers and says why.
 
+☠️ **THE PHANTOM 120.** `tools/midi.mjs` seeded a default 120bpm and kept it
+beside a file's real tempo meta at tick 0, and `tempoOf` averaged the two: every
+engraved score shipped too fast (Clair de Lune marked 60, taught at 90; the
+Pathetique marked 36, taught at 78). A stated tempo now REPLACES the fallback,
+and the average is weighted by the ticks each tempo rules, so a two-bar
+ritardando cannot set a whole piece's number (Traumerei read 47 for a marked
+60). Fixed 2026-09-02 for 15 score pieces, 43 tiers.
+
 **Bump `VERSION` in `sw.js` on every deploy**, or clients keep the cached build
 and the work never reaches Mark. `shell-check.mjs` proves the shell precaches
 everything the app imports: three modules were missing, including the one
