@@ -141,3 +141,73 @@ from pitch. Nothing gets imported until that comes from evidence outside pitch.
   `--bpm-source`, resolves `midi.mjs` in both copies of this folder, and says
   plainly that the grid fit tests metronomicity at a GIVEN tempo (35, 70, 140
   and 210 all fit; the number is the arranger's, not the fit's).
+
+---
+
+# FEASIBILITY — hand-pose lane for FILMED keyboards (Zelda / Overwatch), 2026-09-02
+
+Codex's verdict on the first plan was "do not build this yet": run a 100-strike
+feasibility experiment per video with human-labelled hands first. This section
+is that experiment, numbers as measured, committed gates: two-witness hand
+identity must agree; unresolved share < 5% to import; per-note hand accuracy
+against human labels reported by stratum before any threshold is trusted.
+
+## What works (measured)
+- **Geometry on film** (`calibrate.mjs --filmed`): the keyboard band is found
+  anywhere in the frame; all 36 black keys detected in both videos; the standard
+  88-key layout (black-key offsets measured on the pixel-uniform SMB render:
+  C# -0.115, D# +0.055, F# -0.195, G# -0.038, A# +0.150 white-widths) maps
+  through a quadratic camera with worst residual 3.0px (Zelda) / 2.9px (Overwatch).
+  Pitch mapping proven against the audio transcription: with ZERO semitone shift
+  197 of 197 audio notes in a 60s Zelda window match a bar-lane note; every other
+  shift scores under 25.
+- **Notes from the falling bars** (`extract-bars.mjs`): per-key occupancy in a
+  band 60-90px above the strike line with non-maximum suppression across
+  neighbouring columns (without it two lit keys read as five). Lane latency from
+  the bars' own fall speed: Zelda 402px/s -> 186ms; Overwatch 146px/s -> 512ms.
+  ☠️ A `-ss N -c copy` clip starts at the previous keyframe, so clip timestamps
+  are off by up to a second; only full-video PTS are trusted.
+- **Hands** (`hands-track.py`, MediaPipe Hand Landmarker, VIDEO mode): two hands
+  in 76% of Overwatch clip frames, one in 21%, none in 3%. Track identity by
+  wrist continuity; the two tracks named by two independent witnesses (model
+  label majority, left-of-other-hand majority): Overwatch clip track0 = R
+  (label 97%, right of the other 98%), track1 = L (98% / 88%). Agreement gate held.
+- **Assignment** (`assign-hands.mjs`): a note goes to a hand only when one hand
+  has a fingertip within NEAR key-widths of the key over the keys in the strike
+  window and the other has none within FAR; else UNRESOLVED, which blocks import.
+
+## What does not yet pass
+- Overwatch clip, 449 notes: unresolved 26.9% at window +-2 / NEAR 0.8; 19.4% at
+  +-4 / 1.0; 15.4% at +-6 / 1.2. Gate is < 5%. Most unresolved are "no fingertip
+  close enough": the landmark tips do not land on the played key at the strike
+  frame as often as the rule needs, and widening the window trades that for
+  "both hands near".
+- Human labels: only six tiles read by eye so far (thumb side agreed with the
+  claim on five, one ambiguous). That is not a corpus. `contact-sheet.mjs`
+  builds the sheets; 100 labelled strikes per video stratified by chords,
+  crossings, thumbs, black keys, occlusion and repeats are still owed.
+- Hands identity on Zelda: MediaPipe labelled both hands "Left" in a probe
+  frame; the track-level witnesses have not yet been run on the full video.
+
+## Honest state
+Notes and timing from these two videos are within reach (pitch proven, timing
+to a measured constant). Hands are a feasibility result with a 15-27%
+unresolved rate and six eyeballed labels. Nothing from either video imports
+until the unresolved share is under the gate AND a labelled corpus says the
+assignments are right.
+
+## Full-video numbers (Zelda, 590s, 60fps)
+- Bar lane vs audio transcription: 4501 video / 4931 audio, latency 228ms
+  (measured; the fall-speed estimate said 186), precision 0.903, recall 0.824,
+  F1 0.862, onset error median 27ms, p90 56ms. Worst 30s window (395s) F1 0.60:
+  589 audio notes in 30s, 19.6/s, median 0.147s. Of 866 audio-only notes 145
+  are octave ghosts and 776 sit in dense passages: fast repeats on one key merge
+  in the band because the gap between consecutive bars is under the 3-frame
+  hysteresis. Of 436 video-only events 318 are under 0.1s: particle blips.
+  The dense-passage recall and the blips are the two open problems on notes.
+- Human labels (contact sheets, hand identity by thumb side): Zelda 41 tiles,
+  34 agree with the claim, 6 ambiguous by eye (all in the stratum where both
+  thumbs sit within a key of the marked column), 1 possible disagreement
+  (#158, D5, claimed R, thumb reads left). Overwatch 6 tiles, 5 agree, 1
+  ambiguous. Labels in `labels.json`. This is 47 labels against the 100 per
+  video the plan requires; it is evidence, not a corpus.

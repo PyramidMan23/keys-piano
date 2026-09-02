@@ -1,0 +1,313 @@
+{
+ "method": "human read of contact sheets: which hand's fingers are over the marked key at the strike frame, hand identity from thumb side (overhead from behind: right hand thumb on its left)",
+ "labels": [
+  {
+   "video": "overwatch/clip60",
+   "note": 5,
+   "claim": "L",
+   "human": "L"
+  },
+  {
+   "video": "overwatch/clip60",
+   "note": 89,
+   "claim": "L",
+   "human": "L"
+  },
+  {
+   "video": "overwatch/clip60",
+   "note": 181,
+   "claim": "L",
+   "human": "L"
+  },
+  {
+   "video": "overwatch/clip60",
+   "note": 253,
+   "claim": "L",
+   "human": "ambiguous"
+  },
+  {
+   "video": "overwatch/clip60",
+   "note": 301,
+   "claim": "L",
+   "human": "L"
+  },
+  {
+   "video": "overwatch/clip60",
+   "note": 0,
+   "claim": "R",
+   "human": "R"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 20,
+   "claim": "R",
+   "human": "R"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 170,
+   "claim": "R",
+   "human": "R"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 198,
+   "claim": "L",
+   "human": "L"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 5,
+   "claim": "R",
+   "human": "R"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 104,
+   "claim": "R",
+   "human": "R"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 162,
+   "claim": "L",
+   "human": "L"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 1,
+   "claim": "L",
+   "human": "L"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 38,
+   "claim": "L",
+   "human": "L"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 78,
+   "claim": "L",
+   "human": "L"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 135,
+   "claim": "L",
+   "human": "L"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 10,
+   "claim": "R",
+   "human": "R"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 41,
+   "claim": "R",
+   "human": "R"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 69,
+   "claim": "R",
+   "human": "R"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 173,
+   "claim": "R",
+   "human": "R"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 224,
+   "claim": "R",
+   "human": "R"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 237,
+   "claim": "R",
+   "human": "R",
+   "stratum": "both hands adjacent"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 151,
+   "claim": "R",
+   "human": "ambiguous",
+   "stratum": "both hands adjacent"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 150,
+   "claim": "L",
+   "human": "ambiguous",
+   "stratum": "both hands adjacent"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 99,
+   "claim": "L",
+   "human": "ambiguous",
+   "stratum": "both hands adjacent"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 236,
+   "claim": "L",
+   "human": "L",
+   "stratum": "both hands adjacent"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 186,
+   "claim": "R",
+   "human": "R",
+   "stratum": "both hands adjacent"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 189,
+   "claim": "R",
+   "human": "ambiguous",
+   "stratum": "both hands adjacent"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 188,
+   "claim": "L",
+   "human": "ambiguous",
+   "stratum": "both hands adjacent"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 2,
+   "claim": "L",
+   "human": "L",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 28,
+   "claim": "L",
+   "human": "L",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 54,
+   "claim": "L",
+   "human": "L",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 80,
+   "claim": "R",
+   "human": "R",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 106,
+   "claim": "R",
+   "human": "R",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 130,
+   "claim": "R",
+   "human": "R",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 157,
+   "claim": "R",
+   "human": "R",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 184,
+   "claim": "L",
+   "human": "L",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 212,
+   "claim": "R",
+   "human": "R",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 3,
+   "claim": "L",
+   "human": "L",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 29,
+   "claim": "L",
+   "human": "L",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 55,
+   "claim": "R",
+   "human": "R",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 81,
+   "claim": "R",
+   "human": "R",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 107,
+   "claim": "R",
+   "human": "R",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 131,
+   "claim": "R",
+   "human": "R",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 158,
+   "claim": "R",
+   "human": "L?",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 185,
+   "claim": "L",
+   "human": "ambiguous",
+   "stratum": "random"
+  },
+  {
+   "video": "zelda/clip60",
+   "note": 213,
+   "claim": "R",
+   "human": "R",
+   "stratum": "random"
+  }
+ ]
+}
