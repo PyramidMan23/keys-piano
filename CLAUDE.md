@@ -183,6 +183,17 @@ and the average is weighted by the ticks each tempo rules, so a two-bar
 ritardando cannot set a whole piece's number (Traumerei read 47 for a marked
 60). Fixed 2026-09-02 for 15 score pieces, 43 tiers.
 
+☠️ **RUN `tools/make-sleeves.mjs` FROM THE SERVING COPY.** It writes its scratch
+`.sleeve.html` next to itself and then loads it from `http://localhost:4180`,
+which serves `C:\Users\markh\keys-piano`. Run from the Drive build copy it
+photographs the server's "not found" page, and keys-v110 shipped two cover
+sleeves that were exactly that, byte-identical to each other, past every gate.
+Same family as the gate trap below: the tool edits one tree and the browser reads
+the other. Two related rules the same bug taught: a sleeve is drawn from the
+group's FULLEST tier (an Easy tier's thinning had dropped nearly every F sharp,
+so the key detector read G major as C major), and a key STATED by a score
+(`import-midi.mjs --key "G major"`) beats a detected one.
+
 **Bump `VERSION` in `sw.js` on every deploy**, or clients keep the cached build
 and the work never reaches Mark. `shell-check.mjs` proves the shell precaches
 everything the app imports: three modules were missing, including the one
