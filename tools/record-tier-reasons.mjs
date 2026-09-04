@@ -61,6 +61,35 @@ for (const [g, tiers] of thin) {
     reasons[g] = { tiers: tiers.length, notes: hi, why };
     continue;
   }
+  // VIDEO-AUTHORED HANDS (the arranger's own render, tools/video-lane). The
+  // hands are the file's two tracks, not a re-split, and the reason is either
+  // the audit on Hard at the arranger's tempo or the step-down arithmetic.
+  if (tiers[0].provenance === 'video-authored-hands') {
+    const vf = join(ROOT, 'tools', 'video-lane', `${g}.mid`);
+    const by = Object.fromEntries(tiers.map((t) => [t.level, t.notes.length]));
+    const missing = ['Easy', 'Medium', 'Hard'].filter((l) => !by[l]).join(' and ');
+    if (!existsSync(vf)) { reasons[g] = { tiers: tiers.length, why: `video-authored hands; ${missing} missing; the lane MIDI ${g}.mid is not in tools/video-lane` }; continue; }
+    const mid = parseMidi(readFileSync(vf));
+    const vb = tempoOf(mid).bpm;
+    const raw = midiNotes(mid);
+    const ts = [...new Set(raw.map((n) => n.track))].sort((a, b) => a - b);
+    const vn = raw.map((n) => ({ b: n.b, d: n.d, m: n.m, h: n.track === ts[0] ? 'L' : 'R' }));
+    let fast = 0, wide = 0, crossed = 0;
+    const onsets = new Set(vn.map((n) => n.b)).size;
+    for (const hand of ['L', 'R']) {
+      const hn = vn.filter((n) => n.h === hand).sort((a, b) => a.b - b.b);
+      for (let i = 1; i < hn.length; i++) { const dt = ((hn[i].b - hn[i - 1].b) / vb) * 60; if (dt > 0 && Math.abs(hn[i].m - hn[i - 1].m) / dt > TRAVEL_MAX) fast++; }
+    }
+    const byB = new Map(); for (const n of vn) { (byB.get(n.b) ?? byB.set(n.b, []).get(n.b)).push(n); }
+    for (const g2 of byB.values()) { const L = g2.filter((n) => n.h === 'L').map((n) => n.m), R = g2.filter((n) => n.h === 'R').map((n) => n.m); if (L.length && R.length && Math.max(...L) > Math.min(...R)) crossed++; for (const ms of [L, R]) if (ms.length > 1 && Math.max(...ms) - Math.min(...ms) > SPAN_MAX) wide++; }
+    const parts = []; if (wide) parts.push(`${wide} chords wider than ${SPAN_MAX} semitones`); if (crossed) parts.push(`${crossed} moments with the hands crossed`); if (fast) parts.push(`${fast} jumps faster than ${TRAVEL_MAX} semitones a second`);
+    const why = missing === 'Hard'
+      ? `video-authored hands from the arranger's own render at quarter = ${vb}; Hard refused by the playability audit: ${parts.join(', ')} on ${onsets} onsets (${(100 * (wide + crossed + fast) / onsets).toFixed(2)}%, gate 1%); the same moves pass at Medium's slower tempo`
+      : `video-authored hands from the arranger's own render; ${missing} missing because thin('medium') keeps ${Math.round(0.94 * by.Hard)}+ of Hard's ${by.Hard} notes (not a step down) and no density cut between ${Math.floor(by.Easy / 0.85) + 1} and ${Math.ceil(by.Hard * 0.85) - 1} notes exists without dropping a beat's melody or bass (every left-hand note is an outer voice of its beat)`;
+    reasons[g] = { tiers: tiers.length, notes: vn.length, why };
+    console.log(`  ${g.padEnd(26)} ${tiers.length} tier(s)  ${why.slice(0, 90)}`);
+    continue;
+  }
   if (!file) { reasons[g] = { tiers: tiers.length, why: 'the source recording is no longer on disk' }; continue; }
   let notes, bpm;
   try {

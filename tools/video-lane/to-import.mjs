@@ -28,17 +28,27 @@ const args = process.argv.slice(2);
 const flag = (n, d) => { const i = args.indexOf('--' + n); return i >= 0 ? args[i + 1] : d; };
 const [eventsPath, templatePath] = args.filter((a, i) => !a.startsWith('--') && (i === 0 || !args[i - 1].startsWith('--')));
 const bpm = Number(flag('bpm'));
-const meter = Number(flag('meter', 4));
+// --meter takes '3', '4' (quarters per bar) or 'N/D' (6/8 keeps its eighth
+// beat unit, which the app's score view honours via beatUnit).
+const meterArg = String(flag('meter', '4'));
+const [meterNum, meterDen] = meterArg.includes('/') ? meterArg.split('/').map(Number) : [Number(meterArg), 4];
 const outPath = flag('out', 'song.mid');
 const bpmSource = flag('bpm-source');
 if (!eventsPath || !templatePath || !bpm || !bpmSource) { console.error('usage: to-import.mjs <events.json> <template.json> --bpm N --bpm-source "where the tempo comes from" [--meter 4] --out song.mid'); process.exit(2); }
 
 const T = JSON.parse(readFileSync(templatePath, 'utf8'));
-if (!T.handMapping || !T.handMapping.red || !T.handMapping.white) {
+if (!T.handMapping || Object.keys(T.handMapping).length < 2 || !Object.values(T.handMapping).includes('L') || !Object.values(T.handMapping).includes('R')) {
   console.error(`REFUSE: ${templatePath} has no handMapping. Which colour is the left hand must be established from evidence outside pitch and written there, with its source.`);
   process.exit(1);
 }
-const ev = JSON.parse(readFileSync(eventsPath, 'utf8')).events;
+const evAll = JSON.parse(readFileSync(eventsPath, 'utf8')).events;
+// THRESHOLDS: ambiguous events under 2% of all events are LISTED and left out;
+// at or over 2% the extraction is refused (a colour the template cannot name
+// on that many notes means the template is wrong, not the notes).
+const amb = evAll.filter((e) => e.colour === 'ambiguous');
+if (amb.length / Math.max(1, evAll.length) >= 0.02) { console.error(`REFUSE: ${amb.length} of ${evAll.length} events (${(100 * amb.length / evAll.length).toFixed(1)}%) are ambiguous; the committed gate is < 2%`); process.exit(1); }
+for (const e of amb) console.log(`left out (ambiguous): midi ${e.midi} at ${e.on}s for ${(e.off - e.on).toFixed(2)}s: ${e.flags.join('; ')}`);
+const ev = evAll.filter((e) => e.colour !== 'ambiguous');
 // ☠️ A COLOUR THE TEMPLATE DOES NOT NAME IS NOT A HAND. Anything but a mapped
 // colour used to fall through to the right hand; it is refused instead.
 const unknown = ev.filter((e) => !(e.colour in T.handMapping));
@@ -78,5 +88,5 @@ if (mean >= MEAN_MAX || worst >= WORST_MAX) {
 const first = Math.min(...notes.map((n) => n.b));
 for (const n of notes) n.b = +(n.b - first).toFixed(4);
 const L = notes.filter((n) => n.hand === 'L').length, R = notes.length - L;
-writeFileSync(outPath, writeMidi({ notes, bpm, timeSig: [meter, 4], tracks: 2 }));
+writeFileSync(outPath, writeMidi({ notes, bpm, timeSig: [meterNum, meterDen], tracks: 2 }));
 console.log(`wrote ${outPath}: track 0 = left hand (${L} notes, colour ${Object.entries(T.handMapping).find(([, h]) => h === 'L')[0]}), track 1 = right hand (${R} notes)`);

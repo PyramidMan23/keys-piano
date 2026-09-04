@@ -564,6 +564,14 @@ function canonRowOf(variants) {
     diff: variants.length > 1 ? `${dLo}–${dHi}` : String(dHi),
     state: banked ? 'Banked' : (plays > 0 || tiers.some((t) => t > 0)) ? 'Needs work' : 'Not started',
     tiers,
+    // ☠️ A PIP IS A LEVEL, NOT A POSITION. The design draws E, M and H, and the
+    // renderer filled them by index: a song that ships Easy and Hard drew "E M",
+    // claiming a Medium it does not have and hiding the Hard it does. Eleven
+    // pieces skip a tier (ten of them long before this line was written). Send
+    // the levels along so each pip can find its own letter. Null when a variant
+    // carries no level at all (a single-arrangement song or a drill), which
+    // keeps the by-position path those rely on.
+    tierLevels: variants.every((v) => v.level) ? variants.map((v) => v.level[0]) : null,
     onOpen: () => startSong(variants.find((v) => (songStats(v.id).stars || 0) < 3) ?? main),
   };
 }

@@ -187,6 +187,10 @@ export const ART = {
     "album": "Gangsta's Paradise",
     "year": "1995"
   },
+  "gerudo-valley": {
+    "generated": true,
+    "drawnFrom": "the notes of Gerudo Valley, Koji Kondo · arr. Sheet Music Boss"
+  },
   "gladiator": {
     "artist": "Lisa Gerrard, Gavin Greenaway, The Lyndhurst Orchestra, Bruce Fowler, Yvonne S. Moriarty, Walt Fowler, Ladd McIntosh, Elizabeth Finch, Jack Smalley & Hans Zimmer",
     "album": "Gladiator (Soundtrack from the Motion Picture)",
@@ -590,5 +594,9 @@ export const ART = {
     "artist": "Mark Snow & Chris Carter",
     "album": "The Truth and the Light: Music from The X-Files",
     "year": "1996"
+  },
+  "zeldas-lullaby": {
+    "generated": true,
+    "drawnFrom": "the notes of Zelda's Lullaby, Koji Kondo · arr. Sheet Music Boss"
   }
 };

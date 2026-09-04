@@ -1,0 +1,30 @@
+{
+ "id": "sheet-music-boss-synthesia-2019",
+ "renderer": "Synthesia-style flat render used by Sheet Music Boss around 2019 (cream white keys, flat black keys, red strike line); Zelda Lullaby O6MtYbfo1eY",
+ "metric": "gmb",
+ "metricNote": "(g-b)/max(r,g,b). MEASURED 2026-09-04 on 698 events, median per frame over each press: white keys blue at -0.25 (352), green at +1.00 (232); black keys blue at -0.55..-0.50 (85), green at +1.00 (29). Nothing between -0.25 and +1.00.",
+ "classes": [
+  {
+   "name": "blue",
+   "max": 0
+  },
+  {
+   "name": "green",
+   "min": 0.5
+  }
+ ],
+ "hysteresisFrames": 2,
+ "settleFramesAfterSceneBreak": 12,
+ "sceneMinShare": 0.8,
+ "pressDeviation": 60,
+ "pressDeviationNote": "Euclidean RGB distance from the key own rest colour; the Silksong template measured 120-314 pressed vs at most 23 at rest and this renderer family reads the same (re-measured 2026-09-04 by the probe extraction: every event tint sits 100+ from rest).",
+ "maxSimultaneousKeys": 10,
+ "handMapping": {
+  "blue": "L",
+  "green": "R"
+ },
+ "handMappingNote": "Established from the arranger own score, not from pitch.",
+ "onsetLatencyMs": 83,
+ "onsetLatencyNote": "MEASURED 2026-09-04 with compare.mjs against a ByteDance transcription of this video own audio: best constant latency 83ms, residual onset error median 10ms, p90 22ms over 696 matched notes.",
+ "handMappingEvidence": "The video (O6MtYbfo1eY) shows page 1 of the arranger own engraving at 3:10 (saved as z-zeldas-lullaby/score_190.png): 3/4, G major, Flowing quarter = 110. Bars 1-4: treble staff RESTS, bass staff plays the eighth-eighth-quarter figure C3 G3 E4. Bar 5: treble enters with B4 (half) then D5. The video paints C3 G3 E4 BLUE from the first onset, repeating every 1.62s (a 3/4 bar at 110 = 1.636s), and the first GREEN event is B4 at +6.53s = the start of bar 5 (4 bars = 6.55s), followed by D5. Staff assignment by the arranger; blue = bass = left, green = treble = right. Checked 2026-09-04. No instant in the whole video has a blue note above a simultaneous green one."
+}

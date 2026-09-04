@@ -79,6 +79,20 @@ a per-note COLOUR, which is the hand information audio throws away:
   score). Erik C and Patrik Pietschmann paint a left-to-right gradient by pitch
   over a REAL keyboard: notes and timing readable, hands NOT. Never fill that
   gap from pitch.
+- ☠️ **One channel is not one renderer.** Sheet Music Boss alone spans four: Embers
+  red/grey (2025, Silksong), flat Synthesia-style blue/green (2019), a 3D render in
+  blue/green (2020) or dark-blue/cyan (2022), and cropped-keyboard renders. A
+  template names its own `metric` and per-key-type classes, measured on that
+  video's own tint histogram, judged on the per-frame MEDIAN of a press (the 3D
+  render's white strike flare smears a run mean). Never reuse thresholds across
+  renderers.
+- ☠️ **Colour is not always hand, even from SMB.** Song of Storms (2022) paints
+  VOICES: bass-staff chords one blue, bass-staff line the other, a G2 in the same
+  colour as a G5+D6 above it. Test every new video for same-colour spans over a
+  tenth and for one colour above the other at the same instant BEFORE trusting
+  bar 1; bar 1 alone agreed with the score and would have shipped a lie.
+- **The arranger's own engraving is IN every SMB video** (page 1 on the end card):
+  hand mapping and the tempo marking come from there; Musicnotes is not needed.
 - Results, gates and the one failing number: `tools/video-lane/THRESHOLDS.md`.
 
 **The importer** — `tools/import-midi.mjs`, `tools/midi.mjs` (a dependency-free

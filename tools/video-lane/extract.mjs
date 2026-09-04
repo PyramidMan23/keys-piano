@@ -73,6 +73,29 @@ const classify = (r, g, b) => {
   if (redness <= T.rednessGrey) return 'white';
   return 'ambiguous';
 };
+// A renderer that paints hands in two BLUES (Sheet Music Boss 2020-2022, a 3D
+// keyboard) lights each key as a vertical GRADIENT with a white strike flare
+// in the first frames, so the run-mean tint smears the two classes into one
+// continuum (measured 2026-09-04: g/b ran 0.2 to 0.8 with no gap). Such a
+// template names its metric and its class ranges PER KEY TYPE (the gradient
+// differs between the white row and the black row), and the event is judged on
+// the MEDIAN per-frame metric over its run, which the flare cannot move.
+// Without T.metric the redness path above runs unchanged (Silksong).
+const METRICS = {
+  redness: (r, g, b) => r <= 0 ? null : (r - b) / r,
+  gb: (r, g, b) => g / Math.max(1, b),
+  gmb: (r, g, b) => (g - b) / Math.max(1, r, g, b),
+};
+const metricFn = T.metric ? METRICS[T.metric] : null;
+if (T.metric && !metricFn) { console.error(`REFUSE: template metric '${T.metric}' is not one of ${Object.keys(METRICS).join(', ')}`); process.exit(1); }
+const classifyMedian = (vals, black) => {
+  const v = vals.filter((x) => x !== null).sort((a, b) => a - b);
+  if (!v.length) return 'ambiguous';
+  const m = v[Math.floor(v.length / 2)];
+  const classes = (black ? T.classesBlack : T.classesWhite) ?? T.classes;
+  for (const c of classes) if ((c.min === undefined || m >= c.min) && (c.max === undefined || m <= c.max)) return c.name;
+  return 'ambiguous';
+};
 
 const ff = spawn('ffmpeg', ['-v', 'info', '-i', videoPath,
   '-vf', `crop=${W}:${cropH}:0:${cropTop},showinfo`,
@@ -184,12 +207,15 @@ function finish() {
     const dev = s.map((o) => o === null ? null : Math.hypot(o[0] - rest[0], o[1] - rest[1], o[2] - rest[2]));
 
     let on = false, run = 0, gap = 0, startI = 0, sum = null;
+    let metricVals = [];
     const close = (endI) => {
-      const colour = classify(sum[0] / sum[3], sum[1] / sum[3], sum[2] / sum[3]);
+      const colour = metricFn ? classifyMedian(metricVals, cols[ci].black) : classify(sum[0] / sum[3], sum[1] / sum[3], sum[2] / sum[3]);
       const flags = [];
-      if (colour === 'ambiguous') { flags.push(`tint (${(sum[0] / sum[3]).toFixed(0)},${(sum[1] / sum[3]).toFixed(0)},${(sum[2] / sum[3]).toFixed(0)}) matches no template class`); unresolved++; }
-      events.push({ midi: cols[ci].midi, on: +times[startI].toFixed(4), off: +times[endI].toFixed(4), colour, flags });
-      on = false; sum = null;
+      const mv = metricFn ? metricVals.filter((x) => x !== null).sort((a, b) => a - b) : null;
+      const metricMedian = mv && mv.length ? +mv[Math.floor(mv.length / 2)].toFixed(3) : undefined;
+      if (colour === 'ambiguous') { flags.push(`tint (${(sum[0] / sum[3]).toFixed(0)},${(sum[1] / sum[3]).toFixed(0)},${(sum[2] / sum[3]).toFixed(0)})${metricFn ? ` ${T.metric} median ${metricMedian}` : ''} matches no template class`); unresolved++; }
+      events.push({ midi: cols[ci].midi, on: +times[startI].toFixed(4), off: +times[endI].toFixed(4), colour, ...(metricFn ? { metricMedian } : {}), flags });
+      on = false; sum = null; metricVals = [];
     };
     for (let i = 0; i < s.length; i++) {
       const d = dev[i];
@@ -197,7 +223,7 @@ function finish() {
       if (d > T.pressDeviation) {
         gap = 0; run++;
         if (!on && run >= T.hysteresisFrames) { on = true; startI = i - run + 1; sum = [0, 0, 0, 0]; }
-        if (on) { sum[0] += s[i][0]; sum[1] += s[i][1]; sum[2] += s[i][2]; sum[3]++; }
+        if (on) { sum[0] += s[i][0]; sum[1] += s[i][1]; sum[2] += s[i][2]; sum[3]++; if (metricFn) metricVals.push(metricFn(s[i][0], s[i][1], s[i][2])); }
       } else {
         run = 0;
         if (on) { gap++; if (gap >= T.hysteresisFrames) close(i - gap); }
@@ -226,8 +252,14 @@ function finish() {
     console.log(`dropped ${dropped} events at ${impossible.length} instant(s) where more than ${MAX_SIMULTANEOUS} keys lit at once (${impossible.map(([k, n]) => `${(+k).toFixed(2)}s: ${n}`).join(', ')}) - a scene transition, not a performance`);
   }
 
-  const byColour = { red: 0, white: 0, ambiguous: 0 };
-  for (const e of events) byColour[e.colour]++;
+  // ☠️ COUNT THE AMBIGUOUS EVENTS THAT SURVIVED THE DROP. unresolved++ ran in
+  // close(), before the ten-finger rule removed the title-card events, so a
+  // 3-minute video with two dissolves reported 99 unresolved of 698 (14.2%)
+  // when every one of the 698 kept events had a class. Recount on what ships.
+  unresolved = events.filter((e) => e.colour === 'ambiguous').length;
+  const byColour = { ambiguous: 0 };
+  for (const c of ((T.classesWhite ?? T.classes) ?? [{ name: 'red' }, { name: 'white' }])) byColour[c.name] = 0;
+  for (const e of events) byColour[e.colour] = (byColour[e.colour] ?? 0) + 1;
   const out = {
     video: videoPath, frames: frameIdx,
     nonPianoFrames: skippedFrames, settlingFrames,
@@ -239,6 +271,6 @@ function finish() {
     events,
   };
   writeFileSync(outPath, JSON.stringify(out, null, 1));
-  console.log(`${frameIdx} frames (${skippedFrames} not the piano, ${settlingFrames} settling) -> ${events.length} events (${byColour.red} red, ${byColour.white} white), ${unresolved} unresolved (${(out.ambiguousShare * 100).toFixed(1)}%)`);
+  console.log(`${frameIdx} frames (${skippedFrames} not the piano, ${settlingFrames} settling) -> ${events.length} events (${Object.entries(byColour).filter(([k]) => k !== 'ambiguous').map(([k, n]) => `${n} ${k}`).join(', ')}), ${unresolved} unresolved (${(out.ambiguousShare * 100).toFixed(1)}%)`);
   console.log(`wrote ${outPath}`);
 }

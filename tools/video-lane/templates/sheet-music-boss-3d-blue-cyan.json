@@ -1,0 +1,36 @@
+{
+ "id": "sheet-music-boss-3d-blue-cyan",
+ "renderer": "Sheet Music Boss 3D keyboard render (2022) painting hands DARK BLUE and CYAN; Song of Storms jxd-DCi_cLM. The key tint is a vertical gradient (bright at the strike line, dark at the key foot) so the two rows sampled by the extractor need their own ranges.",
+ "metric": "gb",
+ "metricNote": "g/b, median per frame over each press. MEASURED 2026-09-04 on 942 events: white row dark-blue 0.00..0.10 (204) vs cyan 0.55..0.80 (566), nothing between 0.15 and 0.55; black row dark-blue 0.40..0.50 (100) vs cyan 0.70..0.85 (72), nothing between 0.50 and 0.70. The run MEAN could not separate them (continuum 0.2..0.8) because of the white strike flare; the per-frame median can.",
+ "classesWhite": [
+  {
+   "name": "blue",
+   "max": 0.3
+  },
+  {
+   "name": "cyan",
+   "min": 0.45
+  }
+ ],
+ "classesBlack": [
+  {
+   "name": "blue",
+   "max": 0.58
+  },
+  {
+   "name": "cyan",
+   "min": 0.66
+  }
+ ],
+ "hysteresisFrames": 2,
+ "settleFramesAfterSceneBreak": 12,
+ "sceneMinShare": 0.8,
+ "pressDeviation": 60,
+ "pressDeviationNote": "Euclidean RGB distance from the key own rest colour; the Silksong template measured 120-314 pressed vs at most 23 at rest and this renderer family reads the same (re-measured 2026-09-04 by the probe extraction: every event tint sits 100+ from rest).",
+ "maxSimultaneousKeys": 10,
+ "handMapping": null,
+ "handMappingNote": "REFUSED 2026-09-04: in this render the two blues are NOT hands. Song of Storms bar 5 (page 1 of the arranger score, shown in the video at 2:14): the bass-staff chords F3+A3 are CYAN while the bass-staff line E3 G3 B3 in the same bar is DARK BLUE; at 71.67s a cyan G2 sounds with a cyan G5 and D6 (a 43-semitone span); 33 instants in the video have one colour spanning more than a tenth. Transcribed velocity does not separate the colours either (p50 84 vs 89). The colours look like VOICES (bass line vs everything else). Notes and timing from this template are readable; hands are not, and must not be filled from pitch.",
+ "onsetLatencyMs": 95,
+ "onsetLatencyNote": "MEASURED 2026-09-04 with compare.mjs: best constant latency 95ms, residual median 3ms, p90 12ms over 932 matched notes."
+}

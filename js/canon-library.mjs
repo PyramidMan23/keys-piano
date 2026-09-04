@@ -1358,13 +1358,22 @@ function renderTiles(root, ctx) {
     const pips = pipRowOf(tile);
     if (pips) {
       const tiers = Array.isArray(song.tiers) ? song.tiers : [];
+      // ☠️ MATCH THE CELL'S OWN LETTER, DO NOT COUNT CELLS. song.tiers holds the
+      // proofs for the tiers this song actually ships, easiest first, so filling
+      // E, M, H from it by index mislabels every song that skips one: Easy+Hard
+      // drew "E M". tierLevels says which letter each entry belongs to, and is
+      // null only where no variant has a level, where by-position is right.
+      const levels = Array.isArray(song.tierLevels) ? song.tierLevels : null;
       [...pips.children].forEach((cell, i) => {
         const pip = cell.querySelector('i');
         const letter = cell.querySelector('span');
         if (!pip) return;
+        const at = levels ? levels.indexOf((letter?.textContent ?? '').trim()) : i;
         // a single-tier drill keeps only its first pip honest; spare letters go
-        if (i >= tiers.length && tiers.length) { cell.style.display = 'none'; return; }
-        const on = (tiers[i] ?? 0) > 0;
+        // (no un-hiding: every tile here is a fresh clone of the template, and
+        // writing display back would SHOW a cell the design itself hides)
+        if (at < 0 || (at >= tiers.length && tiers.length)) { cell.style.display = 'none'; return; }
+        const on = (tiers[at] ?? 0) > 0;
         if (on && pipOn) { pip.setAttribute('style', pipOn); if (letterOn && letter) letter.setAttribute('style', letterOn); }
         if (!on && pipOff) { pip.setAttribute('style', pipOff); if (letterOff && letter) letter.setAttribute('style', letterOff); }
       });
@@ -1540,8 +1549,13 @@ function renderRows(root, ctx, anchors) {
     put(STATE, song.state);
 
     // pips carry this song's proofs, not the template song's
+    // the same letter rule as the grid tiles: a tier button belongs to the
+    // level printed on it, and a song that does not ship that level shows none
+    const levels = Array.isArray(song.tierLevels) ? song.tierLevels : null;
     [...slot(row, TIERS).querySelectorAll('button')].forEach((btn, i) => {
-      const proofs = tiers[i] ?? 0;
+      const at = levels ? levels.indexOf((btn.querySelector('span')?.textContent ?? '').trim()) : i;
+      if (at < 0) { btn.style.display = 'none'; return; }
+      const proofs = tiers[at] ?? 0;
       [...btn.querySelectorAll('i')].forEach((pip, k) => {
         const style = pipRef[pipKey(pip, k < proofs)];
         if (style) pip.setAttribute('style', style);

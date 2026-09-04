@@ -241,3 +241,83 @@ assignments are right.
   labels against the 100 the plan requires. Fix (2) first (track each bar as an
   object down the lane so consecutive same-key bars do not merge), then label,
   then decide.
+
+---
+
+# RESULTS — Zelda batch (four Sheet Music Boss videos), 2026-09-04
+
+Mark's list: Song of Storms, Main Theme, Zelda's Lullaby, Gerudo Valley. All four
+SMB videos downloaded at 1920x1080 60fps CFR (AV1). None of them is the Embers
+red/grey render Silksong came from; three renderers appear, and the template
+system had to grow to name its own colour metric per renderer
+(`metric`, `classesWhite`, `classesBlack`, judged on the per-frame MEDIAN over a
+press, because the 2020-22 3D render's white strike flare smears a run MEAN).
+
+| Song | Video | Renderer | Geometry | Ambiguous | Audio F1 / worst 30s | Octave crop | Palette swap | Hands | Grid fit | Shipped |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Zelda's Lullaby | O6MtYbfo1eY (2019) | flat Synthesia-style, blue/green | 52+36, residual 0.5px | 0 of 698 | 0.816 / 0.157* | refused (32 black) | 46 flipped, 0 unchanged, 56 ambiguous | blue=L green=R from the engraving in the video | 110, mean 0.046 worst 0.124 | Easy 269 / Hard 698 |
+| Gerudo Valley | Sna0iom85IU (2020) | 3D render, blue/green | `--filmed` fit, residual 1.8px (uniform fit refused at 6.5px) | 9 of 1468 (0.6%), all listed | 0.860 / 0.788 | refused (30 black) | 314 flipped, 0 unchanged, 72 ambiguous | blue=L green=R from the engraving in the video | 120, mean 0.013 worst 0.052 | Easy 595 / Medium 1297; **Hard REFUSED by the audit** |
+| Song of Storms | jxd-DCi_cLM (2022) | 3D render, dark-blue/cyan | 52+36, residual 0.7px | 0 of 942 | 0.869 / 0.814 | refused (32 black) | 228 flipped, 1 unchanged, 6 unmatched | **NOT HANDS** | (not run) | **EXCLUDED** |
+| Main Theme | c0szv75MEU4 (2019), Xtre_JPPxBs (2024 EASY) | cropped keyboards | **REFUSED**: 32 and 25 black keys found | | | | | | | **EXCLUDED** |
+
+\* Lullaby's worst window is the last 24 s: the piece ends at 182 s and the channel
+outro jingle plays over the end card to 206 s (194 audio-only notes there, 3 % of
+which match anything the video played, so it is not the piece). Inside the
+performance the window gate holds.
+
+## The audio-consistency gate, honestly
+
+All three extractions FAIL F1 >= 0.90 exactly the way Silksong did (0.864):
+precision 0.986-0.997, the shortfall is recall against a transcription that
+produces octave ghosts (Storms 133 of 271 audio-only notes, Lullaby 68 of 311,
+Gerudo 89 of 450 sit an octave or a twelfth above a video note at the same
+instant). The threshold is NOT lowered and the numbers are NOT recomputed with
+ghosts removed. What was verified directly instead: page 1 of each arranger's
+own engraving, shown inside the video, bar by bar against the extracted events
+(Lullaby bars 1-7, Gerudo bars 1-7, Storms bars 1-7): every pitch, every hand
+colour and every bar length agreed.
+
+## Song of Storms: the colours are voices, not hands
+
+Bar 5 of the engraving puts F3+A3 chords and the E3 G3 B3 line in the SAME bass
+staff; the video paints the chords CYAN and the line DARK BLUE. At 71.67 s a
+cyan G2 sounds with a cyan G5 and D6 (43 semitones), and 33 instants have one
+colour spanning more than a tenth. Transcribed velocity does not separate the
+colours (p50 84 vs 89). Notes and timing are clean (0 ambiguous, median onset
+error 3 ms) but hands cannot be read, and Law 2 forbids filling them from
+pitch. Excluded; a hand source outside this video would reopen it.
+
+## Main Theme: cropped keyboards
+
+Both SMB renders show only part of the keyboard (45 and 36 white keys). The
+committed geometry gate refuses anything but the full 88, so nothing was
+anchored by guesswork. Reopening this needs a decision to anchor a cropped
+keyboard from the black-key pattern plus the audio transcription's pitch
+(the filmed lane's method), which is a new gate, not a lowered one.
+
+## Gerudo Valley Hard
+
+18 left-hand moves of 19 semitones at sixteenth-note speed (A3 -> D2, 152
+semitones a second, the arranger's own bass figure at quarter = 120) trip the
+120 st/s ceiling on 1.77 % of onsets (gate: 1 %). The audit is the contract for
+video-authored hands (Codex round 3), so Hard is refused and the arrangement
+ships as Easy 84 bpm / Medium 102 bpm, where the same moves fall under the
+ceiling. Exempting video-authored Hard from the audit the way an engraving is
+exempt is Mark's call, not the lane's.
+
+## Lullaby Medium
+
+thin('medium') keeps 656 of 698 (not a step down). The density cut cannot reach
+the 317-593 band because in an eighth-eighth-quarter arpeggio every left-hand
+note is an outer voice of its beat, so nothing is droppable without losing a
+bass or a melody note. Two tiers, as the importer says.
+
+## Lane fixes this run
+- `extract.mjs`: template metric + per-type classes + per-frame median (above).
+- `extract.mjs`: ambiguous count is now taken over the events that SURVIVE the
+  ten-finger drop; it used to count title-card events already thrown away
+  (Lullaby read 14.2 % when the real figure was 0).
+- `to-import.mjs`: ambiguous events under the 2 % gate are LISTED and left out
+  instead of refusing the whole file; `--meter N/D`; handMapping check is
+  colour-name agnostic.
+- `import-midi.mjs`: the density tier fill now runs for video-authored hands too.

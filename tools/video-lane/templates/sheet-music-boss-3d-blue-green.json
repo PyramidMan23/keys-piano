@@ -1,0 +1,40 @@
+{
+ "id": "sheet-music-boss-3d-blue-green",
+ "renderer": "Sheet Music Boss 3D keyboard render (2020-2022, blue glow strike line, particle flare) painting hands BLUE and GREEN; Gerudo Valley Sna0iom85IU",
+ "metric": "gmb",
+ "metricNote": "(g-b)/max(r,g,b), median per frame over each press. MEASURED 2026-09-04 on 1468 events: white keys blue -0.45..-0.25 (439), green +0.25..+0.70 (363), 9 events at -0.10..0.00; black keys blue -0.40..-0.25 (345), green +0.40..+0.60 (312), none between. Thresholds sit in the gaps.",
+ "classesWhite": [
+  {
+   "name": "blue",
+   "max": -0.18
+  },
+  {
+   "name": "green",
+   "min": 0.2
+  }
+ ],
+ "classesBlack": [
+  {
+   "name": "blue",
+   "max": -0.18
+  },
+  {
+   "name": "green",
+   "min": 0.3
+  }
+ ],
+ "hysteresisFrames": 2,
+ "settleFramesAfterSceneBreak": 12,
+ "sceneMinShare": 0.8,
+ "pressDeviation": 60,
+ "pressDeviationNote": "Euclidean RGB distance from the key own rest colour; the Silksong template measured 120-314 pressed vs at most 23 at rest and this renderer family reads the same (re-measured 2026-09-04 by the probe extraction: every event tint sits 100+ from rest).",
+ "maxSimultaneousKeys": 10,
+ "handMapping": {
+  "blue": "L",
+  "green": "R"
+ },
+ "handMappingNote": "Established from the arranger own score, not from pitch.",
+ "onsetLatencyMs": 83,
+ "onsetLatencyNote": "MEASURED 2026-09-04 with compare.mjs against a ByteDance transcription of this video own audio: best constant latency 83ms, residual onset error median 5ms, p90 14ms over 1448 matched notes.",
+ "handMappingEvidence": "The video (Sna0iom85IU) shows page 1 of the arranger own engraving at 2:43 (saved as z-gerudo-valley/score_full.png): 4/4, F# minor, Moderately fast quarter = 120, arr. Andrew Wrangell. Bar 1: treble staff = repeated staccato eighth chords A3 C#4 F#4; bass staff = F#2 then alternating F#3 / C#3 eighths. The video paints the A3 C#4 F#4 chords GREEN every 0.25s (an eighth at 120) and F#2, F#3, C#3 BLUE on the off-eighths, exactly the engraving. Staff assignment by the arranger; blue = bass = left, green = treble = right. Checked 2026-09-04: no instant in the whole video has one colour spanning more than a tenth, and none has a blue note above a simultaneous green one."
+}

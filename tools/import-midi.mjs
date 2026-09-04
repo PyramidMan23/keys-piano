@@ -422,7 +422,12 @@ for (const p of problems.slice(-3)) if (/not a step down/.test(p)) console.log('
 // and it faces the same playability audit as every tier we make. Where no
 // such band exists (the Bach prelude's Easy is already 82% of its Hard) the
 // piece honestly keeps two tiers, and the reason is recorded.
-if (fromScore) {
+// Video-authored hands qualify too: the render is played from the arranger's
+// own MIDI, so its Hard is the arranger's notes exactly as an engraving's are,
+// and a density cut of it is still a strict subset of verified notes
+// (Zelda's Lullaby, 2026-09-04: thin('medium') kept 656 of 698 and was dropped
+// as not a step down, the same way the Bach prelude was).
+if (fromScore || videoHands) {
   const order = ['Easy', 'Medium', 'Hard'];
   const count = (lvl) => built.find((t) => t.level === lvl)?.notes.length;
   for (const lvl of ['Medium', 'Easy']) {
