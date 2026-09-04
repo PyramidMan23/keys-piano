@@ -171026,7 +171026,8 @@ export const IMPORTED = [
   "beatUnit": 4,
   "handAssignment": "generated",
   "provenance": "video-authored-hands",
-  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=Sna0iom85IU (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bar 1: treble staccato chords A3 C#4 F#4, bass F#2 / F#3 / C#3); tempo Moderately fast quarter = 120 from that engraving; Hard refused by the playability audit (18 left-hand leaps at 152 semitones a second)",
+  "key": "F# minor",
+  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=Sna0iom85IU (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bar 1: treble staccato chords A3 C#4 F#4, bass F#2 / F#3 / C#3); F sharp minor, 4/4, tempo Moderately fast quarter = 120, all from that engraving; Hard refused by the playability audit (18 left-hand leaps at 152 semitones a second)",
   "sections": [
    {
     "name": "A, bars 1 to 16",
@@ -178853,7 +178854,8 @@ export const IMPORTED = [
   "beatUnit": 4,
   "handAssignment": "generated",
   "provenance": "video-authored-hands",
-  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=Sna0iom85IU (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bar 1: treble staccato chords A3 C#4 F#4, bass F#2 / F#3 / C#3); tempo Moderately fast quarter = 120 from that engraving; Hard refused by the playability audit (18 left-hand leaps at 152 semitones a second)",
+  "key": "F# minor",
+  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=Sna0iom85IU (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bar 1: treble staccato chords A3 C#4 F#4, bass F#2 / F#3 / C#3); F sharp minor, 4/4, tempo Moderately fast quarter = 120, all from that engraving; Hard refused by the playability audit (18 left-hand leaps at 152 semitones a second)",
   "sections": [
    {
     "name": "A, bars 1 to 16",
@@ -794426,7 +794428,8 @@ export const IMPORTED = [
   "beatUnit": 4,
   "handAssignment": "generated",
   "provenance": "video-authored-hands",
-  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=O6MtYbfo1eY (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bars 1-4 bass only, treble enters bar 5); tempo Flowing quarter = 110 from that engraving",
+  "key": "G major",
+  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=O6MtYbfo1eY (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bars 1-4 bass only, treble enters bar 5); G major, 3/4, tempo Flowing quarter = 110, all from that engraving",
   "sections": [
    {
     "name": "A, bars 1 to 16",
@@ -796095,7 +796098,8 @@ export const IMPORTED = [
   "beatUnit": 4,
   "handAssignment": "generated",
   "provenance": "video-authored-hands",
-  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=O6MtYbfo1eY (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bars 1-4 bass only, treble enters bar 5); tempo Flowing quarter = 110 from that engraving",
+  "key": "G major",
+  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=O6MtYbfo1eY (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bars 1-4 bass only, treble enters bar 5); G major, 3/4, tempo Flowing quarter = 110, all from that engraving",
   "sections": [
    {
     "name": "A, bars 1 to 16",

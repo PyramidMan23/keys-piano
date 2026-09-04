@@ -44,6 +44,11 @@ if (!id || !title) { console.error('--id and --title are required'); process.exi
 const group = flag('group', id);
 const grid = Number(flag('grid', 4));           // subdivisions per quarter beat
 const source = flag('source', 'imported MIDI');
+// The KEY as the source states it, e.g. --key "G major". Optional, and only
+// ever from a score or an engraving: the sleeve generator otherwise guesses it
+// from the notes, and a guess read Zelda's Lullaby (G major, one sharp in the
+// arranger's own engraving) as C major off its thinned Easy tier.
+const key = flag('key', '');
 const wantTiers = flag('tiers', 'easy,medium,hard').split(',');
 
 // ---- 1. read ---------------------------------------------------------------
@@ -370,7 +375,7 @@ for (const level of wantTiers) {
     title, composer, bpm: tierBpm, timeSig, beatUnit: timeSig[1],
     // handAssignment stays 'generated' because four tools key on it; the video
     // provenance rides in its own field and in the source string
-    handAssignment: 'generated', ...(videoHands ? { provenance: 'video-authored-hands' } : {}), source,
+    handAssignment: 'generated', ...(videoHands ? { provenance: 'video-authored-hands' } : {}), ...(key ? { key } : {}), source,
     sections: sectionsFor(ns),
     notes: ns.map((n) => ({ b: n.b, d: +n.d.toFixed(4), m: n.m, h: n.h })),
   });
@@ -475,7 +480,7 @@ if (fromScore || videoHands) {
     built.push({
       id: tid, group, level: lvl,
       title, composer, bpm: tierBpm, timeSig, beatUnit: timeSig[1],
-      handAssignment: 'generated', source,
+      handAssignment: 'generated', ...(key ? { key } : {}), source,
       sections: sectionsFor(made),
       notes: made.map((n) => ({ b: n.b, d: +n.d.toFixed(4), m: n.m, h: n.h })),
     });

@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v110';  // Zelda: Zelda's Lullaby (E/H) + Gerudo Valley (E/M) via the video lane
+const VERSION = 'keys-v111';  // Zelda sleeves drawn for real (v110 shipped a 404 placeholder), key stated from the engraving
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

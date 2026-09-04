@@ -76,6 +76,16 @@ function keyOf(notes) {
   return best;
 }
 
+// "G major" / "F# minor" as the detector's own shape, or null if unstated.
+function parseKey(stated) {
+  if (!stated) return null;
+  const m = /^\s*([A-G])([#b]?)\s+(major|minor)\s*$/i.exec(stated);
+  if (!m) return null;
+  const base = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[m[1].toUpperCase()];
+  const tonic = (base + (m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0) + 12) % 12;
+  return { tonic, mode: m[3].toLowerCase(), stated: true };
+}
+
 // The opening melody, as a 0..1 contour. The top voice is the tune.
 // The opening melody as a 0..1 contour, SMOOTHED INTO A GESTURE. The raw top
 // line of a piece with repeated notes reads as a jagged trace, like a share
@@ -103,7 +113,10 @@ function contourOf(notes, steps = 40) {
 }
 
 function sleeveHtml(song) {
-  const key = keyOf(song.notes);
+  // ☠️ A STATED KEY BEATS A DETECTED ONE. keyOf reads the notes, which is all
+  // there is for a transcription, but a song imported from an engraving can
+  // carry the key its arranger WROTE, and that is not a thing to re-derive.
+  const key = parseKey(song.key) ?? keyOf(song.notes);
   const contour = contourOf(song.notes) || [0.2, 0.5, 0.35, 0.7, 0.5, 0.85, 0.6, 0.4];
   const hue = Math.round((FIFTHS.indexOf(key.tonic) / 12) * 360);
   const major = key.mode === 'major';
@@ -183,10 +196,15 @@ function sleeveHtml(song) {
 }
 
 // which groups need one
+// ☠️ DRAW FROM THE FULLEST TIER. Keeping the first variant meant drawing from
+// the EASY one, whose thinning had dropped nearly every F sharp, so the key
+// detector read Zelda's Lullaby as C major. The richest tier is the best
+// evidence of both the key and the melody's shape.
 const groups = new Map();
 for (const s of SONGS) {
   const g = s.group ?? s.id;
-  if (!groups.has(g)) groups.set(g, s);
+  const held = groups.get(g);
+  if (!held || s.notes.length > held.notes.length) groups.set(g, s);
 }
 const targets = [...groups.entries()]
   .filter(([g]) => (force || !ART[g]))
