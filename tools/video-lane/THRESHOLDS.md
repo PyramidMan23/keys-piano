@@ -321,3 +321,44 @@ bass or a melody note. Two tiers, as the importer says.
   instead of refusing the whole file; `--meter N/D`; handMapping check is
   colour-name agnostic.
 - `import-midi.mjs`: the density tier fill now runs for video-authored hands too.
+
+---
+
+# GERUDO VALLEY HARD — the audit exemption, 2026-09-05
+
+Mark, in his own words: **"do the hard tier for gerudo, exempt it from the audit"**.
+
+The refusal was real and is not being re-scored: the arrangement asks the left
+hand for 18 leaps of about 19 semitones at sixteenth-note speed, 152 semitones a
+second against a 120 ceiling, on 1.77% of onsets against a 1% gate. What changed
+is WHOSE work the audit is grading. The ceiling was derived to catch hands a
+SCRIPT invented; these hands are the ones Andrew Wrangell painted in his own
+render, at his own marked tempo, and the leaps are his written bass figure. That
+is the same argument that already exempts an engraved score's Hard tier, so
+`import-midi.mjs` now treats `fromScore || videoHands` alike for Hard only.
+
+What the exemption does NOT cover, and this matters most:
+- **A CROSSING is still refused**, whoever authored the hands. Hands that cross
+  mean we read the staves or the colours the wrong way round, and no authorship
+  makes a mis-read right. The first version of this change skipped the audit
+  outright, and Codex's planted fixture in `test/import-roundtrip.mjs` (eight
+  deliberately swapped moments) failed within a minute. `crossings()` in
+  `js/hands.mjs` is now the one definition of that rule and an authored Hard is
+  still measured against it. Gerudo Valley: 0 crossings on 1019 onsets.
+
+Three more things kept, deliberately:
+- **Easy and Medium are still audited.** We cut those, so they are ours to grade.
+- **A video-authored Hard is never thinned to pass.** The density fallback that
+  trims a transcribed Hard "until it is playable" is skipped for authored hands,
+  or the app would teach a different arrangement than the one on the page.
+- **The exemption announces itself.** The importer prints that the tier does NOT
+  pass on its own and names whose call it was, so this can never look like a
+  green result.
+
+Gerudo Valley now ships Easy 595 / Medium 1240 / Hard 1459 at 84 / 102 / 120 bpm.
+Medium is a density cut of the Hard, so it is a strict subset of the arranger's
+notes and a real step down (1240 against 1459, with 595 a step down again).
+
+Zelda's Lullaby is unchanged at two tiers: its refusal was never the audit, it
+is that every left-hand note is an outer voice of its beat, so no density cut
+lands between 317 and 593 notes without dropping a beat's melody or bass.

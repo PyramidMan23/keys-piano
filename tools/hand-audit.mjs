@@ -81,6 +81,15 @@ function auditSong(song) {
   // field is granted only on Mark's word, so this is not a hole a tool can
   // widen: nothing generated ever sets performanceVerified.
   const fromScore = /mutopia|wikimedia/i.test(song.source || '') || !!song.performanceVerified;
+  // ☠️ AND AN ARRANGER'S OWN RENDER CARRIES THE SAME AUTHORITY AS THEIR ENGRAVING.
+  // Mark, 2026-09-05, on Gerudo Valley: "do the hard tier for gerudo, exempt it
+  // from the audit". A video-authored HARD tier is the arranger's complete
+  // arrangement with the hands that arranger painted, so its reach and its tempo
+  // are theirs, exactly as Chopin's leap is his. ONLY the Hard tier: Easy and
+  // Medium are OUR cuts of it and stay strict, and crossed hands stay strict for
+  // everyone below, because a crossing means the colours were read the wrong way
+  // round and no provenance excuses our own mis-read.
+  const authored = fromScore || (song.provenance === 'video-authored-hands' && song.level === 'Hard');
 
   const byBeat = new Map();
   for (const n of notes) {
@@ -196,7 +205,7 @@ function auditSong(song) {
       // the occasional wide leap, a script-cut hand is asked to do it all song.
       // So: the limit sits above where correct writing lives, and it has to
       // happen systemically before it counts.
-      if (systemic(wide, hn.length) && !fromScore) add('hand roams too far in one beat',
+      if (systemic(wide, hn.length) && !authored) add('hand roams too far in one beat',
         `${h === 'L' ? 'left' : 'right'} hand covers over ${ROAM_MAX} semitones inside a beat on ` +
         `${wide} of ${hn.length} notes, worst ${worst}; ${eg}`);
     }
@@ -217,8 +226,8 @@ function auditSong(song) {
   // chord: crossed hands (which would mean the staves were mis-read) and a hand
   // asked to cover ground faster than a hand moves. Those keep the strict rule.
   const onsets = beats.length;
-  if (systemic(over, onsets) && !fromScore) add('chord no hand can hold', `${over} of ${onsets} onsets; e.g. ${overEg}`);
-  if (systemic(fingers, onsets) && !fromScore) add('more than five keys in one hand', `${fingers} of ${onsets} onsets; e.g. ${fingerEg}`);
+  if (systemic(over, onsets) && !authored) add('chord no hand can hold', `${over} of ${onsets} onsets; e.g. ${overEg}`);
+  if (systemic(fingers, onsets) && !authored) add('more than five keys in one hand', `${fingers} of ${onsets} onsets; e.g. ${fingerEg}`);
   if (systemic(crossed, onsets)) add('crossed hands', `${crossed} of ${onsets} onsets; e.g. ${crossedEg}`);
   // Travel joins the score exemption (2026-09-01, the Fantaisie-Impromptu
   // import). The 120 st/s ceiling was derived to catch hands a SCRIPT invented;
@@ -227,7 +236,7 @@ function auditSong(song) {
   // an assignment error. The one rule deliberately NOT exempted is crossed
   // hands: in an imported score that means the staves were mis-read, which is
   // OUR bug class, and no provenance excuses it.
-  if (systemic(travel, onsets) && !fromScore) add('hand cannot travel that fast', `${travel} of ${onsets} onsets; e.g. ${travelEg}`);
+  if (systemic(travel, onsets) && !authored) add('hand cannot travel that fast', `${travel} of ${onsets} onsets; e.g. ${travelEg}`);
 
   // THRESHOLD SPLIT: do the hands separate almost perfectly at a fixed pitch?
   const L = notes.filter((n) => n.h === 'L').map((n) => n.m);
@@ -265,7 +274,7 @@ function auditSong(song) {
     // tier over a single leftover moment. A blemish is not a defect (165860d),
     // and evidence too weak for the rule that owns it is too weak to borrow.
     if (bestPurity > 0.985 && (systemic(over, onsets) || systemic(travel, onsets)
-      || systemic(fingers, onsets) || systemic(crossed, onsets)) && !fromScore) {
+      || systemic(fingers, onsets) || systemic(crossed, onsets)) && !authored) {
       add('threshold split', `${(bestPurity * 100).toFixed(1)}% of notes fall on one side of ${name(bestCut)}, ` +
         'and the result is unplayable: a script cut this by pitch');
     }
@@ -373,6 +382,31 @@ if (!process.argv.includes('--id')) {
   for (const n of cutButScored.notes) n.h = n.m < 60 ? 'L' : 'R';
   const caughtScored = auditSong(cutButScored);
 
+  // FOURTH ARM: the authored-hands exemption must not hide a CROSSING.
+  // Mark's 2026-09-05 call excuses a video-authored Hard tier its reach and its
+  // tempo, which are the arranger's. It excuses nothing about which hand plays
+  // which note: hands that cross mean WE read the colours the wrong way round.
+  // The importer has its own planted fixture for this (test/import-roundtrip);
+  // this is the same claim made of the shipped library, because the exemption
+  // lives in two files and an exemption is only as narrow as its widest copy.
+  const authoredButCrossed = clone(good);
+  authoredButCrossed.id = 'fixture:video-authored-hard-but-crossed';
+  authoredButCrossed.source = 'video lane: key tint read frame by frame';
+  authoredButCrossed.provenance = 'video-authored-hands';
+  authoredButCrossed.level = 'Hard';
+  // swap the hands wherever both sound together, which is a real crossing
+  {
+    const byBeat = new Map();
+    for (const n of authoredButCrossed.notes) {
+      if (!byBeat.has(n.b)) byBeat.set(n.b, []);
+      byBeat.get(n.b).push(n);
+    }
+    for (const g of byBeat.values()) {
+      if (g.some((n) => n.h === 'L') && g.some((n) => n.h === 'R')) for (const n of g) n.h = n.h === 'L' ? 'R' : 'L';
+    }
+  }
+  const caughtAuthored = auditSong(authoredButCrossed);
+
   // a fixture that changed nothing tests nothing, and that is how the first one
   // passed review while being vacuous. Say what the cut actually did.
   if (moved < cut.notes.length * 0.05) {
@@ -389,6 +423,7 @@ if (!process.argv.includes('--id')) {
   console.log(`  ${cut.id.padEnd(38)} ${caughtCut.length ? 'condemned (' + [...new Set(caughtCut.map((f) => f.kind))].join(', ') + ')' : 'SAID NOTHING'}`);
   console.log(`  ${untouched.id.padEnd(38)} ${caughtGood.length ? 'CONDEMNED (' + [...new Set(caughtGood.map((f) => f.kind))].join(', ') + ')' : 'clean'}`);
   console.log(`  ${cutButScored.id.padEnd(38)} ${caughtScored.length ? 'CONDEMNED (' + [...new Set(caughtScored.map((f) => f.kind))].join(', ') + ')' : 'clean (the exemption holds)'}`);
+  console.log(`  ${authoredButCrossed.id.padEnd(38)} ${caughtAuthored.some((f) => f.kind === 'crossed hands') ? 'condemned (crossed hands, as it must be)' : 'SAID NOTHING'}`);
   if (!caughtCut.length) {
     console.log('');
     console.log('GUARD FAILED. A hand split at a fixed pitch went unnoticed. That is Law 2,');
@@ -400,6 +435,15 @@ if (!process.argv.includes('--id')) {
     console.log('');
     console.log('GUARD FAILED. A correctly arranged song was condemned. A limit above is now');
     console.log('stricter than real piano writing, which is how this gate came to accuse Chopin.');
+    process.exit(2);
+  }
+  if (!caughtAuthored.some((f) => f.kind === 'crossed hands')) {
+    console.log('');
+    console.log('GUARD FAILED. A video-authored Hard tier with its hands swapped at every');
+    console.log('hands-together moment was NOT condemned, so the authored-hands exemption has');
+    console.log('swallowed the crossed-hands rule. Reach and tempo belong to the arranger; which');
+    console.log('hand plays which note is our reading of their colours, and a crossing says we');
+    console.log('read it the wrong way round.');
     process.exit(2);
   }
   if (caughtScored.length) {

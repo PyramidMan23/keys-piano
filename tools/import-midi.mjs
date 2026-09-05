@@ -25,7 +25,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { parseMidi, midiNotes, tempoOf } from './midi.mjs';
 import { difficultyScore } from '../js/difficulty.mjs';
-import { repairHands, handsAreSane, SPAN_MAX, TRAVEL_MAX } from '../js/hands.mjs';
+import { repairHands, handsAreSane, crossings, systemic, SPAN_MAX, TRAVEL_MAX } from '../js/hands.mjs';
 import { unpedal, repairSplit, splitHeld, violations, releaseOverlaps } from './handsplit.mjs';
 
 const argv = process.argv.slice(2);
@@ -336,7 +336,10 @@ for (const level of wantTiers) {
       return violations(t, tbpm).length < violations(arr, tbpm).length ? t : arr;
     };
     if (!handsAreSane(ns, tierBpm, fromScore)) ns = resplit(ns, tierBpm);
-    if (level === 'hard' && !handsAreSane(ns, tierBpm, fromScore)) {
+    // ...but NEVER on hands the arranger authored. A video-authored Hard is
+    // that arranger's own notes, so thinning it "until it passes" would quietly
+    // ship a different arrangement than the one on the page.
+    if (level === 'hard' && !videoHands && !handsAreSane(ns, tierBpm, fromScore)) {
       for (const keep of [0.9, 0.8, 0.7, 0.6, 0.5]) {
         const trial = resplit(thinToDensity(ns, keep), tierBpm);
         if (handsAreSane(trial, tierBpm, fromScore)) {
@@ -354,7 +357,35 @@ for (const level of wantTiers) {
   // means the tool is grading Chopin. Easy and Medium are OURS, though. Thinning
   // to the top voice can invent a leap the composer never wrote, so those tiers
   // are still checked, and so is anything whose hands we had to derive.
-  const oursToJudge = !fromScore || level !== 'hard';
+  //
+  // MARK, 2026-09-05: "do the hard tier for gerudo, exempt it from the audit".
+  // A VIDEO-AUTHORED HARD IS AUTHORED TOO. The render is played from the
+  // arranger's own MIDI and the hands are the colours that arranger painted, so
+  // its Hard is no more ours to grade than an engraving's: Gerudo Valley was
+  // refused for 18 left-hand leaps at 152 semitones a second, which is the
+  // arranger's own written bass figure at his own marked tempo, not a machine's
+  // guess. Easy and Medium stay OURS and stay audited, because we cut those.
+  // The ceiling this waives is real (120 st/s), so a video-authored Hard says
+  // so out loud rather than passing silently.
+  const authored = fromScore || videoHands;
+  const oursToJudge = !authored || level !== 'hard';
+  // ☠️ AN EXEMPTION IS NOT A BLANK CHEQUE. What an authored Hard is excused is
+  // the REACH and the TEMPO, because those are the arranger's own. A CROSSING is
+  // never excused: it means we mis-read which staff or which colour is which
+  // hand, which is a data error wearing the arranger's name. Codex planted
+  // exactly this case in test/import-roundtrip.mjs, and it caught this change
+  // the first time it ran - the blanket skip would have shipped a two-track
+  // file whose hands were swapped for eight moments.
+  if (!oursToJudge) {
+    const { crossed, onsets } = crossings(ns);
+    if (systemic(crossed, onsets)) {
+      problems.push(`${level}: FAILS the playability audit (crossed hands on ${crossed} of ${onsets} onsets). Authored hands are excused reach and tempo, never a crossing: it means the staves or the colours were read the wrong way round.`);
+      continue;
+    }
+    if (!handsAreSane(ns, tierBpm, authored)) {
+      console.log(`hard: exempt from the audit's reach and tempo limits as ${videoHands ? "the arranger's own video-authored hands" : 'an engraved score'}; it does NOT pass them on its own, and no hands cross (Mark's call, 2026-09-05)`);
+    }
+  }
   if (oursToJudge && !handsAreSane(ns, tierBpm, fromScore)) {
     problems.push(`${level}: FAILS the playability audit (chord over ${SPAN_MAX} semitones, crossed hands, or a hand asked to travel over ${TRAVEL_MAX} semitones a second)`);
     continue;
@@ -480,7 +511,9 @@ if (fromScore || videoHands) {
     built.push({
       id: tid, group, level: lvl,
       title, composer, bpm: tierBpm, timeSig, beatUnit: timeSig[1],
-      handAssignment: 'generated', ...(key ? { key } : {}), source,
+      // the filled tier is a SUBSET of the tier above, so its hands came from
+      // wherever that tier's did: a video-authored parent makes a video-authored cut
+      handAssignment: 'generated', ...(videoHands ? { provenance: 'video-authored-hands' } : {}), ...(key ? { key } : {}), source,
       sections: sectionsFor(made),
       notes: made.map((n) => ({ b: n.b, d: +n.d.toFixed(4), m: n.m, h: n.h })),
     });

@@ -55,8 +55,35 @@ const span = (sorted) => (sorted.length ? sorted[sorted.length - 1] - sorted[0] 
 // the kind a pitch threshold produces: the old Interstellar broke on 4.5% of
 // its onsets, not on one. So judge the RATE, with a floor so that a short piece
 // cannot hide a real problem behind a percentage.
-const BAD_RATE = 0.01;    // more than 1% of onsets in trouble is systemic
-const BAD_FLOOR = 3;      // and fewer than 3 bad moments is never systemic
+export const BAD_RATE = 0.01;    // more than 1% of onsets in trouble is systemic
+export const BAD_FLOOR = 3;      // and fewer than 3 bad moments is never systemic
+
+// Is a count of bad moments a DEFECT or a BLEMISH? The one place that decides.
+export const systemic = (bad, onsets) => !(bad < BAD_FLOOR || bad / onsets < BAD_RATE);
+
+// CROSSED HANDS ON THEIR OWN, by the same per-onset rule handsAreSane applies
+// below. It is separate because an AUTHORED Hard tier (an engraved score's, or
+// the colours an arranger painted in their own render) is excused the reach and
+// the tempo - those are that arranger's own hands and tempo - but never a
+// crossing: hands that cross mean we mis-read which staff or which colour is
+// which hand, and no authorship makes a mis-read right. Deliberately mirrored
+// rather than folded into handsAreSane, whose else-if between crossed and span
+// is load-bearing for 174 shipped songs.
+export function crossings(notes) {
+  const byBeat = new Map();
+  for (const n of notes) {
+    const k = Math.round(n.b * 1000) / 1000;
+    if (!byBeat.has(k)) byBeat.set(k, []);
+    byBeat.get(k).push(n);
+  }
+  let crossed = 0;
+  for (const group of byBeat.values()) {
+    const l = group.filter((n) => n.h === 'L').map((n) => n.m).sort((a, b) => a - b);
+    const r = group.filter((n) => n.h === 'R').map((n) => n.m).sort((a, b) => a - b);
+    if (l.length && r.length && r[0] < l[l.length - 1]) crossed++;
+  }
+  return { crossed, onsets: byBeat.size };
+}
 
 export function handsAreSane(notes, bpm = 100, fromScore = false) {
   const byBeat = new Map();

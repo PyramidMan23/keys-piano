@@ -236,6 +236,24 @@ holding the immersive Restart button, which would have been absent offline.
 8. **Change the design in the ARTBOARD**, then regenerate the canon and re-run
    every gate. Never patch a binder to outrun the specification.
 
+9. **An AUTHORED Hard tier is excused the audit's REACH and TEMPO; never a
+   CROSSING, and ours is not excused at all.**
+   The 120 st/s ceiling and the 14-semitone span were derived to catch hands a
+   SCRIPT invented. When the hands are the arranger's own - an engraved score's
+   staves, or the colours that arranger painted in their own render
+   (`--video-hands`) - refusing their Hard means the tool is grading the
+   arranger. Mark's call, 2026-09-05, on Gerudo Valley: "do the hard tier for
+   gerudo, exempt it from the audit". Four things this does NOT license.
+   **Crossed hands are still refused**, whoever authored them: a crossing means
+   we read the staves or the colours the wrong way round, which is a data error
+   wearing the arranger's name, and Codex's planted fixture in
+   `test/import-roundtrip.mjs` caught the first, blanket version of this change
+   within a minute of it running. Easy and Medium are still audited in full,
+   because we cut those. An authored Hard is never thinned to make it pass, or
+   the app teaches a different arrangement than the page. And the exemption
+   prints itself at import time, saying the tier does not pass on its own, so it
+   can never read as a green result.
+
 ## Where things live
 
 - serving copy `C:\Users\markh\keys-piano` (scheduled task `KeysPianoServer`, :4180)

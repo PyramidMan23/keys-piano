@@ -25,11 +25,6 @@ export const TIERS_REFUSED = {
   "notes": 2697,
   "why": "a fuller arrangement of this recording asks for 83 chords wider than 14 semitones, 24 moments with the hands crossed, 46 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
- "gerudo-valley": {
-  "tiers": 2,
-  "notes": 1459,
-  "why": "video-authored hands from the arranger's own render at quarter = 120; Hard refused by the playability audit: 18 jumps faster than 120 semitones a second on 1019 onsets (1.77%, gate 1%); the same moves pass at Medium's slower tempo"
- },
  "gray-day": {
   "tiers": 2,
   "notes": 488,
