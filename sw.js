@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v112';  // Gerudo Valley Hard (authored-hands exemption, Mark's call)
+const VERSION = 'keys-v113';  // both Zelda songs findable: the game is in the title and the sub-line
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

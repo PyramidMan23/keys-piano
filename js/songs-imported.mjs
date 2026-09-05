@@ -171016,8 +171016,8 @@ export const IMPORTED = [
   "id": "gerudo-valley",
   "group": "gerudo-valley",
   "level": "Medium",
-  "title": "Gerudo Valley",
-  "composer": "Koji Kondo · arr. Sheet Music Boss",
+  "title": "Gerudo Valley (The Legend of Zelda)",
+  "composer": "Koji Kondo · Ocarina of Time · arr. Sheet Music Boss",
   "bpm": 102,
   "timeSig": [
    4,
@@ -171027,7 +171027,7 @@ export const IMPORTED = [
   "handAssignment": "generated",
   "provenance": "video-authored-hands",
   "key": "F# minor",
-  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=Sna0iom85IU (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bar 1: treble staccato chords A3 C#4 F#4, bass F#2 / F#3 / C#3); F sharp minor, 4/4, tempo Moderately fast quarter = 120, all from that engraving; Hard is the arranger's complete arrangement, excused the audit's reach and tempo limits as authored hands with no crossings (Mark's call 2026-09-05): it asks for 18 left-hand leaps at 152 semitones a second",
+  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=Sna0iom85IU (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bar 1: treble staccato chords A3 C#4 F#4, bass F#2 / F#3 / C#3); F sharp minor, 4/4, tempo Moderately fast quarter = 120, all from that engraving, which titles it 'Gerudo Valley, From The Legend of Zelda: Ocarina of Time'; Hard is the arranger's complete arrangement, excused the audit's reach and tempo limits as authored hands with no crossings (Mark's call 2026-09-05)",
   "sections": [
    {
     "name": "A, bars 1 to 16",
@@ -178502,8 +178502,8 @@ export const IMPORTED = [
   "id": "gerudo-valley-easy",
   "group": "gerudo-valley",
   "level": "Easy",
-  "title": "Gerudo Valley",
-  "composer": "Koji Kondo · arr. Sheet Music Boss",
+  "title": "Gerudo Valley (The Legend of Zelda)",
+  "composer": "Koji Kondo · Ocarina of Time · arr. Sheet Music Boss",
   "bpm": 84,
   "timeSig": [
    4,
@@ -178513,7 +178513,7 @@ export const IMPORTED = [
   "handAssignment": "generated",
   "provenance": "video-authored-hands",
   "key": "F# minor",
-  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=Sna0iom85IU (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bar 1: treble staccato chords A3 C#4 F#4, bass F#2 / F#3 / C#3); F sharp minor, 4/4, tempo Moderately fast quarter = 120, all from that engraving; Hard is the arranger's complete arrangement, excused the audit's reach and tempo limits as authored hands with no crossings (Mark's call 2026-09-05): it asks for 18 left-hand leaps at 152 semitones a second",
+  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=Sna0iom85IU (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bar 1: treble staccato chords A3 C#4 F#4, bass F#2 / F#3 / C#3); F sharp minor, 4/4, tempo Moderately fast quarter = 120, all from that engraving, which titles it 'Gerudo Valley, From The Legend of Zelda: Ocarina of Time'; Hard is the arranger's complete arrangement, excused the audit's reach and tempo limits as authored hands with no crossings (Mark's call 2026-09-05)",
   "sections": [
    {
     "name": "A, bars 1 to 16",
@@ -182118,8 +182118,8 @@ export const IMPORTED = [
   "id": "gerudo-valley-hard",
   "group": "gerudo-valley",
   "level": "Hard",
-  "title": "Gerudo Valley",
-  "composer": "Koji Kondo · arr. Sheet Music Boss",
+  "title": "Gerudo Valley (The Legend of Zelda)",
+  "composer": "Koji Kondo · Ocarina of Time · arr. Sheet Music Boss",
   "bpm": 120,
   "timeSig": [
    4,
@@ -182129,7 +182129,7 @@ export const IMPORTED = [
   "handAssignment": "generated",
   "provenance": "video-authored-hands",
   "key": "F# minor",
-  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=Sna0iom85IU (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bar 1: treble staccato chords A3 C#4 F#4, bass F#2 / F#3 / C#3); F sharp minor, 4/4, tempo Moderately fast quarter = 120, all from that engraving; Hard is the arranger's complete arrangement, excused the audit's reach and tempo limits as authored hands with no crossings (Mark's call 2026-09-05): it asks for 18 left-hand leaps at 152 semitones a second",
+  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=Sna0iom85IU (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bar 1: treble staccato chords A3 C#4 F#4, bass F#2 / F#3 / C#3); F sharp minor, 4/4, tempo Moderately fast quarter = 120, all from that engraving, which titles it 'Gerudo Valley, From The Legend of Zelda: Ocarina of Time'; Hard is the arranger's complete arrangement, excused the audit's reach and tempo limits as authored hands with no crossings (Mark's call 2026-09-05)",
   "sections": [
    {
     "name": "A, bars 1 to 16",
@@ -802877,7 +802877,7 @@ export const IMPORTED = [
   "group": "zeldas-lullaby",
   "level": "Easy",
   "title": "Zelda's Lullaby",
-  "composer": "Koji Kondo · arr. Sheet Music Boss",
+  "composer": "Koji Kondo · Ocarina of Time · arr. Sheet Music Boss",
   "bpm": 77,
   "timeSig": [
    3,
@@ -802887,7 +802887,7 @@ export const IMPORTED = [
   "handAssignment": "generated",
   "provenance": "video-authored-hands",
   "key": "G major",
-  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=O6MtYbfo1eY (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bars 1-4 bass only, treble enters bar 5); G major, 3/4, tempo Flowing quarter = 110, all from that engraving",
+  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=O6MtYbfo1eY (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bars 1-4 bass only, treble enters bar 5), which titles it \"Zelda's Lullaby, From The Legend of Zelda: Ocarina of Time\"; G major, 3/4, tempo Flowing quarter = 110, all from that engraving",
   "sections": [
    {
     "name": "A, bars 1 to 16",
@@ -804547,7 +804547,7 @@ export const IMPORTED = [
   "group": "zeldas-lullaby",
   "level": "Hard",
   "title": "Zelda's Lullaby",
-  "composer": "Koji Kondo · arr. Sheet Music Boss",
+  "composer": "Koji Kondo · Ocarina of Time · arr. Sheet Music Boss",
   "bpm": 110,
   "timeSig": [
    3,
@@ -804557,7 +804557,7 @@ export const IMPORTED = [
   "handAssignment": "generated",
   "provenance": "video-authored-hands",
   "key": "G major",
-  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=O6MtYbfo1eY (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bars 1-4 bass only, treble enters bar 5); G major, 3/4, tempo Flowing quarter = 110, all from that engraving",
+  "source": "video lane: key tint read frame by frame from youtube.com/watch?v=O6MtYbfo1eY (Sheet Music Boss, 2026-09-04); hands from the video's colours, blue = left, green = right, per the arranger's own engraving shown at the end of the video (bars 1-4 bass only, treble enters bar 5), which titles it \"Zelda's Lullaby, From The Legend of Zelda: Ocarina of Time\"; G major, 3/4, tempo Flowing quarter = 110, all from that engraving",
   "sections": [
    {
     "name": "A, bars 1 to 16",
