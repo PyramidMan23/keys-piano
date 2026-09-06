@@ -141,7 +141,7 @@ in `js/songs-imported.mjs`, never in `songs.mjs`.
 **Hand assignment** — `js/hands.mjs`. `handsAreSane()` and an offline
 `repairHands()`. Deliberately NOT wired into the app: see the law below.
 
-**Gates: `node tools/gates.mjs`** (all twenty-three, five at a time, ~3½ minutes; a gate that fails under the parallel load gets ONE solo re-run before it is called red).
+**Gates: `node tools/gates.mjs`** (all twenty-four, five at a time, ~3½ minutes; a gate that fails under the parallel load gets ONE solo re-run before it is called red).
 Measured 2026-09-06: run one after another they take 400-490s and two own most
 of it (canon-journeys ~195s, overlay ~90s); in parallel the suite is 199s, and
 canon-journeys alone sets that floor. `node tools/gates.mjs songs` runs only the
@@ -201,9 +201,9 @@ app-draw anything new inside a canon board and EXEMPT it in the same breath,
 and a gate must MEASURE the rendered thing (`tools/lesson-walk-probe.mjs`
 opens all 13 reading lessons, asserts a sized note head or lit keys, an
 instruction that matches the runner's target, a wrong press scored as a miss
-and a right press advancing). 18th council: [[2026-09-06-council-keys-learning-science-gamification]].
+and a right press advancing; `tools/teacher-walk-probe.mjs` does the same for the five chord lessons' guided tasks, Melody echo and a theory card: a wrong chord is refused and the answer named, the right one advances). 18th council: [[2026-09-06-council-keys-learning-science-gamification]].
 
-The twenty-three gates, if you need to run one by hand:
+The twenty-four gates, if you need to run one by hand:
 `test/check.mjs` · `test/import-roundtrip.mjs` · `tools/overlay.mjs` ·
 `tools/canon-runtime.mjs` · `tools/canon-clickable.mjs` ·
 `tools/canon-geometry.mjs` · `tools/canon-samples.mjs` ·
@@ -213,7 +213,7 @@ The twenty-three gates, if you need to run one by hand:
 `tools/restart-probe.mjs` · `tools/shell-check.mjs` ·
 `tools/press-probe.mjs` · `tools/seek-probe.mjs` · `tools/surface-check.mjs` ·
 `tools/bars-probe.mjs` · `tools/leave-probe.mjs` · `tools/phone-library-probe.mjs` ·
-`tools/trial-probe.mjs` · `tools/lesson-walk-probe.mjs`
+`tools/trial-probe.mjs` · `tools/lesson-walk-probe.mjs` · `tools/teacher-walk-probe.mjs`
 
 ☠️ **`surface-check.mjs` was red for weeks and the app was never at fault.** It
 read 2/8, and the note here said "the theory-task keyboard paints nothing at

@@ -1191,7 +1191,9 @@ ok('lessons: micro-steps, in-pool worked examples, verified video links');
   for (const id of ['five-finger', 'c-major-scale']) {
     const les = LESSONS.find((l2) => l2.id === id);
     assert.equal(les.drill.type, 'technique', `${id} is a technique drill`);
-    assert.ok(!les.video, `${id} ships no unverified video`);
+    // 2026-09-07: both carry a video now, oEmbed-verified that night (Mark is a visual learner)
+    const VERIFIED_TECH = { 'five-finger': 'syWpsymSKgU', 'c-major-scale': 'MHnHREACogE' };
+    assert.ok(les.video && les.video.url.endsWith(VERIFIED_TECH[id]), `${id} ships only its verified video`);
     assert.ok(les.steps.some((s2) => /cannot see your hands/.test(s2)),
       `${id} tells the learner the app cannot see fingers`);
     for (const r of les.drill.runs) {
@@ -2210,6 +2212,11 @@ console.log(`\nALL GREEN: ${n} checks passed`);
     assert.equal(journeyState(st2, s).step, steps.length);
   }
   assert.ok(maxWin <= 6, `the drawn strip has room for six cells, widest window is ${maxWin}`);
+  {
+    const VERIFIED_CHORD = { 'tl-pulse': 'st7pabkIMZQ', 'tl-symbols': 'P28KMjSNQYg', 'tl-inversions': 'KU4YLMlN5hk', 'tl-two-hand': 'suriVc4lBTo', 'tl-leadsheet': '5v3z0cd7okY' };
+    for (const l of TEACHER_LESSONS) assert.ok(l.video && l.video.url.endsWith(VERIFIED_CHORD[l.id]), `${l.id} ships only its verified video`);
+    for (const l of LESSONS) assert.ok(l.video && /youtube\.com\/watch\?v=/.test(l.video.url), `${l.id} carries a video`);
+  }
   ok(`every song has a journey (${generic} generic, ${Object.keys(JOURNEYS).length} authored), windows never exceed 6 cells`);
 
   const st = {};

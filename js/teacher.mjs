@@ -472,6 +472,7 @@ function prescribeCore(st, now, ctx = {}) {
 export const TEACHER_LESSONS = [
   {
     id: 'tl-pulse', title: 'A pulse you can trust', skillIds: ['pulse'],
+    video: { url: 'https://www.youtube.com/watch?v=st7pabkIMZQ', title: "Playing with a Metronome: Beginner Piano Exercises for a Steady Tempo" },  // oEmbed-verified 2026-09-07
     teach: [
       'Music is a clock: tick, tick, tick, tick. Your only job here is to press a key ON each tick.',
       'Say it out loud: "1, 2, 3, 4". Press as you SAY the number, like stepping on stones.',
@@ -483,6 +484,7 @@ export const TEACHER_LESSONS = [
   },
   {
     id: 'tl-symbols', title: 'Four chords from their symbols', skillIds: ['chord-symbol'],
+    video: { url: 'https://www.youtube.com/watch?v=P28KMjSNQYg', title: "Master Major and Minor Triads" },  // oEmbed-verified 2026-09-07
     teach: [
       'A chord is 3 keys pressed together, and its name tells you where to START: the C chord starts on the C key.',
       'The recipe never changes: press the letter key, SKIP one white key, press, SKIP one, press. Letter, skip, press, skip, press.',
@@ -494,6 +496,7 @@ export const TEACHER_LESSONS = [
   },
   {
     id: 'tl-inversions', title: 'Move less: nearest position', skillIds: ['inversion'],
+    video: { url: 'https://www.youtube.com/watch?v=KU4YLMlN5hk', title: "Beginner's Guide to Chord Inversions" },  // oEmbed-verified 2026-09-07
     teach: [
       'Here is a secret: C chord (C+E+G) and Am chord (A+C+E) SHARE two keys. C and E are in both!',
       'So to go from C to Am, keep two fingers glued down and move JUST ONE: the top finger slides from G down to A. One finger!',
@@ -505,6 +508,7 @@ export const TEACHER_LESSONS = [
   },
   {
     id: 'tl-two-hand', title: 'Left root, right chord', skillIds: ['two-hand'],
+    video: { url: 'https://www.youtube.com/watch?v=suriVc4lBTo', title: "Left Hand Accompaniment 101" },  // oEmbed-verified 2026-09-07
     teach: [
       'Right hand: the chord (3 keys). Left hand: ONE low key, the chord letter. C chord = left hand presses a low C.',
       'Both hands land at the SAME moment, like two feet jumping together. One thud, not two.',
@@ -516,6 +520,7 @@ export const TEACHER_LESSONS = [
   },
   {
     id: 'tl-leadsheet', title: 'Play a lead sheet', skillIds: ['lead-sheet'],
+    video: { url: 'https://www.youtube.com/watch?v=5v3z0cd7okY', title: "Reading Chords on a Lead Sheet" },  // oEmbed-verified 2026-09-07
     teach: [
       'Real musicians often read just LETTERS above the music: C... Am... F... G. That whole line is called a lead sheet, and you can already play every chord in it.',
       'Each letter lasts one bar (four clicks). On click 1: left hand letter-key, right hand chord, together. Then wait for the next bar.',

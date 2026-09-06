@@ -47,8 +47,11 @@ export async function launch({ width = 756, height = 1400, scale = 2, port = 933
   ], { stdio: 'ignore' });
 
   // wait for the debugger to answer
+  // 40s, not 15: on 2026-09-07 another session's probes, the nightly refresh
+  // and Drive were pinning the CPU at 100% and Chrome took longer than 15s to
+  // answer, which failed a gate that had nothing wrong with it
   let target = null;
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 260; i++) {
     await new Promise((r) => setTimeout(r, 150));
     try {
       const list = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
@@ -130,6 +133,18 @@ export async function launch({ width = 756, height = 1400, scale = 2, port = 933
         expression: 'document.fonts ? document.fonts.ready.then(()=>true) : true',
         awaitPromise: true, returnByValue: true,
       });
+    },
+    // Wait until the APP is up, not just the document: under a pinned CPU the
+    // modules can still be loading seconds after readyState says complete, and
+    // a probe that acts then reads sample text or throws on window.__show.
+    async ready(ms = 30000) {
+      const t0 = Date.now();
+      while (Date.now() - t0 < ms) {
+        const { result } = await send('Runtime.evaluate', { expression: "typeof window.__show === 'function' && !!document.querySelector('#screen-library')", returnByValue: true });
+        if (result.value) return true;
+        await new Promise((r) => setTimeout(r, 150));
+      }
+      throw new Error('the app did not boot within ' + ms + 'ms');
     },
     async eval(expression) {
       const { result, exceptionDetails } = await send('Runtime.evaluate', {

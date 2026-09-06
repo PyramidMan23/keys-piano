@@ -29,12 +29,20 @@ for (let i = 0; i < LESSONS.length; i++) {
   const done = Object.fromEntries(LESSONS.slice(0, i).map((l) => [l.id, Date.now() - (i - LESSONS.indexOf(l)) * 864e5]));
   const seed = { firstRunDone: true, diagnosticDone: Date.now(), calibratedAt: Date.now() - 864e5, calOffsetMs: 0, lib: { learning: true }, lessons: done };
   await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify(seed))}); true`);
-  await b.goto('http://localhost:4180/index.html'); await sleep(1400);
-  await b.eval(`document.getElementById('btn-lessons').click(); true`); await sleep(400);
-  const opened = await b.eval(`(() => { const l = [...document.querySelectorAll('#screen-lessons *')].find((e) => !e.children.length && e.textContent.trim() === 'Continue here' && e.getBoundingClientRect().width > 0); if (!l) return null; l.closest('button').click(); return true; })()`);
-  await sleep(700);
-  const title = await b.eval(`document.getElementById('lesson-title').textContent.trim()`);
+  await b.goto('http://localhost:4180/index.html'); await b.ready(); await sleep(600);
+  await b.eval(`document.getElementById('btn-lessons').click(); true`); await sleep(600);
+  // the lessons board re-renders itself for a moment after opening; a click that
+  // lands on a button being replaced does nothing, so try until the lesson shows
+  let title = '';
+  for (let tries = 0; tries < 6 && title !== les.title; tries++) {
+    await b.eval(`(() => { const l = [...document.querySelectorAll('#screen-lessons *')].find((e) => !e.children.length && e.textContent.trim() === 'Continue here' && e.getBoundingClientRect().width > 0); if (!l) return null; l.closest('button').click(); return true; })()`);
+    await sleep(700);
+    title = await b.eval(`document.getElementById('lesson-title').textContent.trim()`);
+    if (title !== les.title) { await b.eval(`window.__show('lessons'); true`); await sleep(400); }
+  }
   if (title !== les.title) { ok(`${i + 1}. ${les.title}: Continue here opens it`, false, `opened "${title}"`); continue; }
+  const vid = await b.eval(`(() => { const a = document.querySelector('#lesson-video a'); return a && a.getBoundingClientRect().width > 0 ? a.href : null; })()`);
+  ok(`${i + 1}. ${les.title}: a verified video link is on the page`, !!vid && /youtube\.com\/watch/.test(vid), vid ?? 'none');
   if (les.drill.type === 'rhythm-gate') {
     const link = await b.eval(`(() => { const l = document.getElementById('lesson-rhythm-link'); return l && !l.hidden && l.getBoundingClientRect().width > 0 ? l.textContent.trim() : null; })()`);
     ok(`${i + 1}. ${les.title}: the rhythm gate offers its door`, !!link, link ?? 'no link');

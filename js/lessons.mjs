@@ -27,6 +27,10 @@ const VID_SHARPS_FLATS = { url: 'https://www.youtube.com/watch?v=rmn1-N27DOA', t
 const VID_INTERVALS = { url: 'https://www.youtube.com/watch?v=GqKxN0Znojw', title: 'Piano Quickie: Intervals Explained' };
 const VID_TRIADS = { url: 'https://www.youtube.com/watch?v=P28KMjSNQYg', title: 'Master Major and Minor Triads' };
 const VID_NOTE_VALUES = { url: 'https://www.youtube.com/watch?v=vMZv0j8_3Wg', title: 'Understanding Note Values' };
+// 2026-09-07 (Mark: "there's YouTube videos if I'm a visual learner, which I am"): the two
+// technique lessons and the five chord lessons had none. All oEmbed-verified the same night.
+const VID_FIVE_FINGER = { url: 'https://www.youtube.com/watch?v=syWpsymSKgU', title: 'C Major Five Finger Position on the Piano Keyboard' };
+const VID_C_SCALE = { url: 'https://www.youtube.com/watch?v=MHnHREACogE', title: 'C Major Scale (Right Hand), beginner lesson' };
 
 // ---- technique track (2026-09-02) ------------------------------------------
 // C position. The right-hand five-finger fingering is ERGONOMIC and forced
@@ -304,6 +308,7 @@ export const LESSONS = [
   {
     id: 'five-finger',
     title: 'Five fingers in C position',
+    video: VID_FIVE_FINGER,
     steps: [
       'Time to think about the HAND, not just the note. Fingers are numbered the same on both hands: thumb 1, index 2, middle 3, ring 4, little finger 5.',
       'C position, right hand: thumb on middle C, then one finger per white key going right. 1 on C4, 2 on D4, 3 on E4, 4 on F4, 5 on G4. Nothing reaches, nothing moves. Play up 1-2-3-4-5, then back down 5-4-3-2-1.',
@@ -335,6 +340,7 @@ export const LESSONS = [
   {
     id: 'c-major-scale',
     title: 'The C major scale, right hand',
+    video: VID_C_SCALE,
     steps: [
       'Five fingers, eight notes: the hand has to move. The trick is the THUMB UNDER, and it happens in the same place every time.',
       'Going up from middle C: 1 on C4, 2 on D4, 3 on E4, then the thumb travels under those fingers and lands on F4 as 1 again. From there 2 on G4, 3 on A4, 4 on B4, 5 on C5.',

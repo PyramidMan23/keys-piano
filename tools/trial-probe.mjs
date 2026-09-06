@@ -22,7 +22,7 @@ const seed = (extra = {}) => ({ firstRunDone: true, diagnosticDone: Date.now() -
 const boot = async (st) => {
   await b.goto('http://localhost:4180/index.html');
   await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify(st))}); true`);
-  await b.goto('http://localhost:4180/index.html'); await sleep(1600);
+  await b.goto('http://localhost:4180/index.html'); await b.ready(); await sleep(700);
 };
 const visible = () => b.eval(`[...document.querySelectorAll('[id^=screen-]')].filter((s) => !s.hidden).map((s) => s.id.replace('screen-', '')).join(',')`);
 const clickText = (label, scope) => b.eval(`(() => { const root = document.querySelector(${JSON.stringify(scope)}); const m = [...root.querySelectorAll('*')].filter((e) => !e.children.length && e.textContent.trim() === ${JSON.stringify(label)} && e.getBoundingClientRect().width > 0); for (const el of m.reverse()) { let c = el; while (c && !(c.tagName === 'BUTTON' || c.style.cursor === 'pointer')) c = c.parentElement; (c || el).click(); return true; } return false; })()`);

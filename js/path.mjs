@@ -588,6 +588,14 @@ export function installPath(ctx) {
     store.save(state);
     phase = (state.teacherStep?.[les.id] === 'transfer') ? 'transfer' : 'guided';
     openTaskScreen(les.title, les.teach, 'Pass rule: ' + les.passRule + '.');
+    // the visual learner's door, same words and same log as the reading lessons
+    if (les.video) {
+      const li = document.createElement('li');
+      li.id = 'task-video';
+      li.innerHTML = 'Still confused? <a href="' + les.video.url + '" target="_blank" rel="noopener">Watch: ' + les.video.title + '</a> (free, opens YouTube)';
+      li.querySelector('a').addEventListener('click', () => jlog('video_click', { id: les.id }));
+      ($('task-teach').querySelector('ol') ?? $('task-teach')).appendChild(li);
+    }
     $('task-start').textContent = phase === 'transfer' ? '▶ Continue: on your own' : '▶ Start the guided go';
     $('task-show').hidden = false;
     $('task-easier').hidden = phase !== 'transfer';

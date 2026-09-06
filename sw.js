@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v119';  // the lesson stave draws its note again (canon reset exemption), HUD reads as words, a Reading lessons door on My Path, mastery XP on a passed transfer check, silent reading due dates logged (18th council)
+const VERSION = 'keys-v120';  // every lesson on both ladders carries a verified video (7 added, oEmbed-checked); teacher-walk gate
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
