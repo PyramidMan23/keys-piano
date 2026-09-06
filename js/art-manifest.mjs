@@ -540,6 +540,10 @@ export const ART = {
     "generated": true,
     "drawnFrom": "the notes of Silksong (Main Theme), Christopher Larkin · arr. Sheet Music Boss"
   },
+  "song-of-storms": {
+    "generated": true,
+    "drawnFrom": "the notes of Song of Storms (The Legend of Zelda), Koji Kondo · Ocarina of Time · arr. Sebastian, NinSheetMusic"
+  },
   "stairway": {
     "artist": "Led Zeppelin",
     "album": "Led Zeppelin IV",
@@ -594,6 +598,10 @@ export const ART = {
     "artist": "Mark Snow & Chris Carter",
     "album": "The Truth and the Light: Music from The X-Files",
     "year": "1996"
+  },
+  "zelda-main-theme": {
+    "generated": true,
+    "drawnFrom": "the notes of The Legend of Zelda (Main Theme), Koji Kondo · Overworld theme, arr. JDMEK5, NinSheetMusic"
   },
   "zeldas-lullaby": {
     "generated": true,

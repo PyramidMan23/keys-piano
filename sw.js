@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v114';  // Zelda's Lullaby gains its Medium (bar-wide thinning window)
+const VERSION = 'keys-v115';  // Song of Storms + The Legend of Zelda (Main Theme) from NinSheetMusic scores: all four Zelda songs, three tiers each
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

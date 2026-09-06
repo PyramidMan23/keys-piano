@@ -54,6 +54,10 @@ if (flag('midi')) {
   const a = [midi, '--id', id, '--title', title, '--composer', flag('composer', ''),
     '--source', flag('source', `the arranger's own MIDI (${midi.split(/[\/]/).pop()}), hands from its tracks`)];
   if (flag('key')) a.push('--key', flag('key'));
+  // --grid 12 for a piece written in triplets: on the default 1/4 grid every
+  // triplet eighth lands a 16th early or late and the app teaches a swing the
+  // arranger never wrote (the Zelda Overworld bass is triplets throughout)
+  if (flag('grid')) a.push('--grid', flag('grid'));
   console.log(execFileSync(process.execPath, [join(SERVING, 'tools', 'import-midi.mjs'), ...a], { cwd: SERVING, encoding: 'utf8' }).trim());
   console.log('\n' + execFileSync(process.execPath, [join(SERVING, 'tools', 'after-import.mjs')], { cwd: SERVING, encoding: 'utf8' }).trim());
   console.log(`\nnow: bump VERSION in sw.js, then 'node tools/gates.mjs'`);
