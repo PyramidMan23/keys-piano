@@ -105,7 +105,30 @@ in `js/songs-imported.mjs`, never in `songs.mjs`.
 **Hand assignment** — `js/hands.mjs`. `handsAreSane()` and an offline
 `repairHands()`. Deliberately NOT wired into the app: see the law below.
 
-**Gates** (all must be green before you ship):
+**Gates: `node tools/gates.mjs`** (all nineteen, five at a time, ~3½ minutes).
+Measured 2026-09-06: run one after another they take 400-490s and two own most
+of it (canon-journeys ~195s, overlay ~90s); in parallel the suite is 199s, and
+canon-journeys alone sets that floor. `node tools/gates.mjs songs` runs only the
+gates a song-data change can break, and `--serial` is the old behaviour. The
+lane is for ITERATING; the full run is the ship gate.
+
+**After an import: `node tools/after-import.mjs`** (about 5 seconds). Fingering,
+tier reasons, missing sleeves, the sleeve manifest, then it mirrors every song
+file to the build copy and PROVES both copies byte-identical. It refuses to run
+anywhere but the serving copy, because the sleeve renderer loads its page from
+the server: that one mistake shipped two cover sleeves that were a screenshot of
+a 404, past all nineteen gates, on 2026-09-04.
+
+☠️ **cdp.mjs picks a FREE port now, and kills its browser on any exit.** Each
+gate used to hardcode one. Stop a run and its Chrome survives, still listening,
+and the next run attaches to the OLD browser and drives another run's pages:
+canon-journeys read 25/30 with five impossible failures that way on 2026-09-05,
+and later hung for 28 minutes. The port a caller passes is only a starting
+point. If you ever meet a stale one, kill by PROFILE, never by process name:
+`Get-CimInstance Win32_Process -Filter "Name='chrome.exe'" | Where-Object { $_.CommandLine -match 'keys-cdp-' }`
+leaves Mark's real Chrome alone.
+
+The nineteen gates, if you need to run one by hand:
 `test/check.mjs` · `test/import-roundtrip.mjs` · `tools/overlay.mjs` ·
 `tools/canon-runtime.mjs` · `tools/canon-clickable.mjs` ·
 `tools/canon-geometry.mjs` · `tools/canon-samples.mjs` ·

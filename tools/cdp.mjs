@@ -12,7 +12,23 @@ import { join } from 'node:path';
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 
+// ☠️ A FIXED PORT IS A TRAP, AND IT COST HOURS ON 2026-09-05. Every gate asked
+// for its own hardcoded port. Stop a gate run (Ctrl-C, a timeout, a killed
+// shell) and its Chrome survives, still LISTENING on that port; the next run's
+// Chrome then fails to bind, this loop finds the OLD browser answering, and the
+// gate silently drives another run's pages. canon-journeys read 25/30 with five
+// impossible failures that way, and later hung for 28 minutes. The port a
+// caller passes is now only a STARTING POINT: anything already answering is
+// skipped, so a stale browser can never be mistaken for ours.
+const portFree = async (p) => {
+  try { await fetch(`http://127.0.0.1:${p}/json/version`, { signal: AbortSignal.timeout(400) }); return false; }
+  catch { return true; }
+};
+
 export async function launch({ width = 756, height = 1400, scale = 2, port = 9333 } = {}) {
+  const wanted = port;
+  for (let i = 0; i < 40 && !(await portFree(port)); i++) port = wanted + 1 + i;
+  if (!(await portFree(port))) throw new Error(`no free debugging port near ${wanted}`);
   const profile = mkdtempSync(join(tmpdir(), 'keys-cdp-'));
   const proc = spawn(CHROME, [
     '--headless=new',
@@ -40,6 +56,20 @@ export async function launch({ width = 756, height = 1400, scale = 2, port = 933
     } catch { /* not up yet */ }
   }
   if (!target) { proc.kill(); throw new Error('Chrome did not open a debugging port'); }
+
+  // ☠️ AND A GATE THAT THROWS MUST NOT LEAK ITS BROWSER, which is how the stale
+  // ones accumulated: close() only runs on the happy path. Kill the child when
+  // this process ends, however it ends.
+  let killed = false;
+  const cleanup = () => {
+    if (killed) return;
+    killed = true;
+    try { proc.kill(); } catch {}
+    try { rmSync(profile, { recursive: true, force: true }); } catch {}
+  };
+  process.once('exit', cleanup);
+  for (const sig of ['SIGINT', 'SIGTERM', 'SIGHUP']) process.once(sig, () => { cleanup(); process.exit(130); });
+  process.once('uncaughtException', (e) => { cleanup(); throw e; });
 
   const ws = new WebSocket(target.webSocketDebuggerUrl);
   await new Promise((res, rej) => { ws.onopen = res; ws.onerror = rej; });
@@ -130,6 +160,7 @@ export async function launch({ width = 756, height = 1400, scale = 2, port = 933
     async close() {
       try { ws.close(); } catch {}
       proc.kill();
+      cleanup();
       try { rmSync(profile, { recursive: true, force: true }); } catch {}
     },
   };
