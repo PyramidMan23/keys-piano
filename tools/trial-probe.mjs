@@ -82,12 +82,26 @@ await b.eval(`document.getElementById('btn-path').click(); true`); await sleep(8
 const go = await b.eval(`document.getElementById('path-go').textContent.trim()`);
 const headline = await b.eval(`document.getElementById('path-reason').textContent`);
 ok('My Path prescribes the first reading lesson', /reading/i.test(go) && /Middle C and the grand staff/.test(headline), `go="${go}"`);
+// the reading ladder has a DOOR on the path (Mark: "i thought my path was the lessons but i couldnt find them there")
+const door = await b.eval(`(() => { const d = document.getElementById('path-reading'); return d ? { text: d.textContent.trim(), visible: d.getBoundingClientRect().width > 0 } : null; })()`);
+ok('My Path shows the reading-lessons door with its count and next title', !!door && door.visible && /Reading lessons · 0 of 13 · next: Middle C/.test(door.text), JSON.stringify(door));
+await b.eval(`document.getElementById('path-reading').click(); true`); await sleep(700);
+ok('the door opens the Lessons screen', (await visible()) === 'lessons', await visible());
+await b.eval(`document.getElementById('btn-path').click(); true`); await sleep(800);
 await b.eval(`document.getElementById('path-go').click(); true`); await sleep(800);
 ok('Continue opens that lesson', (await visible()) === 'lesson' && /Middle C/.test(await b.eval(`document.getElementById('lesson-title').textContent`)), await visible());
 const showme = await b.eval(`(() => { const b2 = document.getElementById('lesson-showme'); const a = document.querySelector('#lesson-video a'); return { showme: !!b2 && b2.getBoundingClientRect().width > 0, link: !!a && a.getBoundingClientRect().width > 0, text: b2?.textContent.trim() }; })()`);
 ok('the lesson carries Show me beside the verified video link', showme.showme && showme.link && showme.text === 'Show me', JSON.stringify(showme));
 await b.eval(`document.getElementById('lesson-showme').click(); true`); await sleep(600);
 ok('Show me lights the worked example on the lesson keyboard', /that is C4/.test(await b.eval(`document.getElementById('lesson-msg').textContent`)), await b.eval(`document.getElementById('lesson-msg').textContent`));
+// THE NOTE IS ON THE STAVE (Mark, 2026-09-06: "it felt like notes were meant to show up here and
+// weren't"). The lesson stave sits inside the canon column; without its exemption from the
+// reset the note head's rx/ry revert to 0 and the learner reads an empty staff.
+await b.eval(`document.getElementById('lesson-start').click(); true`); await sleep(1200);
+const noteHead = await b.eval(`(() => { const e = document.querySelector('#lesson-stave ellipse'); if (!e) return null; const r = e.getBoundingClientRect(); return { w: Math.round(r.width), h: Math.round(r.height), stroke: getComputedStyle(e).stroke, fill: getComputedStyle(e).fill }; })()`);
+ok('the drill draws a note head on the lesson stave', !!noteHead && noteHead.w >= 8 && noteHead.h >= 6 && noteHead.stroke !== 'none', JSON.stringify(noteHead));
+const hud = await b.eval(`document.getElementById('lesson-phase').textContent`);
+ok('the lesson HUD reads as words, not a run-on', /^LEVEL \d+ \/ \d+ · .+ · names (on|off)$/.test(hud), hud);
 
 // 7. a due transfer check is prescribed and launches help-off on the other passage
 await boot(seed({ transfers: { [SONG]: { section: 'B, bars 17 to 32', from: 'A, bars 1 to 16', passedAt: Date.now() - 864e5, dueAt: Date.now() - 3600000 } }, lastSession: null }));

@@ -215,7 +215,29 @@ export function playableGroups(st, songs) {
 // stats, resume = {songId, title, level, at} for the last open session. The
 // 13th council made this the app's ONE brain: the library's amber card and the
 // path screen both ask it, so there is never a second "do this next" voice.
+// SILENT READING DUE DATES (18th council, 2026-09-06). The freeze forbids a
+// scheduled reading check before the ten sessions are in; it does not forbid
+// KNOWING when one would have been due. Every completed reading lesson gets a
+// due date from the app's existing first clock (six days, the skill ladder's),
+// and the prescription carries the list as `shadow` so the app can log how
+// often a reading check would have competed with what it actually prescribed.
+// Nothing on screen changes. After the trial this list becomes a branch.
+export const READING_FIRST_GAP = 6 * DAY;
+export function readingDue(st, now) {
+  const done = st.lessons ?? {};
+  return READING_LESSONS.filter((l) => {
+    const t = done[l.id];
+    const at = typeof t === 'number' ? t : t?.done;
+    return at && now >= at + READING_FIRST_GAP && !(st.lessonReviews?.[l.id] > at);
+  }).map((l) => l.id);
+}
 export function prescribe(st, now, ctx = {}) {
+  const rx = prescribeCore(st, now, ctx);
+  const due = readingDue(st, now);
+  if (due.length) rx.shadow = { readingDue: due };
+  return rx;
+}
+function prescribeCore(st, now, ctx = {}) {
   const mastery = st.mastery ?? {};
   const done = st.teacherLessons ?? {};
   const seen = SKILLS.filter((s) => (mastery[s.id]?.stage ?? 'unseen') !== 'unseen');

@@ -23,10 +23,11 @@ export const XP = {
   weeklyDone: 150,    // the chosen weekly mission completed
   calibrated: 20,     // latency calibration done (once)
   firstCleanRun: 25,  // first ≥85% timed full run of a song (once per song)
+  transfer: 40,       // a day-later unaided check on an undrilled passage passed: the mastery upgrade (18th council)
 };
 // quest/weekly rewards are once-per-period by REF (day / ISO week), a re-pick
 // can never double-pay (Codex review P1, 2026-08-28)
-const ONCE = new Set(['proof', 'playable', 'sectionMastered', 'lessonCleared', 'calibrated', 'firstCleanRun', 'questDone', 'weeklyDone']);
+const ONCE = new Set(['proof', 'playable', 'sectionMastered', 'lessonCleared', 'calibrated', 'firstCleanRun', 'questDone', 'weeklyDone', 'transfer']);
 
 export function grantXp(st, src, ref, now) {
   if (!XP[src]) return null;

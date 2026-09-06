@@ -774,8 +774,14 @@ button:disabled { opacity: 0.35; cursor: default; }
    while the icon painted with no stroke: black on a black pill. The tell is
    always the same, the box is right and the ink is missing. App-draw anything
    new in here and exempt it in the same breath. */
+/* #lesson-stave joined 2026-09-06, the FIFTH time. Mark and his housemate sat
+   at the lesson drill reading an EMPTY stave ("it felt like notes were meant to
+   show up here and weren't"): the lesson's prompt note is the same ScoreView
+   ellipse, its rx/ry reverted to 0, a 0x0 head with the right fill, and the
+   staff lines still painted because lines have no rx. Same tell as ever: the
+   box is right and the ink is missing. */
 .canon-root,
-.canon-root *:not(#score-wrap, #score-wrap *, #cp-again, #cp-again *) {
+.canon-root *:not(#score-wrap, #score-wrap *, #cp-again, #cp-again *, #lesson-stave, #lesson-stave *) {
   all: revert;
   /* The one thing that must come BACK. The canon was authored in a page with
      `* { box-sizing: border-box }` and every width in it assumes that; reverting

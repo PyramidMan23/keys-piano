@@ -1,3 +1,4 @@
+import { LESSONS as READING_LESSONS } from './lessons.mjs';
 import { setTextKeeping, setHTMLKeeping, CANON_ON, hideRestingLayer } from './canon-mount.mjs';
 import { CANON } from './canon-templates.mjs';
 import { coverDataUrl } from './covers.mjs';
@@ -188,6 +189,15 @@ export function installPath(ctx) {
       : rx.kind === 'transfer' ? 'Check it holds'
       : rx.kind === 'done' ? '✓ Path complete' : '▶ Continue learning';
     $('path-go').disabled = rx.kind === 'done';
+    {
+      const b2 = $('path-reading');
+      if (b2) {
+        const doneR = state.lessons ?? {};
+        const nDone = READING_LESSONS.filter((l) => doneR[l.id]).length;
+        const next = READING_LESSONS.find((l) => !doneR[l.id]);
+        setTextKeeping(b2, next ? `Reading lessons · ${nDone} of ${READING_LESSONS.length} · next: ${next.title}` : `Reading lessons · all ${READING_LESSONS.length} done`);
+      }
+    }
     // ---- 11d value slots (2026-08-30 council redraw), each guarded so the
     // phone board is untouched. Scoped writes: sample text is the address.
     {
@@ -1170,6 +1180,20 @@ export function installPath(ctx) {
   $('btn-path').addEventListener('click', openPath);
   $('path-home').addEventListener('click', () => { show('library'); ctx.renderLibrary(); });
   $('path-technique').addEventListener('click', openTechnique);
+  // READING LESSONS HAVE A DOOR ON THE PATH (Mark, 2026-09-06: "i thought my
+  // path was the lessons but i couldnt find them there"). The path listed the
+  // five chord lessons and nothing else; the 13 reading lessons lived only
+  // behind the Lessons tool. A twin of the drawn Technique drills button, bound
+  // to the reading ladder's count and next title, opens the Lessons screen.
+  {
+    const tech = $('path-technique');
+    if (tech && !$('path-reading')) {
+      const b2 = tech.cloneNode(true);
+      b2.id = 'path-reading';
+      tech.parentElement.insertBefore(b2, tech);
+      b2.addEventListener('click', () => { jlog?.('reading_door', {}); $('btn-lessons')?.click(); });
+    }
+  }
   $('task-start').addEventListener('click', () => $('task-prestart-live')?.remove());
   $('task-back').addEventListener('click', openPath);
   $('task-show').addEventListener('click', showMe);

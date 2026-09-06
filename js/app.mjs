@@ -370,6 +370,13 @@ function renderNextAction() {
     songs: SONGS, statsOf: songStats,
     resume: lastSong ? { songId: lastSong.id, title: lastSong.title, level: lastSong.level, at: last.at } : null,
   });
+  // the 18th council's silent measurement: a reading check that WOULD have been
+  // due is logged beside what was actually prescribed, once a day, nothing shown
+  if (rx.shadow?.readingDue?.length && state.shadowDay !== localDay(new Date())) {
+    state.shadowDay = localDay(new Date());
+    jlog('reading_due_shadow', { due: rx.shadow.readingDue, prescribed: rx.kind });
+    store.save(state);
+  }
   card.hidden = false;
   $('next-action-label').textContent = rx.reason;
   $('next-action-reason').textContent = rx.evidence ?? '';
@@ -1973,8 +1980,10 @@ function updateLessonHud() {
   const p = lessonRunner?.progress();
   if (!p) { $('lesson-phase').textContent = ''; $('lesson-progress').innerHTML = ''; return; }
   const mode = p.melody ? 'play it through' : p.labels ? 'names on' : 'names off';
-  $('lesson-phase').innerHTML =
-    `<span class="lvl-rail"><b>LEVEL ${p.level} / ${p.of}</b><em>${p.name}</em><span class="lvl-mode">${mode}</span></span>`;
+  // plain text with separators: inside the canon the app's classes are
+  // reverted, and the three spans ran together into "LEVEL 2 / 7Add G4names on"
+  // (Mark's screenshot, 2026-09-06)
+  $('lesson-phase').textContent = `LEVEL ${p.level} / ${p.of} · ${p.name} · ${mode}`;
   const word = { clean: 'clean', recov: 'recovered', todo: 'to play' };
   const dots = p.slots.map((s, i) =>
     `<i class="slot ${s}${i === p.activeSlot ? ' now' : ''}" title="${word[s]}"></i>`).join('');
@@ -2541,7 +2550,10 @@ function onLap(ev) {
       delete state.pathPending;
       delete (state.transfers ?? {})[song.id];
       bankBlock('transfer', song.id + '|' + pp.section);
-      comboFlash('IT HELDS ✓'.replace('HELDS', 'HELD'));
+      // the MASTERY upgrade (18th council): immediate feedback rewarded the
+      // rung; the delayed, unaided check is the one the evidence trusts
+      comboFlash('MASTERY ↑ IT HELD');
+      awardXp('transfer', song.id + '|' + pp.section);
     } else {
       falls.banner = (explainMiss(lapMiss)?.line ?? `${ev.accuracy}%, needs 85.`) + ' Again.';
     }

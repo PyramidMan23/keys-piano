@@ -54,6 +54,7 @@ const ALL = [
   'tools/leave-probe.mjs',
   'tools/phone-library-probe.mjs',
   'tools/trial-probe.mjs',
+  'tools/lesson-walk-probe.mjs',
 ];
 
 // What a change to the SONG DATA (songs-imported, songs-fingers, tiers-refused,
@@ -108,6 +109,17 @@ await Promise.all(Array.from({ length: Math.min(LIMIT, queue.length) }, async ()
   }
 }));
 
+// A gate that measures TIME (seek-probe's picture-versus-sound drift) can fail
+// only because five browsers were sharing the machine: it read 1.13 and 1.04
+// beats under the parallel run on 2026-09-06 and 0.21 alone, twice. A failure
+// gets ONE solo re-run before it is called red; a real defect fails again.
+for (const r of results.filter((x) => x.code !== 0)) {
+  console.log(`
+retrying ${r.gate} alone (it may have lost a timing race under load)`);
+  const again = await run(r.gate);
+  console.log(`${again.code === 0 ? 'PASS' : 'FAIL'}  ${again.gate.replace(/^tools\/|^test\//, '').padEnd(24)} ${String(again.secs).padStart(4)}s  (solo re-run)`);
+  if (again.code === 0) { r.code = 0; r.text = again.text; r.retried = true; }
+}
 const failed = results.filter((r) => r.code !== 0);
 const wall = Math.round((Date.now() - started) / 1000);
 const cpu = results.reduce((a, r) => a + r.secs, 0);
