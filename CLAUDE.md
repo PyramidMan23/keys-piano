@@ -22,6 +22,42 @@ move on without fixing it. Reporting is not finishing.
 are blocked on a decision only he can make; they never justify stopping on the
 others. Do not stop to report progress: report once, at the end.
 
+## SCORE FIRST. The video lane is the fallback. (Mark, 2026-09-06: "then fix it")
+
+**Why this exists.** The 1 September council found the whole problem in one
+line: 63 hours was lossy input plus missing stop-losses. Every song had been
+rebuilt from a recording (loses hands, tempo, meter, bars) or a video (recovers
+hands only when the renderer paints them, and only with outside proof), and the
+verification needed to catch the ways that goes wrong grew into nineteen gates.
+The council's fix was a census of real scores. It was parked as "Mark approves
+the list in one tap", Mark does not read everything, so it never happened, and
+the next three songs went down the slow path anyway. His words: "I trust that
+you do what needs doing. So why did this get pointed out five days ago and not
+acted on?"
+
+**The rule.** A song comes from a file that already carries hands, tempo and
+meter whenever one exists: a two-track MIDI or an engraved score. That is
+`node tools/add-song.mjs --midi file.mid --id x --title "..."`, about a minute,
+three tiers, `fromScore`, nothing to prove. Only when no such file exists does
+the video lane run, and then `--probe` first.
+
+**Where the files are.**
+- NinSheetMusic (ninsheetmusic.org): free .mid + .pdf for Nintendo music,
+  including Ocarina of Time. Behind bot protection that a headless browser will
+  not pass and must not be worked around: Mark downloads, one click each.
+- Sheet Music Boss on Gumroad (sheetmusicboss.gumroad.com): their arrangements
+  as PDF + MIDI + MP3 for a few dollars (A$5-8). That MIDI is the exact file
+  behind the video, so it is the arranger's own hands. Their Zelda titles were
+  NOT found in the Gumroad search on 2026-09-06; those may be Musicnotes-only,
+  which is PDF without MIDI.
+- Mutopia for the classical repertoire, already in use.
+- A purchase is a T3 act: hand Mark the link and the price, never buy.
+
+**And the meta-rule, which is the real fix.** Never park a decision on Mark
+that can be made by checking. "He approves the list" is where work goes to die.
+Do the census, act on what it finds, put the one-click actions in front of him,
+and report once.
+
 ## What already exists
 
 **The listening lane** — `C:\Users\markh\keys-piano-tools\` (its own venv, NOT

@@ -7,6 +7,7 @@
 // Nothing here is new work: it is the same scripts in the same order, with the
 // bits that always had to be decided by a human left as the only stops.
 //
+//   node tools/add-song.mjs --midi song.mid --id x --title "..."   SCORE FIRST (a minute)
 //   node tools/add-song.mjs --probe --url <youtube>            what IS this video?
 //   node tools/add-song.mjs --url <youtube> --id river-x --title "..." \
 //        --composer "..." --template sheet-music-boss-3d-blue-green \
@@ -35,6 +36,30 @@ const PY = 'C:/Users/markh/keys-piano-tools/venv/Scripts/python.exe';
 const args = process.argv.slice(2);
 const flag = (n, d = null) => { const i = args.indexOf('--' + n); return i >= 0 ? args[i + 1] : d; };
 const has = (n) => args.includes('--' + n);
+
+// ---- 0. SCORE FIRST. A MIDI with the hands on its own tracks skips the lane ----
+// The whole video lane exists to recover what an arranger's own file already
+// carries: which hand, what tempo, what meter. Sheet Music Boss sells that
+// file for a few dollars beside every video (PDF + MIDI + MP3), NinSheetMusic
+// gives it away for Nintendo music, Mutopia for the classical repertoire. So
+// this is the default, and watching a video is what you do when no such file
+// exists. Mark, 2026-09-06: "then fix it".
+//
+//   node tools/add-song.mjs --midi "C:/path/song.mid" --id x --title "..." [--composer "..."] [--key "G major"]
+if (flag('midi')) {
+  const midi = flag('midi');
+  if (!existsSync(midi)) { console.error(`no file at ${midi}`); process.exit(2); }
+  const id = flag('id'), title = flag('title');
+  if (!id || !title) { console.error('--id and --title are required'); process.exit(2); }
+  const a = [midi, '--id', id, '--title', title, '--composer', flag('composer', ''),
+    '--source', flag('source', `the arranger's own MIDI (${midi.split(/[\/]/).pop()}), hands from its tracks`)];
+  if (flag('key')) a.push('--key', flag('key'));
+  console.log(execFileSync(process.execPath, [join(SERVING, 'tools', 'import-midi.mjs'), ...a], { cwd: SERVING, encoding: 'utf8' }).trim());
+  console.log('\n' + execFileSync(process.execPath, [join(SERVING, 'tools', 'after-import.mjs')], { cwd: SERVING, encoding: 'utf8' }).trim());
+  console.log(`\nnow: bump VERSION in sw.js, then 'node tools/gates.mjs'`);
+  process.exit(0);
+}
+
 const url = flag('url');
 if (!url) { console.error('usage: --probe --url <youtube>   |   --url <youtube> --id <id> --title "..." --template <t> --bpm N --bpm-source "..." [--meter 4/4] [--key "G major"] [--composer "..."]'); process.exit(2); }
 
