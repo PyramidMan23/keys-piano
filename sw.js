@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v116';  // bug sweep: leaving a screen ends its click track (check-in, rhythm tap), search resets on Back, tabs end a search, Resume tile resumes the song
+const VERSION = 'keys-v117';  // path board: every slot binds on the sample's stem, so no design sample ships as Mark's data (17th council, lie fix first)
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

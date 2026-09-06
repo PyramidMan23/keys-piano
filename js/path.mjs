@@ -190,8 +190,16 @@ export function installPath(ctx) {
     // phone board is untouched. Scoped writes: sample text is the address.
     {
       const scr = $('screen-path');
+      // The two compositions carry DIFFERENT sample sentences for the same slot
+      // ("It decays Thursday." on the column, "...Thursday if untested." on the
+      // desktop, "...left hand alone." against "...alone, four notes each."), so
+      // an exact match bound one board and left the other showing the design's
+      // sample as if it were Mark's data (screenshot, 2026-09-06). A slot matches
+      // on the sample's stem: equal, or the text begins with it.
+      const stem = (t) => t.trim().replace(/[.,;:]?\s*$/, '');
       const leafBy = (rootEl, sample) => rootEl && [...rootEl.querySelectorAll('*')]
-        .find((e) => !e.children.length && e.textContent.trim() === sample && !e.closest('[data-legacy-screen]'));
+        .find((e) => !e.children.length && !e.closest('[data-legacy-screen]')
+          && (e.textContent.trim() === sample || stem(e.textContent).startsWith(stem(sample))));
       const skillId = rx.skillId
         ?? (rx.lessonId && TEACHER_LESSONS.find((l2) => l2.id === rx.lessonId)?.skillIds?.[0]) ?? null;
       const STAGES2 = ['unseen', 'introduced', 'guided', 'independent', 'retained'];
