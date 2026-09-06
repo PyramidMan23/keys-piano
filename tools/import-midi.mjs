@@ -237,12 +237,21 @@ function thinToDensity(all, keepFraction) {
 // beat and how buried they sit, dropping the latest, most buried first. An
 // arpeggio becomes a sparser arpeggio with the same outline; nothing is ever
 // added, so every note is still the composer's.
-function thinByBeat(all, keepFraction) {
+// ☠️ THE WINDOW MUST FIT THE FIGURE. This grouped by whole BEAT, and Zelda's
+// Lullaby's left hand walks C3 - G3 - E4 across a 3/4 bar, one note per beat, so
+// every group held ONE note, nothing was ever "inner", and the cut could remove
+// 43 notes of 698 when it needed to remove 105. The accompaniment figure is the
+// unit an arranger thins, and here that figure is a BAR. So the window is a
+// parameter and the tier fill tries the beat first, then the bar: at bar scale
+// the same rule keeps the bass C3 and the top E4 and drops the middle G3, which
+// is what a simpler arrangement of this piece actually looks like. Still a
+// strict subset, still audited, still ranked against its neighbours.
+function thinByBeat(all, keepFraction, window = 1) {
   const target = Math.max(8, Math.round(all.length * keepFraction));
   if (all.length <= target) return all.map((n) => ({ ...n }));
   const byBeat = new Map();
   for (const n of all) {
-    const k = Math.floor(n.b) + ':' + n.h;
+    const k = Math.floor(n.b / window) + ':' + n.h;
     if (!byBeat.has(k)) byBeat.set(k, []);
     byBeat.get(k).push(n);
   }
@@ -482,7 +491,7 @@ if (fromScore || videoHands) {
     let made = null, audited = 0;
     // every count in the band, so a refusal means every cut was tried, not a sample of them
     for (let target = hi; target >= lo; target--) {
-      for (const cut of [thinToDensity, thinByBeat]) {
+      for (const cut of [thinToDensity, thinByBeat, (a, f) => thinByBeat(a, f, beatsPerBar)]) {
         const ns = cut(notes, target / notes.length);
         if (ns.length < lo || ns.length > hi) continue;
         if (!handsAreSane(ns, tierBpm, fromScore)) { audited++; continue; }

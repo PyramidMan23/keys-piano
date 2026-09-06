@@ -124,10 +124,5 @@ export const TIERS_REFUSED = {
   "tiers": 2,
   "notes": 1174,
   "why": "a fuller arrangement of this recording asks for 127 chords wider than 14 semitones, 28 moments with the hands crossed, 8 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
- },
- "zeldas-lullaby": {
-  "tiers": 2,
-  "notes": 698,
-  "why": "video-authored hands from the arranger's own render; Medium missing because thin('medium') keeps 656+ of Hard's 698 notes (not a step down) and no density cut between 317 and 593 notes exists without dropping a beat's melody or bass (every left-hand note is an outer voice of its beat)"
  }
 };
