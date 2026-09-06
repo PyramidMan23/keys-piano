@@ -99,6 +99,21 @@ export function installPath(ctx) {
     clearInterval(clickTimer);
     clickTimer = 0;
   }
+  // LEAVING THE TASK SCREEN ABANDONS THE TASK (Mark, 2026-09-06: "if we start
+  // the training mode, the tick tick, I can't get it off"). Back used to open
+  // the path and leave the pulse task running underneath: the click track kept
+  // ticking on the library, and when it ran out the check-in's onDone advanced
+  // to the next step and yanked the screen back to the task. taskGen is the
+  // fence: every deferred continuation checks it before touching the screen.
+  let taskGen = 0;
+  function abandonTask() {
+    taskGen++;
+    stopClicks();
+    if (task?.settle) clearTimeout(task.settle);
+    task = null;
+    introTarget = null;
+    clearTimeout(introTimer);
+  }
   function runClicks(bpm, beats, onBeat, onDone) {
     stopClicks();
     clickCtx ??= new (window.AudioContext || window.webkitAudioContext)();
@@ -355,6 +370,7 @@ export function installPath(ctx) {
   }
 
   function openPath() {
+    abandonTask();
     show('path');
     $('now-playing').textContent = 'My path';
     renderPath();
@@ -1023,7 +1039,7 @@ export function installPath(ctx) {
         'Anything you already showed me is marked as met; anything you skipped simply starts at the beginning.',
       ]);
       $('task-start').hidden = true;
-      setTimeout(() => openPath(), 2000);
+      setTimeout(() => { if (!$('screen-task').hidden) openPath(); }, 2000);
       return;
     }
     const d = DIAGNOSTIC[diagIdx];
@@ -1043,7 +1059,8 @@ export function installPath(ctx) {
         store.save(state);
         $('task-msg').textContent = (res.passed ? '✓ ' : '· ') + (res.note ?? '');
         diagIdx++;
-        setTimeout(nextDiagnostic, 1100);
+        const gen = taskGen;
+        setTimeout(() => { if (gen === taskGen && !$('screen-task').hidden) nextDiagnostic(); }, 1100);
       },
     });
   }
@@ -1072,7 +1089,7 @@ export function installPath(ctx) {
           $('task-msg').textContent = (passed ? '★ ' : '· ') + hits +
             (passed ? ' That is Teacher Loop v1 complete: you can play a pop song from a lead sheet.'
                     : ' Needed 7 of 8. Nothing is lost, the path will point you at the weak part.');
-          setTimeout(() => openPath(), 2800);
+          setTimeout(() => { if (!$('screen-task').hidden) openPath(); }, 2800);
         },
       });
     };
@@ -1225,5 +1242,7 @@ export function installPath(ctx) {
     noteOn: (m) => { if (!$('screen-task').hidden) noteOn(m); },
     noteOff: (m) => { if (!$('screen-task').hidden) noteOff(m); },
     active: () => !$('screen-task').hidden || !$('screen-path').hidden,
+    // the app's show() calls this on every screen change away from the task
+    leave: abandonTask,
   };
 }

@@ -141,6 +141,9 @@ export function renderCanonLibrary(host, ctx) {
   const search = root.querySelector('input[type="search"]');
   if (search) {
     search.id = 'lib-search';
+    // the box always shows the query the table is filtered by; a remount used
+    // to leave it blank over SEARCH RESULTS (restoreFocus below wins mid-typing)
+    search.value = ctx.query ?? '';
     search.addEventListener('input', () => ctx.onSearch?.(search.value));
   }
 
@@ -189,7 +192,9 @@ export function renderCanonLibrary(host, ctx) {
     c.style.cursor = 'pointer';
   }
   const resume = bySample(root, 'Resume the session');
-  if (resume) { const c = control(resume); c.addEventListener('click', () => onRun?.(prescription)); c.style.cursor = 'pointer'; }
+  // The tile NAMES the last song, so it resumes that song. It used to fire
+  // the path prescription (the check-in), which is the module beside it.
+  if (resume) { const c = control(resume); c.addEventListener('click', () => (ctx.carryOn && ctx.onResume) ? ctx.onResume() : onRun?.(prescription)); c.style.cursor = 'pointer'; }
 
   // ---- the four shelves, now tabs ----
   const counts = ctx.counts;

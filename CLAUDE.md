@@ -141,7 +141,7 @@ in `js/songs-imported.mjs`, never in `songs.mjs`.
 **Hand assignment** — `js/hands.mjs`. `handsAreSane()` and an offline
 `repairHands()`. Deliberately NOT wired into the app: see the law below.
 
-**Gates: `node tools/gates.mjs`** (all nineteen, five at a time, ~3½ minutes).
+**Gates: `node tools/gates.mjs`** (all twenty-one, five at a time, ~3½ minutes).
 Measured 2026-09-06: run one after another they take 400-490s and two own most
 of it (canon-journeys ~195s, overlay ~90s); in parallel the suite is 199s, and
 canon-journeys alone sets that floor. `node tools/gates.mjs songs` runs only the
@@ -164,7 +164,21 @@ point. If you ever meet a stale one, kill by PROFILE, never by process name:
 `Get-CimInstance Win32_Process -Filter "Name='chrome.exe'" | Where-Object { $_.CommandLine -match 'keys-cdp-' }`
 leaves Mark's real Chrome alone.
 
-The nineteen gates, if you need to run one by hand:
+☠️ **LEAVING A SCREEN ENDS WHAT THE SCREEN STARTED** (Mark, 2026-09-06: "the
+tick tick, I can't get it off"). The check-in's click track survived Back, and
+when it ran out the step's onDone re-opened the task over the library; Rhythm
+tap booked four bars of clicks up front and a Library tap left them playing.
+Every click now goes through `metClick()` so `show()` can kill the queue, the
+path module exposes `leave()` and `show()` calls it, and every deferred
+continuation carries a generation check. `tools/leave-probe.mjs` walks every
+activity, leaves it the way a person does, and asserts silence. Same day, same
+class: the canon remounts its search box EMPTY on every render while the query
+lived on in `libQuery`, so a song opened from a search came back to one row
+under a blank box; a screen change now clears the query and the box is bound
+to it. And the rail's "Resume the session" tile fired the path prescription
+(the check-in) instead of the song it named.
+
+The twenty-one gates, if you need to run one by hand:
 `test/check.mjs` · `test/import-roundtrip.mjs` · `tools/overlay.mjs` ·
 `tools/canon-runtime.mjs` · `tools/canon-clickable.mjs` ·
 `tools/canon-geometry.mjs` · `tools/canon-samples.mjs` ·
@@ -173,7 +187,7 @@ The nineteen gates, if you need to run one by hand:
 `tools/finger-check.mjs` · `tools/finger-probe.mjs` ·
 `tools/restart-probe.mjs` · `tools/shell-check.mjs` ·
 `tools/press-probe.mjs` · `tools/seek-probe.mjs` · `tools/surface-check.mjs` ·
-`tools/bars-probe.mjs`
+`tools/bars-probe.mjs` · `tools/leave-probe.mjs` · `tools/phone-library-probe.mjs`
 
 ☠️ **`surface-check.mjs` was red for weeks and the app was never at fault.** It
 read 2/8, and the note here said "the theory-task keyboard paints nothing at

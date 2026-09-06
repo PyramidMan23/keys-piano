@@ -25,7 +25,7 @@ const portFree = async (p) => {
   catch { return true; }
 };
 
-export async function launch({ width = 756, height = 1400, scale = 2, port = 9333 } = {}) {
+export async function launch({ width = 756, height = 1400, scale = 2, port = 9333, extraArgs = [] } = {}) {
   const wanted = port;
   for (let i = 0; i < 40 && !(await portFree(port)); i++) port = wanted + 1 + i;
   if (!(await portFree(port))) throw new Error(`no free debugging port near ${wanted}`);
@@ -42,6 +42,7 @@ export async function launch({ width = 756, height = 1400, scale = 2, port = 933
     // navigator.webdriver === true inside the page, so app.mjs jlog() drops every
     // event a gate produces (2026-09-02: tools had polluted the practice journal)
     '--enable-automation',
+    ...extraArgs,
     'about:blank',
   ], { stdio: 'ignore' });
 

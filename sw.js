@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v115';  // Song of Storms + The Legend of Zelda (Main Theme) from NinSheetMusic scores: all four Zelda songs, three tiers each
+const VERSION = 'keys-v116';  // bug sweep: leaving a screen ends its click track (check-in, rhythm tap), search resets on Back, tabs end a search, Resume tile resumes the song
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

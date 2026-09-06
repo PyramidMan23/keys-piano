@@ -51,6 +51,8 @@ const ALL = [
   'tools/hand-audit.mjs',
   'tools/finger-check.mjs',
   'tools/shell-check.mjs',
+  'tools/leave-probe.mjs',
+  'tools/phone-library-probe.mjs',
 ];
 
 // What a change to the SONG DATA (songs-imported, songs-fingers, tiers-refused,

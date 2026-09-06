@@ -253,8 +253,17 @@ function syncTopbar(name) {
 function show(name) {
   // leaving any screen kills preview audio and its visual leftovers (audit #1, #9)
   stopPreview();
-  stopMetronome();
+  stopMetronome(); // also silences every queued click (rhythm tap's four bars)
   stopTakeAudio();
+  // a running path task (its click track, its pending continuations) dies with
+  // its screen; pathUI is installed later in this module, hence the guard
+  if (name !== 'task') leaveTask?.();
+  // A song opened from the search results comes back to the WHOLE library
+  // (Mark, 2026-09-06: "if I search for a song and then go back I only see
+  // that search song"). The canon remounts its search box empty on every
+  // render, so a query that outlived the screen showed one row under a blank
+  // box with no way to clear it short of a hard refresh.
+  if (name !== 'library') libQuery = '';
   if (takeRec && name !== 'play') finishTake('left-screen');
   if (perf && name !== 'play') perfEnd(); // walking off stage ends the take
   if (active === 'improv' && name !== 'improv' && improvEnterT) {
@@ -310,6 +319,7 @@ function show(name) {
   }
 }
 let active = 'library';
+let leaveTask = null; // set once the path module is installed (bottom of this file)
 
 // ---------- library ----------
 // 2026-08-28 council: ONE page, progressive disclosure. One amber next-action,
@@ -693,6 +703,7 @@ function canonLibraryCtx() {
 
     // the rail's live readouts
     carryOn: lastSong ? { title: 'Resume the session', sub: lastSong.title } : null,
+    onResume: resumeLastSession,
     metronomeBpm: $('met-bpm')?.value ?? '100',
     voiceName: voiceModeLabel(voiceInfo().mode),
     // the app's single source of truth for whether a keyboard is plugged in
@@ -816,7 +827,10 @@ function canonLibraryCtx() {
     formCheckDue: state.formOnDemand === true,
     onChooseAnother: () => { state.lib.explore = true; store.save(state); renderLibrary(); },
     onSearch: (q) => { libQuery = q; renderLibrary(); },
-    onTab: (sec) => { state.lib.canonTab = sec; state.lib.canonShowAll = false; store.save(state); renderLibrary(); },
+    // a tab click during a search ends the search: before, it stored the tab
+    // and the table stayed on SEARCH RESULTS, so the click did nothing visible
+    onTab: (sec) => { state.lib.canonTab = sec; state.lib.canonShowAll = false; libQuery = ''; store.save(state); renderLibrary(); },
+    query: libQuery,
     onTool: (id) => { const el = $(id); if (el) el.click(); },
     sortMode: state.lib.exploreSort === 'diff' ? 'diff' : 'az',
     onSort: (mode) => { state.lib.exploreSort = mode; store.save(state); renderLibrary(); },
@@ -1385,14 +1399,7 @@ function startArmCountIn() {
   metCtx.resume();
   const spb = engine.msPerBeat() / 1000;
   const t0 = metCtx.currentTime + 0.08;
-  for (let i = 0; i < 4; i++) {
-    const o = metCtx.createOscillator(), g = metCtx.createGain();
-    o.type = 'square'; o.frequency.value = i === 0 ? 1500 : 1000;
-    g.gain.setValueAtTime(i === 0 ? 0.25 : 0.16, t0 + i * spb);
-    g.gain.exponentialRampToValueAtTime(0.001, t0 + i * spb + 0.05);
-    o.connect(g).connect(metCtx.destination);
-    o.start(t0 + i * spb); o.stop(t0 + i * spb + 0.06);
-  }
+  for (let i = 0; i < 4; i++) metClick(t0 + i * spb, i === 0 ? 1500 : 1000, i === 0 ? 0.25 : 0.16);
 }
 
 function loopFrame(t) {
@@ -2297,6 +2304,7 @@ $('lesson-rhythm-link').addEventListener('click', (e) => {
 
 // ---------- rhythm tap ----------
 let rhythmRound = null, rhythmT0 = 0, rhythmRecording = false;
+let rhythmGen = 0; // a round's timers belong to the round; leaving and coming back must not hear them
 const rhythmState = () => (state.rhythm ??= { level: 1, cleans: 0 });
 function rhythmHud(msg) {
   const rs = rhythmState();
@@ -2315,7 +2323,7 @@ function renderRhythmBlocks(beats, states) {
 $('btn-rhythm').addEventListener('click', () => {
   show('rhythm');
   $('now-playing').textContent = 'Rhythm tap';
-  rhythmRecording = false; rhythmRound = null;
+  rhythmRecording = false; rhythmRound = null; rhythmGen++;
   rhythmHud("Press ▶ when you're ready.");
   $('rhythm-blocks').innerHTML = '';
 });
@@ -2328,18 +2336,12 @@ $('rhythm-go').addEventListener('click', () => {
   const BPM = 80, spb = 60 / BPM, msPerBeat = spb * 1000;
   renderRhythmBlocks(pattern.beats);
   const t0 = metCtx.currentTime + 0.2;
-  const click = (at, hz, vol) => {
-    const o = metCtx.createOscillator(), g = metCtx.createGain();
-    o.type = 'square'; o.frequency.value = hz;
-    g.gain.setValueAtTime(vol, at);
-    g.gain.exponentialRampToValueAtTime(0.001, at + 0.05);
-    o.connect(g).connect(metCtx.destination);
-    o.start(at); o.stop(at + 0.06);
-  };
+  const click = metClick;
   // bar 1 count-in, bar 2 the pattern (over soft clicks), bar 3 count-in, bar 4 Mark
   for (let q = 0; q < 16; q++) click(t0 + q * spb, q % 4 === 0 ? 1500 : 1000, q >= 4 && q < 8 ? 0.08 : 0.16);
   for (const b of pattern.beats) click(t0 + (4 + b) * spb, 2100, 0.3);
-  const phase = (name, atBar) => setTimeout(() => { if (active === 'rhythm') rhythmHud(name); }, Math.max(0, (t0 - metCtx.currentTime + atBar * 4 * spb) * 1000));
+  const gen = ++rhythmGen;
+  const phase = (name, atBar) => setTimeout(() => { if (active === 'rhythm' && gen === rhythmGen) rhythmHud(name); }, Math.max(0, (t0 - metCtx.currentTime + atBar * 4 * spb) * 1000));
   phase('1… 2… 3… 4…', 0);
   phase('LISTEN…', 1);
   phase('Get ready…', 2);
@@ -2349,7 +2351,7 @@ $('rhythm-go').addEventListener('click', () => {
   rhythmT0 = tapBarStartMs;
   phase('YOUR TURN: tap it', 3);
   setTimeout(() => {
-    if (active !== 'rhythm' || !rhythmRound) return;
+    if (active !== 'rhythm' || !rhythmRound || gen !== rhythmGen) return;
     rhythmRecording = false;
     const res = rhythmRound.result();
     const states = rhythmRound.expected.map((e2) => (e2.hit !== null ? 'hit' : 'miss'));
@@ -2580,14 +2582,7 @@ $('btn-perf').addEventListener('click', () => {
   metCtx.resume();
   const spb = engine.msPerBeat() / 1000;
   const t0 = metCtx.currentTime + 0.08;
-  for (let i = 0; i < 4; i++) {
-    const o = metCtx.createOscillator(), g = metCtx.createGain();
-    o.type = 'square'; o.frequency.value = i === 0 ? 1500 : 1000;
-    g.gain.setValueAtTime(i === 0 ? 0.25 : 0.16, t0 + i * spb);
-    g.gain.exponentialRampToValueAtTime(0.001, t0 + i * spb + 0.05);
-    o.connect(g).connect(metCtx.destination);
-    o.start(t0 + i * spb); o.stop(t0 + i * spb + 0.06);
-  }
+  for (let i = 0; i < 4; i++) metClick(t0 + i * spb, i === 0 ? 1500 : 1000, i === 0 ? 0.25 : 0.16);
 });
 
 // ---------- staged memory transfer (mastery item 7) ----------
@@ -2667,13 +2662,7 @@ function memMetronomeTick() {
   metCtx ??= new (window.AudioContext || window.webkitAudioContext)();
   if (metCtx.state !== 'running') { metCtx.resume(); return; }
   const accent = ((b % song.timeSig[0]) + song.timeSig[0]) % song.timeSig[0] === 0;
-  const o = metCtx.createOscillator(), g = metCtx.createGain();
-  o.type = 'square'; o.frequency.value = accent ? 1500 : 1000;
-  const at = metCtx.currentTime;
-  g.gain.setValueAtTime(accent ? 0.22 : 0.13, at);
-  g.gain.exponentialRampToValueAtTime(0.001, at + 0.05);
-  o.connect(g).connect(metCtx.destination);
-  o.start(at); o.stop(at + 0.06);
+  metClick(metCtx.currentTime, accent ? 1500 : 1000, accent ? 0.22 : 0.13);
 }
 
 function onMemLap(ev) {
@@ -3625,8 +3614,28 @@ function maybeFirstRun() {
 
 // ---------- metronome ----------
 let metCtx = null, metTicker = null, metNextBeat = 0, metBeatIdx = 0;
+// EVERY click the app schedules goes through here, so leaving a screen can
+// silence what is already queued (Mark, 2026-09-06: "the tick tick, I can't
+// get it off"). Rhythm tap books four bars of clicks up front, twelve seconds
+// of them, and a Library tap used to leave them all playing over the library.
+const metNodes = [];
+function metClick(at, hz, vol) {
+  const o = metCtx.createOscillator(), g = metCtx.createGain();
+  o.type = 'square'; o.frequency.value = hz;
+  g.gain.setValueAtTime(vol, at);
+  g.gain.exponentialRampToValueAtTime(0.001, at + 0.05);
+  o.connect(g).connect(metCtx.destination);
+  o.start(at); o.stop(at + 0.06);
+  o.onended = () => { const i = metNodes.indexOf(o); if (i >= 0) metNodes.splice(i, 1); };
+  metNodes.push(o);
+  return o;
+}
+function killClicks() {
+  for (const o of metNodes.splice(0)) { try { o.stop(); } catch { /* already ended */ } }
+}
 function stopMetronome() {
   if (metTicker) { clearInterval(metTicker); metTicker = null; }
+  killClicks();
   const btn = $('met-toggle');
   if (btn) btn.textContent = '▶ Start';
 }
@@ -3643,15 +3652,7 @@ function startMetronome() {
     const spb = 60 / bpm;
     while (metNextBeat < metCtx.currentTime + 0.3) {
       const accent = metBeatIdx % perBar === 0;
-      const osc = metCtx.createOscillator();
-      const g = metCtx.createGain();
-      osc.type = 'square';
-      osc.frequency.value = accent ? 1500 : 1000;
-      g.gain.setValueAtTime(accent ? 0.25 : 0.15, metNextBeat);
-      g.gain.exponentialRampToValueAtTime(0.001, metNextBeat + 0.05);
-      osc.connect(g).connect(metCtx.destination);
-      osc.start(metNextBeat);
-      osc.stop(metNextBeat + 0.06);
+      metClick(metNextBeat, accent ? 1500 : 1000, accent ? 0.25 : 0.15);
       const idx = metBeatIdx % perBar;
       const at = (metNextBeat - metCtx.currentTime) * 1000;
       setTimeout(() => { if (metTicker) paintMetBeat(idx, perBar); }, Math.max(0, at));
@@ -3953,6 +3954,7 @@ const pathUI = installPath({
   SONGS, songStats, launchSong: launchSongFragment, runPrescription, awardXp,
 });
 window.__path = pathUI; // debug lever, same spirit as __engine / __lesson
+leaveTask = pathUI.leave;
 
 midi.connect();
 renderLibrary();
