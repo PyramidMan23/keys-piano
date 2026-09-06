@@ -1,3 +1,4 @@
+import { LESSONS as READING_LESSONS } from './lessons.mjs';
 // Teacher Loop v1 (11th council 2026-08-25): the spine that turns Keys from a
 // toolbox into a teacher, diagnose -> teach -> practise -> assess -> prescribe.
 // DOM-free and node-tested. Everything here is EVIDENCE, never a verdict about
@@ -241,6 +242,22 @@ export function prescribe(st, now, ctx = {}) {
     };
   }
 
+  // 1.2 a transfer check that came due (17th council): a section passed with
+  // help on is checked later on a DIFFERENT passage of the same song, help off.
+  // The only honest test of a skill is material it was not drilled on.
+  const dueTransfer = Object.entries(st.transfers ?? {})
+    .filter(([, t]) => t.dueAt && t.dueAt <= now)
+    .sort((a, b) => a[1].dueAt - b[1].dueAt)[0];
+  if (dueTransfer) {
+    const [songId, t] = dueTransfer;
+    const s = (ctx.songs ?? []).find((x) => x.id === songId);
+    return {
+      kind: 'transfer', songId, section: t.section, title: s?.title ?? songId,
+      reason: 'Check it holds: ' + (s?.title ?? songId) + ', ' + t.section + ', no waiting.',
+      evidence: 'you passed ' + t.from + ' ' + Math.max(1, Math.round((now - t.passedAt) / DAY)) + ' day(s) ago · a passage you have not drilled is the only honest check',
+    };
+  }
+
   // 1.5 resume where he left off, a CANDIDATE, not a separate authority
   // (13th council). Fresh means under 48h; sessions saved before timestamps
   // existed count as fresh so the Continue habit survives the upgrade.
@@ -313,6 +330,23 @@ export function prescribe(st, now, ctx = {}) {
     };
   }
 
+  // 4.5 the reading ladder (17th council). This brain imported only the five
+  // chord lessons and had never once been able to recommend any of the 13
+  // reading lessons. Reading and chords now take turns: the next reading
+  // lesson is prescribed whenever fewer reading lessons are done than chord
+  // lessons, and always once the chord ladder is finished.
+  const readingDone = st.lessons ?? {};
+  const nextReading = READING_LESSONS.find((l) => !readingDone[l.id]);
+  const nReading = READING_LESSONS.filter((l) => readingDone[l.id]).length;
+  const nChord = TEACHER_LESSONS.filter((l) => done[l.id]).length;
+  if (nextReading && nextUndone && nReading < nChord) {
+    return {
+      kind: 'reading', lessonId: nextReading.id, title: nextReading.title,
+      reason: 'Next reading step: "' + nextReading.title + '".',
+      evidence: nReading + ' of ' + READING_LESSONS.length + ' reading lessons done · reading and chords take turns',
+    };
+  }
+
   // 5. the next lesson in the path
   if (nextUndone) {
     return {
@@ -362,6 +396,16 @@ export function prescribe(st, now, ctx = {}) {
         evidence: 'best ' + worst.best + '% · five focused minutes here beats anything else',
       };
     }
+  }
+  // 7.5 the reading ladder continues (17th council) once nothing in his music
+  // is urgent: a due retention check and a weak section outrank a new lesson,
+  // a new song does not
+  if (nextReading) {
+    return {
+      kind: 'reading', lessonId: nextReading.id, title: nextReading.title,
+      reason: 'Next reading step: "' + nextReading.title + '".',
+      evidence: nReading + ' of ' + READING_LESSONS.length + ' reading lessons done',
+    };
   }
   // 8. earn the next playable song from the proof map
   const provenIds = new Set(Object.keys(st.playable ?? {}).filter((id) => st.playable[id].provenAt));

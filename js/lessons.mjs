@@ -413,6 +413,28 @@ export function lessonTaughtMidis(les) {
 }
 
 // everything taught by this lesson and every lesson before it
+// ONE explanation after an attempt (17th council): name the note missed most,
+// and the reading lesson that teaches it, so the retry has something to hold.
+// Pure: counts -> { midi, line, lessonId }. Never a chord claim (that is the
+// theory card's job) and never a verdict about the person.
+const NAMES12 = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const nameOf = (m) => NAMES12[m % 12] + (Math.floor(m / 12) - 1);
+export function explainMiss(missCounts, lessons = LESSONS) {
+  const entries = Object.entries(missCounts ?? {}).map(([m, c]) => [+m, c]).filter(([, c]) => c > 0);
+  if (!entries.length) return null;
+  entries.sort((a, b) => b[1] - a[1] || a[0] - b[0]);
+  const [midi, count] = entries[0];
+  const black = [1, 3, 6, 8, 10].includes(midi % 12);
+  const lesson = lessons.find((l) => lessonTaughtMidis(l).includes(midi))
+    ?? (black ? lessons.find((l) => l.id === 'sharps-flats') : null)
+    ?? (midi < 60 ? lessons.find((l) => /bass/i.test(l.title)) : lessons.find((l) => /treble/i.test(l.title)));
+  // pitch says where the key is, never which staff: a right hand can sit below middle C
+  const where = black ? 'a black key' : midi < 60 ? 'below middle C' : midi === 60 ? 'middle C' : 'above middle C';
+  const line = `Most missed: ${nameOf(midi)} (${where}), ${count} time${count === 1 ? '' : 's'}.` +
+    (lesson ? ` Lesson: "${lesson.title}".` : '');
+  return { midi, count, line, lessonId: lesson?.id ?? null };
+}
+
 export function cumulativeTaughtMidis(lessonId, lessons = LESSONS) {
   const set = new Set();
   for (const les of lessons) {

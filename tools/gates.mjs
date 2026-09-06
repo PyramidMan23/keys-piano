@@ -53,6 +53,7 @@ const ALL = [
   'tools/shell-check.mjs',
   'tools/leave-probe.mjs',
   'tools/phone-library-probe.mjs',
+  'tools/trial-probe.mjs',
 ];
 
 // What a change to the SONG DATA (songs-imported, songs-fingers, tiers-refused,

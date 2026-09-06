@@ -185,6 +185,8 @@ export function badges(st, songs = []) {
   if ((st.bestRhythm ?? 0) >= 7) out.push({ id: 'rhythm7', word: '7-day rhythm', shape: '●', evidence: { best: st.bestRhythm } });
   const lessons = Object.keys(st.teacherLessons ?? {}).length;
   if (lessons >= 5) out.push({ id: 'foundation', word: 'Foundation complete', shape: '■', evidence: st.teacherLessons });
+  const blocks = st.blocks ?? [];
+  if (blocks.length) out.push({ id: 'blocks', word: blocks.length + ' practice block' + (blocks.length === 1 ? '' : 's'), shape: '▮', evidence: { count: blocks.length, last: blocks[blocks.length - 1] } });
   // arcade stats are honest fun, labelled as arcade, never competence claims
   const bestCombo = Math.max(0, ...Object.values(st.songs ?? {}).map((s) => s.bestCombo ?? 0));
   if (bestCombo >= 50) out.push({ id: 'combo50', word: bestCombo + ' note streak', shape: '▲', arcade: true, evidence: { bestCombo } });
@@ -201,16 +203,77 @@ export const JOURNEYS = {
     { name: 'Prove it', section: null, hand: 'both', wait: false, pass: 'playable' },
   ],
 };
-export function journeyState(st, songId) {
-  const steps = JOURNEYS[songId];
-  if (!steps) return null;
-  const step = st.journeys?.[songId]?.step ?? 0;
+// EVERY SONG HAS A JOURNEY (17th council, 2026-09-06: the ten-session trial).
+// The drawn strip (Hear it, Right hand, Left hand, Both hands, Full run, a
+// Next step button) was lit for ONE pilot song; every other song opened as a
+// whole-song run with no unit of work smaller than "play it". The generic
+// ladder is built from the song's own sections: hear it, then per section
+// each hand alone and then together with help on, then a full run with help
+// off, then the playable proof. Each step is one declared target with one
+// verdict, which is exactly a completed practice block. An authored entry in
+// JOURNEYS still wins.
+export function journeyFor(song) {
+  if (!song) return null;
+  if (JOURNEYS[song.id]) return JOURNEYS[song.id];
+  const secs = song.sections ?? [];
+  const notes = song.notes ?? [];
+  const hasHand = (h, sec) => notes.some((n) => n.h === h && (!sec || (n.b >= sec.startBeat && n.b < sec.endBeat)));
+  const steps = [{ name: 'Hear it', section: secs[0]?.name ?? null, hand: 'both', wait: true, pass: 'hear' }];
+  const units = secs.length ? secs : [null];
+  for (const sec of units) {
+    const tag = sec ? ' · ' + sec.name.replace(/,.*$/, '') : '';
+    const both = hasHand('L', sec) && hasHand('R', sec);
+    if (both) {
+      steps.push({ name: 'Right hand' + tag, section: sec?.name ?? null, hand: 'R', wait: true, pass: 'lap70' });
+      steps.push({ name: 'Left hand' + tag, section: sec?.name ?? null, hand: 'L', wait: true, pass: 'lap70' });
+    }
+    steps.push({ name: (both ? 'Both hands' : 'Play it') + tag, section: sec?.name ?? null, hand: 'both', wait: true, pass: 'lap70' });
+  }
+  steps.push({ name: 'Full run', section: null, hand: 'both', wait: false, pass: 'run85' });
+  steps.push({ name: 'Prove it', section: null, hand: 'both', wait: false, pass: 'playable' });
+  return steps;
+}
+export function journeyState(st, song) {
+  // accepts a song or, for the pilot's older callers, an id
+  const id = typeof song === 'string' ? song : song?.id;
+  const steps = typeof song === 'string' ? JOURNEYS[song] : journeyFor(song);
+  if (!steps || !id) return null;
+  const step = st.journeys?.[id]?.step ?? 0;
   return { steps, step: Math.min(step, steps.length) };
 }
-export function journeyAdvance(st, songId) {
-  const steps = JOURNEYS[songId];
-  if (!steps) return null;
-  const j = ((st.journeys ??= {})[songId] ??= { step: 0 });
+// The strip shows ONE section's ladder, not the whole song's: hear it, the
+// current section's steps, the two closing steps. Six cells at most, which is
+// what the design drew room for; finished sections fold away.
+export function journeyWindow(st, song) {
+  const js = journeyState(st, song);
+  if (!js) return null;
+  const cur = js.steps[js.step];
+  const curSec = cur?.section ?? null;
+  const shown = js.steps.map((s, i) => ({ s, i })).filter(({ s, i }) =>
+    i === 0 || s.section === null || s.section === curSec || (cur && cur.section === null && i >= js.step));
+  const idx = shown.findIndex(({ i }) => i === js.step);
+  return { steps: shown.map(({ s }) => s), step: idx < 0 ? shown.length : idx, all: js };
+}
+export function journeyAdvance(st, song) {
+  const id = typeof song === 'string' ? song : song?.id;
+  const steps = typeof song === 'string' ? JOURNEYS[song] : journeyFor(song);
+  if (!steps || !id) return null;
+  const j = ((st.journeys ??= {})[id] ??= { step: 0 });
   if (j.step < steps.length) j.step++;
   return j.step;
+}
+
+// ---- completed practice blocks (17th council) ----------------------------
+// A block is a declared target, an attempt and a recorded verdict. It is the
+// unit the ledger counts. It is NOT "focused hours": the council would not let
+// a block claim anything about attention, and elapsed time stays a separate
+// number. Sources: a journey step passed, a trained section passed, a lesson
+// level passed, a path task finished, a transfer check passed.
+export function recordBlock(st, kind, ref, now = Date.now()) {
+  (st.blocks ??= []).push({ t: now, kind, ref });
+  if (st.blocks.length > 2000) st.blocks.splice(0, st.blocks.length - 2000);
+  return st.blocks.length;
+}
+export function blockCount(st, sinceMs = 0) {
+  return (st.blocks ?? []).filter((b) => b.t >= sinceMs).length;
 }

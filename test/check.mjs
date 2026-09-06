@@ -1451,7 +1451,11 @@ pst.mastery['inversion'].stage = 'independent';
 pst.mastery['inversion'].evidence = [{ t: tt0, passed: true }];
 assert.equal(T.prescribe(pst, tt0 + 1000).kind, 'assessment', 'all lessons done -> the novel assessment');
 pst.teacherAssessed = tt0;
-assert.equal(T.prescribe(pst, tt0 + 1000).kind, 'repertoire', 'after the assessment the path becomes the repertoire loop');
+// 17th council: the brain now knows the reading ladder; it continues after the assessment
+assert.equal(T.prescribe(pst, tt0 + 1000).kind, 'reading', 'after the assessment the reading ladder continues');
+pst.lessons = Object.fromEntries((await import('../js/lessons.mjs')).LESSONS.map((l) => [l.id, { done: tt0 }]));
+assert.equal(T.prescribe(pst, tt0 + 1000).kind, 'repertoire', 'after the assessment and the reading ladder the path becomes the repertoire loop');
+delete pst.lessons; // the repertoire tests below predate the reading ladder; a due review and a weak section still outrank it
 ok('prescription order: review > prerequisite > unfinished > proof > weakest > next lesson');
 
 // --- the curriculum itself is honest and complete ---
@@ -1738,6 +1742,9 @@ ok('library: derived Learning/Repertoire/Explore, weakest-first, one next action
   const statsWeak = (id) => (id === 'bella-ciao-easy' ? { sectionAcc: { Verse: { best: 60, last: 60 } } } : {});
   const weak = T.prescribe(full, nw, { songs: SONGS, statsOf: statsWeak });
   assert.deepEqual([weak.kind, weak.sub, weak.songId], ['repertoire', 'weak-section', 'bella-ciao-easy'], 'weakest section first');
+  // with nothing urgent in his music the reading ladder comes next (17th council); finish it to see the song loop continue
+  assert.equal(T.prescribe(full, nw, { songs: SONGS, statsOf: () => ({}) }).kind, 'reading', 'then the reading ladder, while it has lessons left');
+  full.lessons = Object.fromEntries((await import('../js/lessons.mjs')).LESSONS.map((l) => [l.id, { done: nw }]));
   const earn = T.prescribe(full, nw, { songs: SONGS, statsOf: () => ({}) });
   assert.deepEqual([earn.kind, earn.sub], ['repertoire', 'earn-playable'], 'then earning the next playable song');
   const allProven = { ...full, playable: Object.fromEntries([...new Set(Object.values(T.SKILL_REPERTOIRE).flatMap((m) => m.proof.map((p) => p.songId)))].map((id) => [id, { days: ['a', 'b'], provenAt: 1, dueAt: nw + DAYMS }])) };
@@ -2178,3 +2185,57 @@ ok('no decoy modules in the repo root shadowing a shipped js/ module');
 }
 
 console.log(`\nALL GREEN: ${n} checks passed`);
+
+// ---- 17th council (2026-09-06): every song has a journey, the ledger, the brain's new branches ----
+{
+  const { journeyFor, journeyWindow, journeyState, journeyAdvance, recordBlock, blockCount, JOURNEYS } = await import('../js/game.mjs');
+  const { explainMiss, LESSONS } = await import('../js/lessons.mjs');
+  const { prescribe, TEACHER_LESSONS } = await import('../js/teacher.mjs');
+  let maxWin = 0, generic = 0;
+  for (const s of SONGS) {
+    if (s.ladder) continue;
+    const steps = journeyFor(s);
+    assert.ok(steps && steps.length >= 3, `${s.id}: a journey with at least hear, play, full run`);
+    assert.equal(steps[0].pass, JOURNEYS[s.id] ? steps[0].pass : 'hear', `${s.id}: the generic ladder starts by listening`);
+    assert.equal(steps[steps.length - 1].pass, 'playable', `${s.id}: the ladder ends at the playable proof`);
+    for (const st of steps) assert.ok(['hear', 'finish', 'lap70', 'run85', 'playable'].includes(st.pass), `${s.id}: known pass rule ${st.pass}`);
+    // every section-scoped step names a REAL section (a step that names a ghost section can never pass)
+    for (const st of steps) if (st.section) assert.ok((s.sections ?? []).some((x) => x.name === st.section), `${s.id}: step "${st.name}" names section "${st.section}" which exists`);
+    const w = journeyWindow({}, s);
+    maxWin = Math.max(maxWin, w.steps.length);
+    if (!JOURNEYS[s.id]) generic++;
+    // walking the ladder to its end folds every finished section away
+    const st2 = {};
+    for (let i = 0; i < steps.length; i++) { const ww = journeyWindow(st2, s); assert.ok(ww.steps.length <= 6, `${s.id}: window ${ww.steps.length} at step ${i}`); journeyAdvance(st2, s); }
+    assert.equal(journeyState(st2, s).step, steps.length);
+  }
+  assert.ok(maxWin <= 6, `the drawn strip has room for six cells, widest window is ${maxWin}`);
+  ok(`every song has a journey (${generic} generic, ${Object.keys(JOURNEYS).length} authored), windows never exceed 6 cells`);
+
+  const st = {};
+  recordBlock(st, 'journey', 'x', 1000); recordBlock(st, 'section', 'y', 2000);
+  assert.equal(blockCount(st), 2); assert.equal(blockCount(st, 1500), 1);
+  ok('the block ledger counts, and counts since a moment');
+
+  const ex = explainMiss({ 61: 3, 64: 1 });
+  assert.equal(ex.midi, 61); assert.match(ex.line, /C#4/); assert.equal(ex.lessonId, 'sharps-flats');
+  assert.equal(explainMiss({}), null);
+  const low = explainMiss({ 43: 2 });
+  assert.ok(low.lessonId && /bass/i.test(LESSONS.find((l) => l.id === low.lessonId).title), 'a low note points at a bass lesson');
+  ok('explainMiss names the most-missed note and the lesson that teaches it');
+
+  const base = { diagnosticDone: 1, lessons: {}, teacherLessons: {} };
+  // chords ahead of reading by one: reading is next (once the chord lesson's proof is banked)
+  const rx1 = prescribe({ ...base, teacherLessons: { 'tl-pulse': 1 }, pathProofs: { 'tl-pulse': { at: 1 } } }, Date.now(), { songs: SONGS });
+  assert.equal(rx1.kind, 'reading'); assert.equal(rx1.lessonId, LESSONS[0].id);
+  // level: the chord lesson goes first
+  assert.equal(prescribe(base, Date.now(), { songs: SONGS }).kind, 'lesson');
+  // every chord lesson done and proven: reading continues until the ladder is finished
+  const allChords = Object.fromEntries(TEACHER_LESSONS.map((l) => [l.id, 1]));
+  const rx3 = prescribe({ ...base, teacherLessons: allChords, pathProofs: allChords, teacherAssessed: 1 }, Date.now(), { songs: SONGS });
+  assert.equal(rx3.kind, 'reading');
+  // a due transfer check outranks everything but an overdue review
+  const rx4 = prescribe({ ...base, transfers: { 'fur-elise': { section: 'Theme 2nd time', from: 'Theme 1st time', passedAt: 1, dueAt: 1 } } }, Date.now(), { songs: SONGS });
+  assert.equal(rx4.kind, 'transfer'); assert.equal(rx4.songId, 'fur-elise');
+  ok('prescribe() now recommends reading lessons and due transfer checks');
+}

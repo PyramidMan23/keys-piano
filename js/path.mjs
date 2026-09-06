@@ -167,7 +167,7 @@ export function installPath(ctx) {
         const skillId = rx.skillId
           ?? (rx.lessonId && TEACHER_LESSONS.find((l) => l.id === rx.lessonId)?.skillIds?.[0]);
         const song = rx.songId && (SONGS ?? []).find((x) => x.id === rx.songId);
-        head.textContent = (skillId && SKILL_BY_ID[skillId]?.name)
+        head.textContent = rx.title ?? (skillId && SKILL_BY_ID[skillId]?.name)
           ?? song?.title
           ?? ({ diagnostic: 'The check-in', assessment: 'The assessment', done: 'Path complete' }[rx.kind]
               ?? 'Continue learning');
@@ -184,6 +184,8 @@ export function installPath(ctx) {
       : rx.kind === 'proof' ? 'Prove it in the song'
       : rx.kind === 'song-review' ? 'Run the song'
       : rx.kind === 'repertoire' ? 'Five focused minutes'
+      : rx.kind === 'reading' ? '▶ Next reading lesson'
+      : rx.kind === 'transfer' ? 'Check it holds'
       : rx.kind === 'done' ? '✓ Path complete' : '▶ Continue learning';
     $('path-go').disabled = rx.kind === 'done';
     // ---- 11d value slots (2026-08-30 council redraw), each guarded so the
@@ -730,6 +732,7 @@ export function installPath(ctx) {
     const t = task;
     task = null;
     stopClicks();
+    if (passed) ctx.bankBlock?.('task', t.spec.type + (lessonDef ? '|' + lessonDef.id : ''));
     t.opts.onDone?.({ passed, note });
   }
 
@@ -1238,7 +1241,7 @@ export function installPath(ctx) {
     }
     if (rx.kind === 'lesson') return openLesson(TEACHER_LESSONS.find((l) => l.id === rx.lessonId));
     // song-shaped prescriptions launch through the app's one launcher
-    if (rx.kind === 'proof' || rx.kind === 'repertoire' || rx.kind === 'song-review') return runPrescription?.(rx);
+    if (rx.kind === 'proof' || rx.kind === 'repertoire' || rx.kind === 'song-review' || rx.kind === 'reading' || rx.kind === 'transfer') return runPrescription?.(rx);
   });
   $('task-start').addEventListener('click', () => {
     if ($('task-title').textContent.startsWith('Check-in')) return runDiagnosticStep();

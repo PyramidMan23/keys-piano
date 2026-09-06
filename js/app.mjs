@@ -24,7 +24,7 @@ import { MEM_STAGES, memCues, memAdvance, randomStartBar } from './memory.mjs';
 import { makeExercise, judgeSight } from './sight.mjs';
 import { matchCard, CardTask } from './theory.mjs';
 import { pickPattern, RhythmRound } from './rhythm.mjs';
-import { LESSONS, StaffDrill, TogetherDrill, PhraseDrill, PHRASES, pickReviewItems, lessonKeyRange, buildLevels, LevelRunner, lessonItemKeyOf, bridgeSongFor } from './lessons.mjs';
+import { LESSONS, StaffDrill, TogetherDrill, PhraseDrill, PHRASES, pickReviewItems, lessonKeyRange, buildLevels, LevelRunner, lessonItemKeyOf, bridgeSongFor, explainMiss } from './lessons.mjs';
 import { installPath } from './path.mjs';
 import { makeCountCells } from './rhythm.mjs';
 import { TouchDiagnostic, buildCalibration, ZONES } from './touch.mjs';
@@ -39,7 +39,7 @@ import {
   grantXp, totalXp, gameLevel, questsFor, chooseQuest, settleQuest,
   isoWeek, weeklyOptions, chooseWeekly, settleWeekly,
   rhythmOf, freezeOffer, useFreeze, earnFreeze, rebaseWeekly,
-  verdictWord, badges, JOURNEYS, journeyState, journeyAdvance,
+  verdictWord, badges, JOURNEYS, journeyState, journeyAdvance, journeyWindow, recordBlock, blockCount,
 } from './game.mjs';
 import { difficultyScore, difficultyBand, HALL_OF_FAME } from './difficulty.mjs';
 import { coverDataUrl } from './covers.mjs';
@@ -286,7 +286,7 @@ function show(name) {
       if (mountWidePlay($('screen-play')) && song) {
         // full first sync, so the header never shows the artboard's sample song
         const lv = (song.level ?? 'easy');
-        syncWidePlay({ title: song.title, sub: lv[0].toUpperCase() + lv.slice(1) + ' tier',
+        syncWidePlay({ title: song.title, sub: songSub(song),
           bpm: Math.round(song.bpm * (+$('tempo').value) / 100) + ' bpm',
           accuracy: engine ? engine.accuracy() : 0, combo: 0, tier: (falls?.comboLevel ?? 0) + 1, timing: '\u2014',
           art: coverDataUrl(song, 96) });
@@ -383,6 +383,23 @@ function renderNextAction() {
 // One launcher for every prescription kind, the path screen calls this too.
 function runPrescription(rx) {
   if (rx.kind === 'resume') { resumeLastSession(); return; }
+  if (rx.kind === 'reading') {
+    const les = LESSONS.find((l) => l.id === rx.lessonId);
+    if (les) { jlog('reading_prescribed', { id: les.id }); openLesson(les); return; }
+  }
+  if (rx.kind === 'transfer') {
+    const s = SONGS.find((x) => x.id === rx.songId);
+    if (!s) { $('btn-path').click(); return; }
+    state.pathPending = { type: 'transfer', songId: rx.songId, section: rx.section, at: Date.now() };
+    store.save(state);
+    startSong(s);
+    const secIdx = (s.sections ?? []).findIndex((x) => x.name === rx.section);
+    if (secIdx >= 0) $('section-select').value = String(secIdx);
+    $('wait-mode').checked = false;
+    rebuildEngine();
+    if (falls) falls.banner = 'Transfer check: ' + rx.section + ', no waiting, 85% to pass.';
+    return;
+  }
   if (rx.kind === 'proof' || rx.kind === 'repertoire' || rx.kind === 'song-review') {
     const s = SONGS.find((x) => x.id === rx.songId);
     if (!s) { $('btn-path').click(); return; }
@@ -684,7 +701,7 @@ function canonLibraryCtx() {
       : (() => {
         const sid = rx.skillId
           ?? (rx.lessonId && TEACHER_LESSONS.find((l2) => l2.id === rx.lessonId)?.skillIds?.[0]);
-        const name = (sid && SKILL_BY_ID[sid]?.name)
+        const name = rx.title ?? (sid && SKILL_BY_ID[sid]?.name)
           ?? ({ diagnostic: 'The check-in', assessment: 'The assessment', done: 'Path complete' }[rx.kind]
               ?? 'Continue learning');
         return { title: name, reason: rx.reason ?? rx.evidence ?? '', song: null };
@@ -781,7 +798,10 @@ function canonLibraryCtx() {
       const d = new Date();
       let total = 0, days = 0;
       for (let i = 0; i < 7; i++) { const k = localDay(d); const m = pmin[k] ?? 0; total += m; if (m > 0) days++; d.setDate(d.getDate() - 1); }
-      return `${Math.round(total)} MIN · ${days} DAY${days === 1 ? '' : 'S'}`;
+      // the completed-blocks ledger rides the same line (17th council): the
+      // count of targets set and answered this week, beside the raw minutes
+      const blocks = blockCount(state, Date.now() - 7 * 864e5);
+      return `${Math.round(total)} MIN · ${days} DAY${days === 1 ? '' : 'S'} · ${blocks} BLOCK${blocks === 1 ? '' : 'S'}`;
     })(),
     practiceTrend: (() => {
       const pmin = state.pmin ?? {};
@@ -803,6 +823,7 @@ function canonLibraryCtx() {
       const skillId = rx.skillId
         ?? (rx.lessonId && TEACHER_LESSONS.find((l2) => l2.id === rx.lessonId)?.skillIds?.[0]);
       const skillName = (skillId && SKILL_BY_ID[skillId]?.name)
+        ?? rx.title
         ?? ({ diagnostic: 'The check-in', assessment: 'The assessment', done: 'Path complete' }[rx.kind] ?? 'Continue learning');
       const stage = skillId ? (state.mastery?.[skillId]?.stage ?? 'unseen') : null;
       const rank = stage ? STAGES.indexOf(stage) : -1;
@@ -1216,6 +1237,8 @@ let viewMode = 'falls'; // council default; score one tap away
 let hand = 'both';
 let sightMode = false;
 let wrongByGroup = new Map(); // "60,64,69" -> {count, midis} for theory triggers
+let lapMiss = {};             // expected midi -> misses this lap, for the one-line explanation
+let journeyRetry = false;     // the current journey step's last attempt failed
 let cardTask = null; // open theory card listener
 let raf = 0, lastT = 0, scorePassFlag = false;
 let armed = false, armCountUntil = 0; // timed mode waits for the first key, then a 1-bar count-in
@@ -1267,6 +1290,45 @@ function comboFlash(n) {
   el.classList.add('go');
 }
 
+// WHAT IS IN THIS PIECE (17th council): the drawn subtitle slot carries the
+// tier, and now the key, the meter and the marked tempo too. Only what the
+// data states: a key the import stated, a meter only when it was verified or
+// came from a score (a transcribed song's 4/4 is the transcriber's default).
+// The 756 play board draws its own header ("Star Wars Main Title", "Easy tier,
+// section B") and only the wide board's binder ever claimed it, so on a phone
+// every song wore the sample title (screenshot, 2026-09-06). Claim it once by
+// its sample text, then bind the real song every open.
+function bindNarrowPlayHeader() {
+  if (!CANON_ON || !song) return;
+  const scr = $('screen-play');
+  const claim = (sample, id) => {
+    if ($(id)) return $(id);
+    const leaf = [...scr.querySelectorAll('*')].find((e) => !e.children.length && e.textContent.trim() === sample && !e.closest('[data-legacy-screen]'));
+    if (leaf) leaf.id = id;
+    return leaf;
+  };
+  const t = claim('Star Wars Main Title', 'cp-title-n');
+  const u = claim('Easy tier, section B', 'cp-sub-n');
+  if (t) t.textContent = song.title;
+  if (u) u.textContent = songSub(song) ?? '';
+}
+function songSub(s) {
+  if (!s) return null;
+  const lv = s.level ?? 'easy';
+  const parts = [lv[0].toUpperCase() + lv.slice(1) + ' tier'];
+  if (s.key) parts.push(s.key);
+  if (s.timeSig && (s.meterVerified || s.fromScore || s.key) && !s.freeTime) parts.push(s.timeSig[0] + '/' + s.timeSig[1]);
+  if (s.bpm) parts.push(Math.round(s.bpm) + ' bpm');
+  return parts.join(' · ');
+}
+// A completed practice block: declared target, attempt, verdict. Recorded
+// here so every source logs the same way and the ledger stays inspectable.
+function bankBlock(kind, ref) {
+  const n = recordBlock(state, kind, ref);
+  jlog('block_done', { kind, ref, n });
+  store.save(state);
+  return n;
+}
 function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   jlog('song_start', { id: s.id, sight: !!s.sightRead });
   pathSessionUntil = 0; // an ordinary open carries no prescribed timebox
@@ -1283,6 +1345,7 @@ function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   $('btn-hear').disabled = sightMode;
   $('btn-train').disabled = sightMode;
   show('play');
+  bindNarrowPlayHeader();
   // "free time": this song's grid is the transcriber's default, not measured
   // meter, so the app must not sell it as bars-and-counts (council 2026-09-01).
   $('now-playing').textContent = `${s.title}${s.level ? ' · ' + s.level : ''} · ${s.composer.replace(' · easy arrangement', '')} · D${difficultyScore(s)} ${difficultyBand(difficultyScore(s))}${s.freeTime ? ' · free time' : ''}${s.meterVerified ? ` · ${s.timeSig[0]}/${s.timeSig[1]}` : ''}`;
@@ -1340,6 +1403,7 @@ function rebuildEngine() {
   paceSamples = [];
   lastBiasAt = 0;
   wrongByGroup = new Map();
+  lapMiss = {};
   window.__engine = engine; // debug/test handle, same spirit as __simNote
   if (!falls) falls = new FallsView($('falls'));
   window.__falls = falls;   // the wide play screen adopts this canvas and calls resize()
@@ -1428,7 +1492,7 @@ function loopFrame(t) {
       if ((ev.type === 'perfect' || ev.type === 'good') && viewMode === 'falls') falls.burst(ev.midi, ev.type);
     }
     if (viewMode === 'falls') falls.draw(demoEngine); else score.update(demoEngine, hand);
-    if (demoEngine.finished) { previewStop?.(); stopDemo(); }
+    if (demoEngine.finished) { jlog('demo_done', { id: song?.id }); previewStop?.(); stopDemo(); }
     scheduleFrame();
     return;
   }
@@ -1465,10 +1529,14 @@ function loopFrame(t) {
     if (ev.type === 'wrong' || ev.type === 'early' || ev.type === 'missed') {
       if (ev.type !== 'early') combo = 0;
       if (fx) falls.flash(ev.midi, 'wrong');
+      // the one-line explanation counts EXPECTED notes: a miss names itself,
+      // a wrong press names the group it was aimed at
+      if (ev.type === 'missed' && ev.midi != null) lapMiss[ev.midi] = (lapMiss[ev.midi] ?? 0) + 1;
       // theory trigger data: which expected group was fumbled (audit-by-play)
       if (ev.type === 'wrong') {
         const g = engine.currentGroup();
         if (g) {
+          for (const n of g.notes) lapMiss[n.m] = (lapMiss[n.m] ?? 0) + 1;
           const midis = g.notes.map((n) => n.m).sort((a, b) => a - b);
           const key = midis.join(',');
           const rec = wrongByGroup.get(key) ?? { count: 0, midis };
@@ -1510,7 +1578,7 @@ function loopFrame(t) {
     timing: '\u2014',   // no honest per-frame timing source yet; a dash, never sample data
     tier: (falls?.comboLevel ?? 0) + 1,
     title: song?.title,
-    sub: song ? `${(song.level ?? 'easy')[0].toUpperCase()}${(song.level ?? 'easy').slice(1)} tier` : null,
+    sub: songSub(song),
     bpm: song ? Math.round(song.bpm * (+$('tempo').value) / 100) + ' bpm' : null,
   });
   if (engine.finished) { finishSong(); return; }
@@ -1554,21 +1622,21 @@ function finishSong() {
     dayStat('cleanRuns'); // clean but e.g. slowed: still a real run for the quest
   }
   // song journey (goal-gradient milestones, pilot: See You Again Easy)
-  const jj = journeyState(state, song.id);
+  const jj = journeyState(state, song);
   if (jj && jj.step < jj.steps.length) {
     const stepDef = jj.steps[jj.step];
     const secOk = !stepDef.section || song.sections?.[+$('section-select').value]?.name === stepDef.section;
     const handOk = stepDef.hand === 'both' ? hand === 'both' : hand === stepDef.hand;
     const passOk = stepDef.pass === 'finish' ? true
+      : stepDef.pass === 'lap70' ? acc >= 70
       : stepDef.pass === 'run85' ? (acc >= 85 && !$('wait-mode').checked)
       : stepDef.pass === 'playable' ? !!state.playable?.[song.id]?.provenAt : false;
-    if (secOk && handOk && passOk) {
-      const n = journeyAdvance(state, song.id);
-      comboFlash(n >= jj.steps.length ? '🌟 JOURNEY COMPLETE' : `MILESTONE ${n}/${jj.steps.length} ✓`);
-      jlog('journey', { id: song.id, step: n });
-      renderJourney();
+    if (secOk && handOk && stepDef.pass !== 'hear') {
+      if (passOk) journeyPass(stepDef, { acc });
+      else if (stepDef.pass === 'lap70' || stepDef.pass === 'run85') journeyFail(stepDef, { acc });
     }
   }
+  lapMiss = {};
   settleGame();
   store.save(state);
   const s = engine.stats;
@@ -1929,6 +1997,29 @@ function openLesson(les) {
   $('lesson-video').innerHTML = les.video
     ? `Still confused? <a href="${les.video.url}" target="_blank" rel="noopener">Watch: ${les.video.title}</a> (free, opens YouTube)`
     : '';
+  // SHOW ME (17th council): an in-app demonstration beside the verified link,
+  // both logged, so the next council reads usage instead of taste. The button
+  // is the drawn keyboard toggle's twin (lifted, never restyled); it sounds and
+  // lights the lesson's own worked example.
+  $('lesson-video').querySelector('a')?.addEventListener('click', () => jlog('video_click', { id: les.id }));
+  {
+    const demo = les.exChord ?? (les.ex ? [les.ex.m] : []);
+    const twin = $('lesson-kb-toggle');
+    if (demo.length && twin) {
+      const b = twin.cloneNode(true);
+      b.id = 'lesson-showme'; b.hidden = false;
+      b.textContent = 'Show me';
+      b.addEventListener('click', () => {
+        jlog('showme_click', { id: les.id });
+        playPreview(demo.map((m) => ({ b: 0, d: 1.6, m, h: les.ex?.h ?? (m < 60 ? 'L' : 'R') })), 500, (m, down) => {
+          if (down) lessonView?.keyDown(m, m < 60 ? 'L' : 'R'); else lessonView?.keyUp(m);
+        }, null);
+        showLessonPrompt(demo.map((m) => ({ m, h: les.ex?.h ?? (m < 60 ? 'L' : 'R') })));
+        setTextKeeping($('lesson-msg'), 'Watch the key light and the note on the stave: that is ' + demo.map(noteName).join(' + ') + '.');
+      });
+      $('lesson-video').prepend(b, ' ');
+    }
+  }
   $('lesson-nomidi').hidden = $('midi-status').dataset.connected === 'true';
   // the action button is shared with the song bridge: put its own word back
   const actionBtn = $('lesson-rhythm-link');
@@ -2160,6 +2251,7 @@ function lessonNote(m, isDown, mode = 'midi') {
   }
   if (res.levelPassed) {
     comboFlash('LEVEL ✓');
+    bankBlock('lesson-level', lessonDef.id + '|' + (lessonRunner.li ?? ''));
     enterLevel();
     return;
   }
@@ -2440,20 +2532,34 @@ function onLap(ev) {
     settleGame();
     store.save(state);
   }
+  // a transfer check (17th council): the prescribed passage, help off, 85%
+  if (pp?.type === 'transfer' && pp.songId === song.id && !$('wait-mode').checked &&
+      song.sections?.[+secIdx]?.name === pp.section) {
+    const passed = ev.accuracy >= 85;
+    jlog('transfer_result', { id: song.id, section: pp.section, acc: ev.accuracy, passed });
+    if (passed) {
+      delete state.pathPending;
+      delete (state.transfers ?? {})[song.id];
+      bankBlock('transfer', song.id + '|' + pp.section);
+      comboFlash('IT HELDS ✓'.replace('HELDS', 'HELD'));
+    } else {
+      falls.banner = (explainMiss(lapMiss)?.line ?? `${ev.accuracy}%, needs 85.`) + ' Again.';
+    }
+    store.save(state);
+  }
   // journey milestones scoped to a SECTION complete on a lap (a section loop
   // never "finishes"); full-song milestones complete in finishSong
-  const jj2 = journeyState(state, song.id);
+  const jj2 = journeyState(state, song);
   if (jj2 && jj2.step < jj2.steps.length) {
     const sd = jj2.steps[jj2.step];
     const handOk = sd.hand === 'both' ? hand === 'both' : hand === sd.hand;
-    if (sd.section && sd.pass === 'finish' && handOk && song.sections?.[+secIdx]?.name === sd.section) {
-      const n2 = journeyAdvance(state, song.id);
-      comboFlash(`MILESTONE ${n2}/${jj2.steps.length} ✓`);
-      jlog('journey', { id: song.id, step: n2 });
-      store.save(state);
-      renderJourney();
+    if (sd.section && handOk && song.sections?.[+secIdx]?.name === sd.section && sd.pass !== 'hear') {
+      const passed = sd.pass === 'finish' ? true : sd.pass === 'lap70' ? ev.accuracy >= 70 : false;
+      if (passed) journeyPass(sd, { acc: ev.accuracy });
+      else journeyFail(sd, { acc: ev.accuracy });
     }
   }
+  lapMiss = {};
   if (!trainer) return;
   const passedLap = ev.accuracy >= PASS_ACC && ev.wrong === 0;
   if (passedLap) {
@@ -2494,6 +2600,7 @@ function sectionPassed() {
   const st = songStats(song.id);
   const name = song.sections[trainer.secIdx].name;
   (st.sectionsPassed ??= {})[name] = true;
+  bankBlock('section', song.id + '|' + name);
   dayStat('sectionsMastered');
   awardXp('sectionMastered', song.id + '|' + name);
   settleGame();
@@ -2769,6 +2876,9 @@ $('btn-hear').addEventListener('click', () => {
   fadePlayCover();
   jlog('demo_play', { id: song.id, sec: $('section-select').value });
   runDemoFrom(demoWatch.startBeat);
+  // the journey's first rung is listening: hearing the section once is the step
+  const jh = journeyState(state, song);
+  if (jh && jh.steps[jh.step]?.pass === 'hear') journeyPass(jh.steps[jh.step], { acc: null });
 });
 
 // ← / → skip, the way every media player does it. This is also the scrub bar's
@@ -3571,26 +3681,67 @@ $('btn-trophies').addEventListener('click', () => {
 });
 
 // ---------- song journey strip (goal gradient; pilot: See You Again Easy) ----
+// THE 90-SECOND CHALLENGE (17th council): a journey step is one declared
+// target with one verdict. Passing banks a block and advances; failing keeps
+// the step, names the note missed most and the lesson that teaches it, and
+// offers the same step again. A section's last step schedules a transfer
+// check on a passage he has not drilled, a day later, help off.
+function journeyPass(sd, { acc }) {
+  const all = journeyState(state, song);
+  const n2 = journeyAdvance(state, song);
+  journeyRetry = false;
+  jlog('challenge_result', { id: song.id, step: n2 - 1, name: sd.name, acc, passed: true });
+  bankBlock('journey', song.id + '|' + sd.name);
+  comboFlash(n2 >= all.steps.length ? '🌟 JOURNEY COMPLETE' : `MILESTONE ${n2}/${all.steps.length} ✓`);
+  jlog('journey', { id: song.id, step: n2 });
+  // the section is done with both hands: book the transfer check
+  const next = all.steps[n2];
+  if (sd.section && sd.hand === 'both' && sd.pass === 'lap70' && next?.section && next.section !== sd.section) {
+    (state.transfers ??= {})[song.id] = { section: next.section, from: sd.section, passedAt: Date.now(), dueAt: Date.now() + 20 * 3600000 };
+    jlog('transfer_due', { id: song.id, section: next.section, from: sd.section });
+  }
+  store.save(state);
+  renderJourney();
+}
+function journeyFail(sd, { acc }) {
+  journeyRetry = true;
+  const why = explainMiss(lapMiss);
+  jlog('challenge_result', { id: song.id, name: sd.name, acc, passed: false, miss: why?.midi ?? null, lesson: why?.lessonId ?? null });
+  if (falls) falls.banner = (why?.line ?? `${acc}%: the step needs 70.`) + ' Same step, once more.';
+  comboFlash('AGAIN');
+  renderJourney();
+}
 function renderJourney() {
   const strip = $('journey-strip');
-  const jj = song && journeyState(state, song.id);
-  if (!jj) { strip.hidden = true; return; }
+  const jw = song && journeyWindow(state, song);
+  if (!jw) { strip.hidden = true; return; }
   strip.hidden = false;
-  strip.innerHTML = jj.steps.map((s2, i) => `
-    <span class="j-step ${i < jj.step ? 'done' : i === jj.step ? 'now' : ''}">
-      <i>${i < jj.step ? '✓' : i === jj.step ? '▶' : '○'}</i>${s2.name}
+  // the legacy strip sits inside the canon column, where the app's stylesheet
+  // is reverted; its own layout rides inline so the cells wrap and the button
+  // stays inside the card on the 756 board
+  Object.assign(strip.style, { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px 10px', padding: '8px 4px', fontSize: '12.5px' });
+  const cur = jw.steps[jw.step];
+  const label = !cur ? null : journeyRetry ? `↺ Try again: ${cur.name}` : cur.pass === 'hear' ? `▶ ${cur.name}` : `▶ Practise: ${cur.name}`;
+  strip.innerHTML = jw.steps.map((s2, i) => `
+    <span class="j-step ${i < jw.step ? 'done' : i === jw.step ? 'now' : ''}" style="white-space:nowrap">
+      <i>${i < jw.step ? '✓' : i === jw.step ? '▶' : '○'}</i>${s2.name}
     </span>`).join('<span class="j-link"></span>') +
-    (jj.step < jj.steps.length ? `<button id="j-go" class="tool">▶ ${jj.steps[jj.step].name}</button>` : '<span class="j-done">🌟 Journey complete</span>');
+    (cur ? `<button id="j-go" class="tool" style="white-space:nowrap;margin-left:auto">${label}</button>` : '<span class="j-done">🌟 Journey complete</span>');
+  if (cur && strip.dataset.shownFor !== song.id + '|' + cur.name) {
+    strip.dataset.shownFor = song.id + '|' + cur.name;
+    jlog('challenge_shown', { id: song.id, name: cur.name, retry: journeyRetry });
+  }
   $('j-go')?.addEventListener('click', () => {
-    const stepDef = jj.steps[jj.step];
+    const stepDef = cur;
     const secIdx = stepDef.section ? (song.sections ?? []).findIndex((x) => x.name === stepDef.section) : -1;
     $('section-select').value = secIdx >= 0 ? String(secIdx) : '';
     $('wait-mode').checked = stepDef.wait;
     hand = stepDef.hand === 'both' ? 'both' : stepDef.hand;
     document.querySelectorAll('.hand-btn').forEach((x) => (x.dataset.on = String(x.dataset.hand === hand)));
     if (CANON_ON) syncHandCells();
-    jlog('journey_step_start', { id: song.id, step: jj.step });
+    jlog('journey_step_start', { id: song.id, step: jw.all.step, name: stepDef.name, retry: journeyRetry });
     rebuildEngine();
+    if (stepDef.pass === 'hear') $('btn-hear').click();
   });
 }
 
@@ -3949,7 +4100,7 @@ window.__openTier = (level) => {
 document.addEventListener('visibilitychange', () => { lastT = 0; });
 // Teacher Loop v1 (11th council): the path owns the "what next" question
 const pathUI = installPath({
-  $, show, state, store, FallsView, playPreview, stopPreview, comboFlash,
+  $, show, state, store, FallsView, playPreview, stopPreview, comboFlash, bankBlock,
   markPracticedToday, jlog, lessonKeyRange, COLORS, renderLibrary,
   SONGS, songStats, launchSong: launchSongFragment, runPrescription, awardXp,
 });

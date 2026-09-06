@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v117';  // path board: every slot binds on the sample's stem, so no design sample ships as Mark's data (17th council, lie fix first)
+const VERSION = 'keys-v118';  // the trial (17th council): every song has a journey (Hear it, hands, full run, prove it), completed-blocks ledger, explanation + retry, reading ladder in the brain, transfer checks, Show me beside the video link, what is in the piece in the header
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

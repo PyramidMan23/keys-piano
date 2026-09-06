@@ -141,7 +141,7 @@ in `js/songs-imported.mjs`, never in `songs.mjs`.
 **Hand assignment** — `js/hands.mjs`. `handsAreSane()` and an offline
 `repairHands()`. Deliberately NOT wired into the app: see the law below.
 
-**Gates: `node tools/gates.mjs`** (all twenty-one, five at a time, ~3½ minutes).
+**Gates: `node tools/gates.mjs`** (all twenty-two, five at a time, ~3½ minutes).
 Measured 2026-09-06: run one after another they take 400-490s and two own most
 of it (canon-journeys ~195s, overlay ~90s); in parallel the suite is 199s, and
 canon-journeys alone sets that floor. `node tools/gates.mjs songs` runs only the
@@ -178,7 +178,22 @@ under a blank box; a screen change now clears the query and the box is bound
 to it. And the rail's "Resume the session" tile fired the path prescription
 (the check-in) instead of the song it named.
 
-The twenty-one gates, if you need to run one by hand:
+**THE TRIAL (17th council, 2026-09-06).** Every song has a journey now
+(`journeyFor` in `js/game.mjs`: Hear it, then each section right hand, left
+hand, both hands with help on, then a full run help off, then the playable
+proof); the drawn JOURNEY strip and its Next step button carry it, and the
+strip shows one section's rungs at a time (six cells, what the design drew).
+A rung passed banks a COMPLETED PRACTICE BLOCK (`recordBlock`, the unit the
+library's practice line and Trophies count; never "focused hours", the council
+would not have it). A rung failed keeps the step and `explainMiss` names the
+note missed most and the reading lesson that teaches it. A section passed with
+both hands books a TRANSFER check a day later on the next section, help off,
+and `prescribe()` prescribes it; `prescribe()` also knows the 13 reading lessons
+now (it never had) and interleaves them with the chord ladder, after due
+reviews and weak sections. `tools/trial-probe.mjs` drives the whole loop.
+Measure ten real sessions before touching the curriculum again.
+
+The twenty-two gates, if you need to run one by hand:
 `test/check.mjs` · `test/import-roundtrip.mjs` · `tools/overlay.mjs` ·
 `tools/canon-runtime.mjs` · `tools/canon-clickable.mjs` ·
 `tools/canon-geometry.mjs` · `tools/canon-samples.mjs` ·
@@ -187,7 +202,8 @@ The twenty-one gates, if you need to run one by hand:
 `tools/finger-check.mjs` · `tools/finger-probe.mjs` ·
 `tools/restart-probe.mjs` · `tools/shell-check.mjs` ·
 `tools/press-probe.mjs` · `tools/seek-probe.mjs` · `tools/surface-check.mjs` ·
-`tools/bars-probe.mjs` · `tools/leave-probe.mjs` · `tools/phone-library-probe.mjs`
+`tools/bars-probe.mjs` · `tools/leave-probe.mjs` · `tools/phone-library-probe.mjs` ·
+`tools/trial-probe.mjs`
 
 ☠️ **`surface-check.mjs` was red for weeks and the app was never at fault.** It
 read 2/8, and the note here said "the theory-task keyboard paints nothing at
