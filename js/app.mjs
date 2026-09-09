@@ -33,19 +33,19 @@ import { FORM_CHECKS, formDue } from './form.mjs';
 import { analyzePedal, pedalNotes } from './pedal.mjs';
 import { analyzeArticulation, articulationSummary } from './artic.mjs';
 import { analyzeVoicing, voicingText } from './voicing.mjs';
-import { groupSongs, classifyGroups, filterExplore } from './library.mjs';
-import { prescribe, qualifiesPlayable, recordPlayableRun, PROOF_PASS, SKILL_BY_ID, TEACHER_LESSONS, STAGES } from './teacher.mjs';
+import { appendDiagnostic, PROGRESS_MAX_BYTES, exportProgress, importProgress, saveProgress, restoreProgress, groupSongs, classifyGroups, filterExplore } from './library.mjs';
+import { initializeExposure, RETENTION_MIN_DELAY, exposePassage, schedulePassageCheck, passageCheckKind, reconcileMastery, assessmentConditions, prescribe, qualifiesPlayable, recordPlayableRun, PROOF_PASS, SKILL_BY_ID, TEACHER_LESSONS, STAGES } from './teacher.mjs';
 import {
   grantXp, totalXp, gameLevel, questsFor, chooseQuest, settleQuest,
   isoWeek, weeklyOptions, chooseWeekly, settleWeekly,
   rhythmOf, freezeOffer, useFreeze, earnFreeze, rebaseWeekly,
-  verdictWord, badges, JOURNEYS, journeyState, journeyAdvance, journeyWindow, recordBlock, blockCount,
+  LISTEN_MIN_PROPORTION, listeningCoverage, verdictWord, badges, JOURNEYS, journeyState, journeyAdvance, journeyWindow, recordBlock, blockCount,
 } from './game.mjs';
-import { difficultyScore, difficultyBand, HALL_OF_FAME } from './difficulty.mjs';
+import { difficultyLabel, difficultyScore, difficultyBand, HALL_OF_FAME } from './difficulty.mjs';
 import { coverDataUrl } from './covers.mjs';
 import { CANON_ON, setTextKeeping, setHTMLKeeping, setRichText, hideRestingLayer, setCanonNav, desktopFits, applyCanonZoom } from './canon-mount.mjs';
 import { bindTrophyList, bindXpLog, bindKeys12, bindKeys12Count, bindLessonList, bindImprovLoop, bindSegmentByIds, bindSegment } from './canon-bind.mjs';
-import { mountWidePlay, syncWidePlay, bindHandCells, syncHandCells } from './canon-play.mjs';
+import { installPracticeDisclosure, mountWidePlay, syncWidePlay, bindHandCells, syncHandCells } from './canon-play.mjs';
 import { renderCanonLibrary } from './canon-library.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -81,10 +81,18 @@ const store = {
         localStorage.setItem('keys-v1-precanon', localStorage.getItem('keys-v1') ?? '{}');
       }
     } catch { /* private mode, quota: never let a backup stop a save */ }
-    localStorage.setItem('keys-v1', JSON.stringify(s));
+    let result;
+    try { result = saveProgress(localStorage, s); }
+    catch { result = {ok:false,message:'Browser storage is unavailable. Export progress before closing Keys.'}; }
+    $('save-status').hidden = result.ok;
+    $('save-status').textContent = result.ok ? '' : result.message;
+    return result.ok;
   },
 };
 const state = Object.assign({ songs: {}, calOffsetMs: 0, days: [] }, store.load());
+let restoringProgress = false;
+reconcileMastery(state.mastery);
+initializeExposure(state, SONGS);
 // The restore half of the above. Deliberately a console lever rather than a
 // button: it throws away everything done since the canon first wrote, so it
 // should be hard to hit by accident.
@@ -93,9 +101,41 @@ window.__restorePreCanon = () => {
   if (snap === null) return 'no pre-canon snapshot exists';
   localStorage.setItem('keys-v1', snap);
   localStorage.removeItem('keys-v1-precanon');
+  restoringProgress = true;
   location.reload();
   return 'restored';
 };
+function downloadFile(name, text) {
+  const url = URL.createObjectURL(new Blob([text], {type:'application/json'}));
+  const a = document.createElement('a'); a.href = url; a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+$('progress-export').onclick = () => downloadFile('keys-progress.json', exportProgress(state));
+$('progress-import').onchange = async (event) => {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  try {
+    if (file.size > PROGRESS_MAX_BYTES) throw new Error('Progress file is too large.');
+    const text = await file.text();
+    importProgress(text);
+    if (!confirm('Replace progress on this browser with this file? Your current progress will be saved for Undo last restore.')) return;
+    restoreProgress(localStorage, text);
+    restoringProgress = true;
+    location.reload();
+  } catch (error) { $('restore-status').textContent = 'Restore failed. ' + error.message; }
+  finally { event.target.value = ''; }
+};
+$('progress-undo').onclick = () => {
+  try {
+    const old = localStorage.getItem('keys-v1-before-restore');
+    if (!old) { $('restore-status').textContent = 'No restore to undo on this browser.'; return; }
+    if (!confirm('Restore the progress saved before your last import?')) return;
+    localStorage.setItem('keys-v1', old);
+    restoringProgress = true;
+    location.reload();
+  } catch { $('restore-status').textContent = 'Undo could not save. Export your progress before closing Keys.'; }
+};
+
 // note style (Mark 2026-08-25): 'duo' amber/cyan or 'moon' Rousseau white.
 // Views read the seam at construction; applyNoteStyle updates the live ones.
 window.__keysNoteStyle = state.noteStyle === 'moon' ? 'moon' : 'duo';
@@ -161,18 +201,35 @@ function streakLen() {
 // ---------- practice journal (council 2026-08-23: decision-relevant events
 // only, self-logged because hand-journaling corrupts the usage test) ----------
 const jbuf = [];
+const BUILD_ID = document.querySelector('meta[name="keys-build"]')?.content ?? 'unknown-build';
+let diagnosticEvents = [];
+try {
+  const saved = JSON.parse(localStorage.getItem('keys-diagnostics') ?? '[]');
+  if (Array.isArray(saved)) diagnosticEvents = saved.slice(-200);
+} catch { /* diagnostics stay available in memory when storage fails */ }
+const diagnosticReport = () => JSON.stringify({build:BUILD_ID, at:Date.now(), browser:navigator.userAgent,
+  input:$('midi-status')?.textContent, events:diagnosticEvents}, null, 2);
+$('diagnostics-export').onclick = () => downloadFile('keys-diagnostics.json', diagnosticReport());
+$('diagnostics-copy').onclick = async () => {
+  try { await navigator.clipboard.writeText(diagnosticReport()); $('diagnostics-status').textContent = 'Diagnostics copied.'; }
+  catch { $('diagnostics-status').textContent = 'Copy unavailable. Use Download diagnostics instead.'; }
+};
 // Headless Chrome (every gate in tools/ goes through tools/cdp.mjs) reports
 // navigator.webdriver === true. Tool runs must never land in the journal: by
 // 2026-09-02 they had written 5,700 fake session starts into the one file
 // that is meant to be read before building anything.
 function jlog(e, data = {}) {
   if (navigator.webdriver) return;
-  jbuf.push({ v: 1, t: Date.now(), e, ...data });
+  const event = { v: 2, build: BUILD_ID, t: Date.now(), e, ...data };
+  appendDiagnostic(diagnosticEvents, event);
+  jbuf.push(event);
   if (jbuf.length >= 25) jflush();
 }
 function jflush() {
   if (!jbuf.length) return;
+  try { localStorage.setItem('keys-diagnostics', JSON.stringify(diagnosticEvents)); } catch { /* keep memory copy */ }
   const batch = JSON.stringify(jbuf.splice(0, jbuf.length));
+  if (!['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) return;
   try {
     if (!navigator.sendBeacon?.('/journal', new Blob([batch], { type: 'application/json' }))) {
       fetch('/journal', { method: 'POST', body: batch, keepalive: true }).catch(() => {});
@@ -181,11 +238,19 @@ function jflush() {
 }
 setInterval(jflush, 10000);
 window.addEventListener('pagehide', jflush);
+// NO SAVE ON PAGEHIDE (Fable review of the Astra build, 2026-09-09). Every change already saves
+// as it happens, so a save on leaving the page adds nothing, and it costs two things: every gate
+// seeds localStorage then reloads, and the leaving page overwrote the seed with its stale memory
+// (the first-run modal came back, Learning read 0); and a second stale tab closing would overwrite
+// the progress the live tab had just made, which is the exact data-loss the audit warned about.
 window.addEventListener('error', (ev) => jlog('error', { msg: String(ev.message).slice(0, 200) }));
+window.addEventListener('unhandledrejection', (ev) => jlog('unhandled_rejection', {msg:String(ev.reason?.message ?? ev.reason).slice(0,200)}));
 jlog('session_start');
 
 // ---------- MIDI ----------
 const midi = new MidiInput();
+$('keyboard-retry').onclick = () => midi.connect();
+midi.onKeyTest = (note, device) => { $('keyboard-test').textContent = 'Key received: ' + noteName(note) + ' from ' + (device ?? 'keyboard') + '.'; };
 // 14th council input chip: the app always says what it is listening to, and
 // what that input can honestly prove (shape + word, never hue alone).
 function syncInputChip(detail) {
@@ -194,7 +259,7 @@ function syncInputChip(detail) {
   el.textContent = !connected
     ? 'Screen taps · plug your keyboard in for the real thing'
     : state.calibratedAt ? 'MIDI · calibrated ✓' : 'MIDI · uncalibrated, run Latency calibration';
-  if (detail) el.title = detail;
+  if (detail) { el.title = detail; $('keyboard-help').textContent = detail; }
 }
 midi.onStatus = (text, connected) => {
   const el = $('midi-status');
@@ -268,6 +333,8 @@ function show(name) {
   // render, so a query that outlived the screen showed one row under a blank
   // box with no way to clear it short of a hard refresh.
   if (name !== 'library') libQuery = '';
+  if (name !== 'play') document.querySelectorAll('.practice-adjust').forEach((d) => { d.open = false; });
+  $('progress-safety').hidden = name !== 'library'; // recovery lives under the library board, nowhere else
   if (takeRec && name !== 'play') finishTake('left-screen');
   if (perf && name !== 'play') perfEnd(); // walking off stage ends the take
   if (active === 'improv' && name !== 'improv' && improvEnterT) {
@@ -287,6 +354,7 @@ function show(name) {
   if (name === 'play') {
     window.__viewMode = viewMode;
     setTimeout(() => {
+      if (active !== 'play') return;
       if (mountWidePlay($('screen-play')) && song) {
         // full first sync, so the header never shows the artboard's sample song
         const lv = (song.level ?? 'easy');
@@ -295,12 +363,14 @@ function show(name) {
           accuracy: engine ? engine.accuracy() : 0, combo: 0, tier: (falls?.comboLevel ?? 0) + 1, timing: '\u2014',
           art: coverDataUrl(song, 96) });
       }
+      installPracticeDisclosure($('screen-play'));
     }, 0);
   }
   // A screen change closes the tools drawer. Reaching a tool by any other route
   // left it hanging open behind the new screen.
   document.getElementById('canon-tools-drawer')?.remove();
   previewActive = false;
+  demoWatch = null;
   demoEngine = null; // a screen change ends the follow-along demo too
   const hearBtn = $('btn-hear');
   if (hearBtn) hearBtn.textContent = '▶ Hear it';
@@ -394,7 +464,7 @@ function renderNextAction() {
 }
 // One launcher for every prescription kind, the path screen calls this too.
 function runPrescription(rx) {
-  if (rx.kind === 'resume') { resumeLastSession(); return; }
+  if (rx.kind === 'resume') { resumeLastSession(); $('j-go')?.click(); return; }
   if (rx.kind === 'reading') {
     const les = LESSONS.find((l) => l.id === rx.lessonId);
     if (les) { jlog('reading_prescribed', { id: les.id }); openLesson(les); return; }
@@ -402,14 +472,19 @@ function runPrescription(rx) {
   if (rx.kind === 'transfer') {
     const s = SONGS.find((x) => x.id === rx.songId);
     if (!s) { $('btn-path').click(); return; }
-    state.pathPending = { type: 'transfer', songId: rx.songId, section: rx.section, at: Date.now() };
+    const check = state.transfers?.[rx.songId];
+    const checkKind = check ? passageCheckKind(state, rx.songId, check) : 'retention';
+    const lastExposure = state.passageExposure?.[rx.songId]?.sections?.[rx.section]?.lastAt;
+    state.pathPending = { type: 'transfer', songId: rx.songId, section: rx.section, at: Date.now(), checkKind };
+    const delayed = !!lastExposure && Date.now() - lastExposure >= RETENTION_MIN_DELAY;
     store.save(state);
     startSong(s);
     const secIdx = (s.sections ?? []).findIndex((x) => x.name === rx.section);
     if (secIdx >= 0) $('section-select').value = String(secIdx);
     $('wait-mode').checked = false;
     rebuildEngine();
-    if (falls) falls.banner = 'Transfer check: ' + rx.section + ', no waiting, 85% to pass.';
+    engine.__checkKind = checkKind === 'transfer' ? 'transfer' : delayed ? 'retention' : 'independent';
+    if (falls) falls.banner = engine.__checkKind + ': ' + rx.section + ', both hands, full tempo, help off, 85% to pass.';
     return;
   }
   if (rx.kind === 'proof' || rx.kind === 'repertoire' || rx.kind === 'song-review') {
@@ -473,7 +548,7 @@ function makeCard(variants) {
     <div class="composer">${main.composer.replace(' · easy arrangement', '')} · ${main.bpm} bpm</div>
     ${levelRow}
     <div class="stats">
-      <span>Difficulty <b>${difficultyScore(variants[0])}${variants.length > 1 ? '–' + difficultyScore(main) : ''}</b></span>
+      <span>Difficulty <b>${difficultyLabel(main)}</b></span>
       <span>Plays <b>${variants.reduce((a, v) => a + songStats(v.id).plays, 0)}</b></span>
       <span class="verdict-word">${(() => { const best = variants.find((v) => state.playable?.[v.id]?.provenAt) ?? variants.find((v) => songStats(v.id).plays > 0); return best ? verdictWord(state, best.id) : ''; })()}</span>
       <span class="${st.scorePasses > 0 ? 'learned' : ''}">${st.scorePasses > 0 ? '♪ read from score' : ''}</span>
@@ -497,17 +572,16 @@ function makeRow(variants, fromLabel = null) {
   row.className = 'song-row';
   const topStars = starsOf(main.id);
   // tier chips are clickable: Mark jumps straight to Hard on new songs.
-  // Each carries its measured difficulty (number + word, colour-blind law).
+  // Each carries an estimated difficulty band in words.
   const tiers = variants.length > 1
-    ? variants.map((v) => { const d = difficultyScore(v); return `<i class="row-tier" data-id="${v.id}" title="${v.level} · difficulty ${d} (${difficultyBand(d)})">${(v.level || '')[0]}</i>`; }).join('')
+    ? variants.map((v) => { const d = difficultyScore(v); return `<i class="row-tier" data-id="${v.id}" title="${v.level}: ${difficultyBand(d)} (estimated band)">${(v.level || '')[0]}</i>`; }).join('')
     : '';
-  const dLo = difficultyScore(variants[0]), dHi = difficultyScore(main);
-  const diff = variants.length > 1 ? `${dLo}–${dHi}` : `${dHi} ${difficultyBand(dHi)}`;
+  const diff = difficultyLabel(main);
   row.innerHTML = `
     <img class="cover-plate cover-40" src="${coverDataUrl(main, 40)}" alt="" aria-hidden="true">
     <span class="row-title">${main.title}</span>
     <span class="row-meta">${fromLabel ?? main.composer.replace(' · easy arrangement', '')}</span>
-    <span class="row-diff" title="measured difficulty, 1–10">${diff}</span>
+    <span class="row-diff" title="Estimated difficulty band, not a placement test">${diff}</span>
     <span class="row-tiers">${tiers}</span>
     <span class="row-stars stars">${(songStats(main.id).stars || 0) > 0 ? topStars : ''}</span>`;
   row.addEventListener('click', () => {
@@ -536,18 +610,8 @@ function renderGameRow() {
   $('rhythm-chip').textContent = r.current > 0
     ? `${r.current}-day rhythm · best ${r.best}` + (r.freezes ? ` · freezes ×${r.freezes}` : '')
     : (r.best > 1 ? `Fresh start today · best rhythm ${r.best}` : '');
-  // humane continuity: OFFER a freeze, never force or shame, and a declined
-  // offer stays declined for the day (Codex review P3)
-  const offer = state.freezeDeclined === today ? null : freezeOffer(state, today);
-  const fo = $('freeze-offer');
-  if (offer) {
-    fo.hidden = false;
-    fo.innerHTML = `Yesterday slipped by. Use a freeze to keep your ${offer.wouldKeep}-day rhythm?
-      <button id="freeze-yes" class="tool">Use one</button>
-      <button id="freeze-no" class="ghost">Fresh start</button>`;
-    $('freeze-yes').onclick = () => { useFreeze(state, offer.yesterday); store.save(state); jlog('freeze_used', {}); renderLibrary(); };
-    $('freeze-no').onclick = () => { fo.hidden = true; state.freezeDeclined = today; store.save(state); };
-  } else fo.hidden = true;
+  // Keep historical continuity data without putting token choices in practice.
+  $('freeze-offer').hidden = true; // history remains, no token offer interrupts practice
   // daily quests: three offered, HE picks one; declining costs nothing
   const quests = questsFor(state, today);
   $('quest-row').innerHTML = `<span class="quest-tag">Today</span>` + quests.map((q) => `
@@ -592,16 +656,16 @@ function canonRowOf(variants) {
   // proofs per tier, easiest first: exactly the pips the design draws
   const tiers = variants.map((v) => songStats(v.id).stars || 0);
   const plays = variants.reduce((a, v) => a + (songStats(v.id).plays || 0), 0);
-  const dLo = difficultyScore(variants[0]), dHi = difficultyScore(main);
-  const banked = tiers.every((t) => t >= 3);
+  const banked = variants.some((v) => state.playable?.[v.id]?.provenAt);
+  const passedOnce = variants.some((v) => state.playable?.[v.id]?.days?.length);
   return {
     song: main,
     title: main.title,
     sub: main.composer.replace(' · easy arrangement', ''),
     plays: String(plays),
-    // en dash, matching the design's own "4.2–5.7"
-    diff: variants.length > 1 ? `${dLo}–${dHi}` : String(dHi),
-    state: banked ? 'Banked' : (plays > 0 || tiers.some((t) => t > 0)) ? 'Needs work' : 'Not started',
+    diff: difficultyLabel(main),
+    statusLabel: banked ? 'Proven' : passedOnce ? 'Passed once' : (plays > 0 || variants.some((v) => songStats(v.id).ms >= 60000)) ? 'Practising' : 'Not started',
+    state: banked ? 'Banked' : (plays > 0 || tiers.some((t) => t > 0) || variants.some((v) => songStats(v.id).ms >= 60000)) ? 'Needs work' : 'Not started',
     tiers,
     // ☠️ A PIP IS A LEVEL, NOT A POSITION. The design draws E, M and H, and the
     // renderer filled them by index: a song that ships Easy and Hard drew "E M",
@@ -630,7 +694,7 @@ function canonLibraryCtx() {
   const today = localDay(new Date());
   const r = rhythmOf(state, today);
   const groups = groupSongs(SONGS);
-  const { learning, repertoire, explore } = classifyGroups(groups, songStats);
+  const { learning, repertoire, explore } = classifyGroups(groups, songStats, state.playable);
   const last = state.lastSession;
   const lastSong = last && SONGS.find((x) => x.id === last.songId);
   const rx = prescribe(state, Date.now(), {
@@ -702,14 +766,17 @@ function canonLibraryCtx() {
   const shown = state.lib.canonShowAll || q ? active.rows : active.rows.slice(0, pageSize);
 
   return {
+    practiceFirst: true,
+    practiceLabel: heroSong ? 'Practise this passage' : 'Start prescribed practice',
     level: { n: lvl.level, xp: lvl.into, next: lvl.next },
     streak: { current: r.current, best: r.best },
     counts: { learning: learning.length, repertoire: repertoire.length,
               fame: HALL_OF_FAME.length, explore: allGroups.length },
     prescription: heroSong
-      ? { title: heroSong.title, reason: rx.evidence ?? rx.reason, song: heroSong,
+      ? { title: heroSong.title, reason: [rx.section ?? journeyState(state, heroSong)?.steps[journeyState(state, heroSong)?.step]?.name, rx.reason, rx.evidence].filter(Boolean).join(' | '), song: heroSong,
           // the hero's state chip carries the recommended GROUP's real state
-          state: (() => { const v = groups.get(heroSong.group); return v ? canonRowOf(v).state : null; })() }
+          state: (() => { const v = groups.get(heroSong.group ?? heroSong.id); return v ? canonRowOf(v).state : null; })(),
+          statusLabel: (() => { const v = groups.get(heroSong.group ?? heroSong.id); return v ? canonRowOf(v).statusLabel : null; })() }
       // NO SONG: the headline is the SKILL'S NAME, never the whole sentence.
       // The drawn module allows three lines; "Time to check "Chords from a
       // symbol" is still there." overran and clipped (Mark's screenshot,
@@ -746,11 +813,7 @@ function canonLibraryCtx() {
 
     // The freeze offer (CANON-GAPS Gap C): same humane rules as renderGameRow,
     // offered never forced, and a decline holds for the day.
-    freeze: (() => {
-      if (state.freezeDeclined === today) return null;
-      const offer = freezeOffer(state, today);
-      return offer ? { wouldKeep: offer.wouldKeep, yesterday: offer.yesterday, freezes: state.freezeTokens ?? 0 } : null;
-    })(),
+    freeze: null,
     onFreezeYes: () => {
       const offer = freezeOffer(state, today);
       if (offer) { useFreeze(state, offer.yesterday); store.save(state); jlog('freeze_used', {}); }
@@ -817,7 +880,7 @@ function canonLibraryCtx() {
       // the completed-blocks ledger rides the same line (17th council): the
       // count of targets set and answered this week, beside the raw minutes
       const blocks = blockCount(state, Date.now() - 7 * 864e5);
-      return `${Math.round(total)} MIN · ${days} DAY${days === 1 ? '' : 'S'} · ${blocks} BLOCK${blocks === 1 ? '' : 'S'}`;
+      return `${Math.round(total)} MIN · ${days} DAY${days === 1 ? '' : 'S'} · ${blocks} BLOCK${blocks === 1 ? '' : 'S'}` + ' | ' + blockCount(state, Date.now() - 7 * 864e5, 'listening') + ' LISTENS';
     })(),
     practiceTrend: (() => {
       const pmin = state.pmin ?? {};
@@ -996,7 +1059,8 @@ function applyLibraryAtmosphere() {
   if (!frame || !frame.style.height) return;      // phone board: fixed column
   const z = Math.min(1, window.innerWidth / 1418);
   const target = Math.max(738, Math.round(window.innerHeight / z));
-  frame.style.height = target + 'px';
+  const prescribedLayout = card.classList.contains('practice-library');
+  if (!prescribedLayout) frame.style.height = target + 'px';
   // the hero/tile band is the flexible region; find it as the frame child
   // containing the grid's show-more control
   // NO DEAD BLACK BAND (council ruling 2026-08-30, Mark's third ask). The grid
@@ -1007,7 +1071,7 @@ function applyLibraryAtmosphere() {
   const gridRow = frame.querySelector('[data-lib-grid]');
   const todayLeaf = [...frame.querySelectorAll('*')]
     .find((e) => !e.children.length && /CHOOSE 1$/.test(e.textContent.trim()));
-  if (gridRow && todayLeaf) {
+  if (!prescribedLayout && gridRow && todayLeaf) {
     const content = [...frame.children].find((c) => c.contains(gridRow));
     let dashBand = todayLeaf;
     while (dashBand && dashBand.parentElement && dashBand.parentElement !== content) dashBand = dashBand.parentElement;
@@ -1163,7 +1227,7 @@ function renderLibrary() {
     if (errs.length) console.error(song.id, errs);
   }
   const groups = groupSongs(SONGS);
-  const { learning, repertoire, explore } = classifyGroups(groups, songStats);
+  const { learning, repertoire, explore } = classifyGroups(groups, songStats, state.playable);
   // GLOBAL search (Mark 2026-08-28: "songs are spread across categories"):
   // a query collapses the sections into one result list, each row tagged
   // with WHERE the song lives
@@ -1347,6 +1411,7 @@ function bankBlock(kind, ref) {
 }
 function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   jlog('song_start', { id: s.id, sight: !!s.sightRead });
+  (state.passageExposure ??= {})[s.id] ??= { known: !state.songs?.[s.id], sections: {} };
   songStats(s.id).lastAt = Date.now(); // touched: the Learning shelf's recency key
   pathSessionUntil = 0; // an ordinary open carries no prescribed timebox
   song = s;
@@ -1365,7 +1430,7 @@ function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   bindNarrowPlayHeader();
   // "free time": this song's grid is the transcriber's default, not measured
   // meter, so the app must not sell it as bars-and-counts (council 2026-09-01).
-  $('now-playing').textContent = `${s.title}${s.level ? ' · ' + s.level : ''} · ${s.composer.replace(' · easy arrangement', '')} · D${difficultyScore(s)} ${difficultyBand(difficultyScore(s))}${s.freeTime ? ' · free time' : ''}${s.meterVerified ? ` · ${s.timeSig[0]}/${s.timeSig[1]}` : ''}`;
+  $('now-playing').textContent = `${s.title}${s.level ? ' · ' + s.level : ''} · ${s.composer.replace(' · easy arrangement', '')} · ${difficultyLabel(s)} (estimated)${s.freeTime ? ' · free time' : ''}${s.meterVerified ? ` · ${s.timeSig[0]}/${s.timeSig[1]}` : ''}`;
   renderSections();
   $('section-select').value = '';
   chunkIdx = null; syncChunkLabel();
@@ -1489,6 +1554,8 @@ function fadePlayCover() {
   setTimeout(() => { pc.hidden = true; }, 260);
 }
 function startArmCountIn() {
+  exposePassage(state, song, engine.startBeat, engine.endBeat, Date.now());
+  store.save(state);
   armed = false;
   falls.banner = null;
   fadePlayCover();
@@ -1585,6 +1652,10 @@ function loopFrame(t) {
   }
   // hint + target keys: name and light the keys due right now (the memory
   // ladder strips these cues stage by stage)
+  if (document.visibilityState !== 'hidden') {
+    exposePassage(state, song, viewMode === 'score' ? 0 : engine.beat,
+      viewMode === 'score' ? Math.max(...song.notes.map((n) => n.b + n.d)) : engine.beat + falls.lookaheadBeats, Date.now());
+  }
   const cur = engine.currentGroup();
   const due = cur && (engine.waiting || cur.beat - engine.beat < 1)
     ? cur.notes.filter((n) => !cur.done.has(n.m)) : [];
@@ -1642,7 +1713,7 @@ function finishSong() {
   st.bestCombo = Math.max(st.bestCombo ?? 0, bestCombo); // arcade stat, labelled arcade
   // playable-song ledger (13th council): only uncarryable evidence counts, 
   // whole song, help off, full tempo, both hands, ≥85%. Two days prove it.
-  const qualified = qualifiesPlayable({ secIdx: $('section-select').value, wait: $('wait-mode').checked, tempo: $('tempo').value, hand, acc, sight: sightMode });
+  const qualified = qualifiesPlayable({ secIdx: $('section-select').value, wait: engine.waitMode, tempo: engine.tempo * 100, hand: engine.hand, acc, sight: sightMode || !!engine.loop });
   if (qualified) {
     const wasDue = state.playable?.[song.id]?.dueAt && state.playable[song.id].dueAt <= Date.now();
     const status = recordPlayableRun(state, song.id, { day: localDay(new Date()), now: Date.now() });
@@ -2189,6 +2260,7 @@ function completeLesson() {
   const wasComplete = !!done[lessonDef.id];
   if (!wasComplete) done[lessonDef.id] = Date.now(); // feeds review recency
   else (state.lessonReplays ??= {})[lessonDef.id] = Date.now();
+  if (wasComplete && clean) (state.lessonReviews ??= {})[lessonDef.id] = Date.now();
   if (clean) (state.lessonBadges ??= {})[lessonDef.id] = true; // clean run, not a star
   // reading lessons join the ONE value currency, first completion only; the
   // dedupe key makes a replay award impossible
@@ -2557,8 +2629,9 @@ function onLap(ev) {
   // path proof lap (13th council): the prescribed section, help off, full
   // tempo, clean, this is what banks a lesson's skill in real music
   const pp = state.pathPending;
-  if (pp?.type === 'proof' && pp.songId === song.id && !$('wait-mode').checked &&
-      +$('tempo').value >= 100 && song.sections?.[+secIdx]?.name === pp.section &&
+  const assessmentSection = song.sections?.find((s) => s.name === pp?.section);
+  const conditionsMet = assessmentConditions(engine, assessmentSection);
+  if (pp?.type === 'proof' && pp.songId === song.id && conditionsMet &&
       ev.accuracy >= PROOF_PASS.minAcc && ev.wrong <= PROOF_PASS.maxWrong) {
     (state.pathProofs ??= {})[pp.lessonId] = { songId: pp.songId, section: pp.section, at: Date.now(), acc: ev.accuracy };
     delete state.pathPending;
@@ -2569,21 +2642,31 @@ function onLap(ev) {
     settleGame();
     store.save(state);
   }
+  if (pp?.type === 'proof' && pp.songId === song.id && !conditionsMet) {
+    falls.banner = 'Proof needs both hands, full tempo and help off on the whole prescribed passage.';
+  }
   // a transfer check (17th council): the prescribed passage, help off, 85%
-  if (pp?.type === 'transfer' && pp.songId === song.id && !$('wait-mode').checked &&
+  if (pp?.type === 'transfer' && pp.songId === song.id &&
       song.sections?.[+secIdx]?.name === pp.section) {
-    const passed = ev.accuracy >= 85;
-    jlog('transfer_result', { id: song.id, section: pp.section, acc: ev.accuracy, passed });
+    const evidenceKind = engine.__checkKind ?? 'independent';
+    engine.__checkKind = null; // only the first attempt can claim an unexposed passage
+    const passed = conditionsMet && ev.accuracy >= 85;
+    jlog('transfer_result', { id: song.id, section: pp.section, acc: ev.accuracy, passed, evidenceKind });
     if (passed) {
       delete state.pathPending;
-      delete (state.transfers ?? {})[song.id];
-      bankBlock('transfer', song.id + '|' + pp.section);
+      if (evidenceKind === 'independent') {
+        (state.transfers ??= {})[song.id] = schedulePassageCheck(state, song.id, pp.section, null, Date.now());
+      } else delete (state.transfers ?? {})[song.id];
+      (state.passageChecks ??= []).push({ songId: song.id, section: pp.section, at: Date.now(), kind: evidenceKind, acc: ev.accuracy });
+      bankBlock(evidenceKind, song.id + '|' + pp.section);
+      dayStat('passageChecks');
       // the MASTERY upgrade (18th council): immediate feedback rewarded the
       // rung; the delayed, unaided check is the one the evidence trusts
-      comboFlash('MASTERY ↑ IT HELD');
-      awardXp('transfer', song.id + '|' + pp.section);
+      comboFlash(evidenceKind === 'retention' ? 'DELAYED CHECK PASSED' : evidenceKind === 'transfer' ? 'TRANSFER PASSED' : 'INDEPENDENT PASS');
+      awardXp(evidenceKind === 'transfer' ? 'transfer' : evidenceKind === 'retention' ? 'passageRetention' : 'passageIndependent', song.id + '|' + pp.section);
     } else {
-      falls.banner = (explainMiss(lapMiss)?.line ?? `${ev.accuracy}%, needs 85.`) + ' Again.';
+      falls.banner = !conditionsMet ? 'Check needs both hands, full tempo and help off on the whole prescribed passage.'
+        : (explainMiss(lapMiss)?.line ?? `${ev.accuracy}%, needs 85.`) + ' Again.';
     }
     store.save(state);
   }
@@ -2882,7 +2965,14 @@ function runDemoFrom(fromBeat) {
     if (downState) falls.keyDown(m); else falls.keyUp(m);
   }, () => {
     stopDemo();
-  }, start);
+  }, start, {
+    onProgress: (a, b) => { if (previewActive && demoWatch) demoWatch.ranges.push([a,b]); },
+    onError: (error) => {
+      stopDemo();
+      if (falls) falls.banner = 'Audio could not start. Tap Hear it to retry.';
+      jlog('demo_error', {msg:String(error.message).slice(0,200)});
+    },
+  });
   return true;
 }
 
@@ -2905,6 +2995,9 @@ $('btn-hear').addEventListener('click', () => {
     : secIdx === '' ? null : song.sections[+secIdx];
   demoWatch = range ? { startBeat: range.startBeat, endBeat: range.endBeat }
     : { startBeat: 0, endBeat: Math.max(...song.notes.map((n) => n.b + n.d)) };
+  exposePassage(state, song, demoWatch.startBeat, demoWatch.endBeat, Date.now());
+  store.save(state);
+  demoWatch.ranges = [];
   previewActive = true;
   $('btn-hear').textContent = '■ Stop';
   falls.banner = '▶ WATCHING: the song plays itself';
@@ -2916,9 +3009,7 @@ $('btn-hear').addEventListener('click', () => {
   fadePlayCover();
   jlog('demo_play', { id: song.id, sec: $('section-select').value });
   runDemoFrom(demoWatch.startBeat);
-  // the journey's first rung is listening: hearing the section once is the step
-  const jh = journeyState(state, song);
-  if (jh && jh.steps[jh.step]?.pass === 'hear') journeyPass(jh.steps[jh.step], { acc: null });
+
 });
 
 // ← / → skip, the way every media player does it. This is also the scrub bar's
@@ -2935,6 +3026,13 @@ window.addEventListener('keydown', (ev) => {
 
 function stopDemo() {
   if (!previewActive && !demoEngine) return; // idempotent (manual stop + onDone)
+  const heard = demoWatch && listeningCoverage(demoWatch.ranges, demoWatch.startBeat, demoWatch.endBeat);
+  const jh = song && journeyState(state, song);
+  if (heard >= LISTEN_MIN_PROPORTION && jh?.steps[jh.step]?.pass === 'hear' &&
+      hand === jh.steps[jh.step].hand && chunkIdx === null &&
+      (jh.steps[jh.step].section ?? '') === (song.sections?.[$('section-select').value]?.name ?? '')) {
+    journeyPass(jh.steps[jh.step], { acc: null });
+  }
   previewActive = false;
   demoEngine = null;
   demoWatch = null;
@@ -2971,7 +3069,11 @@ function syncModeButtons() {
 }
 
 $('mode-falls').addEventListener('click', () => { viewMode = 'falls'; syncModeButtons(); });
-$('mode-score').addEventListener('click', () => { viewMode = 'score'; syncModeButtons(); });
+$('mode-score').addEventListener('click', () => {
+  exposePassage(state, song, 0, Math.max(...song.notes.map((n) => n.b + n.d)), Date.now());
+  if (engine) engine.__checkKind = null;
+  store.save(state); viewMode = 'score'; syncModeButtons();
+});
 for (const b of document.querySelectorAll('.hand-btn')) {
   b.addEventListener('click', () => {
     hand = b.dataset.hand;
@@ -3721,23 +3823,23 @@ $('btn-trophies').addEventListener('click', () => {
 });
 
 // ---------- song journey strip (goal gradient; pilot: See You Again Easy) ----
-// THE 90-SECOND CHALLENGE (17th council): a journey step is one declared
+// THE PASSAGE CHALLENGE (17th council): a journey step is one declared
 // target with one verdict. Passing banks a block and advances; failing keeps
 // the step, names the note missed most and the lesson that teaches it, and
-// offers the same step again. A section's last step schedules a transfer
-// check on a passage he has not drilled, a day later, help off.
+// offers the same step again. The section's last step schedules a day-later
+// check: unexposed material tests transfer, familiar material tests retention.
 function journeyPass(sd, { acc }) {
   const all = journeyState(state, song);
   const n2 = journeyAdvance(state, song);
   journeyRetry = false;
   jlog('challenge_result', { id: song.id, step: n2 - 1, name: sd.name, acc, passed: true });
-  bankBlock('journey', song.id + '|' + sd.name);
+  bankBlock(sd.pass === 'hear' ? 'listening' : 'journey', song.id + '|' + sd.name);
   comboFlash(n2 >= all.steps.length ? '🌟 JOURNEY COMPLETE' : `MILESTONE ${n2}/${all.steps.length} ✓`);
   jlog('journey', { id: song.id, step: n2 });
   // the section is done with both hands: book the transfer check
   const next = all.steps[n2];
   if (sd.section && sd.hand === 'both' && sd.pass === 'lap70' && next?.section && next.section !== sd.section) {
-    (state.transfers ??= {})[song.id] = { section: next.section, from: sd.section, passedAt: Date.now(), dueAt: Date.now() + 20 * 3600000 };
+    (state.transfers ??= {})[song.id] = schedulePassageCheck(state, song.id, sd.section, next.section, Date.now());
     jlog('transfer_due', { id: song.id, section: next.section, from: sd.section });
   }
   store.save(state);
@@ -4081,6 +4183,7 @@ midi.onNote = (m, vel, down) => {
   if (active === 'rhythm') { if (down) rhythmNote(); return; }
   if (active === 'touch') { if (down) touchNote(m, vel); return; }
   if (active === 'play' && engine) {
+    if (previewActive && down) { previewStop?.(); stopDemo(); return; }
     if (armed && down) { startArmCountIn(); return; }
     if (down) fadePlayCover(); // wait mode: the first press cedes the light too
     // tap-sound law: screen taps hear the grand; the P-45 speaks for itself
@@ -4088,7 +4191,10 @@ midi.onNote = (m, vel, down) => {
       playPreview([{ b: 0, d: 1.2, m, h: falls?.handMap?.get(m) ?? 'R', v: vel != null ? vel / 127 : 0.8 }], 350, null, null);
     }
     if (takeRec) takeRec.events.push({ t: performance.now() - takeRec.t0, m, vel, down, h: falls?.handMap?.get(m) ?? 'R' });
-    if (down) { falls.keyDown(m); engine.noteOn(m, vel); } else { falls.keyUp(m); engine.noteOff(m); }
+    if (down) {
+      exposePassage(state, song, engine.startBeat, engine.endBeat, Date.now());
+      falls.keyDown(m); engine.noteOn(m, vel);
+    } else { falls.keyUp(m); engine.noteOff(m); }
   } else if (active === 'freeplay' && fpView) {
     if (down) {
       fpView.keyDown(m);

@@ -1396,13 +1396,14 @@ assert.equal(mm.pulse.stage, 'guided', 'ASSISTED practice is capped at guided fo
 T.recordAttempt(mm, 'pulse', { passed: true, assisted: false, now: tt0 + 9000 });
 assert.equal(mm.pulse.stage, 'independent', 'an unaided pass promotes to independent');
 T.recordAttempt(mm, 'pulse', { passed: true, assisted: false, novel: true, now: tt0 + 10000 });
-assert.equal(mm.pulse.stage, 'retained', 'and NOVEL material is what earns retained');
+assert.equal(mm.pulse.stage, 'independent', 'novel material earns transfer, never immediate retention');
+assert.equal(mm.pulse.evidence.at(-1).outcome, 'transfer');
 const evBefore = mm.pulse.evidence.length;
 T.recordAttempt(mm, 'pulse', { passed: false, now: tt0 + 11000 });
 assert.equal(mm.pulse.stage, 'guided', 'a miss drops back to guided, not to zero');
 assert.equal(mm.pulse.evidence.length, evBefore + 1, 'and the evidence trail is kept');
 assert.ok(mm.pulse.dueAt <= tt0 + 11000, 'a failed skill is due immediately');
-ok('mastery stages: assistance caps promotion, novelty earns retention, failure re-opens');
+ok('mastery stages: assistance caps promotion, novelty earns transfer, failure re-opens');
 
 // --- prerequisites gate the graph ---
 mm = T.emptyMastery();
@@ -1686,8 +1687,9 @@ const { groupSongs, classifyGroups, filterExplore } = await import('../js/librar
   const topOf = (grp) => { const v = [...groups.values()].find((x) => (x[0].group ?? x[0].id) === grp); return v[v.length - 1].id; };
   const marioTop = topOf('mario');
   const statsB = (id) => (id === marioTop ? { plays: 5, stars: 3, best: 95 } : zero());
-  const b = classifyGroups(groups, statsB);
-  assert.ok(b.repertoire.some((v) => v.some((s) => s.id === marioTop)), '3-starred top tier lands in Repertoire');
+  assert.equal(classifyGroups(groups, statsB).repertoire.length, 0, 'stars alone never put a song in Repertoire');
+  const b = classifyGroups(groups, statsB, {[marioTop]:{days:['2026-09-08','2026-09-09'],provenAt:100}});
+  assert.ok(b.repertoire.some((v) => v.some((s) => s.id === marioTop)), 'two-day playable proof lands in Repertoire');
   assert.ok(!b.learning.some((v) => v.some((s) => s.id === marioTop)), 'and leaves Learning');
   // learning sorts by time in the song, then recency, then the old weakness order (2026-09-09)
   const statsC = (id) => id === 'fur-elise' ? { plays: 1, stars: 2, best: 90 } : id === 'ode-to-joy' ? { plays: 1, stars: 0, best: 40 } : zero();
@@ -2199,7 +2201,7 @@ ok('no decoy modules in the repo root shadowing a shipped js/ module');
   ok('canon: ' + screens.length + ' screens generated, no design-tool chrome, no inlined artwork');
 }
 
-console.log(`\nALL GREEN: ${n} checks passed`);
+
 
 // ---- 17th council (2026-09-06): every song has a journey, the ledger, the brain's new branches ----
 {
@@ -2259,3 +2261,342 @@ console.log(`\nALL GREEN: ${n} checks passed`);
   assert.equal(rx4.kind, 'transfer'); assert.equal(rx4.songId, 'fur-elise');
   ok('prescribe() now recommends reading lessons and due transfer checks');
 }
+
+{
+  const { listeningCoverage, LISTEN_MIN_PROPORTION } = await import('../js/game.mjs');
+  assert.equal(listeningCoverage([], 0, 10), 0);
+  assert.ok(listeningCoverage([[0, 0.1], [9.9, 10]], 0, 10) < LISTEN_MIN_PROPORTION);
+  assert.equal(listeningCoverage([[0, 4], [0, 4]], 0, 10), 0.4);
+  assert.equal(listeningCoverage([[0, 4], [4, 8]], 0, 10), LISTEN_MIN_PROPORTION);
+  ok('listening credit requires 80 percent unique playback, seeking and repeats cannot fill gaps');
+}
+
+{
+  const { assessmentConditions } = await import('../js/teacher.mjs');
+  const section = { startBeat: 0, endBeat: 8 };
+  const e = { hand: 'both', waitMode: false, tempo: 1, startBeat: 0, endBeat: 8 };
+  assert.ok(assessmentConditions(e, section));
+  for (const weaker of [{hand:'R'}, {hand:'L'}, {waitMode:true}, {tempo:0.99}, {tempo:NaN}, {endBeat:4}, {startBeat:1}]) {
+    assert.equal(assessmentConditions({...e, ...weaker}, section), false);
+  }
+  assert.equal(assessmentConditions(e, null), false);
+  ok('assessment completion requires real engine hands, full tempo, help off and the entire prescribed passage');
+}
+
+{
+  const m = T.emptyMastery();
+  T.recordAttempt(m, 'pulse', {passed:true, now:tt0});
+  T.recordAttempt(m, 'pulse', {passed:true, novel:true, now:tt0 + T.RETENTION_MIN_DELAY});
+  assert.equal(m.pulse.stage, 'independent');
+  T.recordAttempt(m, 'pulse', {passed:true, now:tt0 + 2 * T.RETENTION_MIN_DELAY - 1});
+  assert.equal(m.pulse.stage, 'independent');
+  T.recordAttempt(m, 'pulse', {passed:true, now:tt0 + 3 * T.RETENTION_MIN_DELAY});
+  assert.equal(m.pulse.stage, 'retained');
+  assert.equal(m.pulse.evidence.at(-1).outcome, 'retention');
+  const old = {pulse:{stage:'retained', evidence:[{passed:true, novel:true, t:tt0}]}};
+  const evidence = JSON.stringify(old.pulse.evidence);
+  T.reconcileMastery(old);
+  assert.equal(old.pulse.stage, 'independent');
+  assert.equal(JSON.stringify(old.pulse.evidence), evidence);
+  T.reconcileMastery(m); assert.equal(m.pulse.stage, 'retained');
+  ok('retention needs a full day without another attempt, novel success and historical overclaims stay distinct');
+}
+
+{
+  const s = {id:'test', sections:[{name:'A',startBeat:0,endBeat:8},{name:'B',startBeat:8,endBeat:16}]};
+  const st = {passageExposure:{test:{known:true,sections:{}}}};
+  T.exposePassage(st,s,0,8,100);
+  const check = T.schedulePassageCheck(st,'test','A','B',100);
+  assert.equal(check.kind,'transfer'); assert.equal(check.section,'B');
+  T.exposePassage(st,s,9,10,200);
+  assert.equal(T.passageCheckKind(st,'test',check),'retention');
+  assert.equal(T.schedulePassageCheck(st,'test','A','B',300).section,'A');
+  assert.equal(T.schedulePassageCheck({},'test','A','B',300).kind,'retention');
+  assert.equal(st.passageExposure.test.sections.B.lastAt,200);
+  ok('overlapping exposure invalidates transfer, unknown history cannot certify novelty, fallback checks the practised passage');
+}
+
+{
+  const now = 100 * T.RETENTION_MIN_DELAY;
+  const ctx = {songs:SONGS, resume:{songId:'fur-elise',at:now-1000}};
+  const st = {diagnosticDone:1, playable:{'faded-easy':{provenAt:1,dueAt:now-1}}};
+  assert.equal(T.prescribe(st,now,ctx).kind,'song-review');
+  const reading = {diagnosticDone:1,lessons:{'middle-c':1}};
+  const lid = (await import('../js/lessons.mjs')).LESSONS[0].id;
+  reading.lessons = {[lid]:now-T.READING_FIRST_GAP};
+  assert.equal(T.prescribe(reading,now,ctx).kind,'reading');
+  reading.lessonReviews = {[lid]:now};
+  assert.equal(T.readingDue(reading,now).length,0);
+  assert.equal(T.readingDue(reading,now+T.READING_FIRST_GAP).length,1);
+  ok('due song and recurring reading revisits outrank a fresh resume');
+}
+
+{
+  const {exportProgress,importProgress,restoreProgress,saveProgress} = await import('../js/library.mjs');
+  const source = {songs:{x:{plays:2,ms:123}}, days:['2026-09-09'],calOffsetMs:0,unknownFuture:{keep:true}};
+  const text = exportProgress(source,1);
+  assert.deepEqual(importProgress(text),source);
+  for (const bad of ['{}','null',text.replace('"version": 1','"version": 99'),
+    exportProgress({...source,songs:[]}),exportProgress({...source,songs:{x:null}}),
+    exportProgress({...source,mastery:{pulse:{stage:'retained',evidence:'bad'}}}),
+    '{"format":"keys-progress","version":1,"state":{"songs":{},"days":[],"__proto__":{}}}']) assert.throws(() => importProgress(bad));
+  const values = new Map([['keys-v1','old']]);
+  const storage = {getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v)};
+  restoreProgress(storage,text);
+  assert.equal(values.get('keys-v1-before-restore'),'old');
+  assert.deepEqual(JSON.parse(values.get('keys-v1')),source);
+  const failing = {getItem:storage.getItem,setItem:()=>{throw Error('quota');}};
+  assert.equal(saveProgress(failing,source).ok,false);
+  assert.throws(()=>restoreProgress(failing,text));
+  assert.deepEqual(JSON.parse(values.get('keys-v1')),source);
+  ok('progress export restores all fields, rejects malformed files, preserves rollback and catches save failure');
+}
+
+{
+  const {readFileSync} = await import('node:fs');
+  const app = readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  const binder = readFileSync(new URL('../js/canon-library.mjs',import.meta.url),'utf8');
+  const css = readFileSync(new URL('../style.css',import.meta.url),'utf8');
+  assert.match(app,/practiceFirst: true/);
+  assert.match(binder,/shared.insertBefore\(practiceModule, branch\)/);
+  assert.match(binder,/button.id = 'practice-primary'/);
+  assert.match(css,/:not\([^)]*\.practice-prescription/);
+  ok('library binds one primary prescription before browsing and exempts its subtree from the canon reset');
+}
+
+{
+  const groups = groupSongs(SONGS), ledger = {};
+  T.recordPlayableRun({playable:ledger},'faded-easy',{day:'2026-09-08',now:100});
+  assert.equal(classifyGroups(groups,()=>({plays:1}),ledger).repertoire.length,0);
+  T.recordPlayableRun({playable:ledger},'faded-easy',{day:'2026-09-09',now:200});
+  const shelf = classifyGroups(groups,()=>({plays:1}),ledger).repertoire.map((v)=>v[0].group??v[0].id);
+  assert.deepEqual(shelf,T.playableGroups({playable:ledger},SONGS));
+  ok('Repertoire membership agrees with the two-day playable ledger, including a proven lower tier');
+}
+
+{
+  const {MidiInput} = await import('../js/midi.mjs');
+  const {appendDiagnostic,DIAGNOSTIC_EVENT_LIMIT} = await import('../js/library.mjs');
+  const midi = new MidiInput(), notes = [], tests = [];
+  const a = {name:'One',state:'connected'}, b = {name:'Two',state:'connected'};
+  midi.access = {inputs:new Map([['a',a],['b',b]])};
+  midi.onNote = (...args)=>notes.push(args); midi.onKeyTest = (...args)=>tests.push(args);
+  midi._bind(); a.onmidimessage({data:[144,60,90]}); b.onmidimessage({data:[144,60,90]});
+  assert.equal(notes.length,1); assert.equal(tests.length,2);
+  a.state = 'disconnected'; midi._bind(); assert.equal(a.onmidimessage,null); assert.equal(notes.length,1);
+  b.state = 'disconnected'; midi._bind(); assert.deepEqual(notes.at(-1),[60,0,false]);
+  assert.equal(midi.deviceName,null);
+  midi._message({data:[144]}); assert.equal(notes.length,2);
+  const events = []; for(let i=0;i<250;i++) appendDiagnostic(events,{i});
+  assert.equal(events.length,DIAGNOSTIC_EVENT_LIMIT); assert.equal(events[0].i,50);
+  ok('keyboard recovery detaches disconnected ports, tests real keys, releases held notes and bounds local diagnostics');
+}
+
+{
+  const dates = T.skillCheckDates({lastTested:1000,dueAt:3000},2000);
+  assert.match(dates,/Last checked/); assert.match(dates,/Next check/);
+  assert.doesNotMatch(dates,/held|decay/);
+  assert.match(T.skillCheckDates({lastTested:1000,dueAt:2000},2000),/Check again today/);
+  assert.equal(T.skillCheckDates({}),'Not checked yet.');
+  ok('skill status reports actual test and next-check dates without elapsed-time retention claims');
+}
+
+{
+  const {readFileSync} = await import('node:fs');
+  const app = readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  assert.match(app,/freeze: null/);
+  assert.match(app,/\$\('freeze-offer'\).hidden = true/);
+  const st = {freezeTokens:2,frozenDays:['2026-09-01']};
+  const before = JSON.stringify(st); G.rhythmOf(st,'2026-09-09');
+  assert.equal(JSON.stringify(st),before);
+  ok('freeze offers are removed from practice while token and frozen-day history remain readable');
+}
+
+{
+  const day = '2026-09-09';
+  const st = {dayStats:{[day]:{minutes:1000}}};
+  const qs = G.questsFor(st,day);
+  assert.ok(qs.every((q)=>q.id !== 'minutes10' && !q.done));
+  assert.ok(qs.some((q)=>q.id === 'passage-check'));
+  st.dayStats[day].passageChecks = 1;
+  assert.ok(G.questsFor(st,day).find((q)=>q.id === 'passage-check').done);
+  ok('offered quests require identifiable playing outcomes, elapsed time alone completes none');
+}
+
+{
+  const {difficultyLabel,DIFF_BANDS} = await import('../js/difficulty.mjs');
+  for(const song of SONGS) {
+    const label = difficultyLabel(song);
+    assert.ok(DIFF_BANDS.some(([,word])=>word===label)); assert.doesNotMatch(label,/\d/);
+  }
+  ok('difficulty display uses descriptive bands while internal sorting retains its existing heuristic');
+}
+
+{
+  const {readFileSync} = await import('node:fs');
+  const play = readFileSync(new URL('../js/canon-play.mjs',import.meta.url),'utf8');
+  const css = readFileSync(new URL('../style.css',import.meta.url),'utf8');
+  assert.match(play,/const ids = \['btn-train','btn-mem','btn-take','btn-perf'\]/);
+  assert.match(play,/summary.textContent = 'Adjust practice'/);
+  assert.match(css,/:not\([^)]*\.practice-adjust/);
+  ok('alternate practice modes share one disclosure and its app-drawn subtree is exempt from the reset');
+}
+
+{
+  const st = {};
+  G.recordBlock(st,'listening','x',1); G.recordBlock(st,'journey','y',2);
+  assert.equal(G.blockCount(st),1); assert.equal(G.blockCount(st,0,'listening'),1);
+  assert.equal(G.badges(st).find((b)=>b.id==='blocks').evidence.count,1);
+  const fresh = {songs:{},days:[]}; T.initializeExposure(fresh,[{id:'x'}]);
+  assert.ok(T.passageUnexposed(fresh,'x','A'));
+  const old = {songs:{x:{plays:1}}}; T.initializeExposure(old,[{id:'x'}]);
+  assert.equal(T.passageUnexposed(old,'x','A'),false);
+  assert.ok(G.grantXp({},'passageIndependent','x',1));
+  assert.ok(G.grantXp({},'passageRetention','x',1));
+  ok('listening stays outside performed-block totals, reward sources name the evidence and unknown history stays conservative');
+}
+
+{
+  const {audibleSpan} = await import('../js/audio.mjs');
+  assert.deepEqual(audibleSpan(1,1.1,1,5,0.35,'running'),[1,1.1]);
+  assert.equal(audibleSpan(1,1.1,1,5,0.35,'suspended'),null);
+  assert.equal(audibleSpan(1,3,1,5,0.35,'running'),null);
+  assert.equal(audibleSpan(0,0.1,1,5,0.35,'running'),null);
+  assert.deepEqual(audibleSpan(4.9,5.1,1,5,0.35,'running'),[4.9,5]);
+  ok('listening coverage comes from running audio, excluding startup, suspension and unscheduled background gaps');
+}
+
+{
+  const {readFileSync} = await import('node:fs');
+  const vm = await import('node:vm');
+  const source = readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  const onLap = source.match(/function onLap\(ev\) \{[\s\S]*?\n\}/)[0];
+  const silent = ()=>{};
+  const run = (type, overrides, kind) => {
+    const state = {pathPending:{type,songId:'x',section:'A',lessonId:'lesson'},transfers:{x:{section:'A'}}};
+    const engine = {hand:'both',tempo:1,waitMode:false,startBeat:0,endBeat:8,msPerBeat:()=>500,__checkKind:kind,...overrides};
+    const credits = [];
+    const ctx = {state,engine,song:{id:'x',sections:[{name:'A',startBeat:0,endBeat:8}]},
+      $:id=>id==='section-select'?{value:'0'}:{checked:false,value:'100'},hand:'both',
+      trainer:null,memo:null,lapMiss:{},falls:{},jlog:silent,markPracticedToday:silent,logPracticeMinutes:silent,
+      songStats:()=>({}),store:{save:silent},assessmentConditions:T.assessmentConditions,PROOF_PASS:T.PROOF_PASS,
+      comboFlash:silent,dayStat:silent,awardXp:(kind)=>credits.push(kind),settleGame:silent,
+      bankBlock:silent,journeyState:()=>null,explainMiss:()=>null,schedulePassageCheck:T.schedulePassageCheck};
+    vm.runInNewContext(onLap+'; onLap({accuracy:95,wrong:0});',ctx);
+    return {state,credits,banner:ctx.falls.banner};
+  };
+  for(const type of ['proof','transfer']) for(const weak of [{hand:'R'},{hand:'L'},{tempo:0.5},{waitMode:true},{endBeat:4}]) {
+    const result=run(type,weak,'transfer');
+    assert.ok(result.state.pathPending); assert.equal(result.credits.length,0);
+    assert.match(result.banner,/both hands, full tempo and help off/);
+  }
+  assert.ok(run('proof',{}).state.pathProofs.lesson);
+  assert.equal(run('transfer',{},'transfer').state.passageChecks[0].kind,'transfer');
+  const repeat = run('transfer',{});
+  assert.equal(repeat.state.passageChecks[0].kind,'independent');
+  assert.equal(repeat.state.transfers.x.kind,'retention');
+  assert.deepEqual(repeat.credits,['passageIndependent']);
+  ok('actual lap handler rejects weakened engine settings despite full-strength controls, and schedules delayed proof after an independent retry');
+}
+
+{
+  const {exportProgress,importProgress} = await import('../js/library.mjs');
+  for (const bad of [{xpLog:[null]},{blocks:'bad'},{frozenDays:{}},{xpTotal:'100'},
+    {xpTotal:1e15},{activeQuest:'bad'},{transfers:{x:null}}, {passageExposure:{x:{known:true,sections:[]}}}]) {
+    assert.throws(()=>importProgress(exportProgress({songs:{},days:[],...bad})));
+  }
+  const legitimate = {songs:{},days:[],xpTotal:150,xpLog:[{t:100,src:'proof',ref:'x',xp:50}],
+    blocks:[{t:100,kind:'listening',ref:'x'}], frozenDays:['2026-09-01']};
+  assert.deepEqual(importProgress(exportProgress(legitimate)),legitimate);
+  ok('restore rejects malformed reward, quest, exposure and activity containers before replacing browser state');
+}
+
+{
+  const {readFileSync} = await import('node:fs'); const vm = await import('node:vm');
+  const source = readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  const stop = source.match(/function stopDemo\(\) \{[\s\S]*?\n\}/)[0];
+  const run = (ranges, hand='both') => {
+    let credits=0;
+    const ctx = {state:{},previewActive:true,demoEngine:{},demoWatch:{startBeat:0,endBeat:10,ranges},
+      song:{sections:[]},hand,chunkIdx:null,active:'play',falls:{pressed:{clear(){}}},
+      $:()=>({value:'',textContent:''}),journeyState:()=>({step:0,steps:[{pass:'hear',hand:'both'}]}),
+      journeyPass:()=>credits++,disarmTransport(){},rebuildEngine(){},
+      listeningCoverage:G.listeningCoverage,LISTEN_MIN_PROPORTION:G.LISTEN_MIN_PROPORTION};
+    vm.runInNewContext(stop+'; stopDemo(); stopDemo();',ctx); return credits;
+  };
+  assert.equal(run([[0,0.1]]),0); assert.equal(run([[9,10]]),0);
+  assert.equal(run([[0,8]]),1); assert.equal(run([[0,8]],'R'),0);
+  const {exportProgress,importProgress} = await import('../js/library.mjs');
+  const sourceState = {songs:{},days:[],technique:[{t:1,answers:{pain:false}}]};
+  assert.deepEqual(importProgress(exportProgress(sourceState)),sourceState);
+  ok('actual demo-stop handler grants once only after enough audio and matching scope, and restore preserves technique arrays');
+}
+
+{
+  const {readFileSync} = await import('node:fs'); const vm = await import('node:vm');
+  const {difficultyLabel} = await import('../js/difficulty.mjs');
+  const source = readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  const rowCode = source.match(/function canonRowOf\(variants\) \{[\s\S]*?\n\}/)[0];
+  const song = SONGS.find((s)=>s.id==='faded-easy');
+  const row = (playable) => vm.runInNewContext(rowCode+'; canonRowOf([song]);',
+    {song,state:{playable},songStats:()=>({plays:1,stars:3}),difficultyLabel});
+  assert.equal(row({}).statusLabel,'Practising');
+  assert.equal(row({[song.id]:{days:['2026-09-09']}}).statusLabel,'Passed once');
+  assert.equal(row({[song.id]:{days:['2026-09-08','2026-09-09'],provenAt:1}}).statusLabel,'Proven');
+  assert.equal(row({}).diff,difficultyLabel(song));
+  assert.doesNotMatch(source,/comboFlash\('MASTERY/);
+  assert.match(source,/INDEPENDENT PASS/);
+  const rx = T.prescribe({diagnosticDone:1,transfers:{x:{section:'A',dueAt:1,passedAt:1}}},1000);
+  assert.match(rx.evidence,/Exposure history unavailable/);
+  assert.doesNotMatch(rx.evidence,/you have not drilled/);
+  ok('actual library binding displays descriptive difficulty and honest proof labels, and unknown passage checks never claim novelty');
+}
+
+{
+  const {readFileSync} = await import('node:fs'); const vm = await import('node:vm');
+  const source = readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  // No save on pagehide (Fable review, 2026-09-09): every change saves as it happens, the leaving
+  // page must never overwrite a seeded or restored localStorage with its stale memory, and a stale
+  // second tab closing must never overwrite the live tab's progress.
+  assert.doesNotMatch(source, /addEventListener\('pagehide',[^\n]*store\.save/);
+  assert.match(source, /restoringProgress = true;\s*location\.reload\(\)/);
+  ok('nothing saves on pagehide; import and undo reload without a stale save in between');
+}
+
+{
+  const {MidiInput} = await import('../js/midi.mjs');
+  const nav = Object.getOwnPropertyDescriptor(globalThis,'navigator');
+  try {
+    const statuses=[]; const midi = new MidiInput(); midi.onStatus=(text,connected)=>statuses.push({text,connected});
+    Object.defineProperty(globalThis,'navigator',{configurable:true,value:{}});
+    assert.equal(await midi.connect(),false); assert.match(statuses.at(-1).text,/Chrome or Edge/);
+    Object.defineProperty(globalThis,'navigator',{configurable:true,value:{requestMIDIAccess:async()=>{throw Error('denied');}}});
+    const port={state:'connected',name:'Piano'}; midi.access={inputs:new Map([['p',port]])}; midi._bind();
+    assert.equal(await midi.connect(),false); assert.equal(port.onmidimessage,null); assert.equal(midi.bound.size,0);
+    assert.match(statuses.at(-1).text,/permission denied/);
+    Object.defineProperty(globalThis,'navigator',{configurable:true,value:{requestMIDIAccess:async()=>({inputs:new Map([['p',port]])})}});
+    assert.equal(await midi.connect(),true); assert.equal(statuses.at(-1).connected,true);
+  } finally {
+    if (nav) Object.defineProperty(globalThis,'navigator',nav); else delete globalThis.navigator;
+  }
+  const st={blocks:[{kind:'journey',ref:'song|Hear it',t:1},{kind:'journey',ref:'song|Right hand',t:2}]};
+  assert.equal(G.blockCount(st),1); assert.equal(G.blockCount(st,0,'listening'),0);
+  assert.equal(st.blocks.length,2);
+  ok('unsupported and denied keyboard access recover on retry, and legacy listening starts stay archived without performed-practice credit');
+}
+
+{
+  const {readFileSync} = await import('node:fs');
+  const css = readFileSync(new URL('../style.css',import.meta.url),'utf8');
+  const app = readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  assert.match(css,/#screen-library \.practice-reflow \{ height: auto !important; overflow: visible !important;/);
+  assert.match(app,/if \(!prescribedLayout && gridRow && todayLeaf\)/);
+  assert.doesNotMatch(css,/\.canon-root\.practice-library/);
+  ok('practice-first library releases fixed-height ancestors and bypasses the old viewport clipping calculation');
+}
+
+assert.equal(classifyGroups(groupSongs(SONGS),()=>({}),null).repertoire.length,0);
+assert.doesNotThrow(()=>T.reconcileMastery(null));
+assert.doesNotThrow(()=>T.reconcileMastery({pulse:null}));
+ok('mastery reconciliation tolerates absent legacy records');
+console.log(`\nALL GREEN: ${n} checks passed`);

@@ -69,3 +69,6 @@ export const HALL_OF_FAME = [
   { group: 'mario', from: 'Super Mario Bros. (game)' },
   { group: 'in-a-gadda-da-vida', from: 'The Simpsons (TV) · Iron Butterfly 1968' },
 ];
+
+// Descriptive display only. The weighted score remains an internal sort heuristic.
+export const difficultyLabel = (song) => difficultyBand(difficultyScore(song));

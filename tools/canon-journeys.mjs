@@ -44,6 +44,10 @@ const visible = () => b.eval(`(() => { const s = [...document.querySelectorAll('
 // overlay blocked every control while this suite reported 6/6. Synthetic clicks
 // do not hit-test; these do.
 const clickText = async (label) => {
+  if (['Train','Memorize','Record take','Performance run'].includes(label)) {
+    const closed = await b.eval(`!!document.querySelector('#screen-play .practice-adjust:not([open])')`);
+    if (closed && await clickText('Adjust practice') !== 'ok') return 'ADJUST PRACTICE NOT CLICKABLE';
+  }
   const pt = await b.eval(`(() => {
     // Among every element with this text, click the one a PERSON would hit: the
     // one that wins the hit-test at its own centre. The first version clicked
@@ -241,7 +245,7 @@ try {
       // the recommendation MODULE now lives in the grid's first cells and
       // legitimately keeps naming the resume song while you search: it is not
       // a result row, so exclude anything inside it
-      const mod = [...grid.querySelectorAll('div')].find((d) => /Start/.test(d.textContent) && /Choose another/.test(d.textContent));
+      const mod = document.querySelector('#screen-library .practice-prescription');
       return [...grid.querySelectorAll('*')]
         .filter((e) => !e.children.length && /Fraunces/.test(e.getAttribute('style') ?? '') && e.textContent.trim()
           && e.getBoundingClientRect().width > 0 && !(mod && mod.contains(e)))
@@ -608,28 +612,16 @@ try {
     return bad;
   });
 
-  await journey('FREEZE OFFER: a broken rhythm offers a freeze, Use one keeps the run', async () => {
-    const bad = [];
+  await journey('FREEZE HISTORY: no token offer interrupts practice', async () => {
     await b.goto('http://localhost:4180/index.html?canon=0');
     await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify({
-      ...SEED, freezeTokens: 1,
-      days: [day(0), day(2), day(3), day(4)],   // yesterday missing; 3-day run before it
-      pmin: {},
+      ...SEED, freezeTokens: 1, frozenDays:[day(5)], days:[day(0),day(2),day(3),day(4)], pmin:{},
     }))}); true`);
     await boot();
     const offered = await b.eval(`(() => { const f = document.getElementById('freeze-offer'); return f && f.getBoundingClientRect().height > 0; })()`);
-    if (!offered) return ['a broken 3-day rhythm produced no freeze offer on the library'];
-    const wording = await text('freeze-offer');
-    if (!/keep your 4 day rhythm/i.test(wording)) bad.push(`the offer does not carry the real rhythm (${JSON.stringify(wording?.slice(0, 80))})`);
-    if (!/1 freeze left/i.test(wording)) bad.push(`the offer does not carry the real token count (${JSON.stringify(wording?.slice(0, 120))})`);
-    if (await clickText('Use one') !== 'ok') return ['no Use one control on the offer'];
-    await new Promise((r) => setTimeout(r, 800));
     const st = await state();
-    if ((st.freezeTokens ?? 99) !== 0) bad.push(`using the freeze left ${st.freezeTokens} tokens, expected 0`);
-    if (!(st.frozenDays ?? []).includes(day(1))) bad.push('the frozen day was not recorded');
-    const still = await b.eval(`(() => { const f = document.getElementById('freeze-offer'); return f && f.getBoundingClientRect().height > 0; })()`);
-    if (still) bad.push('the offer is still on screen after being used');
-    return bad;
+    return [offered && 'freeze offer interrupts the library', st.freezeTokens !== 1 && 'token history changed',
+      !st.frozenDays.includes(day(5)) && 'frozen-day history lost'].filter(Boolean);
   });
 
   await journey('IMMERSION: a run recedes the chrome, Escape brings it back', async () => {
@@ -882,6 +874,9 @@ try {
       const loop = await b.eval(`(window.__engine?.loop ? 'looped' : 'whole')`);
       if (loop !== 'looped') bad.push(`choosing section ${JSON.stringify(sec)} set no engine loop`);
     }
+    // Alternate modes are behind one disclosure. Open it before measuring.
+    const adjustClosed = await b.eval(`!!document.querySelector('#screen-play .practice-adjust:not([open])')`);
+    if (adjustClosed && await clickText('Adjust practice') !== 'ok') bad.push('Adjust practice is not reachable');
     // PERFORMANCE RUN: drawn and wired (missing until 2026-08-30)
     const perf = await b.eval(`(() => { const c = document.querySelector('[data-proxy-for="btn-perf"]'); return c ? c.getBoundingClientRect().width > 0 : false; })()`);
     if (!perf) bad.push('no visible Performance run control on the wide board');

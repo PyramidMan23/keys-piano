@@ -29,16 +29,16 @@ export function groupSongs(songs) {
 // end to end sitting in Explore, alphabetically, with no trace: 59 of 69 song
 // starts in the 3 to 5 Sep journal were abandoned before 5%. The minute floor
 // keeps that council's intent (an accidental launch never promotes).
-// Repertoire = the top tier is 3-starred. Explore = everything else.
+// Repertoire = a tier has passed the two-day playable proof. Explore = everything else.
 export const LEARNING_MIN_MS = 60000;
-export function classifyGroups(groups, statsOf) {
+export function classifyGroups(groups, statsOf, playable = {}) {
   const learning = [], repertoire = [], explore = [];
   const timeIn = (variants) => variants.reduce((a, v) => a + (statsOf(v.id).ms || 0), 0);
   const lastAt = (variants) => Math.max(0, ...variants.map((v) => statsOf(v.id).lastAt || 0));
   for (const variants of groups.values()) {
-    const top = variants[variants.length - 1];
+    const proven = variants.some((v) => playable?.[v.id]?.provenAt);
     const played = variants.some((v) => (statsOf(v.id).plays || 0) > 0);
-    if ((statsOf(top.id).stars || 0) >= 3) repertoire.push(variants);
+    if (proven) repertoire.push(variants);
     else if (played || timeIn(variants) >= LEARNING_MIN_MS) learning.push(variants);
     else explore.push(variants);
   }
@@ -71,3 +71,82 @@ export function filterExplore(explore, query) {
 
 // Past this size the Explore search stops being an icon and stays a field.
 export const SEARCH_PERSISTENT_AT = 40;
+
+// Progress files include all state fields, including fields unknown to this build.
+export const PROGRESS_FORMAT = 'keys-progress';
+export const PROGRESS_VERSION = 1;
+export const PROGRESS_MAX_BYTES = 8 * 1024 * 1024;
+const plain = (v) => !!v && typeof v === 'object' && !Array.isArray(v);
+export function validateProgress(s) {
+  const fail = () => { throw new Error('This file has an invalid progress structure. Nothing was restored.'); };
+  let nodes = 0;
+  const walk = (v, depth = 0) => {
+    if (++nodes > 200000 || depth > 30) fail();
+    if (typeof v === 'number' && (!Number.isFinite(v) || Math.abs(v) > Number.MAX_SAFE_INTEGER)) fail();
+    if (v && typeof v === 'object') for (const [k, value] of Object.entries(v)) {
+      if (['__proto__', 'prototype', 'constructor'].includes(k)) fail();
+      walk(value, depth + 1);
+    }
+  };
+  if (!plain(s) || !plain(s.songs) || !Array.isArray(s.days)) fail();
+  walk(s);
+  if (!s.days.every((d) => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d))) fail();
+  const maps = ['songs','mastery','playable','transfers','passageExposure','pathProofs','lessons','lessonReviews',
+    'lessonReplays','lessonBadges','lessonStars','teacherLessons','teacherStep','dayStats','litems','mem','pmin','lib',
+    'xpKeys','journeys','echo','sight','rhythm','theory','touch','activeQuest','weekly','lastSession','pathPending'];
+  for (const k of maps) if (s[k] != null && !plain(s[k])) fail();
+  for (const k of ['xpLog','takes','passageChecks','blocks','frozenDays','technique']) if (s[k] != null && !Array.isArray(s[k])) fail();
+  for (const k of ['xpLog','takes','passageChecks','blocks','technique']) if (s[k]?.some((e) => !plain(e))) fail();
+  if (s.frozenDays?.some((d) => typeof d !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(d))) fail();
+  for (const k of ['xpTotal','freezeTokens','bestRhythm','calibratedAt','exposureTrackingSince']) {
+    if (s[k] != null && (typeof s[k] !== 'number' || s[k] < 0)) fail();
+  }
+  if (s.xpTotal > 1000000000) fail();
+  for (const entry of s.xpLog ?? []) if (typeof entry.xp !== 'number' || entry.xp < 0 || typeof entry.src !== 'string') fail();
+  for (const k of ['transfers','pathProofs','dayStats','journeys','passageExposure']) {
+    if (Object.values(s[k] ?? {}).some((e) => !plain(e))) fail();
+  }
+  for (const record of Object.values(s.passageExposure ?? {})) {
+    if (typeof record.known !== 'boolean' || !plain(record.sections) || Object.values(record.sections).some((e) => !plain(e))) fail();
+  }
+  if (s.calOffsetMs != null && typeof s.calOffsetMs !== 'number') fail();
+  for (const record of Object.values(s.songs)) {
+    if (!plain(record)) fail();
+    for (const k of ['ms','lastAt','best','plays','stars']) if (record[k] != null && (typeof record[k] !== 'number' || record[k] < 0)) fail();
+  }
+  for (const record of Object.values(s.mastery ?? {})) {
+    if (!plain(record) || !['unseen','introduced','guided','independent','retained'].includes(record.stage) ||
+        !Array.isArray(record.evidence) || record.evidence.some((e) => !plain(e) || typeof e.t !== 'number')) fail();
+  }
+  for (const record of Object.values(s.playable ?? {})) {
+    if (!plain(record) || !Array.isArray(record.days) || record.days.some((d) => typeof d !== 'string')) fail();
+  }
+  return s;
+}
+export function exportProgress(state, now = Date.now()) {
+  return JSON.stringify({format:PROGRESS_FORMAT, version:PROGRESS_VERSION, exportedAt:now, state}, null, 2);
+}
+export function importProgress(text) {
+  if (new TextEncoder().encode(text).length > PROGRESS_MAX_BYTES) throw new Error('Progress file is too large.');
+  const file = JSON.parse(text);
+  if (file?.format !== PROGRESS_FORMAT || file.version !== PROGRESS_VERSION) throw new Error('Unsupported Keys progress file version.');
+  return validateProgress(file.state);
+}
+export function saveProgress(storage, state) {
+  try { storage.setItem('keys-v1', JSON.stringify(state)); return {ok:true}; }
+  catch { return {ok:false, message:'Progress could not be saved on this browser. Export it now before closing Keys.'}; }
+}
+export function restoreProgress(storage, text) {
+  const state = importProgress(text);
+  // Back up before replacing. A quota failure leaves the active state untouched.
+  storage.setItem('keys-v1-before-restore', storage.getItem('keys-v1') ?? '{}');
+  storage.setItem('keys-v1', JSON.stringify(state));
+  return state;
+}
+
+export const DIAGNOSTIC_EVENT_LIMIT = 200;
+export function appendDiagnostic(events, event) {
+  events.push(event);
+  if (events.length > DIAGNOSTIC_EVENT_LIMIT) events.splice(0, events.length - DIAGNOSTIC_EVENT_LIMIT);
+  return events;
+}

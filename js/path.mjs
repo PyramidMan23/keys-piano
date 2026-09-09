@@ -1,3 +1,4 @@
+import { skillCheckDates } from './teacher.mjs';
 import { LESSONS as READING_LESSONS } from './lessons.mjs';
 import { setTextKeeping, setHTMLKeeping, CANON_ON, hideRestingLayer } from './canon-mount.mjs';
 import { CANON } from './canon-templates.mjs';
@@ -148,7 +149,7 @@ export function installPath(ctx) {
 
   // ---------- the Path screen ----------
   function stageChip(stage) {
-    const label = { unseen: 'not met', introduced: 'met', guided: 'with help', independent: 'on your own', retained: 'remembered' }[stage] ?? stage;
+    const label = { unseen: 'not met', introduced: 'met', guided: 'with help', independent: 'on your own', retained: 'checked after a day' }[stage] ?? stage;
     const shape = { unseen: '·', introduced: '◔', guided: '◑', independent: '●', retained: '★' }[stage] ?? '·';
     return '<span class="stage-chip s-' + stage + '"><i>' + shape + '</i>' + label + '</span>';
   }
@@ -186,7 +187,8 @@ export function installPath(ctx) {
       : rx.kind === 'song-review' ? 'Run the song'
       : rx.kind === 'repertoire' ? 'Five focused minutes'
       : rx.kind === 'reading' ? '▶ Next reading lesson'
-      : rx.kind === 'transfer' ? 'Check it holds'
+      // the check names what it can honestly claim (Astra audit items 3 and 4)
+      : rx.kind === 'transfer' ? (rx.checkKind === 'transfer' ? 'Try an unpractised passage' : rx.checkKind === 'retention' ? 'Check it holds' : 'Play this passage independently')
       : rx.kind === 'done' ? '✓ Path complete' : '▶ Continue learning';
     $('path-go').disabled = rx.kind === 'done';
     {
@@ -231,8 +233,8 @@ export function installPath(ctx) {
       const mile = leafBy(reason, 'One clean run moves this to Guided');
       if (mile) {
         mile.textContent = rank2 >= 0 && rank2 < 4
-          ? `A clean, unassisted pass moves this to ${STAGES2[rank2 + 1]}`
-          : rank2 === 4 ? 'Held. Reviews keep it alive.'
+          ? 'An unassisted pass shows independence. A check after a day tests retention.'
+          : rank2 === 4 ? 'Delayed check passed. Return for the next check.'
           : rx.kind === 'diagnostic' ? 'The check-in builds your path from what you play'
           : 'Keep going: the path re-plans after every attempt';
       }
@@ -333,13 +335,7 @@ export function installPath(ctx) {
     const skillRows = SKILLS.map((s2) => {
       const m2 = mastery()[s2.id] ?? { stage: 'unseen' };
       const rank2 = STAGES.indexOf(m2.stage);
-      const now2 = Date.now();
-      let bottom = m2.stage;
-      if (rank2 >= 1 && m2.dueAt) {
-        if (m2.dueAt <= now2) bottom = `${m2.stage} · due today`;
-        else bottom = `${m2.stage} · ${rank2 === 4 ? 'held' : 'decays'} ${new Date(m2.dueAt).toLocaleString('en', { weekday: 'long' })}`;
-      }
-      if (rank2 === 4 && m2.lastTested) bottom = `${m2.stage} · held ${Math.max(1, Math.round((now2 - m2.lastTested) / 864e5))} days`;
+      const bottom = skillCheckDates(m2);
       return { name: s2.name, stage: m2.stage, title: s2.passRule, bottom,
                filled: Math.max(0, rank2 + 1) };
     });
@@ -638,7 +634,7 @@ export function installPath(ctx) {
     // Complete. A voluntary replay is PRACTICE: it never moves the ledger.
     const isReplay = !!doneLessons()[lessonDef.id];
     if (!isReplay) recordAttempt(mastery(), skillId, {
-      passed: res.passed, assisted, novel: false, now: Date.now(), note: res.note ?? '',
+      passed: res.passed, assisted, novel: phase === 'transfer', now: Date.now(), note: res.note ?? '',
     });
     jlog('teacher_task', { lesson: lessonDef.id, phase, passed: res.passed, note: res.note ?? '' });
     if (!res.passed) {
@@ -1094,7 +1090,7 @@ export function installPath(ctx) {
     });
   }
 
-  // ---------- assessment: novel material, no help, retention-grade ----------
+  // ---------- assessment: novel material, no help, transfer evidence ----------
   function startAssessment() {
     openTaskScreen(ASSESSMENT.title, [
       'Eight bars in an order no lesson has drilled. No key names, no lit keys, no second go.',
@@ -1116,7 +1112,7 @@ export function installPath(ctx) {
           jlog('teacher_assessment', { passed, note: hits });
           comboFlash(passed ? 'ASSESSMENT PASSED ★' : 'NOT YET');
           $('task-msg').textContent = (passed ? '★ ' : '· ') + hits +
-            (passed ? ' That is Teacher Loop v1 complete: you can play a pop song from a lead sheet.'
+            (passed ? ' Transfer passed on this exercise. Come back for a delayed check.'
                     : ' Needed 7 of 8. Nothing is lost, the path will point you at the weak part.');
           setTimeout(() => { if (!$('screen-task').hidden) openPath(); }, 2800);
         },

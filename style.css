@@ -781,7 +781,7 @@ button:disabled { opacity: 0.35; cursor: default; }
    staff lines still painted because lines have no rx. Same tell as ever: the
    box is right and the ink is missing. */
 .canon-root,
-.canon-root *:not(#score-wrap, #score-wrap *, #cp-again, #cp-again *, #lesson-stave, #lesson-stave *) {
+.canon-root *:not(#score-wrap, #score-wrap *, #cp-again, #cp-again *, #lesson-stave, #lesson-stave *, .practice-prescription, .practice-prescription *, .practice-adjust, .practice-adjust *) {
   all: revert;
   /* The one thing that must come BACK. The canon was authored in a page with
      `* { box-sizing: border-box }` and every width in it assumes that; reverting
@@ -914,3 +914,28 @@ button:active:not(:disabled),
     transform: none !important;
   }
 }
+
+/* Recovery sits outside the canon board and its reset. */
+#progress-safety { padding: 8px 16px; max-width: 72rem; margin: auto; }
+#progress-safety summary { cursor: pointer; padding: 8px 0; }
+#progress-safety button, #progress-safety input { min-height: 44px; margin: 4px; }
+#save-status:not([hidden]) { border: 2px solid currentColor; padding: 12px; font-weight: 700; }
+
+/* The prescription is app-ordered, with the collection below it. */
+#screen-library .practice-library { height: auto !important; min-height: 100vh; }
+#screen-library .practice-reflow { height: auto !important; overflow: visible !important; }
+#screen-library .practice-library [data-lib-grid] { height: auto !important; overflow: visible !important; }
+.practice-library .practice-flow { display: flex !important; flex-direction: column !important; height: auto !important; }
+.practice-library .practice-prescription { flex: 0 0 auto !important; width: 100% !important; height: auto !important; min-height: 166px; margin-bottom: 20px; }
+.practice-library .practice-prescription [hidden] { display: none !important; }
+.practice-library #practice-primary { width: auto !important; padding: 10px 16px !important; min-height: 44px !important; white-space: normal !important; }
+.practice-library .practice-secondary { background: transparent !important; box-shadow: none !important; border-color: transparent !important; }
+
+.practice-adjust { width: 100%; flex-basis: 100%; color: inherit; }
+.practice-adjust summary { cursor: pointer; min-height: 44px; padding: 12px 4px; font: inherit; }
+.practice-adjust-modes { display: flex; flex-wrap: wrap; gap: 8px; }
+/* Chrome keeps layout boxes for a closed details' content (content-visibility), so the
+   hidden mode buttons still reported rects and the geometry gate read them as overlapping
+   Hear it. Closed means no box at all. (Fable review of the Astra build, 2026-09-09) */
+.practice-adjust:not([open]) > .practice-adjust-modes { display: none; }
+.practice-adjust-modes > * { min-height: 44px; max-width: 100%; }

@@ -243,6 +243,7 @@ export function renderCanonLibrary(host, ctx) {
     }
   }
 
+  let practiceModule = null;
   // ---- the recommendation (council redraw 2026-08-30) ----------------------
   // The 666x516 billboard is gone. The recommendation is a pinned 412x166
   // module in the grid's first three columns. Its two states live on the
@@ -281,6 +282,7 @@ export function renderCanonLibrary(host, ctx) {
     // an unscoped bind overwrote the path teaser with the song title and
     // reported a phantom miss. The module is the only place these belong.
     const rec = moduleIn(root) ?? root;
+    practiceModule = rec === root ? null : rec;
     // AND SKIP THE EYEBROW. The 756 column sets "DO THIS NEXT" in Fraunces too
     // (the desktop module uses the mono label face), so "the first Fraunces
     // leaf" was the eyebrow there and the phone hero announced the song title
@@ -369,6 +371,33 @@ export function renderCanonLibrary(host, ctx) {
   // added, so the accessible names have to be reapplied here or the two collapse
   // chevrons go back to being nameless the first time the screen re-renders
   nameControls(root);
+  if (ctx.practiceFirst && practiceModule) {
+    // Bind all samples first. Then move the real prescription ahead of browsing.
+    const tabs = tabStrip?.parent;
+    let shared = practiceModule.parentElement;
+    while (shared && tabs && !shared.contains(tabs)) shared = shared.parentElement;
+    if (shared && tabs) {
+      let branch = tabs;
+      while (branch.parentElement !== shared) branch = branch.parentElement;
+      shared.insertBefore(practiceModule, branch);
+      shared.classList.add('practice-flow');
+      for (let ancestor = shared; ancestor && root.contains(ancestor); ancestor = ancestor.parentElement) {
+        ancestor.classList.add('practice-reflow');
+      }
+    }
+    root.classList.add('practice-library');
+    practiceModule.classList.add('practice-prescription');
+    const start = bySample(practiceModule, 'Start');
+    if (start) {
+      start.textContent = ctx.practiceLabel ?? 'Start prescribed practice';
+      const button = control(start);
+      button.id = 'practice-primary';
+      button.setAttribute('aria-label', (ctx.practiceLabel ?? 'Start prescribed practice') + ': ' + prescription.title);
+    }
+    const alternate = bySample(practiceModule, 'Choose another');
+    if (alternate) control(alternate).hidden = true;
+    if (resume) control(resume).classList.add('practice-secondary');
+  }
   restoreFocus(host, focus);
   return root;
 }
@@ -926,7 +955,7 @@ function openLibraryGallery(ctx) {
     if (span) {
       const v = stateVariants.get(song.state);
       const wordEl = [...span.children].find((ch) => ch.tagName === 'SPAN');
-      if (wordEl) wordEl.textContent = song.state;
+      if (wordEl) wordEl.textContent = song.statusLabel ?? song.state;
       if (v) {
         const shape = span.querySelector('i');
         if (v.i && shape) shape.setAttribute('style', v.i);
@@ -1352,7 +1381,7 @@ function renderTiles(root, ctx) {
     if (span) {
       const v = stateVariants.get(song.state);
       const wordEl = [...span.children].find((ch) => ch.tagName === 'SPAN');
-      if (wordEl) wordEl.textContent = song.state;
+      if (wordEl) wordEl.textContent = song.statusLabel ?? song.state;
       if (v) {
         const shape = span.querySelector('i');
         if (v.i && shape) shape.setAttribute('style', v.i);
@@ -1418,7 +1447,7 @@ function renderTiles(root, ctx) {
     if (span) {
       const v = stateVariants.get(ctx.prescription.state);
       const wordEl = [...span.children].find((ch) => ch.tagName === 'SPAN');
-      if (wordEl) wordEl.textContent = ctx.prescription.state;
+      if (wordEl) wordEl.textContent = ctx.prescription.statusLabel ?? ctx.prescription.state;
       if (v) {
         const shape = span.querySelector('i');
         if (v.i && shape) shape.setAttribute('style', v.i);
@@ -1551,7 +1580,7 @@ function renderRows(root, ctx, anchors) {
     const put = (i, v) => { const n = leaves(slot(row, i))[0]; if (n) n.textContent = v; };
     put(PLAYS, song.plays);
     put(DIFF, song.diff);
-    put(STATE, song.state);
+    put(STATE, song.statusLabel ?? song.state);
 
     // pips carry this song's proofs, not the template song's
     // the same letter rule as the grid tiles: a tier button belongs to the

@@ -90,6 +90,7 @@ const RANK = Object.fromEntries(STAGES.map((s, i) => [s, i]));
 export const stageRank = (s) => RANK[s] ?? 0;
 
 const DAY = 86400000;
+export const RETENTION_MIN_DELAY = DAY;
 // spacing after each stage is reached (retention is TESTED, never assumed)
 const REVIEW_GAP = { introduced: 0, guided: DAY, independent: 2 * DAY, retained: 6 * DAY };
 
@@ -102,7 +103,11 @@ export function emptyMastery() {
 export function recordAttempt(mastery, skillId, opts) {
   const { passed, assisted = false, novel = false, now, note = '' } = opts;
   const m = (mastery[skillId] ??= { stage: 'unseen', evidence: [], lastTested: 0, dueAt: 0 });
-  m.evidence.push({ t: now, passed: !!passed, assisted: !!assisted, novel: !!novel, note });
+  const previous = m.evidence.at(-1);
+  const delayed = !novel && previous?.passed && !previous.assisted &&
+    now - previous.t >= RETENTION_MIN_DELAY;
+  const outcome = !passed ? 'not-yet' : assisted ? 'assisted' : novel ? 'transfer' : delayed ? 'retention' : 'independent';
+  m.evidence.push({ t: now, passed: !!passed, assisted: !!assisted, novel: !!novel, note, outcome });
   if (m.evidence.length > 20) m.evidence.shift();
   m.lastTested = now;
   if (!passed) {
@@ -115,7 +120,7 @@ export function recordAttempt(mastery, skillId, opts) {
   // one stage per attempt meant a lesson's guided+transfer pair could never
   // reach "independent", so the app claimed it while the ledger said otherwise
   // (caught live 2026-08-25). Assistance still caps it: that law is untouched.
-  const cap = assisted ? 'guided' : novel ? 'retained' : 'independent';
+  const cap = assisted ? 'guided' : delayed ? 'retained' : 'independent';
   if (RANK[cap] > RANK[m.stage]) m.stage = cap;
   m.dueAt = now + (REVIEW_GAP[m.stage] ?? DAY);
   return m;
@@ -215,20 +220,17 @@ export function playableGroups(st, songs) {
 // stats, resume = {songId, title, level, at} for the last open session. The
 // 13th council made this the app's ONE brain: the library's amber card and the
 // path screen both ask it, so there is never a second "do this next" voice.
-// SILENT READING DUE DATES (18th council, 2026-09-06). The freeze forbids a
-// scheduled reading check before the ten sessions are in; it does not forbid
-// KNOWING when one would have been due. Every completed reading lesson gets a
-// due date from the app's existing first clock (six days, the skill ladder's),
-// and the prescription carries the list as `shadow` so the app can log how
-// often a reading check would have competed with what it actually prescribed.
-// Nothing on screen changes. After the trial this list becomes a branch.
+// Reading revisits recur six days after completion or a clean revisit.
+// The audit promotes these from shadow evidence into the prescription order.
+// The shadow list remains in the returned record for existing journal readers.
 export const READING_FIRST_GAP = 6 * DAY;
 export function readingDue(st, now) {
   const done = st.lessons ?? {};
   return READING_LESSONS.filter((l) => {
     const t = done[l.id];
     const at = typeof t === 'number' ? t : t?.done;
-    return at && now >= at + READING_FIRST_GAP && !(st.lessonReviews?.[l.id] > at);
+    const last = Math.max(at || 0, st.lessonReviews?.[l.id] || 0);
+    return last && now >= last + READING_FIRST_GAP;
   }).map((l) => l.id);
 }
 export function prescribe(st, now, ctx = {}) {
@@ -266,7 +268,7 @@ function prescribeCore(st, now, ctx = {}) {
 
   // 1.2 a transfer check that came due (17th council): a section passed with
   // help on is checked later on a DIFFERENT passage of the same song, help off.
-  // The only honest test of a skill is material it was not drilled on.
+  // Exposure history distinguishes transfer from a familiar passage check.
   const dueTransfer = Object.entries(st.transfers ?? {})
     .filter(([, t]) => t.dueAt && t.dueAt <= now)
     .sort((a, b) => a[1].dueAt - b[1].dueAt)[0];
@@ -275,22 +277,30 @@ function prescribeCore(st, now, ctx = {}) {
     const s = (ctx.songs ?? []).find((x) => x.id === songId);
     return {
       kind: 'transfer', songId, section: t.section, title: s?.title ?? songId,
-      reason: 'Check it holds: ' + (s?.title ?? songId) + ', ' + t.section + ', no waiting.',
-      evidence: 'you passed ' + t.from + ' ' + Math.max(1, Math.round((now - t.passedAt) / DAY)) + ' day(s) ago · a passage you have not drilled is the only honest check',
+      checkKind: passageCheckKind(st, songId, t),
+      reason: (passageCheckKind(st, songId, t) === 'transfer' ? 'Try an unpractised passage: ' : passageCheckKind(st, songId, t) === 'retention' ? 'Check this passage again: ' : 'Play this passage independently: ') + (s?.title ?? songId) + ', ' + t.section + ', no waiting.',
+      evidence: passageCheckKind(st, songId, t) === 'transfer' ? 'No prior exposure recorded. Both hands, full tempo, help off.' : passageCheckKind(st, songId, t) === 'retention' ? 'Previously seen material. Both hands, full tempo, help off. Retention requires a day since its last exposure.' : 'Exposure history unavailable. This checks independent playing, without a transfer or retention claim.',
     };
   }
 
-  // 1.5 resume where he left off, a CANDIDATE, not a separate authority
-  // (13th council). Fresh means under 48h; sessions saved before timestamps
-  // existed count as fresh so the Continue habit survives the upgrade.
-  const resume = ctx.resume;
-  if (resume && (!resume.at || now - resume.at < 48 * 3600000)) {
+  const songs = ctx.songs ?? [];
+  // 6. a playable song whose retention clock ran out
+  const dueSong = Object.entries(st.playable ?? {})
+    .filter(([, p]) => p.provenAt && p.dueAt && p.dueAt <= now)
+    .sort((a, b) => a[1].dueAt - b[1].dueAt)[0];
+  if (dueSong) {
+    const s = songs.find((x) => x.id === dueSong[0]);
     return {
-      kind: 'resume', songId: resume.songId,
-      reason: '▶ Continue, ' + (resume.title ?? resume.songId) + (resume.level ? ' (' + resume.level + ')' : ''),
-      evidence: 'you were here ' + (resume.at ? Math.max(1, Math.round((now - resume.at) / 3600000)) + 'h ago' : 'last time'),
+      kind: 'song-review', songId: dueSong[0],
+      reason: 'Still playable? Run ' + (s?.title ?? dueSong[0]) + ' start to finish, no waiting.',
+      evidence: 'proven ' + Math.round((now - dueSong[1].provenAt) / DAY) + ' day(s) ago · retention is tested, never assumed',
     };
   }
+  const dueReading = readingDue(st, now)[0];
+  if (dueReading) return {kind:'reading', lessonId:dueReading,
+    title:READING_LESSONS.find((l) => l.id === dueReading).title,
+    reason:'A short reading revisit is due before resuming your song.',
+    evidence:'Last completed or revisited at least six days ago.'};
 
   // 2. a failed prerequisite blocking the next lesson
   const nextUndone = TEACHER_LESSONS.find((l) => !done[l.id]);
@@ -316,6 +326,18 @@ function prescribeCore(st, now, ctx = {}) {
       kind: 'lesson', lessonId: started.id, step: st.teacherStep[started.id],
       reason: 'You are part-way through "' + started.title + '".',
       evidence: 'you stopped at the ' + st.teacherStep[started.id] + ' task',
+    };
+  }
+
+  // 1.5 resume where he left off, a CANDIDATE, not a separate authority
+  // (13th council). Fresh means under 48h; sessions saved before timestamps
+  // existed count as fresh so the Continue habit survives the upgrade.
+  const resume = ctx.resume;
+  if (resume && (!resume.at || now - resume.at < 48 * 3600000)) {
+    return {
+      kind: 'resume', songId: resume.songId,
+      reason: '▶ Continue, ' + (resume.title ?? resume.songId) + (resume.level ? ' (' + resume.level + ')' : ''),
+      evidence: 'you were here ' + (resume.at ? Math.max(1, Math.round((now - resume.at) / 3600000)) + 'h ago' : 'last time'),
     };
   }
 
@@ -388,19 +410,6 @@ function prescribeCore(st, now, ctx = {}) {
 
   // ---- the ongoing repertoire loop (13th council: after the foundation, the
   // path's job is making SONGS independently playable, forever) ----
-  const songs = ctx.songs ?? [];
-  // 6. a playable song whose retention clock ran out
-  const dueSong = Object.entries(st.playable ?? {})
-    .filter(([, p]) => p.provenAt && p.dueAt && p.dueAt <= now)
-    .sort((a, b) => a[1].dueAt - b[1].dueAt)[0];
-  if (dueSong) {
-    const s = songs.find((x) => x.id === dueSong[0]);
-    return {
-      kind: 'song-review', songId: dueSong[0],
-      reason: 'Still playable? Run ' + (s?.title ?? dueSong[0]) + ' start to finish, no waiting.',
-      evidence: 'proven ' + Math.round((now - dueSong[1].provenAt) / DAY) + ' day(s) ago · retention is tested, never assumed',
-    };
-  }
   // 7. the weakest section of anything he is learning (the old library target)
   if (ctx.statsOf) {
     let worst = null;
@@ -559,3 +568,59 @@ export const TECHNIQUE_RUBRIC = [
 ];
 export const TECHNIQUE_STOP_RULE =
   'If anything hurts, stop playing for today. Pain is not something to practise through, and it is not something this app can diagnose: that is a question for a human teacher or a doctor.';
+
+export const ASSESSMENT_MIN_TEMPO = 1;
+export function assessmentConditions(engine, section) {
+  return !!engine && !!section && engine.hand === 'both' && engine.waitMode === false &&
+    Number.isFinite(engine.tempo) && engine.tempo >= ASSESSMENT_MIN_TEMPO &&
+    engine.startBeat === section.startBeat && engine.endBeat === section.endBeat;
+}
+
+// Historical evidence is preserved. Unsupported old retention labels are reopened.
+export function reconcileMastery(mastery = {}) {
+  if (!mastery || typeof mastery !== 'object') return mastery;
+  for (const m of Object.values(mastery)) {
+    if (!m || m.stage !== 'retained' || m.evidence?.some((e) => e.outcome === 'retention')) continue;
+    m.legacyStage ??= m.stage;
+    m.stage = 'independent';
+  }
+  return mastery;
+}
+
+// An unknown legacy history can never certify a passage as unexposed.
+export function passageUnexposed(st, songId, section) {
+  const history = st.passageExposure?.[songId];
+  return !!history?.known && !history.sections?.[section];
+}
+export function exposePassage(st, song, start, end, now) {
+  const history = ((st.passageExposure ??= {})[song.id] ??= {known:false, sections:{}});
+  for (const section of song.sections ?? []) {
+    if (section.startBeat < end && section.endBeat > start) {
+      const rec = (history.sections[section.name] ??= {firstAt:now, count:0});
+      rec.lastAt = now; rec.count++;
+    }
+  }
+}
+export function schedulePassageCheck(st, songId, from, next, now) {
+  const novel = !!next && passageUnexposed(st, songId, next);
+  return {section:novel ? next : from, from, kind:novel ? 'transfer' : 'retention',
+    passedAt:now, dueAt:now + RETENTION_MIN_DELAY};
+}
+export function passageCheckKind(st, songId, check) {
+  if (check.kind === 'transfer' && passageUnexposed(st, songId, check.section)) return 'transfer';
+  return st.passageExposure?.[songId]?.sections?.[check.section] ? 'retention' : 'independent';
+}
+
+export function skillCheckDates(record, now = Date.now()) {
+  const date = (t) => new Date(t).toLocaleDateString('en', {month:'short',day:'numeric'});
+  const tested = record.lastTested ? 'Last checked ' + date(record.lastTested) : 'Not checked yet';
+  return tested + (record.dueAt ? record.dueAt <= now ? '. Check again today.' : '. Next check ' + date(record.dueAt) + '.' : '.');
+}
+
+export function initializeExposure(st, songs) {
+  if (st.exposureTrackingSince) return;
+  const fresh = !st.firstRunDone && !st.lastSession && !(st.days?.length) && !Object.keys(st.songs ?? {}).length;
+  st.exposureTrackingSince = Date.now();
+  st.passageExposure ??= {};
+  for (const song of songs) st.passageExposure[song.id] ??= {known:fresh,sections:{}};
+}

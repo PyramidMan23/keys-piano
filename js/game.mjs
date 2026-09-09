@@ -23,11 +23,13 @@ export const XP = {
   weeklyDone: 150,    // the chosen weekly mission completed
   calibrated: 20,     // latency calibration done (once)
   firstCleanRun: 25,  // first ≥85% timed full run of a song (once per song)
+  passageIndependent: 25,
+  passageRetention: 40,
   transfer: 40,       // a day-later unaided check on an undrilled passage passed: the mastery upgrade (18th council)
 };
 // quest/weekly rewards are once-per-period by REF (day / ISO week), a re-pick
 // can never double-pay (Codex review P1, 2026-08-28)
-const ONCE = new Set(['proof', 'playable', 'sectionMastered', 'lessonCleared', 'calibrated', 'firstCleanRun', 'questDone', 'weeklyDone', 'transfer']);
+const ONCE = new Set(['proof', 'playable', 'sectionMastered', 'lessonCleared', 'calibrated', 'firstCleanRun', 'questDone', 'weeklyDone', 'transfer', 'passageIndependent', 'passageRetention']);
 
 export function grantXp(st, src, ref, now) {
   if (!XP[src]) return null;
@@ -57,7 +59,7 @@ export function questsFor(st, day) {
   const ds = (st.dayStats ?? {})[day] ?? {};
   const pool = [
     { id: 'clean-run', label: 'One clean run', why: 'a full song, no waiting, ≥85%', done: (ds.cleanRuns ?? 0) >= 1 },
-    { id: 'minutes10', label: '10 real minutes', why: 'time at the keys is the only currency', done: (ds.minutes ?? 0) >= 10 },
+    { id: 'passage-check', label: 'Pass a passage check', why: 'both hands, full tempo, help off, at least 85%', done: (ds.passageChecks ?? 0) >= 1 },
     { id: 'train-section', label: 'Master a section', why: 'ride one trainer ladder to 100%', done: (ds.sectionsMastered ?? 0) >= 1 },
   ];
   const lessonsDone = st.teacherLessons ?? {};
@@ -79,7 +81,8 @@ export function chooseQuest(st, day, id) {
 export function settleQuest(st, day, now) {
   const aq = st.activeQuest;
   if (!aq || aq.day !== day || aq.done) return null;
-  const q = questsFor(st, day).find((x) => x.id === aq.id);
+  const q = questsFor(st, day).find((x) => x.id === aq.id)
+    ?? (aq.id === 'minutes10' ? {done:(st.dayStats?.[day]?.minutes ?? 0) >= 10} : null); // honour an already chosen legacy goal
   if (!q?.done) return null;
   aq.done = true;
   return grantXp(st, 'questDone', day, now);
@@ -186,7 +189,7 @@ export function badges(st, songs = []) {
   if ((st.bestRhythm ?? 0) >= 7) out.push({ id: 'rhythm7', word: '7-day rhythm', shape: '●', evidence: { best: st.bestRhythm } });
   const lessons = Object.keys(st.teacherLessons ?? {}).length;
   if (lessons >= 5) out.push({ id: 'foundation', word: 'Foundation complete', shape: '■', evidence: st.teacherLessons });
-  const blocks = st.blocks ?? [];
+  const blocks = (st.blocks ?? []).filter(isPerformedBlock);
   if (blocks.length) out.push({ id: 'blocks', word: blocks.length + ' practice block' + (blocks.length === 1 ? '' : 's'), shape: '▮', evidence: { count: blocks.length, last: blocks[blocks.length - 1] } });
   // arcade stats are honest fun, labelled as arcade, never competence claims
   const bestCombo = Math.max(0, ...Object.values(st.songs ?? {}).map((s) => s.bestCombo ?? 0));
@@ -275,6 +278,17 @@ export function recordBlock(st, kind, ref, now = Date.now()) {
   if (st.blocks.length > 2000) st.blocks.splice(0, st.blocks.length - 2000);
   return st.blocks.length;
 }
-export function blockCount(st, sinceMs = 0) {
-  return (st.blocks ?? []).filter((b) => b.t >= sinceMs).length;
+export const isPerformedBlock = (b) => b.kind !== 'listening' && !(b.kind === 'journey' && b.ref?.endsWith('|Hear it'));
+export function blockCount(st, sinceMs = 0, kind = 'practice') {
+  return (st.blocks ?? []).filter((b) => b.t >= sinceMs && (kind === 'listening' ? b.kind === 'listening' : isPerformedBlock(b))).length;
+}
+
+// Listening credit measures unique playback coverage, never the seek position.
+export const LISTEN_MIN_PROPORTION = 0.8;
+export function listeningCoverage(ranges, start, end) {
+  const sorted = ranges.map(([a, b]) => [Math.max(start, a), Math.min(end, b)])
+    .filter(([a, b]) => b > a).sort((a, b) => a[0] - b[0]);
+  let covered = 0, edge = start;
+  for (const [a, b] of sorted) { covered += Math.max(0, b - Math.max(a, edge)); edge = Math.max(edge, b); }
+  return end > start ? covered / (end - start) : 0;
 }

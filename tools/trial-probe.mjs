@@ -32,17 +32,26 @@ const errs = () => b.eval('window.__errs.splice(0)');
 
 // 1. open the last song: the invitation is there before anything is pressed
 await boot(seed());
+const primary = await b.eval(`(() => { const p = document.getElementById('practice-primary'); const mod = p?.closest('.practice-prescription'); const tab = document.getElementById('sec-learning'); return {count:document.querySelectorAll('#practice-primary').length, height:p?.getBoundingClientRect().height, before:!!mod && !!tab && !!(mod.compareDocumentPosition(tab) & Node.DOCUMENT_POSITION_FOLLOWING)}; })()`);
+ok('one primary practice action precedes browsing with a usable target', primary.count === 1 && primary.height >= 44 && primary.before, JSON.stringify(primary));
 await clickText('Resume the session', '#screen-library'); await sleep(1200);
 let st = await strip(); let ds = await drawnStrip();
+const adjust = await b.eval(`(() => { const d = [...document.querySelectorAll('#screen-play .practice-adjust')].find((d) => d.getBoundingClientRect().width > 0); return !!d && !d.open && d.querySelector('summary').getBoundingClientRect().height >= 44; })()`);
+ok('alternate practice modes start behind Adjust practice', adjust);
 ok('a song opens with the journey visible', (await visible()) === 'play' && !st.hidden && st.steps.length === 6 && st.steps[0] === 'Hear it=now', JSON.stringify(st));
 ok('the DRAWN strip mirrors it and shows a Next step button', !!ds && ds.cells.length === 6 && ds.next.some((x) => x === 'Next step'), JSON.stringify(ds));
 ok('the header states what is in the piece', /D minor/.test(await b.eval(`document.getElementById('cp-sub')?.textContent ?? ''`)) && /3\/4/.test(await b.eval(`document.getElementById('cp-sub')?.textContent ?? ''`)), await b.eval(`document.getElementById('cp-sub')?.textContent`));
 
-// 2. rung one: Hear it. Pressing the drawn Next step plays the demo and the rung passes.
-await b.eval(`[...document.querySelectorAll('#screen-play button')].find((x) => x.textContent.trim() === 'Next step' && x.getBoundingClientRect().width > 0).click(); true`); await sleep(1200);
+// 2. A short listen earns nothing. Actual playback earns listening credit.
+await b.eval(`document.getElementById('j-go').click(); true`); await sleep(250);
+await b.eval(`document.getElementById('btn-hear').click(); true`); await sleep(250);
 st = await strip();
-ok('Hear it passes on listening and the strip moves to Right hand · A', st.steps[0] === 'Hear it=done' && st.steps[1] === 'Right hand · A=now', JSON.stringify(st.steps));
-await b.eval(`document.getElementById('btn-hear').click(); true`); await sleep(500); // stop the demo
+ok('starting then stopping earns no listening rung', st.steps[0] === 'Hear it=now', JSON.stringify(st));
+await b.eval(`document.getElementById('j-go').click(); true`);
+const listenMs = await b.eval(`(window.__demo.endBeat - window.__demo.startBeat) * window.__demo.msPerBeat()`);
+await sleep(listenMs + 1500);
+st = await strip();
+ok('playback completes the listening rung', st.steps[0] === 'Hear it=done' && st.steps[1] === 'Right hand \u00b7 A=now', JSON.stringify(st.steps));
 
 // 3. rung two, failed: right hand, section A, wait off, nothing played -> the lap fails with an explanation
 await b.eval(`document.getElementById('j-go').click(); true`); await sleep(400);
@@ -107,10 +116,27 @@ ok('the lesson HUD reads as words, not a run-on', /^LEVEL \d+ \/ \d+ · .+ · na
 await boot(seed({ transfers: { [SONG]: { section: 'B, bars 17 to 32', from: 'A, bars 1 to 16', passedAt: Date.now() - 864e5, dueAt: Date.now() - 3600000 } }, lastSession: null }));
 await b.eval(`document.getElementById('btn-path').click(); true`); await sleep(800);
 const go2 = await b.eval(`document.getElementById('path-go').textContent.trim()`);
-ok('My Path prescribes the transfer check', /Check it holds/.test(go2), go2);
+ok('My Path prescribes the transfer check', /Play this passage independently/.test(go2), go2);
 await b.eval(`document.getElementById('path-go').click(); true`); await sleep(1200);
 const tset = await b.eval(`({ screen: [...document.querySelectorAll('[id^=screen-]')].filter((s) => !s.hidden).map((s) => s.id).join(), sec: document.getElementById('section-select').selectedOptions[0]?.textContent, wait: document.getElementById('wait-mode').checked, banner: window.__falls?.banner })`);
-ok('it launches the undrilled section, help off, with the banner saying so', tset.screen === 'screen-play' && /B, bars 17/.test(tset.sec ?? '') && tset.wait === false && /Transfer check/.test(tset.banner ?? ''), JSON.stringify(tset));
+ok('legacy unknown exposure launches an independent check without a novelty claim', tset.screen === 'screen-play' && /B, bars 17/.test(tset.sec ?? '') && tset.wait === false && /independent:/.test(tset.banner ?? ''), JSON.stringify(tset));
+// Recovery through the visible file input, then a full reload.
+await boot(seed());
+await b.eval(`document.getElementById('recovery-panel').open = true; window.confirm = () => true; true`);
+const restoreSeed = {songs:{'fur-elise':{plays:3,ms:180000,best:90,stars:3}},days:['2026-09-01'],
+  firstRunDone:true,diagnosticDone:true,calOffsetMs:12,technique:[{t:1,answers:{}}],
+  playable:{'fur-elise':{days:['2026-09-01','2026-09-02'],provenAt:1,dueAt:Date.now()+864e5}}};
+await b.eval(`(async () => {
+  const {exportProgress} = await import('./js/library.mjs');
+  const transfer = new DataTransfer();
+  transfer.items.add(new File([exportProgress(${JSON.stringify(restoreSeed)})], 'progress.json', {type:'application/json'}));
+  const input = document.getElementById('progress-import'); input.files = transfer.files;
+  input.dispatchEvent(new Event('change', {bubbles:true})); return true;
+})()`);
+await sleep(2000); await b.ready();
+const restored = await b.eval(`JSON.parse(localStorage.getItem('keys-v1'))`);
+ok('file restore survives reload with song proof and technique history', restored.songs?.['fur-elise']?.plays === 3 && restored.playable?.['fur-elise']?.days?.length === 2 && restored.technique?.length === 1 && restored.calOffsetMs === 12, JSON.stringify(restored.songs));
+ok('restore retains the previous browser snapshot', await b.eval(`!!localStorage.getItem('keys-v1-before-restore')`));
 ok('no errors', !(await errs()).length);
 
 const failedN = results.filter((r) => !r.pass).length;

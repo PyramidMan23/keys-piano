@@ -675,3 +675,19 @@ function mirrorProxies() {
     if (m.el.textContent !== want) m.el.textContent = want;
   }
 }
+
+// Keep alternate practice systems available through one beginner-facing disclosure.
+export function installPracticeDisclosure(host) {
+  const ids = ['btn-train','btn-mem','btn-take','btn-perf'];
+  const controls = ids.flatMap((id) => [...host.querySelectorAll(`[data-proxy-for="${id}"], #${id}`)])
+    .filter((el) => el.getBoundingClientRect().width > 0 && !el.closest('.practice-adjust'));
+  if (!controls.length) return;
+  const details = document.createElement('details');
+  details.className = 'practice-adjust';
+  const summary = document.createElement('summary'); summary.textContent = 'Adjust practice';
+  details.appendChild(summary);
+  const modes = document.createElement('div'); modes.className = 'practice-adjust-modes';
+  details.appendChild(modes);
+  controls[0].parentElement.insertBefore(details, controls[0]);
+  for (const control of controls) modes.appendChild(control);
+}

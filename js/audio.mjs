@@ -157,7 +157,7 @@ function voice(bus, when, midi, durS, gainMul) {
 // to travel. Picture and sound then sit apart by exactly the silence you seeked
 // into, for the rest of the song, because neither clock ever re-checks the
 // other. Passing the seek beat keeps that silence and the two stay married.
-export function playPreview(notes, msPerBeat, onKey, onDone, anchorBeat = null) {
+export function playPreview(notes, msPerBeat, onKey, onDone, anchorBeat = null, options = {}) {
   stopPreview();
   const sess = { stopped: false, oscs: [], timers: [], next: 0, bus: null };
   current = sess;
@@ -176,9 +176,14 @@ export function playPreview(notes, msPerBeat, onKey, onDone, anchorBeat = null) 
     const endS = Math.max(...song.map((n) => n.atS + n.durS));
 
     const LOOKAHEAD = 0.35;
+    let previousAudioTime = t0;
     const tick = () => {
       if (sess.stopped) return;
       const now = ctx.currentTime;
+      const span = audibleSpan(previousAudioTime, now, t0, t0 + endS, LOOKAHEAD, ctx.state);
+      if (span) options.onProgress?.(startBeat + (span[0] - t0) * 1000 / msPerBeat,
+        startBeat + (span[1] - t0) * 1000 / msPerBeat);
+      previousAudioTime = Math.max(t0, now);
       while (sess.next < song.length && t0 + song[sess.next].atS < now + LOOKAHEAD) {
         const n = song[sess.next++];
         const when = t0 + n.atS;
@@ -196,6 +201,10 @@ export function playPreview(notes, msPerBeat, onKey, onDone, anchorBeat = null) 
     };
     tick();
     sess.ticker = setInterval(tick, 100);
+  }).catch((error) => {
+    if (sess.stopped) return;
+    stopSession(sess);
+    options.onError?.(error);
   });
 
   return () => stopSession(sess);
@@ -232,4 +241,11 @@ export function soundModeNext(mode) {
 export function tapSoundActive(mode, midiConnected) {
   const m = SOUND_MODES.includes(mode) ? mode : 'auto';
   return m === 'on' || (m === 'auto' && !midiConnected);
+}
+
+// Only scheduled, running audio time can count. A throttled gap is not listening.
+export function audibleSpan(previous, now, start, end, horizon, state) {
+  if (state !== 'running' || now <= previous || now - previous > horizon) return null;
+  const a = Math.max(start, previous), b = Math.min(end, now);
+  return b > a ? [a,b] : null;
 }
