@@ -111,7 +111,7 @@ body {
 .song-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
 .song-card {
   position: relative;
-  background: linear-gradient(160deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+  background: rgba(255,255,255,0.03);   /* flat, same ruling: no fade on the card ground */
   border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px;
   cursor: pointer; text-align: left; color: var(--ink); font: inherit;
   transition: transform .12s ease, border-color .12s ease;
@@ -614,7 +614,7 @@ button:disabled { opacity: 0.35; cursor: default; }
 
 /* filmed self-review card (pull, never nag) */
 .form-card {
-  background: linear-gradient(160deg, var(--panel-2), var(--panel));
+  background: var(--panel);   /* flat, 2026-09-09: Mark, "i dont like the colour fade we have going on in the background"; the hairline carries the edge */
   border: 1px solid var(--accent); border-radius: 14px;
   padding: 16px 18px; margin-bottom: 16px; max-width: 720px; flex: none;
 }
@@ -653,7 +653,7 @@ button:disabled { opacity: 0.35; cursor: default; }
 /* the library teaser: one line that always says what is next */
 .path-teaser {
   display: flex; align-items: center; gap: 14px; flex-wrap: wrap; flex: none;
-  background: linear-gradient(160deg, var(--panel-2), var(--panel));
+  background: var(--panel);   /* flat, 2026-09-09: Mark, "i dont like the colour fade we have going on in the background"; the hairline carries the edge */
   border: 1px solid var(--accent); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
@@ -665,7 +665,7 @@ button:disabled { opacity: 0.35; cursor: default; }
 
 /* the prescription card: reason on top, evidence underneath, never bare */
 .path-next {
-  flex: none; background: linear-gradient(160deg, var(--panel-2), var(--panel));
+  flex: none; background: var(--panel);   /* flat, 2026-09-09: Mark, "i dont like the colour fade we have going on in the background"; the hairline carries the edge */
   border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin: 10px 0 6px;
   max-width: 760px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }

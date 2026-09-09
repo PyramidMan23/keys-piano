@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v122';  // Astra applies its own audit: honest listening/assessment/retention, progress export+restore, practice-first library, keyboard recovery, delete list
+const VERSION = 'keys-v123';  // Astra applies its own audit: honest listening/assessment/retention, progress export+restore, practice-first library, keyboard recovery, delete list
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
