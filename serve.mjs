@@ -23,7 +23,7 @@ const MIME = {
 
 const JOURNAL = join(ROOT, 'journal.log');
 
-createServer(async (req, res) => {
+const server = createServer(async (req, res) => {
   try {
     let path = decodeURIComponent(new URL(req.url, 'http://x').pathname);
     // usage-gate journal (council 2026-08-23): the app POSTs event batches,
@@ -71,4 +71,17 @@ createServer(async (req, res) => {
     }
     res.writeHead(404).end('not found');
   }
-}).listen(PORT, () => console.log(`piano dev server on http://localhost:${PORT}`));
+});
+
+// ☠️ THE DESKTOP SHORTCUT IS AN EDGE APP WINDOW POINTED AT THIS PORT, so if this
+// process dies, Keys "isn't launching" (Mark, 2026-09-09: ERR_CONNECTION_REFUSED,
+// the KeysPianoServer task had exited with code 1 the day before and given up
+// after three restarts). A bare listen() throws on EADDRINUSE and takes the
+// process with it. Retry the port forever instead; the task's restart count is
+// raised to 999 as the second net.
+const listen = () => server.listen(PORT, () => console.log(`piano dev server on http://localhost:${PORT}`));
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') { console.error(`port ${PORT} busy, retrying in 5s`); setTimeout(listen, 5000); return; }
+  throw err;
+});
+listen();
