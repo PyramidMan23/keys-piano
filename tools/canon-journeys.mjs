@@ -44,7 +44,7 @@ const visible = () => b.eval(`(() => { const s = [...document.querySelectorAll('
 // overlay blocked every control while this suite reported 6/6. Synthetic clicks
 // do not hit-test; these do.
 const clickText = async (label) => {
-  if (['Train','Memorize','Record take','Performance run'].includes(label)) {
+  if (['Train','Memorize','Record take','Performance run','Hear it','Wait for me','Left','Right','Both'].includes(label)) {
     const closed = await b.eval(`!!document.querySelector('#screen-play .practice-adjust:not([open])')`);
     if (closed && await clickText('Adjust practice') !== 'ok') return 'ADJUST PRACTICE NOT CLICKABLE';
   }
@@ -827,6 +827,7 @@ try {
     if (await clickText('See You Again') !== 'ok') return ['no library row for the seeded song'];
     await new Promise((r) => setTimeout(r, 1500));
     if (await visible() !== 'play') return ['the song did not open'];
+    if (await clickText('Adjust practice') !== 'ok') return ['Adjust practice is not reachable'];
     // TEMPO: the drawn range drives the engine (dead until 2026-08-30)
     const t = await b.eval(`(() => {
       const drawn = document.querySelector('input[type="range"][data-proxy-for="tempo"]');

@@ -39,7 +39,16 @@ let st = await strip(); let ds = await drawnStrip();
 const adjust = await b.eval(`(() => { const d = [...document.querySelectorAll('#screen-play .practice-adjust')].find((d) => d.getBoundingClientRect().width > 0); return !!d && !d.open && d.querySelector('summary').getBoundingClientRect().height >= 44; })()`);
 ok('alternate practice modes start behind Adjust practice', adjust);
 ok('a song opens with the journey visible', (await visible()) === 'play' && !st.hidden && st.steps.length === 6 && st.steps[0] === 'Hear it=now', JSON.stringify(st));
-ok('the DRAWN strip mirrors it and shows a Next step button', !!ds && ds.cells.length === 6 && ds.next.some((x) => x === 'Next step'), JSON.stringify(ds));
+ok('the drawn strip mirrors six milestones without a competing primary button', !!ds && ds.cells.length === 6 && ds.next.every((x) => x.endsWith('(hidden)')), JSON.stringify(ds));
+const guideSize = await b.eval(`(() => {
+  const guide = document.getElementById('session-guide'), go = document.getElementById('j-go'), exit = document.getElementById('j-exit');
+  const r = guide.getBoundingClientRect(), a = go.getBoundingClientRect(), z = exit.getBoundingClientRect();
+  const hit = document.elementFromPoint(a.x + a.width / 2, a.y + a.height / 2);
+  return { count: document.querySelectorAll('#session-guide').length, height: r.height,
+    go: a.height, exit: z.height, fits: r.right <= innerWidth && r.bottom <= innerHeight,
+    hit: hit === go || go.contains(hit), words: document.getElementById('j-instruction').textContent };
+})()`);
+ok('the controller is drawn, hit-testable and states section, hand, help and pass target', guideSize.count === 1 && guideSize.height > 80 && guideSize.go >= 44 && guideSize.exit >= 44 && guideSize.fits && guideSize.hit && /both hands, help on.*80%/.test(guideSize.words), JSON.stringify(guideSize));
 ok('the header states what is in the piece', /D minor/.test(await b.eval(`document.getElementById('cp-sub')?.textContent ?? ''`)) && /3\/4/.test(await b.eval(`document.getElementById('cp-sub')?.textContent ?? ''`)), await b.eval(`document.getElementById('cp-sub')?.textContent`));
 
 // 2. A short listen earns nothing. Actual playback earns listening credit.
@@ -61,9 +70,25 @@ await b.eval(`const wm = document.getElementById('wait-mode'); wm.checked = fals
 await b.eval(`window.__simNote(60, true); window.__simNote(60, false); true`); await sleep(400); // arms and counts in
 await b.eval(`window.__engine.beat = window.__engine.endBeat - 1.5; true`);
 let failed = null;
-for (let i = 0; i < 30; i++) { await sleep(300); const s2 = await strip(); if (/Try again/.test(s2.button ?? '')) { failed = s2; break; } }
+for (let i = 0; i < 30; i++) { await sleep(300); const s2 = await strip(); if (await b.eval(`!!document.getElementById('correction-try')`)) { failed = s2; break; } }
 const banner = await b.eval(`window.__falls?.banner ?? ''`);
-ok('a failed rung keeps the step, says Try again, and names the note missed most', !!failed && /Most missed: [A-G]#?\d/.test(banner) && /Lesson:/.test(banner), `button=${failed?.button} banner=${banner}`);
+const correctionCard = await b.eval(`(() => { const c=document.querySelector('.correction-card'); return {text:c?.textContent, sized:c && [...c.querySelectorAll('button')].every(x=>x.getBoundingClientRect().height>=44)}; })()`);
+ok('a failed rung keeps the step and offers one measured correction', !!failed && failed.steps[1] === 'Right hand · A=now' && /Missed note|Wrong pitch|Early:|Late:|Short key hold/.test(correctionCard.text) && correctionCard.sized, JSON.stringify(correctionCard));
+await b.eval(`document.getElementById('correction-hear').click(); true`); await sleep(300);
+const bit = await b.eval(`({start:window.__demo.startBeat,end:window.__demo.endBeat})`);
+ok('Hear this bit demonstrates at most two bars', bit.end > bit.start && bit.end-bit.start <= 6, JSON.stringify(bit));
+await b.eval(`document.getElementById('correction-try').click(); true`); await sleep(150);
+const retryBit = await b.eval(`({start:window.__engine.startBeat,end:window.__engine.endBeat,help:window.__engine.waitMode})`);
+ok('Try this bit uses exactly the demonstrated span with help on', retryBit.start===bit.start && retryBit.end===bit.end && retryBit.help, JSON.stringify(retryBit));
+for (let i=0;i<180;i++) {
+  if (await b.eval(`!!document.getElementById('correction-result')`)) break;
+  await b.eval(`(() => { const g=window.__engine.currentGroup(); if (g) for(const n of g.notes) if(!g.done.has(n.m)) {window.__simNote(n.m,true);window.__simNote(n.m,false);} return true; })()`);
+  await sleep(100);
+}
+const comparison = await b.eval(`document.getElementById('correction-result')?.textContent ?? ''`);
+ok('the retry compares the same passage and never advances the journey', /before \d+% \(help off\), now \d+% \(help on\)/.test(comparison) && (await strip()).steps[1] === 'Right hand · A=now', comparison);
+// The failure above uses an explicit settings override. The next guided attempt
+// restores all of its prescribed settings before any notes are accepted.
 
 // 4. rung two, passed: help on, play every right-hand group of section A
 await b.eval(`document.getElementById('j-go').click(); true`); await sleep(400);
@@ -78,6 +103,9 @@ for (let i = 0; i < 400 && !passed; i++) {
 }
 const blocks = await b.eval(`(JSON.parse(localStorage.getItem('keys-v1')).blocks ?? []).map((x) => x.kind + ':' + x.ref)`);
 ok('a passed rung advances the strip and banks a practice block', !!passed && passed.steps[2] === 'Left hand · A=now' && blocks.some((x) => x.startsWith('journey:') && /Right hand/.test(x)), `steps=${JSON.stringify(passed?.steps)} blocks=${JSON.stringify(blocks)}`);
+const heldAt = await b.eval('window.__engine.beat');
+await sleep(500);
+ok('the completed guided attempt pauses instead of silently replaying the old hand', await b.eval('window.__engine.beat') === heldAt);
 ok('no errors so far', !(await errs()).length);
 
 // 5. the ledger shows on the library
@@ -120,6 +148,65 @@ ok('My Path prescribes the transfer check', /Play this passage independently/.te
 await b.eval(`document.getElementById('path-go').click(); true`); await sleep(1200);
 const tset = await b.eval(`({ screen: [...document.querySelectorAll('[id^=screen-]')].filter((s) => !s.hidden).map((s) => s.id).join(), sec: document.getElementById('section-select').selectedOptions[0]?.textContent, wait: document.getElementById('wait-mode').checked, banner: window.__falls?.banner })`);
 ok('legacy unknown exposure launches an independent check without a novelty claim', tset.screen === 'screen-play' && /B, bars 17/.test(tset.sec ?? '') && tset.wait === false && /independent:/.test(tset.banner ?? ''), JSON.stringify(tset));
+// Reloaded resumption, including deliberately conflicting legacy settings,
+// through the same visible controller on the phone and desktop compositions.
+for (const width of [756, 1418]) {
+  await b.send('Emulation.setDeviceMetricsOverride', {width, height:900, deviceScaleFactor:1, mobile:false});
+  await boot(seed({journeys:{[SONG]:{step:2,guided:true}}, lastSession:{songId:SONG,sec:'1',hand:'R',wait:false,tempo:60,at:Date.now()}}));
+  await clickText('Resume the session', '#screen-library'); await sleep(1000);
+  const resumed = await b.eval(`(() => {
+    const p = document.getElementById('session-guide'), go = document.getElementById('j-go'), exit = document.getElementById('j-exit');
+    const a = go.getBoundingClientRect(), z = exit.getBoundingClientRect();
+    return { hand:window.__engine.hand, wait:window.__engine.waitMode, tempo:window.__engine.tempo,
+      sec:document.getElementById('section-select').value, count:document.querySelectorAll('#session-guide').length,
+      instruction:document.getElementById('j-instruction').textContent, exit:exit.textContent,
+      fits:p.getBoundingClientRect().right <= innerWidth && z.bottom <= innerHeight,
+      sized:a.height >= 44 && z.height >= 44 };
+  })()`);
+  ok(width + ': reload restores the exact rung with a visible instruction and named exit', resumed.hand === 'L' && resumed.wait && resumed.tempo === 1 && resumed.sec === '0' && resumed.count === 1 && resumed.fits && resumed.sized && /left hand, help on.*70%/.test(resumed.instruction) && /resume at Left hand/.test(resumed.exit), JSON.stringify(resumed));
+  // Activate the exit with the keyboard, then prove leaving ends the screen.
+  await b.eval(`document.getElementById('j-exit').focus(); true`);
+  await b.send('Input.dispatchKeyEvent', {type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+  await b.send('Input.dispatchKeyEvent', {type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+  await sleep(400);
+  ok(width + ': the named exit works from the keyboard and ends the demo', (await visible()) === 'library' && await b.eval('!window.__falls?.seekable'));
+}
+// First minute with no physical keyboard, in both target compositions.
+await b.send('Page.addScriptToEvaluateOnNewDocument', {source:`Object.defineProperty(navigator,'requestMIDIAccess',{configurable:true,value:async()=>{throw Error('No keyboard in this test');}});`});
+for (const [width, experience, expectedHand] of [[756,'new','R'],[1418,'returning','both']]) {
+  await b.send('Emulation.setDeviceMetricsOverride',{width,height:900,deviceScaleFactor:1,mobile:false});
+  await boot({});
+  const welcome = await b.eval(`(() => {const f=document.getElementById('firstrun'), c=document.getElementById('firstrun-choice'); return {open:!f.hidden, choice:c.hidden,role:f.getAttribute('role'),target:document.getElementById('firstrun-taps').getBoundingClientRect().height};})()`);
+  ok(width+': a fresh player gets a sized, accessible key test before the experience choice', welcome.open && welcome.choice && welcome.role==='dialog' && welcome.target>=44, JSON.stringify(welcome));
+  await b.eval(`document.getElementById('firstrun-retry').click(); true`); await sleep(250);
+  if (experience === 'new') {
+    await b.eval(`document.getElementById('firstrun-taps').focus(); true`);
+    await b.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+    await b.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+  } else await b.eval(`window.__simNote(64,true); window.__simNote(64,false); true`);
+  const heardKey = await b.eval(`document.getElementById('firstrun-msg').textContent`);
+  ok(width+': connection confirmation names the exact key', heardKey.includes(experience==='new'?'C4 received':'E4 received'), heardKey);
+  await b.eval(`document.getElementById('firstrun-${experience}').click(); true`); await sleep(1000);
+  ok(width+': experience selection opens the phrase, without a diagnostic', (await visible())==='play' && await b.eval(`window.__engine.hand===${JSON.stringify(expectedHand)} && window.__engine.waitMode && window.__engine.endBeat-window.__engine.startBeat===16`));
+  await b.eval(`document.getElementById('j-go').click(); true`); await sleep(150);
+  const duration = await b.eval(`(window.__demo.endBeat-window.__demo.startBeat)*window.__demo.msPerBeat()`);
+  await sleep(duration+1500);
+  ok(width+': hearing the real phrase unlocks the attempt', await b.eval(`document.getElementById('j-go').textContent==='Play four bars'`));
+  await b.eval(`document.getElementById('j-go').click(); true`);
+  const keysSized = await b.eval(`(() => {const keys=[...document.querySelectorAll('.first-phrase-keys button')];return keys.length>0 && keys.every(k=>!k.disabled && k.getBoundingClientRect().height>=44 && k.getAttribute('aria-label').startsWith('Play '));})()`);
+  ok(width+': the phrase has named, sized note buttons for keyboard and screen input', keysSized);
+  for (let i=0;i<300;i++) {
+    if (await b.eval(`document.getElementById('j-go').textContent==='Open library'`)) break;
+    await b.eval(`(() => {const g=window.__engine.currentGroup();if(g)for(const n of g.notes)if(!g.done.has(n.m))document.getElementById('first-note-'+n.m)?.click();return true;})()`);
+    await sleep(100);
+  }
+  const result = await b.eval(`({label:document.getElementById('j-go').textContent,words:document.getElementById('j-instruction').textContent,saved:JSON.parse(localStorage.getItem('keys-v1')).firstMinuteResult})`);
+  ok(width+': playing screen notes earns a scored first phrase', result.label==='Open library' && result.saved?.accuracy>=70 && /Four bars banked/.test(result.words), JSON.stringify(result));
+  await b.eval(`document.getElementById('j-go').click(); true`); await sleep(500);
+  ok(width+': the library offers the check-in without opening it', (await visible())==='library' && await b.eval(`/check-in/i.test(document.getElementById('practice-primary')?.textContent ?? '')`));
+  await b.goto('http://localhost:4180/index.html'); await b.ready(); await sleep(500);
+  ok(width+': a returning player never sees the welcome again', await b.eval(`document.getElementById('firstrun').hidden`));
+}
 // Recovery through the visible file input, then a full reload.
 await boot(seed());
 await b.eval(`document.getElementById('recovery-panel').open = true; window.confirm = () => true; true`);

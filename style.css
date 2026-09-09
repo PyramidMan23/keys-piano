@@ -781,7 +781,7 @@ button:disabled { opacity: 0.35; cursor: default; }
    staff lines still painted because lines have no rx. Same tell as ever: the
    box is right and the ink is missing. */
 .canon-root,
-.canon-root *:not(#score-wrap, #score-wrap *, #cp-again, #cp-again *, #lesson-stave, #lesson-stave *, .practice-prescription, .practice-prescription *, .practice-adjust, .practice-adjust *) {
+.canon-root *:not(#score-wrap, #score-wrap *, #cp-again, #cp-again *, #lesson-stave, #lesson-stave *, .practice-prescription, .practice-prescription *, .practice-adjust, .practice-adjust *, .session-guide, .session-guide *) {
   all: revert;
   /* The one thing that must come BACK. The canon was authored in a page with
      `* { box-sizing: border-box }` and every width in it assumes that; reverting
@@ -939,3 +939,17 @@ button:active:not(:disabled),
    Hear it. Closed means no box at all. (Fable review of the Astra build, 2026-09-09) */
 .practice-adjust:not([open]) > .practice-adjust-modes { display: none; }
 .practice-adjust-modes > * { min-height: 44px; max-width: 100%; }
+.session-guide { box-sizing: border-box; flex: 0 0 auto; width: 100%; padding: 10px 12px; border: 1px solid currentColor; border-radius: 12px; color: inherit; font: inherit; }
+.session-guide p { margin: 0 0 8px; line-height: 1.4; }
+.session-guide .session-goal { font-weight: 700; }
+.session-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.session-actions button { min-height: 44px; max-width: 100%; white-space: normal; text-align: left; }
+.session-actions #j-go { font-weight: 700; border: 2px solid currentColor; }
+.session-actions #j-exit { margin-left: auto; }
+.correction-card { margin-top: 12px; padding-top: 12px; border-top: 1px solid currentColor; }
+.correction-card .session-actions { margin-bottom: 8px; }
+.first-phrase-keys { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+.first-phrase-keys p { flex-basis: 100%; }
+.first-phrase-keys button { min-width: 44px; min-height: 44px; }
+.firstrun-card { max-height: calc(100dvh - 40px); overflow-y: auto; }
+.firstrun-card button { min-height: 44px; }

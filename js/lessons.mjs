@@ -441,6 +441,52 @@ export function explainMiss(missCounts, lessons = LESSONS) {
   return { midi, count, line, lessonId: lesson?.id ?? null };
 }
 
+// The same weighted accuracy as the engine, restricted to measured events in
+// one passage. Early attempts and hold length are separate from this score.
+export function passageAccuracy(evidence, start, end) {
+  const counts = {perfect:0,good:0,late:0,wrong:0,missed:0};
+  for (const e of evidence?.verdicts ?? [])
+    if (e.beat >= start && e.beat < end && e.type in counts) counts[e.type]++;
+  const total = counts.perfect + counts.good + counts.late + counts.missed;
+  const denominator = total + counts.wrong * 0.5;
+  return denominator ? Math.round((counts.perfect + counts.good * 0.8 + counts.late * 0.4) / denominator * 100) : null;
+}
+
+export function correctionFor(song, evidence) {
+  if (!evidence) return null;
+  const errors = (evidence.verdicts ?? []).filter(e => ['wrong','early','late','missed'].includes(e.type))
+    .map(e => ({...e, kind:e.type}));
+  for (const n of evidence.notes ?? []) {
+    const target = n.d * evidence.msPerBeat, held = n.offMs - n.onMs;
+    if (n.offMs != null && target >= 150 && held >= 0 && held < target * 0.55)
+      errors.push({kind:'short',beat:n.b,midi:n.m,held:Math.round(held),target:Math.round(target)});
+  }
+  const usable = errors.filter(e => Number.isFinite(e.beat) && e.beat >= evidence.start && e.beat < evidence.end);
+  if (!usable.length) return null;
+  const bar = song.timeSig?.[0] ?? 4;
+  const boundaries = song.barBeats?.length ? song.barBeats : null;
+  const barIndex = beat => boundaries ? Math.max(0,boundaries.findLastIndex(b => b <= beat)) : Math.floor(beat / bar);
+  const counts = new Map();
+  for (const e of usable) { const key = barIndex(e.beat); counts.set(key,(counts.get(key) ?? 0)+1); }
+  const index = [...counts].sort((a,b)=>b[1]-a[1] || a[0]-b[0])[0][0];
+  const candidates = usable.filter(e=>barIndex(e.beat)===index);
+  const kinds = new Map();
+  for (const e of candidates) kinds.set(e.kind,(kinds.get(e.kind) ?? 0)+1);
+  const kind = [...kinds].sort((a,b)=>b[1]-a[1])[0][0];
+  const hit = candidates.find(e=>e.kind===kind);
+  const start = Math.max(evidence.start,boundaries ? boundaries[index] : index*bar);
+  const end = Math.min(evidence.end,boundaries ? (boundaries[index+2] ?? evidence.end) : (index+2)*bar);
+  const note = nameOf(hit.midi);
+  const line = kind === 'wrong' ? `Wrong pitch: ${note} was pressed${hit.expected?.length ? '; the target was '+hit.expected.map(nameOf).join(' + ') : ' after the passage target'}.`
+    : kind === 'early' ? `Early: ${note} was pressed before its turn.`
+    : kind === 'late' ? `Late: ${note} was pressed after its target time.`
+    : kind === 'short' ? `Short key hold: ${note} was held for ${hit.held} milliseconds; its written duration is ${hit.target} milliseconds.`
+    : `Missed note: ${note} was not played before its turn passed.`;
+  return {start,end,kind,line,hand:evidence.hand,tempo:evidence.tempo,wait:evidence.wait,
+    before:passageAccuracy(evidence,start,end),
+    label:song.freeTime ? 'Short passage' : `Bar ${index+1}${end > (boundaries?.[index+1] ?? (index+1)*bar) ? ' and the next bar' : ''}`};
+}
+
 export function cumulativeTaughtMidis(lessonId, lessons = LESSONS) {
   const set = new Set();
   for (const les of lessons) {

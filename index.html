@@ -191,12 +191,23 @@
 </main>
 
 <!-- FIRST RUN: hardware-aware welcome, one-tap skippable -->
-<div id="firstrun" class="firstrun" hidden>
+<div id="firstrun" class="firstrun" role="dialog" aria-modal="true" aria-labelledby="firstrun-title" hidden>
   <div class="firstrun-card">
-    <h2>Keys</h2>
-    <p id="firstrun-msg">Plug your keyboard in by USB and press any key, or tap below to play on screen for now.</p>
+    <h2 id="firstrun-title">Your first four bars</h2>
+    <p id="firstrun-msg" role="status">Press any key on your piano, or play C4 below. We will tell you exactly which key arrived.</p>
+    <p id="firstrun-connection" role="status"></p>
     <div class="echo-actions">
-      <button id="firstrun-taps" class="tool accent">I'll tap the screen</button>
+      <button id="firstrun-taps" class="tool accent">Play C4 on screen</button>
+      <button id="firstrun-retry" class="tool">Retry keyboard connection</button>
+    </div>
+    <div id="firstrun-choice" hidden>
+      <p>Where are you starting? Either way, we will hear four bars together.</p>
+      <div class="echo-actions">
+        <button id="firstrun-new" class="tool accent">New to piano</button>
+        <button id="firstrun-returning" class="tool">I already play</button>
+      </div>
+    </div>
+    <div class="echo-actions">
       <button id="firstrun-skip" class="ghost">Skip, just show me the app</button>
     </div>
   </div>

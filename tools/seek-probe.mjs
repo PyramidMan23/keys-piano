@@ -86,6 +86,11 @@ try {
   await click(pt.x, pt.y);
   await new Promise((r) => setTimeout(r, 1300));
 
+  // Free listening is an override; open its disclosure through a real click.
+  const adjust = await b.eval(hit('Adjust practice'));
+  if (!adjust) { console.log('FAIL: no Adjust practice control'); process.exit(1); }
+  await click(adjust.x, adjust.y);
+  await new Promise((r) => setTimeout(r, 200));
   // press Hear it.
   // ☠️ THE CANON'S TWIN, NOT `#btn-hear`. Under the canon the addressed button
   // is 0x0 and a drawn twin with no id carries the label, so it reads "Hear it"

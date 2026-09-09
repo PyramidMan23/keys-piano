@@ -164,30 +164,48 @@ const leaveVia = async (label, scope) => { const tag = await clickText(label, sc
   ok('lesson: drill then Library leaves nothing running', scr === 'lesson' && q.osc === 0 && q.buf === 0 && !e.length && (await visible()) === 'library', `screen=${scr} started=${started} after=${JSON.stringify(q)} errs=${e.join('|')}`);
 }
 
-// 7. Finishing: results, Play again, results again, Library
+// 7. Failed runs now lead to a correction, with Restart and the named exit.
 {
   await clickText('Resume the session'); await sleep(800);
   const finish = async () => {
-    await b.eval(`(() => { const wm = document.getElementById('wait-mode'); if (wm.checked) { wm.checked = false; wm.dispatchEvent(new Event('change', { bubbles: true })); } return true; })()`);
+    await b.eval(`(() => { document.getElementById('section-select').value=''; const wm = document.getElementById('wait-mode'); wm.checked = false; wm.dispatchEvent(new Event('change', { bubbles: true })); return true; })()`);
     await sleep(200);
     await b.eval(`window.__simNote(60, true); window.__simNote(60, false); true`); // arms, one bar counts in
     await sleep(300);
     await b.eval(`window.__engine.beat = window.__engine.endBeat - 2; true`);
-    for (let i = 0; i < 40; i++) { await sleep(250); if (await b.eval(`!document.getElementById('results').hidden`)) break; }
-    return b.eval(`({ shown: !document.getElementById('results').hidden, finished: window.__engine.finished, beat: window.__engine.beat })`);
+    for (let i = 0; i < 40; i++) { await sleep(250); if (await b.eval(`!!document.querySelector('.correction-card')`)) break; }
+    return b.eval(`({ shown: (document.querySelector('.correction-card')?.getBoundingClientRect().height ?? 0)>40, finished: window.__engine.finished, beat: window.__engine.beat })`);
   };
   const r1 = await finish();
-  ok('play: a finished run shows the results', r1.shown && r1.finished, JSON.stringify(r1));
-  await clickId('results-again'); await sleep(500);
+  ok('play: a failed finished run shows a rendered correction', r1.shown && r1.finished, JSON.stringify(r1));
+  await clickText('Restart','#screen-play'); await sleep(500);
   const again = await b.eval(`({ hidden: document.getElementById('results').hidden, beat: window.__engine.beat, finished: window.__engine.finished, screen: [...document.querySelectorAll('[id^=screen-]')].filter((s) => !s.hidden).map((s) => s.id).join() })`);
-  ok('play: Play again rebuilds the run from the top', again.hidden && again.beat === 0 && !again.finished && again.screen === 'screen-play', JSON.stringify(again));
+  ok('play: Restart rebuilds the run from the top', again.hidden && again.beat === 0 && !again.finished && again.screen === 'screen-play', JSON.stringify(again));
   const r2 = await finish();
   ok('play: the second run finishes too', r2.shown && r2.finished, JSON.stringify(r2));
-  await clickId('results-done'); await sleep(500);
+  const beforeHear = await sounds();
+  await clickId('correction-hear'); await sleep(700);
+  const heard = await sounds();
+  await clickId('j-exit'); await sleep(500);
+  const silence = await quiet(5000);
+  ok('correction: leaving stops its audio and prevents a stale continuation', heard.buf+heard.osc>beforeHear.buf+beforeHear.osc && silence.buf+silence.osc===0 && (await visible())==='library', JSON.stringify(silence));
   const e = await errs();
-  ok('play: Library from the results lands on the library, clean', (await visible()) === 'library' && (await b.eval(`document.getElementById('results').hidden`)) && !e.length, `on ${await visible()} errs=${e.join('|')}`);
+  ok('play: the named exit lands on the library, clean', (await visible()) === 'library' && (await b.eval(`document.getElementById('results').hidden`)) && !e.length, `on ${await visible()} errs=${e.join('|')}`);
   const resumeSub = await b.eval(`[...document.querySelectorAll('#screen-library *')].find((e) => !e.children.length && e.textContent.trim() === 'Resume the session')?.closest('button')?.textContent`);
   ok('library: the resume tile still names the song', /Song of Storms/.test(resumeSub ?? ''), resumeSub);
+}
+
+// 8. The first minute has the same leave contract as the full practice screen.
+{
+  await b.eval(`localStorage.setItem('keys-v1','{}'); true`); await boot();
+  await clickId('firstrun-taps'); await clickId('firstrun-new'); await sleep(500);
+  const before = await sounds();
+  await clickId('j-go'); await sleep(700);
+  const playing = await sounds();
+  await clickId('j-exit'); await sleep(400);
+  const after = await quiet(14000);
+  ok('first minute: leaving cancels the phrase and its deferred completion', playing.buf+playing.osc>before.buf+before.osc && after.buf+after.osc===0 && (await visible())==='library', JSON.stringify(after));
+  ok('first minute: no errors after leaving', !(await errs()).length);
 }
 
 const failed = results.filter((r) => !r.pass);

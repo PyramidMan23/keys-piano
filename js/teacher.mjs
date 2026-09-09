@@ -247,7 +247,9 @@ function prescribeCore(st, now, ctx = {}) {
   if (!st.diagnosticDone) {
     return {
       kind: 'diagnostic',
-      reason: 'I have not heard you play yet. Four short questions and I will know where to start you.',
+      reason: st.firstMinuteResult
+        ? 'Your four bars are a start. A short check-in can help choose what to practise next.'
+        : 'I have not heard you play yet. Four short questions and I will know where to start you.',
       evidence: null,
     };
   }

@@ -245,6 +245,49 @@ export function journeyState(st, song) {
   const step = st.journeys?.[id]?.step ?? 0;
   return { steps, step: Math.min(step, steps.length) };
 }
+// A single prescription for the controls, instruction and saved-step return.
+export function journeyPlan(st, song) {
+  const j = journeyState(st, song), step = j?.steps[j.step];
+  if (!step) return null;
+  const section = (song.sections ?? []).findIndex((s) => s.name === step.section);
+  const hands = { R: 'right hand', L: 'left hand', both: 'both hands' };
+  const target = step.pass === 'hear' ? 'Listen to at least 80% of this passage.'
+    : step.pass === 'finish' ? 'Reach the end of the passage.'
+    : step.pass === 'lap70' ? 'Complete one pass with at least 70% accuracy.'
+    : step.pass === 'run85' ? 'Complete one full run with at least 85% accuracy.'
+    : 'Pass at least 85% at full tempo on two different days, with help off.';
+  return { step: j.step, name: step.name, section: section < 0 ? '' : String(section),
+    hand: step.hand, wait: step.wait, tempo: 100, listen: step.pass === 'hear',
+    instruction: `${step.section ?? 'Whole song'}, ${hands[step.hand]}, help ${step.wait ? 'on' : 'off'}, full tempo. ${target}`,
+    action: step.pass === 'hear' ? 'Listen to this passage' : 'Start this step',
+    resume: `Library; resume at ${step.name}` };
+}
+export function journeySettingsMatch(plan, settings) {
+  return !!plan && plan.section === settings.section && plan.hand === settings.hand &&
+    plan.wait === settings.wait && plan.tempo === Number(settings.tempo) && settings.chunk == null;
+}
+export function journeyAttemptMatches(song, step, engine) {
+  const section = step.section ? song.sections?.find(s=>s.name===step.section) : null;
+  const start = section?.startBeat ?? 0;
+  const end = section?.endBeat ?? Math.max(...song.notes.map(n=>n.b+n.d));
+  return engine.hand === step.hand && engine.startBeat === start && engine.endBeat === end &&
+    (!['run85','playable'].includes(step.pass) || (engine.tempo === 1 && !engine.waitMode));
+}
+export function firstPhrasePlan(song, experience) {
+  if (!song || song.level?.toLowerCase() !== 'easy' || song.freeTime) return null;
+  const start = song.barBeats?.[0] ?? 0;
+  const end = song.barBeats?.[4] ?? start + 4 * song.timeSig[0];
+  if (Math.max(...song.notes.map(n=>n.b+n.d)) < end) return null;
+  const hand = experience === 'returning' ? 'both' : 'R';
+  const notes = song.notes.filter(n=>n.b>=start && n.b<end && (hand==='both' || n.h===hand));
+  if (!notes.length) return null;
+  return {songId:song.id,start,end,hand,wait:true,tempo:1,pass:70,
+    keys:[...new Set(notes.map(n=>n.m))].sort((a,b)=>a-b)};
+}
+export function firstRunEligible(st) {
+  return !st.firstRunDone && !st.lastSession && !st.diagnosticDone && !(st.days?.length) &&
+    !Object.values(st.songs ?? {}).some(s => (s?.plays ?? 0) > 0 || (s?.ms ?? 0) > 0);
+}
 // The strip shows ONE section's ladder, not the whole song's: hear it, the
 // current section's steps, the two closing steps. Six cells at most, which is
 // what the design drew room for; finished sections fold away.

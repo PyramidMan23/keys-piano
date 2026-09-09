@@ -24,7 +24,7 @@ import { MEM_STAGES, memCues, memAdvance, randomStartBar } from './memory.mjs';
 import { makeExercise, judgeSight } from './sight.mjs';
 import { matchCard, CardTask } from './theory.mjs';
 import { pickPattern, RhythmRound } from './rhythm.mjs';
-import { LESSONS, StaffDrill, TogetherDrill, PhraseDrill, PHRASES, pickReviewItems, lessonKeyRange, buildLevels, LevelRunner, lessonItemKeyOf, bridgeSongFor, explainMiss } from './lessons.mjs';
+import { LESSONS, StaffDrill, TogetherDrill, PhraseDrill, PHRASES, pickReviewItems, lessonKeyRange, buildLevels, LevelRunner, lessonItemKeyOf, bridgeSongFor, explainMiss, correctionFor, passageAccuracy } from './lessons.mjs';
 import { installPath } from './path.mjs';
 import { makeCountCells } from './rhythm.mjs';
 import { TouchDiagnostic, buildCalibration, ZONES } from './touch.mjs';
@@ -39,7 +39,7 @@ import {
   grantXp, totalXp, gameLevel, questsFor, chooseQuest, settleQuest,
   isoWeek, weeklyOptions, chooseWeekly, settleWeekly,
   rhythmOf, freezeOffer, useFreeze, earnFreeze, rebaseWeekly,
-  LISTEN_MIN_PROPORTION, listeningCoverage, verdictWord, badges, JOURNEYS, journeyState, journeyAdvance, journeyWindow, recordBlock, blockCount,
+  LISTEN_MIN_PROPORTION, listeningCoverage, verdictWord, badges, JOURNEYS, journeyState, journeyAdvance, journeyWindow, journeyPlan, journeySettingsMatch, journeyAttemptMatches, firstPhrasePlan, firstRunEligible, recordBlock, blockCount,
 } from './game.mjs';
 import { difficultyLabel, difficultyScore, difficultyBand, HALL_OF_FAME } from './difficulty.mjs';
 import { coverDataUrl } from './covers.mjs';
@@ -319,7 +319,10 @@ function syncTopbar(name) {
   bar.style.display = CANON_ON ? 'none' : '';
 }
 
+let screenGeneration = 0;
 function show(name) {
+  const generation = ++screenGeneration;
+  if (name !== 'play') { correction = null; firstMinute = null; }
   // leaving any screen kills preview audio and its visual leftovers (audit #1, #9)
   stopPreview();
   stopMetronome(); // also silences every queued click (rhythm tap's four bars)
@@ -354,7 +357,7 @@ function show(name) {
   if (name === 'play') {
     window.__viewMode = viewMode;
     setTimeout(() => {
-      if (active !== 'play') return;
+      if (active !== 'play' || generation !== screenGeneration) return;
       if (mountWidePlay($('screen-play')) && song) {
         // full first sync, so the header never shows the artboard's sample song
         const lv = (song.level ?? 'easy');
@@ -416,6 +419,7 @@ function resumeLastSession() {
   const lastSong = last && SONGS.find((s) => s.id === last.songId);
   if (!lastSong) return;
   startSong(lastSong);
+  if (state.journeys?.[lastSong.id]?.guided && journeyPlan(state, lastSong)) return;
   if (last.sec !== '') $('section-select').value = last.sec;
   $('tempo').value = last.tempo ?? 100;
   $('tempo-val').textContent = ($('tempo').value) + '%';
@@ -1319,6 +1323,10 @@ let sightMode = false;
 let wrongByGroup = new Map(); // "60,64,69" -> {count, midis} for theory triggers
 let lapMiss = {};             // expected midi -> misses this lap, for the one-line explanation
 let journeyRetry = false;     // the current journey step's last attempt failed
+let guidedHold = false;      // a verdict waits for the next deliberate action
+let journeyFeedback = '';
+let correction = null;
+let firstMinute = null;
 let cardTask = null; // open theory card listener
 let raf = 0, lastT = 0, scorePassFlag = false;
 let armed = false, armCountUntil = 0; // timed mode waits for the first key, then a 1-bar count-in
@@ -1415,6 +1423,11 @@ function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   songStats(s.id).lastAt = Date.now(); // touched: the Learning shelf's recency key
   pathSessionUntil = 0; // an ordinary open carries no prescribed timebox
   song = s;
+  journeyRetry = false;
+  guidedHold = false;
+  journeyFeedback = '';
+  correction = null;
+  firstMinute = null;
   sightMode = !!s.sightRead;
   scorePassFlag = asScorePass;
   viewMode = (asScorePass || sightMode) ? 'score' : 'falls';
@@ -1438,9 +1451,11 @@ function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   $('tempo').value = 100; $('tempo-val').textContent = '100%';
   // sight reading: read at your own pace early, in time from level 3
   $('wait-mode').checked = sightMode ? (state.sight?.level ?? 1) < 3 : true;
+  if (!sightMode && !asScorePass && state.journeys?.[s.id]?.guided) applyJourneyPlan();
   rebuildEngine();
   syncModeButtons();
   renderJourney();
+  if (!sightMode && !asScorePass && state.journeys?.[s.id]?.guided && journeyPlan(state, s)) engine.__guidedAttempt = true;
 }
 
 function renderSections() {
@@ -1480,7 +1495,10 @@ function bankSongTime() {
 }
 window.__bankSongTime = bankSongTime; // gate handle (learning-order-probe)
 
-function rebuildEngine() {
+function rebuildEngine(preserveCorrection = false, preserveFirstMinute = false) {
+  if (preserveCorrection !== true) correction = null;
+  if (preserveFirstMinute !== true) firstMinute = null;
+  guidedHold = false;
   bankSongTime(); // a rebuild replaces the engine: keep what the old one counted
   const secIdx = $('section-select').value;
   const loop = loopOverride ? { ...loopOverride }
@@ -1514,7 +1532,11 @@ function rebuildEngine() {
   // say so once, or the verdicts just look broken (Mark, 2026-08-25)
   if ($('wait-mode').checked && !window.__verdictHintShown) {
     window.__verdictHintShown = true;
-    setTimeout(() => falls?.biasNote('Wait mode is on, turn "Wait for me" off to see EARLY / PERFECT / LATE'), 1200);
+    const generation = screenGeneration, currentEngine = engine;
+    setTimeout(() => {
+      if (generation === screenGeneration && active === 'play' && engine === currentEngine)
+        falls?.biasNote('Help is on: the notes wait for you. Timing is measured with help off.');
+    }, 1200);
   }
   falls.handMap = new Map(song.notes.map((n) => [n.m, n.h])); // fountain colours per hand
   falls.chunkBeats = chunkIdx !== null ? chunkRange(song, chunkIdx, chunkBars()).chunkBeats : null;
@@ -1544,6 +1566,7 @@ function rebuildEngine() {
   lastT = 0;
   cancelAnimationFrame(raf);
   raf = requestAnimationFrame(loopFrame);
+  renderJourney();
 }
 
 // the trigger press is consumed: it starts the count-in, it is never judged
@@ -1598,7 +1621,7 @@ function loopFrame(t) {
     return;
   }
   if (armCountUntil && t >= armCountUntil) armCountUntil = 0;
-  const clockHeld = armed || (armCountUntil && t < armCountUntil);
+  const clockHeld = guidedHold || armed || (armCountUntil && t < armCountUntil);
   if (lastT && !previewActive && !clockHeld && !(perf && t < perf.countUntil)) engine.tick(Math.min(200, t - lastT));
   lastT = t;
   for (const ev of engine.drainEvents()) {
@@ -1738,8 +1761,8 @@ function finishSong() {
       : stepDef.pass === 'run85' ? (acc >= 85 && !$('wait-mode').checked)
       : stepDef.pass === 'playable' ? !!state.playable?.[song.id]?.provenAt : false;
     if (secOk && handOk && stepDef.pass !== 'hear') {
-      if (passOk) journeyPass(stepDef, { acc });
-      else if (stepDef.pass === 'lap70' || stepDef.pass === 'run85') journeyFail(stepDef, { acc });
+      if (passOk && journeyAttemptMatches(song, stepDef, engine)) journeyPass(stepDef, { acc });
+      else if (stepDef.pass === 'lap70' || stepDef.pass === 'run85' || stepDef.pass === 'playable') journeyFail(stepDef, { acc });
     }
   }
   lapMiss = {};
@@ -1825,7 +1848,8 @@ function finishSong() {
     tBtn.textContent = `${card.title}`;
     tBtn.onclick = () => openTheoryCard(card);
   } else tBtn.hidden = true;
-  $('results').hidden = false;
+  if (acc < 85 && !correction) showCorrection(engine.evidence());
+  $('results').hidden = guidedHold || !!correction;
 }
 
 // ---------- sight reading ----------
@@ -2610,6 +2634,26 @@ function scheduleFrame() {
 }
 
 function onLap(ev) {
+  if (engine.__correction && correction?.phase === 'trying') {
+    correction.after = passageAccuracy(ev.evidence, correction.start, correction.end);
+    correction.phase = 'result'; guidedHold = true;
+    jlog('correction_result', {id:song.id,start:correction.start,end:correction.end,
+      before:correction.before,after:correction.after,helpBefore:correction.wait,helpNow:true});
+    renderJourney();
+    return; // a short repair is not a passed journey rung or section proof
+  }
+  if (firstMinute?.phase === 'playing') {
+    firstMinute.accuracy = ev.accuracy;
+    firstMinute.phase = 'result'; guidedHold = true;
+    state.firstMinuteResult = {songId:song.id,accuracy:ev.accuracy,hand:firstMinute.hand,at:Date.now()};
+    if (ev.accuracy >= firstMinute.pass && !firstMinute.banked) {
+      firstMinute.banked = true; bankBlock('first-minute',song.id+'|first-four-bars');
+    }
+    store.save(state);
+    jlog('firstrun_phrase_result',{id:song.id,acc:ev.accuracy,passed:ev.accuracy>=firstMinute.pass});
+    if (ev.accuracy < firstMinute.pass) showCorrection(ev.evidence);
+    renderJourney(); return;
+  }
   jlog('lap', { id: song.id, acc: ev.accuracy, wrong: ev.wrong, training: !!trainer, tempo: trainer?.tempoPct, mem: memo ? memo.rec.stage : undefined });
   markPracticedToday();
   logPracticeMinutes(((engine.endBeat - engine.startBeat) * engine.msPerBeat()) / 60000);
@@ -2678,11 +2722,12 @@ function onLap(ev) {
     const handOk = sd.hand === 'both' ? hand === 'both' : hand === sd.hand;
     if (sd.section && handOk && song.sections?.[+secIdx]?.name === sd.section && sd.pass !== 'hear') {
       const passed = sd.pass === 'finish' ? true : sd.pass === 'lap70' ? ev.accuracy >= 70 : false;
-      if (passed) journeyPass(sd, { acc: ev.accuracy });
-      else journeyFail(sd, { acc: ev.accuracy });
+      if (passed && journeyAttemptMatches(song, sd, engine)) journeyPass(sd, { acc: ev.accuracy });
+      else journeyFail(sd, { acc: ev.accuracy, evidence: ev.evidence });
     }
   }
   lapMiss = {};
+  if (ev.accuracy < 70 && !correction && !trainer) showCorrection(ev.evidence);
   if (!trainer) return;
   const passedLap = ev.accuracy >= PASS_ACC && ev.wrong === 0;
   if (passedLap) {
@@ -2933,6 +2978,7 @@ $('chunk-size').addEventListener('change', () => { if (chunkIdx !== null) setChu
 // The watch covers the whole song, or the chosen section/chunk. Kept apart from
 // the seek so scrubbing can never escape the range you asked to hear.
 let demoWatch = null; // {startBeat, endBeat}
+let demoGeneration = 0;
 
 // Start, or RE-start, the watch at `fromBeat`.
 //
@@ -2944,9 +2990,12 @@ let demoWatch = null; // {startBeat, endBeat}
 // was. That is why this throws BOTH away and builds a fresh pair off one
 // number, rather than trying to nudge the running ones into agreement.
 function runDemoFrom(fromBeat) {
+  const generation = ++demoGeneration, screen = screenGeneration;
+  const alive = () => generation === demoGeneration && screen === screenGeneration && active === 'play';
   const start = Math.max(demoWatch.startBeat, fromBeat);
   const notes = song.notes.filter((n) =>
-    n.b >= start && n.b < demoWatch.endBeat && (hand === 'both' || n.h === hand));
+    n.b >= start && n.b < demoWatch.endBeat && (hand === 'both' || n.h === hand))
+    .map(n => ({...n,d:Math.min(n.d,demoWatch.endBeat-n.b)}));
   if (!notes.length) { previewStop?.(); stopDemo(); return false; }
   previewStop?.();
   demoEngine = new Engine(song, {
@@ -2962,12 +3011,14 @@ function runDemoFrom(fromBeat) {
   // falls are drawn from, so it is the one the audio has to match.
   // `start` as the anchor keeps any silence you land in - see playPreview.
   previewStop = playPreview(notes, demoEngine.msPerBeat(), (m, downState) => {
+    if (!alive()) return;
     if (downState) falls.keyDown(m); else falls.keyUp(m);
   }, () => {
-    stopDemo();
+    if (alive()) stopDemo();
   }, start, {
-    onProgress: (a, b) => { if (previewActive && demoWatch) demoWatch.ranges.push([a,b]); },
+    onProgress: (a, b) => { if (alive() && previewActive && demoWatch) demoWatch.ranges.push([a,b]); },
     onError: (error) => {
+      if (!alive()) return;
       stopDemo();
       if (falls) falls.banner = 'Audio could not start. Tap Hear it to retry.';
       jlog('demo_error', {msg:String(error.message).slice(0,200)});
@@ -2990,7 +3041,10 @@ $('btn-hear').addEventListener('click', () => {
     return;
   }
   const secIdx = $('section-select').value;
-  const range = chunkIdx !== null
+  const range = correction?.phase === 'hearing'
+    ? {startBeat:correction.start,endBeat:correction.end}
+    : firstMinute?.phase === 'hearing' ? {startBeat:firstMinute.start,endBeat:firstMinute.end}
+    : chunkIdx !== null
     ? (() => { const c = chunkRange(song, chunkIdx, chunkBars()); return { startBeat: c.start, endBeat: c.end }; })()
     : secIdx === '' ? null : song.sections[+secIdx];
   demoWatch = range ? { startBeat: range.startBeat, endBeat: range.endBeat }
@@ -3009,6 +3063,7 @@ $('btn-hear').addEventListener('click', () => {
   fadePlayCover();
   jlog('demo_play', { id: song.id, sec: $('section-select').value });
   runDemoFrom(demoWatch.startBeat);
+  if (state.journeys?.[song.id]?.guided) renderJourney();
 
 });
 
@@ -3026,9 +3081,12 @@ window.addEventListener('keydown', (ev) => {
 
 function stopDemo() {
   if (!previewActive && !demoEngine) return; // idempotent (manual stop + onDone)
+  const guided = !!engine?.__guidedAttempt;
+  const correctionListen = correction?.phase === 'hearing';
+  const firstListen = firstMinute?.phase === 'hearing';
   const heard = demoWatch && listeningCoverage(demoWatch.ranges, demoWatch.startBeat, demoWatch.endBeat);
   const jh = song && journeyState(state, song);
-  if (heard >= LISTEN_MIN_PROPORTION && jh?.steps[jh.step]?.pass === 'hear' &&
+  if (!correctionListen && !firstListen && heard >= LISTEN_MIN_PROPORTION && jh?.steps[jh.step]?.pass === 'hear' &&
       hand === jh.steps[jh.step].hand && chunkIdx === null &&
       (jh.steps[jh.step].section ?? '') === (song.sections?.[$('section-select').value]?.name ?? '')) {
     journeyPass(jh.steps[jh.step], { acc: null });
@@ -3039,7 +3097,22 @@ function stopDemo() {
   $('btn-hear').textContent = '▶ Hear it';
   if (falls) { falls.banner = null; falls.pressed.clear(); }
   disarmTransport();
-  if (active === 'play') rebuildEngine(); // clean, armed restart, watched it, now play it
+  if (correctionListen) {
+    correction.phase = 'ready'; guidedHold = true;
+    if (active === 'play') renderJourney();
+    return;
+  }
+  if (firstListen) {
+    firstMinute.phase = heard >= LISTEN_MIN_PROPORTION ? 'play' : 'hear';
+    guidedHold = true;
+    if (active === 'play') renderJourney();
+    return;
+  }
+  if (active === 'play') {
+    if (guided) applyJourneyPlan();
+    rebuildEngine();
+    if (guided) { engine.__guidedAttempt = true; guidedHold = true; renderJourney(); }
+  }
 }
 
 // ☠️ THE BAR GOES BACK TO BEING A HAIRLINE, AND THERE ARE TWO WAYS OUT of a
@@ -3832,6 +3905,8 @@ function journeyPass(sd, { acc }) {
   const all = journeyState(state, song);
   const n2 = journeyAdvance(state, song);
   journeyRetry = false;
+  if (engine?.__guidedAttempt) guidedHold = true;
+  journeyFeedback = acc == null ? 'Listening step banked. ' : `${acc}% accuracy. Step banked. `;
   jlog('challenge_result', { id: song.id, step: n2 - 1, name: sd.name, acc, passed: true });
   bankBlock(sd.pass === 'hear' ? 'listening' : 'journey', song.id + '|' + sd.name);
   comboFlash(n2 >= all.steps.length ? '🌟 JOURNEY COMPLETE' : `MILESTONE ${n2}/${all.steps.length} ✓`);
@@ -3845,13 +3920,87 @@ function journeyPass(sd, { acc }) {
   store.save(state);
   renderJourney();
 }
-function journeyFail(sd, { acc }) {
+function journeyFail(sd, { acc, evidence = engine.evidence?.() }) {
   journeyRetry = true;
+  if (engine?.__guidedAttempt) guidedHold = true;
   const why = explainMiss(lapMiss);
+  journeyFeedback = sd.pass === 'playable' && acc >= 85
+    ? 'Independent proof needs clean full-tempo runs on two different days. '
+    : ['run85','playable'].includes(sd.pass) && (engine.tempo !== 1 || engine.waitMode)
+    ? `${acc}% accuracy. This step needs full tempo with help off. `
+    : `${acc}% accuracy. ${why?.line ?? `This step needs ${sd.pass === 'lap70' ? 70 : 85}%.`} `;
   jlog('challenge_result', { id: song.id, name: sd.name, acc, passed: false, miss: why?.midi ?? null, lesson: why?.lessonId ?? null });
-  if (falls) falls.banner = (why?.line ?? `${acc}%: the step needs 70.`) + ' Same step, once more.';
+  if (falls) falls.banner = journeyFeedback + 'Same step, once more.';
   comboFlash('AGAIN');
+  showCorrection(evidence);
   renderJourney();
+}
+function showCorrection(evidence) {
+  const plan = correctionFor(song, evidence);
+  if (!plan) return;
+  correction = {...plan,phase:'ready'};
+  guidedHold = true;
+  jlog('correction_shown', {id:song.id,start:plan.start,end:plan.end,kind:plan.kind,before:plan.before});
+  renderJourney();
+}
+function renderCorrection() {
+  if (!correction) return;
+  const card = document.createElement('section'); card.className = 'correction-card';
+  card.setAttribute('aria-label','One correction');
+  const title = document.createElement('p'); title.className = 'session-goal';
+  title.textContent = 'One correction: ' + correction.label;
+  const line = document.createElement('p'); line.textContent = correction.line;
+  const actions = document.createElement('div'); actions.className = 'session-actions';
+  const hear = document.createElement('button'); hear.id = 'correction-hear'; hear.className = 'tool';
+  hear.textContent = correction.phase === 'hearing' ? 'Stop this bit' : 'Hear this bit';
+  hear.onclick = () => {
+    if (previewActive) { $('btn-hear').click(); return; }
+    correction.phase = 'hearing';
+    hand = correction.hand; $('tempo').value = correction.tempo * 100;
+    jlog('correction_heard',{id:song.id,start:correction.start,end:correction.end});
+    $('btn-hear').click(); renderJourney();
+  };
+  const retry = document.createElement('button'); retry.id = 'correction-try';
+  retry.className = correction.phase === 'result' ? 'tool' : 'tool accent';
+  retry.textContent = correction.phase === 'trying' ? 'Restart this bit' : 'Try this bit';
+  retry.onclick = () => {
+    stopPreview(); previewActive = false; demoEngine = null; demoWatch = null; disarmTransport();
+    $('btn-hear').textContent = '▶ Hear it';
+    correction.phase = 'trying';
+    chunkIdx = null; syncChunkLabel();
+    loopOverride = {start:correction.start,end:correction.end};
+    hand = correction.hand; $('wait-mode').checked = true;
+    $('tempo').value = correction.tempo * 100; $('tempo-val').textContent = $('tempo').value + '%';
+    viewMode = 'falls'; syncModeButtons();
+    document.querySelectorAll('.hand-btn').forEach(x => { x.dataset.on = String(x.dataset.hand === hand); });
+    if (CANON_ON) syncHandCells();
+    jlog('correction_tried',{id:song.id,start:correction.start,end:correction.end});
+    rebuildEngine(true, true); engine.__correction = true;
+  };
+  actions.append(hear,retry); card.append(title,line,actions);
+  if (correction.phase === 'result') {
+    const result = document.createElement('p'); result.id = 'correction-result'; result.setAttribute('role','status');
+    const pct = n => n == null ? 'not scored' : n + '%';
+    result.textContent = `This passage: before ${pct(correction.before)} (help ${correction.wait ? 'on' : 'off'}), now ${pct(correction.after)} (help on). Return to the full step to check the correction in context.`;
+    card.appendChild(result);
+  }
+  $('session-guide').appendChild(card);
+  if ($('j-go')) {
+    $('j-go').textContent = firstMinute ? 'Return to four bars' : 'Return to the full step';
+    $('j-go').className = correction.phase === 'result' ? 'tool accent' : 'tool';
+  }
+}
+function applyJourneyPlan() {
+  const plan = journeyPlan(state, song);
+  if (!plan) return false;
+  chunkIdx = null; loopOverride = null; syncChunkLabel();
+  $('section-select').value = plan.section;
+  $('wait-mode').checked = plan.wait;
+  $('tempo').value = plan.tempo; $('tempo-val').textContent = plan.tempo + '%';
+  hand = plan.hand;
+  document.querySelectorAll('.hand-btn').forEach((x) => (x.dataset.on = String(x.dataset.hand === hand)));
+  if (CANON_ON) syncHandCells();
+  return true;
 }
 function renderJourney() {
   const strip = $('journey-strip');
@@ -3863,46 +4012,166 @@ function renderJourney() {
   // stays inside the card on the 756 board
   Object.assign(strip.style, { display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px 10px', padding: '8px 4px', fontSize: '12.5px' });
   const cur = jw.steps[jw.step];
-  const label = !cur ? null : journeyRetry ? `↺ Try again: ${cur.name}` : cur.pass === 'hear' ? `▶ ${cur.name}` : `▶ Practise: ${cur.name}`;
+  const plan = journeyPlan(state, song);
+  const label = !cur ? null : previewActive ? 'Stop listening' : journeyRetry ? `Try again: ${cur.name}` : plan.action;
+  // There is only one live controller. The desktop binder adopts this node.
+  const focused = document.getElementById('session-guide')?.contains(document.activeElement) ? document.activeElement.id : null;
+  document.getElementById('session-guide')?.remove();
   strip.innerHTML = jw.steps.map((s2, i) => `
     <span class="j-step ${i < jw.step ? 'done' : i === jw.step ? 'now' : ''}" style="white-space:nowrap">
       <i>${i < jw.step ? '✓' : i === jw.step ? '▶' : '○'}</i>${s2.name}
     </span>`).join('<span class="j-link"></span>') +
-    (cur ? `<button id="j-go" class="tool" style="white-space:nowrap;margin-left:auto">${label}</button>` : '<span class="j-done">🌟 Journey complete</span>');
+    '<section id="session-guide" class="session-guide" aria-label="Guided session"><p class="session-goal">One passage at a time</p><p id="j-instruction" aria-live="polite"></p><div class="session-actions">' +
+    (cur || correction ? '<button id="j-go" class="tool accent"></button>' : '<span class="j-done">Journey complete</span>') +
+    '<button id="j-exit" class="ghost"></button></div></section>';
+  const settingsMatch = journeySettingsMatch(plan, {section:$('section-select').value, hand,
+    wait:$('wait-mode').checked, tempo:$('tempo').value, chunk:chunkIdx});
+  $('j-instruction').textContent = plan
+    ? journeyFeedback + (guidedHold ? 'Next: ' : settingsMatch ? '' : 'Start this step to set: ') + plan.instruction
+    : 'Every step is banked. Return to the library to choose your next practice.';
+  if ($('j-go')) $('j-go').textContent = label;
+  $('j-exit').textContent = plan ? plan.resume : 'Return to library';
+  $('j-exit').onclick = () => {
+    ((state.journeys ??= {})[song.id] ??= { step: 0 }).guided = true;
+    store.save(state);
+    show('library'); renderLibrary();
+  };
   if (cur && strip.dataset.shownFor !== song.id + '|' + cur.name) {
     strip.dataset.shownFor = song.id + '|' + cur.name;
     jlog('challenge_shown', { id: song.id, name: cur.name, retry: journeyRetry });
   }
   $('j-go')?.addEventListener('click', () => {
+    if (previewActive) { $('btn-hear').click(); return; }
+    if (!cur && correction) {
+      $('wait-mode').checked = correction.wait;
+      $('tempo').value = correction.tempo * 100;
+      $('tempo-val').textContent = $('tempo').value + '%';
+      loopOverride = null; rebuildEngine(); return;
+    }
+    journeyFeedback = '';
     const stepDef = cur;
-    const secIdx = stepDef.section ? (song.sections ?? []).findIndex((x) => x.name === stepDef.section) : -1;
-    $('section-select').value = secIdx >= 0 ? String(secIdx) : '';
-    $('wait-mode').checked = stepDef.wait;
-    hand = stepDef.hand === 'both' ? 'both' : stepDef.hand;
-    document.querySelectorAll('.hand-btn').forEach((x) => (x.dataset.on = String(x.dataset.hand === hand)));
-    if (CANON_ON) syncHandCells();
+    stopPreview(); previewActive = false; demoEngine = null; demoWatch = null;
+    $('btn-hear').textContent = '▶ Hear it'; disarmTransport();
+    ((state.journeys ??= {})[song.id] ??= { step: 0 }).guided = true;
+    applyJourneyPlan();
+    document.querySelectorAll('.practice-adjust').forEach((d) => { d.open = false; });
     jlog('journey_step_start', { id: song.id, step: jw.all.step, name: stepDef.name, retry: journeyRetry });
     rebuildEngine();
+    engine.__guidedAttempt = true;
     if (stepDef.pass === 'hear') $('btn-hear').click();
   });
+  if (firstMinute) renderFirstMinute();
+  renderCorrection();
+  if (CANON_ON) syncWidePlay();
+  if (focused) $(focused)?.focus({preventScroll:true});
 }
 
 // ---------- first run: hardware-aware, one-tap skippable ----------
 function maybeFirstRun() {
-  const fresh = !(state.days?.length) && !state.lastSession && !state.diagnosticDone;
-  if (!fresh || state.firstRunDone) return;
+  if (!firstRunEligible(state)) return;
   $('firstrun').hidden = false;
   jlog('firstrun_shown', {});
-  const close = (how) => {
-    $('firstrun').hidden = true;
-    state.firstRunDone = how;
-    store.save(state);
-    jlog('firstrun_done', { how });
-    if (how !== 'skip') $('btn-path').click(); // the diagnostic IS the audition
+  $('firstrun-choice').hidden = true;
+  $('firstrun-connection').textContent = $('keyboard-help').textContent;
+  window.__firstRunNote = (m, input = 'keyboard') => {
+    if (!Number.isInteger(m) || m < 0 || m > 127) return;
+    $('firstrun-msg').textContent = `${noteName(m)} received. ${input === 'screen' ? 'Screen input' : 'Your keyboard'} works.`;
+    $('keyboard-test').textContent = 'Key received: ' + noteName(m) + ' from ' + input + '.';
+    const first = $('firstrun-choice').hidden;
+    $('firstrun-choice').hidden = false;
+    if (first) $('firstrun-new').focus();
   };
-  window.__firstRunNote = () => { window.__firstRunNote = null; close('midi'); };
-  $('firstrun-taps').onclick = () => close('taps');
-  $('firstrun-skip').onclick = () => close('skip');
+  $('firstrun-taps').onclick = () => {
+    window.__firstRunNote?.(60,'screen');
+    playPreview([{b:0,d:0.5,m:60,h:'R'}],500,null,null);
+  };
+  $('firstrun-retry').onclick = async () => {
+    const generation = screenGeneration;
+    $('firstrun-connection').textContent = 'Checking the keyboard connection...';
+    await midi.connect();
+    if (generation !== screenGeneration || $('firstrun').hidden) return;
+    $('firstrun-connection').textContent = $('keyboard-help').textContent;
+  };
+  const choose = experience => {
+    const selected = SONGS.find(s=>s.id==='faded-easy');
+    const plan = firstPhrasePlan(selected,experience);
+    if (!plan) { $('firstrun-msg').textContent = 'The starter phrase is unavailable. You can still open the library.'; return; }
+    state.firstRunExperience = experience;
+    state.firstRunDone = 'started'; store.save(state);
+    $('firstrun').hidden = true; window.__firstRunNote = null;
+    startSong(selected);
+    firstMinute = {...plan,phase:'hear'};
+    beginFirstPhrase('hear');
+    $('j-go').focus({preventScroll:true});
+  };
+  $('firstrun-new').onclick = () => choose('beginner');
+  $('firstrun-returning').onclick = () => choose('returning');
+  $('firstrun-skip').onclick = () => finishFirstMinute('skip');
+  $('firstrun').addEventListener('keydown',event => {
+    if (event.key === 'Escape') { event.preventDefault(); finishFirstMinute('skip'); }
+    if (event.key !== 'Tab') return;
+    const buttons = [...$('firstrun').querySelectorAll('button')].filter(b=>b.getBoundingClientRect().width>0);
+    const first=buttons[0], last=buttons.at(-1);
+    if (event.shiftKey && document.activeElement===first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement===last) { event.preventDefault(); first.focus(); }
+  });
+  $('firstrun-taps').focus();
+}
+
+function finishFirstMinute(how = 'phrase') {
+  $('firstrun').hidden = true; window.__firstRunNote = null;
+  state.firstRunDone = how; store.save(state);
+  jlog('firstrun_done',{how});
+  firstMinute = null; show('library'); renderLibrary();
+  $('practice-primary')?.focus({preventScroll:true});
+}
+function beginFirstPhrase(phase) {
+  if (!firstMinute) return;
+  stopPreview(); previewActive = false; demoEngine = null; demoWatch = null; disarmTransport();
+  $('btn-hear').textContent = '▶ Hear it';
+  firstMinute.phase = phase;
+  hand = firstMinute.hand; chunkIdx = null; syncChunkLabel();
+  loopOverride = {start:firstMinute.start,end:firstMinute.end};
+  $('section-select').value = ''; $('wait-mode').checked = true;
+  $('tempo').value = 100; $('tempo-val').textContent = '100%';
+  viewMode = 'falls'; syncModeButtons();
+  document.querySelectorAll('.hand-btn').forEach(x=>{x.dataset.on=String(x.dataset.hand===hand);});
+  if (CANON_ON) syncHandCells();
+  rebuildEngine(false, true); guidedHold = phase !== 'playing';
+  if (phase === 'hearing') $('btn-hear').click();
+  renderJourney();
+}
+function renderFirstMinute() {
+  const guide = $('session-guide');
+  $('journey-strip').querySelectorAll('.j-step,.j-link').forEach(el=>{el.hidden=true;});
+  guide.querySelector('.session-goal').textContent = 'Your first four bars: ' + song.title;
+  const p = firstMinute, hands = p.hand === 'R' ? 'right hand' : 'both hands';
+  $('j-instruction').textContent = p.phase === 'result'
+    ? `${p.accuracy}% accuracy. ${p.accuracy>=p.pass ? 'Four bars banked. The library will offer a check-in when you are ready.' : 'The target is 70%. Let us try this small phrase again.'}`
+    : `Four bars, ${hands}, help on. ${p.phase === 'hear' || p.phase === 'hearing' ? 'First, listen to the phrase.' : 'Now play it. The notes wait for you. One pass with at least 70% accuracy.'}`;
+  const button = document.createElement('button'); button.id='j-go'; button.className='tool accent';
+  button.textContent = p.phase === 'hearing' ? 'Stop listening' : p.phase === 'hear' ? 'Hear four bars'
+    : p.phase === 'result' && p.accuracy>=p.pass ? 'Open library' : p.phase === 'playing' ? 'Restart four bars' : 'Play four bars';
+  button.onclick = () => {
+    if (correction) { beginFirstPhrase('playing'); return; }
+    if (p.phase === 'hearing') { $('btn-hear').click(); return; }
+    if (p.phase === 'result' && p.accuracy>=p.pass) { finishFirstMinute(); return; }
+    beginFirstPhrase(p.phase === 'hear' ? 'hearing' : 'playing');
+  };
+  $('j-go').replaceWith(button);
+  $('j-exit').textContent = 'Library; check in when ready';
+  $('j-exit').onclick = () => finishFirstMinute('left-phrase');
+  const keys = document.createElement('div'); keys.className='first-phrase-keys';
+  keys.setAttribute('role','group'); keys.setAttribute('aria-label','Play the phrase on screen');
+  const prompt = document.createElement('p'); prompt.textContent='Use your piano, tap these notes, or use Tab then Enter to play them.';
+  keys.appendChild(prompt);
+  for (const m of p.keys) {
+    const key=document.createElement('button'); key.id='first-note-'+m; key.className='tool';
+    key.textContent=noteName(m); key.setAttribute('aria-label','Play '+noteName(m));
+    key.disabled=p.phase!=='playing' && correction?.phase!=='trying';
+    key.onclick=()=>{midi.onNote(m,90,true);midi.onNote(m,90,false);}; keys.appendChild(key);
+  }
+  guide.appendChild(keys);
 }
 
 // ---------- metronome ----------
@@ -4176,13 +4445,14 @@ function echoNote(m) {
 
 // ---------- MIDI routing ----------
 midi.onNote = (m, vel, down) => {
-  if (down && !$('firstrun').hidden) { window.__firstRunNote?.(); return; }
+  if (down && !$('firstrun').hidden) { window.__firstRunNote?.(m); return; }
   if (cardTask) { theoryNote(m, down); return; }
   if (active === 'task') { if (down) pathUI.noteOn(m); else pathUI.noteOff(m); return; }
   if (active === 'lesson') { lessonNote(m, down); return; }
   if (active === 'rhythm') { if (down) rhythmNote(); return; }
   if (active === 'touch') { if (down) touchNote(m, vel); return; }
   if (active === 'play' && engine) {
+    if (guidedHold && !previewActive) { if (!down) { falls.keyUp(m); engine.noteOff(m); } return; }
     if (previewActive && down) { previewStop?.(); stopDemo(); return; }
     if (armed && down) { startArmCountIn(); return; }
     if (down) fadePlayCover(); // wait mode: the first press cedes the light too

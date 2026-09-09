@@ -340,6 +340,7 @@ export function mountWidePlay(host) {
   if (trainLine) trainLine.id = 'cp-train-sec';   // the big header under TRAINING
 
   if (sec9) {
+    sec9.dataset.guideSection = '1';
     const mirror = () => {
       const real = $('section-select');
       if (!real) return;
@@ -420,7 +421,9 @@ export function mountWidePlay(host) {
       nextBtn.addEventListener('click', () => { $('j-go')?.click(); setTimeout(syncWidePlay, 0); });
       board.__mirrorJourney = () => {
         const legacy = $('journey-strip');
-        const steps = legacy && !legacy.hidden ? [...legacy.querySelectorAll('.j-step')] : [];
+        const guide = $('session-guide');
+        if (guide && guide.parentElement !== row.parentElement) row.parentElement.insertBefore(guide, row.parentElement.firstChild);
+        const steps = legacy && !legacy.hidden ? [...legacy.querySelectorAll('.j-step')].filter(s=>!s.hidden) : [];
         const sig = steps.map((s) => s.textContent.trim() + '|' + s.className).join(';') + '|' + !!$('j-go');
         if (row.dataset.jsig === sig) return;
         row.dataset.jsig = sig;
@@ -436,7 +439,7 @@ export function mountWidePlay(host) {
           if (word) word.textContent = s.textContent.replace(/^[^\p{L}]+/u, '').trim();
           row.insertBefore(c, nextBtn);
         }
-        nextBtn.style.display = $('j-go') ? nextBtn.dataset.disp : 'none';
+        nextBtn.style.display = 'none'; // the adopted controller owns the primary action
       };
       board.__mirrorJourney();
     }
@@ -678,7 +681,7 @@ function mirrorProxies() {
 
 // Keep alternate practice systems available through one beginner-facing disclosure.
 export function installPracticeDisclosure(host) {
-  const ids = ['btn-train','btn-mem','btn-take','btn-perf'];
+  const ids = ['btn-train','btn-mem','btn-take','btn-perf','btn-hear'];
   const controls = ids.flatMap((id) => [...host.querySelectorAll(`[data-proxy-for="${id}"], #${id}`)])
     .filter((el) => el.getBoundingClientRect().width > 0 && !el.closest('.practice-adjust'));
   if (!controls.length) return;
@@ -690,4 +693,15 @@ export function installPracticeDisclosure(host) {
   details.appendChild(modes);
   controls[0].parentElement.insertBefore(details, controls[0]);
   for (const control of controls) modes.appendChild(control);
+  const selectors = '#section-select, [data-guide-section], .hand-btn, [data-hand-cell], #wait-mode, [data-reflects="wait-mode"], #tempo, [data-proxy-for="tempo"]';
+  const settings = [...host.querySelectorAll(selectors)]
+    .filter(el => el.getBoundingClientRect().width > 0 && !el.closest('.practice-adjust'));
+  for (const control of settings) {
+    if (control.closest('.practice-adjust')) continue;
+    if (control.matches('select, input')) {
+      const label = document.createElement('label');
+      label.textContent = control.tagName === 'SELECT' ? 'Section ' : control.type === 'checkbox' ? 'Help on ' : 'Tempo ';
+      label.appendChild(control); modes.appendChild(label);
+    } else modes.appendChild(control);
+  }
 }

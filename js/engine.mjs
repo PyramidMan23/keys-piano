@@ -62,6 +62,7 @@ export class Engine {
     this.finished = false;
     this.stats = { perfect: 0, good: 0, late: 0, wrong: 0, missed: 0 };
     this.events = []; // {type, midi, beat} feedback events since last drain
+    this.verdicts = []; // measured note events, retained until the lap is judged
     this.timeMs = 0; // wall time, advances even while waiting
     this.recent = new Map(); // midi -> timeMs of last accepted hit
     this._lastDoneAt = null; // pace tracking: when the previous group finished
@@ -104,7 +105,7 @@ export class Engine {
         const missed = cur.notes.length - cur.done.size;
         if (missed > 0) {
           this.stats.missed += missed;
-          for (const n of cur.notes) if (!cur.done.has(n.m)) this.events.push({ type: 'missed', midi: n.m, beat: n.b });
+          for (const n of cur.notes) if (!cur.done.has(n.m)) this.emitVerdict({ type: 'missed', midi: n.m, beat: n.b });
         }
         this.nextGroupIdx++;
       }
@@ -115,8 +116,9 @@ export class Engine {
         // the section trainer can judge each pass on its own.
         const lapAccuracy = this.accuracy();
         const lapWrong = this.stats.wrong;
+        const evidence = this.evidence();
         this.reset();
-        this.events.push({ type: 'lap', accuracy: lapAccuracy, wrong: lapWrong });
+        this.events.push({ type: 'lap', accuracy: lapAccuracy, wrong: lapWrong, evidence });
       } else { this.beat = this.endBeat; this.finished = true; }
     }
   }
@@ -157,7 +159,7 @@ export class Engine {
     if (!this.waiting && deltaMs < -GOOD_MS) {
       // Right key, but its beat hasn't arrived: reject without consuming,
       // otherwise the whole song can be sprinted through ahead of the music.
-      this.events.push({ type: 'early', midi, beat: g.beat });
+      this.emitVerdict({ type: 'early', midi, beat: g.beat, deltaMs });
       return { result: 'early', deltaMs };
     }
     const result = this.waiting ? 'good' : classifyTiming(deltaMs);
@@ -175,7 +177,7 @@ export class Engine {
       ev.deltaMs = Math.round(deltaMs);
       this.timing.push(ev.deltaMs);
     }
-    this.events.push(ev);
+    this.emitVerdict(ev);
 
     if (g.done.size >= g.notes.length) {
       // pace: your real speed between completed groups vs the song's tempo
@@ -194,11 +196,20 @@ export class Engine {
 
   _wrong(midi) {
     this.stats.wrong++;
-    this.events.push({ type: 'wrong', midi, beat: this.beat });
+    const group = this.currentGroup();
+    this.emitVerdict({ type: 'wrong', midi, beat: group?.beat ?? this.beat,
+      expected: group?.notes.filter(n => !group.done.has(n.m)).map(n => n.m) ?? [] });
     return { result: 'wrong' };
   }
 
   drainEvents() { const e = this.events; this.events = []; return e; }
+
+  emitVerdict(event) { this.events.push(event); this.verdicts.push(event); }
+  evidence() {
+    return { verdicts: this.verdicts.map(e => ({...e})), notes: this.playLog.map(n => ({...n})),
+      start: this.startBeat, end: this.endBeat, hand: this.hand, wait: this.waitMode,
+      tempo: this.tempo, msPerBeat: this.msPerBeat() };
+  }
 
   accuracy() {
     const s = this.stats;

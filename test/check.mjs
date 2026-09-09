@@ -2462,7 +2462,7 @@ ok('no decoy modules in the repo root shadowing a shipped js/ module');
   const {readFileSync} = await import('node:fs');
   const play = readFileSync(new URL('../js/canon-play.mjs',import.meta.url),'utf8');
   const css = readFileSync(new URL('../style.css',import.meta.url),'utf8');
-  assert.match(play,/const ids = \['btn-train','btn-mem','btn-take','btn-perf'\]/);
+  assert.match(play,/const ids = \['btn-train','btn-mem','btn-take','btn-perf','btn-hear'\]/);
   assert.match(play,/summary.textContent = 'Adjust practice'/);
   assert.match(css,/:not\([^)]*\.practice-adjust/);
   ok('alternate practice modes share one disclosure and its app-drawn subtree is exempt from the reset');
@@ -2504,7 +2504,7 @@ ok('no decoy modules in the repo root shadowing a shipped js/ module');
     const credits = [];
     const ctx = {state,engine,song:{id:'x',sections:[{name:'A',startBeat:0,endBeat:8}]},
       $:id=>id==='section-select'?{value:'0'}:{checked:false,value:'100'},hand:'both',
-      trainer:null,memo:null,lapMiss:{},falls:{},jlog:silent,markPracticedToday:silent,logPracticeMinutes:silent,
+      trainer:null,memo:null,firstMinute:null,lapMiss:{},falls:{},jlog:silent,markPracticedToday:silent,logPracticeMinutes:silent,
       songStats:()=>({}),store:{save:silent},assessmentConditions:T.assessmentConditions,PROOF_PASS:T.PROOF_PASS,
       comboFlash:silent,dayStat:silent,awardXp:(kind)=>credits.push(kind),settleGame:silent,
       bankBlock:silent,journeyState:()=>null,explainMiss:()=>null,schedulePassageCheck:T.schedulePassageCheck};
@@ -2543,7 +2543,7 @@ ok('no decoy modules in the repo root shadowing a shipped js/ module');
   const stop = source.match(/function stopDemo\(\) \{[\s\S]*?\n\}/)[0];
   const run = (ranges, hand='both') => {
     let credits=0;
-    const ctx = {state:{},previewActive:true,demoEngine:{},demoWatch:{startBeat:0,endBeat:10,ranges},
+    const ctx = {state:{},engine:{},correction:null,firstMinute:null,previewActive:true,demoEngine:{},demoWatch:{startBeat:0,endBeat:10,ranges},
       song:{sections:[]},hand,chunkIdx:null,active:'play',falls:{pressed:{clear(){}}},
       $:()=>({value:'',textContent:''}),journeyState:()=>({step:0,steps:[{pass:'hear',hand:'both'}]}),
       journeyPass:()=>credits++,disarmTransport(){},rebuildEngine(){},
@@ -2625,4 +2625,217 @@ assert.equal(classifyGroups(groupSongs(SONGS),()=>({}),null).repertoire.length,0
 assert.doesNotThrow(()=>T.reconcileMastery(null));
 assert.doesNotThrow(()=>T.reconcileMastery({pulse:null}));
 ok('mastery reconciliation tolerates absent legacy records');
+{
+  const { journeyPlan, journeyFor } = await import('../js/game.mjs');
+  for (const song of SONGS) {
+    const steps = journeyFor(song);
+    for (let step = 0; step < steps.length; step++) {
+      const st = { journeys: { [song.id]: { step } } };
+      const p = journeyPlan(st, song), def = steps[step];
+      assert.equal(p.hand, def.hand); assert.equal(p.wait, def.wait);
+      assert.equal(p.tempo, 100);
+      assert.equal(p.section === '' ? null : song.sections[+p.section].name, def.section);
+      assert.match(p.instruction, /help (on|off)/);
+      assert.ok(p.resume.includes(def.name));
+      assert.deepEqual(journeyPlan(JSON.parse(JSON.stringify(st)), song), p);
+    }
+    assert.equal(journeyPlan({ journeys: { [song.id]: { step: steps.length } } }, song), null);
+  }
+  assert.match(journeyPlan({}, SONGS.find(s => s.id === 'song-of-storms-easy')).instruction, /80%/);
+  const p = journeyPlan({}, SONGS.find(s => s.id === 'song-of-storms-easy'));
+  const settings = {...p,chunk:null};
+  assert.equal(G.journeySettingsMatch(p,settings),true);
+  for (const [key,value] of Object.entries({section:'1',hand:'L',wait:false,tempo:60,chunk:0}))
+    assert.equal(G.journeySettingsMatch(p,{...settings,[key]:value}),false);
+  ok('guided prescriptions match every real rung and survive saved progress without losing settings');
+}
+{
+  const {readFileSync} = await import('node:fs'); const vm = await import('node:vm');
+  const source = readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  const fn = name => source.match(new RegExp('function '+name+'\\([^]*?\\n\\}'))[0];
+  const song = SONGS.find(s => s.id === 'song-of-storms-easy');
+  const controls = Object.fromEntries(['section-select','wait-mode','tempo','tempo-val'].map(id => [id,{}]));
+  const buttons = ['L','R','both'].map(hand => ({dataset:{hand}}));
+  const context = {state:{journeys:{[song.id]:{step:2,guided:true}}}, song,
+    journeyPlan:G.journeyPlan, chunkIdx:3, loopOverride:{start:50,end:60}, hand:'R',
+    $:id => controls[id], document:{querySelectorAll:()=>buttons}, syncChunkLabel(){}, CANON_ON:false};
+  vm.runInNewContext(fn('applyJourneyPlan')+'; applyJourneyPlan()',context);
+  assert.equal(controls['section-select'].value,'0'); assert.equal(controls['wait-mode'].checked,true);
+  assert.equal(controls.tempo.value,100); assert.equal(context.hand,'L');
+  assert.equal(context.chunkIdx,null); assert.equal(context.loopOverride,null);
+  assert.equal(buttons.find(b => b.dataset.on === 'true').dataset.hand,'L');
+  ok('actual controller replaces stale section, chunk, hand, tempo and help overrides together');
+
+  let rebuilds=0, opened=null;
+  const resumeContext = {state:{journeys:{[song.id]:{step:2,guided:true}},lastSession:{songId:song.id,hand:'R',wait:false,tempo:60}},
+    SONGS:[song], journeyPlan:G.journeyPlan, startSong:s=>{opened=s;}, rebuildEngine:()=>rebuilds++,
+    $:()=>{throw Error('legacy settings must not overwrite the current guided rung');}};
+  vm.runInNewContext(fn('resumeLastSession')+'; resumeLastSession()',resumeContext);
+  assert.equal(opened,song); assert.equal(rebuilds,0);
+  ok('actual resume handler gives the saved journey priority over conflicting legacy session controls');
+
+  const failureContext = {state:{},song,engine:{__guidedAttempt:true},guidedHold:false,journeyRetry:false,
+    lapMiss:{60:2},explainMiss:()=>({line:'Most missed: C4',midi:60}),jlog(){},falls:{},comboFlash(){},renderJourney(){},showCorrection(){}};
+  vm.runInNewContext(fn('journeyFail')+'; journeyFail({name:"Left hand"},{acc:30})',failureContext);
+  assert.equal(failureContext.guidedHold,true); assert.equal(failureContext.journeyRetry,true);
+  assert.match(failureContext.falls.banner,/Most missed: C4/);
+  const heldClock = source.match(/const clockHeld = ([^;]+);/)[1];
+  assert.equal(vm.runInNewContext(heldClock,{guidedHold:true,armed:false,armCountUntil:0,t:1}),true);
+  assert.match(source,/if \(guidedHold && !previewActive\)/);
+  assert.match(source,/\$\('results'\)\.hidden = guidedHold/);
+  const css = readFileSync(new URL('../style.css',import.meta.url),'utf8');
+  assert.match(css,/:not\([^)]*\.session-guide, \.session-guide \*/);
+  assert.match(css,/\.session-actions button \{ min-height: 44px/);
+  ok('actual failed guided rung pauses for a deliberate retry and its controller is exempt from the canon reset');
+}
+{
+  const s={notes:[{m:60,b:0,d:1,h:'R'},{m:62,b:1,d:1,h:'R'}],bpm:120};
+  const e = new Engine(s,{waitMode:false,loop:{start:0,end:2}});
+  e.noteOn(61); e.noteOn(60); e.tick(100); e.noteOff(60); e.tick(1000);
+  const lap=e.drainEvents().find(ev=>ev.type==='lap');
+  assert.ok(lap.evidence.verdicts.some(ev=>ev.type==='wrong' && ev.expected[0]===60));
+  assert.ok(lap.evidence.verdicts.some(ev=>ev.type==='missed' && ev.midi===62));
+  assert.equal(lap.evidence.notes[0].offMs,100);
+  assert.equal(e.verdicts.length,0); assert.equal(e.playLog.length,0);
+  e.noteOn(60); assert.equal(lap.evidence.verdicts.length,3);
+  ok('lap evidence preserves the final tick misses, expected pitch and measured releases across reset');
+}
+{
+  const {correctionFor,passageAccuracy}=await import('../js/lessons.mjs');
+  const song={timeSig:[4,4]}, base={start:0,end:12,hand:'R',tempo:1,wait:false,msPerBeat:500,notes:[]};
+  const evidence={...base,verdicts:[{type:'perfect',beat:0},{type:'wrong',midi:61,expected:[60],beat:4},
+    {type:'missed',midi:60,beat:4},{type:'missed',midi:64,beat:5},{type:'perfect',beat:9}]};
+  const c=correctionFor(song,evidence);
+  assert.equal(c.start,4); assert.equal(c.end,12); assert.equal(c.kind,'missed');
+  assert.equal(c.before,29); assert.match(c.line,/not played/);
+  assert.equal(passageAccuracy(evidence,0,4),100);
+  assert.equal(passageAccuracy({...base,verdicts:[]},0,4),null);
+  for (const type of ['wrong','early','late']) {
+    const r=correctionFor(song,{...base,verdicts:[{type,midi:60,beat:0,expected:[62]}]});
+    assert.equal(r.kind,type); assert.doesNotMatch(r.line,/tension|finger/);
+  }
+  const short=correctionFor(song,{...base,verdicts:[],notes:[{m:60,b:0,d:1,onMs:0,offMs:100}]});
+  assert.equal(short.kind,'short'); assert.match(short.line,/100 milliseconds.*500 milliseconds/);
+  assert.equal(correctionFor(song,{...base,verdicts:[],notes:[{m:60,b:0,d:1,onMs:0,offMs:null}]}),null);
+  const tracked=correctionFor({barBeats:[0,3,7,10],freeTime:false},{...base,start:3,end:10,verdicts:[{type:'missed',midi:60,beat:7}]});
+  assert.equal(tracked.start,7); assert.equal(tracked.end,10);
+  ok('corrections select the most-missed bars, distinguish only measured error kinds and score the same span');
+}
+{
+  const {readFileSync}=await import('node:fs'); const vm=await import('node:vm');
+  const {passageAccuracy}=await import('../js/lessons.mjs');
+  const source=readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  const fn=name=>source.match(new RegExp('function '+name+'\\([^]*?\\n\\}'))[0];
+  const nodes=new Map();
+  const element=()=>({children:[],className:'',textContent:'',setAttribute(){},
+    append(...children){this.children.push(...children); for(const c of children) if(c.id) nodes.set(c.id,c);},
+    appendChild(child){this.append(child);}});
+  for(const id of ['session-guide','j-go','btn-hear','wait-mode','tempo','tempo-val']) nodes.set(id,element());
+  const logs=[];
+  const ctx={firstMinute:null,correction:{start:4,end:8,hand:'R',tempo:0.8,wait:false,before:20,line:'Missed note: C4.',label:'Bar 2',phase:'ready'},
+    song:{id:'fixture'},document:{createElement:element,querySelectorAll:()=>[]},$:id=>nodes.get(id),
+    previewActive:false,stopPreview(){},disarmTransport(){},syncChunkLabel(){},syncModeButtons(){},
+    jlog:(e,data)=>logs.push({e,...data}),CANON_ON:false,engine:{},renderJourney(){},passageAccuracy,
+    rebuildEngine(keep){assert.equal(keep,true); ctx.engine={};}};
+  vm.runInNewContext(fn('renderCorrection')+'; renderCorrection()',ctx);
+  nodes.get('correction-try').onclick();
+  assert.equal(ctx.loopOverride.start,4); assert.equal(ctx.loopOverride.end,8);
+  assert.equal(nodes.get('wait-mode').checked,true); assert.equal(ctx.engine.__correction,true);
+  assert.equal(ctx.viewMode,'falls'); assert.equal(ctx.hand,'R');
+  assert.equal(logs[0].e,'correction_tried');
+  vm.runInNewContext(fn('onLap')+'; onLap({evidence:{verdicts:[{type:"good",beat:4},{type:"good",beat:5}]}})',ctx);
+  assert.equal(ctx.correction.after,80); assert.equal(ctx.correction.phase,'result'); assert.equal(ctx.guidedHold,true);
+  assert.equal(logs.at(-1).e,'correction_result'); assert.equal(logs.at(-1).before,20);
+  assert.equal(logs.at(-1).helpNow,true);
+  ok('actual correction retry uses its own bounded loop and returns a comparison before any journey credit');
+
+  let credits=0, rebuilds=0;
+  const stopContext={engine:{__guidedAttempt:true},state:{},firstMinute:null,song:{id:'fixture'},hand:'both',chunkIdx:null,
+    correction:{phase:'hearing'},previewActive:true,demoEngine:{},demoWatch:{startBeat:0,endBeat:4,ranges:[[0,4]]},
+    active:'play',falls:{pressed:{clear(){}}},$:()=>({textContent:''}),disarmTransport(){},renderJourney(){},
+    journeyState:()=>({step:0,steps:[{pass:'hear',hand:'both'}]}),journeyPass:()=>credits++,
+    rebuildEngine:()=>rebuilds++,listeningCoverage:G.listeningCoverage,LISTEN_MIN_PROPORTION:0.8};
+  vm.runInNewContext(fn('stopDemo')+'; stopDemo()',stopContext);
+  assert.equal(credits,0); assert.equal(rebuilds,0); assert.equal(stopContext.correction.phase,'ready');
+  assert.equal(stopContext.guidedHold,true);
+  for(const event of ['correction_shown','correction_heard','correction_tried','correction_result']) assert.ok(source.includes("jlog('"+event+"'"));
+  assert.match(source,/generation === demoGeneration && screen === screenGeneration/);
+  assert.match(source,/d:Math.min\(n.d,demoWatch.endBeat-n.b\)/);
+  ok('correction listening cannot bank a listening rung, and its callbacks are generation guarded');
+}
+{
+  const song=SONGS.find(s=>s.id==='faded-easy');
+  const p=G.firstPhrasePlan(song,'beginner'), r=G.firstPhrasePlan(song,'returning');
+  assert.equal(p.end-p.start,16); assert.equal(p.hand,'R'); assert.equal(r.hand,'both');
+  assert.equal(p.pass,70); assert.equal(p.wait,true);
+  for(const m of p.keys) assert.ok(song.notes.some(n=>n.m===m && n.h==='R' && n.b>=p.start && n.b<p.end));
+  assert.equal(G.firstPhrasePlan({...song,freeTime:true},'beginner'),null);
+  assert.equal(G.firstPhrasePlan({...song,level:'Hard'},'beginner'),null);
+  assert.equal(G.firstRunEligible({}),true);
+  assert.equal(G.firstRunEligible({songs:{x:{plays:0,ms:0}}}),true);
+  for(const st of [{firstRunDone:'skip'},{firstRunDone:'started'},{lastSession:{}},{diagnosticDone:true},{days:['2026-09-09']},{songs:{x:{plays:1}}},{songs:{x:{ms:100}}}])
+    assert.equal(G.firstRunEligible(st),false);
+  ok('the first minute uses four real Easy-song bars and chooses authored hands without inventing notes');
+}
+{
+  const {readFileSync}=await import('node:fs'); const vm=await import('node:vm');
+  const source=readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  const fn=name=>source.match(new RegExp('function '+name+'\\([^]*?\\n\\}'))[0];
+  const nodes=new Map();
+  const node=id=>{if(!nodes.has(id)) nodes.set(id,{hidden:true,textContent:'',focus(){},addEventListener(){}}); return nodes.get(id);};
+  const started=[];
+  const ctx={state:{},firstRunEligible:G.firstRunEligible,firstPhrasePlan:G.firstPhrasePlan,SONGS,
+    $:node,window:{},jlog(){},store:{save(){}},screenGeneration:1,midi:{connect:async()=>{}},
+    noteName:m=>m===64?'E4':'C4',playPreview(){},startSong:s=>started.push(s.id),
+    beginFirstPhrase:p=>started.push(p),finishFirstMinute(){}};
+  vm.runInNewContext(fn('maybeFirstRun')+'; maybeFirstRun()',ctx);
+  assert.equal(node('firstrun').hidden,false); assert.equal(node('firstrun-choice').hidden,true);
+  ctx.window.__firstRunNote(64);
+  assert.match(node('firstrun-msg').textContent,/E4 received.*keyboard.*works/);
+  assert.equal(node('firstrun-choice').hidden,false);
+  node('firstrun-returning').onclick();
+  assert.equal(ctx.state.firstRunExperience,'returning'); assert.equal(ctx.firstMinute.hand,'both');
+  assert.equal(ctx.state.firstRunDone,'started'); assert.equal(node('firstrun').hidden,true);
+  assert.deepEqual(started,['faded-easy','hear']);
+  vm.runInNewContext('maybeFirstRun()',ctx); assert.equal(node('firstrun').hidden,true);
+  assert.match(source,/window\.__firstRunNote\?\.\(m\)/);
+  ok('actual welcome confirms the exact key, stores experience and starts real music without forcing a diagnostic');
+
+  let blocks=0, corrections=0;
+  const lap={engine:{},firstMinute:{phase:'playing',hand:'R',pass:70},state:{},song:{id:'faded-easy'},
+    store:{save(){}},bankBlock(){blocks++;},jlog(){},showCorrection(){corrections++;},renderJourney(){}};
+  vm.runInNewContext(fn('onLap')+'; onLap({accuracy:60,evidence:{}})',lap);
+  assert.equal(blocks,0); assert.equal(corrections,1); assert.equal(lap.firstMinute.phase,'result');
+  lap.firstMinute.phase='playing'; vm.runInNewContext('onLap({accuracy:80,evidence:{}})',lap);
+  assert.equal(blocks,1); assert.equal(lap.state.firstMinuteResult.accuracy,80); assert.equal(lap.guidedHold,true);
+  lap.firstMinute.phase='playing'; vm.runInNewContext('onLap({accuracy:80,evidence:{}})',lap); assert.equal(blocks,1);
+  const listen={engine:{},state:{},song:{id:'faded-easy'},hand:'R',chunkIdx:null,correction:null,
+    firstMinute:{phase:'hearing'},previewActive:true,demoEngine:{},demoWatch:{startBeat:0,endBeat:16,ranges:[[0,13]]},
+    active:'play',falls:{pressed:{clear(){}}},$:()=>({textContent:''}),disarmTransport(){},renderJourney(){},
+    journeyState:()=>null,listeningCoverage:G.listeningCoverage,LISTEN_MIN_PROPORTION:0.8};
+  vm.runInNewContext(fn('stopDemo')+'; stopDemo()',listen);
+  assert.equal(listen.firstMinute.phase,'play'); assert.equal(listen.guidedHold,true);
+  assert.match(source,/rebuildEngine\(false, true\); guidedHold = phase !== 'playing'/);
+  ok('first-phrase listening unlocks play, failed attempts get correction and a passed phrase banks only once');
+}
+{
+  const rx=T.prescribe({firstRunDone:'phrase',firstMinuteResult:{songId:'faded-easy',accuracy:80}},Date.now());
+  assert.equal(rx.kind,'diagnostic'); assert.match(rx.reason,/four bars.*check-in/i);
+  assert.doesNotMatch(rx.reason,/not heard you/);
+  ok('the post-phrase prescription offers a check-in and acknowledges the music already played');
+}
+{
+  const song=SONGS.find(s=>s.id==='song-of-storms-easy'), step=G.journeyFor(song)[1];
+  const sec=song.sections.find(s=>s.name===step.section);
+  const e=new Engine(song,{hand:step.hand,loop:{start:sec.startBeat,end:sec.endBeat}});
+  assert.equal(G.journeyAttemptMatches(song,step,e),true);
+  e.loop.end=sec.startBeat+1;
+  assert.equal(G.journeyAttemptMatches(song,step,e),false);
+  const full=G.journeyFor(song).find(s=>s.pass==='run85');
+  const run=new Engine(song,{hand:'both',waitMode:false});
+  assert.equal(G.journeyAttemptMatches(song,full,run),true);
+  run.tempo=0.5; assert.equal(G.journeyAttemptMatches(song,full,run),false);
+  run.tempo=1; run.waitMode=true; assert.equal(G.journeyAttemptMatches(song,full,run),false);
+  ok('short chunk overrides cannot bank a full rung, and the full-run step requires full tempo with help off');
+}
 console.log(`\nALL GREEN: ${n} checks passed`);
