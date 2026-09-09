@@ -137,7 +137,7 @@ try {
 
   await journey('change the sort, and have it survive a reload', async () => {
     const bad = [];
-    const before = (await state()).lib?.exploreSort ?? 'az';
+    const before = (await state()).lib?.exploreSort ?? 'diff'; // unset means the smart order (2026-09-09)
     const target = before === 'diff' ? 'A to Z' : 'Weakest';
     if (await clickText(target) !== 'ok') bad.push(`no ${target} control`);
     await new Promise((r) => setTimeout(r, 700));

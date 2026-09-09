@@ -21,25 +21,36 @@ export function groupSongs(songs) {
   return groups;
 }
 
-// Council ruling: Learning = evidence of a FINISHED run (plays only increments
-// on finish, so an accidental launch never promotes). Repertoire = the top
-// tier is 3-starred. Explore = never finished anything.
+// Learning = a song Mark has actually WORKED ON: a finished run, or at least a
+// minute of play time in any tier (Mark, 2026-09-09: "make sure that any song
+// I'm learning comes up there in the order that I've tried playing or spent
+// the most time in"). The 13th council's rule was a finished run only, which
+// left every song he opened and drilled for twenty minutes but never played
+// end to end sitting in Explore, alphabetically, with no trace: 59 of 69 song
+// starts in the 3 to 5 Sep journal were abandoned before 5%. The minute floor
+// keeps that council's intent (an accidental launch never promotes).
+// Repertoire = the top tier is 3-starred. Explore = everything else.
+export const LEARNING_MIN_MS = 60000;
 export function classifyGroups(groups, statsOf) {
   const learning = [], repertoire = [], explore = [];
+  const timeIn = (variants) => variants.reduce((a, v) => a + (statsOf(v.id).ms || 0), 0);
+  const lastAt = (variants) => Math.max(0, ...variants.map((v) => statsOf(v.id).lastAt || 0));
   for (const variants of groups.values()) {
     const top = variants[variants.length - 1];
     const played = variants.some((v) => (statsOf(v.id).plays || 0) > 0);
     if ((statsOf(top.id).stars || 0) >= 3) repertoire.push(variants);
-    else if (played) learning.push(variants);
+    else if (played || timeIn(variants) >= LEARNING_MIN_MS) learning.push(variants);
     else explore.push(variants);
   }
-  // Learning: weakest first (fewest total stars, then least best accuracy).
+  // Learning: most time in the song first, then most recently opened, then the
+  // old weakness order (fewest stars, lowest best) for anything older than the
+  // clock, which has no time recorded.
   const weakness = (variants) => {
     const stars = variants.reduce((a, v) => a + (statsOf(v.id).stars || 0), 0);
     const best = Math.max(...variants.map((v) => statsOf(v.id).best || 0));
     return stars * 1000 + best;
   };
-  learning.sort((a, b) => weakness(a) - weakness(b));
+  learning.sort((a, b) => timeIn(b) - timeIn(a) || lastAt(b) - lastAt(a) || weakness(a) - weakness(b));
   const byTitle = (a, b) => a[0].title.localeCompare(b[0].title);
   repertoire.sort(byTitle);
   explore.sort(byTitle);

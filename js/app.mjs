@@ -110,7 +110,11 @@ function applyNoteStyle(styleName, lettersOn) {
   }
   store.save(state);
 }
-const songStats = (id) => (state.songs[id] ??= { plays: 0, best: 0, scorePasses: 0, stars: 0, bestScore: 0 });
+// ms = wall time spent in the song's engine (any tier, any rung, banked when the
+// run ends or the screen changes); lastAt = the last time it was opened. The
+// Learning shelf orders by them (Mark, 2026-09-09). Older entries lack both:
+// every reader must treat a missing field as 0.
+const songStats = (id) => (state.songs[id] ??= { plays: 0, best: 0, scorePasses: 0, stars: 0, bestScore: 0, ms: 0, lastAt: 0 });
 // Local date, not toISOString: UTC would flip Mark's AEST mornings to yesterday.
 const localDay = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 function markPracticedToday() {
@@ -306,8 +310,9 @@ function show(name) {
   echoView?.pressed.clear();
   // abandonment: leaving mid-song is exactly the signal the usage gate wants
   if (active === 'play' && name !== 'play' && engine && !engine.finished) {
-    jlog('abandon', { id: song?.id, at: Math.round(engine.beat), of: Math.round(engine.endBeat) });
+    jlog('abandon', { id: song?.id, at: Math.round(engine.beat), of: Math.round(engine.endBeat), ms: Math.round(engine.timeMs || 0) });
   }
+  if (active === 'play' && name !== 'play') bankSongTime(); // the clock stops when the screen does
   if (name !== active) jlog('screen', { to: name });
   for (const s of screens) $('screen-' + s).hidden = s !== name;
   $('results').hidden = true;
@@ -642,7 +647,11 @@ function canonLibraryCtx() {
   // filters across every shelf, tagged with where each hit lives.
   const q = libQuery.trim();
   const fameGroups = HALL_OF_FAME.map((h2) => groups.get(h2.group)).filter(Boolean);
-  const sortMode2 = state.lib.exploreSort === 'diff' ? 'diff' : 'az';
+  // THE DEFAULT IS THE SMART ORDER. The setting used to fall back to A to Z
+  // when unset, so the Learning shelf Mark asked to see by time (2026-09-09)
+  // showed A to Z until he found the toggle, under a header that admitted it.
+  // The design's own sample headers are the smart titles: that is the default.
+  const sortMode2 = state.lib.exploreSort === 'az' ? 'az' : 'diff';
   // Explore is the ALL SONGS shelf (Mark, 2026-08-30: "make sure explore has
   // all our songs in it, that's our all songs area"): every group, not just
   // the untouched remainder, so the sleeve wall from here is the whole catalogue
@@ -656,7 +665,7 @@ function canonLibraryCtx() {
   const azSort = (list) => [...list].sort((a2, b2) =>
     a2[a2.length - 1].title.localeCompare(b2[b2.length - 1].title));
   const az = sortMode2 === 'az';
-  const smartTitle = { learning: 'LEARNING, WEAKEST FIRST', repertoire: 'REPERTOIRE, STRONGEST FIRST',
+  const smartTitle = { learning: 'LEARNING, MOST PLAYED FIRST', repertoire: 'REPERTOIRE, STRONGEST FIRST',
     fame: 'HALL OF FAME', explore: 'EXPLORE, EASIEST FIRST' };
   const shelf = (key, list) => ({
     rows: az ? azSort(list) : list,
@@ -860,7 +869,7 @@ function canonLibraryCtx() {
     onTab: (sec) => { state.lib.canonTab = sec; state.lib.canonShowAll = false; libQuery = ''; store.save(state); renderLibrary(); },
     query: libQuery,
     onTool: (id) => { const el = $(id); if (el) el.click(); },
-    sortMode: state.lib.exploreSort === 'diff' ? 'diff' : 'az',
+    sortMode: state.lib.exploreSort === 'az' ? 'az' : 'diff',
     onSort: (mode) => { state.lib.exploreSort = mode; store.save(state); renderLibrary(); },
 
     // Per-tool TRUTH for the drawer (sample-bleed audit: the drawn rows carried
@@ -1189,7 +1198,7 @@ function renderLibrary() {
     if (variants) fameEl.appendChild(makeRow(variants, '🎬 ' + h.from));
   }
   // explore ordering: A–Z or by measured entry difficulty (easiest tier first)
-  const sortMode = state.lib.exploreSort === 'diff' ? 'diff' : 'az';
+  const sortMode = state.lib.exploreSort === 'az' ? 'az' : 'diff';
   $('explore-sort').textContent = sortMode === 'diff' ? '1→10' : 'A–Z';
   $('explore-sort').title = sortMode === 'diff' ? 'Ordered by difficulty, tap for A–Z' : 'Ordered A–Z, tap for difficulty';
   const exploreSorted = sortMode === 'diff'
@@ -1215,7 +1224,7 @@ for (const head of document.querySelectorAll('.lib-head')) {
 }
 $('explore-sort').addEventListener('click', (ev) => {
   ev.stopPropagation();
-  state.lib.exploreSort = state.lib.exploreSort === 'diff' ? 'az' : 'diff';
+  state.lib.exploreSort = state.lib.exploreSort === 'az' ? 'diff' : 'az';
   state.lib.explore = true;
   store.save(state);
   jlog('explore_sort', { mode: state.lib.exploreSort });
@@ -1338,6 +1347,7 @@ function bankBlock(kind, ref) {
 }
 function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   jlog('song_start', { id: s.id, sight: !!s.sightRead });
+  songStats(s.id).lastAt = Date.now(); // touched: the Learning shelf's recency key
   pathSessionUntil = 0; // an ordinary open carries no prescribed timebox
   song = s;
   sightMode = !!s.sightRead;
@@ -1389,7 +1399,24 @@ function syncChunkLabel() {
   btn.textContent = `Chunk ${c.idx + 1} / ${c.count}`;
 }
 
+// The per-song clock. Every engine's wall time is banked exactly once, on
+// whichever comes first: the run finishing, the screen changing, or the engine
+// being rebuilt (a section change, a restart, a rung). The flag lives on the
+// engine so the three callers cannot double-count the same run.
+function bankSongTime() {
+  if (!engine || !song || engine.__timeBanked) return;
+  engine.__timeBanked = true;
+  const ms = Math.round(engine.timeMs || 0);
+  if (ms <= 0) return;
+  const st = songStats(song.id);
+  st.ms = (st.ms || 0) + ms;
+  st.lastAt = Date.now();
+  store.save(state);
+}
+window.__bankSongTime = bankSongTime; // gate handle (learning-order-probe)
+
 function rebuildEngine() {
+  bankSongTime(); // a rebuild replaces the engine: keep what the old one counted
   const secIdx = $('section-select').value;
   const loop = loopOverride ? { ...loopOverride }
     : chunkIdx !== null
@@ -1597,6 +1624,7 @@ function finishSong() {
   if (engine.__finishHandled) return; // pumped frames must not double-count
   engine.__finishHandled = true;
   if (takeRec) finishTake(); // a finished song closes and shelves its take
+  bankSongTime();
   markPracticedToday();
   logPracticeMinutes(engine.timeMs / 60000);
   jlog('song_finish', { id: song.id, acc: engine.accuracy(), wrong: engine.stats.wrong, mode: viewMode, sight: sightMode });

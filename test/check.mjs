@@ -1689,11 +1689,24 @@ const { groupSongs, classifyGroups, filterExplore } = await import('../js/librar
   const b = classifyGroups(groups, statsB);
   assert.ok(b.repertoire.some((v) => v.some((s) => s.id === marioTop)), '3-starred top tier lands in Repertoire');
   assert.ok(!b.learning.some((v) => v.some((s) => s.id === marioTop)), 'and leaves Learning');
-  // learning sorts weakest first
+  // learning sorts by time in the song, then recency, then the old weakness order (2026-09-09)
   const statsC = (id) => id === 'fur-elise' ? { plays: 1, stars: 2, best: 90 } : id === 'ode-to-joy' ? { plays: 1, stars: 0, best: 40 } : zero();
   const c = classifyGroups(groups, statsC);
   const ids = c.learning.map((v) => v[0].id);
-  assert.ok(ids.indexOf('ode-to-joy') < ids.indexOf('fur-elise'), 'weakest song leads the Learning section');
+  assert.ok(ids.indexOf('ode-to-joy') < ids.indexOf('fur-elise'), 'with no clock, the weakest song still leads Learning');
+  const statsD = (id) => id === 'fur-elise' ? { plays: 1, stars: 2, best: 90, ms: 300000 } : id === 'ode-to-joy' ? { plays: 1, stars: 0, best: 40, ms: 60000 } : zero();
+  const d = classifyGroups(groups, statsD).learning.map((v) => v[0].id);
+  assert.ok(d.indexOf('fur-elise') < d.indexOf('ode-to-joy'), 'the song with the most time in it leads Learning');
+  // a minute of play with NO finished run is Learning; twenty seconds is still Explore (accidental launch)
+  const { LEARNING_MIN_MS } = await import('../js/library.mjs');
+  const statsE = (id) => id === 'fur-elise' ? { plays: 0, stars: 0, best: 0, ms: LEARNING_MIN_MS } : id === 'ode-to-joy' ? { plays: 0, stars: 0, best: 0, ms: 20000 } : zero();
+  const e = classifyGroups(groups, statsE);
+  assert.ok(e.learning.some((v) => v[0].id === 'fur-elise'), 'a minute in a song puts it in Learning without a finished run');
+  assert.ok(e.explore.some((v) => v[0].id === 'ode-to-joy'), 'twenty seconds does not');
+  // same time: the most recently opened leads
+  const statsF = (id) => id === 'fur-elise' ? { plays: 0, ms: 90000, lastAt: 1000 } : id === 'ode-to-joy' ? { plays: 0, ms: 90000, lastAt: 2000 } : zero();
+  const f = classifyGroups(groups, statsF).learning.map((v) => v[0].id);
+  assert.ok(f.indexOf('ode-to-joy') < f.indexOf('fur-elise'), 'equal time: the most recently opened leads');
   // explore search filters by title and composer
   const ex = fresh.explore;
   assert.ok(filterExplore(ex, 'moonlight').length === 1, 'search finds Moonlight by title');

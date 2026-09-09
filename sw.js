@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v120';  // every lesson on both ladders carries a verified video (7 added, oEmbed-checked); teacher-walk gate
+const VERSION = 'keys-v121';  // Learning shelf orders by time in the song (touched songs count after a minute); per-song clock; learning-order gate
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
