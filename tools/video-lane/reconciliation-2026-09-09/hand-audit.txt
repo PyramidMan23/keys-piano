@@ -1,0 +1,10 @@
+241 songs audited
+
+0 of 241 songs have at least one problem
+
+guard
+  the cut moved 227 of 977 notes across hands
+  fixture:clair-de-lune-cut-at-middle-C  condemned (chord no hand can hold, threshold split)
+  fixture:clair-de-lune-as-engraved      clean
+  fixture:clair-de-lune-cut-but-claiming-a-score clean (the exemption holds)
+  fixture:video-authored-hard-but-crossed condemned (crossed hands, as it must be)

@@ -1,0 +1,1752 @@
+[
+ {
+  "midi": 56,
+  "colour": "red",
+  "on": 1.717,
+  "off": 1.733,
+  "frames": [
+   {
+    "requestedSeconds": 3.4370000000000007,
+    "presentationSeconds": 3.45,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-0-0.png"
+   },
+   {
+    "requestedSeconds": 3.552000000000001,
+    "presentationSeconds": 3.567,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-0-1.png"
+   }
+  ],
+  "strike": 3.517000000000001,
+  "row": 0,
+  "index": 0,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 0
+ },
+ {
+  "midi": 74,
+  "colour": "red",
+  "on": 1.817,
+  "off": 1.833,
+  "frames": [
+   {
+    "requestedSeconds": 3.537000000000001,
+    "presentationSeconds": 3.55,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-1-0.png"
+   },
+   {
+    "requestedSeconds": 3.652000000000001,
+    "presentationSeconds": 3.667,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-1-1.png"
+   }
+  ],
+  "strike": 3.617000000000001,
+  "row": 0,
+  "index": 1,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 1
+ },
+ {
+  "midi": 76,
+  "colour": "red",
+  "on": 1.833,
+  "off": 2.617,
+  "frames": [
+   {
+    "requestedSeconds": 3.553000000000001,
+    "presentationSeconds": 3.567,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-2-0.png"
+   },
+   {
+    "requestedSeconds": 3.668000000000001,
+    "presentationSeconds": 3.683,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-2-1.png"
+   }
+  ],
+  "strike": 3.633000000000001,
+  "row": 0,
+  "index": 2,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 2
+ },
+ {
+  "midi": 57,
+  "colour": "white",
+  "on": 1.917,
+  "off": 3.1,
+  "frames": [
+   {
+    "requestedSeconds": 3.6370000000000005,
+    "presentationSeconds": 3.65,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-3-0.png"
+   },
+   {
+    "requestedSeconds": 3.7520000000000007,
+    "presentationSeconds": 3.767,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-3-1.png"
+   }
+  ],
+  "strike": 3.7170000000000005,
+  "row": 0,
+  "index": 3,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 3
+ },
+ {
+  "midi": 73,
+  "colour": "red",
+  "on": 18.917,
+  "off": 18.933,
+  "frames": [
+   {
+    "requestedSeconds": 20.637000000000004,
+    "presentationSeconds": 20.65,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-4-0.png"
+   },
+   {
+    "requestedSeconds": 20.752000000000002,
+    "presentationSeconds": 20.767,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-4-1.png"
+   }
+  ],
+  "strike": 20.717000000000002,
+  "row": 0,
+  "index": 4,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 4
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "on": 31.367,
+  "off": 31.617,
+  "frames": [
+   {
+    "requestedSeconds": 33.087,
+    "presentationSeconds": 33.1,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-5-0.png"
+   },
+   {
+    "requestedSeconds": 33.202,
+    "presentationSeconds": 33.217,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-5-1.png"
+   }
+  ],
+  "strike": 33.167,
+  "row": 0,
+  "index": 5,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 5
+ },
+ {
+  "midi": 42,
+  "colour": "white",
+  "on": 31.383,
+  "off": 31.467,
+  "frames": [
+   {
+    "requestedSeconds": 33.103,
+    "presentationSeconds": 33.117,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-6-0.png"
+   },
+   {
+    "requestedSeconds": 33.217999999999996,
+    "presentationSeconds": 33.233,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-6-1.png"
+   }
+  ],
+  "strike": 33.183,
+  "row": 0,
+  "index": 6,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 6
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "on": 31.667,
+  "off": 31.7,
+  "frames": [
+   {
+    "requestedSeconds": 33.387,
+    "presentationSeconds": 33.4,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-7-0.png"
+   },
+   {
+    "requestedSeconds": 33.501999999999995,
+    "presentationSeconds": 33.517,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-7-1.png"
+   }
+  ],
+  "strike": 33.467,
+  "row": 0,
+  "index": 7,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 7
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "on": 31.733,
+  "off": 31.817,
+  "frames": [
+   {
+    "requestedSeconds": 33.453,
+    "presentationSeconds": 33.467,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-8-0.png"
+   },
+   {
+    "requestedSeconds": 33.568,
+    "presentationSeconds": 33.583,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-8-1.png"
+   }
+  ],
+  "strike": 33.533,
+  "row": 0,
+  "index": 8,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 8
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "on": 32.167,
+  "off": 32.3,
+  "frames": [
+   {
+    "requestedSeconds": 33.887,
+    "presentationSeconds": 33.9,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-9-0.png"
+   },
+   {
+    "requestedSeconds": 34.001999999999995,
+    "presentationSeconds": 34.017,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-9-1.png"
+   }
+  ],
+  "strike": 33.967,
+  "row": 0,
+  "index": 9,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 9
+ },
+ {
+  "midi": 44,
+  "colour": "white",
+  "on": 34.433,
+  "off": 34.5,
+  "frames": [
+   {
+    "requestedSeconds": 36.153000000000006,
+    "presentationSeconds": 36.167,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-10-0.png"
+   },
+   {
+    "requestedSeconds": 36.268,
+    "presentationSeconds": 36.283,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-10-1.png"
+   }
+  ],
+  "strike": 36.233000000000004,
+  "row": 0,
+  "index": 10,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 10
+ },
+ {
+  "midi": 56,
+  "colour": "white",
+  "on": 34.433,
+  "off": 34.517,
+  "frames": [
+   {
+    "requestedSeconds": 36.153000000000006,
+    "presentationSeconds": 36.167,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-11-0.png"
+   },
+   {
+    "requestedSeconds": 36.268,
+    "presentationSeconds": 36.283,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-11-1.png"
+   }
+  ],
+  "strike": 36.233000000000004,
+  "row": 0,
+  "index": 11,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-01.png",
+  "cell": 11
+ },
+ {
+  "midi": 44,
+  "colour": "white",
+  "on": 34.533,
+  "off": 34.883,
+  "frames": [
+   {
+    "requestedSeconds": 36.253,
+    "presentationSeconds": 36.267,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-12-0.png"
+   },
+   {
+    "requestedSeconds": 36.367999999999995,
+    "presentationSeconds": 36.383,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-12-1.png"
+   }
+  ],
+  "strike": 36.333,
+  "row": 0,
+  "index": 12,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 0
+ },
+ {
+  "midi": 56,
+  "colour": "white",
+  "on": 34.867,
+  "off": 34.9,
+  "frames": [
+   {
+    "requestedSeconds": 36.587,
+    "presentationSeconds": 36.6,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-13-0.png"
+   },
+   {
+    "requestedSeconds": 36.702,
+    "presentationSeconds": 36.717,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-13-1.png"
+   }
+  ],
+  "strike": 36.667,
+  "row": 0,
+  "index": 13,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 1
+ },
+ {
+  "midi": 44,
+  "colour": "white",
+  "on": 35.133,
+  "off": 35.3,
+  "frames": [
+   {
+    "requestedSeconds": 36.85300000000001,
+    "presentationSeconds": 36.867,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-14-0.png"
+   },
+   {
+    "requestedSeconds": 36.968,
+    "presentationSeconds": 36.983,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-14-1.png"
+   }
+  ],
+  "strike": 36.93300000000001,
+  "row": 0,
+  "index": 14,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 2
+ },
+ {
+  "midi": 56,
+  "colour": "white",
+  "on": 35.333,
+  "off": 35.533,
+  "frames": [
+   {
+    "requestedSeconds": 37.053,
+    "presentationSeconds": 37.067,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-15-0.png"
+   },
+   {
+    "requestedSeconds": 37.16799999999999,
+    "presentationSeconds": 37.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-15-1.png"
+   }
+  ],
+  "strike": 37.132999999999996,
+  "row": 0,
+  "index": 15,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 3
+ },
+ {
+  "midi": 69,
+  "colour": "red",
+  "on": 37.45,
+  "off": 37.55,
+  "frames": [
+   {
+    "requestedSeconds": 39.17,
+    "presentationSeconds": 39.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-16-0.png"
+   },
+   {
+    "requestedSeconds": 39.285,
+    "presentationSeconds": 39.3,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-16-1.png"
+   }
+  ],
+  "strike": 39.25,
+  "row": 0,
+  "index": 16,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 4
+ },
+ {
+  "midi": 71,
+  "colour": "red",
+  "on": 37.45,
+  "off": 37.55,
+  "frames": [
+   {
+    "requestedSeconds": 39.17,
+    "presentationSeconds": 39.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-17-0.png"
+   },
+   {
+    "requestedSeconds": 39.285,
+    "presentationSeconds": 39.3,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-17-1.png"
+   }
+  ],
+  "strike": 39.25,
+  "row": 0,
+  "index": 17,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 5
+ },
+ {
+  "midi": 69,
+  "colour": "red",
+  "on": 37.583,
+  "off": 37.817,
+  "frames": [
+   {
+    "requestedSeconds": 39.303,
+    "presentationSeconds": 39.317,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-18-0.png"
+   },
+   {
+    "requestedSeconds": 39.41799999999999,
+    "presentationSeconds": 39.433,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-18-1.png"
+   }
+  ],
+  "strike": 39.382999999999996,
+  "row": 0,
+  "index": 18,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 6
+ },
+ {
+  "midi": 71,
+  "colour": "red",
+  "on": 37.583,
+  "off": 37.767,
+  "frames": [
+   {
+    "requestedSeconds": 39.303,
+    "presentationSeconds": 39.317,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-19-0.png"
+   },
+   {
+    "requestedSeconds": 39.41799999999999,
+    "presentationSeconds": 39.433,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-19-1.png"
+   }
+  ],
+  "strike": 39.382999999999996,
+  "row": 0,
+  "index": 19,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 7
+ },
+ {
+  "midi": 72,
+  "colour": "red",
+  "on": 37.8,
+  "off": 38.05,
+  "frames": [
+   {
+    "requestedSeconds": 39.519999999999996,
+    "presentationSeconds": 39.533,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-20-0.png"
+   },
+   {
+    "requestedSeconds": 39.63499999999999,
+    "presentationSeconds": 39.65,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-20-1.png"
+   }
+  ],
+  "strike": 39.599999999999994,
+  "row": 0,
+  "index": 20,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 8
+ },
+ {
+  "midi": 73,
+  "colour": "red",
+  "on": 42.483,
+  "off": 42.517,
+  "frames": [
+   {
+    "requestedSeconds": 44.203,
+    "presentationSeconds": 44.217,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-21-0.png"
+   },
+   {
+    "requestedSeconds": 44.318,
+    "presentationSeconds": 44.333,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-21-1.png"
+   }
+  ],
+  "strike": 44.283,
+  "row": 0,
+  "index": 21,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 9
+ },
+ {
+  "midi": 72,
+  "colour": "red",
+  "on": 42.533,
+  "off": 42.567,
+  "frames": [
+   {
+    "requestedSeconds": 44.253,
+    "presentationSeconds": 44.267,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-22-0.png"
+   },
+   {
+    "requestedSeconds": 44.367999999999995,
+    "presentationSeconds": 44.383,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-22-1.png"
+   }
+  ],
+  "strike": 44.333,
+  "row": 0,
+  "index": 22,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 10
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "on": 44.717,
+  "off": 44.75,
+  "frames": [
+   {
+    "requestedSeconds": 46.437,
+    "presentationSeconds": 46.45,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-23-0.png"
+   },
+   {
+    "requestedSeconds": 46.55199999999999,
+    "presentationSeconds": 46.567,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-23-1.png"
+   }
+  ],
+  "strike": 46.516999999999996,
+  "row": 0,
+  "index": 23,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-02.png",
+  "cell": 11
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "on": 44.817,
+  "off": 44.867,
+  "frames": [
+   {
+    "requestedSeconds": 46.537000000000006,
+    "presentationSeconds": 46.55,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-24-0.png"
+   },
+   {
+    "requestedSeconds": 46.652,
+    "presentationSeconds": 46.667,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-24-1.png"
+   }
+  ],
+  "strike": 46.617000000000004,
+  "row": 0,
+  "index": 24,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 0
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "on": 44.95,
+  "off": 45.017,
+  "frames": [
+   {
+    "requestedSeconds": 46.67,
+    "presentationSeconds": 46.683,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-25-0.png"
+   },
+   {
+    "requestedSeconds": 46.785,
+    "presentationSeconds": 46.8,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-25-1.png"
+   }
+  ],
+  "strike": 46.75,
+  "row": 0,
+  "index": 25,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 1
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "on": 45.183,
+  "off": 45.317,
+  "frames": [
+   {
+    "requestedSeconds": 46.903000000000006,
+    "presentationSeconds": 46.917,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-26-0.png"
+   },
+   {
+    "requestedSeconds": 47.018,
+    "presentationSeconds": 47.033,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-26-1.png"
+   }
+  ],
+  "strike": 46.983000000000004,
+  "row": 0,
+  "index": 26,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 2
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "on": 45.8,
+  "off": 46.017,
+  "frames": [
+   {
+    "requestedSeconds": 47.519999999999996,
+    "presentationSeconds": 47.533,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-27-0.png"
+   },
+   {
+    "requestedSeconds": 47.63499999999999,
+    "presentationSeconds": 47.65,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-27-1.png"
+   }
+  ],
+  "strike": 47.599999999999994,
+  "row": 0,
+  "index": 27,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 3
+ },
+ {
+  "midi": 73,
+  "colour": "red",
+  "on": 47.217,
+  "off": 47.233,
+  "frames": [
+   {
+    "requestedSeconds": 48.937,
+    "presentationSeconds": 48.95,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-28-0.png"
+   },
+   {
+    "requestedSeconds": 49.05199999999999,
+    "presentationSeconds": 49.067,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-28-1.png"
+   }
+  ],
+  "strike": 49.016999999999996,
+  "row": 0,
+  "index": 28,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 4
+ },
+ {
+  "midi": 56,
+  "colour": "white",
+  "on": 48.117,
+  "off": 48.333,
+  "frames": [
+   {
+    "requestedSeconds": 49.837,
+    "presentationSeconds": 49.85,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-29-0.png"
+   },
+   {
+    "requestedSeconds": 49.952,
+    "presentationSeconds": 49.967,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-29-1.png"
+   }
+  ],
+  "strike": 49.917,
+  "row": 0,
+  "index": 29,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 5
+ },
+ {
+  "midi": 44,
+  "colour": "white",
+  "on": 48.65,
+  "off": 48.8,
+  "frames": [
+   {
+    "requestedSeconds": 50.370000000000005,
+    "presentationSeconds": 50.383,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-30-0.png"
+   },
+   {
+    "requestedSeconds": 50.485,
+    "presentationSeconds": 50.5,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-30-1.png"
+   }
+  ],
+  "strike": 50.45,
+  "row": 0,
+  "index": 30,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 6
+ },
+ {
+  "midi": 44,
+  "colour": "white",
+  "on": 48.833,
+  "off": 49.267,
+  "frames": [
+   {
+    "requestedSeconds": 50.553,
+    "presentationSeconds": 50.567,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-31-0.png"
+   },
+   {
+    "requestedSeconds": 50.66799999999999,
+    "presentationSeconds": 50.683,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-31-1.png"
+   }
+  ],
+  "strike": 50.632999999999996,
+  "row": 0,
+  "index": 31,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 7
+ },
+ {
+  "midi": 56,
+  "colour": "white",
+  "on": 49.2,
+  "off": 49.35,
+  "frames": [
+   {
+    "requestedSeconds": 50.92,
+    "presentationSeconds": 50.933,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-32-0.png"
+   },
+   {
+    "requestedSeconds": 51.035,
+    "presentationSeconds": 51.05,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-32-1.png"
+   }
+  ],
+  "strike": 51,
+  "row": 0,
+  "index": 32,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 8
+ },
+ {
+  "midi": 70,
+  "colour": "red",
+  "on": 50.883,
+  "off": 50.95,
+  "frames": [
+   {
+    "requestedSeconds": 52.60300000000001,
+    "presentationSeconds": 52.617,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-33-0.png"
+   },
+   {
+    "requestedSeconds": 52.718,
+    "presentationSeconds": 52.733,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-33-1.png"
+   }
+  ],
+  "strike": 52.68300000000001,
+  "row": 0,
+  "index": 33,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 9
+ },
+ {
+  "midi": 69,
+  "colour": "red",
+  "on": 50.967,
+  "off": 51.55,
+  "frames": [
+   {
+    "requestedSeconds": 52.687,
+    "presentationSeconds": 52.7,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-34-0.png"
+   },
+   {
+    "requestedSeconds": 52.80199999999999,
+    "presentationSeconds": 52.817,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-34-1.png"
+   }
+  ],
+  "strike": 52.766999999999996,
+  "row": 0,
+  "index": 34,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 10
+ },
+ {
+  "midi": 71,
+  "colour": "red",
+  "on": 50.967,
+  "off": 51.55,
+  "frames": [
+   {
+    "requestedSeconds": 52.687,
+    "presentationSeconds": 52.7,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-35-0.png"
+   },
+   {
+    "requestedSeconds": 52.80199999999999,
+    "presentationSeconds": 52.817,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-35-1.png"
+   }
+  ],
+  "strike": 52.766999999999996,
+  "row": 0,
+  "index": 35,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-03.png",
+  "cell": 11
+ },
+ {
+  "midi": 60,
+  "colour": "red",
+  "on": 54.283,
+  "off": 54.317,
+  "frames": [
+   {
+    "requestedSeconds": 56.003,
+    "presentationSeconds": 56.017,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-36-0.png"
+   },
+   {
+    "requestedSeconds": 56.117999999999995,
+    "presentationSeconds": 56.133,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-36-1.png"
+   }
+  ],
+  "strike": 56.083,
+  "row": 0,
+  "index": 36,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 0
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "on": 54.283,
+  "off": 54.317,
+  "frames": [
+   {
+    "requestedSeconds": 56.003,
+    "presentationSeconds": 56.017,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-37-0.png"
+   },
+   {
+    "requestedSeconds": 56.117999999999995,
+    "presentationSeconds": 56.133,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-37-1.png"
+   }
+  ],
+  "strike": 56.083,
+  "row": 0,
+  "index": 37,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 1
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "on": 54.55,
+  "off": 54.583,
+  "frames": [
+   {
+    "requestedSeconds": 56.269999999999996,
+    "presentationSeconds": 56.283,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-38-0.png"
+   },
+   {
+    "requestedSeconds": 56.38499999999999,
+    "presentationSeconds": 56.4,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-38-1.png"
+   }
+  ],
+  "strike": 56.349999999999994,
+  "row": 0,
+  "index": 38,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 2
+ },
+ {
+  "midi": 64,
+  "colour": "red",
+  "on": 54.6,
+  "off": 54.617,
+  "frames": [
+   {
+    "requestedSeconds": 56.32000000000001,
+    "presentationSeconds": 56.333,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-39-0.png"
+   },
+   {
+    "requestedSeconds": 56.435,
+    "presentationSeconds": 56.45,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-39-1.png"
+   }
+  ],
+  "strike": 56.400000000000006,
+  "row": 0,
+  "index": 39,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 3
+ },
+ {
+  "midi": 63,
+  "colour": "red",
+  "on": 54.75,
+  "off": 54.783,
+  "frames": [
+   {
+    "requestedSeconds": 56.47,
+    "presentationSeconds": 56.483,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-40-0.png"
+   },
+   {
+    "requestedSeconds": 56.584999999999994,
+    "presentationSeconds": 56.6,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-40-1.png"
+   }
+  ],
+  "strike": 56.55,
+  "row": 0,
+  "index": 40,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 4
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "on": 54.8,
+  "off": 55.317,
+  "frames": [
+   {
+    "requestedSeconds": 56.519999999999996,
+    "presentationSeconds": 56.533,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-41-0.png"
+   },
+   {
+    "requestedSeconds": 56.63499999999999,
+    "presentationSeconds": 56.65,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-41-1.png"
+   }
+  ],
+  "strike": 56.599999999999994,
+  "row": 0,
+  "index": 41,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 5
+ },
+ {
+  "midi": 64,
+  "colour": "red",
+  "on": 54.8,
+  "off": 55.317,
+  "frames": [
+   {
+    "requestedSeconds": 56.519999999999996,
+    "presentationSeconds": 56.533,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-42-0.png"
+   },
+   {
+    "requestedSeconds": 56.63499999999999,
+    "presentationSeconds": 56.65,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-42-1.png"
+   }
+  ],
+  "strike": 56.599999999999994,
+  "row": 0,
+  "index": 42,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 6
+ },
+ {
+  "midi": 63,
+  "colour": "red",
+  "on": 55.45,
+  "off": 55.467,
+  "frames": [
+   {
+    "requestedSeconds": 57.17,
+    "presentationSeconds": 57.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-43-0.png"
+   },
+   {
+    "requestedSeconds": 57.285,
+    "presentationSeconds": 57.3,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-43-1.png"
+   }
+  ],
+  "strike": 57.25,
+  "row": 0,
+  "index": 43,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 7
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "on": 55.483,
+  "off": 55.767,
+  "frames": [
+   {
+    "requestedSeconds": 57.203,
+    "presentationSeconds": 57.217,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-44-0.png"
+   },
+   {
+    "requestedSeconds": 57.318,
+    "presentationSeconds": 57.333,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-44-1.png"
+   }
+  ],
+  "strike": 57.283,
+  "row": 0,
+  "index": 44,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 8
+ },
+ {
+  "midi": 64,
+  "colour": "red",
+  "on": 55.483,
+  "off": 57.183,
+  "frames": [
+   {
+    "requestedSeconds": 57.203,
+    "presentationSeconds": 57.217,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-45-0.png"
+   },
+   {
+    "requestedSeconds": 57.318,
+    "presentationSeconds": 57.333,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-45-1.png"
+   }
+  ],
+  "strike": 57.283,
+  "row": 0,
+  "index": 45,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 9
+ },
+ {
+  "midi": 100,
+  "colour": "red",
+  "on": 59.367,
+  "off": 59.383,
+  "frames": [
+   {
+    "requestedSeconds": 61.087,
+    "presentationSeconds": 61.1,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-46-0.png"
+   },
+   {
+    "requestedSeconds": 61.202,
+    "presentationSeconds": 61.217,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-46-1.png"
+   }
+  ],
+  "strike": 61.167,
+  "row": 0,
+  "index": 46,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 10
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "on": 69.183,
+  "off": 69.283,
+  "frames": [
+   {
+    "requestedSeconds": 70.903,
+    "presentationSeconds": 70.917,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-47-0.png"
+   },
+   {
+    "requestedSeconds": 71.018,
+    "presentationSeconds": 71.033,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-47-1.png"
+   }
+  ],
+  "strike": 70.983,
+  "row": 0,
+  "index": 47,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-04.png",
+  "cell": 11
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "on": 75.983,
+  "off": 76.017,
+  "frames": [
+   {
+    "requestedSeconds": 77.703,
+    "presentationSeconds": 77.717,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-48-0.png"
+   },
+   {
+    "requestedSeconds": 77.818,
+    "presentationSeconds": 77.833,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-48-1.png"
+   }
+  ],
+  "strike": 77.783,
+  "row": 0,
+  "index": 48,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 0
+ },
+ {
+  "midi": 95,
+  "colour": "red",
+  "on": 76.033,
+  "off": 76.067,
+  "frames": [
+   {
+    "requestedSeconds": 77.753,
+    "presentationSeconds": 77.767,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-49-0.png"
+   },
+   {
+    "requestedSeconds": 77.868,
+    "presentationSeconds": 77.883,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-49-1.png"
+   }
+  ],
+  "strike": 77.833,
+  "row": 0,
+  "index": 49,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 1
+ },
+ {
+  "midi": 72,
+  "colour": "red",
+  "on": 19.2,
+  "off": 19.217,
+  "frames": [
+   {
+    "requestedSeconds": 20.669999999999998,
+    "presentationSeconds": 20.683,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-50-0.png"
+   },
+   {
+    "requestedSeconds": 20.784999999999997,
+    "presentationSeconds": 20.8,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-50-1.png"
+   }
+  ],
+  "strike": 20.749999999999996,
+  "row": 1,
+  "index": 50,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 2
+ },
+ {
+  "midi": 74,
+  "colour": "red",
+  "on": 19.2,
+  "off": 20.033,
+  "frames": [
+   {
+    "requestedSeconds": 20.669999999999998,
+    "presentationSeconds": 20.683,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-51-0.png"
+   },
+   {
+    "requestedSeconds": 20.784999999999997,
+    "presentationSeconds": 20.8,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-51-1.png"
+   }
+  ],
+  "strike": 20.749999999999996,
+  "row": 1,
+  "index": 51,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 3
+ },
+ {
+  "midi": 42,
+  "colour": "white",
+  "on": 31.583,
+  "off": 31.75,
+  "frames": [
+   {
+    "requestedSeconds": 33.053,
+    "presentationSeconds": 33.067,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-52-0.png"
+   },
+   {
+    "requestedSeconds": 33.16799999999999,
+    "presentationSeconds": 33.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-52-1.png"
+   }
+  ],
+  "strike": 33.132999999999996,
+  "row": 1,
+  "index": 52,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 4
+ },
+ {
+  "midi": 44,
+  "colour": "white",
+  "on": 35.333,
+  "off": 35.567,
+  "frames": [
+   {
+    "requestedSeconds": 36.803,
+    "presentationSeconds": 36.817,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-53-0.png"
+   },
+   {
+    "requestedSeconds": 36.91799999999999,
+    "presentationSeconds": 36.933,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-53-1.png"
+   }
+  ],
+  "strike": 36.882999999999996,
+  "row": 1,
+  "index": 53,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 5
+ },
+ {
+  "midi": 71,
+  "colour": "red",
+  "on": 42.333,
+  "off": 42.383,
+  "frames": [
+   {
+    "requestedSeconds": 43.803,
+    "presentationSeconds": 43.817,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-54-0.png"
+   },
+   {
+    "requestedSeconds": 43.91799999999999,
+    "presentationSeconds": 43.933,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-54-1.png"
+   }
+  ],
+  "strike": 43.882999999999996,
+  "row": 1,
+  "index": 54,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 6
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "on": 45.383,
+  "off": 45.6,
+  "frames": [
+   {
+    "requestedSeconds": 46.853,
+    "presentationSeconds": 46.867,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-55-0.png"
+   },
+   {
+    "requestedSeconds": 46.967999999999996,
+    "presentationSeconds": 46.983,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-55-1.png"
+   }
+  ],
+  "strike": 46.933,
+  "row": 1,
+  "index": 55,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 7
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "on": 45.933,
+  "off": 46.283,
+  "frames": [
+   {
+    "requestedSeconds": 47.403,
+    "presentationSeconds": 47.417,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-56-0.png"
+   },
+   {
+    "requestedSeconds": 47.517999999999994,
+    "presentationSeconds": 47.533,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-56-1.png"
+   }
+  ],
+  "strike": 47.483,
+  "row": 1,
+  "index": 56,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 8
+ },
+ {
+  "midi": 44,
+  "colour": "white",
+  "on": 48.85,
+  "off": 49.7,
+  "frames": [
+   {
+    "requestedSeconds": 50.32,
+    "presentationSeconds": 50.333,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-57-0.png"
+   },
+   {
+    "requestedSeconds": 50.434999999999995,
+    "presentationSeconds": 50.45,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-57-1.png"
+   }
+  ],
+  "strike": 50.4,
+  "row": 1,
+  "index": 57,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 9
+ },
+ {
+  "midi": 60,
+  "colour": "red",
+  "on": 54.417,
+  "off": 54.433,
+  "frames": [
+   {
+    "requestedSeconds": 55.887,
+    "presentationSeconds": 55.9,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-58-0.png"
+   },
+   {
+    "requestedSeconds": 56.001999999999995,
+    "presentationSeconds": 56.017,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-58-1.png"
+   }
+  ],
+  "strike": 55.967,
+  "row": 1,
+  "index": 58,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 10
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "on": 54.417,
+  "off": 54.433,
+  "frames": [
+   {
+    "requestedSeconds": 55.887,
+    "presentationSeconds": 55.9,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-59-0.png"
+   },
+   {
+    "requestedSeconds": 56.001999999999995,
+    "presentationSeconds": 56.017,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-59-1.png"
+   }
+  ],
+  "strike": 55.967,
+  "row": 1,
+  "index": 59,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-05.png",
+  "cell": 11
+ },
+ {
+  "midi": 61,
+  "colour": "red",
+  "on": 54.45,
+  "off": 54.567,
+  "frames": [
+   {
+    "requestedSeconds": 55.92,
+    "presentationSeconds": 55.933,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-60-0.png"
+   },
+   {
+    "requestedSeconds": 56.035,
+    "presentationSeconds": 56.05,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-60-1.png"
+   }
+  ],
+  "strike": 56,
+  "row": 1,
+  "index": 60,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-06.png",
+  "cell": 0
+ },
+ {
+  "midi": 60,
+  "colour": "red",
+  "on": 54.583,
+  "off": 54.6,
+  "frames": [
+   {
+    "requestedSeconds": 56.053,
+    "presentationSeconds": 56.067,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-61-0.png"
+   },
+   {
+    "requestedSeconds": 56.16799999999999,
+    "presentationSeconds": 56.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-61-1.png"
+   }
+  ],
+  "strike": 56.132999999999996,
+  "row": 1,
+  "index": 61,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-06.png",
+  "cell": 1
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "on": 54.583,
+  "off": 54.6,
+  "frames": [
+   {
+    "requestedSeconds": 56.053,
+    "presentationSeconds": 56.067,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-62-0.png"
+   },
+   {
+    "requestedSeconds": 56.16799999999999,
+    "presentationSeconds": 56.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-62-1.png"
+   }
+  ],
+  "strike": 56.132999999999996,
+  "row": 1,
+  "index": 62,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-06.png",
+  "cell": 2
+ },
+ {
+  "midi": 60,
+  "colour": "red",
+  "on": 54.917,
+  "off": 54.95,
+  "frames": [
+   {
+    "requestedSeconds": 56.387,
+    "presentationSeconds": 56.4,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-63-0.png"
+   },
+   {
+    "requestedSeconds": 56.501999999999995,
+    "presentationSeconds": 56.517,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-63-1.png"
+   }
+  ],
+  "strike": 56.467,
+  "row": 1,
+  "index": 63,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-06.png",
+  "cell": 3
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "on": 54.983,
+  "off": 55.583,
+  "frames": [
+   {
+    "requestedSeconds": 56.452999999999996,
+    "presentationSeconds": 56.467,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-64-0.png"
+   },
+   {
+    "requestedSeconds": 56.56799999999999,
+    "presentationSeconds": 56.583,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-64-1.png"
+   }
+  ],
+  "strike": 56.532999999999994,
+  "row": 1,
+  "index": 64,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-06.png",
+  "cell": 4
+ },
+ {
+  "midi": 63,
+  "colour": "red",
+  "on": 55.6,
+  "off": 55.617,
+  "frames": [
+   {
+    "requestedSeconds": 57.07,
+    "presentationSeconds": 57.083,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-65-0.png"
+   },
+   {
+    "requestedSeconds": 57.184999999999995,
+    "presentationSeconds": 57.2,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-65-1.png"
+   }
+  ],
+  "strike": 57.15,
+  "row": 1,
+  "index": 65,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-06.png",
+  "cell": 5
+ },
+ {
+  "midi": 99,
+  "colour": "red",
+  "on": 65.7,
+  "off": 65.717,
+  "frames": [
+   {
+    "requestedSeconds": 67.17,
+    "presentationSeconds": 67.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-66-0.png"
+   },
+   {
+    "requestedSeconds": 67.285,
+    "presentationSeconds": 67.3,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-66-1.png"
+   }
+  ],
+  "strike": 67.25,
+  "row": 1,
+  "index": 66,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-06.png",
+  "cell": 6
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "on": 69.383,
+  "off": 69.55,
+  "frames": [
+   {
+    "requestedSeconds": 70.853,
+    "presentationSeconds": 70.867,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-67-0.png"
+   },
+   {
+    "requestedSeconds": 70.96799999999999,
+    "presentationSeconds": 70.983,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-67-1.png"
+   }
+  ],
+  "strike": 70.93299999999999,
+  "row": 1,
+  "index": 67,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-06.png",
+  "cell": 7
+ },
+ {
+  "midi": 95,
+  "colour": "red",
+  "on": 73.6,
+  "off": 73.683,
+  "frames": [
+   {
+    "requestedSeconds": 75.07,
+    "presentationSeconds": 75.083,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-68-0.png"
+   },
+   {
+    "requestedSeconds": 75.18499999999999,
+    "presentationSeconds": 75.2,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-68-1.png"
+   }
+  ],
+  "strike": 75.14999999999999,
+  "row": 1,
+  "index": 68,
+  "decision": "reject",
+  "reason": "Existing bar or release particles continue; no separate second strike.",
+  "sheet": "silksong-single-candidates-06.png",
+  "cell": 8
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "on": 73.7,
+  "off": 76.183,
+  "frames": [
+   {
+    "requestedSeconds": 75.17,
+    "presentationSeconds": 75.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-69-0.png"
+   },
+   {
+    "requestedSeconds": 75.285,
+    "presentationSeconds": 75.3,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-69-1.png"
+   }
+  ],
+  "strike": 75.25,
+  "row": 1,
+  "index": 69,
+  "decision": "reject",
+  "reason": "Adjacent bar or particles, with the marked key unpressed.",
+  "sheet": "silksong-single-candidates-06.png",
+  "cell": 9
+ }
+]

@@ -1,0 +1,1388 @@
+[
+ {
+  "midi": 21,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.136,
+  "flags": [
+   "tint (195,191,165) gmb median 0.136 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 23,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.136,
+  "flags": [
+   "tint (196,191,165) gmb median 0.136 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 24,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.138,
+  "flags": [
+   "tint (195,191,164) gmb median 0.138 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 26,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.136,
+  "flags": [
+   "tint (195,191,165) gmb median 0.136 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 28,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (195,191,165) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 29,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (195,191,164) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 31,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (195,191,164) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 33,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.131,
+  "flags": [
+   "tint (195,191,165) gmb median 0.131 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 35,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.137,
+  "flags": [
+   "tint (195,191,164) gmb median 0.137 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 36,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.136,
+  "flags": [
+   "tint (195,191,165) gmb median 0.136 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 38,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.128,
+  "flags": [
+   "tint (194,191,166) gmb median 0.128 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 40,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.14,
+  "flags": [
+   "tint (195,191,164) gmb median 0.14 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 41,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (195,191,164) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 43,
+  "on": 2.317,
+  "off": 2.617,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (196,193,165) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 45,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (195,191,164) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 47,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (195,191,164) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 48,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (196,191,164) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 50,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.129,
+  "flags": [
+   "tint (195,191,166) gmb median 0.129 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 52,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.138,
+  "flags": [
+   "tint (195,191,164) gmb median 0.138 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 53,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (195,191,164) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 55,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.131,
+  "flags": [
+   "tint (195,191,166) gmb median 0.131 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 57,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.13,
+  "flags": [
+   "tint (195,191,166) gmb median 0.13 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 59,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (196,191,164) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 60,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.133,
+  "flags": [
+   "tint (195,191,165) gmb median 0.133 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 62,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.137,
+  "flags": [
+   "tint (195,192,165) gmb median 0.137 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 64,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.14,
+  "flags": [
+   "tint (195,191,164) gmb median 0.14 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 65,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (195,191,164) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 67,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (195,191,164) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 69,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.131,
+  "flags": [
+   "tint (196,192,166) gmb median 0.131 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 71,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.132,
+  "flags": [
+   "tint (194,191,166) gmb median 0.132 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 72,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.13,
+  "flags": [
+   "tint (195,191,165) gmb median 0.13 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 74,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.138,
+  "flags": [
+   "tint (196,191,164) gmb median 0.138 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 76,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.142,
+  "flags": [
+   "tint (195,191,163) gmb median 0.142 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 77,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.13,
+  "flags": [
+   "tint (195,191,166) gmb median 0.13 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 79,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (195,191,164) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 81,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (195,191,164) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 83,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.133,
+  "flags": [
+   "tint (195,191,165) gmb median 0.133 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 84,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.131,
+  "flags": [
+   "tint (195,191,166) gmb median 0.131 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 86,
+  "on": 2.317,
+  "off": 2.617,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (196,193,165) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 88,
+  "on": 2.317,
+  "off": 2.617,
+  "colour": "ambiguous",
+  "metricMedian": 0.131,
+  "flags": [
+   "tint (196,193,167) gmb median 0.131 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 89,
+  "on": 2.317,
+  "off": 2.617,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (197,192,165) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 91,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.131,
+  "flags": [
+   "tint (195,191,165) gmb median 0.131 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 93,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.136,
+  "flags": [
+   "tint (195,191,164) gmb median 0.136 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 95,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.134,
+  "flags": [
+   "tint (195,191,165) gmb median 0.134 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 96,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.131,
+  "flags": [
+   "tint (196,191,166) gmb median 0.131 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 98,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (195,192,164) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 100,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.132,
+  "flags": [
+   "tint (195,191,165) gmb median 0.132 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 101,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.137,
+  "flags": [
+   "tint (195,191,165) gmb median 0.137 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 103,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (195,191,164) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 105,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (195,191,164) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 107,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.149,
+  "flags": [
+   "tint (195,191,163) gmb median 0.149 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 108,
+  "on": 2.317,
+  "off": 2.6,
+  "colour": "ambiguous",
+  "metricMedian": 0.136,
+  "flags": [
+   "tint (195,191,165) gmb median 0.136 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-2.317.png",
+  "reason": "Title-card transition changes the whole keyboard rest appearance; no strike."
+ },
+ {
+  "midi": 21,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.142,
+  "flags": [
+   "tint (173,170,146) gmb median 0.142 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 23,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.14,
+  "flags": [
+   "tint (173,170,146) gmb median 0.14 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 24,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.143,
+  "flags": [
+   "tint (173,170,145) gmb median 0.143 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 28,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.137,
+  "flags": [
+   "tint (173,170,146) gmb median 0.137 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 29,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (173,170,145) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 31,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.142,
+  "flags": [
+   "tint (173,170,145) gmb median 0.142 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 38,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (174,170,145) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 40,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (173,170,146) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 57,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.14,
+  "flags": [
+   "tint (173,170,146) gmb median 0.14 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 67,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.138,
+  "flags": [
+   "tint (173,170,146) gmb median 0.138 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 69,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (173,170,145) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 76,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (173,170,145) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 79,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.14,
+  "flags": [
+   "tint (173,170,146) gmb median 0.14 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 81,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.143,
+  "flags": [
+   "tint (173,170,145) gmb median 0.143 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 83,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.143,
+  "flags": [
+   "tint (173,170,145) gmb median 0.143 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 89,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (174,170,145) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 95,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.143,
+  "flags": [
+   "tint (173,170,145) gmb median 0.143 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 96,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.143,
+  "flags": [
+   "tint (173,170,145) gmb median 0.143 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 100,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (173,170,145) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 103,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.142,
+  "flags": [
+   "tint (173,170,145) gmb median 0.142 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 105,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.143,
+  "flags": [
+   "tint (173,170,145) gmb median 0.143 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 107,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.142,
+  "flags": [
+   "tint (173,170,145) gmb median 0.142 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 108,
+  "on": 186.383,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.143,
+  "flags": [
+   "tint (173,170,145) gmb median 0.143 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.383.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 26,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.137,
+  "flags": [
+   "tint (172,169,145) gmb median 0.137 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 33,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (172,169,145) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 35,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.136,
+  "flags": [
+   "tint (172,169,145) gmb median 0.136 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 41,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.14,
+  "flags": [
+   "tint (172,169,144) gmb median 0.14 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 45,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.138,
+  "flags": [
+   "tint (172,169,145) gmb median 0.138 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 47,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (172,169,145) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 48,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (172,169,145) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 50,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.14,
+  "flags": [
+   "tint (173,169,145) gmb median 0.14 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 53,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.135,
+  "flags": [
+   "tint (172,169,145) gmb median 0.135 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 55,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.14,
+  "flags": [
+   "tint (172,169,145) gmb median 0.14 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 59,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.138,
+  "flags": [
+   "tint (172,169,145) gmb median 0.138 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 60,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.138,
+  "flags": [
+   "tint (172,169,145) gmb median 0.138 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 62,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.143,
+  "flags": [
+   "tint (172,169,144) gmb median 0.143 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 64,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (172,169,144) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 65,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.135,
+  "flags": [
+   "tint (172,169,146) gmb median 0.135 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 71,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.132,
+  "flags": [
+   "tint (172,169,146) gmb median 0.132 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 72,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.138,
+  "flags": [
+   "tint (172,169,145) gmb median 0.138 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 74,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.139,
+  "flags": [
+   "tint (172,169,145) gmb median 0.139 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 77,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (172,169,144) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 84,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.141,
+  "flags": [
+   "tint (172,169,144) gmb median 0.141 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 88,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.137,
+  "flags": [
+   "tint (173,169,145) gmb median 0.137 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 91,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.138,
+  "flags": [
+   "tint (172,169,145) gmb median 0.138 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 98,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.138,
+  "flags": [
+   "tint (172,169,145) gmb median 0.138 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ },
+ {
+  "midi": 101,
+  "on": 186.4,
+  "off": 187.117,
+  "colour": "ambiguous",
+  "metricMedian": 0.136,
+  "flags": [
+   "tint (172,169,145) gmb median 0.136 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "zeldas-lullaby-186.4.png",
+  "reason": "Outro dimming changes the keyboard appearance after the performance."
+ }
+]

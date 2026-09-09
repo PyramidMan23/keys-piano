@@ -27,6 +27,7 @@ import { parseMidi, midiNotes, tempoOf } from './midi.mjs';
 import { difficultyScore } from '../js/difficulty.mjs';
 import { repairHands, handsAreSane, crossings, systemic, SPAN_MAX, TRAVEL_MAX } from '../js/hands.mjs';
 import { unpedal, repairSplit, splitHeld, violations, releaseOverlaps } from './handsplit.mjs';
+import { videoProvenance } from './video-lane/provenance.mjs';
 
 const argv = process.argv.slice(2);
 const flag = (name, dflt) => {
@@ -543,6 +544,13 @@ if (built.length === 1) {
   delete built[0].level;
   console.log(`only one tier survived the audit, so it is the arrangement, not a tier: ${id}`);
 }
+const videoMetadata = flag('video-metadata');
+if (videoMetadata) {
+  if (!videoHands) throw Error('--video-metadata requires --video-hands');
+  const evidence = JSON.parse(readFileSync(videoMetadata, 'utf8'));
+  for (const song of built) Object.assign(song, videoProvenance(song.notes, evidence));
+}
+if (flag('preview-json')) writeFileSync(flag('preview-json'), JSON.stringify(built, null, 1) + '\n');
 if (has('dry')) { console.log('\n--dry: nothing written'); process.exit(0); }
 
 // ---- 8. write, merging by id ------------------------------------------------

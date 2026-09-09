@@ -1,0 +1,478 @@
+[
+ {
+  "id": "gerudo-valley",
+  "index": 0,
+  "t": 23.8,
+  "h": "L",
+  "events": [
+   {
+    "midi": 57,
+    "on": 23.683,
+    "off": 23.817,
+    "colour": "blue",
+    "metricMedian": -0.282,
+    "flags": [],
+    "index": 265,
+    "b": 39.75,
+    "h": "L"
+   },
+   {
+    "midi": 40,
+    "on": 23.8,
+    "off": 23.967,
+    "colour": "blue",
+    "metricMedian": -0.307,
+    "flags": [],
+    "index": 266,
+    "b": 40,
+    "h": "L"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 23.8,
+   "presentationSeconds": 23.8,
+   "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley-span-0.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ },
+ {
+  "id": "gerudo-valley",
+  "index": 1,
+  "t": 31.817,
+  "h": "L",
+  "events": [
+   {
+    "midi": 57,
+    "on": 31.683,
+    "off": 31.833,
+    "colour": "blue",
+    "metricMedian": -0.283,
+    "flags": [],
+    "index": 351,
+    "b": 55.75,
+    "h": "L"
+   },
+   {
+    "midi": 40,
+    "on": 31.817,
+    "off": 32.033,
+    "colour": "blue",
+    "metricMedian": -0.414,
+    "flags": [],
+    "index": 352,
+    "b": 56,
+    "h": "L"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 31.817,
+   "presentationSeconds": 31.817,
+   "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley-span-1.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ },
+ {
+  "id": "gerudo-valley",
+  "index": 2,
+  "t": 33.817,
+  "h": "L",
+  "events": [
+   {
+    "midi": 56,
+    "on": 33.683,
+    "off": 33.9,
+    "colour": "blue",
+    "metricMedian": -0.283,
+    "flags": [],
+    "index": 372,
+    "b": 59.75,
+    "h": "L"
+   },
+   {
+    "midi": 37,
+    "on": 33.817,
+    "off": 34.1,
+    "colour": "blue",
+    "metricMedian": -0.32,
+    "flags": [],
+    "index": 373,
+    "b": 60,
+    "h": "L"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 33.817,
+   "presentationSeconds": 33.817,
+   "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley-span-2.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ },
+ {
+  "id": "gerudo-valley",
+  "index": 3,
+  "t": 41.817,
+  "h": "L",
+  "events": [
+   {
+    "midi": 56,
+    "on": 41.683,
+    "off": 41.9,
+    "colour": "blue",
+    "metricMedian": -0.277,
+    "flags": [],
+    "index": 457,
+    "b": 75.75,
+    "h": "L"
+   },
+   {
+    "midi": 37,
+    "on": 41.817,
+    "off": 42.067,
+    "colour": "blue",
+    "metricMedian": -0.335,
+    "flags": [],
+    "index": 458,
+    "b": 76,
+    "h": "L"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 41.817,
+   "presentationSeconds": 41.817,
+   "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley-span-3.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ },
+ {
+  "id": "gerudo-valley",
+  "index": 4,
+  "t": 43.8,
+  "h": "L",
+  "events": [
+   {
+    "midi": 56,
+    "on": 43.683,
+    "off": 43.9,
+    "colour": "blue",
+    "metricMedian": -0.287,
+    "flags": [],
+    "index": 475,
+    "b": 79.75,
+    "h": "L"
+   },
+   {
+    "midi": 30,
+    "on": 43.8,
+    "off": 43.967,
+    "colour": "blue",
+    "metricMedian": -0.38,
+    "flags": [],
+    "index": 476,
+    "b": 80,
+    "h": "L"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 43.8,
+   "presentationSeconds": 43.8,
+   "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley-span-4.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ },
+ {
+  "id": "gerudo-valley",
+  "index": 5,
+  "t": 97.933,
+  "h": "L",
+  "events": [
+   {
+    "midi": 37,
+    "on": 97.8,
+    "off": 98.017,
+    "colour": "blue",
+    "metricMedian": -0.34,
+    "flags": [],
+    "index": 1041,
+    "b": 188,
+    "h": "L"
+   },
+   {
+    "midi": 57,
+    "on": 97.933,
+    "off": 98.117,
+    "colour": "blue",
+    "metricMedian": -0.288,
+    "flags": [],
+    "index": 1043,
+    "b": 188.25,
+    "h": "L"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 97.933,
+   "presentationSeconds": 97.933,
+   "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley-span-5.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ },
+ {
+  "id": "gerudo-valley",
+  "index": 6,
+  "t": 101.8,
+  "h": "L",
+  "events": [
+   {
+    "midi": 54,
+    "on": 101.55,
+    "off": 101.817,
+    "colour": "blue",
+    "metricMedian": -0.271,
+    "flags": [],
+    "index": 1084,
+    "b": 195.5,
+    "h": "L"
+   },
+   {
+    "midi": 57,
+    "on": 101.683,
+    "off": 101.817,
+    "colour": "blue",
+    "metricMedian": -0.285,
+    "flags": [],
+    "index": 1087,
+    "b": 195.75,
+    "h": "L"
+   },
+   {
+    "midi": 38,
+    "on": 101.8,
+    "off": 102,
+    "colour": "blue",
+    "metricMedian": -0.321,
+    "flags": [],
+    "index": 1088,
+    "b": 196,
+    "h": "L"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 101.8,
+   "presentationSeconds": 101.8,
+   "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley-span-6.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ },
+ {
+  "id": "gerudo-valley",
+  "index": 7,
+  "t": 105.8,
+  "h": "L",
+  "events": [
+   {
+    "midi": 56,
+    "on": 105.667,
+    "off": 105.883,
+    "colour": "blue",
+    "metricMedian": -0.28,
+    "flags": [],
+    "index": 1137,
+    "b": 203.75,
+    "h": "L"
+   },
+   {
+    "midi": 37,
+    "on": 105.8,
+    "off": 106.067,
+    "colour": "blue",
+    "metricMedian": -0.336,
+    "flags": [],
+    "index": 1138,
+    "b": 204,
+    "h": "L"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 105.8,
+   "presentationSeconds": 105.8,
+   "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley-span-7.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ },
+ {
+  "id": "gerudo-valley",
+  "index": 8,
+  "t": 113.8,
+  "h": "L",
+  "events": [
+   {
+    "midi": 54,
+    "on": 113.667,
+    "off": 113.85,
+    "colour": "blue",
+    "metricMedian": -0.274,
+    "flags": [],
+    "index": 1252,
+    "b": 219.75,
+    "h": "L"
+   },
+   {
+    "midi": 37,
+    "on": 113.8,
+    "off": 114.017,
+    "colour": "blue",
+    "metricMedian": -0.352,
+    "flags": [],
+    "index": 1253,
+    "b": 220,
+    "h": "L"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 113.8,
+   "presentationSeconds": 113.8,
+   "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley-span-8.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ },
+ {
+  "id": "zeldas-lullaby",
+  "index": 0,
+  "t": 6.817,
+  "h": "L",
+  "events": [
+   {
+    "midi": 48,
+    "on": 6.267,
+    "off": 7.533,
+    "colour": "blue",
+    "metricMedian": -0.248,
+    "flags": [],
+    "index": 3,
+    "b": 3,
+    "h": "L"
+   },
+   {
+    "midi": 57,
+    "on": 6.55,
+    "off": 7.483,
+    "colour": "blue",
+    "metricMedian": -0.247,
+    "flags": [],
+    "index": 4,
+    "b": 3.5,
+    "h": "L"
+   },
+   {
+    "midi": 66,
+    "on": 6.817,
+    "off": 7.583,
+    "colour": "blue",
+    "metricMedian": -0.522,
+    "flags": [],
+    "index": 5,
+    "b": 4,
+    "h": "L"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 6.817,
+   "presentationSeconds": 6.817,
+   "path": "tools/video-lane/reconciliation-2026-09-09/zeldas-lullaby-span-0.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ },
+ {
+  "id": "zeldas-lullaby",
+  "index": 1,
+  "t": 10.083,
+  "h": "L",
+  "events": [
+   {
+    "midi": 48,
+    "on": 9.55,
+    "off": 10.683,
+    "colour": "blue",
+    "metricMedian": -0.248,
+    "flags": [],
+    "index": 9,
+    "b": 9,
+    "h": "L"
+   },
+   {
+    "midi": 57,
+    "on": 9.817,
+    "off": 10.65,
+    "colour": "blue",
+    "metricMedian": -0.247,
+    "flags": [],
+    "index": 10,
+    "b": 9.5,
+    "h": "L"
+   },
+   {
+    "midi": 66,
+    "on": 10.083,
+    "off": 10.667,
+    "colour": "blue",
+    "metricMedian": -0.525,
+    "flags": [],
+    "index": 11,
+    "b": 10,
+    "h": "L"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 10.083,
+   "presentationSeconds": 10.083,
+   "path": "tools/video-lane/reconciliation-2026-09-09/zeldas-lullaby-span-1.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ },
+ {
+  "id": "zeldas-lullaby",
+  "index": 2,
+  "t": 173.783,
+  "h": "R",
+  "events": [
+   {
+    "midi": 68,
+    "on": 171.483,
+    "off": 174.667,
+    "colour": "green",
+    "metricMedian": 1,
+    "flags": [],
+    "index": 677,
+    "b": 305.75,
+    "h": "R"
+   },
+   {
+    "midi": 72,
+    "on": 171.883,
+    "off": 174.733,
+    "colour": "green",
+    "metricMedian": 1,
+    "flags": [],
+    "index": 678,
+    "b": 306.5,
+    "h": "R"
+   },
+   {
+    "midi": 89,
+    "on": 173.783,
+    "off": 174.7,
+    "colour": "green",
+    "metricMedian": 1,
+    "flags": [],
+    "index": 680,
+    "b": 310,
+    "h": "R"
+   }
+  ],
+  "frame": {
+   "requestedSeconds": 173.783,
+   "presentationSeconds": 173.783,
+   "path": "tools/video-lane/reconciliation-2026-09-09/zeldas-lullaby-span-2.png"
+  },
+  "review": "Both distant keys visibly tinted at the recorded presentation timestamp. This confirms the tint-span failure, not a physical finger hold."
+ }
+]

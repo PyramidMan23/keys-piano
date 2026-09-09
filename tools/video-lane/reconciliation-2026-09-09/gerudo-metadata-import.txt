@@ -1,0 +1,27 @@
+1732 events at 120bpm (Andrew Wrangell, Gerudo Valley end-card engraving, Moderately fast quarter = 120, presentation timestamp 164 seconds), grid phase 265ms: mean move 0.013 beats, worst 0.052
+wrote tools/video-lane/reconciliation-2026-09-09/gerudo-valley.mid: track 0 = left hand (929 notes, colour blue), track 1 = right hand (803 notes)
+left out (ambiguous): midi 21 at 2.25s for 158.43s: tint (141,144,159) gmb median -0.095 matches no template class
+left out (ambiguous): midi 108 at 2.25s for 158.43s: tint (140,143,157) gmb median -0.094 matches no template class
+left out (ambiguous): midi 62 at 160.667s for 0.02s: tint (238,238,239) gmb median -0.005 matches no template class
+left out (ambiguous): midi 64 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+left out (ambiguous): midi 65 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+left out (ambiguous): midi 67 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+left out (ambiguous): midi 69 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+left out (ambiguous): midi 71 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+left out (ambiguous): midi 72 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+1459 events at 120bpm (Andrew Wrangell, Gerudo Valley end-card engraving, Moderately fast quarter = 120, presentation timestamp 164 seconds), grid phase 265ms: mean move 0.013 beats, worst 0.052
+wrote tools/video-lane/reconciliation-2026-09-09/gerudo-valley.accepted.mid: track 0 = left hand (784 notes, colour blue), track 1 = right hand (675 notes)
+read 1459 notes, 3 tracks, 4/4, tempo 120bpm
+quantised to 1/4 beat: mean move 0.000 beats, worst 0.000
+hands: the video's own hand colours (784 left, 675 right); fromScore stays false
+pedal: shortened 8 notes the transcriber only heard because the pedal was down
+hard: exempt from the audit's reach and tempo limits as the arranger's own video-authored hands; it does NOT pass them on its own, and no hands cross (Mark's call, 2026-09-05)
+
+DROPPED  Medium: 1297 notes against Hard's 1459 is not a step down, so it is not a tier
+medium: cut from the score by density, 1240 of 1459 notes (a step down from 1459, and 595 is a step down from it)
+ok       gerudo-valley                  1240 notes, 102bpm
+ok       gerudo-valley-easy             595 notes, 84bpm, 5 sections
+ok       gerudo-valley                 1240 notes, 102bpm, 5 sections
+ok       gerudo-valley-hard            1459 notes, 120bpm, 5 sections
+
+wrote js/songs-imported.mjs: 145 songs (3 from this file)

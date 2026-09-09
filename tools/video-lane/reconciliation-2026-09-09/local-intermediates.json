@@ -1,0 +1,4962 @@
+[
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/baseline.mjs",
+  "reason": "Diagnostic snapshot or evidence metadata.",
+  "bytes": 9337091
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/check.log",
+  "reason": "Actual command receipt.",
+  "bytes": 53070
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/finger-check.log",
+  "reason": "Actual command receipt.",
+  "bytes": 1338
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-corrected-dry-import.log",
+  "reason": "Actual command receipt.",
+  "bytes": 2588
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-metadata-import.log",
+  "reason": "Actual command receipt.",
+  "bytes": 5406
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley-score.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 358398
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley.audio-consistency.log",
+  "reason": "Actual command receipt.",
+  "bytes": 564
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley.spans.json",
+  "reason": "Whole-stream timing and held-span measurements.",
+  "bytes": 4344
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/gerudo-valley.upper-witness.json",
+  "reason": "Independent whole-video bar witness or comparison.",
+  "bytes": 360243
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/hand-audit.log",
+  "reason": "Actual command receipt.",
+  "bytes": 848
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/import-roundtrip.log",
+  "reason": "Actual command receipt.",
+  "bytes": 114
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/import.log",
+  "reason": "Actual command receipt.",
+  "bytes": 10762
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/measure.log",
+  "reason": "Whole-stream timing and held-span measurements.",
+  "bytes": 9090
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-0.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 54283
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-1.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 64789
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-10.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 65309
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-11.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 55490
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-12.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 66544
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-13.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 58006
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-14.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 60761
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-15.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 55249
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-16.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 55871
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-17.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 61995
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-18.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 65022
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-19.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 56031
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-2.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 68156
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-20.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 64046
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-21.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 61194
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-3.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 57812
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-4.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 64957
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-5.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 62699
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-6.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 61105
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-7.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 55722
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-8.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 60487
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-9.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 63556
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-0-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50596
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-0-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55535
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-1-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42013
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-1-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45829
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-10-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53859
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-10-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52362
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-100-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48973
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-100-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52587
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-101-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 60798
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-101-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58596
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-102-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52794
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-102-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52441
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-103-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56421
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-103-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57160
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-104-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53841
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-104-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53213
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-105-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58413
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-105-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59176
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-106-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57496
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-106-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57148
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-107-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57195
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-107-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54222
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-108-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51295
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-108-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50352
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-109-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48671
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-109-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47558
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-11-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49839
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-11-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50450
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-110-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42652
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-110-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44123
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-111-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46560
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-111-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47132
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-112-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42098
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-112-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43032
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-113-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51636
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-113-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52284
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-114-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47405
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-114-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49160
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-115-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43347
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-115-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42546
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-116-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49065
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-116-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49368
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-117-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52508
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-117-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48051
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-118-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46838
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-118-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46935
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-119-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50950
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-119-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49565
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-12-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50759
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-12-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50887
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-120-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48633
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-120-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49565
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-121-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46044
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-121-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46583
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-122-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44618
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-122-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45158
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-123-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48858
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-123-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51210
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-124-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44703
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-124-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44471
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-125-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49183
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-125-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50046
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-126-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53373
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-126-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53869
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-127-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58609
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-127-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57580
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-128-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52442
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-128-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51488
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-129-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50834
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-129-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51542
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-13-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48364
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-13-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49496
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-130-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48530
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-130-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50399
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-131-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53285
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-131-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55434
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-132-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52915
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-132-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52375
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-133-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50641
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-133-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45474
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-134-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46826
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-134-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47280
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-135-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48864
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-135-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47624
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-136-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46027
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-136-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44853
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-137-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44724
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-137-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45999
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-138-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43846
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-138-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46478
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-139-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49065
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-139-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50194
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-14-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52192
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-14-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52629
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-140-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49001
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-140-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51489
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-141-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48683
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-141-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50605
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-142-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51476
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-142-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52556
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-143-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52370
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-143-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54109
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-144-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48327
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-144-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49595
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-145-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47182
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-145-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49601
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-146-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41552
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-146-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41346
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-147-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 40545
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-147-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39756
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-148-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39930
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-148-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41976
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-149-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39883
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-149-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42647
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-15-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50590
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-15-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51865
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-150-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41099
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-150-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42472
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-151-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 40507
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-151-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41762
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-152-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39177
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-152-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41028
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-153-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49131
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-153-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52175
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-154-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52456
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-154-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51019
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-155-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50600
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-155-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50565
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-156-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50907
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-156-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49559
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-157-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48548
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-157-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51152
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-158-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52057
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-158-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52193
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-159-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51324
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-159-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51268
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-16-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47405
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-16-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48465
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-160-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55433
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-160-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54299
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-161-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53154
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-161-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52440
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-162-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52709
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-162-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52890
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-163-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54354
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-163-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52783
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-164-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53810
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-164-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50974
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-165-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51170
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-165-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50905
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-166-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49926
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-166-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52868
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-167-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50590
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-167-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52723
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-168-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51946
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-168-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51489
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-169-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52047
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-169-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51507
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-17-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49485
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-17-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47267
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-170-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51415
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-170-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53323
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-171-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52491
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-171-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51531
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-172-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50798
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-172-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51096
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-173-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50988
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-173-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50657
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-174-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49326
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-174-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47719
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-175-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48479
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-175-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51775
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-176-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50233
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-176-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51052
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-177-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47080
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-177-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48359
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-178-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49626
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-178-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47332
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-179-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48131
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-179-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49791
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-18-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46898
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-18-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44665
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-180-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48974
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-180-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47603
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-181-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50508
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-181-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50873
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-182-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51517
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-182-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48563
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-183-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41856
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-183-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44994
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-184-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43115
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-184-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43354
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-185-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48740
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-185-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48033
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-186-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42896
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-186-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43950
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-187-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50779
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-187-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50404
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-188-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50390
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-188-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52053
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-189-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47679
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-189-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49379
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-19-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48716
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-19-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48460
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-190-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51820
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-190-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50963
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-191-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53503
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-191-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52444
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-192-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52267
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-192-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50723
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-193-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44650
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-193-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49035
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-194-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48387
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-194-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49188
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-195-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51451
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-195-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53764
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-196-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48233
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-196-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45655
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-197-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49530
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-197-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50173
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-198-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48617
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-198-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50741
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-199-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51322
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-199-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49556
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-2-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47537
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-2-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54865
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-20-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47961
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-20-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44723
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-200-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50600
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-200-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50810
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-201-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51984
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-201-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51892
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-202-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51838
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-202-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48521
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-203-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44186
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-203-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44115
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-204-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46948
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-204-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45901
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-205-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54717
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-205-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50171
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-206-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48132
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-206-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45064
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-207-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50298
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-207-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47162
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-208-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49608
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-208-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45998
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-209-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53741
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-209-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47493
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-21-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50338
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-21-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49664
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-210-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50377
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-210-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50590
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-211-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50120
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-211-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50527
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-212-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55225
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-212-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56034
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-213-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54526
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-213-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52770
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-214-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50240
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-214-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50358
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-215-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53695
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-215-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52977
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-216-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47896
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-216-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44726
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-217-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42204
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-217-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43337
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-218-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50261
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-218-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45182
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-219-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42878
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-219-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43474
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-22-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46532
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-22-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43265
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-220-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51471
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-220-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52712
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-221-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49548
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-221-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48394
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-222-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52858
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-222-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52031
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-223-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50904
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-223-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49781
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-224-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52851
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-224-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50775
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-225-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48035
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-225-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47671
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-226-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53533
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-226-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52594
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-227-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47884
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-227-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46780
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-228-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48522
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-228-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47475
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-229-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50748
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-229-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46719
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-23-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 40036
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-23-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43499
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-230-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50946
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-230-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51602
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-231-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50139
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-231-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47552
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-232-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48552
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-232-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47105
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-233-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44638
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-233-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43864
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-234-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49521
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-234-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48991
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-235-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54193
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-235-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53325
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-236-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54071
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-236-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52623
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-237-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42913
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-237-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42454
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-238-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 63152
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-238-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 66328
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-239-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 66666
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-239-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 64685
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-24-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 40250
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-24-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42341
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-240-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 66065
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-240-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 62992
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-241-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59250
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-241-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58327
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-242-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59613
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-242-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54564
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-243-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57074
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-243-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53613
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-244-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53198
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-244-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51439
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-245-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54024
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-245-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53830
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-246-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54776
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-246-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54504
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-247-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 63117
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-247-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59071
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-248-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 60019
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-248-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58074
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-249-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58074
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-249-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50064
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-25-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 40557
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-25-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41287
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-250-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48773
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-250-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46802
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-251-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44594
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-251-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46057
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-252-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42565
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-252-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45718
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-253-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46802
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-253-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47764
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-254-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44701
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-254-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46325
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-255-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53638
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-255-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52826
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-256-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48637
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-256-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50759
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-257-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54385
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-257-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53793
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-258-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50112
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-258-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49412
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-259-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46832
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-259-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47071
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-26-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 40192
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-26-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 40584
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-260-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50971
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-260-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49594
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-261-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42431
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-261-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41205
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-262-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49782
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-262-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48717
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-263-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47937
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-263-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49422
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-264-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49262
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-264-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50143
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-265-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50212
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-265-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48043
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-266-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49666
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-266-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47804
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-267-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48127
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-267-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49748
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-268-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50864
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-268-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52196
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-269-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52179
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-269-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53979
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-27-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39124
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-27-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39952
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-270-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50888
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-270-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49114
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-271-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48847
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-271-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47675
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-272-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50039
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-272-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48804
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-273-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47966
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-273-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50130
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-274-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48645
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-274-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49411
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-275-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53931
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-275-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53929
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-28-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39671
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-28-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43463
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-29-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41238
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-29-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44359
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-3-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46964
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-3-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48182
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-30-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43243
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-30-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43248
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-31-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48260
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-31-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44054
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-32-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48378
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-32-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46568
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-33-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43648
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-33-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41825
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-34-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43924
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-34-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45897
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-35-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43818
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-35-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43083
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-36-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47554
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-36-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46948
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-37-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44169
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-37-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42894
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-38-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46319
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-38-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45778
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-39-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52282
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-39-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49333
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-4-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50894
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-4-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49141
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-40-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43185
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-40-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46866
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-41-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41245
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-41-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44316
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-42-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49428
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-42-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50503
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-43-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44273
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-43-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42861
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-44-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49303
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-44-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52256
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-45-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50824
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-45-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51541
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-46-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52234
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-46-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48924
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-47-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50551
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-47-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48959
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-48-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45363
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-48-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46762
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-49-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53008
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-49-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50294
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-5-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42369
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-5-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43052
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-50-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46228
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-50-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44689
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-51-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48642
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-51-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49167
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-52-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43810
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-52-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42488
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-53-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50822
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-53-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50270
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-54-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46989
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-54-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46667
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-55-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46165
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-55-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44145
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-56-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45113
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-56-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45642
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-57-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50569
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-57-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50274
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-58-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46069
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-58-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45506
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-59-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51000
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-59-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48634
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-6-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53460
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-6-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50064
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-60-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48808
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-60-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50142
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-61-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49595
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-61-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49793
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-62-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56791
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-62-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56592
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-63-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48956
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-63-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55914
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-64-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50817
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-64-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52275
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-65-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51651
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-65-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50727
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-66-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56596
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-66-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57613
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-67-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52676
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-67-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52672
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-68-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47611
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-68-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49358
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-69-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53218
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-69-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54596
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-7-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50635
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-7-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52484
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-70-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43121
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-70-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43805
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-71-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42864
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-71-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42882
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-72-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45991
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-72-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48276
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-73-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39535
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-73-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39506
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-74-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39308
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-74-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42633
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-75-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 38062
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-75-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39536
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-76-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41738
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-76-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41559
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-77-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49042
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-77-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49761
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-78-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46560
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-78-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45593
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-79-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47862
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-79-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52275
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-8-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54597
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-8-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55555
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-80-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47566
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-80-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47803
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-81-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52164
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-81-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54739
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-82-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49017
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-82-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48492
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-83-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50581
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-83-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50890
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-84-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52038
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-84-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54444
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-85-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50547
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-85-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48915
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-86-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50507
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-86-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50983
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-87-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47133
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-87-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45986
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-88-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55624
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-88-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53755
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-89-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50790
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-89-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48787
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-9-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50347
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-9-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50350
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-90-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48043
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-90-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47982
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-91-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52691
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-91-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53723
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-92-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53289
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-92-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52432
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-93-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53189
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-93-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51261
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-94-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56620
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-94-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 61449
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-95-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51368
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-95-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49923
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-96-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52272
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-96-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50648
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-97-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51622
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-97-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53725
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-98-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49334
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-98-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46462
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-99-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47756
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-candidate-99-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46561
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-0-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44187
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-0-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44691
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-1-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51686
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-1-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51738
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-2-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39755
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-2-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44616
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-3-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45588
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-3-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45010
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-4-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45398
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-4-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47253
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-5-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44907
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-5-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44858
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-6-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39479
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-6-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44880
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-7-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42198
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-7-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44855
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-8-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44691
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-8-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 45250
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-9-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50051
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-9-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50831
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-0.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 59073
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-1.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 63629
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-10.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 59731
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-11.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 66844
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-12.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 75618
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-13.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 76936
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-14.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 72921
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-15.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 60469
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-16.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 66799
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-17.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 77704
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-18.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 76147
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-19.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 74295
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-2.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 68692
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-3.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 73858
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-4.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 68587
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-5.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 57214
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-6.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 64542
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-7.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 71678
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-8.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 73735
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-9.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 71208
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-0-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 72247
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-0-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 75127
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-1-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 68380
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-1-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 70658
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-10-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 65444
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-10-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 72766
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-11-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 63100
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-11-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 65421
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-12-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56819
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-12-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53743
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-13-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55205
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-13-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55341
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-14-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 60364
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-14-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 61727
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-15-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 62638
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-15-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 61491
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-16-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 80060
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-16-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 81615
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-17-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 69903
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-17-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 69468
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-18-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55974
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-18-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55745
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-19-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56231
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-19-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58762
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-2-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 69084
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-2-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 72574
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-20-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 60908
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-20-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 62282
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-21-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 63726
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-21-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 62497
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-22-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 67685
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-22-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 71775
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-23-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 62265
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-23-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 63883
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-24-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55733
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-24-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53680
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-25-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58676
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-25-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57427
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-26-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 92756
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-26-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 92488
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-27-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 91742
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-27-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 93145
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-28-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 93147
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-28-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 92882
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-29-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 92488
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-29-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 95848
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-3-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 72563
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-3-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 72130
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-30-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 88002
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-30-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 98914
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-31-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 86028
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-31-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 95062
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-32-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 95682
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-32-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 96292
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-33-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 91070
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-33-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 91852
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-34-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 91089
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-34-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 88896
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-35-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 89053
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-35-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 87076
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-36-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 90757
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-36-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 90300
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-37-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 88533
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-37-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 87900
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-38-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 90441
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-38-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 90096
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-39-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 76653
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-39-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 79017
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-4-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53140
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-4-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55522
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-40-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 74372
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-40-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 76177
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-41-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 36968
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-41-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43743
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-42-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44629
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-42-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52161
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-43-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50051
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-43-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56351
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-44-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55284
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-44-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56336
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-45-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57989
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-45-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57812
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-46-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48638
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-46-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52721
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-47-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54228
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-47-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55633
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-48-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56195
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-48-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56788
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-49-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47660
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-49-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50561
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-5-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56571
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-5-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54362
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-50-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48559
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-50-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46790
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-51-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48215
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-51-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54529
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-52-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50447
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-52-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57519
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-53-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48350
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-53-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54196
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-54-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50411
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-54-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54172
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-55-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54227
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-55-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54692
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-56-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56047
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-56-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56676
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-57-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56202
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-57-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55516
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-58-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56659
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-58-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56802
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-6-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54661
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-6-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51910
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-7-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55674
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-7-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57285
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-8-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59213
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-8-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59204
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-9-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59603
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-9-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59569
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-0-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39841
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-0-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 35223
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-1-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42588
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-1-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 43531
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-10-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58421
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-10-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59269
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-11-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 62184
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-11-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 62109
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-12-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58504
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-12-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57299
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-13-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53802
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-13-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53426
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-14-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54318
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-14-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56984
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-15-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59240
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-15-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 63123
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-16-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 81995
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-16-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 82981
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-17-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 68725
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-17-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 69788
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-18-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 84536
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-18-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 84491
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-19-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 71487
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-19-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 73424
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-2-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 39514
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-2-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44109
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-20-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 72908
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-20-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 78441
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-21-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 64177
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-21-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 67447
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-22-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 65499
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-22-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 70306
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-23-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53941
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-23-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52137
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-24-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53569
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-24-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50007
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-25-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50565
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-25-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49628
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-26-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52145
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-26-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54696
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-27-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57530
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-27-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58924
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-28-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 68571
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-28-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 68762
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-29-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 64382
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-29-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 65752
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-3-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41526
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-3-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 41607
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-30-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51091
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-30-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51728
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-31-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52774
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-31-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54747
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-32-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 65238
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-32-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 67741
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-33-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 82447
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-33-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 86516
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-34-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 86139
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-34-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 88047
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-35-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 84297
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-35-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 85689
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-36-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 93903
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-36-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 90357
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-37-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 90252
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-37-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 88205
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-38-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 89321
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-38-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 88582
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-39-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 86072
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-39-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 86251
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-4-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 74748
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-4-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 75548
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-40-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 86370
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-40-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 86445
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-41-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 88172
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-41-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 86459
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-42-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 86265
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-42-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 85479
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-43-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 76767
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-43-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 75173
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-44-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 79017
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-44-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 77629
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-45-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 76177
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-45-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 73178
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-46-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51244
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-46-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52962
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-47-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53033
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-47-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53862
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-48-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56817
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-48-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57171
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-49-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56437
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-49-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55884
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-5-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52453
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-5-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53568
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-50-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 76996
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-50-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 77333
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-51-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 70381
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-51-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 71311
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-52-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51351
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-52-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51669
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-53-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54262
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-53-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55689
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-54-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 68705
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-54-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 71311
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-55-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49635
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-55-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53265
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-56-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59789
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-56-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57530
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-57-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51932
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-57-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50675
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-58-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 95793
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-58-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 93903
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-59-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 92289
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-59-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 90252
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-6-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53276
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-6-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50713
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-60-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 96917
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-60-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 91725
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-61-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 91838
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-61-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 91089
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-62-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 89240
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-62-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 89053
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-63-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 90612
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-63-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 90816
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-64-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 87834
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-64-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 87755
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-65-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 75860
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-65-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 77078
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-66-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49238
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-66-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 48170
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-67-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51554
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-67-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55668
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-68-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58131
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-68-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56799
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-69-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 58394
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-69-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57215
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-7-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53240
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-7-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55131
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-8-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54183
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-8-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 55825
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-9-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 60088
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-single-candidate-9-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56999
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-0-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42636
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-0-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44230
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-1-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 69428
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-1-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 73195
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-10-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 46162
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-10-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49744
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-11-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47977
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-11-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54109
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-12-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49492
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-12-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 57332
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-13-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47598
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-13-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53901
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-14-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 49608
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-14-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53159
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-15-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 68461
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-15-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 70932
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-16-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 50603
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-16-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 54562
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-2-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 53320
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-2-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 56323
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-3-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 59098
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-3-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 66088
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-4-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 61300
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-4-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 63474
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-5-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 65771
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-5-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 66637
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-6-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 83631
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-6-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 85588
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-7-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 36159
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-7-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 42190
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-8-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 44146
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-8-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 51770
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-9-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 47534
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-unmatched-candidate-9-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 52124
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-0.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 34849
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-1.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 40487
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-10.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 35128
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-11.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 30601
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-12.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 35052
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-13.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 42800
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-14.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 41321
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-15.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 30816
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-16.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 31758
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-17.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 29613
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-18.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 31568
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-19.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 34529
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-2.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 25329
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-3.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 35708
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-4.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 37797
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-5.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 25568
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-6.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 36589
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-7.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 41883
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-8.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 25308
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-9.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 36075
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-0-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 27921
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-0-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 32311
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-1-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 30897
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-1-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 25558
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-2-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 31578
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-2-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 34145
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-3-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 31256
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-3-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 33094
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-4-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 33374
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-4-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 32643
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-5-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 30569
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-5-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 32701
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-6-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 30319
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-6-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 32152
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-7-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 32816
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-7-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 36965
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-8-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 34056
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-8-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 27557
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-0-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 26231
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-0-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 25489
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-1-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 33052
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-1-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 33380
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-10-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 29429
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-10-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 27363
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-2-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 29463
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-2-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 27849
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-3-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 27703
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-3-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 27255
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-4-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 30145
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-4-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 29243
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-5-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 30940
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-5-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 27721
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-6-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 29305
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-6-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 31005
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-7-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 29522
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-7-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 26934
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-8-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 17612
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-8-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 17595
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-9-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 28541
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-single-candidate-9-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 26383
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-unmatched-candidate-0-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 29220
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-unmatched-candidate-0-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 31555
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-unmatched-candidate-1-0.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 32668
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-unmatched-candidate-1-1.png",
+  "reason": "Inspected before/after candidate contact sheet.",
+  "bytes": 34646
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/silksong-score.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 252814
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/silksong.audio-consistency.log",
+  "reason": "Actual command receipt.",
+  "bytes": 578
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/silksong.spans.json",
+  "reason": "Whole-stream timing and held-span measurements.",
+  "bytes": 41
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/silksong.upper-witness.json",
+  "reason": "Independent whole-video bar witness or comparison.",
+  "bytes": 95208
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/worklist.log",
+  "reason": "Actual command receipt.",
+  "bytes": 2094
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/zeldas-lullaby-score.png",
+  "reason": "Inspected source/score/release/span frame evidence.",
+  "bytes": 53129
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/zeldas-lullaby.audio-consistency.log",
+  "reason": "Actual command receipt.",
+  "bytes": 588
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/zeldas-lullaby.spans.json",
+  "reason": "Whole-stream timing and held-span measurements.",
+  "bytes": 1479
+ },
+ {
+  "path": "tools/video-lane/reconciliation-2026-09-09/zeldas-lullaby.upper-witness.json",
+  "reason": "Independent whole-video bar witness or comparison.",
+  "bytes": 177400
+ }
+]

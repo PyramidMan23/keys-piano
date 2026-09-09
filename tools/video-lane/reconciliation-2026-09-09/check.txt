@@ -1,0 +1,392 @@
+Test output; long-dash punctuation normalized to hyphens to meet the task writing rule.
+  ok 1. ode-to-joy valid (78 notes, ends beat 64)
+  ok 2. happy-birthday valid (33 notes, ends beat 24)
+  ok 3. fur-elise valid (53 notes, ends beat 22)
+  ok 4. still-dre-easy valid (80 notes, ends beat 64)
+  ok 5. game-of-thrones-easy valid (68 notes, ends beat 48)
+  ok 6. runaway-easy valid (29 notes, ends beat 28)
+  ok 7. still-dre valid (1632 notes, ends beat 256)
+  ok 8. game-of-thrones valid (225 notes, ends beat 105)
+  ok 9. runaway valid (158 notes, ends beat 124)
+  ok 10. faded valid (124 notes, ends beat 68)
+  ok 11. faded-easy valid (20 notes, ends beat 16)
+  ok 12. fray-save-a-life valid (194 notes, ends beat 92)
+  ok 13. fray-save-a-life-easy valid (45 notes, ends beat 24)
+  ok 14. empire valid (299 notes, ends beat 100)
+  ok 15. empire-easy valid (36 notes, ends beat 24)
+  ok 16. pirates valid (71 notes, ends beat 36)
+  ok 17. pirates-easy valid (32 notes, ends beat 18)
+  ok 18. river valid (132 notes, ends beat 68)
+  ok 19. river-easy valid (20 notes, ends beat 16)
+  ok 20. piano-man valid (46 notes, ends beat 27)
+  ok 21. piano-man-easy valid (19 notes, ends beat 12)
+  ok 22. gangstas-paradise valid (196 notes, ends beat 148)
+  ok 23. gangstas-paradise-easy valid (46 notes, ends beat 32)
+  ok 24. scale-c-major valid (30 notes, ends beat 15)
+  ok 25. scale-a-minor valid (30 notes, ends beat 15)
+  ok 26. scale-db-major valid (30 notes, ends beat 15)
+  ok 27. scale-d-major valid (30 notes, ends beat 15)
+  ok 28. scale-eb-major valid (30 notes, ends beat 15)
+  ok 29. scale-e-major valid (30 notes, ends beat 15)
+  ok 30. scale-f-major valid (30 notes, ends beat 15)
+  ok 31. scale-fs-major valid (30 notes, ends beat 15)
+  ok 32. scale-g-major valid (30 notes, ends beat 15)
+  ok 33. scale-ab-major valid (30 notes, ends beat 15)
+  ok 34. scale-a-major valid (30 notes, ends beat 15)
+  ok 35. scale-bb-major valid (30 notes, ends beat 15)
+  ok 36. scale-b-major valid (30 notes, ends beat 15)
+  ok 37. scale-bb-minor valid (30 notes, ends beat 15)
+  ok 38. scale-b-minor valid (30 notes, ends beat 15)
+  ok 39. scale-c-minor valid (30 notes, ends beat 15)
+  ok 40. scale-cs-minor valid (30 notes, ends beat 15)
+  ok 41. scale-d-minor valid (30 notes, ends beat 15)
+  ok 42. scale-eb-minor valid (30 notes, ends beat 15)
+  ok 43. scale-e-minor valid (30 notes, ends beat 15)
+  ok 44. scale-f-minor valid (30 notes, ends beat 15)
+  ok 45. scale-fs-minor valid (30 notes, ends beat 15)
+  ok 46. scale-g-minor valid (30 notes, ends beat 15)
+  ok 47. scale-gs-minor valid (30 notes, ends beat 15)
+  ok 48. arp-c-majarp valid (26 notes, ends beat 13)
+  ok 49. arp-db-majarp valid (26 notes, ends beat 13)
+  ok 50. arp-d-majarp valid (26 notes, ends beat 13)
+  ok 51. arp-eb-majarp valid (26 notes, ends beat 13)
+  ok 52. arp-e-majarp valid (26 notes, ends beat 13)
+  ok 53. arp-f-majarp valid (26 notes, ends beat 13)
+  ok 54. arp-fs-majarp valid (26 notes, ends beat 13)
+  ok 55. arp-g-majarp valid (26 notes, ends beat 13)
+  ok 56. arp-ab-majarp valid (26 notes, ends beat 13)
+  ok 57. arp-a-majarp valid (26 notes, ends beat 13)
+  ok 58. arp-bb-majarp valid (26 notes, ends beat 13)
+  ok 59. arp-b-majarp valid (26 notes, ends beat 13)
+  ok 60. arp-a-minarp valid (26 notes, ends beat 13)
+  ok 61. arp-bb-minarp valid (26 notes, ends beat 13)
+  ok 62. arp-b-minarp valid (26 notes, ends beat 13)
+  ok 63. arp-c-minarp valid (26 notes, ends beat 13)
+  ok 64. arp-cs-minarp valid (26 notes, ends beat 13)
+  ok 65. arp-d-minarp valid (26 notes, ends beat 13)
+  ok 66. arp-eb-minarp valid (26 notes, ends beat 13)
+  ok 67. arp-e-minarp valid (26 notes, ends beat 13)
+  ok 68. arp-f-minarp valid (26 notes, ends beat 13)
+  ok 69. arp-fs-minarp valid (26 notes, ends beat 13)
+  ok 70. arp-g-minarp valid (26 notes, ends beat 13)
+  ok 71. arp-gs-minarp valid (26 notes, ends beat 13)
+  ok 72. pirates-hard valid (188 notes, ends beat 36)
+  ok 73. piano-man-hard valid (82 notes, ends beat 27)
+  ok 74. empire-hard valid (476 notes, ends beat 100)
+  ok 75. fray-save-a-life-hard valid (443 notes, ends beat 92)
+  ok 76. still-dre-hard valid (518 notes, ends beat 68)
+  ok 77. game-of-thrones-hard valid (306 notes, ends beat 99)
+  ok 78. runaway-hard valid (202 notes, ends beat 60)
+  ok 79. gangstas-paradise-hard valid (1805 notes, ends beat 264.75)
+  ok 80. faded-hard valid (254 notes, ends beat 84)
+  ok 81. river-hard valid (262 notes, ends beat 68)
+  ok 82. lost-easy valid (31 notes, ends beat 32)
+  ok 83. lost valid (152 notes, ends beat 104)
+  ok 84. lost-hard valid (528 notes, ends beat 152)
+  ok 85. numb-easy valid (28 notes, ends beat 24)
+  ok 86. numb valid (164 notes, ends beat 88)
+  ok 87. numb-hard valid (597 notes, ends beat 136)
+  ok 88. mario-easy valid (48 notes, ends beat 40)
+  ok 89. mario valid (215 notes, ends beat 168)
+  ok 90. mario-hard valid (540 notes, ends beat 168)
+  ok 91. star-wars-easy valid (25 notes, ends beat 24)
+  ok 92. star-wars valid (162 notes, ends beat 88)
+  ok 93. star-wars-hard valid (356 notes, ends beat 88)
+  ok 94. bella-ciao-easy valid (77 notes, ends beat 32.5)
+  ok 95. bella-ciao valid (741 notes, ends beat 231.5)
+  ok 96. bella-ciao-hard valid (1203 notes, ends beat 231.5)
+  ok 97. see-you-again-easy valid (57 notes, ends beat 32)
+  ok 98. see-you-again valid (556 notes, ends beat 299.5)
+  ok 99. see-you-again-hard valid (778 notes, ends beat 299.5)
+  ok 100. interstellar-easy valid (203 notes, ends beat 43.5)
+  ok 101. interstellar valid (799 notes, ends beat 130.75)
+  ok 102. interstellar-hard valid (1076 notes, ends beat 130.75)
+  ok 103. in-the-end-easy valid (131 notes, ends beat 64)
+  ok 104. in-the-end valid (943 notes, ends beat 361)
+  ok 105. in-the-end-hard valid (1519 notes, ends beat 361)
+  ok 106. what-ive-done-easy valid (160 notes, ends beat 64)
+  ok 107. what-ive-done valid (1413 notes, ends beat 351.5)
+  ok 108. what-ive-done-hard valid (1854 notes, ends beat 351.5)
+  ok 109. work-this-time-easy valid (48 notes, ends beat 64)
+  ok 110. work-this-time valid (227 notes, ends beat 172)
+  ok 111. work-this-time-hard valid (460 notes, ends beat 172)
+  ok 112. in-a-gadda-da-vida-easy valid (44 notes, ends beat 36)
+  ok 113. in-a-gadda-da-vida valid (157 notes, ends beat 84)
+  ok 114. in-a-gadda-da-vida-hard valid (314 notes, ends beat 84)
+  ok 115. stairway-easy valid (303 notes, ends beat 109)
+  ok 116. stairway valid (2886 notes, ends beat 690)
+  ok 117. stairway-hard valid (3301 notes, ends beat 690)
+  ok 118. bohemian-rhapsody-easy valid (154 notes, ends beat 126.5)
+  ok 119. bohemian-rhapsody valid (1877 notes, ends beat 544.5)
+  ok 120. bohemian-rhapsody-hard valid (2249 notes, ends beat 544.5)
+  ok 121. hotel-california-easy valid (791 notes, ends beat 256)
+  ok 122. hotel-california valid (2481 notes, ends beat 521)
+  ok 123. hotel-california-hard valid (1678 notes, ends beat 260.5)
+  ok 124. fur-elise-full valid (207 notes, ends beat 97.5)
+  ok 125. fur-elise-hard valid (1040 notes, ends beat 393.5)
+  ok 126. afterglow valid (473 notes, ends beat 376.25)
+  ok 127. arabesque-1 valid (1227 notes, ends beat 423)
+  ok 128. arabesque-1-easy valid (735 notes, ends beat 423)
+  ok 129. arabesque-1-hard valid (1444 notes, ends beat 423)
+  ok 130. bach-prelude-c-easy valid (448 notes, ends beat 140)
+  ok 131. bach-prelude-c-hard valid (549 notes, ends beat 140)
+  ok 132. beanie valid (616 notes, ends beat 270.25)
+  ok 133. beanie-easy valid (395 notes, ends beat 270.25)
+  ok 134. clair-de-lune valid (977 notes, ends beat 322)
+  ok 135. clair-de-lune-easy valid (490 notes, ends beat 322)
+  ok 136. clair-de-lune-hard valid (1468 notes, ends beat 322)
+  ok 137. coffin-dance valid (1560 notes, ends beat 380.75)
+  ok 138. coffin-dance-easy valid (885 notes, ends beat 380.75)
+  ok 139. comptine valid (1886 notes, ends beat 566.25)
+  ok 140. comptine-easy valid (1041 notes, ends beat 566.25)
+  ok 141. comptine-hard valid (2465 notes, ends beat 570)
+  ok 142. consolation-3 valid (874 notes, ends beat 243)
+  ok 143. consolation-3-easy valid (295 notes, ends beat 243)
+  ok 144. consolation-3-hard valid (1029 notes, ends beat 243)
+  ok 145. disney-star valid (865 notes, ends beat 508.25)
+  ok 146. disney-star-easy valid (513 notes, ends beat 508.25)
+  ok 147. disney-star-hard valid (1050 notes, ends beat 508.25)
+  ok 148. fantaisie-impromptu valid (2276 notes, ends beat 552)
+  ok 149. fantaisie-impromptu-easy valid (1715 notes, ends beat 552)
+  ok 150. fantaisie-impromptu-hard valid (3013 notes, ends beat 552)
+  ok 151. gerudo-valley valid (1240 notes, ends beat 313.75)
+  ok 152. gerudo-valley-easy valid (595 notes, ends beat 313.75)
+  ok 153. gerudo-valley-hard valid (1459 notes, ends beat 313.75)
+  ok 154. gladiator valid (956 notes, ends beat 446.5)
+  ok 155. gladiator-easy valid (655 notes, ends beat 446.5)
+  ok 156. gladiator-hard valid (1403 notes, ends beat 446.5)
+  ok 157. goldberg-aria valid (352 notes, ends beat 96)
+  ok 158. goldberg-aria-easy valid (236 notes, ends beat 96)
+  ok 159. goldberg-aria-hard valid (415 notes, ends beat 96)
+  ok 160. gray-day-easy valid (260 notes, ends beat 221.75)
+  ok 161. gray-day-hard valid (488 notes, ends beat 228.5)
+  ok 162. gymnopedie-1 valid (156 notes, ends beat 141)
+  ok 163. gymnopedie-1-hard valid (282 notes, ends beat 141)
+  ok 164. i-giorni valid (1669 notes, ends beat 726.25)
+  ok 165. i-giorni-easy valid (1076 notes, ends beat 726.25)
+  ok 166. i-giorni-hard valid (1973 notes, ends beat 726.25)
+  ok 167. i-wanted-to-leave valid (959 notes, ends beat 395)
+  ok 168. i-wanted-to-leave-easy valid (487 notes, ends beat 395)
+  ok 169. i-wanted-to-leave-hard valid (1249 notes, ends beat 395)
+  ok 170. icarus valid (770 notes, ends beat 383.75)
+  ok 171. idea-10 valid (723 notes, ends beat 219.25)
+  ok 172. idea-10-easy valid (464 notes, ends beat 219.25)
+  ok 173. idea-10-hard valid (975 notes, ends beat 223.25)
+  ok 174. idea-12 valid (797 notes, ends beat 277.25)
+  ok 175. idea-12-easy valid (466 notes, ends beat 277.25)
+  ok 176. imperial-march valid (1406 notes, ends beat 356.75)
+  ok 177. imperial-march-easy valid (738 notes, ends beat 356.75)
+  ok 178. jaws valid (780 notes, ends beat 279.5)
+  ok 179. jaws-easy valid (354 notes, ends beat 279.5)
+  ok 180. la-petite-fille valid (1253 notes, ends beat 666)
+  ok 181. la-petite-fille-easy valid (500 notes, ends beat 666)
+  ok 182. la-petite-fille-hard valid (1497 notes, ends beat 666)
+  ok 183. last-friday-night valid (1226 notes, ends beat 415.5)
+  ok 184. last-friday-night-easy valid (679 notes, ends beat 415.25)
+  ok 185. last-friday-night-hard valid (2260 notes, ends beat 416.25)
+  ok 186. last-waltz valid (698 notes, ends beat 323.75)
+  ok 187. last-waltz-easy valid (440 notes, ends beat 322.75)
+  ok 188. lauras-dance valid (514 notes, ends beat 181.5)
+  ok 189. lauras-dance-easy valid (270 notes, ends beat 181.5)
+  ok 190. lauras-dance-hard valid (671 notes, ends beat 181.5)
+  ok 191. liebestraum-3-easy valid (921 notes, ends beat 543)
+  ok 192. liebestraum-3-hard valid (1884 notes, ends beat 543)
+  ok 193. light-of-the-seven valid (2246 notes, ends beat 771)
+  ok 194. light-of-the-seven-easy valid (1338 notes, ends beat 771)
+  ok 195. light-of-the-seven-hard valid (2748 notes, ends beat 771)
+  ok 196. little-things valid (676 notes, ends beat 291.5)
+  ok 197. little-things-easy valid (390 notes, ends beat 291.5)
+  ok 198. mariage-d-amour-easy valid (996 notes, ends beat 531)
+  ok 199. mariage-d-amour-hard valid (1739 notes, ends beat 531)
+  ok 200. married-life valid (891 notes, ends beat 477.5)
+  ok 201. married-life-easy valid (550 notes, ends beat 477.5)
+  ok 202. married-life-hard valid (1282 notes, ends beat 477.5)
+  ok 203. mia-sebastian valid (334 notes, ends beat 218.25)
+  ok 204. mia-sebastian-easy valid (207 notes, ends beat 218.25)
+  ok 205. mia-sebastian-hard valid (491 notes, ends beat 218.25)
+  ok 206. moonlight-sonata-easy valid (770 notes, ends beat 276)
+  ok 207. moonlight-sonata-hard valid (1142 notes, ends beat 276)
+  ok 208. mozart-pc21-2 valid (1440 notes, ends beat 413)
+  ok 209. mozart-pc21-2-easy valid (646 notes, ends beat 413)
+  ok 210. mozart-pc21-2-hard valid (2474 notes, ends beat 413)
+  ok 211. never-gonna-2-easy valid (190 notes, ends beat 232.5)
+  ok 212. never-gonna-2-hard valid (272 notes, ends beat 233.5)
+  ok 213. next-episode valid (1401 notes, ends beat 379.5)
+  ok 214. next-episode-easy valid (923 notes, ends beat 375.5)
+  ok 215. nocturne-op9-2 valid (783 notes, ends beat 222.5)
+  ok 216. nocturne-op9-2-easy valid (419 notes, ends beat 222.5)
+  ok 217. nocturne-op9-2-hard valid (1236 notes, ends beat 222.5)
+  ok 218. overwatch valid (2739 notes, ends beat 621.25)
+  ok 219. overwatch-easy valid (1680 notes, ends beat 621)
+  ok 220. pain valid (747 notes, ends beat 326)
+  ok 221. pain-easy valid (564 notes, ends beat 326)
+  ok 222. pain-hard valid (991 notes, ends beat 326)
+  ok 223. passacaglia-easy valid (563 notes, ends beat 296)
+  ok 224. passacaglia-hard valid (1178 notes, ends beat 296.25)
+  ok 225. pathetique-2 valid (819 notes, ends beat 146)
+  ok 226. pathetique-2-easy valid (578 notes, ends beat 146)
+  ok 227. pathetique-2-hard valid (1380 notes, ends beat 146)
+  ok 228. prelude-e-minor valid (257 notes, ends beat 101)
+  ok 229. prelude-e-minor-easy valid (105 notes, ends beat 101)
+  ok 230. prelude-e-minor-hard valid (600 notes, ends beat 101)
+  ok 231. rachmaninoff-pc2 valid (3297 notes, ends beat 1435)
+  ok 232. rachmaninoff-pc2-easy valid (1882 notes, ends beat 1435)
+  ok 233. rachmaninoff-pc2-hard valid (4331 notes, ends beat 1435)
+  ok 234. raindrop-prelude valid (950 notes, ends beat 356)
+  ok 235. raindrop-prelude-easy valid (626 notes, ends beat 356)
+  ok 236. raindrop-prelude-hard valid (1516 notes, ends beat 356)
+  ok 237. rondo-alla-turca valid (1089 notes, ends beat 255)
+  ok 238. rondo-alla-turca-easy valid (717 notes, ends beat 255)
+  ok 239. rondo-alla-turca-hard valid (1613 notes, ends beat 255)
+  ok 240. say-yes-to-heaven valid (1435 notes, ends beat 432)
+  ok 241. say-yes-to-heaven-easy valid (778 notes, ends beat 432)
+  ok 242. see-you-tomorrow valid (555 notes, ends beat 247.25)
+  ok 243. see-you-tomorrow-easy valid (307 notes, ends beat 246.25)
+  ok 244. see-you-tomorrow-hard valid (653 notes, ends beat 247.25)
+  ok 245. silksong valid (199 notes, ends beat 89)
+  ok 246. silksong-easy valid (140 notes, ends beat 89)
+  ok 247. silksong-hard valid (264 notes, ends beat 89)
+  ok 248. song-of-storms valid (414 notes, ends beat 270)
+  ok 249. song-of-storms-easy valid (314 notes, ends beat 270)
+  ok 250. song-of-storms-hard valid (667 notes, ends beat 270)
+  ok 251. traumerei valid (241 notes, ends beat 97)
+  ok 252. traumerei-easy valid (148 notes, ends beat 97)
+  ok 253. traumerei-hard valid (339 notes, ends beat 97)
+  ok 254. un-sospiro valid (2409 notes, ends beat 715.25)
+  ok 255. un-sospiro-easy valid (1284 notes, ends beat 703.75)
+  ok 256. valzer-d-inverno valid (849 notes, ends beat 262.25)
+  ok 257. valzer-d-inverno-easy valid (519 notes, ends beat 262.25)
+  ok 258. van-gogh-easy valid (339 notes, ends beat 360.5)
+  ok 259. van-gogh-hard valid (855 notes, ends beat 360.5)
+  ok 260. where-is-my-mind valid (471 notes, ends beat 313.75)
+  ok 261. where-is-my-mind-easy valid (280 notes, ends beat 313.75)
+  ok 262. where-is-my-mind-hard valid (557 notes, ends beat 313.75)
+  ok 263. x-files-easy valid (555 notes, ends beat 463.5)
+  ok 264. x-files-hard valid (1174 notes, ends beat 463.5)
+  ok 265. zelda-main-theme valid (848 notes, ends beat 256)
+  ok 266. zelda-main-theme-easy valid (529 notes, ends beat 256)
+  ok 267. zelda-main-theme-hard valid (1142 notes, ends beat 256)
+  ok 268. zeldas-lullaby valid (593 notes, ends beat 334.5)
+  ok 269. zeldas-lullaby-easy valid (269 notes, ends beat 334.5)
+  ok 270. zeldas-lullaby-hard valid (698 notes, ends beat 334.5)
+  ok 271. 125 curated songs, 145 imported, all with provenance
+  ok 272. silksong: video provenance and all tier reconciliation counts agree with the reviewed reference
+  ok 273. gerudo-valley: video provenance and all tier reconciliation counts agree with the reviewed reference
+  ok 274. zeldas-lullaby: video provenance and all tier reconciliation counts agree with the reviewed reference
+  ok 275. Hard tier exists, is denser, and gp-hard passes its performance-curation gates
+  ok 276. Faded hook matches the verified arpeggio tops and chord loop
+  ok 277. How to Save a Life matches the verified riff, bass move, and chorus letters
+  ok 278. Empire State of Mind matches the triple-verified transcription
+  ok 279. new songs match their verified transcriptions (Pirates, River, Piano Man, Gangsta)
+  ok 280. signed timing: deltaMs/responseMs events, summary, bias line, tick map, dyn gain
+  ok 281. Linkin Park wave matches its verified transcriptions (Lost, Numb)
+  ok 282. scale drills carry standard fingering and mirror down
+  ok 283. easy variants exist, are simpler, and pair with their full versions
+  ok 284. Still D.R.E. riff structure matches the Skoove transcription
+  ok 285. Game of Thrones cells + full structure match the verified letter notes
+  ok 286. Runaway plink + descent + chorus figure match the verified letter notes
+  ok 287. curation gate rejects wait-mode-deadlocking duplicates
+  ok 288. timing windows classify at the boundaries
+  ok 289. hands-separate filters required vs passive notes
+  ok 290. wait mode freezes until the required note is played
+  ok 291. wrong notes flagged and non-advancing
+  ok 292. full wait-mode playthrough finishes (accuracy 80%)
+  ok 293. section looping wraps and reports per-lap accuracy (100%)
+  ok 294. chord double-taps ignored, not punished (incl. final note after advance)
+  ok 295. cross-hand unisons collapse to one required press (deadlock class fixed)
+  ok 296. early correct notes are rejected, no sprint-through
+  ok 297. timed mode counts misses (21 so far)
+  ok 298. learning chunks slice cleanly and loop in the engine
+  ok 299. pace metric tracks real playing speed (on-tempo 0.97, slow 0.49)
+  ok 300. lag spikes cannot swallow misses
+  ok 301. tempo scaling halves the clock
+  ok 302. melody echo picks real phrases and judges the echo
+  ok 303. sight reading: 30 valid kernels, deterministic in-range transforms, level ladder
+  ok 304. theory: chords named, cards matched, answer-by-playing works
+  ok 305. rhythm: tap windows, extras, clean detection
+  ok 306. lessons: 10-step curriculum, EGBDF verified, drills judge by playing
+  ok 307. learning engine: first-attempt mastery signals, weighted review, phrase bridge, count row
+  ok 308. median offset
+  ok 309. touch diagnostic: zones, guided flow, medians, classification, level mapping
+  ok 310. engine records the play log (on/off/velocity) and pedal transitions
+  ok 311. pedal analyzer: late changes, blur risk, opt-in gaps only
+  ok 312. articulation: legato/detached/choppy boundaries, clipped endings, per-section worst
+  ok 313. voicing: calibrated melody-over-accompaniment judgement, honest refusals
+  ok 314. takes: cap eviction, usage, id, MIDI events to replayable notes
+  ok 315. form checkpoint: due every 7 practice days, resets on done
+  ok 316. memory ladder: two-clean stage climbing, cue schedule, random-start recall
+  ok 317. transposition: octave-agnostic start, exact interval sequence, honest restarts
+  ok 318. continuity: longest run, one stumble per pile-up, recovery beats, honest ratings
+  ok 319. improv: authored chord data, current-chord cycling, LH comp
+  ok 320. 12-key ladder: 24 verified scales, mirrored fingering, correct shapes and roots
+  ok 321. grand samples: 30-note map, <=1 semitone shift, all files present and valid
+  ok 322. game metadata: capped pools, focus in pool, mix covers the drill, melody payoff
+  ok 323. LevelRunner: pass rule, resurfacing, retry keeps levels, melody always finishes, all item shapes
+  ok 324. keyboard hit-test: whites, blacks-on-top, edges, misses
+  ok 325. lessons: micro-steps, in-pool worked examples, verified video links
+  ok 326. bridge: chosen by rule from the shelf, right hand inside what was taught, no placeholder
+  ok 327. technique: EVEN_TOL 0.40 rubric, fingering read from shipped data, evenness judged on notes only
+  ok 328. Super Mario theme: opening, chromatic turn, triplet, bridge, coda and chords
+  ok 329. Mario tiers: Easy simplifies, Hard is a superset of the melody
+  ok 330. Star Wars: triplet fanfare, bridge, chromatic descent, tiers verified
+  ok 331. lesson keyboard zooms to the octaves in play, octave-snapped, hit-test intact
+  ok 332. octave teaching is in the curriculum text
+  ok 333. teacher chords: triads, inversions, one-finger voice leading
+  ok 334. chord judging: any voicing, any octave, exact set only
+  ok 335. pulse + coordination scoring: evidence with direction, never a verdict
+  ok 336. mastery stages: assistance caps promotion, novelty earns transfer, failure re-opens
+  ok 337. skill graph: prerequisites actually gate
+  ok 338. prescription order: review > prerequisite > unfinished > proof > weakest > next lesson
+  ok 339. curriculum: teach-then-test, transfer on new material, novel assessment, honest rubric
+  ok 340. note styles: duo split kept, moon goes white-hot, fallback safe
+  ok 341. deck tail: 6px scrolling scanlines pinned to the 8a board, speed derived from its pulse
+  ok 342. verdicts: perfect centred, early left, late right, heavy doubles
+  ok 343. 2026-08-28 wave: Moonlight / Bella Ciao / See You Again pinned to their sources
+  ok 344. wave 2: Interstellar / In the End / What I've Done pinned to their sources
+  ok 345. wave 3: Work This Time pinned - loop, tab riff, Hooktheory melody beats, dorian discipline
+  ok 346. wave 4: In-A-Gadda-Da-Vida pinned - climb, riff, vocal chant, chromatic placement
+  ok 347. wave 5: Stairway + Bohemian Rhapsody pinned - dual-arranger agreement, descent, -3 block
+  ok 348. wave 6: Hotel California pinned - dual-arranger opening, canonical loop, tempo
+  ok 349. library: derived Learning/Repertoire/Explore, weakest-first, one next action
+  ok 350. teacher v2: repertoire map pinned, playable ledger honest, one brain ordered
+  ok 351. gamification: value XP, chosen quests, humane rhythm, evidence badges, journey pilot
+  ok 352. review regressions: no double-pay, durable XP ledger, honest freeze days, weekly re-base
+  ok 353. difficulty: measured 1-10, every group monotonic, hall of fame pinned
+  ok 354. covers: deterministic, all distinct, dark-glass palette, notes-as-art, notch identity
+  ok 355. real art: every claimed sleeve on disk at both sizes, no-recording songs fall back, no group uncovered
+  ok 356. contrast guard: tokens read from style.css clear AA on both surfaces, hands and cream score page pinned
+  ok 357. tap-sound: auto follows the input, overrides honest, old state safe
+  ok 358. chord acceptance: rolled + staccato land, stale evidence expires, wrong notes reset
+  ok 359. no em dashes anywhere in the app, copy or comments (Mark, hard rule)
+  ok 360. no decoy modules in the repo root shadowing a shipped js/ module
+  ok 361. canon: 38 screens generated, no design-tool chrome, no inlined artwork
+  ok 362. every song has a journey (223 generic, 1 authored), windows never exceed 6 cells
+  ok 363. the block ledger counts, and counts since a moment
+  ok 364. explainMiss names the most-missed note and the lesson that teaches it
+  ok 365. prescribe() now recommends reading lessons and due transfer checks
+  ok 366. listening credit requires 80 percent unique playback, seeking and repeats cannot fill gaps
+  ok 367. assessment completion requires real engine hands, full tempo, help off and the entire prescribed passage
+  ok 368. retention needs a full day without another attempt, novel success and historical overclaims stay distinct
+  ok 369. overlapping exposure invalidates transfer, unknown history cannot certify novelty, fallback checks the practised passage
+  ok 370. due song and recurring reading revisits outrank a fresh resume
+  ok 371. progress export restores all fields, rejects malformed files, preserves rollback and catches save failure
+  ok 372. library binds one primary prescription before browsing and exempts its subtree from the canon reset
+  ok 373. Repertoire membership agrees with the two-day playable ledger, including a proven lower tier
+  ok 374. keyboard recovery detaches disconnected ports, tests real keys, releases held notes and bounds local diagnostics
+  ok 375. skill status reports actual test and next-check dates without elapsed-time retention claims
+  ok 376. freeze offers are removed from practice while token and frozen-day history remain readable
+  ok 377. offered quests require identifiable playing outcomes, elapsed time alone completes none
+  ok 378. difficulty display uses descriptive bands while internal sorting retains its existing heuristic
+  ok 379. alternate practice modes share one disclosure and its app-drawn subtree is exempt from the reset
+  ok 380. listening stays outside performed-block totals, reward sources name the evidence and unknown history stays conservative
+  ok 381. listening coverage comes from running audio, excluding startup, suspension and unscheduled background gaps
+  ok 382. actual lap handler rejects weakened engine settings despite full-strength controls, and schedules delayed proof after an independent retry
+  ok 383. restore rejects malformed reward, quest, exposure and activity containers before replacing browser state
+  ok 384. actual demo-stop handler grants once only after enough audio and matching scope, and restore preserves technique arrays
+  ok 385. actual library binding displays descriptive difficulty and honest proof labels, and unknown passage checks never claim novelty
+  ok 386. nothing saves on pagehide; import and undo reload without a stale save in between
+  ok 387. unsupported and denied keyboard access recover on retry, and legacy listening starts stay archived without performed-practice credit
+  ok 388. practice-first library releases fixed-height ancestors and bypasses the old viewport clipping calculation
+  ok 389. mastery reconciliation tolerates absent legacy records
+
+ALL GREEN: 389 checks passed

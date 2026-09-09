@@ -1,0 +1,394 @@
+[
+ {
+  "midi": 21,
+  "on": 2.25,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": -0.095,
+  "flags": [
+   "tint (141,144,159) gmb median -0.095 matches no template class"
+  ],
+  "kind": "ambiguous",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-2.25.png",
+  "reason": "Unpressed extreme keyboard edge shading; no falling bar."
+ },
+ {
+  "midi": 108,
+  "on": 2.25,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": -0.094,
+  "flags": [
+   "tint (140,143,157) gmb median -0.094 matches no template class"
+  ],
+  "kind": "ambiguous",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-2.25.png",
+  "reason": "Unpressed extreme keyboard edge shading; no falling bar."
+ },
+ {
+  "midi": 62,
+  "on": 160.667,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": -0.005,
+  "flags": [
+   "tint (238,238,239) gmb median -0.005 matches no template class"
+  ],
+  "kind": "ambiguous",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 64,
+  "on": 160.667,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ambiguous",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 65,
+  "on": 160.667,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ambiguous",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 67,
+  "on": 160.667,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ambiguous",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 69,
+  "on": 160.667,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ambiguous",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 71,
+  "on": 160.667,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ambiguous",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 72,
+  "on": 160.667,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ambiguous",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 74,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 76,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 77,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 79,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 81,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 83,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 84,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 86,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 88,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 89,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 91,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 93,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 95,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 96,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 98,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 100,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 101,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": 0,
+  "flags": [
+   "tint (255,255,255) gmb median 0 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 103,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": -0.001,
+  "flags": [
+   "tint (243,243,243) gmb median -0.001 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ },
+ {
+  "midi": 105,
+  "on": 160.65,
+  "off": 160.683,
+  "colour": "ambiguous",
+  "metricMedian": -0.082,
+  "flags": [
+   "tint (83,87,95) gmb median -0.082 matches no template class"
+  ],
+  "kind": "ten-finger rejection",
+  "decision": "not a musical strike",
+  "frame": "gerudo-valley-160.667.png",
+  "reason": "Incoming white score card overlays the keyboard; no falling note strike."
+ }
+]

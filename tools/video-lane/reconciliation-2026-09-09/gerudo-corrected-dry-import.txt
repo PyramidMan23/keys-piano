@@ -1,0 +1,16 @@
+1732 events at 120bpm (Andrew Wrangell, Gerudo Valley end-card engraving, Moderately fast quarter = 120, presentation timestamp 164 seconds), grid phase 265ms: mean move 0.013 beats, worst 0.052
+wrote tools/video-lane/reconciliation-2026-09-09/gerudo-valley.mid: track 0 = left hand (929 notes, colour blue), track 1 = right hand (803 notes)
+read 1732 notes, 3 tracks, 4/4, tempo 120bpm
+quantised to 1/4 beat: mean move 0.000 beats, worst 0.000
+hands: the video's own hand colours (929 left, 803 right); fromScore stays false
+pedal: shortened 10 notes the transcriber only heard because the pedal was down
+hard: exempt from the audit's reach and tempo limits as the arranger's own video-authored hands; it does NOT pass them on its own, and no hands cross (Mark's call, 2026-09-05)
+
+DROPPED  Medium: 1525 notes against Hard's 1732 is not a step down, so it is not a tier
+medium: cut from the score by density, 1472 of 1732 notes (a step down from 1732, and 680 is a step down from it)
+ok       gerudo-valley                  1472 notes, 102bpm
+ok       gerudo-valley-easy             680 notes, 84bpm, 5 sections
+ok       gerudo-valley                 1472 notes, 102bpm, 5 sections
+ok       gerudo-valley-hard            1732 notes, 120bpm, 5 sections
+
+--dry: nothing written

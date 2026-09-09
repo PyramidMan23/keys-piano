@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v123';  // Astra applies its own audit: honest listening/assessment/retention, progress export+restore, practice-first library, keyboard recovery, delete list
+const VERSION = 'keys-v124';  // Gerudo Valley Hard carries all 1,732 video strikes (273 merged repeats recovered); per-tier video provenance and reconciliation numbers on the three video songs
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was

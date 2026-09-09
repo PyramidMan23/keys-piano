@@ -1,0 +1,1831 @@
+[
+ {
+  "midi": 75,
+  "colour": "red",
+  "strike": 5.299999999999999,
+  "a": {
+   "midi": 75,
+   "colour": "red",
+   "on": 3.5,
+   "off": 3.517,
+   "frames": 2
+  },
+  "b": {
+   "midi": 75,
+   "colour": "red",
+   "on": 3.75,
+   "off": 3.783,
+   "frames": 3
+  },
+  "frames": [
+   {
+    "requestedSeconds": 5.219999999999999,
+    "presentationSeconds": 5.233,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-0-0.png"
+   },
+   {
+    "requestedSeconds": 5.334999999999999,
+    "presentationSeconds": 5.35,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-0-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 76,
+  "colour": "red",
+  "strike": 5.341499999999998,
+  "a": {
+   "midi": 76,
+   "colour": "red",
+   "on": 3.533,
+   "off": 4.483,
+   "frames": 58
+  },
+  "b": {
+   "midi": 76,
+   "colour": "red",
+   "on": 3.8,
+   "off": 4.75,
+   "frames": 58
+  },
+  "frames": [
+   {
+    "requestedSeconds": 5.261499999999998,
+    "presentationSeconds": 5.267,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-1-0.png"
+   },
+   {
+    "requestedSeconds": 5.376499999999998,
+    "presentationSeconds": 5.383,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-1-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 73,
+  "colour": "red",
+  "strike": 7.858499999999999,
+  "a": {
+   "midi": 73,
+   "colour": "red",
+   "on": 6.05,
+   "off": 6.1,
+   "frames": 4
+  },
+  "b": {
+   "midi": 73,
+   "colour": "red",
+   "on": 6.317,
+   "off": 6.367,
+   "frames": 4
+  },
+  "frames": [
+   {
+    "requestedSeconds": 7.778499999999999,
+    "presentationSeconds": 7.783,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-2-0.png"
+   },
+   {
+    "requestedSeconds": 7.8934999999999995,
+    "presentationSeconds": 7.9,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-2-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 72,
+  "colour": "red",
+  "strike": 7.924999999999999,
+  "a": {
+   "midi": 72,
+   "colour": "red",
+   "on": 6.117,
+   "off": 6.917,
+   "frames": 49
+  },
+  "b": {
+   "midi": 72,
+   "colour": "red",
+   "on": 6.383,
+   "off": 7.183,
+   "frames": 49
+  },
+  "frames": [
+   {
+    "requestedSeconds": 7.844999999999999,
+    "presentationSeconds": 7.85,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-3-0.png"
+   },
+   {
+    "requestedSeconds": 7.959999999999999,
+    "presentationSeconds": 7.967,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-3-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "strike": 32.775,
+  "a": {
+   "midi": 54,
+   "colour": "white",
+   "on": 30.983,
+   "off": 31.067,
+   "frames": 6
+  },
+  "b": {
+   "midi": 54,
+   "colour": "white",
+   "on": 31.217,
+   "off": 31.333,
+   "frames": 8
+  },
+  "frames": [
+   {
+    "requestedSeconds": 32.695,
+    "presentationSeconds": 32.7,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-4-0.png"
+   },
+   {
+    "requestedSeconds": 32.809999999999995,
+    "presentationSeconds": 32.817,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-4-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 42,
+  "colour": "white",
+  "strike": 32.9,
+  "a": {
+   "midi": 42,
+   "colour": "white",
+   "on": 31.1,
+   "off": 31.133,
+   "frames": 3
+  },
+  "b": {
+   "midi": 42,
+   "colour": "white",
+   "on": 31.35,
+   "off": 31.4,
+   "frames": 4
+  },
+  "frames": [
+   {
+    "requestedSeconds": 32.82,
+    "presentationSeconds": 32.833,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-5-0.png"
+   },
+   {
+    "requestedSeconds": 32.934999999999995,
+    "presentationSeconds": 32.95,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-5-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "strike": 32.9665,
+  "a": {
+   "midi": 54,
+   "colour": "white",
+   "on": 31.183,
+   "off": 31.25,
+   "frames": 5
+  },
+  "b": {
+   "midi": 54,
+   "colour": "white",
+   "on": 31.4,
+   "off": 32.083,
+   "frames": 42
+  },
+  "frames": [
+   {
+    "requestedSeconds": 32.886500000000005,
+    "presentationSeconds": 32.9,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-6-0.png"
+   },
+   {
+    "requestedSeconds": 33.0015,
+    "presentationSeconds": 33.017,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-6-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 42,
+  "colour": "white",
+  "strike": 33.491499999999995,
+  "a": {
+   "midi": 42,
+   "colour": "white",
+   "on": 31.7,
+   "off": 31.9,
+   "frames": 13
+  },
+  "b": {
+   "midi": 42,
+   "colour": "white",
+   "on": 31.933,
+   "off": 32.167,
+   "frames": 15
+  },
+  "frames": [
+   {
+    "requestedSeconds": 33.4115,
+    "presentationSeconds": 33.417,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-7-0.png"
+   },
+   {
+    "requestedSeconds": 33.52649999999999,
+    "presentationSeconds": 33.533,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-7-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "strike": 33.7665,
+  "a": {
+   "midi": 54,
+   "colour": "white",
+   "on": 31.983,
+   "off": 32.117,
+   "frames": 9
+  },
+  "b": {
+   "midi": 54,
+   "colour": "white",
+   "on": 32.2,
+   "off": 32.55,
+   "frames": 22
+  },
+  "frames": [
+   {
+    "requestedSeconds": 33.6865,
+    "presentationSeconds": 33.7,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-8-0.png"
+   },
+   {
+    "requestedSeconds": 33.8015,
+    "presentationSeconds": 33.817,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-8-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 42,
+  "colour": "white",
+  "strike": 33.8085,
+  "a": {
+   "midi": 42,
+   "colour": "white",
+   "on": 32.017,
+   "off": 32.4,
+   "frames": 24
+  },
+  "b": {
+   "midi": 42,
+   "colour": "white",
+   "on": 32.25,
+   "off": 32.667,
+   "frames": 26
+  },
+  "frames": [
+   {
+    "requestedSeconds": 33.728500000000004,
+    "presentationSeconds": 33.733,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-9-0.png"
+   },
+   {
+    "requestedSeconds": 33.8435,
+    "presentationSeconds": 33.85,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-9-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 73,
+  "colour": "red",
+  "strike": 36.1415,
+  "a": {
+   "midi": 73,
+   "colour": "red",
+   "on": 34.333,
+   "off": 34.383,
+   "frames": 4
+  },
+  "b": {
+   "midi": 73,
+   "colour": "red",
+   "on": 34.6,
+   "off": 34.633,
+   "frames": 3
+  },
+  "frames": [
+   {
+    "requestedSeconds": 36.0615,
+    "presentationSeconds": 36.067,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-10-0.png"
+   },
+   {
+    "requestedSeconds": 36.1765,
+    "presentationSeconds": 36.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-10-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 74,
+  "colour": "red",
+  "strike": 36.199999999999996,
+  "a": {
+   "midi": 74,
+   "colour": "red",
+   "on": 34.4,
+   "off": 34.983,
+   "frames": 36
+  },
+  "b": {
+   "midi": 74,
+   "colour": "red",
+   "on": 34.65,
+   "off": 35.25,
+   "frames": 37
+  },
+  "frames": [
+   {
+    "requestedSeconds": 36.12,
+    "presentationSeconds": 36.133,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-11-0.png"
+   },
+   {
+    "requestedSeconds": 36.23499999999999,
+    "presentationSeconds": 36.25,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-11-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 56,
+  "colour": "white",
+  "strike": 36.516999999999996,
+  "a": {
+   "midi": 56,
+   "colour": "white",
+   "on": 34.717,
+   "off": 34.817,
+   "frames": 7
+  },
+  "b": {
+   "midi": 56,
+   "colour": "white",
+   "on": 34.967,
+   "off": 35.2,
+   "frames": 15
+  },
+  "frames": [
+   {
+    "requestedSeconds": 36.437,
+    "presentationSeconds": 36.45,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-12-0.png"
+   },
+   {
+    "requestedSeconds": 36.55199999999999,
+    "presentationSeconds": 36.567,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-12-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 56,
+  "colour": "white",
+  "strike": 36.883500000000005,
+  "a": {
+   "midi": 56,
+   "colour": "white",
+   "on": 35.1,
+   "off": 35.217,
+   "frames": 8
+  },
+  "b": {
+   "midi": 56,
+   "colour": "white",
+   "on": 35.317,
+   "off": 35.817,
+   "frames": 31
+  },
+  "frames": [
+   {
+    "requestedSeconds": 36.80350000000001,
+    "presentationSeconds": 36.817,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-13-0.png"
+   },
+   {
+    "requestedSeconds": 36.9185,
+    "presentationSeconds": 36.933,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-13-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 44,
+  "colour": "white",
+  "strike": 37.341499999999996,
+  "a": {
+   "midi": 44,
+   "colour": "white",
+   "on": 35.533,
+   "off": 35.65,
+   "frames": 8
+  },
+  "b": {
+   "midi": 44,
+   "colour": "white",
+   "on": 35.8,
+   "off": 35.917,
+   "frames": 8
+  },
+  "frames": [
+   {
+    "requestedSeconds": 37.2615,
+    "presentationSeconds": 37.267,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-14-0.png"
+   },
+   {
+    "requestedSeconds": 37.37649999999999,
+    "presentationSeconds": 37.383,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-14-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 44,
+  "colour": "white",
+  "strike": 37.591499999999996,
+  "a": {
+   "midi": 44,
+   "colour": "white",
+   "on": 35.8,
+   "off": 35.85,
+   "frames": 4
+  },
+  "b": {
+   "midi": 44,
+   "colour": "white",
+   "on": 36.033,
+   "off": 36.117,
+   "frames": 6
+  },
+  "frames": [
+   {
+    "requestedSeconds": 37.5115,
+    "presentationSeconds": 37.517,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-15-0.png"
+   },
+   {
+    "requestedSeconds": 37.62649999999999,
+    "presentationSeconds": 37.633,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-15-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 69,
+  "colour": "red",
+  "strike": 39.016999999999996,
+  "a": {
+   "midi": 69,
+   "colour": "red",
+   "on": 37.217,
+   "off": 37.35,
+   "frames": 9
+  },
+  "b": {
+   "midi": 69,
+   "colour": "red",
+   "on": 37.467,
+   "off": 38.083,
+   "frames": 38
+  },
+  "frames": [
+   {
+    "requestedSeconds": 38.937,
+    "presentationSeconds": 38.95,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-16-0.png"
+   },
+   {
+    "requestedSeconds": 39.05199999999999,
+    "presentationSeconds": 39.067,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-16-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 71,
+  "colour": "red",
+  "strike": 39.016999999999996,
+  "a": {
+   "midi": 71,
+   "colour": "red",
+   "on": 37.217,
+   "off": 37.35,
+   "frames": 9
+  },
+  "b": {
+   "midi": 71,
+   "colour": "red",
+   "on": 37.467,
+   "off": 38.067,
+   "frames": 37
+  },
+  "frames": [
+   {
+    "requestedSeconds": 38.937,
+    "presentationSeconds": 38.95,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-17-0.png"
+   },
+   {
+    "requestedSeconds": 39.05199999999999,
+    "presentationSeconds": 39.067,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-17-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 42,
+  "colour": "white",
+  "strike": 46.833,
+  "a": {
+   "midi": 42,
+   "colour": "white",
+   "on": 45.033,
+   "off": 45.683,
+   "frames": 40
+  },
+  "b": {
+   "midi": 42,
+   "colour": "white",
+   "on": 45.283,
+   "off": 45.95,
+   "frames": 41
+  },
+  "frames": [
+   {
+    "requestedSeconds": 46.753,
+    "presentationSeconds": 46.767,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-18-0.png"
+   },
+   {
+    "requestedSeconds": 46.867999999999995,
+    "presentationSeconds": 46.883,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-18-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 54,
+  "colour": "white",
+  "strike": 47.241499999999995,
+  "a": {
+   "midi": 54,
+   "colour": "white",
+   "on": 45.45,
+   "off": 45.55,
+   "frames": 7
+  },
+  "b": {
+   "midi": 54,
+   "colour": "white",
+   "on": 45.683,
+   "off": 45.8,
+   "frames": 8
+  },
+  "frames": [
+   {
+    "requestedSeconds": 47.1615,
+    "presentationSeconds": 47.167,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-19-0.png"
+   },
+   {
+    "requestedSeconds": 47.27649999999999,
+    "presentationSeconds": 47.283,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-19-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 42,
+  "colour": "white",
+  "strike": 47.6085,
+  "a": {
+   "midi": 42,
+   "colour": "white",
+   "on": 45.817,
+   "off": 45.95,
+   "frames": 9
+  },
+  "b": {
+   "midi": 42,
+   "colour": "white",
+   "on": 46.05,
+   "off": 46.267,
+   "frames": 14
+  },
+  "frames": [
+   {
+    "requestedSeconds": 47.5285,
+    "presentationSeconds": 47.533,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-20-0.png"
+   },
+   {
+    "requestedSeconds": 47.643499999999996,
+    "presentationSeconds": 47.65,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-20-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 42,
+  "colour": "white",
+  "strike": 47.882999999999996,
+  "a": {
+   "midi": 42,
+   "colour": "white",
+   "on": 46.083,
+   "off": 46.167,
+   "frames": 6
+  },
+  "b": {
+   "midi": 42,
+   "colour": "white",
+   "on": 46.333,
+   "off": 46.417,
+   "frames": 6
+  },
+  "frames": [
+   {
+    "requestedSeconds": 47.803,
+    "presentationSeconds": 47.817,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-21-0.png"
+   },
+   {
+    "requestedSeconds": 47.91799999999999,
+    "presentationSeconds": 47.933,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-21-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 72,
+  "colour": "red",
+  "strike": 49.05,
+  "a": {
+   "midi": 72,
+   "colour": "red",
+   "on": 47.25,
+   "off": 48.05,
+   "frames": 49
+  },
+  "b": {
+   "midi": 72,
+   "colour": "red",
+   "on": 47.5,
+   "off": 48.3,
+   "frames": 49
+  },
+  "frames": [
+   {
+    "requestedSeconds": 48.97,
+    "presentationSeconds": 48.983,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-22-0.png"
+   },
+   {
+    "requestedSeconds": 49.084999999999994,
+    "presentationSeconds": 49.1,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-22-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 74,
+  "colour": "red",
+  "strike": 49.05,
+  "a": {
+   "midi": 74,
+   "colour": "red",
+   "on": 47.25,
+   "off": 47.267,
+   "frames": 2
+  },
+  "b": {
+   "midi": 74,
+   "colour": "red",
+   "on": 47.5,
+   "off": 47.517,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 48.97,
+    "presentationSeconds": 48.983,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-23-0.png"
+   },
+   {
+    "requestedSeconds": 49.084999999999994,
+    "presentationSeconds": 49.1,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-23-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 44,
+  "colour": "white",
+  "strike": 50.0585,
+  "a": {
+   "midi": 44,
+   "colour": "white",
+   "on": 48.267,
+   "off": 48.483,
+   "frames": 14
+  },
+  "b": {
+   "midi": 44,
+   "colour": "white",
+   "on": 48.5,
+   "off": 48.783,
+   "frames": 18
+  },
+  "frames": [
+   {
+    "requestedSeconds": 49.978500000000004,
+    "presentationSeconds": 49.983,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-24-0.png"
+   },
+   {
+    "requestedSeconds": 50.0935,
+    "presentationSeconds": 50.1,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-24-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 56,
+  "colour": "white",
+  "strike": 50.4,
+  "a": {
+   "midi": 56,
+   "colour": "white",
+   "on": 48.617,
+   "off": 49.15,
+   "frames": 33
+  },
+  "b": {
+   "midi": 56,
+   "colour": "white",
+   "on": 48.833,
+   "off": 49.6,
+   "frames": 47
+  },
+  "frames": [
+   {
+    "requestedSeconds": 50.32,
+    "presentationSeconds": 50.333,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-25-0.png"
+   },
+   {
+    "requestedSeconds": 50.434999999999995,
+    "presentationSeconds": 50.45,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-25-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 61,
+  "colour": "red",
+  "strike": 55.5085,
+  "a": {
+   "midi": 61,
+   "colour": "red",
+   "on": 53.7,
+   "off": 53.75,
+   "frames": 4
+  },
+  "b": {
+   "midi": 61,
+   "colour": "red",
+   "on": 53.967,
+   "off": 54.017,
+   "frames": 4
+  },
+  "frames": [
+   {
+    "requestedSeconds": 55.4285,
+    "presentationSeconds": 55.433,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-26-0.png"
+   },
+   {
+    "requestedSeconds": 55.543499999999995,
+    "presentationSeconds": 55.55,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-26-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 60,
+  "colour": "red",
+  "strike": 55.575,
+  "a": {
+   "midi": 60,
+   "colour": "red",
+   "on": 53.767,
+   "off": 53.817,
+   "frames": 4
+  },
+  "b": {
+   "midi": 60,
+   "colour": "red",
+   "on": 54.033,
+   "off": 54.05,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 55.495000000000005,
+    "presentationSeconds": 55.5,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-27-0.png"
+   },
+   {
+    "requestedSeconds": 55.61,
+    "presentationSeconds": 55.617,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-27-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "strike": 55.575,
+  "a": {
+   "midi": 62,
+   "colour": "red",
+   "on": 53.767,
+   "off": 53.817,
+   "frames": 4
+  },
+  "b": {
+   "midi": 62,
+   "colour": "red",
+   "on": 54.033,
+   "off": 54.05,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 55.495000000000005,
+    "presentationSeconds": 55.5,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-28-0.png"
+   },
+   {
+    "requestedSeconds": 55.61,
+    "presentationSeconds": 55.617,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-28-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 61,
+  "colour": "red",
+  "strike": 55.62499999999999,
+  "a": {
+   "midi": 61,
+   "colour": "red",
+   "on": 53.833,
+   "off": 54.017,
+   "frames": 12
+  },
+  "b": {
+   "midi": 61,
+   "colour": "red",
+   "on": 54.067,
+   "off": 54.283,
+   "frames": 14
+  },
+  "frames": [
+   {
+    "requestedSeconds": 55.544999999999995,
+    "presentationSeconds": 55.55,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-29-0.png"
+   },
+   {
+    "requestedSeconds": 55.65999999999999,
+    "presentationSeconds": 55.667,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-29-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 60,
+  "colour": "red",
+  "strike": 55.841499999999996,
+  "a": {
+   "midi": 60,
+   "colour": "red",
+   "on": 54.033,
+   "off": 54.067,
+   "frames": 3
+  },
+  "b": {
+   "midi": 60,
+   "colour": "red",
+   "on": 54.3,
+   "off": 54.35,
+   "frames": 4
+  },
+  "frames": [
+   {
+    "requestedSeconds": 55.7615,
+    "presentationSeconds": 55.767,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-30-0.png"
+   },
+   {
+    "requestedSeconds": 55.87649999999999,
+    "presentationSeconds": 55.883,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-30-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "strike": 55.841499999999996,
+  "a": {
+   "midi": 62,
+   "colour": "red",
+   "on": 54.033,
+   "off": 54.067,
+   "frames": 3
+  },
+  "b": {
+   "midi": 62,
+   "colour": "red",
+   "on": 54.3,
+   "off": 54.35,
+   "frames": 4
+  },
+  "frames": [
+   {
+    "requestedSeconds": 55.7615,
+    "presentationSeconds": 55.767,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-31-0.png"
+   },
+   {
+    "requestedSeconds": 55.87649999999999,
+    "presentationSeconds": 55.883,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-31-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 61,
+  "colour": "red",
+  "strike": 55.9,
+  "a": {
+   "midi": 61,
+   "colour": "red",
+   "on": 54.083,
+   "off": 54.267,
+   "frames": 12
+  },
+  "b": {
+   "midi": 61,
+   "colour": "red",
+   "on": 54.367,
+   "off": 54.4,
+   "frames": 3
+  },
+  "frames": [
+   {
+    "requestedSeconds": 55.82,
+    "presentationSeconds": 55.833,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-32-0.png"
+   },
+   {
+    "requestedSeconds": 55.934999999999995,
+    "presentationSeconds": 55.95,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-32-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 61,
+  "colour": "red",
+  "strike": 56.15,
+  "a": {
+   "midi": 61,
+   "colour": "red",
+   "on": 54.333,
+   "off": 54.45,
+   "frames": 8
+  },
+  "b": {
+   "midi": 61,
+   "colour": "red",
+   "on": 54.617,
+   "off": 54.667,
+   "frames": 4
+  },
+  "frames": [
+   {
+    "requestedSeconds": 56.07,
+    "presentationSeconds": 56.083,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-33-0.png"
+   },
+   {
+    "requestedSeconds": 56.184999999999995,
+    "presentationSeconds": 56.2,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-33-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 60,
+  "colour": "red",
+  "strike": 56.24999999999999,
+  "a": {
+   "midi": 60,
+   "colour": "red",
+   "on": 54.467,
+   "off": 54.55,
+   "frames": 6
+  },
+  "b": {
+   "midi": 60,
+   "colour": "red",
+   "on": 54.683,
+   "off": 54.817,
+   "frames": 9
+  },
+  "frames": [
+   {
+    "requestedSeconds": 56.169999999999995,
+    "presentationSeconds": 56.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-34-0.png"
+   },
+   {
+    "requestedSeconds": 56.28499999999999,
+    "presentationSeconds": 56.3,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-34-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "strike": 56.24999999999999,
+  "a": {
+   "midi": 62,
+   "colour": "red",
+   "on": 54.467,
+   "off": 54.517,
+   "frames": 4
+  },
+  "b": {
+   "midi": 62,
+   "colour": "red",
+   "on": 54.683,
+   "off": 54.817,
+   "frames": 9
+  },
+  "frames": [
+   {
+    "requestedSeconds": 56.169999999999995,
+    "presentationSeconds": 56.183,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-35-0.png"
+   },
+   {
+    "requestedSeconds": 56.28499999999999,
+    "presentationSeconds": 56.3,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-35-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 61,
+  "colour": "red",
+  "strike": 56.3915,
+  "a": {
+   "midi": 61,
+   "colour": "red",
+   "on": 54.6,
+   "off": 54.617,
+   "frames": 2
+  },
+  "b": {
+   "midi": 61,
+   "colour": "red",
+   "on": 54.833,
+   "off": 54.9,
+   "frames": 5
+  },
+  "frames": [
+   {
+    "requestedSeconds": 56.3115,
+    "presentationSeconds": 56.317,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-36-0.png"
+   },
+   {
+    "requestedSeconds": 56.4265,
+    "presentationSeconds": 56.433,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-36-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "strike": 56.45,
+  "a": {
+   "midi": 62,
+   "colour": "red",
+   "on": 54.633,
+   "off": 54.733,
+   "frames": 7
+  },
+  "b": {
+   "midi": 62,
+   "colour": "red",
+   "on": 54.917,
+   "off": 54.95,
+   "frames": 3
+  },
+  "frames": [
+   {
+    "requestedSeconds": 56.370000000000005,
+    "presentationSeconds": 56.383,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-37-0.png"
+   },
+   {
+    "requestedSeconds": 56.485,
+    "presentationSeconds": 56.5,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-37-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 60,
+  "colour": "red",
+  "strike": 56.54149999999999,
+  "a": {
+   "midi": 60,
+   "colour": "red",
+   "on": 54.75,
+   "off": 54.767,
+   "frames": 2
+  },
+  "b": {
+   "midi": 60,
+   "colour": "red",
+   "on": 54.983,
+   "off": 55.017,
+   "frames": 3
+  },
+  "frames": [
+   {
+    "requestedSeconds": 56.461499999999994,
+    "presentationSeconds": 56.467,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-38-0.png"
+   },
+   {
+    "requestedSeconds": 56.57649999999999,
+    "presentationSeconds": 56.583,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-38-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 62,
+  "colour": "red",
+  "strike": 57.166500000000006,
+  "a": {
+   "midi": 62,
+   "colour": "red",
+   "on": 55.35,
+   "off": 55.433,
+   "frames": 6
+  },
+  "b": {
+   "midi": 62,
+   "colour": "red",
+   "on": 55.633,
+   "off": 56.033,
+   "frames": 25
+  },
+  "frames": [
+   {
+    "requestedSeconds": 57.08650000000001,
+    "presentationSeconds": 57.1,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-39-0.png"
+   },
+   {
+    "requestedSeconds": 57.2015,
+    "presentationSeconds": 57.217,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-39-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 64,
+  "colour": "red",
+  "strike": 57.166500000000006,
+  "a": {
+   "midi": 64,
+   "colour": "red",
+   "on": 55.35,
+   "off": 55.433,
+   "frames": 6
+  },
+  "b": {
+   "midi": 64,
+   "colour": "red",
+   "on": 55.633,
+   "off": 57.45,
+   "frames": 110
+  },
+  "frames": [
+   {
+    "requestedSeconds": 57.08650000000001,
+    "presentationSeconds": 57.1,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-40-0.png"
+   },
+   {
+    "requestedSeconds": 57.2015,
+    "presentationSeconds": 57.217,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-40-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 99,
+  "colour": "red",
+  "strike": 60.2085,
+  "a": {
+   "midi": 99,
+   "colour": "red",
+   "on": 58.4,
+   "off": 58.533,
+   "frames": 9
+  },
+  "b": {
+   "midi": 99,
+   "colour": "red",
+   "on": 58.667,
+   "off": 58.8,
+   "frames": 9
+  },
+  "frames": [
+   {
+    "requestedSeconds": 60.1285,
+    "presentationSeconds": 60.133,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-41-0.png"
+   },
+   {
+    "requestedSeconds": 60.2435,
+    "presentationSeconds": 60.25,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-41-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 99,
+  "colour": "red",
+  "strike": 61.067,
+  "a": {
+   "midi": 99,
+   "colour": "red",
+   "on": 59.267,
+   "off": 59.35,
+   "frames": 6
+  },
+  "b": {
+   "midi": 99,
+   "colour": "red",
+   "on": 59.517,
+   "off": 59.617,
+   "frames": 7
+  },
+  "frames": [
+   {
+    "requestedSeconds": 60.987,
+    "presentationSeconds": 61,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-42-0.png"
+   },
+   {
+    "requestedSeconds": 61.102,
+    "presentationSeconds": 61.117,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-42-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "strike": 63.217,
+  "a": {
+   "midi": 94,
+   "colour": "red",
+   "on": 61.417,
+   "off": 61.45,
+   "frames": 3
+  },
+  "b": {
+   "midi": 94,
+   "colour": "red",
+   "on": 61.667,
+   "off": 61.683,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 63.137,
+    "presentationSeconds": 63.15,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-43-0.png"
+   },
+   {
+    "requestedSeconds": 63.251999999999995,
+    "presentationSeconds": 63.267,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-43-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "strike": 63.3165,
+  "a": {
+   "midi": 94,
+   "colour": "red",
+   "on": 61.5,
+   "off": 61.667,
+   "frames": 11
+  },
+  "b": {
+   "midi": 94,
+   "colour": "red",
+   "on": 61.783,
+   "off": 61.917,
+   "frames": 9
+  },
+  "frames": [
+   {
+    "requestedSeconds": 63.2365,
+    "presentationSeconds": 63.25,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-44-0.png"
+   },
+   {
+    "requestedSeconds": 63.351499999999994,
+    "presentationSeconds": 63.367,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-44-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "strike": 64.17500000000001,
+  "a": {
+   "midi": 94,
+   "colour": "red",
+   "on": 62.367,
+   "off": 62.483,
+   "frames": 8
+  },
+  "b": {
+   "midi": 94,
+   "colour": "red",
+   "on": 62.633,
+   "off": 62.733,
+   "frames": 7
+  },
+  "frames": [
+   {
+    "requestedSeconds": 64.09500000000001,
+    "presentationSeconds": 64.1,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-45-0.png"
+   },
+   {
+    "requestedSeconds": 64.21000000000001,
+    "presentationSeconds": 64.217,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-45-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "strike": 65.38300000000001,
+  "a": {
+   "midi": 94,
+   "colour": "red",
+   "on": 63.583,
+   "off": 64.25,
+   "frames": 41
+  },
+  "b": {
+   "midi": 94,
+   "colour": "red",
+   "on": 63.833,
+   "off": 64.517,
+   "frames": 42
+  },
+  "frames": [
+   {
+    "requestedSeconds": 65.30300000000001,
+    "presentationSeconds": 65.317,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-46-0.png"
+   },
+   {
+    "requestedSeconds": 65.418,
+    "presentationSeconds": 65.433,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-46-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 95,
+  "colour": "red",
+  "strike": 66.07499999999999,
+  "a": {
+   "midi": 95,
+   "colour": "red",
+   "on": 64.267,
+   "off": 64.283,
+   "frames": 2
+  },
+  "b": {
+   "midi": 95,
+   "colour": "red",
+   "on": 64.533,
+   "off": 64.567,
+   "frames": 3
+  },
+  "frames": [
+   {
+    "requestedSeconds": 65.99499999999999,
+    "presentationSeconds": 66,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-47-0.png"
+   },
+   {
+    "requestedSeconds": 66.10999999999999,
+    "presentationSeconds": 66.117,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-47-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "strike": 66.1165,
+  "a": {
+   "midi": 94,
+   "colour": "red",
+   "on": 64.3,
+   "off": 64.517,
+   "frames": 14
+  },
+  "b": {
+   "midi": 94,
+   "colour": "red",
+   "on": 64.583,
+   "off": 64.783,
+   "frames": 13
+  },
+  "frames": [
+   {
+    "requestedSeconds": 66.0365,
+    "presentationSeconds": 66.05,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-48-0.png"
+   },
+   {
+    "requestedSeconds": 66.1515,
+    "presentationSeconds": 66.167,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-48-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 99,
+  "colour": "red",
+  "strike": 67.0915,
+  "a": {
+   "midi": 99,
+   "colour": "red",
+   "on": 65.283,
+   "off": 65.45,
+   "frames": 11
+  },
+  "b": {
+   "midi": 99,
+   "colour": "red",
+   "on": 65.55,
+   "off": 65.667,
+   "frames": 8
+  },
+  "frames": [
+   {
+    "requestedSeconds": 67.0115,
+    "presentationSeconds": 67.017,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-49-0.png"
+   },
+   {
+    "requestedSeconds": 67.1265,
+    "presentationSeconds": 67.133,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-49-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 100,
+  "colour": "red",
+  "strike": 67.275,
+  "a": {
+   "midi": 100,
+   "colour": "red",
+   "on": 65.467,
+   "off": 65.483,
+   "frames": 2
+  },
+  "b": {
+   "midi": 100,
+   "colour": "red",
+   "on": 65.733,
+   "off": 65.75,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 67.19500000000001,
+    "presentationSeconds": 67.2,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-50-0.png"
+   },
+   {
+    "requestedSeconds": 67.31,
+    "presentationSeconds": 67.317,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-50-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 99,
+  "colour": "red",
+  "strike": 67.94149999999999,
+  "a": {
+   "midi": 99,
+   "colour": "red",
+   "on": 66.133,
+   "off": 66.3,
+   "frames": 11
+  },
+  "b": {
+   "midi": 99,
+   "colour": "red",
+   "on": 66.4,
+   "off": 66.567,
+   "frames": 11
+  },
+  "frames": [
+   {
+    "requestedSeconds": 67.86149999999999,
+    "presentationSeconds": 67.867,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-51-0.png"
+   },
+   {
+    "requestedSeconds": 67.97649999999999,
+    "presentationSeconds": 67.983,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-51-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "strike": 69.2415,
+  "a": {
+   "midi": 94,
+   "colour": "red",
+   "on": 67.433,
+   "off": 67.6,
+   "frames": 11
+  },
+  "b": {
+   "midi": 94,
+   "colour": "red",
+   "on": 67.7,
+   "off": 67.867,
+   "frames": 11
+  },
+  "frames": [
+   {
+    "requestedSeconds": 69.1615,
+    "presentationSeconds": 69.167,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-52-0.png"
+   },
+   {
+    "requestedSeconds": 69.2765,
+    "presentationSeconds": 69.283,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-52-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "strike": 70.05850000000001,
+  "a": {
+   "midi": 94,
+   "colour": "red",
+   "on": 68.25,
+   "off": 68.45,
+   "frames": 13
+  },
+  "b": {
+   "midi": 94,
+   "colour": "red",
+   "on": 68.517,
+   "off": 68.717,
+   "frames": 13
+  },
+  "frames": [
+   {
+    "requestedSeconds": 69.97850000000001,
+    "presentationSeconds": 69.983,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-53-0.png"
+   },
+   {
+    "requestedSeconds": 70.0935,
+    "presentationSeconds": 70.1,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-53-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "strike": 72.225,
+  "a": {
+   "midi": 94,
+   "colour": "red",
+   "on": 70.417,
+   "off": 72.533,
+   "frames": 128
+  },
+  "b": {
+   "midi": 94,
+   "colour": "red",
+   "on": 70.683,
+   "off": 72.767,
+   "frames": 126
+  },
+  "frames": [
+   {
+    "requestedSeconds": 72.145,
+    "presentationSeconds": 72.15,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-54-0.png"
+   },
+   {
+    "requestedSeconds": 72.25999999999999,
+    "presentationSeconds": 72.267,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-54-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 95,
+  "colour": "red",
+  "strike": 74.3415,
+  "a": {
+   "midi": 95,
+   "colour": "red",
+   "on": 72.55,
+   "off": 72.617,
+   "frames": 5
+  },
+  "b": {
+   "midi": 95,
+   "colour": "red",
+   "on": 72.783,
+   "off": 72.917,
+   "frames": 9
+  },
+  "frames": [
+   {
+    "requestedSeconds": 74.2615,
+    "presentationSeconds": 74.267,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-55-0.png"
+   },
+   {
+    "requestedSeconds": 74.3765,
+    "presentationSeconds": 74.383,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-55-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "strike": 74.475,
+  "a": {
+   "midi": 94,
+   "colour": "red",
+   "on": 72.667,
+   "off": 75.917,
+   "frames": 196
+  },
+  "b": {
+   "midi": 94,
+   "colour": "red",
+   "on": 72.933,
+   "off": 73.583,
+   "frames": 40
+  },
+  "frames": [
+   {
+    "requestedSeconds": 74.395,
+    "presentationSeconds": 74.4,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-56-0.png"
+   },
+   {
+    "requestedSeconds": 74.50999999999999,
+    "presentationSeconds": 74.517,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-56-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 95,
+  "colour": "red",
+  "strike": 77.7415,
+  "a": {
+   "midi": 95,
+   "colour": "red",
+   "on": 75.933,
+   "off": 75.967,
+   "frames": 3
+  },
+  "b": {
+   "midi": 95,
+   "colour": "red",
+   "on": 76.2,
+   "off": 76.333,
+   "frames": 9
+  },
+  "frames": [
+   {
+    "requestedSeconds": 77.6615,
+    "presentationSeconds": 77.667,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-57-0.png"
+   },
+   {
+    "requestedSeconds": 77.7765,
+    "presentationSeconds": 77.783,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-57-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 94,
+  "colour": "red",
+  "strike": 77.89150000000001,
+  "a": {
+   "midi": 94,
+   "colour": "red",
+   "on": 76.083,
+   "off": 77.35,
+   "frames": 77
+  },
+  "b": {
+   "midi": 94,
+   "colour": "red",
+   "on": 76.35,
+   "off": 77.6,
+   "frames": 76
+  },
+  "frames": [
+   {
+    "requestedSeconds": 77.81150000000001,
+    "presentationSeconds": 77.817,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-58-0.png"
+   },
+   {
+    "requestedSeconds": 77.9265,
+    "presentationSeconds": 77.933,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-candidate-58-1.png"
+   }
+  ]
+ }
+]

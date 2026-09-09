@@ -1,0 +1,281 @@
+[
+ {
+  "midi": 70,
+  "colour": "green",
+  "strike": 55.7,
+  "a": {
+   "midi": 70,
+   "colour": "green",
+   "on": 53.45,
+   "off": 53.467,
+   "frames": 2
+  },
+  "b": {
+   "midi": 70,
+   "colour": "green",
+   "on": 53.8,
+   "off": 53.817,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 55.620000000000005,
+    "presentationSeconds": 55.633,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-0-0.png"
+   },
+   {
+    "requestedSeconds": 55.735,
+    "presentationSeconds": 55.75,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-0-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 81,
+  "colour": "green",
+  "strike": 61.7,
+  "a": {
+   "midi": 81,
+   "colour": "green",
+   "on": 59.45,
+   "off": 59.467,
+   "frames": 2
+  },
+  "b": {
+   "midi": 81,
+   "colour": "green",
+   "on": 59.8,
+   "off": 59.817,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 61.620000000000005,
+    "presentationSeconds": 61.633,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-1-0.png"
+   },
+   {
+    "requestedSeconds": 61.735,
+    "presentationSeconds": 61.75,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-1-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 82,
+  "colour": "green",
+  "strike": 84.83300000000001,
+  "a": {
+   "midi": 82,
+   "colour": "green",
+   "on": 82.583,
+   "off": 82.6,
+   "frames": 2
+  },
+  "b": {
+   "midi": 82,
+   "colour": "green",
+   "on": 82.933,
+   "off": 82.95,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 84.75300000000001,
+    "presentationSeconds": 84.767,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-2-0.png"
+   },
+   {
+    "requestedSeconds": 84.86800000000001,
+    "presentationSeconds": 84.883,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-2-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 85,
+  "colour": "green",
+  "strike": 93.84150000000001,
+  "a": {
+   "midi": 85,
+   "colour": "green",
+   "on": 91.6,
+   "off": 91.617,
+   "frames": 2
+  },
+  "b": {
+   "midi": 85,
+   "colour": "green",
+   "on": 91.933,
+   "off": 91.95,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 93.76150000000001,
+    "presentationSeconds": 93.767,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-3-0.png"
+   },
+   {
+    "requestedSeconds": 93.87650000000001,
+    "presentationSeconds": 93.883,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-3-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 92,
+  "colour": "green",
+  "strike": 126.483,
+  "a": {
+   "midi": 92,
+   "colour": "green",
+   "on": 124.233,
+   "off": 124.25,
+   "frames": 2
+  },
+  "b": {
+   "midi": 92,
+   "colour": "green",
+   "on": 124.583,
+   "off": 124.6,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 126.403,
+    "presentationSeconds": 126.417,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-4-0.png"
+   },
+   {
+    "requestedSeconds": 126.518,
+    "presentationSeconds": 126.533,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-4-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 80,
+  "colour": "green",
+  "strike": 144.36700000000002,
+  "a": {
+   "midi": 80,
+   "colour": "green",
+   "on": 142.117,
+   "off": 142.15,
+   "frames": 3
+  },
+  "b": {
+   "midi": 80,
+   "colour": "green",
+   "on": 142.467,
+   "off": 142.483,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 144.287,
+    "presentationSeconds": 144.3,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-5-0.png"
+   },
+   {
+    "requestedSeconds": 144.40200000000002,
+    "presentationSeconds": 144.417,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-5-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 85,
+  "colour": "green",
+  "strike": 159.08299999999997,
+  "a": {
+   "midi": 85,
+   "colour": "green",
+   "on": 156.833,
+   "off": 156.85,
+   "frames": 2
+  },
+  "b": {
+   "midi": 85,
+   "colour": "green",
+   "on": 157.183,
+   "off": 157.2,
+   "frames": 2
+  },
+  "frames": [
+   {
+    "requestedSeconds": 159.00299999999996,
+    "presentationSeconds": 159.017,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-6-0.png"
+   },
+   {
+    "requestedSeconds": 159.11799999999997,
+    "presentationSeconds": 159.133,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-6-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 85,
+  "colour": "green",
+  "strike": 165.34999999999997,
+  "a": {
+   "midi": 85,
+   "colour": "green",
+   "on": 163.1,
+   "off": 163.15,
+   "frames": 4
+  },
+  "b": {
+   "midi": 85,
+   "colour": "green",
+   "on": 163.45,
+   "off": 163.5,
+   "frames": 4
+  },
+  "frames": [
+   {
+    "requestedSeconds": 165.26999999999995,
+    "presentationSeconds": 165.283,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-7-0.png"
+   },
+   {
+    "requestedSeconds": 165.38499999999996,
+    "presentationSeconds": 165.4,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-7-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 84,
+  "colour": "green",
+  "strike": 165.41699999999997,
+  "a": {
+   "midi": 84,
+   "colour": "green",
+   "on": 163.167,
+   "off": 163.333,
+   "frames": 11
+  },
+  "b": {
+   "midi": 84,
+   "colour": "green",
+   "on": 163.517,
+   "off": 163.683,
+   "frames": 11
+  },
+  "frames": [
+   {
+    "requestedSeconds": 165.33699999999996,
+    "presentationSeconds": 165.35,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-8-0.png"
+   },
+   {
+    "requestedSeconds": 165.45199999999997,
+    "presentationSeconds": 165.467,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-candidate-8-1.png"
+   }
+  ]
+ }
+]

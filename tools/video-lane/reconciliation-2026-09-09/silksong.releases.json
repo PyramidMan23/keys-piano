@@ -1,0 +1,482 @@
+[
+ {
+  "sample": 1,
+  "bar": 1,
+  "beatWithinBar": 0,
+  "midi": 57,
+  "hand": "L",
+  "writtenDurationBeats": 2,
+  "expectedStrikeSeconds": 3.567,
+  "event": {
+   "midi": 57,
+   "on": 3.567,
+   "off": 5,
+   "colour": "white",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.6718333333333333,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 5.321285714285715,
+   "presentationSeconds": 5.333,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-0.png"
+  }
+ },
+ {
+  "sample": 2,
+  "bar": 1,
+  "beatWithinBar": 0,
+  "midi": 76,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 3.567,
+  "event": {
+   "midi": 76,
+   "on": 3.567,
+   "off": 4.517,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.1083333333333336,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.464142857142857,
+   "presentationSeconds": 4.467,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-1.png"
+  }
+ },
+ {
+  "sample": 3,
+  "bar": 1,
+  "beatWithinBar": 0.5,
+  "midi": 64,
+  "hand": "L",
+  "writtenDurationBeats": 1.5,
+  "expectedStrikeSeconds": 3.9955714285714286,
+  "event": {
+   "midi": 64,
+   "on": 4,
+   "off": 5.417,
+   "colour": "white",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.6531666666666665,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 5.321285714285714,
+   "presentationSeconds": 5.333,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-2.png"
+  }
+ },
+ {
+  "sample": 4,
+  "bar": 1,
+  "beatWithinBar": 1,
+  "midi": 71,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 4.424142857142857,
+  "event": {
+   "midi": 71,
+   "on": 4.417,
+   "off": 5.417,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.1666666666666667,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 5.321285714285714,
+   "presentationSeconds": 5.333,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-3.png"
+  }
+ },
+ {
+  "sample": 5,
+  "bar": 1,
+  "beatWithinBar": 1,
+  "midi": 74,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 4.424142857142857,
+  "event": {
+   "midi": 74,
+   "on": 4.417,
+   "off": 5.433,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.1853333333333333,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 5.321285714285714,
+   "presentationSeconds": 5.333,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-4.png"
+  }
+ },
+ {
+  "sample": 6,
+  "bar": 2,
+  "beatWithinBar": 0,
+  "midi": 57,
+  "hand": "L",
+  "writtenDurationBeats": 2,
+  "expectedStrikeSeconds": 5.281285714285715,
+  "event": {
+   "midi": 57,
+   "on": 5.283,
+   "off": 6.833,
+   "colour": "white",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.8083333333333331,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 7.035571428571429,
+   "presentationSeconds": 7.05,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-5.png"
+  }
+ },
+ {
+  "sample": 7,
+  "bar": 2,
+  "beatWithinBar": 0,
+  "midi": 76,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 5.281285714285715,
+  "event": {
+   "midi": 76,
+   "on": 5.283,
+   "off": 6.383,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.283333333333333,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 6.178428571428571,
+   "presentationSeconds": 6.183,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-6.png"
+  }
+ },
+ {
+  "sample": 8,
+  "bar": 2,
+  "beatWithinBar": 0.5,
+  "midi": 64,
+  "hand": "L",
+  "writtenDurationBeats": 1.5,
+  "expectedStrikeSeconds": 5.7098571428571425,
+  "event": {
+   "midi": 64,
+   "on": 5.7,
+   "off": 7.1,
+   "colour": "white",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.6333333333333329,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 7.035571428571428,
+   "presentationSeconds": 7.05,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-7.png"
+  }
+ },
+ {
+  "sample": 9,
+  "bar": 2,
+  "beatWithinBar": 1,
+  "midi": 69,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 6.138428571428571,
+  "event": {
+   "midi": 69,
+   "on": 6.133,
+   "off": 7.117,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.1480000000000001,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 7.035571428571428,
+   "presentationSeconds": 7.05,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-8.png"
+  }
+ },
+ {
+  "sample": 10,
+  "bar": 2,
+  "beatWithinBar": 1,
+  "midi": 72,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 6.138428571428571,
+  "event": {
+   "midi": 72,
+   "on": 6.133,
+   "off": 7.117,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.1480000000000001,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 7.035571428571428,
+   "presentationSeconds": 7.05,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-9.png"
+  }
+ },
+ {
+  "sample": 11,
+  "bar": 3,
+  "beatWithinBar": 0,
+  "midi": 57,
+  "hand": "L",
+  "writtenDurationBeats": 2,
+  "expectedStrikeSeconds": 6.995571428571429,
+  "event": {
+   "midi": 57,
+   "on": 7,
+   "off": 8.533,
+   "colour": "white",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.7884999999999995,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 8.749857142857142,
+   "presentationSeconds": 8.75,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-10.png"
+  }
+ },
+ {
+  "sample": 12,
+  "bar": 3,
+  "beatWithinBar": 0,
+  "midi": 74,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 6.995571428571429,
+  "event": {
+   "midi": 74,
+   "on": 7,
+   "off": 8.017,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.1864999999999994,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 7.892714285714286,
+   "presentationSeconds": 7.9,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-11.png"
+  }
+ },
+ {
+  "sample": 13,
+  "bar": 3,
+  "beatWithinBar": 0.5,
+  "midi": 64,
+  "hand": "L",
+  "writtenDurationBeats": 1.5,
+  "expectedStrikeSeconds": 7.424142857142857,
+  "event": {
+   "midi": 64,
+   "on": 7.417,
+   "off": 8.833,
+   "colour": "white",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.6520000000000006,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 8.749857142857142,
+   "presentationSeconds": 8.75,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-12.png"
+  }
+ },
+ {
+  "sample": 14,
+  "bar": 3,
+  "beatWithinBar": 1,
+  "midi": 69,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 7.852714285714286,
+  "event": {
+   "midi": 69,
+   "on": 7.85,
+   "off": 8.817,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.1281666666666674,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 8.749857142857142,
+   "presentationSeconds": 8.75,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-13.png"
+  }
+ },
+ {
+  "sample": 15,
+  "bar": 3,
+  "beatWithinBar": 1,
+  "midi": 72,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 7.852714285714286,
+  "event": {
+   "midi": 72,
+   "on": 7.85,
+   "off": 8.817,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.1281666666666674,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 8.749857142857142,
+   "presentationSeconds": 8.75,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-14.png"
+  }
+ },
+ {
+  "sample": 16,
+  "bar": 4,
+  "beatWithinBar": 0,
+  "midi": 57,
+  "hand": "L",
+  "writtenDurationBeats": 2,
+  "expectedStrikeSeconds": 8.709857142857143,
+  "event": {
+   "midi": 57,
+   "on": 8.717,
+   "off": 10.217,
+   "colour": "white",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.75,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 10.464142857142855,
+   "presentationSeconds": 10.467,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-15.png"
+  }
+ },
+ {
+  "sample": 17,
+  "bar": 4,
+  "beatWithinBar": 0,
+  "midi": 74,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 8.709857142857143,
+  "event": {
+   "midi": 74,
+   "on": 8.7,
+   "off": 9.683,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.146833333333334,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 9.607,
+   "presentationSeconds": 9.617,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-16.png"
+  }
+ },
+ {
+  "sample": 18,
+  "bar": 4,
+  "beatWithinBar": 0.5,
+  "midi": 64,
+  "hand": "L",
+  "writtenDurationBeats": 1.5,
+  "expectedStrikeSeconds": 9.138428571428571,
+  "event": {
+   "midi": 64,
+   "on": 9.133,
+   "off": 10.55,
+   "colour": "white",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.6531666666666687,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 10.464142857142857,
+   "presentationSeconds": 10.467,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-17.png"
+  }
+ },
+ {
+  "sample": 19,
+  "bar": 4,
+  "beatWithinBar": 1,
+  "midi": 68,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 9.567,
+  "event": {
+   "midi": 68,
+   "on": 9.567,
+   "off": 10.617,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.225000000000001,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 10.464142857142857,
+   "presentationSeconds": 10.467,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-18.png"
+  }
+ },
+ {
+  "sample": 20,
+  "bar": 4,
+  "beatWithinBar": 1,
+  "midi": 71,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 9.567,
+  "event": {
+   "midi": 71,
+   "on": 9.567,
+   "off": 10.583,
+   "colour": "red",
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.1853333333333333,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 10.464142857142857,
+   "presentationSeconds": 10.467,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/silksong-19.png"
+  }
+ }
+]

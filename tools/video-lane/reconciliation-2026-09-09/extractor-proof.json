@@ -1,0 +1,52 @@
+[
+ {
+  "id": "silksong",
+  "rawEvents": 264,
+  "originalExtractionIdentical": true,
+  "unchangedTemplateControls": [
+   "classes",
+   "rednessRed",
+   "rednessGrey",
+   "hysteresisFrames",
+   "settleFramesAfterSceneBreak",
+   "sceneMinShare",
+   "handMapping",
+   "pressDeviation",
+   "onsetLatencyMs",
+   "maxSimultaneousKeys"
+  ]
+ },
+ {
+  "id": "gerudo-valley",
+  "rawEvents": 1468,
+  "originalExtractionIdentical": true,
+  "unchangedTemplateControls": [
+   "metric",
+   "classesWhite",
+   "classesBlack",
+   "hysteresisFrames",
+   "settleFramesAfterSceneBreak",
+   "sceneMinShare",
+   "pressDeviation",
+   "maxSimultaneousKeys",
+   "handMapping",
+   "onsetLatencyMs"
+  ]
+ },
+ {
+  "id": "zeldas-lullaby",
+  "rawEvents": 698,
+  "originalExtractionIdentical": true,
+  "unchangedTemplateControls": [
+   "metric",
+   "classes",
+   "hysteresisFrames",
+   "settleFramesAfterSceneBreak",
+   "sceneMinShare",
+   "pressDeviation",
+   "maxSimultaneousKeys",
+   "handMapping",
+   "onsetLatencyMs"
+  ]
+ }
+]

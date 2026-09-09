@@ -1,0 +1,63 @@
+{
+ "id": "silksong",
+ "status": "UNVERIFIED whole-video completeness",
+ "frames": 5535,
+ "acceptedEvents": 264,
+ "ambiguous": 0,
+ "rejectedTenFinger": 72,
+ "rejectedShort": 6,
+ "bpm": 70,
+ "latencyMs": 95,
+ "phaseSeconds": 0.44571428571428534,
+ "firstGridBeat": 3.75,
+ "tiers": [
+  {
+   "id": "silksong",
+   "level": "Medium",
+   "shipped": 199,
+   "matched": 199,
+   "missing": 65,
+   "extra": 0,
+   "handDisagreements": 0,
+   "onsetMedianMs": 5.142857142857338,
+   "onsetWorstMs": 102.00000000000387,
+   "onsetMedianBeats": 0.006000000000000227,
+   "onsetWorstBeats": 0.11900000000000452,
+   "releaseChanges": 4
+  },
+  {
+   "id": "silksong-easy",
+   "level": "Easy",
+   "shipped": 140,
+   "matched": 140,
+   "missing": 124,
+   "extra": 0,
+   "handDisagreements": 0,
+   "onsetMedianMs": 5.142857142857338,
+   "onsetWorstMs": 102.00000000000387,
+   "onsetMedianBeats": 0.006000000000000227,
+   "onsetWorstBeats": 0.11900000000000452,
+   "releaseChanges": 3
+  },
+  {
+   "id": "silksong-hard",
+   "level": "Hard",
+   "shipped": 264,
+   "matched": 264,
+   "missing": 0,
+   "extra": 0,
+   "handDisagreements": 0,
+   "onsetMedianMs": 5.142857142853785,
+   "onsetWorstMs": 102.00000000000387,
+   "onsetMedianBeats": 0.005999999999996083,
+   "onsetWorstBeats": 0.11900000000000452,
+   "releaseChanges": 5
+  }
+ ],
+ "heldWideCount": 0,
+ "heldCrossCount": 0,
+ "strikeWideCount": 0,
+ "heldWide": [],
+ "heldCross": [],
+ "strikeWide": []
+}

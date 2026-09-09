@@ -1,0 +1,247 @@
+[
+ {
+  "offset": 2.25,
+  "matched": 696,
+  "missing": [
+   {
+    "midi": 84,
+    "colour": "green",
+    "on": 37.067,
+    "off": 37.083,
+    "frames": 2
+   },
+   {
+    "midi": 70,
+    "colour": "green",
+    "on": 53.45,
+    "off": 53.467,
+    "frames": 2
+   },
+   {
+    "midi": 81,
+    "colour": "green",
+    "on": 59.45,
+    "off": 59.467,
+    "frames": 2
+   },
+   {
+    "midi": 85,
+    "colour": "green",
+    "on": 78.5,
+    "off": 78.517,
+    "frames": 2
+   },
+   {
+    "midi": 84,
+    "colour": "green",
+    "on": 81.8,
+    "off": 81.817,
+    "frames": 2
+   },
+   {
+    "midi": 82,
+    "colour": "green",
+    "on": 82.583,
+    "off": 82.6,
+    "frames": 2
+   },
+   {
+    "midi": 84,
+    "colour": "green",
+    "on": 85.333,
+    "off": 85.35,
+    "frames": 2
+   },
+   {
+    "midi": 83,
+    "colour": "green",
+    "on": 85.917,
+    "off": 86.133,
+    "frames": 14
+   },
+   {
+    "midi": 85,
+    "colour": "green",
+    "on": 91.6,
+    "off": 91.617,
+    "frames": 2
+   },
+   {
+    "midi": 92,
+    "colour": "green",
+    "on": 124.233,
+    "off": 124.25,
+    "frames": 2
+   },
+   {
+    "midi": 80,
+    "colour": "green",
+    "on": 142.117,
+    "off": 142.15,
+    "frames": 3
+   },
+   {
+    "midi": 85,
+    "colour": "green",
+    "on": 156.833,
+    "off": 156.85,
+    "frames": 2
+   },
+   {
+    "midi": 84,
+    "colour": "green",
+    "on": 159.8,
+    "off": 159.817,
+    "frames": 2
+   },
+   {
+    "midi": 85,
+    "colour": "green",
+    "on": 163.1,
+    "off": 163.15,
+    "frames": 4
+   },
+   {
+    "midi": 84,
+    "colour": "green",
+    "on": 163.167,
+    "off": 163.333,
+    "frames": 11
+   },
+   {
+    "midi": 84,
+    "colour": "green",
+    "on": 163.367,
+    "off": 163.383,
+    "frames": 2
+   },
+   {
+    "midi": 84,
+    "colour": "green",
+    "on": 163.883,
+    "off": 163.9,
+    "frames": 2
+   }
+  ],
+  "unmatchedKeys": [
+   {
+    "midi": 83,
+    "on": 88.1,
+    "off": 88.4,
+    "colour": "green",
+    "metricMedian": 0.997,
+    "flags": []
+   },
+   {
+    "midi": 84,
+    "on": 165.333,
+    "off": 165.633,
+    "colour": "green",
+    "metricMedian": 1,
+    "flags": []
+   }
+  ],
+  "handDisagreements": []
+ },
+ {
+  "offset": 1.9000000000000057,
+  "matched": 697,
+  "missing": [
+   {
+    "midi": 74,
+    "colour": "blue",
+    "on": 3.4,
+    "off": 3.45,
+    "frames": 4
+   },
+   {
+    "midi": 70,
+    "colour": "green",
+    "on": 53.8,
+    "off": 53.817,
+    "frames": 2
+   },
+   {
+    "midi": 81,
+    "colour": "green",
+    "on": 59.8,
+    "off": 59.817,
+    "frames": 2
+   },
+   {
+    "midi": 84,
+    "colour": "green",
+    "on": 79.667,
+    "off": 79.683,
+    "frames": 2
+   },
+   {
+    "midi": 82,
+    "colour": "green",
+    "on": 82.933,
+    "off": 82.95,
+    "frames": 2
+   },
+   {
+    "midi": 84,
+    "colour": "green",
+    "on": 86.25,
+    "off": 86.267,
+    "frames": 2
+   },
+   {
+    "midi": 85,
+    "colour": "green",
+    "on": 91.933,
+    "off": 91.95,
+    "frames": 2
+   },
+   {
+    "midi": 92,
+    "colour": "green",
+    "on": 124.583,
+    "off": 124.6,
+    "frames": 2
+   },
+   {
+    "midi": 80,
+    "colour": "green",
+    "on": 142.467,
+    "off": 142.483,
+    "frames": 2
+   },
+   {
+    "midi": 85,
+    "colour": "green",
+    "on": 157.183,
+    "off": 157.2,
+    "frames": 2
+   },
+   {
+    "midi": 85,
+    "colour": "green",
+    "on": 163.45,
+    "off": 163.5,
+    "frames": 4
+   },
+   {
+    "midi": 84,
+    "colour": "green",
+    "on": 163.517,
+    "off": 163.683,
+    "frames": 11
+   }
+  ],
+  "unmatchedKeys": [
+   {
+    "midi": 84,
+    "on": 165.333,
+    "off": 165.633,
+    "colour": "green",
+    "metricMedian": 1,
+    "flags": []
+   }
+  ],
+  "handDisagreements": []
+ }
+]

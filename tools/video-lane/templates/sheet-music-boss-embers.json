@@ -1,7 +1,7 @@
 {
  "id": "sheet-music-boss-embers",
  "renderer": "Embers (https://embers.app), used by the Sheet Music Boss channel",
- "provenanceOfColours": "MEASURED from this template rendered keyboard, not inferred from pitch. A pressed key deviates from its rest colour by 120-314 in RGB distance; an unpressed one by at most 23. Red tint versus cool-grey tint separates on redness (R-B)/R at roughly 0.5-1.0 versus about -0.08. Which colour is which HAND is deliberately NOT recorded here.",
+ "provenanceOfColours": "MEASURED from this template rendered keyboard, not inferred from pitch. A pressed key deviates from its rest colour by 120-314 in RGB distance; an unpressed one by at most 23. Red tint versus cool-grey tint separates on redness (R-B)/R at roughly 0.5-1.0 versus about -0.08. The hand mapping is separately established from engraved staves below.",
  "classes": [
   {
    "name": "red",
@@ -21,12 +21,12 @@
   "red": "R",
   "white": "L"
  },
- "handMappingNote": "null on purpose. Colour -> hand requires evidence outside pitch (the channel's own documentation, a same-template video showing real hands, or Mark's eyes on an excerpt). Filling this in from mean pitch would be the pitch-split law wearing a fake moustache.",
+ "handMappingNote": "Hand mapping comes from the visible engraved staves, never mean pitch. A held-span failure must not be hidden by this mapping.",
  "pressDeviation": 60,
  "pressDeviationNote": "Euclidean RGB distance from the key own rest colour. Measured: 120-314 when pressed, at most 23 when not. 60 sits in the empty middle of that gap.",
  "onsetLatencyMs": 95,
  "onsetLatencyNote": "MEASURED against a transcription of this video own audio: 243 of 261 matched onsets sat at 90-100ms, median 95ms, and applying it leaves a median residual of 4ms (p90 8ms). The key tint therefore lights ~95ms BEFORE the note sounds in this render. LOCKED here; it must be tested unchanged on held-out footage before it is trusted on another video.",
  "maxSimultaneousKeys": 10,
- "handMappingEvidence": "Sheet Music Boss publishes this arrangement (Silksong, arr. Andrew Wrangell, Musicnotes MN0304368, preview image saved as silksong/score-preview.png). Bar 1 of the engraving: treble staff = E5 on beat 1 then the B4+D5 dyad on beat 2; bass staff = a held A3 with E4 on the off-beat. The video paints exactly those treble notes RED and those bass notes GREY. Staff assignment by the arranger, not inferred from pitch. Verified 2026-09-02 against 2/4, quarter = 70.",
- "durationSemantics": "key-tint length = the render MIDI note-off. MEASURED against the arranger published score at quarter = 70: bar-1 treble quarters read 1.11-1.28 beats, the bass half note 1.67-1.81, and every repeat of the same figure agrees to within 0.02 beat, which a decorative trail would not. Durations pass to the importer, which quantises them to the quarter-beat grid and runs unpedal/releaseOverlaps on them; they are NOT exempt from the playability audit."
+ "handMappingEvidence": "Silksong end-card engraving by Samuel Dickenson: bars 1-4 note and staff comparison; further visible staves through bar 15 inspected. Red = right, grey = left. Whole-song sounding-span test: zero. Evidence: tools/video-lane/reconciliation-2026-09-09, score frame and release ledger. Reviewed 2026-09-09.",
+ "durationSemantics": "UNVERIFIED as physical note-off. Twenty written note values checked on 2026-09-09: quarters read about 1.11-1.28 beats and half notes 1.67-1.81 beats. Repeatability does not distinguish authored articulation from a decorative release. The previous equivalence claim is withdrawn; importer duration processing remains unchanged."
 }

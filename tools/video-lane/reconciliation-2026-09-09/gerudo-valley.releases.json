@@ -1,0 +1,538 @@
+[
+ {
+  "sample": 1,
+  "bar": 1,
+  "beatWithinBar": 0,
+  "midi": 42,
+  "hand": "L",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 3.8,
+  "event": {
+   "midi": 42,
+   "on": 3.8,
+   "off": 4.15,
+   "colour": "blue",
+   "metricMedian": -0.264,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.7000000000000011,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 3.965,
+   "presentationSeconds": 3.967,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-0.png"
+  }
+ },
+ {
+  "sample": 2,
+  "bar": 1,
+  "beatWithinBar": 0.25,
+  "midi": 57,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 3.925,
+  "event": {
+   "midi": 57,
+   "on": 3.933,
+   "off": 4.133,
+   "colour": "green",
+   "metricMedian": 0.67,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.40000000000000036,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.09,
+   "presentationSeconds": 4.1,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-1.png"
+  }
+ },
+ {
+  "sample": 3,
+  "bar": 1,
+  "beatWithinBar": 0.25,
+  "midi": 61,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 3.925,
+  "event": {
+   "midi": 61,
+   "on": 3.933,
+   "off": 4.383,
+   "colour": "green",
+   "metricMedian": 0.562,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.9000000000000004,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.09,
+   "presentationSeconds": 4.1,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-2.png"
+  }
+ },
+ {
+  "sample": 4,
+  "bar": 1,
+  "beatWithinBar": 0.25,
+  "midi": 66,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 3.925,
+  "event": {
+   "midi": 66,
+   "on": 3.933,
+   "off": 4.383,
+   "colour": "green",
+   "metricMedian": 0.47,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.9000000000000004,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.09,
+   "presentationSeconds": 4.1,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-3.png"
+  }
+ },
+ {
+  "sample": 5,
+  "bar": 1,
+  "beatWithinBar": 0.5,
+  "midi": 54,
+  "hand": "L",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.05,
+  "event": {
+   "midi": 54,
+   "on": 4.05,
+   "off": 4.25,
+   "colour": "blue",
+   "metricMedian": -0.275,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.40000000000000036,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.215,
+   "presentationSeconds": 4.217,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-4.png"
+  }
+ },
+ {
+  "sample": 6,
+  "bar": 1,
+  "beatWithinBar": 0.75,
+  "midi": 57,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.175,
+  "event": {
+   "midi": 57,
+   "on": 4.183,
+   "off": 4.317,
+   "colour": "green",
+   "metricMedian": 0.28,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.2680000000000007,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.34,
+   "presentationSeconds": 4.35,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-5.png"
+  }
+ },
+ {
+  "sample": 7,
+  "bar": 1,
+  "beatWithinBar": 0.75,
+  "midi": 61,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.175,
+  "event": null,
+  "handAgrees": null,
+  "tintDurationBeats": null,
+  "status": "MISSING strike in key extraction",
+  "frame": {
+   "requestedSeconds": 4.34,
+   "presentationSeconds": 4.35,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-6.png"
+  }
+ },
+ {
+  "sample": 8,
+  "bar": 1,
+  "beatWithinBar": 0.75,
+  "midi": 66,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.175,
+  "event": null,
+  "handAgrees": null,
+  "tintDurationBeats": null,
+  "status": "MISSING strike in key extraction",
+  "frame": {
+   "requestedSeconds": 4.34,
+   "presentationSeconds": 4.35,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-7.png"
+  }
+ },
+ {
+  "sample": 9,
+  "bar": 1,
+  "beatWithinBar": 1,
+  "midi": 49,
+  "hand": "L",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.3,
+  "event": {
+   "midi": 49,
+   "on": 4.317,
+   "off": 4.533,
+   "colour": "blue",
+   "metricMedian": -0.314,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.4320000000000004,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.465,
+   "presentationSeconds": 4.467,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-8.png"
+  }
+ },
+ {
+  "sample": 10,
+  "bar": 1,
+  "beatWithinBar": 1.25,
+  "midi": 57,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.425,
+  "event": {
+   "midi": 57,
+   "on": 4.433,
+   "off": 4.583,
+   "colour": "green",
+   "metricMedian": 0.3,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.3000000000000007,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.59,
+   "presentationSeconds": 4.6,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-9.png"
+  }
+ },
+ {
+  "sample": 11,
+  "bar": 1,
+  "beatWithinBar": 1.25,
+  "midi": 61,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.425,
+  "event": {
+   "midi": 61,
+   "on": 4.433,
+   "off": 4.633,
+   "colour": "green",
+   "metricMedian": 0.566,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.40000000000000036,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.59,
+   "presentationSeconds": 4.6,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-10.png"
+  }
+ },
+ {
+  "sample": 12,
+  "bar": 1,
+  "beatWithinBar": 1.25,
+  "midi": 66,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.425,
+  "event": {
+   "midi": 66,
+   "on": 4.433,
+   "off": 4.617,
+   "colour": "green",
+   "metricMedian": 0.47,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.3680000000000003,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.59,
+   "presentationSeconds": 4.6,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-11.png"
+  }
+ },
+ {
+  "sample": 13,
+  "bar": 1,
+  "beatWithinBar": 1.5,
+  "midi": 54,
+  "hand": "L",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.55,
+  "event": {
+   "midi": 54,
+   "on": 4.567,
+   "off": 4.75,
+   "colour": "blue",
+   "metricMedian": -0.282,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.36599999999999966,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.715,
+   "presentationSeconds": 4.717,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-12.png"
+  }
+ },
+ {
+  "sample": 14,
+  "bar": 1,
+  "beatWithinBar": 1.75,
+  "midi": 57,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.675,
+  "event": {
+   "midi": 57,
+   "on": 4.683,
+   "off": 4.833,
+   "colour": "green",
+   "metricMedian": 0.296,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.3000000000000007,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.84,
+   "presentationSeconds": 4.85,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-13.png"
+  }
+ },
+ {
+  "sample": 15,
+  "bar": 1,
+  "beatWithinBar": 1.75,
+  "midi": 61,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.675,
+  "event": {
+   "midi": 61,
+   "on": 4.683,
+   "off": 4.883,
+   "colour": "green",
+   "metricMedian": 0.566,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.40000000000000036,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.84,
+   "presentationSeconds": 4.85,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-14.png"
+  }
+ },
+ {
+  "sample": 16,
+  "bar": 1,
+  "beatWithinBar": 1.75,
+  "midi": 66,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.675,
+  "event": {
+   "midi": 66,
+   "on": 4.683,
+   "off": 4.867,
+   "colour": "green",
+   "metricMedian": 0.47,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.3680000000000003,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.84,
+   "presentationSeconds": 4.85,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-15.png"
+  }
+ },
+ {
+  "sample": 17,
+  "bar": 1,
+  "beatWithinBar": 2,
+  "midi": 42,
+  "hand": "L",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.8,
+  "event": {
+   "midi": 42,
+   "on": 4.817,
+   "off": 5.15,
+   "colour": "blue",
+   "metricMedian": -0.269,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.6660000000000004,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.965,
+   "presentationSeconds": 4.967,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-16.png"
+  }
+ },
+ {
+  "sample": 18,
+  "bar": 1,
+  "beatWithinBar": 2.25,
+  "midi": 57,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.925,
+  "event": {
+   "midi": 57,
+   "on": 4.933,
+   "off": 5.083,
+   "colour": "green",
+   "metricMedian": 0.296,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.3000000000000007,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 5.09,
+   "presentationSeconds": 5.1,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-17.png"
+  }
+ },
+ {
+  "sample": 19,
+  "bar": 1,
+  "beatWithinBar": 2.25,
+  "midi": 61,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.925,
+  "event": {
+   "midi": 61,
+   "on": 4.933,
+   "off": 5.367,
+   "colour": "green",
+   "metricMedian": 0.565,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.8680000000000003,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 5.09,
+   "presentationSeconds": 5.1,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-18.png"
+  }
+ },
+ {
+  "sample": 20,
+  "bar": 1,
+  "beatWithinBar": 2.25,
+  "midi": 66,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 4.925,
+  "event": {
+   "midi": 66,
+   "on": 4.933,
+   "off": 5.133,
+   "colour": "green",
+   "metricMedian": 0.485,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.40000000000000036,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 5.09,
+   "presentationSeconds": 5.1,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-19.png"
+  }
+ },
+ {
+  "sample": 21,
+  "bar": 1,
+  "beatWithinBar": 2.5,
+  "midi": 54,
+  "hand": "L",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 5.05,
+  "event": {
+   "midi": 54,
+   "on": 5.067,
+   "off": 5.233,
+   "colour": "blue",
+   "metricMedian": -0.283,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.33199999999999896,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 5.215,
+   "presentationSeconds": 5.217,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-20.png"
+  }
+ },
+ {
+  "sample": 22,
+  "bar": 1,
+  "beatWithinBar": 2.75,
+  "midi": 57,
+  "hand": "R",
+  "writtenDurationBeats": 0.25,
+  "expectedStrikeSeconds": 5.175,
+  "event": {
+   "midi": 57,
+   "on": 5.183,
+   "off": 5.333,
+   "colour": "green",
+   "metricMedian": 0.293,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.3000000000000007,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 5.34,
+   "presentationSeconds": 5.35,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-21.png"
+  }
+ }
+]

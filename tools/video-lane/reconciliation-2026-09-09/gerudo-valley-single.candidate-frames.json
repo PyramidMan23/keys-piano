@@ -1,0 +1,202 @@
+[
+ {
+  "midi": 28,
+  "colour": "blue",
+  "on": 54.3,
+  "off": 54.433,
+  "frames": [
+   {
+    "requestedSeconds": 55.986999999999995,
+    "presentationSeconds": 56,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-0-0.png"
+   },
+   {
+    "requestedSeconds": 56.10199999999999,
+    "presentationSeconds": 56.117,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-0-1.png"
+   }
+  ],
+  "strike": 56.06699999999999,
+  "row": 0
+ },
+ {
+  "midi": 81,
+  "colour": "green",
+  "on": 131.85,
+  "off": 131.9,
+  "frames": [
+   {
+    "requestedSeconds": 133.53699999999998,
+    "presentationSeconds": 133.55,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-1-0.png"
+   },
+   {
+    "requestedSeconds": 133.652,
+    "presentationSeconds": 133.667,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-1-1.png"
+   }
+  ],
+  "strike": 133.617,
+  "row": 0
+ },
+ {
+  "midi": 27,
+  "colour": "blue",
+  "on": 52.333,
+  "off": 52.35,
+  "frames": [
+   {
+    "requestedSeconds": 53.753,
+    "presentationSeconds": 53.767,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-2-0.png"
+   },
+   {
+    "requestedSeconds": 53.867999999999995,
+    "presentationSeconds": 53.883,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-2-1.png"
+   }
+  ],
+  "strike": 53.833,
+  "row": 1
+ },
+ {
+  "midi": 27,
+  "colour": "blue",
+  "on": 52.417,
+  "off": 52.45,
+  "frames": [
+   {
+    "requestedSeconds": 53.837,
+    "presentationSeconds": 53.85,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-3-0.png"
+   },
+   {
+    "requestedSeconds": 53.952,
+    "presentationSeconds": 53.967,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-3-1.png"
+   }
+  ],
+  "strike": 53.917,
+  "row": 1
+ },
+ {
+  "midi": 27,
+  "colour": "blue",
+  "on": 53.15,
+  "off": 53.183,
+  "frames": [
+   {
+    "requestedSeconds": 54.57,
+    "presentationSeconds": 54.583,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-4-0.png"
+   },
+   {
+    "requestedSeconds": 54.684999999999995,
+    "presentationSeconds": 54.7,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-4-1.png"
+   }
+  ],
+  "strike": 54.65,
+  "row": 1
+ },
+ {
+  "midi": 26,
+  "colour": "blue",
+  "on": 53.2,
+  "off": 53.217,
+  "frames": [
+   {
+    "requestedSeconds": 54.620000000000005,
+    "presentationSeconds": 54.633,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-5-0.png"
+   },
+   {
+    "requestedSeconds": 54.735,
+    "presentationSeconds": 54.75,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-5-1.png"
+   }
+  ],
+  "strike": 54.7,
+  "row": 1
+ },
+ {
+  "midi": 27,
+  "colour": "blue",
+  "on": 53.817,
+  "off": 53.933,
+  "frames": [
+   {
+    "requestedSeconds": 55.237,
+    "presentationSeconds": 55.25,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-6-0.png"
+   },
+   {
+    "requestedSeconds": 55.352,
+    "presentationSeconds": 55.367,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-6-1.png"
+   }
+  ],
+  "strike": 55.317,
+  "row": 1
+ },
+ {
+  "midi": 26,
+  "colour": "blue",
+  "on": 53.95,
+  "off": 53.967,
+  "frames": [
+   {
+    "requestedSeconds": 55.370000000000005,
+    "presentationSeconds": 55.383,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-7-0.png"
+   },
+   {
+    "requestedSeconds": 55.485,
+    "presentationSeconds": 55.5,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-7-1.png"
+   }
+  ],
+  "strike": 55.45,
+  "row": 1
+ },
+ {
+  "midi": 28,
+  "colour": "blue",
+  "on": 54.683,
+  "off": 54.7,
+  "frames": [
+   {
+    "requestedSeconds": 56.103,
+    "presentationSeconds": 56.117,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-8-0.png"
+   },
+   {
+    "requestedSeconds": 56.217999999999996,
+    "presentationSeconds": 56.233,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-8-1.png"
+   }
+  ],
+  "strike": 56.183,
+  "row": 1
+ },
+ {
+  "midi": 83,
+  "colour": "green",
+  "on": 132.1,
+  "off": 132.117,
+  "frames": [
+   {
+    "requestedSeconds": 133.51999999999998,
+    "presentationSeconds": 133.533,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-9-0.png"
+   },
+   {
+    "requestedSeconds": 133.635,
+    "presentationSeconds": 133.65,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/gerudo-valley-single-candidate-9-1.png"
+   }
+  ],
+  "strike": 133.6,
+  "row": 1
+ }
+]

@@ -1,0 +1,44 @@
+[
+ {
+  "midi": 83,
+  "on": 88.1,
+  "off": 88.4,
+  "colour": "green",
+  "metricMedian": 0.997,
+  "flags": [],
+  "strike": 88.1,
+  "frames": [
+   {
+    "requestedSeconds": 88.02,
+    "presentationSeconds": 88.033,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-unmatched-candidate-0-0.png"
+   },
+   {
+    "requestedSeconds": 88.13499999999999,
+    "presentationSeconds": 88.15,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-unmatched-candidate-0-1.png"
+   }
+  ]
+ },
+ {
+  "midi": 84,
+  "on": 165.333,
+  "off": 165.633,
+  "colour": "green",
+  "metricMedian": 1,
+  "flags": [],
+  "strike": 165.333,
+  "frames": [
+   {
+    "requestedSeconds": 165.253,
+    "presentationSeconds": 165.267,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-unmatched-candidate-1-0.png"
+   },
+   {
+    "requestedSeconds": 165.368,
+    "presentationSeconds": 165.383,
+    "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-unmatched-candidate-1-1.png"
+   }
+  ]
+ }
+]

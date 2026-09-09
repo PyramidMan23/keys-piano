@@ -255,8 +255,8 @@ press, because the 2020-22 3D render's white strike flare smears a run MEAN).
 
 | Song | Video | Renderer | Geometry | Ambiguous | Audio F1 / worst 30s | Octave crop | Palette swap | Hands | Grid fit | Shipped |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Zelda's Lullaby | O6MtYbfo1eY (2019) | flat Synthesia-style, blue/green | 52+36, residual 0.5px | 0 of 698 | 0.816 / 0.157* | refused (32 black) | 46 flipped, 0 unchanged, 56 ambiguous | blue=L green=R from the engraving in the video | 110, mean 0.046 worst 0.124 | Easy 269 / Hard 698 |
-| Gerudo Valley | Sna0iom85IU (2020) | 3D render, blue/green | `--filmed` fit, residual 1.8px (uniform fit refused at 6.5px) | 9 of 1468 (0.6%), all listed | 0.860 / 0.788 | refused (30 black) | 314 flipped, 0 unchanged, 72 ambiguous | blue=L green=R from the engraving in the video | 120, mean 0.013 worst 0.052 | Easy 595 / Medium 1297; **Hard REFUSED by the audit** |
+| Zelda's Lullaby | O6MtYbfo1eY (2019) | flat Synthesia-style, blue/green | 52+36, residual 0.5px | 0 of 698 | 0.816 / 0.157* | refused (32 black) | 46 flipped, 0 unchanged, 56 ambiguous | blue=L green=R from the engraving in the video | 110, mean 0.046 worst 0.124 | Easy 269 / Medium 593 / Hard 698; release/held-span limits below (2026-09-09) |
+| Gerudo Valley | Sna0iom85IU (2020) | 3D render, blue/green | `--filmed` fit, residual 1.8px (uniform fit refused at 6.5px) | 9 raw ambiguities resolved as non-notes; 0 of 1732 reviewed (2026-09-09) | corrected 0.943 / 0.907 (raw 0.860 / 0.788) | refused (30 black) | 314 flipped, 0 unchanged, 72 ambiguous | blue=L green=R from the engraving in the video | 120, mean 0.013 worst 0.052 | Clone: Easy 595 / Medium 1240 / Hard 1459; corrected 680 / 1472 / 1732 dry import pending fingering scope (2026-09-09) |
 | Song of Storms | jxd-DCi_cLM (2022) | 3D render, dark-blue/cyan | 52+36, residual 0.7px | 0 of 942 | 0.869 / 0.814 | refused (32 black) | 228 flipped, 1 unchanged, 6 unmatched | **NOT HANDS** | (not run) | **EXCLUDED** |
 | Main Theme | c0szv75MEU4 (2019), Xtre_JPPxBs (2024 EASY) | cropped keyboards | **REFUSED**: 32 and 25 black keys found | | | | | | | **EXCLUDED** |
 
@@ -362,3 +362,196 @@ notes and a real step down (1240 against 1459, with 595 a step down again).
 Zelda's Lullaby is unchanged at two tiers: its refusal was never the audit, it
 is that every left-hand note is an outer voice of its beat, so no density cut
 lands between 317 and 593 notes without dropping a beat's melody or bass.
+
+# Whole-video reconciliation, 2026-09-09: method and limits
+
+This section supersedes earlier completeness and note-off claims for these three
+recordings. No committed threshold was lowered. Working copy: keys-piano-astra,
+baseline 20c68dd. No serving copy, browser, server, commit or deployment was used.
+A repository test pass is not a music-fidelity pass.
+
+Evidence paths below are relative to `tools/video-lane/reconciliation-2026-09-09/`.
+Presentation timestamp (PTS) is decoded container time, never frame number divided
+by frame rate. MIDI means Musical Instrument Digital Interface; pitch 60 is middle C.
+Left/right are `L`/`R`; `ms` means milliseconds; `bpm` means beats per minute.
+F1 is the harmonic mean of precision and recall, measuring agreement between
+video strikes and the audio transcription. Audio provides no hand evidence.
+
+All three entire videos were decoded again, including title and end cards.
+The key extractor now retains every ambiguous event, ten-finger rejection and
+short run. Independent diagnostic witnesses read connected bars at rows 202 and
+298, above the particles, each aligned once to the key stream. All unmatched
+candidates lasting at least two frames, including single-row candidates, were
+rendered before/after the predicted strike and visually decided. Decision ledgers
+name pitch, colour, sheet, cell, actual decoded timestamps and the observation.
+One-frame diagnostic flicker remains in witness files but was not individually
+reviewed: completeness below that diagnostic floor is UNVERIFIED. The key
+extractor's own one-frame rejections were all reviewed.
+
+`reconcile-reviewed.mjs` applies those decisions. New onsets use the nearest actual
+PTS to the bar-witness alignment. The locked 83/95 millisecond latency stays fixed.
+The bridge writes a full-reference sidecar; the importer calculates each tier's
+missing/extra counts against it. Simplified-tier omissions are counted honestly.
+The additional `reconciliationStatus` field explicitly preserves UNVERIFIED limits.
+A reconciliation date is not a certification. Timing below uses absolute deviation
+after locked latency and one phase fit, at source tempo, even for slowed tiers.
+It is not an audio residual. Held spans use all active tint intervals at each
+unique onset timestamp. Wider than a major tenth means more than 16 semitones.
+Simultaneous-strike-only checks cannot replace this held-note test.
+
+## Silksong, 2026-09-09
+
+- Video `tDT7qpAaRx0`, 5,535 decoded frames. Reviewed reference **264** / clone
+  Hard **264** / missing **0** / extra **0** / pitch disagreements **0** /
+  hand disagreements **0**.
+- Independent rows matched 249/250 key events. All **129** distinct unmatched
+  candidates inspected: 59 paired plus 70 single-row. All rejected as particles,
+  adjacent-key centre errors, or existing-bar fragments/delays. The 17 key events
+  missed by either witness were inspected and retained. See `silksong.decisions.json`,
+  `silksong-single.decisions.json`, `silksong-unmatched.decisions.json` and sheets.
+- All **78** extractor exclusions resolved: 72 ten-finger events and six short
+  runs. Title transition at 2.117 seconds, incoming score card at 86.300/86.317,
+  no musical strikes. Every event and frame is in `silksong.excluded-decisions.json`.
+- Hands: red right / grey left from engraved staves, bars 1-4 note comparisons;
+  further visible staves through bar 15 inspected. The end card at 89 seconds
+  credits **Samuel Dickenson**, not Andrew Wrangell. Template credit corrected.
+  The complete engraving is absent, so a full-piece staff proof is **UNVERIFIED**.
+- Whole-song impossible held spans **0**, held crossings **0**, simultaneous-strike
+  spans **0**. No hand assignment was inferred from pitch.
+- Tempo source: Samuel Dickenson's Silksong end-card engraving, **Flowing quarter
+  = 70**, 2/4, `silksong-89.png`. Locked latency 95 milliseconds. Hard onset
+  median **5.142857 milliseconds / 0.006 beats**, worst **102 milliseconds /
+  0.119 beats**. Both committed quantisation gates pass.
+- **20 written release values checked**, bars 1-4: `score-readings.mjs`,
+  `silksong.releases.json`, `silksong-releases.png`. Written quarters yield about
+  1.11-1.28 beats of tint, half notes 1.67-1.81. Repeatability does not prove
+  physical note-off rather than articulation/trail. Previous equality claim
+  withdrawn. Exact releases **UNVERIFIED**. Existing importer processing changes
+  five Hard durations from their quantised tint lengths.
+- Audio recheck: 261 matches / 264 video / 340 transcription; F1 **0.864**,
+  worst window **0.809**. Overall **FAIL**, unchanged.
+- Musical data: **nothing changed**. Provenance added through the lane to Easy
+  140 / Medium 199 / Hard 264. Confidence judgments, not statistical probabilities:
+  hands **95/100**, timing **90/100**, fidelity including releases **85/100**.
+  Exact-video verdict: **not proven**.
+
+## Gerudo Valley, 2026-09-09
+
+- Video `Sna0iom85IU`, 9,994 decoded frames. Raw accepted **1,459**; reviewed
+  reference **1,732** / clone Hard **1,459** / missing **273** / extra **0** /
+  pitch disagreements **0** / matched-onset hand disagreements **0**. The
+  correction is prepared; app import is pending the fingering scope decision.
+- Both independent rows matched 1,455 accepted events. All **286** distinct
+  unmatched candidates inspected: 276 paired plus 10 single-row. **273 separate
+  strikes confirmed**, 13 rejected. Paired indices 41, 203, 220 are delayed
+  existing strikes; 222 is a false centre between adjacent green white-key bars,
+  with the marked black key unpressed. Single-row index 0 is a genuine E1 repeat
+  near 56.067 seconds; the other nine are errors/fragments. All 23 paired sheets
+  inspected. `gerudo-valley.decisions.json` and `gerudo-valley-single.decisions.json`
+  list every decision and before/after PTS.
+- Defect: continuous key tint merges distinct repeated falling bars. Five hidden
+  strikes also change colour, near 16.183, 16.683, 16.933, 75.433 and 128.183
+  seconds. A whole-run median concealed those hand changes. The corrected source
+  splits the runs into **929 left / 803 right** strikes, from blue/green.
+- **All nine ambiguities resolved**, none is a musical strike: A0 (21) and C8
+  (108), 2.250 to 160.683, are unpressed edge shading; pitches 62, 64, 65, 67,
+  69, 71, 72 at 160.667 are the incoming white score card. The 19 ten-finger
+  rejections at 160.650 are the same card. All 28 exclusions are individually
+  listed in `gerudo-valley.excluded-decisions.json`, with frames
+  `gerudo-valley-2.25.png` / `gerudo-valley-160.667.png`. No short-run rejections.
+- Hands: Andrew Wrangell's end-card engraving shows bars 1-6. Treble chords and
+  bass in 1-4, melody/accompaniment in 5-6 inspected: green right, blue left.
+  Later engraved bars are absent. The old claim of no held violations is false.
+- Impossible held spans **9**, at 23.800, 31.817, 33.817, 41.817, 43.800, 97.933,
+  101.800, 105.800, 113.800 seconds. All full frames inspected,
+  `gerudo-valley-span-0.png` through `-8.png`; distant keys are visibly tinted.
+  Held crossings **2 in raw, 0 in corrected source** after the hidden colour
+  switch is split. Simultaneous-strike spans **0**. Held-span gate **FAIL**.
+  Tint does not establish physical finger holding; no guessed reassignment or
+  pitch-based shortening was used to force this gate to zero.
+- Tempo source: Andrew Wrangell's end-card **Moderately fast quarter = 120**,
+  4/4, `gerudo-valley-164.png`. Locked latency 83 milliseconds. Hard onset median
+  **7 milliseconds / 0.014 beats**, worst **26 milliseconds / 0.052 beats**,
+  also true over the corrected full dry import. Quantisation gates pass.
+- **22 written release values checked**, bar 1, double-beamed sixteenths with
+  staccato articulation. Twenty separate raw strikes; two merged repeats now
+  recovered in the source. Tint ranges about 0.268-0.9 beats for written 0.25-beat
+  notes. `gerudo-valley.releases.json` and `gerudo-valley-releases.png` preserve
+  the two missing-strike findings. This is not 22 certified physical releases.
+  Splitting repeats fixes their boundaries; remaining tint endpoints are
+  **UNVERIFIED** as physical note-offs. Corrected dry import further shortens
+  10 notes with its existing pedal logic.
+- Corrected-source audio: **1,712 matches / 1,732 video / 1,898 transcription**;
+  precision 0.988, recall 0.902, F1 **0.943**, worst window **0.907**. Both
+  unchanged gates now **PASS**. Diagnostic optimum is 81 milliseconds; locked
+  template 83 milliseconds was not changed.
+- Corrected dry tiers: Easy **680**, Medium **1,472**, Hard **1,732**; Hard
+  missing/extra/hand disagreements **0/0/0**. Reach/tempo exemption prints itself.
+  `gerudo-valley.mid` and `gerudo-valley.import-preview.json` are reviewable.
+  **These are not the clone's current notes.** The clone has provenance and an
+  honest source description; musical arrays remain 595 / 1,240 / 1,459.
+- Blocker: corrected counts require replacing three positional entries in
+  `js/songs-fingers.mjs`. The user's fence permits song-data changes only in
+  `js/songs-imported.mjs`. Scope clarification was requested; absent approval,
+  fingering and the corrected app note import remain untouched. Confidence in
+  current clone: hands **90/100**, timing **95/100**, fidelity **70/100**.
+  Exact-video verdict: **no**.
+
+## Zelda's Lullaby, 2026-09-09
+
+- Video `O6MtYbfo1eY`, 12,390 decoded frames. Reviewed reference **698** / clone
+  Hard **698** / missing **0** / extra **0** / pitch disagreements **0** /
+  hand disagreements **0**. The results table now includes Medium 593.
+- Independent rows matched 696/697 events. All **20** unmatched candidates
+  inspected: nine paired plus 11 single-row. Adjacent-bar centre errors or
+  existing fragments; near 165.417 is a delayed detection of the existing C6
+  strike at 165.333. Both unmatched key events inspected and retained. No notes
+  added. Three `zeldas-lullaby` decision ledgers and their sheets record all.
+- All **99** ten-finger rejections resolved: title transition 2.317 seconds,
+  outro dimming 186.383/186.400, no extra strikes. Individual decisions and
+  frames: `zeldas-lullaby.excluded-decisions.json`. Zero ambiguities/short runs.
+- Hands: end-card bars 1-6 note/staff comparison, later visible staves through
+  bar 20 inspected. Blue bass starts with treble rests; green enters bar 5:
+  blue left, green right. No arranger credit on the page. Later engraving is
+  absent: full-piece staff proof **UNVERIFIED**.
+- Impossible held spans **3**: blue C3-A3-F#4 at 6.817 and 10.083 spans 18
+  semitones; green G#4-C5-F6 at 173.783 spans 21. All three full frames inspected,
+  `zeldas-lullaby-span-0.png` through `-2.png`. Held crossings **0**,
+  simultaneous-strike spans **0**. Held-span gate **FAIL**. Visible overlapping
+  tint cannot certify physical finger holding.
+- Tempo source: Sheet Music Boss end-card **Flowing quarter = 110**, 3/4,
+  `zeldas-lullaby-190.png`. Bar 20 also says `poco rit.` (a little slower).
+  Locked latency 83 milliseconds. Hard onset median **23.090909 milliseconds /
+  0.042333 beats**, worst **67.818182 milliseconds / 0.124333 beats**.
+  Quantisation gates pass; the grid does not reproduce every expressive onset.
+- **20 written release values checked**, bars 1-6, in the release ledger/sheet.
+  Bass figure is eighth, eighth, **half**, not the old template's quarter.
+  The opening written eighth C3 remains tinted for about 2.26 beats. Exact
+  release semantics **UNVERIFIED**; the template now says so. Existing importer
+  pedal/overlap processing changes 19 Hard durations from quantised tint lengths.
+- Audio recheck: 696 matches / 698 video / 1,007 transcription; F1 **0.816**,
+  worst window **0.157**, including the outro. **FAIL**. No window removed or
+  threshold relaxed to produce a pass.
+- Musical data: **nothing changed**. Provenance added to Easy **269** / Medium
+  **593** / Hard **698**. Confidence: hands **90/100**, timing **80/100**,
+  fidelity including releases **80/100**. Exact-video verdict: **not proven**.
+
+## Verification and review boundary, 2026-09-09
+
+`node test/check.mjs`: **389 checks pass**, including all nine tiers' provenance
+and reference-derived counts. `node tools/hand-audit.mjs --all`,
+`node test/import-roundtrip.mjs`, `node tools/finger-check.mjs`: **exit 0**.
+Temporary files stayed in the clone. `node tools/worklist.mjs --fast`: 5 done,
+0 open, 1 pre-existing item waiting on Mark; browser checks skipped by the fence.
+The 25 rendered gates and live state are **UNVERIFIED**, reserved for the reviewer.
+
+`node tools/video-lane/verify-scope.mjs` compares literal serialized song objects
+against `git show 20c68dd:js/songs-imported.mjs`: **54 other groups / 136 tiers
+byte-identical**. Per-tier digests in `scope-proof.json`. All nine current video
+note arrays also equal baseline; only metadata changed. Without the explicit
+video-metadata flag the importer follows its existing behavior.
+
+Do not ship a claim that these songs are finished. Gerudo needs the fingering
+scope decision; Gerudo and Lullaby fail held-span validation; physical releases
+and absent later engraved bars remain UNVERIFIED. The correction and evidence
+are preserved so the next step does not repeat this investigation.

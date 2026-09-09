@@ -1,6 +1,7 @@
 // Smallest thing that fails if the logic breaks: song data validity +
 // engine wait mode, scoring windows, hands filter, looping, calibration.
 import assert from 'node:assert/strict';
+import { readFileSync as readVideoEvidence } from 'node:fs';
 import { SONGS, validateSong, songEndBeat } from '../js/songs.mjs';
 import { Engine, classifyTiming, medianOffset, buildGroups, PERFECT_MS, GOOD_MS } from '../js/engine.mjs';
 
@@ -30,6 +31,31 @@ for (const s of SONGS) {
 }
 
 // --- Hard tier: denser than Medium, octave/arpeggio figuration present ---
+// The three reviewed videos carry an explicit, independently countable full
+// reference. Missing notes in simplified tiers are real omissions, not zeroes.
+for (const [group, videoId] of [['silksong', 'tDT7qpAaRx0'], ['gerudo-valley', 'Sna0iom85IU'], ['zeldas-lullaby', 'O6MtYbfo1eY']]) {
+  const evidence = JSON.parse(readVideoEvidence(new URL(`../tools/video-lane/reconciliation-2026-09-09/${group}.mid.video.json`, import.meta.url)));
+  for (const s of SONGS.filter(s => s.group === group)) {
+    assert.equal(s.videoId, videoId, `${s.id}: video identity`);
+    for (const key of ['bpmSource', 'handsSource', 'reconciledAt', 'reconciliationStatus']) assert.equal(s[key], evidence[key === 'reconciliationStatus' ? 'status' : key]);
+    assert.match(s.reconciledAt, /^\d{4}-\d{2}-\d{2}$/);
+    const r = s.reconciliation;
+    assert.equal(r.videoEvents, evidence.reference.length);
+    assert.equal(r.shipped, s.notes.length);
+    const keys = new Map(s.notes.map(n => [`${n.b}:${n.m}`, n]));
+    const matched = evidence.reference.filter(e => keys.has(`${e.b}:${e.m}`));
+    assert.equal(r.missing, evidence.reference.length - matched.length);
+    assert.equal(r.extra, s.notes.length - matched.length);
+    assert.equal(r.handDisagreements, matched.filter(e => keys.get(`${e.b}:${e.m}`).h !== e.h).length);
+    const errors = matched.map(e => Math.abs(e.onsetMs - e.b * 60000 / evidence.sourceBpm)).sort((a, b) => a - b);
+    assert.ok(Math.abs(r.onsetMedianMs - errors[Math.floor(errors.length / 2)]) < 0.000001);
+    assert.ok(Math.abs(r.onsetWorstMs - errors.at(-1)) < 0.000001);
+    assert.equal(r.extra, 0, `${s.id}: no invented strikes`);
+    assert.equal(r.handDisagreements, 0, `${s.id}: colour mapping preserved`);
+  }
+  ok(`${group}: video provenance and all tier reconciliation counts agree with the reviewed reference`);
+}
+
 for (const grp of ['gangstas-paradise', 'faded', 'river', 'still-dre', 'game-of-thrones', 'runaway', 'pirates', 'piano-man', 'empire', 'fray-save-a-life', 'lost', 'numb', 'mario', /* moonlight-sonata left this list 2026-09-01: its Medium tier was REFUSED by the playability audit (recorded in js/tiers-refused.mjs), so there is no Medium to compare against; its own pins live in the transcription block */ 'bella-ciao', 'see-you-again', 'interstellar', 'in-the-end', 'what-ive-done', 'work-this-time', 'in-a-gadda-da-vida', 'stairway', 'bohemian-rhapsody', 'hotel-california']) {
   const med = SONGS.find((s) => s.group === grp && s.level === 'Medium');
   const hard = SONGS.find((s) => s.group === grp && s.level === 'Hard');

@@ -1,0 +1,21 @@
+270 of 270 songs carry fingering
+177146 of 180205 notes fingered (98%)
+
+46 songs ask ONE HAND to hold notes no hand can hold at once.
+No fingering fixes these: the hand assignment is wrong, not the fingers.
+This is the fault Mark reported by ear ("the notes were way too far apart"),
+and it is a separate job from fingering. Listed so it is not mistaken for one.
+  gangstas-paradise-hard
+  interstellar
+  interstellar-hard
+  in-the-end-easy
+  in-the-end
+  in-the-end-hard
+  what-ive-done
+  what-ive-done-hard
+  in-a-gadda-da-vida-hard
+  stairway-easy
+  stairway
+  stairway-hard
+
+every fingering in the shipped library is reachable by a human hand

@@ -1,0 +1,58 @@
+264 events at 70bpm (Samuel Dickenson, Silksong end-card engraving, Flowing quarter = 70, presentation timestamp 89 seconds), grid phase 446ms: mean move 0.015 beats, worst 0.119
+wrote tools/video-lane/reconciliation-2026-09-09/silksong.mid: track 0 = left hand (114 notes, colour white), track 1 = right hand (150 notes)
+264 events at 70bpm (Samuel Dickenson, Silksong end-card engraving, Flowing quarter = 70, presentation timestamp 89 seconds), grid phase 446ms: mean move 0.015 beats, worst 0.119
+wrote tools/video-lane/reconciliation-2026-09-09/silksong.accepted.mid: track 0 = left hand (114 notes, colour white), track 1 = right hand (150 notes)
+read 264 notes, 3 tracks, 2/4, tempo 70bpm
+quantised to 1/4 beat: mean move 0.000 beats, worst 0.000
+hands: the video's own hand colours (114 left, 150 right); fromScore stays false
+pedal: shortened 5 notes the transcriber only heard because the pedal was down
+
+ok       silksong-easy                  140 notes, 49bpm, 3 sections
+ok       silksong                       199 notes, 60bpm, 3 sections
+ok       silksong-hard                  264 notes, 70bpm, 3 sections
+
+wrote js/songs-imported.mjs: 145 songs (3 from this file)
+1732 events at 120bpm (Andrew Wrangell, Gerudo Valley end-card engraving, Moderately fast quarter = 120, presentation timestamp 164 seconds), grid phase 265ms: mean move 0.013 beats, worst 0.052
+wrote tools/video-lane/reconciliation-2026-09-09/gerudo-valley.mid: track 0 = left hand (929 notes, colour blue), track 1 = right hand (803 notes)
+left out (ambiguous): midi 21 at 2.25s for 158.43s: tint (141,144,159) gmb median -0.095 matches no template class
+left out (ambiguous): midi 108 at 2.25s for 158.43s: tint (140,143,157) gmb median -0.094 matches no template class
+left out (ambiguous): midi 62 at 160.667s for 0.02s: tint (238,238,239) gmb median -0.005 matches no template class
+left out (ambiguous): midi 64 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+left out (ambiguous): midi 65 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+left out (ambiguous): midi 67 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+left out (ambiguous): midi 69 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+left out (ambiguous): midi 71 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+left out (ambiguous): midi 72 at 160.667s for 0.02s: tint (255,255,255) gmb median 0 matches no template class
+1459 events at 120bpm (Andrew Wrangell, Gerudo Valley end-card engraving, Moderately fast quarter = 120, presentation timestamp 164 seconds), grid phase 265ms: mean move 0.013 beats, worst 0.052
+wrote tools/video-lane/reconciliation-2026-09-09/gerudo-valley.accepted.mid: track 0 = left hand (784 notes, colour blue), track 1 = right hand (675 notes)
+read 1459 notes, 3 tracks, 4/4, tempo 120bpm
+quantised to 1/4 beat: mean move 0.000 beats, worst 0.000
+hands: the video's own hand colours (784 left, 675 right); fromScore stays false
+pedal: shortened 8 notes the transcriber only heard because the pedal was down
+hard: exempt from the audit's reach and tempo limits as the arranger's own video-authored hands; it does NOT pass them on its own, and no hands cross (Mark's call, 2026-09-05)
+
+DROPPED  Medium: 1297 notes against Hard's 1459 is not a step down, so it is not a tier
+medium: cut from the score by density, 1240 of 1459 notes (a step down from 1459, and 595 is a step down from it)
+ok       gerudo-valley                  1240 notes, 102bpm
+ok       gerudo-valley-easy             595 notes, 84bpm, 5 sections
+ok       gerudo-valley                 1240 notes, 102bpm, 5 sections
+ok       gerudo-valley-hard            1459 notes, 120bpm, 5 sections
+
+wrote js/songs-imported.mjs: 145 songs (3 from this file)
+698 events at 110bpm (Sheet Music Boss, Zelda's Lullaby end-card engraving, Flowing quarter = 110, presentation timestamp 190 seconds), grid phase 98ms: mean move 0.046 beats, worst 0.124
+wrote tools/video-lane/reconciliation-2026-09-09/zeldas-lullaby.mid: track 0 = left hand (437 notes, colour blue), track 1 = right hand (261 notes)
+698 events at 110bpm (Sheet Music Boss, Zelda's Lullaby end-card engraving, Flowing quarter = 110, presentation timestamp 190 seconds), grid phase 98ms: mean move 0.046 beats, worst 0.124
+wrote tools/video-lane/reconciliation-2026-09-09/zeldas-lullaby.accepted.mid: track 0 = left hand (437 notes, colour blue), track 1 = right hand (261 notes)
+read 698 notes, 3 tracks, 3/4, tempo 110bpm
+quantised to 1/4 beat: mean move 0.000 beats, worst 0.000
+hands: the video's own hand colours (437 left, 261 right); fromScore stays false
+pedal: shortened 19 notes the transcriber only heard because the pedal was down
+
+DROPPED  Medium: 656 notes against Hard's 698 is not a step down, so it is not a tier
+medium: cut from the score by density, 593 of 698 notes (a step down from 698, and 269 is a step down from it)
+ok       zeldas-lullaby                 593 notes, 94bpm
+ok       zeldas-lullaby-easy            269 notes, 77bpm, 7 sections
+ok       zeldas-lullaby                 593 notes, 94bpm, 7 sections
+ok       zeldas-lullaby-hard            698 notes, 110bpm, 7 sections
+
+wrote js/songs-imported.mjs: 145 songs (3 from this file)

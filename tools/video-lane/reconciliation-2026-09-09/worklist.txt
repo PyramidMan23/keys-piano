@@ -1,0 +1,18 @@
+THE WORKLIST
+==========================================================================
+   ok   Every song Mark listed is in the app
+        all 29 in
+   ok   The 23-song compilation video has been worked through
+        all 23 pieces from the compilation are in
+   ok   No song has a hand assignment that would teach the wrong hand
+        0 of 241 songs flagged, ? of them split by a script
+   ok   Every imported piece has all three tiers, or a recorded reason it cannot
+        33 pieces have all three tiers; the other 24 each carry a measured reason they cannot (js/tiers-refused.mjs)
+  skip  No screen has a large hole in it
+  skip  Every gate is green
+   ok   "friday night" identified and added
+        CLOSED: Mark said to ignore it (2026-08-31). Last Friday Night, Katy Perry, is in the library as a guess
+  MARK  Form check 1-5 rating selects
+        proposed before this conversation, never ruled on
+==========================================================================
+5 done, 0 still open, 1 waiting on Mark

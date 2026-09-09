@@ -1,0 +1,20 @@
+[
+ {
+  "midi": 83,
+  "on": 88.1,
+  "off": 88.4,
+  "colour": "green",
+  "metricMedian": 0.997,
+  "flags": [],
+  "strike": 88.1
+ },
+ {
+  "midi": 84,
+  "on": 165.333,
+  "off": 165.633,
+  "colour": "green",
+  "metricMedian": 1,
+  "flags": [],
+  "strike": 165.333
+ }
+]

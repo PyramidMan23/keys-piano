@@ -41,7 +41,8 @@ if (!T.handMapping || Object.keys(T.handMapping).length < 2 || !Object.values(T.
   console.error(`REFUSE: ${templatePath} has no handMapping. Which colour is the left hand must be established from evidence outside pitch and written there, with its source.`);
   process.exit(1);
 }
-const evAll = JSON.parse(readFileSync(eventsPath, 'utf8')).events;
+const eventSource = JSON.parse(readFileSync(eventsPath, 'utf8'));
+const evAll = eventSource.events;
 // THRESHOLDS: ambiguous events under 2% of all events are LISTED and left out;
 // at or over 2% the extraction is refused (a colour the template cannot name
 // on that many notes means the template is wrong, not the notes).
@@ -89,4 +90,19 @@ const first = Math.min(...notes.map((n) => n.b));
 for (const n of notes) n.b = +(n.b - first).toFixed(4);
 const L = notes.filter((n) => n.hand === 'L').length, R = notes.length - L;
 writeFileSync(outPath, writeMidi({ notes, bpm, timeSig: [meterNum, meterDen], tracks: 2 }));
+// A sidecar keeps evidence that the Musical Instrument Digital Interface
+// (MIDI) file cannot represent. Optional for older, unrelated imports.
+const evidencePath = flag('evidence');
+if (evidencePath) {
+  const evidence = JSON.parse(readFileSync(evidencePath, 'utf8'));
+  for (const name of ['videoId', 'handsSource', 'reconciledAt', 'status']) {
+    if (typeof evidence[name] !== 'string' || !evidence[name].trim()) throw Error(`Missing evidence ${name}`);
+  }
+  const reference = notes.map((n, i) => ({ b: n.b, m: n.m, h: n.hand,
+    onsetMs: (ev[i].on + latency - bestPhase - first * beat) * 1000 }));
+  writeFileSync(outPath + '.video.json', JSON.stringify({
+    ...evidence, bpmSource, sourceBpm: bpm, latencyMs: T.onsetLatencyMs,
+    phaseSeconds: bestPhase, firstGridBeat: first, reference,
+  }, null, 1) + '\n');
+}
 console.log(`wrote ${outPath}: track 0 = left hand (${L} notes, colour ${Object.entries(T.handMapping).find(([, h]) => h === 'L')[0]}), track 1 = right hand (${R} notes)`);

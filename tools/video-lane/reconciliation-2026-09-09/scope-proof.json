@@ -1,0 +1,744 @@
+{
+ "baseline": "20c68dd",
+ "method": "Literal top-level serialized object byte comparison; SHA-256 means Secure Hash Algorithm with a 256-bit digest.",
+ "unchangedGroups": 54,
+ "unchangedTiers": 136,
+ "unchanged": [
+  {
+   "id": "afterglow",
+   "group": "afterglow",
+   "sha256": "147598b00d97406da25a788f3471eb057293587f7a14b51f4a4320001f65cf2a"
+  },
+  {
+   "id": "arabesque-1",
+   "group": "arabesque-1",
+   "sha256": "d3ae374dc0c921a321ac5cdcfc276d7ebfffbd477b513c7f136cd48cd26f5d87"
+  },
+  {
+   "id": "arabesque-1-easy",
+   "group": "arabesque-1",
+   "sha256": "dcd30dd872fd6c44afe21fee89accb57104cd7cb42674dd063bc773afcf62f9b"
+  },
+  {
+   "id": "arabesque-1-hard",
+   "group": "arabesque-1",
+   "sha256": "a3f226e8c37b856f51e8c5c4e4408393acf65b24ded995ce9630739b352b0d49"
+  },
+  {
+   "id": "bach-prelude-c-easy",
+   "group": "bach-prelude-c",
+   "sha256": "39de796058b64066bd68030c7d72a281ced7cf3149759116b72acaa09c8e6fbf"
+  },
+  {
+   "id": "bach-prelude-c-hard",
+   "group": "bach-prelude-c",
+   "sha256": "88ea2f07d2cd5cfea6a551746955a83ab7596459f25c9e704c9bf7c5d910fe6d"
+  },
+  {
+   "id": "beanie",
+   "group": "beanie",
+   "sha256": "a25b09078e651b03325b39a2907811cebdb039c8f1e23f09a15e98e3b079765e"
+  },
+  {
+   "id": "beanie-easy",
+   "group": "beanie",
+   "sha256": "edabcaaf25efa0e346ba0cd5ed552d2615e6a606dd3771dcb3a9e71e115c9cdf"
+  },
+  {
+   "id": "clair-de-lune",
+   "group": "clair-de-lune",
+   "sha256": "7661ca5bfc998ac4e8f11c6b4463d7013ae5bb3cd25ebcc985c1edab7d5a9d9d"
+  },
+  {
+   "id": "clair-de-lune-easy",
+   "group": "clair-de-lune",
+   "sha256": "ea27878e86137d5bc658ff80a908fec2d5653fad809b7ad6ef7fb7940fa676c0"
+  },
+  {
+   "id": "clair-de-lune-hard",
+   "group": "clair-de-lune",
+   "sha256": "2dec2d688642050fc5fabf18ec6da5ec7fd2e61f9953a5a88d8b879dee76ec1c"
+  },
+  {
+   "id": "coffin-dance",
+   "group": "coffin-dance",
+   "sha256": "aa2178d3bf634ab5e168e4ceb50b91e4c24ba2b53f865ee948d35ba0ff24c6fd"
+  },
+  {
+   "id": "coffin-dance-easy",
+   "group": "coffin-dance",
+   "sha256": "10bdb6804ab9299c757f688eb45be6bf44cdad5b8c85fa9c383a6202ef9083ea"
+  },
+  {
+   "id": "comptine",
+   "group": "comptine",
+   "sha256": "0178fc9346ee08ddfb8b81f2e9257d9cfee76dca56311ab2959899bfd78927ea"
+  },
+  {
+   "id": "comptine-easy",
+   "group": "comptine",
+   "sha256": "0995381e08f15f1b3a1d99186313838f7a307d613d5fd85f2dcccc3cb9d38cca"
+  },
+  {
+   "id": "comptine-hard",
+   "group": "comptine",
+   "sha256": "751352cd736bc5b975c643a3cc76222c6f7cc501d832b53c7190a328c8b9e584"
+  },
+  {
+   "id": "consolation-3",
+   "group": "consolation-3",
+   "sha256": "cfb34c203ab174b518870292f4e57a546ad183edfac8e240ff35062de7a712f5"
+  },
+  {
+   "id": "consolation-3-easy",
+   "group": "consolation-3",
+   "sha256": "794457d847ee457722aef08f2821751e761a8df2ef68dbb18b9b6cbd44375457"
+  },
+  {
+   "id": "consolation-3-hard",
+   "group": "consolation-3",
+   "sha256": "76f75d7e8c37c1c3ef275ac13609701352bc4114f0ecd978c020aeceb48737a7"
+  },
+  {
+   "id": "disney-star",
+   "group": "disney-star",
+   "sha256": "86b7c77685cae086a016e76990150eda80a5ea911990f2649d87b3704efd3c99"
+  },
+  {
+   "id": "disney-star-easy",
+   "group": "disney-star",
+   "sha256": "02e9bae1aa65ccb77f7dce4d90f3c4eeed6b12a2ea98ecf4d65e181f2a5f51bb"
+  },
+  {
+   "id": "disney-star-hard",
+   "group": "disney-star",
+   "sha256": "181b9cb8be6f44a7f6cc84891da65f4adb94326aa075499335155f1a1a51f81a"
+  },
+  {
+   "id": "fantaisie-impromptu",
+   "group": "fantaisie-impromptu",
+   "sha256": "e86a55316dd111d71a20a97872ed44afc392d183a371becda370714307a1ffe0"
+  },
+  {
+   "id": "fantaisie-impromptu-easy",
+   "group": "fantaisie-impromptu",
+   "sha256": "cfa8f945ab3683e45672d504425660692ab43214b66499e41a48ca5805d03a16"
+  },
+  {
+   "id": "fantaisie-impromptu-hard",
+   "group": "fantaisie-impromptu",
+   "sha256": "5656db1571652e71f988559505e5a75c4f35961d7f5cdfee59750ec7a6bb602d"
+  },
+  {
+   "id": "gladiator",
+   "group": "gladiator",
+   "sha256": "dd945a857cf4778e5975be5d4f69904670ce48fbbab016275f5914c7078a7c93"
+  },
+  {
+   "id": "gladiator-easy",
+   "group": "gladiator",
+   "sha256": "f719e31b71a32e15129d697b9b81f7e83dc5ad99efd6c18ed6be09721a2df262"
+  },
+  {
+   "id": "gladiator-hard",
+   "group": "gladiator",
+   "sha256": "5a6e857fe2c1fa6b41f9e6cc2b2cdae93b36dcedc8d1a0347c788fccce879f1d"
+  },
+  {
+   "id": "goldberg-aria",
+   "group": "goldberg-aria",
+   "sha256": "b9a54bb0e29ab8b6c1270c693ccb4c13ceb0e0141cb39be58d3648abf6a804fb"
+  },
+  {
+   "id": "goldberg-aria-easy",
+   "group": "goldberg-aria",
+   "sha256": "93a29b84e72b9f14aecbcd73822fd52778e2689cecf69ea49d9033c7c97dc8cf"
+  },
+  {
+   "id": "goldberg-aria-hard",
+   "group": "goldberg-aria",
+   "sha256": "437207dea955c4c3e672a0000261dbe7d4951a46faffb6eec3e41ea49dfbc63a"
+  },
+  {
+   "id": "gray-day-easy",
+   "group": "gray-day",
+   "sha256": "138c1bf23960999e68fc458b9099875ea68d4ff43f2b1a642fcdc2ccdb9fde76"
+  },
+  {
+   "id": "gray-day-hard",
+   "group": "gray-day",
+   "sha256": "f9e1dbaa74e482e18245cb933b5f4b7f5a2020af889a175bd2b353036f5a1930"
+  },
+  {
+   "id": "gymnopedie-1",
+   "group": "gymnopedie-1",
+   "sha256": "9075af90c094cd7043e7c5a575ba291862a7e6ac318d9e1f644ff8d7258e12a2"
+  },
+  {
+   "id": "gymnopedie-1-hard",
+   "group": "gymnopedie-1",
+   "sha256": "a69ec341a52f3aa357e9331300dcc34160e356941df1266dd74bc64910511cf2"
+  },
+  {
+   "id": "i-giorni",
+   "group": "i-giorni",
+   "sha256": "b017ab0fc5ad6950b60c4d901073a359b648fac69aca78f11d1fc4e018bd3343"
+  },
+  {
+   "id": "i-giorni-easy",
+   "group": "i-giorni",
+   "sha256": "1dd27846e5b98e756be016c5efe3d31bd28ee04d5948dd466d5439c549e97656"
+  },
+  {
+   "id": "i-giorni-hard",
+   "group": "i-giorni",
+   "sha256": "ddc180144d364a9255085d292182b358ec30e8b4ef8b49414d0f0186804e6395"
+  },
+  {
+   "id": "i-wanted-to-leave",
+   "group": "i-wanted-to-leave",
+   "sha256": "54e27906f84bf5624a2db4ddfc29fbab5bcfa62739c5bd551854aa532aadd00e"
+  },
+  {
+   "id": "i-wanted-to-leave-easy",
+   "group": "i-wanted-to-leave",
+   "sha256": "fc9218768c2b9085630f7bc2be5081b34d7f445a68971854d07b627b5ed245b9"
+  },
+  {
+   "id": "i-wanted-to-leave-hard",
+   "group": "i-wanted-to-leave",
+   "sha256": "e5b9f68e03abeac854a6f406dfbc7348fea27e0a66265e096606c13c03987fd2"
+  },
+  {
+   "id": "icarus",
+   "group": "icarus",
+   "sha256": "0d620674940b8555390f54db5d2cce5091245b7a3d6e1007d576bd0f2507a936"
+  },
+  {
+   "id": "idea-10",
+   "group": "idea-10",
+   "sha256": "9294949e05f3cb6e5e0b82a191dffbc695789bce59c9021b31979bdb975400f8"
+  },
+  {
+   "id": "idea-10-easy",
+   "group": "idea-10",
+   "sha256": "cd53d730ecef831bd40dd5bc7f6b5e96159df0a43d947a673ef9ef3c2dc742a6"
+  },
+  {
+   "id": "idea-10-hard",
+   "group": "idea-10",
+   "sha256": "b69f3f0b47dc30080cabe28bea558522fc8e701a6cda3938d5a90a05f1264a97"
+  },
+  {
+   "id": "idea-12",
+   "group": "idea-12",
+   "sha256": "1f7608af4f01be4ee40b85cacbf70c18a765a9c3c5bc7b96a9247d32973b0ef0"
+  },
+  {
+   "id": "idea-12-easy",
+   "group": "idea-12",
+   "sha256": "bb7e54270881948657490f3236d46266cee373becbe59838ff8622a5a4d31d9c"
+  },
+  {
+   "id": "imperial-march",
+   "group": "imperial-march",
+   "sha256": "02598f345c03ff21266ccc78677b3c81d8e7323799bffa9f517052b5db42f614"
+  },
+  {
+   "id": "imperial-march-easy",
+   "group": "imperial-march",
+   "sha256": "159ba4538cee236a3463b02ce4b10730923cb3c5c2237f705633bcdfd98ead8c"
+  },
+  {
+   "id": "jaws",
+   "group": "jaws",
+   "sha256": "777925b39db8db8d2ae630c5ba63778341986f340fcdee7f01d0d1c9248f68a6"
+  },
+  {
+   "id": "jaws-easy",
+   "group": "jaws",
+   "sha256": "e1fe484f03efc68e77651fd97a760df6b144cce79a2aa4a67bb04e39418b7d8c"
+  },
+  {
+   "id": "la-petite-fille",
+   "group": "la-petite-fille",
+   "sha256": "cac3e0e5de2eaeb81f17453d1543b97e26a6aa47025c0c63a9ab9a528904f187"
+  },
+  {
+   "id": "la-petite-fille-easy",
+   "group": "la-petite-fille",
+   "sha256": "ca1c237f80e4e4b89221d82383e61fc60753415fc06a879cb4abbbb71df0c1c7"
+  },
+  {
+   "id": "la-petite-fille-hard",
+   "group": "la-petite-fille",
+   "sha256": "85950a31757e2d900f44aec1b77a21d21bb5fee97ad123d76e54474f63800e37"
+  },
+  {
+   "id": "last-friday-night",
+   "group": "last-friday-night",
+   "sha256": "f2a7e9394ec21354402abbed9c3574c9e6f38b59a2f762838ed9070f6679f25a"
+  },
+  {
+   "id": "last-friday-night-easy",
+   "group": "last-friday-night",
+   "sha256": "e76c7f9ccb9d22819eaa936013224ab1a9ebfd26381a677388c0cd5f3bb1d2a2"
+  },
+  {
+   "id": "last-friday-night-hard",
+   "group": "last-friday-night",
+   "sha256": "6084e9d34da7d93f89ed26e3ff8fac78aedb109938b6e2bf3e941e89b2c4a4ba"
+  },
+  {
+   "id": "last-waltz",
+   "group": "last-waltz",
+   "sha256": "c824391ee9e0f686e0bae9c2963218c7dd08c85aef51693189cc968019b6e9b5"
+  },
+  {
+   "id": "last-waltz-easy",
+   "group": "last-waltz",
+   "sha256": "74c1116bb34f8d6a297a1424d93193acb65eadc4e1e355b64e42849b2c48d2de"
+  },
+  {
+   "id": "lauras-dance",
+   "group": "lauras-dance",
+   "sha256": "7490cc34ba6bf5850b203f7827d33d595623a1d4375a575b89cc17944fcaedf1"
+  },
+  {
+   "id": "lauras-dance-easy",
+   "group": "lauras-dance",
+   "sha256": "17eec85b6e350a07284e77441257e476b24d95ff0140475b46b87ff51bdf617f"
+  },
+  {
+   "id": "lauras-dance-hard",
+   "group": "lauras-dance",
+   "sha256": "5bc9d2c406fb11240173b82d87c3b987dde822e2735d8c87354ec00beb138e39"
+  },
+  {
+   "id": "liebestraum-3-easy",
+   "group": "liebestraum-3",
+   "sha256": "0891a7ab6aec6682feffb90dc835aa6570c26878bb0f005b1543ace894598e7f"
+  },
+  {
+   "id": "liebestraum-3-hard",
+   "group": "liebestraum-3",
+   "sha256": "53cd66e496402b07599818cdde6fded705568c371ba8d2d86129d259fd6a9b6e"
+  },
+  {
+   "id": "light-of-the-seven",
+   "group": "light-of-the-seven",
+   "sha256": "bc4a4e11c6c26f3d47680bfa1186add616d563c5b8be44479f2076909131de3c"
+  },
+  {
+   "id": "light-of-the-seven-easy",
+   "group": "light-of-the-seven",
+   "sha256": "5f6c55ed1c720072641402a9391c0431a7c2a11d3e46116f3a3a8b936846d4a3"
+  },
+  {
+   "id": "light-of-the-seven-hard",
+   "group": "light-of-the-seven",
+   "sha256": "086f181bf578a13ae99f2c6161736cbc62b40f40396d7d8f6f211d3bcf064242"
+  },
+  {
+   "id": "little-things",
+   "group": "little-things",
+   "sha256": "60f17b4a20f3eb3a431df96c3fcce40a2c752d95bca91b27a902860345a191f9"
+  },
+  {
+   "id": "little-things-easy",
+   "group": "little-things",
+   "sha256": "c7aebdcf35c558f45b4361d707e21fcbdd9a5a73467b8bb2681b940edae3430f"
+  },
+  {
+   "id": "mariage-d-amour-easy",
+   "group": "mariage-d-amour",
+   "sha256": "879fdd8a3bdf05390209ffb1514016c0302134f38933a6416e173e4197ceee93"
+  },
+  {
+   "id": "mariage-d-amour-hard",
+   "group": "mariage-d-amour",
+   "sha256": "930d723e209a32c8263325a2c297c6978bfd7de1bbf383a992c5e5fb104977c0"
+  },
+  {
+   "id": "married-life",
+   "group": "married-life",
+   "sha256": "a2a8ccaced431e2d8024c59c4e87b4b075ea0701c8e2f93d8d0d472eacd31aca"
+  },
+  {
+   "id": "married-life-easy",
+   "group": "married-life",
+   "sha256": "20374a1f29f1778b4e7fe1ad4ace9345650f741caf075c2557f42b32a4157410"
+  },
+  {
+   "id": "married-life-hard",
+   "group": "married-life",
+   "sha256": "56b722087c5640dd788702526618190b33c03b730674b3db058fb0096f1805a6"
+  },
+  {
+   "id": "mia-sebastian",
+   "group": "mia-sebastian",
+   "sha256": "6ec579eaf14e9034eff2d6701ab1ac28fe6af17f546972bb6098033295e30d4e"
+  },
+  {
+   "id": "mia-sebastian-easy",
+   "group": "mia-sebastian",
+   "sha256": "a68e4bc2b52f79b4eb6fd68c55421dccbdac9783549831e2900c67d2840cbdba"
+  },
+  {
+   "id": "mia-sebastian-hard",
+   "group": "mia-sebastian",
+   "sha256": "ba543cebc1826578ea5b8d9b18fa2aa4e452ee579d991eeb395551fb8785e6e7"
+  },
+  {
+   "id": "moonlight-sonata-easy",
+   "group": "moonlight-sonata",
+   "sha256": "e57c8dfa0f50c5523c64afdb5cabc4f6ea4d08ea8b7e999707bfc46847ff8e42"
+  },
+  {
+   "id": "moonlight-sonata-hard",
+   "group": "moonlight-sonata",
+   "sha256": "5001f36f7add0461e8c415179364995a5ccc763d60f4e6005f23fafe1f980c58"
+  },
+  {
+   "id": "mozart-pc21-2",
+   "group": "mozart-pc21-2",
+   "sha256": "8b6679cfd2f7cad8547edbb9b5ba5efa644deff7060b785b16929a969629badc"
+  },
+  {
+   "id": "mozart-pc21-2-easy",
+   "group": "mozart-pc21-2",
+   "sha256": "0ac9644f9e741a2a6dfde8171ca698bcb1e5a51de837378b330036c7e921b8ed"
+  },
+  {
+   "id": "mozart-pc21-2-hard",
+   "group": "mozart-pc21-2",
+   "sha256": "f61bd9401e007227198683215f58553dd0459ae01beed40235c0cdf7766e0a33"
+  },
+  {
+   "id": "never-gonna-2-easy",
+   "group": "never-gonna-2",
+   "sha256": "824bb22b91879025cee22ebacc296bbb7136a8fa2766d14f3e3742833f7064db"
+  },
+  {
+   "id": "never-gonna-2-hard",
+   "group": "never-gonna-2",
+   "sha256": "74803588231315927de16e45eacb884dd6813d5a78e2c8dd13ff70a8a08d6b2d"
+  },
+  {
+   "id": "next-episode",
+   "group": "next-episode",
+   "sha256": "e94c74bb61e5731ef8141dfef46289216295eba1a01089c470936561b86a2f65"
+  },
+  {
+   "id": "next-episode-easy",
+   "group": "next-episode",
+   "sha256": "1e5f140d75c623deb52b29b8e50ab77777f48c4140b3da123312e756278371f6"
+  },
+  {
+   "id": "nocturne-op9-2",
+   "group": "nocturne-op9-2",
+   "sha256": "546d47f66753212cbd3c4a037e602c26b538cd09a62fb26acd6dd5a163a7b861"
+  },
+  {
+   "id": "nocturne-op9-2-easy",
+   "group": "nocturne-op9-2",
+   "sha256": "d6e6b54ef2fa962c7b8ee4840cc673a5aec13e250165a52c34fff7eb0cc55783"
+  },
+  {
+   "id": "nocturne-op9-2-hard",
+   "group": "nocturne-op9-2",
+   "sha256": "446556bcd93756cd3c05701a25832a76be3ca2f6bd4eb06c6c5a0d82b0853133"
+  },
+  {
+   "id": "overwatch",
+   "group": "overwatch",
+   "sha256": "4e42e109d1403c26939269aa57d1a1825758997dc7f88ee8437fb084b192ed2c"
+  },
+  {
+   "id": "overwatch-easy",
+   "group": "overwatch",
+   "sha256": "8fd8163b5de4a16d58a8083abe53f3cbd6259e68a7611867015388093644d292"
+  },
+  {
+   "id": "pain",
+   "group": "pain",
+   "sha256": "f4e23d7a54082cacd79114f2e770745d5c45b29b1aff69bf45bbfe4d8866a063"
+  },
+  {
+   "id": "pain-easy",
+   "group": "pain",
+   "sha256": "60d930da99fc8a330bcd573ef679e49047e5d8ca9c6b0666a317403df832b993"
+  },
+  {
+   "id": "pain-hard",
+   "group": "pain",
+   "sha256": "5a2df7f5f4281db60f66c1bf40d9d50f4ffd88e538868a01850e9df630656568"
+  },
+  {
+   "id": "passacaglia-easy",
+   "group": "passacaglia",
+   "sha256": "88ffcfbd0742278a3e9f71c964ef76129d7ed589dc0bbd379d452c0435a8efdb"
+  },
+  {
+   "id": "passacaglia-hard",
+   "group": "passacaglia",
+   "sha256": "3c9cb4ef1b04f716008bf12687969504426eb02412f9bef2d4b96c324a433d79"
+  },
+  {
+   "id": "pathetique-2",
+   "group": "pathetique-2",
+   "sha256": "ec5e90c62868e1af14a24b59366219b0515fb0aff8a7120a2d1288aaea53f07b"
+  },
+  {
+   "id": "pathetique-2-easy",
+   "group": "pathetique-2",
+   "sha256": "03005e1f520407909397038a24c2f5c4cafbc3dd9d3947709f17daccb12b1318"
+  },
+  {
+   "id": "pathetique-2-hard",
+   "group": "pathetique-2",
+   "sha256": "e527b5dda0dfb6eaa479a5baeb6d92695b0c5c96553b1f2d92b45eb077fe5f3f"
+  },
+  {
+   "id": "prelude-e-minor",
+   "group": "prelude-e-minor",
+   "sha256": "08fe4e06dd7603cec4e2ea4b7b765a22f9c8bc51914e1b567dbb463962ac1914"
+  },
+  {
+   "id": "prelude-e-minor-easy",
+   "group": "prelude-e-minor",
+   "sha256": "1060306e70dc61843ba0d8c2c4b22b4935b9cd845391768771ccc26b4d683e83"
+  },
+  {
+   "id": "prelude-e-minor-hard",
+   "group": "prelude-e-minor",
+   "sha256": "848807dc11b517e6890ce7144724a8698583e91e4542daedbc6541ae7358ab57"
+  },
+  {
+   "id": "rachmaninoff-pc2",
+   "group": "rachmaninoff-pc2",
+   "sha256": "2fb0e8dea459404f72f48ef9b842f2afea0f2689c2012dbb30f48e42cb58dca4"
+  },
+  {
+   "id": "rachmaninoff-pc2-easy",
+   "group": "rachmaninoff-pc2",
+   "sha256": "1bc849d3fe6867c6378fc08133ff3207d718da0b8cb4de47a33d4a437f1aa30b"
+  },
+  {
+   "id": "rachmaninoff-pc2-hard",
+   "group": "rachmaninoff-pc2",
+   "sha256": "1106dd89ec9c0629f52e1c971dd2dc226e434506840e95f499f6d09812e98d8e"
+  },
+  {
+   "id": "raindrop-prelude",
+   "group": "raindrop-prelude",
+   "sha256": "79efa88487f1a4993d89173c6cab5a5e16f556b37ec9596eb0239240c85726e9"
+  },
+  {
+   "id": "raindrop-prelude-easy",
+   "group": "raindrop-prelude",
+   "sha256": "6a8c1ae59dc06de42016347983abb6d67d9559459affffad03d7143dd70b9412"
+  },
+  {
+   "id": "raindrop-prelude-hard",
+   "group": "raindrop-prelude",
+   "sha256": "f3e17908abefe2c7056f9d726e58c35b1ef38640eb1a9c617f7fcf31ede23b44"
+  },
+  {
+   "id": "rondo-alla-turca",
+   "group": "rondo-alla-turca",
+   "sha256": "4595dbd409b9f1c85f4000fa5720e4aa3e71aa8a11532761c016a45c8a298a58"
+  },
+  {
+   "id": "rondo-alla-turca-easy",
+   "group": "rondo-alla-turca",
+   "sha256": "691dbb6d5803975b9513bfcc6bc7dc4a3b29f35a12fca6db562b4514a39fa5f9"
+  },
+  {
+   "id": "rondo-alla-turca-hard",
+   "group": "rondo-alla-turca",
+   "sha256": "c3512bc69b776598d319f1d8bf9fb83d33e31e5e1909c68f72247b66f1b2c69e"
+  },
+  {
+   "id": "say-yes-to-heaven",
+   "group": "say-yes-to-heaven",
+   "sha256": "64cc5a76e4f38161114381b286c2c792fc7ea67765b44c36fe6c7e0804a32b00"
+  },
+  {
+   "id": "say-yes-to-heaven-easy",
+   "group": "say-yes-to-heaven",
+   "sha256": "282707318a828a039bbc86756fe55a039cd1748d240a4b10de8a2f421a4dfbb8"
+  },
+  {
+   "id": "see-you-tomorrow",
+   "group": "see-you-tomorrow",
+   "sha256": "ce7b4ff9d6c207a3ab967fe98f58f1ec6946eccac4e079a79e1d75f739553664"
+  },
+  {
+   "id": "see-you-tomorrow-easy",
+   "group": "see-you-tomorrow",
+   "sha256": "9a941d5c91ea4ff56948e8279540c57f88abdc5df140868e6e1b08ed17510618"
+  },
+  {
+   "id": "see-you-tomorrow-hard",
+   "group": "see-you-tomorrow",
+   "sha256": "d23d529ee94a56dea06f56bf60d8ae27f76fc17b4a95aacefb43e213a2a79081"
+  },
+  {
+   "id": "song-of-storms",
+   "group": "song-of-storms",
+   "sha256": "966c224c54d086a0a10dc9bd5387b1057f5e0cba4ec87525667a8d9ccf2e87af"
+  },
+  {
+   "id": "song-of-storms-easy",
+   "group": "song-of-storms",
+   "sha256": "9611162dde3632c89ffcdce57d387ec8b795f3e8ed156a548008cb5e470c8f9f"
+  },
+  {
+   "id": "song-of-storms-hard",
+   "group": "song-of-storms",
+   "sha256": "7fae5bf898061966eeec88f169371f963f63d8a1bbf16bd880c8ca19f4aa9937"
+  },
+  {
+   "id": "traumerei",
+   "group": "traumerei",
+   "sha256": "67b6de383ab16f9d05f4f51aa56e2dd7a523cd5f29823b47d2f8284d3e99005e"
+  },
+  {
+   "id": "traumerei-easy",
+   "group": "traumerei",
+   "sha256": "83a9dfd959598a65a7dd8846a58d3c20f296e559e6dde606e48d80aa06123cb2"
+  },
+  {
+   "id": "traumerei-hard",
+   "group": "traumerei",
+   "sha256": "a095579b1673094755a60c3ad959f383df9dc214dd1362eb231aa4cffdd1c8a0"
+  },
+  {
+   "id": "un-sospiro",
+   "group": "un-sospiro",
+   "sha256": "f00faa4a9d8c8bae67218a5e62b4a4997f3ca1adfc9aa7b99b68a8e9c9653e30"
+  },
+  {
+   "id": "un-sospiro-easy",
+   "group": "un-sospiro",
+   "sha256": "d1d3e7b0b4d89f58437c1a174ee1cdf3b9cc06dcfcc116fe1cde6db852629968"
+  },
+  {
+   "id": "valzer-d-inverno",
+   "group": "valzer-d-inverno",
+   "sha256": "3defd772ccbe00dc7aa505aefd6d520c961d6cce4576d25d21e2bb216bb34bca"
+  },
+  {
+   "id": "valzer-d-inverno-easy",
+   "group": "valzer-d-inverno",
+   "sha256": "e4091b103f1d7f836ae436dd538c0cb3a23553c4417a398e844003990f1adae9"
+  },
+  {
+   "id": "van-gogh-easy",
+   "group": "van-gogh",
+   "sha256": "8334e8013655a86127e2967ef4f895e3048b0ccd7945a0c77078ef8f9251aa5e"
+  },
+  {
+   "id": "van-gogh-hard",
+   "group": "van-gogh",
+   "sha256": "dedbf0578ed3e8ae5477a16c61135ad2230d495d78131e7eca0ceffed9d7f474"
+  },
+  {
+   "id": "where-is-my-mind",
+   "group": "where-is-my-mind",
+   "sha256": "15e3afc01f8a1a947280fc8aaa807264f90a7ea552ceab23407c0670d9015b56"
+  },
+  {
+   "id": "where-is-my-mind-easy",
+   "group": "where-is-my-mind",
+   "sha256": "e635bad512cff37c72efb115c1f703d0c5dc84957bee7d99ab14c0b5149a5afa"
+  },
+  {
+   "id": "where-is-my-mind-hard",
+   "group": "where-is-my-mind",
+   "sha256": "66fe8f43e4189fd56df935f3944158e8ab253ba58640011d50267a0113c20596"
+  },
+  {
+   "id": "x-files-easy",
+   "group": "x-files",
+   "sha256": "9af5452bf839ac9abc5c20d5ae747c2311f8f3402752bdda33ce03782c85385c"
+  },
+  {
+   "id": "x-files-hard",
+   "group": "x-files",
+   "sha256": "5246f4480701edb4d52d3193b00ba19fd29bd5d15add8c501d8586371cff2e76"
+  },
+  {
+   "id": "zelda-main-theme",
+   "group": "zelda-main-theme",
+   "sha256": "1725473a69453a4250a65db8fb5daa73665db1b44dfa86e86d542c7988debaa2"
+  },
+  {
+   "id": "zelda-main-theme-easy",
+   "group": "zelda-main-theme",
+   "sha256": "74c5629f448b858599028c2b00a7740427b6a3b7fc9c440bd4fa17027d08b2e9"
+  },
+  {
+   "id": "zelda-main-theme-hard",
+   "group": "zelda-main-theme",
+   "sha256": "6073fd05a8f0b32c0b027046f68d647769f4bc92cc7c86f261f7088e8168442f"
+  }
+ ],
+ "reviewedGroups": [
+  {
+   "id": "gerudo-valley",
+   "notesIdentical": true,
+   "before": 1240,
+   "after": 1240
+  },
+  {
+   "id": "gerudo-valley-easy",
+   "notesIdentical": true,
+   "before": 595,
+   "after": 595
+  },
+  {
+   "id": "gerudo-valley-hard",
+   "notesIdentical": true,
+   "before": 1459,
+   "after": 1459
+  },
+  {
+   "id": "silksong",
+   "notesIdentical": true,
+   "before": 199,
+   "after": 199
+  },
+  {
+   "id": "silksong-easy",
+   "notesIdentical": true,
+   "before": 140,
+   "after": 140
+  },
+  {
+   "id": "silksong-hard",
+   "notesIdentical": true,
+   "before": 264,
+   "after": 264
+  },
+  {
+   "id": "zeldas-lullaby",
+   "notesIdentical": true,
+   "before": 593,
+   "after": 593
+  },
+  {
+   "id": "zeldas-lullaby-easy",
+   "notesIdentical": true,
+   "before": 269,
+   "after": 269
+  },
+  {
+   "id": "zeldas-lullaby-hard",
+   "notesIdentical": true,
+   "before": 698,
+   "after": 698
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+video events 698, audio notes 1007
+best constant latency 83ms (video seen before it sounds)
+matched 696  precision 0.997  recall 0.691  F1 0.816
+onset error median 10ms, p90 22ms
+worst 30s window at 175s: F1 0.157 (17 video, 200 audio)
+FAIL: committed F1 >= 0.9 and worst-window >= 0.75

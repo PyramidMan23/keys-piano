@@ -1,0 +1,502 @@
+[
+ {
+  "sample": 1,
+  "bar": 1,
+  "beatWithinBar": 0,
+  "midi": 48,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 4.65,
+  "event": {
+   "midi": 48,
+   "on": 4.65,
+   "off": 5.883,
+   "colour": "blue",
+   "metricMedian": -0.249,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 2.2604999999999995,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 4.962727272727273,
+   "presentationSeconds": 4.967,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-0.png"
+  }
+ },
+ {
+  "sample": 2,
+  "bar": 1,
+  "beatWithinBar": 0.5,
+  "midi": 55,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 4.922727272727273,
+  "event": {
+   "midi": 55,
+   "on": 4.917,
+   "off": 5.85,
+   "colour": "blue",
+   "metricMedian": -0.25,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.7105,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 5.235454545454545,
+   "presentationSeconds": 5.25,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-1.png"
+  }
+ },
+ {
+  "sample": 3,
+  "bar": 1,
+  "beatWithinBar": 1,
+  "midi": 64,
+  "hand": "L",
+  "writtenDurationBeats": 2,
+  "expectedStrikeSeconds": 5.195454545454545,
+  "event": {
+   "midi": 64,
+   "on": 5.183,
+   "off": 5.917,
+   "colour": "blue",
+   "metricMedian": -0.249,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.3456666666666668,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 6.326363636363636,
+   "presentationSeconds": 6.333,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-2.png"
+  }
+ },
+ {
+  "sample": 4,
+  "bar": 2,
+  "beatWithinBar": 0,
+  "midi": 48,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 6.286363636363637,
+  "event": {
+   "midi": 48,
+   "on": 6.267,
+   "off": 7.533,
+   "colour": "blue",
+   "metricMedian": -0.248,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 2.321,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 6.59909090909091,
+   "presentationSeconds": 6.6,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-3.png"
+  }
+ },
+ {
+  "sample": 5,
+  "bar": 2,
+  "beatWithinBar": 0.5,
+  "midi": 57,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 6.5590909090909095,
+  "event": {
+   "midi": 57,
+   "on": 6.55,
+   "off": 7.483,
+   "colour": "blue",
+   "metricMedian": -0.247,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.7105,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 6.871818181818182,
+   "presentationSeconds": 6.883,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-4.png"
+  }
+ },
+ {
+  "sample": 6,
+  "bar": 2,
+  "beatWithinBar": 1,
+  "midi": 66,
+  "hand": "L",
+  "writtenDurationBeats": 2,
+  "expectedStrikeSeconds": 6.831818181818182,
+  "event": {
+   "midi": 66,
+   "on": 6.817,
+   "off": 7.583,
+   "colour": "blue",
+   "metricMedian": -0.522,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.4043333333333334,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 7.962727272727273,
+   "presentationSeconds": 7.967,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-5.png"
+  }
+ },
+ {
+  "sample": 7,
+  "bar": 3,
+  "beatWithinBar": 0,
+  "midi": 48,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 7.922727272727273,
+  "event": {
+   "midi": 48,
+   "on": 7.9,
+   "off": 9.117,
+   "colour": "blue",
+   "metricMedian": -0.25,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 2.2311666666666676,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 8.235454545454544,
+   "presentationSeconds": 8.25,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-6.png"
+  }
+ },
+ {
+  "sample": 8,
+  "bar": 3,
+  "beatWithinBar": 0.5,
+  "midi": 55,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 8.195454545454545,
+  "event": {
+   "midi": 55,
+   "on": 8.167,
+   "off": 9.133,
+   "colour": "blue",
+   "metricMedian": -0.249,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.7709999999999988,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 8.508181818181818,
+   "presentationSeconds": 8.517,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-7.png"
+  }
+ },
+ {
+  "sample": 9,
+  "bar": 3,
+  "beatWithinBar": 1,
+  "midi": 64,
+  "hand": "L",
+  "writtenDurationBeats": 2,
+  "expectedStrikeSeconds": 8.468181818181819,
+  "event": {
+   "midi": 64,
+   "on": 8.45,
+   "off": 9.183,
+   "colour": "blue",
+   "metricMedian": -0.25,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.3438333333333343,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 9.599090909090908,
+   "presentationSeconds": 9.6,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-8.png"
+  }
+ },
+ {
+  "sample": 10,
+  "bar": 4,
+  "beatWithinBar": 0,
+  "midi": 48,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 9.559090909090909,
+  "event": {
+   "midi": 48,
+   "on": 9.55,
+   "off": 10.683,
+   "colour": "blue",
+   "metricMedian": -0.248,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 2.077166666666665,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 9.871818181818181,
+   "presentationSeconds": 9.883,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-9.png"
+  }
+ },
+ {
+  "sample": 11,
+  "bar": 4,
+  "beatWithinBar": 0.5,
+  "midi": 57,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 9.831818181818182,
+  "event": {
+   "midi": 57,
+   "on": 9.817,
+   "off": 10.65,
+   "colour": "blue",
+   "metricMedian": -0.247,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.5271666666666672,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 10.144545454545455,
+   "presentationSeconds": 10.15,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-10.png"
+  }
+ },
+ {
+  "sample": 12,
+  "bar": 4,
+  "beatWithinBar": 1,
+  "midi": 66,
+  "hand": "L",
+  "writtenDurationBeats": 2,
+  "expectedStrikeSeconds": 10.104545454545455,
+  "event": {
+   "midi": 66,
+   "on": 10.083,
+   "off": 10.667,
+   "colour": "blue",
+   "metricMedian": -0.525,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.070666666666666,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 11.235454545454544,
+   "presentationSeconds": 11.25,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-11.png"
+  }
+ },
+ {
+  "sample": 13,
+  "bar": 5,
+  "beatWithinBar": 0,
+  "midi": 48,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 11.195454545454545,
+  "event": {
+   "midi": 48,
+   "on": 11.183,
+   "off": 12.117,
+   "colour": "blue",
+   "metricMedian": -0.249,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.7123333333333355,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 11.508181818181818,
+   "presentationSeconds": 11.517,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-12.png"
+  }
+ },
+ {
+  "sample": 14,
+  "bar": 5,
+  "beatWithinBar": 0,
+  "midi": 71,
+  "hand": "R",
+  "writtenDurationBeats": 2,
+  "expectedStrikeSeconds": 11.195454545454545,
+  "event": {
+   "midi": 71,
+   "on": 11.183,
+   "off": 12.317,
+   "colour": "green",
+   "metricMedian": 0.995,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 2.0790000000000006,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 12.326363636363634,
+   "presentationSeconds": 12.333,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-13.png"
+  }
+ },
+ {
+  "sample": 15,
+  "bar": 5,
+  "beatWithinBar": 0.5,
+  "midi": 55,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 11.468181818181819,
+  "event": {
+   "midi": 55,
+   "on": 11.467,
+   "off": 12.367,
+   "colour": "blue",
+   "metricMedian": -0.249,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.6500000000000008,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 11.780909090909091,
+   "presentationSeconds": 11.783,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-14.png"
+  }
+ },
+ {
+  "sample": 16,
+  "bar": 5,
+  "beatWithinBar": 1,
+  "midi": 64,
+  "hand": "L",
+  "writtenDurationBeats": 2,
+  "expectedStrikeSeconds": 11.74090909090909,
+  "event": {
+   "midi": 64,
+   "on": 11.717,
+   "off": 12.35,
+   "colour": "blue",
+   "metricMedian": -0.248,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.1604999999999985,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 12.871818181818181,
+   "presentationSeconds": 12.883,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-15.png"
+  }
+ },
+ {
+  "sample": 17,
+  "bar": 5,
+  "beatWithinBar": 2,
+  "midi": 74,
+  "hand": "R",
+  "writtenDurationBeats": 1,
+  "expectedStrikeSeconds": 12.286363636363635,
+  "event": {
+   "midi": 74,
+   "on": 12.267,
+   "off": 12.783,
+   "colour": "green",
+   "metricMedian": 1,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.9460000000000001,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 12.87181818181818,
+   "presentationSeconds": 12.883,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-16.png"
+  }
+ },
+ {
+  "sample": 18,
+  "bar": 6,
+  "beatWithinBar": 0,
+  "midi": 48,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 12.831818181818182,
+  "event": {
+   "midi": 48,
+   "on": 12.817,
+   "off": 13.083,
+   "colour": "blue",
+   "metricMedian": -0.249,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 0.48766666666666675,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 13.144545454545455,
+   "presentationSeconds": 13.15,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-17.png"
+  }
+ },
+ {
+  "sample": 19,
+  "bar": 6,
+  "beatWithinBar": 0,
+  "midi": 69,
+  "hand": "R",
+  "writtenDurationBeats": 2,
+  "expectedStrikeSeconds": 12.831818181818182,
+  "event": {
+   "midi": 69,
+   "on": 12.8,
+   "off": 13.767,
+   "colour": "green",
+   "metricMedian": 0.999,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.7728333333333313,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 13.962727272727271,
+   "presentationSeconds": 13.967,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-18.png"
+  }
+ },
+ {
+  "sample": 20,
+  "bar": 6,
+  "beatWithinBar": 0.5,
+  "midi": 57,
+  "hand": "L",
+  "writtenDurationBeats": 0.5,
+  "expectedStrikeSeconds": 13.104545454545454,
+  "event": {
+   "midi": 57,
+   "on": 13.067,
+   "off": 13.9,
+   "colour": "blue",
+   "metricMedian": -0.249,
+   "flags": []
+  },
+  "handAgrees": true,
+  "tintDurationBeats": 1.5271666666666672,
+  "status": "measured tint, finger release NOT established",
+  "frame": {
+   "requestedSeconds": 13.417272727272726,
+   "presentationSeconds": 13.417,
+   "path": "tools/video-lane/reconciliation-2026-09-09/scratch/zeldas-lullaby-19.png"
+  }
+ }
+]

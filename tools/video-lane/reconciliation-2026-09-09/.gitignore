@@ -1,0 +1,8 @@
+# Reproducible intermediate frames and duplicate snapshots remain local.
+scratch/
+baseline.mjs
+*.upper-witness.json
+*.spans.json
+*-score.png
+*.png
+*.log

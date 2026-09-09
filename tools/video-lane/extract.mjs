@@ -23,11 +23,14 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
+import { gzipSync } from 'node:zlib';
 
 const args = process.argv.slice(2);
 const outIx = args.indexOf('--out');
 const outPath = outIx >= 0 ? args[outIx + 1] : 'events.json';
-const rest_ = args.filter((_, i) => i !== outIx && i !== outIx + 1);
+const signalIx = args.indexOf('--signal-out');
+const signalOut = signalIx >= 0 ? args[signalIx + 1] : null;
+const rest_ = args.filter((a, i) => !a.startsWith('--') && (i === 0 || !args[i - 1].startsWith('--')));
 const [videoPath, geoPath, templatePath] = rest_;
 if (!templatePath) { console.error('usage: extract.mjs <video> <geometry.json> <template.json> --out events.json'); process.exit(1); }
 const geo = JSON.parse(readFileSync(geoPath, 'utf8'));
@@ -170,6 +173,9 @@ function finish() {
   if (pending.length >= frameBytes) { console.error(`REFUSE: ${Math.floor(pending.length / frameBytes)} frames never received a showinfo PTS`); process.exit(1); }
   finished = true;
   if (!sawShowinfo) { console.error('REFUSE: no showinfo PTS seen'); process.exit(1); }
+  if (signalOut) writeFileSync(signalOut, gzipSync(JSON.stringify({
+    times, cols, series: series.map((s) => s.map((rgb) => rgb?.map((x) => +x.toFixed(2)) ?? null)),
+  })));
 
   // ☠️ A KEY'S OWN MEDIAN IS NOT ITS REST COLOUR IF IT IS MOSTLY DOWN.
   // A3 in this piece is a repeated tenor note held about 88% of the time, so
@@ -195,6 +201,9 @@ function finish() {
   const mostlyDown = [];
 
   const events = [];
+  // Retain rejected candidates so a reconciliation can examine the evidence
+  // the production detector did not accept. This does not change its gates.
+  const shortPresses = [];
   let unresolved = 0;
   for (let ci = 0; ci < cols.length; ci++) {
     const s = series[ci];
@@ -219,12 +228,16 @@ function finish() {
     };
     for (let i = 0; i < s.length; i++) {
       const d = dev[i];
-      if (d === null) { if (on) { close(i - gap - 1); } run = 0; gap = 0; continue; }
+      if (d === null) {
+        if (!on && run > 0) shortPresses.push({ midi: cols[ci].midi, on: times[i - run], off: times[i - 1], reason: 'below hysteresis before scene break' });
+        if (on) { close(i - gap - 1); } run = 0; gap = 0; continue;
+      }
       if (d > T.pressDeviation) {
         gap = 0; run++;
         if (!on && run >= T.hysteresisFrames) { on = true; startI = i - run + 1; sum = [0, 0, 0, 0]; }
         if (on) { sum[0] += s[i][0]; sum[1] += s[i][1]; sum[2] += s[i][2]; sum[3]++; if (metricFn) metricVals.push(metricFn(s[i][0], s[i][1], s[i][2])); }
       } else {
+        if (!on && run > 0) shortPresses.push({ midi: cols[ci].midi, on: times[i - run], off: times[i - 1], reason: 'below hysteresis' });
         run = 0;
         if (on) { gap++; if (gap >= T.hysteresisFrames) close(i - gap); }
       }
@@ -246,6 +259,7 @@ function finish() {
   for (const e of events) { const k = e.on.toFixed(3); frames_.set(k, (frames_.get(k) ?? 0) + 1); }
   const impossible = [...frames_.entries()].filter(([, n]) => n > MAX_SIMULTANEOUS);
   const dropped = impossible.reduce((s, [, n]) => s + n, 0);
+  const droppedEvents = events.filter((e) => impossible.some(([k]) => k === e.on.toFixed(3)));
   if (dropped) {
     const bad = new Set(impossible.map(([k]) => k));
     for (let i = events.length - 1; i >= 0; i--) if (bad.has(events[i].on.toFixed(3))) events.splice(i, 1);
@@ -268,6 +282,8 @@ function finish() {
     counts: byColour,
     ambiguous: unresolved,
     ambiguousShare: +(unresolved / Math.max(1, events.length)).toFixed(4),
+    rejected: { tenFinger: droppedEvents, shortPresses },
+    presentationTimestamps: { first: times[0], last: times.at(-1), count: times.length },
     events,
   };
   writeFileSync(outPath, JSON.stringify(out, null, 1));

@@ -1,0 +1,181 @@
+{
+ "id": "zeldas-lullaby",
+ "status": "UNVERIFIED whole-video completeness",
+ "frames": 12390,
+ "acceptedEvents": 698,
+ "ambiguous": 0,
+ "rejectedTenFinger": 99,
+ "rejectedShort": 0,
+ "bpm": 110,
+ "latencyMs": 83,
+ "phaseSeconds": 0.09818181818181819,
+ "firstGridBeat": 8.5,
+ "tiers": [
+  {
+   "id": "zeldas-lullaby",
+   "level": "Medium",
+   "shipped": 593,
+   "matched": 593,
+   "missing": 105,
+   "extra": 0,
+   "handDisagreements": 0,
+   "onsetMedianMs": 23.090909090896616,
+   "onsetWorstMs": 67.81818181819688,
+   "onsetMedianBeats": 0.04233333333331046,
+   "onsetWorstBeats": 0.12433333333336095,
+   "releaseChanges": 18
+  },
+  {
+   "id": "zeldas-lullaby-easy",
+   "level": "Easy",
+   "shipped": 269,
+   "matched": 269,
+   "missing": 429,
+   "extra": 0,
+   "handDisagreements": 0,
+   "onsetMedianMs": 21.181818181844392,
+   "onsetWorstMs": 67.81818181818267,
+   "onsetMedianBeats": 0.03883333333338139,
+   "onsetWorstBeats": 0.12433333333333489,
+   "releaseChanges": 9
+  },
+  {
+   "id": "zeldas-lullaby-hard",
+   "level": "Hard",
+   "shipped": 698,
+   "matched": 698,
+   "missing": 0,
+   "extra": 0,
+   "handDisagreements": 0,
+   "onsetMedianMs": 23.090909090882406,
+   "onsetWorstMs": 67.81818181819688,
+   "onsetMedianBeats": 0.042333333333284415,
+   "onsetWorstBeats": 0.12433333333336095,
+   "releaseChanges": 19
+  }
+ ],
+ "heldWideCount": 3,
+ "heldCrossCount": 0,
+ "strikeWideCount": 0,
+ "heldWide": [
+  {
+   "t": 6.817,
+   "h": "L",
+   "events": [
+    {
+     "midi": 48,
+     "on": 6.267,
+     "off": 7.533,
+     "colour": "blue",
+     "metricMedian": -0.248,
+     "flags": [],
+     "index": 3,
+     "b": 3,
+     "h": "L"
+    },
+    {
+     "midi": 57,
+     "on": 6.55,
+     "off": 7.483,
+     "colour": "blue",
+     "metricMedian": -0.247,
+     "flags": [],
+     "index": 4,
+     "b": 3.5,
+     "h": "L"
+    },
+    {
+     "midi": 66,
+     "on": 6.817,
+     "off": 7.583,
+     "colour": "blue",
+     "metricMedian": -0.522,
+     "flags": [],
+     "index": 5,
+     "b": 4,
+     "h": "L"
+    }
+   ]
+  },
+  {
+   "t": 10.083,
+   "h": "L",
+   "events": [
+    {
+     "midi": 48,
+     "on": 9.55,
+     "off": 10.683,
+     "colour": "blue",
+     "metricMedian": -0.248,
+     "flags": [],
+     "index": 9,
+     "b": 9,
+     "h": "L"
+    },
+    {
+     "midi": 57,
+     "on": 9.817,
+     "off": 10.65,
+     "colour": "blue",
+     "metricMedian": -0.247,
+     "flags": [],
+     "index": 10,
+     "b": 9.5,
+     "h": "L"
+    },
+    {
+     "midi": 66,
+     "on": 10.083,
+     "off": 10.667,
+     "colour": "blue",
+     "metricMedian": -0.525,
+     "flags": [],
+     "index": 11,
+     "b": 10,
+     "h": "L"
+    }
+   ]
+  },
+  {
+   "t": 173.783,
+   "h": "R",
+   "events": [
+    {
+     "midi": 68,
+     "on": 171.483,
+     "off": 174.667,
+     "colour": "green",
+     "metricMedian": 1,
+     "flags": [],
+     "index": 677,
+     "b": 305.75,
+     "h": "R"
+    },
+    {
+     "midi": 72,
+     "on": 171.883,
+     "off": 174.733,
+     "colour": "green",
+     "metricMedian": 1,
+     "flags": [],
+     "index": 678,
+     "b": 306.5,
+     "h": "R"
+    },
+    {
+     "midi": 89,
+     "on": 173.783,
+     "off": 174.7,
+     "colour": "green",
+     "metricMedian": 1,
+     "flags": [],
+     "index": 680,
+     "b": 310,
+     "h": "R"
+    }
+   ]
+  }
+ ],
+ "heldCross": [],
+ "strikeWide": []
+}
