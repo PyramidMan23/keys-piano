@@ -673,6 +673,9 @@ function canonRowOf(variants) {
     plays: String(plays),
     diff: difficultyLabel(main),
     statusLabel: status,
+    // the grid tile's state slot is one word wide (the design drew Banked / Needs work / Not started);
+    // the dated line collided with the tier pips there, so tiles carry the word alone (Fable, 2026-09-10)
+    tileLabel: earned ? earned.value.word[0].toUpperCase() + earned.value.word.slice(1) : 'Not checked',
     state: earned?.value.word === 'still remembered' ? 'Banked' : earned ? 'Needs work' : 'Not started',
     tiers,
     // ☠️ A PIP IS A LEVEL, NOT A POSITION. The design draws E, M and H, and the

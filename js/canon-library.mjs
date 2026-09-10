@@ -956,7 +956,7 @@ function openLibraryGallery(ctx) {
     if (span) {
       const v = stateVariants.get(song.state);
       const wordEl = [...span.children].find((ch) => ch.tagName === 'SPAN');
-      if (wordEl) wordEl.textContent = song.statusLabel ?? song.state;
+      if (wordEl) wordEl.textContent = song.tileLabel ?? song.statusLabel ?? song.state;
       if (v) {
         const shape = span.querySelector('i');
         if (v.i && shape) shape.setAttribute('style', v.i);
@@ -1382,7 +1382,7 @@ function renderTiles(root, ctx) {
     if (span) {
       const v = stateVariants.get(song.state);
       const wordEl = [...span.children].find((ch) => ch.tagName === 'SPAN');
-      if (wordEl) wordEl.textContent = song.statusLabel ?? song.state;
+      if (wordEl) wordEl.textContent = song.tileLabel ?? song.statusLabel ?? song.state;
       if (v) {
         const shape = span.querySelector('i');
         if (v.i && shape) shape.setAttribute('style', v.i);
