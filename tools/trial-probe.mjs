@@ -247,10 +247,12 @@ ok('no errors', !(await errs()).length);
     whole:true,hand:'both',scope:'whole:both',start:0,end:64});
   await boot(seed({songs:{'ode-to-joy':{plays:2,best:90,stars:3,attempts:[attempt(at),attempt(at+86400000)]}},
     lastSession:{songId:'ode-to-joy',at:Date.now()},lib:{learning:true}}));
+  // the hero chip carries the dated line; a grid tile's one-word slot carries the word alone
+  // (the dated line collided with the tier pips there, Fable 2026-09-10)
   const words=await b.eval(`([...document.querySelectorAll('#screen-library *')]
     .filter(e=>!e.children.length && e.getBoundingClientRect().width>0)
-    .map(e=>e.textContent.trim()).filter(t=>t.includes('still remembered') && t.includes('2026-09-02')))`);
-  ok('library row and hero chip carry the same dated competence',words.length>=2,JSON.stringify(words));
+    .map(e=>e.textContent.trim()).filter(t=>/still remembered/i.test(t)))`);
+  ok('library tile and hero chip carry the same earned competence',words.some(t=>t.includes('2026-09-02')) && words.some(t=>/^Still remembered$/.test(t)),JSON.stringify(words));
 }
 
 const failedN = results.filter((r) => !r.pass).length;

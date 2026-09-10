@@ -1032,7 +1032,15 @@ button:active:not(:disabled),
   .canon-root [data-reflow="play-rail"] { width: 44px !important; }
   .canon-root[data-canon-screen="play"] #cp-again { right: 60px !important; }
   .canon-root:is([data-canon-screen="path"], [data-canon-screen="lesson"], [data-canon-screen="lessons"]) [data-reflow="frame"] {
-    min-height: 100dvh;
+    /* the drawn height, not the viewport: stretching a content board to 100dvh opened a 25%
+       void beside the lesson stave on a 950px-tall window (void-check, 2026-09-10) */
+    min-height: 738px;
+  }
+  /* Content boards (path, lesson, lessons) keep the drawn proportions: wider than the drawn
+     width they stretched the stave panel into a void (void-check at 1600, 2026-09-10). They
+     reflow up to 1418 and centre beyond it; the library and play keep using the whole width. */
+  .canon-root:is([data-canon-screen="path"], [data-canon-screen="lesson"], [data-canon-screen="lessons"]) [data-reflow="board"] {
+    max-width: 1418px !important; margin-left: auto !important; margin-right: auto !important;
   }
   .canon-root:is([data-canon-screen="path"], [data-canon-screen="lesson"], [data-canon-screen="lessons"]) [data-reflow="column"] {
     height: auto !important; max-height: none !important; overflow: visible !important;

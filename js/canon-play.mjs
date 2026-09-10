@@ -606,7 +606,17 @@ export function mountWidePlay(host) {
   rail.dataset.reflow = 'play-rail';
   // Content changes (the correction card, disclosure and first-minute keys)
   // resize the canvas too, even when the window itself has not resized.
-  const observer = new ResizeObserver(() => window.__falls?.resize?.());
+  // Resize on the next frame and only when the box really changed: resizing the canvas inside the
+  // observer's own cycle re-triggers it ("ResizeObserver loop completed with undelivered
+  // notifications", counted as an error by four gates on 2026-09-10).
+  let lastBox = '';
+  const observer = new ResizeObserver((entries) => {
+    const r = entries[0]?.contentRect; if (!r) return;
+    const box = Math.round(r.width) + 'x' + Math.round(r.height);
+    if (box === lastBox) return;
+    lastBox = box;
+    requestAnimationFrame(() => window.__falls?.resize?.());
+  });
   observer.observe(falls);
   board.__responsiveObserver = observer;
   fitZoom();

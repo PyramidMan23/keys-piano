@@ -1186,6 +1186,14 @@ function paintArtGlow(layer, img) {
 // state in shape plus word, E/M/H tier pips, plays count, and a final
 // "Show the other N" cell. Everything visual is HARVESTED from the design's own
 // sample tiles; this function writes no colour, size, radius or spacing.
+// The recommendation module, found the way renderCanonLibrary's local helper finds it (module-sized,
+// holds both "Start" and "Choose another"). Module scope so the tile renderer can use it too.
+function recModuleIn(scope) {
+  if (!scope) return null;
+  return [...scope.querySelectorAll('div')]
+    .filter((d) => { const r = d.getBoundingClientRect(); return /Start/.test(d.textContent) && /Choose another/.test(d.textContent) && r.height >= 100 && r.width >= 300; })
+    .sort((a, b) => (a.getBoundingClientRect().width * a.getBoundingClientRect().height) - (b.getBoundingClientRect().width * b.getBoundingClientRect().height))[0] ?? null;
+}
 function renderTiles(root, ctx) {
   const moreLeaf = [...root.querySelectorAll('*')]
     .find((e) => !e.children.length && /^Show the other \d+ in /.test(e.textContent.trim()));
@@ -1442,8 +1450,15 @@ function renderTiles(root, ctx) {
   // "Not started"). Bind it here, where the harvested variants live; the chip
   // outside the grid is the hero's.
   if (ctx.prescription?.state) {
-    const heroLeaf = [...root.querySelectorAll('*')]
-      .find((e) => !e.children.length && STATES.includes(e.textContent.trim()) && !rowsCol.contains(e));
+    // Search INSIDE the recommendation module. The first sample-state leaf outside the rows column
+    // was a grid TILE's chip once the practice-first layout moved the module ahead of the grid, so
+    // the tile got the hero's dated line (then lost it to its own render) and the hero kept saying
+    // "Not started" (trial-probe, 2026-09-10).
+    // The module still sits INSIDE the rows column at bind time (the practice-first layout lifts
+    // it out afterwards), so the rows-column exclusion only applies when no module was found.
+    const heroScope = recModuleIn(root);
+    const heroLeaf = [...(heroScope ?? root).querySelectorAll('*')]
+      .find((e) => !e.children.length && STATES.includes(e.textContent.trim()) && (heroScope || !rowsCol.contains(e)));
     const span = heroLeaf?.parentElement;
     if (span) {
       const v = stateVariants.get(ctx.prescription.state);

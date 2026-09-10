@@ -196,9 +196,13 @@ async function compare(b, screen, keepImages) {
   };
 }
 
-// 1700 wide: the desktop frames are 1418px, and a 900px viewport makes the
-// prototype fit-zoom them, so both sides would be measured at the wrong scale.
-const b = await launch({ width: 1700, height: 2000, scale: DSF, port: 9471 });
+// EXACTLY the drawn desktop width. This gate measures pixel parity with the
+// artboards, and since keys-v126 every width other than the drawn ones (756 and
+// 1418) reflows on purpose (Run B of the road to 9.5, tools/responsive-probe.mjs
+// measures those). The old 1700 was a workaround for the fit-zoom a 900px
+// viewport used to trigger; fit-zoom is gone above 1024, and at 1418 the reflow
+// rules are off, so both boards render exactly as drawn (Fable, 2026-09-10).
+const b = await launch({ width: 1418, height: 2000, scale: DSF, port: 9471 });
 const results = [];
 try {
   for (const s of SCREENS) {
