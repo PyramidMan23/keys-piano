@@ -38,6 +38,7 @@ const ALL = [
   'tools/canon-samples.mjs',
   'tools/void-check.mjs',
   'tools/seek-probe.mjs',
+  'tools/practice-seek-probe.mjs',
   'tools/canon-geometry.mjs',
   'tools/responsive-probe.mjs',
   'tools/canon-runtime.mjs',

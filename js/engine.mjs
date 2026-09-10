@@ -41,6 +41,7 @@ export class Engine {
     this.tempo = opts.tempo ?? 1; // 1 = song bpm
     this.waitMode = opts.waitMode ?? true;
     this.loop = opts.loop ?? null; // {start,end} beats, loops in wait mode too
+    this.repeat = opts.repeat ?? true;
     this.calOffsetMs = opts.calOffsetMs ?? 0;
     const { groups, passive } = buildGroups(song, this.hand, this.loop);
     this.groups = groups;
@@ -111,7 +112,7 @@ export class Engine {
       }
     }
     if (this.beat >= this.endBeat) {
-      if (this.loop) {
+      if (this.loop && this.repeat) {
         // Per-lap scoring: report the lap then start the next one clean, so
         // the section trainer can judge each pass on its own.
         const lapAccuracy = this.accuracy();

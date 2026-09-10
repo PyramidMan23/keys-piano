@@ -271,7 +271,7 @@ try {
   console.log(`ArrowLeft: beat ${beforeSkip.toFixed(1)} -> ${afterSkip.toFixed(1)}`);
   if (!(afterSkip < beforeSkip - 0.5)) fails.push('ArrowLeft did not skip back');
 
-  // ---- and the handle must NOT survive into practice ----
+  // Practice now gets its own fresh-attempt transport after listening stops.
   let sp = null;
   for (const label of ['■ Stop', 'Stop', 'Hear it']) { sp = await b.eval(hit(label)); if (sp) break; }
   if (sp) await click(sp.x, sp.y);
@@ -281,8 +281,8 @@ try {
     return JSON.stringify({ seekable: !!f?.seekable, onSeek: typeof f?.onSeek === 'function', demo: !!window.__demo });
   })()`));
   console.log(`after stop: seekable=${rest.seekable} onSeek=${rest.onSeek}`);
-  if (rest.seekable || rest.onSeek) {
-    fails.push('the scrub handle survived into practice: a run could skip bars it then scores as clean');
+  if (!rest.seekable || !rest.onSeek) {
+    fails.push('practice did not restore its own seek transport after listening');
   }
 } finally { await b.close(); }
 

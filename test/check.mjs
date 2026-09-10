@@ -2723,7 +2723,7 @@ ok('mastery reconciliation tolerates absent legacy records');
   const element=()=>({children:[],className:'',textContent:'',setAttribute(){},
     append(...children){this.children.push(...children); for(const c of children) if(c.id) nodes.set(c.id,c);},
     appendChild(child){this.append(child);}});
-  for(const id of ['session-guide','j-go','btn-hear','wait-mode','tempo','tempo-val']) nodes.set(id,element());
+  for(const id of ['session-guide','guide-body','j-go','btn-hear','wait-mode','tempo','tempo-val']) nodes.set(id,element());
   const logs=[];
   const ctx={firstMinute:null,correction:{start:4,end:8,hand:'R',tempo:0.8,wait:false,before:20,line:'Missed note: C4.',label:'Bar 2',phase:'ready'},
     song:{id:'fixture'},document:{createElement:element,querySelectorAll:()=>[]},$:id=>nodes.get(id),

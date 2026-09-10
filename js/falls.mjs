@@ -232,9 +232,8 @@ export class FallsView {
     // including any added later.
     this.onKey = FallsView.onKeyDefault || null;
     this._touch = new Map();    // pointerId -> midi, so multi-touch chords work
-    // transport (Mark 2026-08-31): while WATCHING, the hairline progress line
-    // becomes a scrub bar you can drag, the way any media player behaves. Off
-    // during practice on purpose - see _drawTransport.
+    // Both listening and practice install a transport. Practice seeking starts
+    // a fresh partial attempt; performance and sight-reading keep the hairline.
     this.seekable = false;
     this.onSeek = null;         // (frac 0..1) => void, committed on release
     this.transport = null;      // {start,end} beats the bar spans; see _drawTransport
@@ -743,11 +742,8 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
 
   // The progress line, in two guises.
   //
-  // PRACTICE keeps the 3px hairline it has always had. A scrub bar there would
-  // be an invitation to cheat your own scoring: the run's stats, streak and
-  // proof all assume one unbroken pass, and there is no honest reading of
-  // "clean 100%" for a bar you skipped. So the handle only exists while
-  // watching, where nothing is being scored and you are an audience.
+  // The app owns the seek semantics: synchronized clocks for listening, a
+  // fresh finite attempt for practice, and no seeking during an assessment.
   _drawTransport(w, prog, engine) {
     const { ctx } = this;
     if (!this.seekable) {

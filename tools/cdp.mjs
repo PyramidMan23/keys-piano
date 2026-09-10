@@ -120,6 +120,7 @@ export async function launch({ width = 756, height = 1400, scale = 2, port = 933
       return { errors: out, stop: off };
     },
     async goto(url) {
+      if (process.env.KEYS_TEST_ORIGIN) url = url.replace('http://localhost:4180', process.env.KEYS_TEST_ORIGIN);
       await send('Page.navigate', { url });
       // settle: readyState complete plus a frame, then fonts
       for (let i = 0; i < 120; i++) {

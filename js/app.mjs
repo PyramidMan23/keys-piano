@@ -1370,6 +1370,8 @@ let chunkIdx = null; // active learning-chunk index, null = chunks off
 let memo = null; // memory ladder {section, rec:{stage,passes}, cues, recallBar}
 let memoLastClickBeat = null; // blank-stage metronome edge detector
 let loopOverride = null; // one-shot {start,end} consumed by the next rebuild
+let practiceStart = null;
+let guideCollapsed = false;
 const PASS_ACC = 85;
 let previewActive = false, previewStop = null;
 let demoEngine = null; // Hear-it v2 (Mark 2026-08-28): the song PLAYS ITSELF: 
@@ -1430,6 +1432,7 @@ function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   songStats(s.id).lastAt = Date.now(); // touched: the Learning shelf's recency key
   pathSessionUntil = 0; // an ordinary open carries no prescribed timebox
   song = s;
+  practiceStart = null;
   journeyRetry = false;
   guidedHold = false;
   journeyFeedback = '';
@@ -1508,7 +1511,9 @@ function rebuildEngine(preserveCorrection = false, preserveFirstMinute = false) 
   guidedHold = false;
   bankSongTime(); // a rebuild replaces the engine: keep what the old one counted
   const secIdx = $('section-select').value;
+  if (loopOverride || chunkIdx !== null || secIdx !== '') practiceStart = null;
   const loop = loopOverride ? { ...loopOverride }
+    : practiceStart !== null ? { start: practiceStart, end: songEndBeat(song) }
     : chunkIdx !== null
     ? (() => { const c = chunkRange(song, chunkIdx, chunkBars()); return { start: c.start, end: c.end }; })()
     : secIdx === '' ? null : {
@@ -1521,6 +1526,7 @@ function rebuildEngine(preserveCorrection = false, preserveFirstMinute = false) 
     tempo: (+$('tempo').value) / 100,
     waitMode: $('wait-mode').checked,
     loop,
+    repeat: practiceStart === null,
     calOffsetMs: state.calOffsetMs,
   });
   combo = 0; points = 0; bestCombo = 0;
@@ -1563,6 +1569,7 @@ function rebuildEngine(preserveCorrection = false, preserveFirstMinute = false) 
   armed = !$('wait-mode').checked;
   armCountUntil = 0;
   falls.banner = armed ? 'Press any key when ready, then one bar counts you in' : null;
+  armPracticeTransport();
   if (armed) comboFlash('PRESS ANY KEY TO START');
   // council: the 160px cover shows only in the ready state, then cedes the
   // light to the notes (240ms fade on the first press)
@@ -1742,10 +1749,12 @@ function finishSong() {
     : 'This passage: ' + competenceLine(st.attempts.filter(e => e?.scope === compared.attempt.scope));
   st.lastAcc = acc;
   st.plays++;
-  st.best = Math.max(st.best, acc);
-  st.stars = Math.max(st.stars || 0, stars);
-  st.bestScore = Math.max(st.bestScore || 0, points);
-  if (scorePassFlag || viewMode === 'score') st.scorePasses++;
+  if (practiceStart === null) {
+    st.best = Math.max(st.best, acc);
+    st.stars = Math.max(st.stars || 0, stars);
+    st.bestScore = Math.max(st.bestScore || 0, points);
+  }
+  if ((scorePassFlag || viewMode === 'score') && practiceStart === null) st.scorePasses++;
   st.bestCombo = Math.max(st.bestCombo ?? 0, bestCombo); // arcade stat, labelled arcade
   // playable-song ledger (13th council): only uncarryable evidence counts, 
   // whole song, help off, full tempo, both hands, ≥85%. Two days prove it.
@@ -1760,12 +1769,12 @@ function finishSong() {
     dayStat('cleanRuns');
     if (wasDue && status === 'refreshed') dayStat('reviewsPassed');
     awardXp('firstCleanRun', song.id);
-  } else if (acc >= 85 && !$('wait-mode').checked && $('section-select').value === '' && !sightMode) {
+  } else if (acc >= 85 && !$('wait-mode').checked && $('section-select').value === '' && !sightMode && practiceStart === null) {
     dayStat('cleanRuns'); // clean but e.g. slowed: still a real run for the quest
   }
   // song journey (goal-gradient milestones, pilot: See You Again Easy)
   const jj = journeyState(state, song);
-  if (jj && jj.step < jj.steps.length) {
+  if (practiceStart === null && jj && jj.step < jj.steps.length) {
     const stepDef = jj.steps[jj.step];
     const secOk = !stepDef.section || song.sections?.[+$('section-select').value]?.name === stepDef.section;
     const handOk = stepDef.hand === 'both' ? hand === 'both' : hand === stepDef.hand;
@@ -2858,6 +2867,7 @@ function perfEnd() {
 }
 $('btn-perf').addEventListener('click', () => {
   if (perf) return; // one take means one take
+  practiceStart = null;
   $('section-select').value = '';
   chunkIdx = null; syncChunkLabel();
   $('wait-mode').checked = false;
@@ -2866,6 +2876,7 @@ $('btn-perf').addEventListener('click', () => {
   armed = false; armCountUntil = 0; falls.banner = null; // perf has its own count-in
   perf = { tracker: new ContinuityTracker(), countUntil: performance.now() + 4 * engine.msPerBeat() };
   perfControls(true);
+  disarmTransport();
   jlog('perf_start', { id: song.id });
   // audible count-in: four clicks, accent on one
   metCtx ??= new (window.AudioContext || window.webkitAudioContext)();
@@ -3049,6 +3060,31 @@ function seekDemo(frac) {
   runDemoFrom(demoWatch.startBeat + Math.max(0, Math.min(1, frac)) * span);
 }
 
+// A practice seek is a fresh, finite attempt on the remaining song. The bar
+// retains the whole-song scale, and skipped notes earn no journey credit.
+function seekPractice(frac) {
+  if (previewActive || active !== 'play' || !song || sightMode || perf) return;
+  const notes = song.notes.filter(n => hand === 'both' || n.h === hand);
+  if (!notes.length) return;
+  const lastOnset = Math.max(...notes.map(n => n.b));
+  practiceStart = Math.min(lastOnset, Math.max(0, Math.min(1, frac)) * songEndBeat(song));
+  chunkIdx = null; loopOverride = null; syncChunkLabel();
+  $('section-select').value = '';
+  ((state.journeys ??= {})[song.id] ??= {step:0}).guided = false;
+  killClicks();
+  falls.pressed.clear();
+  rebuildEngine();
+  fadePlayCover();
+  jlog('practice_seek', {id:song.id, start:practiceStart, end:engine.endBeat});
+}
+
+function armPracticeTransport() {
+  if (!falls || previewActive) return;
+  falls.seekable = !sightMode && !perf;
+  falls.onSeek = falls.seekable ? seekPractice : null;
+  falls.transport = {start:0, end:songEndBeat(song)};
+}
+
 $('btn-hear').addEventListener('click', () => {
   if (previewActive) {
     previewStop?.();
@@ -3086,9 +3122,17 @@ $('btn-hear').addEventListener('click', () => {
 // only keyboard reach: it is drawn on a canvas, so it can never be tabbed to.
 const SKIP_S = 5;
 window.addEventListener('keydown', (ev) => {
-  if (!previewActive || !demoEngine || !demoWatch) return;
+  if (active !== 'play') return;
   if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return;
   if (/^(INPUT|TEXTAREA|SELECT)$/.test(ev.target?.tagName ?? '')) return;
+  if (!previewActive) {
+    if (!falls?.seekable || !engine) return;
+    ev.preventDefault();
+    const delta = SKIP_S * 1000 / engine.msPerBeat() * (ev.key === 'ArrowRight' ? 1 : -1);
+    seekPractice((engine.beat + delta) / songEndBeat(song));
+    return;
+  }
+  if (!demoEngine || !demoWatch) return;
   ev.preventDefault();
   const dBeats = ((SKIP_S * 1000) / demoEngine.msPerBeat()) * (ev.key === 'ArrowRight' ? 1 : -1);
   runDemoFrom(Math.max(demoWatch.startBeat, demoEngine.beat + dBeats));
@@ -3130,12 +3174,8 @@ function stopDemo() {
   }
 }
 
-// ☠️ THE BAR GOES BACK TO BEING A HAIRLINE, AND THERE ARE TWO WAYS OUT of a
-// watch: the Stop button (stopDemo) and simply leaving the screen, which tears
-// the demo down on its own several hundred lines away. Leave either path out
-// and practice inherits a scrub handle, which would let a run skip the bars it
-// then claims to have played clean. One function, called by both, because the
-// duplicated-teardown is exactly the shape that goes stale.
+// Tear down the current transport on leaving a screen or stopping a watch.
+// A subsequent practice rebuild installs its own fresh-attempt seek handler.
 function disarmTransport() {
   if (!falls) return;
   falls.seekable = false;
@@ -4000,7 +4040,7 @@ function renderCorrection() {
     result.textContent = `This passage: before ${pct(correction.before)} (help ${correction.wait ? 'on' : 'off'}), now ${pct(correction.after)} (help on). Return to the full step to check the correction in context.`;
     card.appendChild(result);
   }
-  $('session-guide').appendChild(card);
+  $('guide-body').appendChild(card);
   if ($('j-go')) {
     $('j-go').textContent = firstMinute ? 'Return to four bars' : 'Return to the full step';
     $('j-go').className = correction.phase === 'result' ? 'tool accent' : 'tool';
@@ -4009,6 +4049,7 @@ function renderCorrection() {
 function applyJourneyPlan() {
   const plan = journeyPlan(state, song);
   if (!plan) return false;
+  practiceStart = null;
   chunkIdx = null; loopOverride = null; syncChunkLabel();
   $('section-select').value = plan.section;
   $('wait-mode').checked = plan.wait;
@@ -4037,14 +4078,24 @@ function renderJourney() {
     <span class="j-step ${i < jw.step ? 'done' : i === jw.step ? 'now' : ''}" style="white-space:nowrap">
       <i>${i < jw.step ? '✓' : i === jw.step ? '▶' : '○'}</i>${s2.name}
     </span>`).join('<span class="j-link"></span>') +
-    '<section id="session-guide" class="session-guide" aria-label="Guided session"><p class="session-goal">One passage at a time</p><p id="j-instruction" aria-live="polite"></p><div class="session-actions">' +
+    '<section id="session-guide" class="session-guide" aria-label="Guided session"><div class="guide-heading"><p class="session-goal">One passage at a time</p><button id="guide-toggle" class="ghost" type="button" aria-controls="guide-body"></button></div><div id="guide-body"><p id="j-instruction" aria-live="polite"></p><div class="session-actions">' +
     (cur || correction ? '<button id="j-go" class="tool accent"></button>' : '<span class="j-done">Journey complete</span>') +
-    '<button id="j-exit" class="ghost"></button></div></section>';
+    '<button id="j-exit" class="ghost"></button></div></div></section>';
+  const syncGuide = () => {
+    $('guide-body').hidden = guideCollapsed;
+    $('guide-toggle').textContent = guideCollapsed ? 'Show practice guide' : 'Hide practice guide';
+    $('guide-toggle').setAttribute('aria-expanded', String(!guideCollapsed));
+    $('session-guide').classList.toggle('is-collapsed', guideCollapsed);
+    requestAnimationFrame(() => falls?.resize());
+  };
+  $('guide-toggle').onclick = () => { guideCollapsed = !guideCollapsed; syncGuide(); };
+  syncGuide();
   const settingsMatch = journeySettingsMatch(plan, {section:$('section-select').value, hand,
     wait:$('wait-mode').checked, tempo:$('tempo').value, chunk:chunkIdx});
   $('j-instruction').textContent = plan
     ? journeyFeedback + (guidedHold ? 'Next: ' : settingsMatch ? '' : 'Start this step to set: ') + plan.instruction
     : 'Every step is banked. Return to the library to choose your next practice.';
+  if (practiceStart !== null) $('j-instruction').textContent = 'Playing from your chosen point to the end. Drag the top timeline to move again, or use the practice guide to return to a guided step.';
   if ($('j-go')) $('j-go').textContent = label;
   $('j-exit').textContent = plan ? plan.resume : 'Return to library';
   $('j-exit').onclick = () => {
@@ -4187,7 +4238,7 @@ function renderFirstMinute() {
     key.disabled=p.phase!=='playing' && correction?.phase!=='trying';
     key.onclick=()=>{midi.onNote(m,90,true);midi.onNote(m,90,false);}; keys.appendChild(key);
   }
-  guide.appendChild(keys);
+  $('guide-body').appendChild(keys);
 }
 
 // ---------- metronome ----------

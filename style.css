@@ -943,7 +943,13 @@ button:active:not(:disabled),
 /* While immersed, the Play again pill lives in the top-right of the readout strip (canon-play.mjs, the
    only band with nothing in it). Run A put the session guide in that strip, so the pill printed over the
    guide's first lines (restart-probe, 2026-09-10). The guide cedes that corner while the pill is shown. */
-.canon-root [data-immersed="1"] .session-guide { padding-right: 200px; }
+.canon-root [data-immersed="1"] .session-guide { display: none !important; }
+.session-guide #guide-toggle { min-height: 44px; cursor: pointer; }
+.session-guide .guide-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.session-guide .guide-heading p { margin: 0; }
+.session-guide.is-collapsed .session-goal { display: none; }
+.session-guide #guide-body[hidden] { display: none; }
+.session-guide.is-collapsed { padding-top: 0; padding-bottom: 0; border-color: transparent; }
 .session-guide p { margin: 0 0 8px; line-height: 1.4; }
 .session-guide .session-goal { font-weight: 700; }
 .session-actions { display: flex; flex-wrap: wrap; gap: 8px; }
