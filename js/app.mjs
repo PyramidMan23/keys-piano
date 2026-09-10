@@ -3083,7 +3083,25 @@ function armPracticeTransport() {
   if (!falls || previewActive) return;
   falls.seekable = !sightMode && !perf;
   falls.onSeek = falls.seekable ? seekPractice : null;
-  falls.transport = {start:0, end:songEndBeat(song)};
+  falls.transport = {start:0, end:songEndBeat(song), msPerBeat:60000/song.bpm};
+  syncPracticeRestart();
+}
+
+function practiceStartTime() {
+  const seconds = Math.floor((practiceStart ?? 0) * 60 / song.bpm + 1e-6);
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+function syncPracticeRestart() {
+  const label = practiceStart === null ? 'Restart' : `Restart from ${practiceStartTime()}`;
+  $('btn-restart').textContent = label;
+  $('btn-restart').setAttribute('aria-label', label);
+  $('results-again').textContent = practiceStart === null ? 'Play again' : label;
+  const immersed = $('cp-again');
+  if (immersed) {
+    immersed.setAttribute('aria-label', practiceStart === null ? 'Play again from the start' : label);
+    immersed.querySelector('span').textContent = practiceStart === null ? 'Play again' : label;
+  }
 }
 
 $('btn-hear').addEventListener('click', () => {
@@ -4079,7 +4097,7 @@ function renderJourney() {
     <span class="j-step ${i < jw.step ? 'done' : i === jw.step ? 'now' : ''}" style="white-space:nowrap">
       <i>${i < jw.step ? '✓' : i === jw.step ? '▶' : '○'}</i>${s2.name}
     </span>`).join('<span class="j-link"></span>') +
-    '<section id="session-guide" class="session-guide" aria-label="Guided session"><div class="guide-heading"><p class="session-goal">One passage at a time</p><button id="guide-toggle" class="ghost" type="button" aria-controls="guide-body"></button></div><div id="guide-body"><p id="j-instruction" aria-live="polite"></p><div class="session-actions">' +
+    '<section id="session-guide" class="session-guide" aria-label="Guided session"><div class="guide-heading"><p class="session-goal">One passage at a time</p><button id="practice-from-start" class="ghost" type="button" hidden>From beginning</button><button id="guide-toggle" class="ghost" type="button" aria-controls="guide-body"></button></div><div id="guide-body"><p id="j-instruction" aria-live="polite"></p><div class="session-actions">' +
     (cur || correction ? '<button id="j-go" class="tool accent"></button>' : '<span class="j-done">Journey complete</span>') +
     '<button id="j-exit" class="ghost"></button></div></div></section>';
   const syncGuide = () => {
@@ -4091,12 +4109,14 @@ function renderJourney() {
   };
   $('guide-toggle').onclick = () => { guideCollapsed = !guideCollapsed; syncGuide(); };
   syncGuide();
+  $('practice-from-start').hidden = practiceStart === null;
+  $('practice-from-start').onclick = () => seekPractice(0);
   const settingsMatch = journeySettingsMatch(plan, {section:$('section-select').value, hand,
     wait:$('wait-mode').checked, tempo:$('tempo').value, chunk:chunkIdx});
   $('j-instruction').textContent = plan
     ? journeyFeedback + (guidedHold ? 'Next: ' : settingsMatch ? '' : 'Start this step to set: ') + plan.instruction
     : 'Every step is banked. Return to the library to choose your next practice.';
-  if (practiceStart !== null) $('j-instruction').textContent = 'Playing from your chosen point to the end. Drag the top timeline to move again, or use the practice guide to return to a guided step.';
+  if (practiceStart !== null) $('j-instruction').textContent = `Playing from ${practiceStartTime()} to the end. Restart returns to ${practiceStartTime()}. Drag the timeline to choose a different starting point.`;
   if ($('j-go')) $('j-go').textContent = label;
   $('j-exit').textContent = plan ? plan.resume : 'Return to library';
   $('j-exit').onclick = () => {

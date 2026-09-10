@@ -779,7 +779,7 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
     ctx.arc(pad + tw * shown, y, this._scrub != null ? 8 : 5.5, 0, Math.PI * 2);
     ctx.fillStyle = this._scrub != null ? COLORS.rightBright : COLORS.right;
     ctx.fill();
-    const total = (span * engine.msPerBeat()) / 1000;
+    const total = (span * (tr?.msPerBeat ?? engine.msPerBeat())) / 1000;
     ctx.font = '700 10px ui-monospace,Menlo,monospace';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = 'rgba(232,228,218,0.72)';

@@ -945,7 +945,9 @@ button:active:not(:disabled),
    guide's first lines (restart-probe, 2026-09-10). The guide cedes that corner while the pill is shown. */
 .canon-root [data-immersed="1"] .session-guide { display: none !important; }
 .session-guide #guide-toggle { min-height: 44px; cursor: pointer; }
-.session-guide .guide-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.session-guide .guide-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+.session-guide #practice-from-start { min-height: 44px; cursor: pointer; margin-left: auto; }
+.session-guide #practice-from-start[hidden] { display: none; }
 .session-guide .guide-heading p { margin: 0; }
 .session-guide.is-collapsed .session-goal { display: none; }
 .session-guide #guide-body[hidden] { display: none; }
