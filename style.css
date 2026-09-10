@@ -781,7 +781,7 @@ button:disabled { opacity: 0.35; cursor: default; }
    staff lines still painted because lines have no rx. Same tell as ever: the
    box is right and the ink is missing. */
 .canon-root,
-.canon-root *:not(#score-wrap, #score-wrap *, #cp-again, #cp-again *, #lesson-stave, #lesson-stave *, .practice-prescription, .practice-prescription *, .practice-adjust, .practice-adjust *, .session-guide, .session-guide *) {
+.canon-root *:not([data-reflow], #score-wrap, #score-wrap *, #cp-again, #cp-again *, #lesson-stave, #lesson-stave *, .practice-prescription, .practice-prescription *, .practice-adjust, .practice-adjust *, .session-guide, .session-guide *) {
   all: revert;
   /* The one thing that must come BACK. The canon was authored in a page with
      `* { box-sizing: border-box }` and every width in it assumes that; reverting
@@ -957,3 +957,109 @@ button:active:not(:disabled),
 .first-phrase-keys button { min-width: 44px; min-height: 44px; }
 .firstrun-card { max-height: calc(100dvh - 40px); overflow-y: auto; }
 .firstrun-card button { min-height: 44px; }
+
+/* Responsive regions have their own low-specificity reset. This preserves
+   canon isolation at the drawn widths while letting layout rules win. */
+:where(.canon-root [data-reflow]):not(.practice-prescription) { all: revert; box-sizing: border-box; }
+
+/* The two reference widths remain pixel-faithful. No font or colour changes.
+   A desktop between or beyond them redistributes space at natural type size. */
+@media (1024px <= width < 1418px), (width > 1418px) {
+  .canon-root[data-canon-screen] { width: 100%; min-width: 0; }
+  .canon-root [data-reflow="board"],
+  .canon-root [data-reflow="frame"] {
+    width: 100% !important; max-width: 100% !important;
+    height: auto !important; min-height: 100dvh; overflow: visible !important;
+  }
+  .canon-root [data-reflow="row"] {
+    flex-wrap: wrap !important; min-width: 0 !important;
+    height: auto !important; max-height: none !important;
+  }
+  .canon-root [data-reflow="column"] {
+    min-width: 0 !important; max-width: 100% !important;
+  }
+  .canon-root [data-reflow] > * { min-width: 0; }
+  .canon-root [data-responsive-board] :is(button, [role="button"], summary) {
+    min-width: 44px !important; min-height: 44px !important;
+    flex-shrink: 0 !important; max-width: 100%; white-space: normal !important;
+  }
+  .canon-root[data-canon-screen="library"] [data-reflow="frame"] > [data-reflow="row"] {
+    min-height: 50px; flex: 0 0 auto !important;
+  }
+  .canon-root[data-canon-screen="library"] [data-lib-grid] {
+    width: 100% !important; height: auto !important; overflow: visible !important;
+    display: flex !important; flex-wrap: wrap !important; align-items: flex-start !important;
+  }
+  .canon-root[data-canon-screen="library"] [data-lib-grid] > * {
+    height: auto !important; min-height: 166px; flex-shrink: 0 !important;
+  }
+  /* Dashboard cards retain their drawn preferred widths, sharing spare space
+     and moving to another line when the preferred widths no longer fit. */
+  .canon-root[data-canon-screen="library"] [data-reflow="row"]:not([data-lib-grid]) > [data-reflow="column"][style*="width:"] {
+    flex-grow: 1 !important; max-width: 100% !important;
+  }
+  .canon-root[data-canon-screen="play"] [data-reflow="board"] { min-height: 0; }
+  .canon-root [data-reflow="play-frame"] {
+    width: 100% !important; height: 100dvh !important; min-height: 600px;
+    display: flex !important; flex-direction: column !important;
+  }
+  .canon-root [data-reflow="play-header"] { flex-wrap: wrap !important; min-height: 66px; }
+  .canon-root [data-reflow="play-main"] {
+    display: grid !important; grid-template-columns: minmax(0, 1fr) clamp(280px, 23.3vw, 330px);
+    flex: 1 !important; min-height: 0 !important; height: auto !important;
+  }
+  .canon-root [data-reflow="play-stage"] { width: auto !important; min-width: 0; min-height: 0; }
+  .canon-root [data-reflow="play-controls"] {
+    width: auto !important; min-width: 0; min-height: 0; overflow-y: auto !important;
+  }
+  .canon-root [data-reflow="play-controls"] > * { flex-shrink: 0 !important; }
+  .canon-root [data-reflow="play-deck"] {
+    min-width: 0; min-height: 0; height: auto !important; overflow-y: auto !important;
+  }
+  .canon-root[data-canon-screen="play"] #falls {
+    flex: 1 0 240px !important; min-height: 240px !important; max-width: 100%;
+  }
+  .canon-root[data-canon-screen="play"] #score-wrap {
+    flex: 1 0 238px !important; min-height: 238px !important; min-width: 0;
+    max-width: 100%; overflow-x: auto;
+  }
+  .canon-root[data-canon-screen="play"] #score-wrap > svg { max-width: none; flex: none; }
+  .canon-root[data-canon-screen="play"] .session-guide { min-width: 0; height: auto; }
+  .canon-root [data-responsive-board="play"][data-immersed="1"] [data-reflow="play-main"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .canon-root [data-responsive-board="play"][data-immersed="1"] [data-reflow="play-deck"] { padding-right: 48px !important; }
+  .canon-root [data-reflow="play-rail"] { width: 44px !important; }
+  .canon-root[data-canon-screen="play"] #cp-again { right: 60px !important; }
+  .canon-root:is([data-canon-screen="path"], [data-canon-screen="lesson"], [data-canon-screen="lessons"]) [data-reflow="frame"] {
+    min-height: 100dvh;
+  }
+  .canon-root:is([data-canon-screen="path"], [data-canon-screen="lesson"], [data-canon-screen="lessons"]) [data-reflow="column"] {
+    height: auto !important; max-height: none !important; overflow: visible !important;
+  }
+  .canon-root[data-canon-screen="path"] #path-skills {
+    display: grid !important; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    height: auto !important;
+  }
+  .canon-root[data-canon-screen="path"] #path-reason { max-height: none !important; }
+  .canon-root[data-canon-screen="path"] #path-reason > *,
+  .canon-root[data-canon-screen="lesson"] #lesson-msg > * { white-space: normal !important; }
+  .canon-root[data-canon-screen="path"] [data-reflow="row"] > [data-reflow="column"][style*="width:430px"] {
+    flex: 1 1 320px !important; width: auto !important;
+  }
+  .canon-root[data-canon-screen="path"] [data-reflow="row"]:has(> [style*="width:430px"]) > :first-child {
+    flex: 2 1 560px !important;
+  }
+  .canon-root[data-canon-screen="lesson"] [data-reflow="row"] > [style*="width:400px"] {
+    flex: 1 1 320px !important; width: auto !important;
+  }
+  .canon-root[data-canon-screen="lesson"] [data-reflow="row"]:has(> [style*="width:400px"]) > :last-child {
+    flex: 2 1 500px !important;
+  }
+  .canon-root[data-canon-screen="lesson"] #lesson-stave { min-height: 210px !important; }
+  .canon-root[data-canon-screen="lesson"] div:has(> #lesson-keys) {
+    min-height: clamp(240px, 40dvh, 480px) !important; min-width: 0;
+  }
+  .canon-root[data-canon-screen="lesson"] #lesson-msg { flex-wrap: wrap !important; }
+  .canon-root[data-canon-screen="lesson"] #lesson-nomidi { flex-basis: 100% !important; min-height: 44px; }
+}

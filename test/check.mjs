@@ -1180,20 +1180,12 @@ ok('lessons: micro-steps, in-pool worked examples, verified video links');
   // a lesson that has taught too few notes offers NOTHING, never a placeholder
   assert.equal(bridgeSongFor('middle-c', SHELF), null, 'one note bridges to no song');
   assert.equal(bridgeSongFor('treble-lines', SHELF), null, 'five treble lines still bridge to nothing');
-  // by the landmark-Cs lesson the treble spaces are taught and a real song fits
-  const cs = bridgeSongFor('the-cs', SHELF);
-  assert.equal(cs.id, 'river-easy', 'the landmark-Cs lesson bridges to River Flows in You (Easy)');
-  // the PROPERTY, not just the name: every right-hand note is inside what has
-  // been taught, so a library change fails loudly instead of picking silently
-  const taught = cumulativeTaughtMidis('the-cs');
-  const rh = cs.notes.filter((nn) => nn.h === 'R');
-  assert.ok(rh.length > 0 && rh.every((nn) => taught.has(nn.m)), 'the bridged right hand is entirely taught');
-  assert.ok(!cs.quarantined, 'a quarantined tier can never be bridged to');
-  // Easy first, then the shortest right hand: nothing shorter and Easy exists
-  const shorter = SHELF.filter((s2) => s2.level === 'Easy' && s2 !== cs
-    && s2.notes.filter((nn) => nn.h === 'R').length < rh.length
-    && s2.notes.filter((nn) => nn.h === 'R').every((nn) => taught.has(nn.m)));
-  assert.deepEqual(shorter, [], 'the bridge picks the shortest qualifying Easy right hand');
+  const state={lessons:Object.fromEntries(LESSONS.map(l=>[l.id,1])),playable:{'river-easy':{provenAt:1}}};
+  const cs=bridgeSongFor('the-cs',SHELF,state);
+  assert.ok(cs,'recorded musical evidence enables a real bridge');
+  const {songDemands,metSongDemands,demandsFit}=await import('../js/difficulty.mjs');
+  assert.ok(demandsFit(songDemands(cs),metSongDemands(state,SHELF)));
+  assert.equal(bridgeSongFor('the-cs',SHELF,{lessons:state.lessons}),null,'pitch lessons alone cannot establish rhythmic readiness');
   // an id outside the curriculum earns no bridge at all
   assert.equal(bridgeSongFor('not-a-lesson', SHELF), null, 'unknown lesson ids bridge to nothing');
   assert.ok(lessonTaughtMidis(LESSONS[0]).includes(60), 'lesson 1 teaches middle C');
@@ -1463,7 +1455,7 @@ assert.ok(pp.reason.includes('Chords from a symbol'), 'and it names WHICH skill 
 pst.mastery['pulse'] = { stage: 'independent', evidence: [{ t: tt0, passed: true }], lastTested: tt0, dueAt: tt0 + 100 };
 pp = T.prescribe(pst, tt0 + 4 * DAYMS);
 assert.deepEqual([pp.kind, pp.skillId], ['review', 'pulse'], 'an overdue skill is reviewed before new work');
-assert.ok(pp.evidence.includes('day(s) ago'), 'the review states how stale it is');
+assert.equal(pp.evidence, T.competenceLine(pst.mastery.pulse), 'review shows the earned competence and pass date');
 pst = { diagnosticDone: tt0, mastery: T.emptyMastery(), teacherLessons: Object.fromEntries(T.TEACHER_LESSONS.map((l) => [l.id, tt0])) };
 // v2: a done lesson without its SONG PROOF is prescribed the proof first
 pp = T.prescribe(pst, tt0 + 1000);
@@ -1483,7 +1475,7 @@ pst.teacherAssessed = tt0;
 // 17th council: the brain now knows the reading ladder; it continues after the assessment
 assert.equal(T.prescribe(pst, tt0 + 1000).kind, 'reading', 'after the assessment the reading ladder continues');
 pst.lessons = Object.fromEntries((await import('../js/lessons.mjs')).LESSONS.map((l) => [l.id, { done: tt0 }]));
-assert.equal(T.prescribe(pst, tt0 + 1000).kind, 'repertoire', 'after the assessment and the reading ladder the path becomes the repertoire loop');
+assert.equal(T.prescribe(pst, tt0 + 1000).kind, 'done', 'without a supplied library the engine does not invent a repertoire choice');
 delete pst.lessons; // the repertoire tests below predate the reading ladder; a due review and a weak section still outrank it
 ok('prescription order: review > prerequisite > unfinished > proof > weakest > next lesson');
 
@@ -1788,11 +1780,12 @@ ok('library: derived Learning/Repertoire/Explore, weakest-first, one next action
   // with nothing urgent in his music the reading ladder comes next (17th council); finish it to see the song loop continue
   assert.equal(T.prescribe(full, nw, { songs: SONGS, statsOf: () => ({}) }).kind, 'reading', 'then the reading ladder, while it has lessons left');
   full.lessons = Object.fromEntries((await import('../js/lessons.mjs')).LESSONS.map((l) => [l.id, { done: nw }]));
+  full.playable={'happy-birthday':{provenAt:1,dueAt:nw+DAYMS}};
   const earn = T.prescribe(full, nw, { songs: SONGS, statsOf: () => ({}) });
   assert.deepEqual([earn.kind, earn.sub], ['repertoire', 'earn-playable'], 'then earning the next playable song');
   const allProven = { ...full, playable: Object.fromEntries([...new Set(Object.values(T.SKILL_REPERTOIRE).flatMap((m) => m.proof.map((p) => p.songId)))].map((id) => [id, { days: ['a', 'b'], provenAt: 1, dueAt: nw + DAYMS }])) };
   const tier = T.prescribe(allProven, nw, { songs: SONGS, statsOf: () => ({}) });
-  assert.deepEqual([tier.kind, tier.sub], ['repertoire', 'tier-up'], 'then laddering a proven song up a tier');
+  assert.ok(tier.kind === 'done' || (tier.sub === 'tier-up' && (await import('../js/difficulty.mjs')).demandsFit((await import('../js/difficulty.mjs')).songDemands(SONGS.find(s=>s.id===tier.songId)), (await import('../js/difficulty.mjs')).metSongDemands(allProven,SONGS))), 'a proven lower tier alone cannot unlock unmet demands');
   // retention: an overdue playable song is re-tested before anything else
   const due = { ...allProven, playable: { ...allProven.playable, 'faded-easy': { days: ['a', 'b'], provenAt: 1, dueAt: nw - 1 } } };
   const rev = T.prescribe(due, nw, { songs: SONGS, statsOf: () => ({}) });
@@ -1855,10 +1848,10 @@ const G = await import('../js/game.mjs');
   assert.equal(G.rhythmOf(fs2, '2026-08-28').current, 5, 'and keeps the rhythm');
   assert.equal(G.freezeOffer({ days: ['2026-08-26'], freezeTokens: 1 }, '2026-08-28'), null, 'short runs get fresh-start language, not a freeze');
   // verdict vocabulary: one voice
-  assert.equal(G.verdictWord({}, 'x'), 'Not yet assessed');
-  assert.equal(G.verdictWord({ songs: { x: { plays: 2, best: 70 } } }, 'x'), 'Needs work');
-  assert.equal(G.verdictWord({ songs: { x: { plays: 2, best: 90 } } }, 'x'), 'One clean day banked');
-  assert.equal(G.verdictWord({ playable: { x: { provenAt: 1 } } }, 'x'), 'Playable independently');
+  assert.equal(G.verdictWord({}, 'x'), 'Not checked yet');
+  assert.equal(G.verdictWord({ songs: { x: { plays: 2, best: 70 } } }, 'x'), 'Not checked yet');
+  assert.equal(G.verdictWord({ songs: { x: { plays: 2, best: 90 } } }, 'x'), 'Not checked yet');
+  assert.equal(G.verdictWord({ playable: { x: { provenAt: 1 } } }, 'x'), 'alone · 1970-01-01');
   // journeys: the pilot references only real sections of the real song
   for (const [songId, steps] of Object.entries(G.JOURNEYS)) {
     const s = SONGS.find((x) => x.id === songId);
@@ -2565,10 +2558,10 @@ ok('no decoy modules in the repo root shadowing a shipped js/ module');
   const rowCode = source.match(/function canonRowOf\(variants\) \{[\s\S]*?\n\}/)[0];
   const song = SONGS.find((s)=>s.id==='faded-easy');
   const row = (playable) => vm.runInNewContext(rowCode+'; canonRowOf([song]);',
-    {song,state:{playable},songStats:()=>({plays:1,stars:3}),difficultyLabel});
-  assert.equal(row({}).statusLabel,'Practising');
-  assert.equal(row({[song.id]:{days:['2026-09-09']}}).statusLabel,'Passed once');
-  assert.equal(row({[song.id]:{days:['2026-09-08','2026-09-09'],provenAt:1}}).statusLabel,'Proven');
+    {song,competence:T.competence,songEvidence:T.songEvidence,state:{playable},songStats:()=>({plays:1,stars:3}),difficultyLabel});
+  assert.equal(row({}).statusLabel,'Not checked yet');
+  assert.equal(row({[song.id]:{days:['2026-09-09']}}).statusLabel,'Not checked yet');
+  assert.equal(row({[song.id]:{days:['2026-09-08','2026-09-09'],provenAt:1}}).statusLabel,'alone · 1970-01-01 · Easy');
   assert.equal(row({}).diff,difficultyLabel(song));
   assert.doesNotMatch(source,/comboFlash\('MASTERY/);
   assert.match(source,/INDEPENDENT PASS/);
@@ -2837,5 +2830,285 @@ ok('mastery reconciliation tolerates absent legacy records');
   run.tempo=0.5; assert.equal(G.journeyAttemptMatches(song,full,run),false);
   run.tempo=1; run.waitMode=true; assert.equal(G.journeyAttemptMatches(song,full,run),false);
   ok('short chunk overrides cannot bank a full rung, and the full-run step requires full tempo with help off');
+}
+{
+  const { canonScale, prepareResponsive } = await import('../js/canon-mount.mjs');
+  for (const width of [1024, 1280, 1400, 1418, 1600, 1920]) assert.equal(canonScale(width, true), 1);
+  assert.equal(canonScale(1000, true), 1000 / 1418);
+  assert.equal(canonScale(1280, false), 1280 / 1418);
+  const row = {style:{display:'flex'},dataset:{},closest:()=>null};
+  const col = {style:{display:'flex',flexDirection:'column'},dataset:{},closest:()=>null};
+  const score = {style:{display:'flex'},dataset:{},closest:()=>({})};
+  const art = {style:{display:'flex',position:'absolute'},dataset:{},closest:()=>null};
+  const root = {style:{width:'756px'},dataset:{},parentElement:{dataset:{}},querySelectorAll:()=>[row,col,score,art]};
+  prepareResponsive(root, 'library');
+  assert.equal(row.dataset.reflow,'row'); assert.equal(col.dataset.reflow,'column');
+  assert.equal(score.dataset.reflow,undefined); assert.equal(art.dataset.reflow,undefined);
+  assert.equal(root.style.zoom,undefined); assert.equal(root.parentElement.dataset.canonScreen,'library');
+  ok('responsive desktop keeps scale one, preserves phone fit and tags layout without changing surfaces or decoration');
+}
+{
+  const { responsiveWidth, responsiveLibraryPlan } = await import('../js/canon-mount.mjs');
+  const { playScale } = await import('../js/canon-play.mjs');
+  assert.equal(responsiveWidth(756),false); assert.equal(responsiveWidth(1418),false);
+  assert.equal(responsiveWidth(1024),true); assert.equal(responsiveWidth(1400),true);
+  assert.deepEqual(responsiveLibraryPlan(1280,738,100),{columns:9,rows:2,gap:14,capacity:15});
+  assert.deepEqual(responsiveLibraryPlan(1920,900,100),{columns:13,rows:3,gap:14,capacity:36});
+  assert.equal(responsiveLibraryPlan(1280,738,0).rows,1);
+  for (const width of [1024,1280,1400,1418,1600,1920]) {
+    for (const height of [600,738,756,900]) assert.equal(playScale(width,height),1);
+  }
+  assert.equal(playScale(1000,600),Math.min(1000/1418,600/738));
+  ok('library capacity uses available columns and Play never shrinks desktop type for a short window');
+}
+{
+  const {readFileSync}=await import('node:fs');
+  const mount=readFileSync(new URL('../js/canon-mount.mjs',import.meta.url),'utf8');
+  const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
+  assert.match(mount,/\['path', 'lesson', 'lessons'\]\.includes\(key\)/);
+  assert.match(mount,/querySelectorAll\('\[data-responsive-board\]'\)/);
+  assert.match(css,/@media \(1024px <= width < 1418px\), \(width > 1418px\)/);
+  assert.match(css,/#path-skills\s*\{[^}]*repeat\(auto-fit, minmax\(180px, 1fr\)\)/);
+  assert.match(css,/#lesson-stave\s*\{ min-height: 210px !important/);
+  assert.match(css,/#score-wrap\s*\{[^}]*min-height: 238px !important/);
+  ok('utility boards opt into reflow and the shared reset exempts independent score and layout regions');
+}
+{
+  const {overlap,SIZES,SCREENS}=await import('../tools/responsive-probe.mjs');
+  const a={left:0,top:0,right:44,bottom:44};
+  assert.equal(overlap(a,{left:41,top:0,right:85,bottom:44}),true);
+  assert.equal(overlap(a,{left:42,top:0,right:86,bottom:44}),false);
+  assert.equal(overlap(a,a,true),false);
+  assert.equal(overlap(a,{left:0,top:44,right:44,bottom:88}),false);
+  assert.equal(SIZES.length*SCREENS.length,36);
+  assert.ok(SIZES.some(([w,h])=>w===1400&&h===756));
+  ok('responsive gate rejects intersecting sibling controls, accepts containment and covers 36 screen-size cases');
+}
+{
+  const {readFileSync}=await import('node:fs'); const vm=await import('node:vm');
+  const source=readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  const fn=source.match(/function refitPlayLayout\([^]*?\n\}/)[0];
+  let mounted=0,disclosures=0,synced;
+  const host={dataset:{}};
+  const ctx={active:'play',song:{title:'Real song',bpm:80},$:id=>id==='screen-play'?host:{value:100},
+    mountWidePlay:()=>{mounted++;return true;},syncWidePlay:info=>{synced=info;},installPracticeDisclosure:()=>disclosures++,
+    songSub:()=> 'Easy',engine:{accuracy:()=>91},falls:{comboLevel:2},coverDataUrl:()=> 'real-art'};
+  vm.runInNewContext(fn+';refitPlayLayout()',ctx);
+  assert.equal(mounted,1);assert.equal(disclosures,1);assert.equal(synced.title,'Real song');assert.equal(synced.accuracy,91);
+  host.dataset.widePlay='1';vm.runInNewContext('refitPlayLayout()',ctx);assert.equal(mounted,1);
+  delete host.dataset.widePlay;ctx.active='lesson';vm.runInNewContext('refitPlayLayout()',ctx);assert.equal(mounted,1);
+  ok('rotating an open song adopts live surfaces once, mirrors real song data and never restarts the session');
+}
+{
+  const {readFileSync}=await import('node:fs');const vm=await import('node:vm');
+  const source=readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  const fn=source.match(/function refitLessonLayout\([^]*?\n\}/)[0];
+  let resized=0,drawn=0;const ctx={active:'lesson',lessonView:{resize(){resized++;}},drawLessonKeys(){drawn++;}};
+  vm.runInNewContext(fn+';refitLessonLayout()',ctx);assert.equal(resized,1);assert.equal(drawn,1);
+  ctx.active='path';vm.runInNewContext('refitLessonLayout()',ctx);assert.equal(resized,1);
+  ok('lesson rotation resizes and redraws the existing keyboard only while its screen is active');
+}
+{
+  const {measure,overlap}=await import('../tools/responsive-probe.mjs');const vm=await import('node:vm');
+  const rect=(left=0,width=44)=>({left,top:0,right:left+width,bottom:44,width,height:44});
+  const node=(id,left=0,width=44)=>({id,tagName:'DIV',textContent:'Actual instruction',children:[],style:{fontSize:'24px'},
+    hidden:false,closest:()=>null,contains:()=>false,matches:()=>true,querySelectorAll:()=>[],getBoundingClientRect:()=>rect(left,width)});
+  const title=node('cp-title'),a=node('a'),b=node('b',50),card=node('card',0,1024),host=node('host',0,1024);
+  card.querySelectorAll=s=>s==='*'?[title,a,b]:s.startsWith('button')?[a,b]:[title];card.querySelector=()=>null;
+  host.firstElementChild=card;card.parentElement=host;
+  const doc={documentElement:{scrollWidth:1024},body:{scrollWidth:1024},getElementById:()=>host};
+  const styles=new Map();
+  const ctx={document:doc,innerWidth:1024,innerHeight:738,SVGElement:class{},getComputedStyle:el=>({visibility:'visible',display:'block',overflowX:'visible',overflowY:'visible',zoom:'1',transform:'none',fontSize:'24px',...styles.get(el)})};
+  const run=()=>vm.runInNewContext(`(${measure.toString()})('play',{'#cp-title':24},${overlap.toString()})`,ctx);
+  assert.equal(run().problems.length,0);
+  styles.set(title,{fontSize:'12px'});styles.set(card,{zoom:'.75'});
+  doc.body.scrollWidth=1200;b.getBoundingClientRect=()=>rect(41,30);card.getBoundingClientRect=()=>rect(0,1200);
+  const bad=run().problems.join('\n');
+  for(const pattern of [/horizontal document scrollbar/,/wider than viewport/,/reduced ancestor scale/,/small target/,/overlap:/,/smaller type:/]) assert.match(bad,pattern);
+  ok('the responsive measurement detects planted overflow, reduced type, scaling, undersized buttons and overlaps');
+}
+// Run C: teaching names must belong to demonstrated or required material.
+{
+  const {lessonTaughtMidis} = await import('../js/lessons.mjs');
+  const pcs = {C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+  const mentioned = text => [...text.matchAll(/\b([A-G])([#b\u266f\u266d]| sharp| flat)?(-?\d)?(m)?(?![a-zA-Z0-9#\u266f\u266d])/g)]
+    // The indefinite article is not the note A. A minor and chord-symbol lists are.
+    .filter(m => !(m[0] === 'A' && /^[a-z]/.test(text.slice(m.index + 2)) &&
+      !/^(minor|major|chord|key|to)\b/.test(text.slice(m.index + 2))))
+    .map(m => ({name:m[0], pc:(pcs[m[1]] + (['#','\u266f',' sharp'].includes(m[2]) ? 1 : ['b','\u266d',' flat'].includes(m[2]) ? -1 : 0) + 12)%12,
+      midi:m[3] == null ? null : (+m[3]+1)*12+pcs[m[1]]+(m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0)}));
+  const checkText = (text, notes) => {
+    for (const m of mentioned(text)) assert.ok(notes.some(n => m.midi == null ? n%12 === m.pc : n === m.midi), `Untaught note ${m.name} in: ${text}`);
+  };
+  for (const lesson of LESSONS) {
+    const notes = lessonTaughtMidis(lesson);
+    const lines = [lesson.title,...lesson.steps,lesson.game?.capability,...(lesson.game?.intro ?? []).map(x=>x.name)].filter(Boolean);
+    lines.forEach(line=>checkText(line,notes));
+    ok(`editorial: ${lesson.id} teaching and prompts name only demonstrated or required notes`);
+  }
+  for (const lesson of T.TEACHER_LESSONS) {
+    const notes=[];
+    for (const spec of [lesson.guided,lesson.transfer]) {
+      let previous=null;
+      for (const sym of spec.pool ?? spec.seq ?? spec.bars ?? []) {
+        const voiced=spec.type==='inversion' ? T.nearestVoicing(sym,previous) : T.triadMidis(sym);
+        notes.push(...voiced); previous=voiced;
+        if (['twohand','leadsheet'].includes(spec.type)) notes.push(T.triadMidis(sym)[0]-12);
+      }
+    }
+    [lesson.title,...lesson.teach].forEach(line=>checkText(line,notes));
+    ok(`editorial: ${lesson.id} teaching names match the generated chord tasks`);
+  }
+  assert.throws(()=>checkText('Play F#4.',[60,64,67]));
+  assert.throws(()=>checkText('Play C5.',[60]));
+  assert.throws(()=>checkText('Play A minor.',[60,64,67]));
+  checkText('A note has a name. Play Db4.',[61]);
+  const inv=T.TEACHER_LESSONS.find(l=>l.id==='tl-inversions');
+  assert.match(inv.teach[1],/G4 UP to A4/);
+  assert.deepEqual(T.nearestVoicing('Am',[60,64,67]),[60,64,69]);
+  assert.doesNotMatch(T.TEACHER_LESSONS.map(l=>l.teach.join(' ')).join(' '),/recipe never changes|down to A/);
+  assert.doesNotMatch(LESSONS.find(l=>l.id==='intervals').game.capability,/4ths/);
+  assert.match(T.TEACHER_LESSONS[0].passRule,/80%.*150 milliseconds/);
+  ok('editorial guard rejects wrong accidentals and octaves; inversion direction and demonstrated intervals are pinned');
+}
+
+// Run C: dated competence and comparable song attempts.
+{
+  const day=T.RETENTION_MIN_DELAY, at=Date.UTC(2026,8,1);
+  const pass=(t,assisted=false,extra={})=>({t,passed:true,assisted,...extra});
+  assert.equal(T.competence({stage:'retained',evidence:[]}),null);
+  assert.equal(T.competence([{t:at,passed:false}]),null);
+  assert.deepEqual(T.competence([pass(at,true)]),{word:'with help',at,date:'2026-09-01'});
+  assert.equal(T.competence([pass(at)]).word,'alone');
+  assert.equal(T.competence([pass(at),pass(at+day-1)]).word,'alone');
+  assert.equal(T.competence([pass(at),pass(at+day)]).word,'still remembered');
+  assert.equal(T.competence([pass(at),pass(at+day,true)]).word,'with help');
+  assert.equal(T.competence([pass(at),pass(at+day,false,{novel:true})]).word,'alone');
+  assert.equal(T.competence([pass(at,false,{scope:'A'}),pass(at+day,false,{scope:'B'})]).word,'alone');
+  assert.equal(T.competence([pass(at),{t:at+day,passed:false}]).at,at);
+  assert.equal(T.competence([{t:at,passed:true}]).word,'with help','unknown legacy assistance never certifies independence');
+  ok('competence: three earned words, exact delay, novelty and scope guards, dated last pass, no invented evidence');
+  const st={},run={t:at,acc:90,wait:true,tempo:100,hand:'both',whole:true,start:0,end:16};
+  T.recordSongAttempt(st,'x',run);
+  assert.equal(T.competence(T.songEvidence(st,'x')).word,'with help');
+  assert.equal(T.recordSongAttempt(st,'x',{...run,t:at+1,wait:false}).previous,null);
+  assert.equal(T.recordSongAttempt(st,'x',{...run,t:at+2,wait:false}).previous.t,at+1);
+  assert.equal(T.recordSongAttempt(st,'x',{...run,t:at+3,tempo:80}).previous,null);
+  T.recordSongAttempt(st,'x',{...run,t:at+day,wait:false});
+  assert.equal(T.competence(T.songEvidence(st,'x')).word,'alone','delay measured from the previous comparable unassisted pass');
+  T.recordSongAttempt(st,'x',{...run,t:at+2*day,wait:false});
+  assert.equal(T.competence(T.songEvidence(st,'x')).word,'still remembered');
+  T.recordSongAttempt(st,'x',{...run,t:at+3*day,wait:true,hand:'R',whole:false});
+  assert.equal(T.competence(T.songEvidence(st,'x')).word,'still remembered','a one-hand passage is not whole-song evidence');
+  assert.match(G.verdictWord(st,'x'),/^still remembered · 2026-09-03$/);
+  assert.ok(G.badges(st,[{id:'x',title:'Test'}]).some(b=>b.evidence?.line===G.verdictWord(st,'x')));
+  ok('song evidence: whole-song scope, assistance cap, comparable attempts, verdict and trophy share the dated vocabulary');
+}
+{
+  const st={songs:{},days:[],mastery:{pulse:{stage:'independent',evidence:[{t:Date.UTC(2026,8,1),passed:true,assisted:false}]}}};
+  assert.equal(G.badges(st).find(b=>b.id==='skill:pulse').evidence.line,T.competenceLine(st.mastery.pulse));
+  const {exportProgress,importProgress}=await import('../js/library.mjs');
+  T.recordSongAttempt(st,'test',{t:1,acc:90,wait:false,tempo:100,hand:'both',whole:true,start:0,end:4});
+  assert.deepEqual(importProgress(exportProgress(st)),st,'new evidence survives export and restore alongside old progress');
+  ok('skill trophies use the common evidence formatter and additive song attempts survive progress round-trip');
+}
+{
+  const D=await import('../js/difficulty.mjs');
+  const song={id:'demand-test',title:'Measured fixture',bpm:80,timeSig:[4,4],notes:[
+    {m:60,h:'R',b:0,d:2},{m:67,h:'R',b:1,d:0.5},{m:48,h:'L',b:1,d:1},
+    {m:72,h:'R',b:3,d:1}]};
+  const before=JSON.stringify(song);
+  assert.deepEqual(D.songDemands(song),{shortestNote:0.5,reach:{L:0,R:7},bothHands:true,longestPhrase:2,tempo:80});
+  assert.equal(JSON.stringify(song),before);
+  assert.equal(D.songDemands({...song,notes:[]}),null);
+  assert.equal(D.songDemands({...song,freeTime:true}),null);
+  const touching={...song,notes:[{m:60,h:'R',b:0,d:1},{m:48,h:'L',b:1,d:1}]};
+  assert.equal(D.songDemands(touching).bothHands,false,'release at the next onset is not overlap');
+  const met=D.songDemands(song);
+  assert.equal(D.demandsFit({...met,tempo:81},met),false);
+  assert.equal(D.demandsFit({...met,shortestNote:0.25},met),false);
+  assert.equal(D.demandsFit({...met,reach:{L:1,R:7}},met),false);
+  assert.equal(D.demandsFit({...met,longestPhrase:3},met),false);
+  assert.equal(D.demandsFit(met,{...met,bothHands:false}),false);
+  ok('song demands: sustained overlaps, per-hand spans, shortest duration, rests, tempo, immutability and every eligibility axis');
+  const st={journeys:{},songs:{},mastery:{}};
+  G.journeyAdvance(st,song,{acc:100,tempo:100,wait:true});
+  assert.equal(D.metSongDemands(st,[song]).tempo,0,'listening is not playing evidence');
+  G.journeyAdvance(st,song,{acc:90,tempo:100,wait:true});
+  assert.equal(D.metSongDemands(st,[song]).tempo,0,'wait mode cannot establish tempo');
+  const full=G.journeyFor(song).findIndex(s=>s.pass==='run85');
+  st.journeys[song.id].step=full;
+  G.journeyAdvance(st,song,{acc:90,tempo:100,wait:false});
+  assert.ok(D.demandsFit(D.songDemands(song),D.metSongDemands(st,[song])));
+  assert.match(D.demandConnection(song,D.metSongDemands(st,[song])),/Measured fixture.*80 beats per minute/);
+  assert.equal(D.demandConnection({...song,bpm:200},D.metSongDemands(st,[song])),null);
+  ok('passed journeys: listening and assistance cannot teach tempo; timed rungs support an explained attainable challenge');
+}
+{
+  const D=await import('../js/difficulty.mjs');
+  assert.equal(T.competence({evidence:{}}),null);
+  assert.equal(T.competence([{passed:true,t:1e30},null]),null);
+  assert.deepEqual(T.songEvidence({songs:{x:{attempts:{}}}},'x'),[]);
+  const local=new Date(2026,8,10,0,30).getTime();
+  assert.equal(T.competence([{passed:true,assisted:false,t:local}]).date,'2026-09-10');
+  const cap={shortestNote:0.5,reach:{L:7,R:7},bothHands:true,longestPhrase:16,tempo:120,rate:120};
+  assert.equal(D.demandsFit({...cap,tempo:120,shortestNote:0.5},cap),false,'slow short notes plus fast long notes do not prove fast short notes');
+  assert.equal(D.demandsFit({...cap,tempo:60,shortestNote:0.5},cap),true);
+  const song=SONGS.find(s=>s.id==='ode-to-joy');
+  const section=song.sections[0];
+  const met=D.metSongDemands({pathProofs:{x:{songId:song.id,section:section.name,acc:90,at:1}}},[song]);
+  assert.ok(met.sources.some(s=>s.title.includes(section.name)),'passed section proofs contribute only their own passage demands');
+  ok('local pass dates, malformed legacy evidence, combined tempo limits and section-scoped proof demands stay honest');
+}
+{
+  const state={songs:{},mastery:{}};
+  const run={t:1,acc:90,wait:false,tempo:100,hand:'both',whole:true,start:0,end:4};
+  T.recordSongAttempt(state,'x',run);
+  T.recordSongAttempt(state,'x',{...run,t:2,hand:'R'});
+  assert.equal(T.competence(T.songEvidence(state,'x')).at,1);
+  assert.notEqual(state.songs.x.attempts[0].scope,state.songs.x.attempts[1].scope);
+  assert.equal(T.competenceRank({stage:'retained',evidence:[{t:1,passed:true,assisted:true}]}),2);
+  assert.equal(T.competenceRank({stage:'retained',evidence:[]}),-1);
+  const D=await import('../js/difficulty.mjs');
+  const {bridgeSongFor}=await import('../js/lessons.mjs');
+  const slow={id:'same-notes-slow',title:'Slow',bpm:60,notes:[{m:60,h:'R',b:0,d:1},{m:64,h:'R',b:1,d:1}]};
+  const fast={...slow,id:'same-notes-fast',title:'Fast',bpm:200};
+  const learned={lessons:Object.fromEntries(LESSONS.map(l=>[l.id,1])),playable:{[slow.id]:{provenAt:1}}};
+  assert.equal(bridgeSongFor('the-cs',[fast,slow],learned).id,slow.id);
+  assert.equal(bridgeSongFor('the-cs',[fast],{...learned,playable:{}}),null);
+  assert.equal(D.demandsFit(D.songDemands(fast),D.metSongDemands(learned,[slow,fast])),false);
+  ok('competence pips follow actual assistance; whole-song hand scopes stay separate; identical pitches cannot hide an unmet tempo');
+}
+{
+  const {readFileSync}=await import('node:fs');
+  const vm=await import('node:vm');
+  const source=readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  const statement=source.match(/  const compared = recordSongAttempt[\s\S]*?  const resultCompetence = [\s\S]*?;\r?\n/)[0];
+  const song=SONGS[0], state={songs:{}};
+  const engine=new Engine(song,{hand:'both',waitMode:false});
+  const st=state.songs[song.id]={};
+  const run=()=>vm.runInNewContext(statement+'; ({compared,resultCompetence});',
+    {state,song,st,engine,acc:90,recordSongAttempt:T.recordSongAttempt,competenceLine:T.competenceLine,
+      verdictWord:G.verdictWord,songEndBeat});
+  assert.match(run().resultCompetence,/^alone/);
+  engine.waitMode=true;
+  assert.match(run().resultCompetence,/^with help/);
+  engine.hand='R';engine.waitMode=false;
+  assert.match(run().resultCompetence,/^This passage: alone/);
+  assert.equal((source.match(/\$\{resultCompetence\}/g) ?? []).length,2,'ordinary and performance results carry the earned line');
+  ok('actual finish-song wiring records scoped evidence and both result layouts show its competence line');
+}
+{
+  const now=Date.UTC(2026,8,10);
+  const st={diagnosticDone:1,teacherAssessed:1,
+    mastery:Object.fromEntries(T.SKILLS.map(s=>[s.id,{stage:'independent',evidence:[],dueAt:now+1000}])),
+    teacherLessons:Object.fromEntries(T.TEACHER_LESSONS.map(l=>[l.id,now])),
+    pathProofs:Object.fromEntries(T.TEACHER_LESSONS.map(l=>[l.id,{at:now}])),
+    lessons:Object.fromEntries(LESSONS.map(l=>[l.id,now])),
+    playable:{'river-easy':{provenAt:now,dueAt:now+1000}}};
+  const rx=T.prescribe(st,now,{songs:SONGS.filter(s=>['river-easy','happy-birthday'].includes(s.id))});
+  assert.equal(rx.sub,'consolidate');assert.equal(rx.songId,'river-easy');
+  assert.match(rx.reason,/next pieces ask for more/);
+  ok('when no new piece fits, the prescription consolidates proven music instead of inventing readiness');
 }
 console.log(`\nALL GREEN: ${n} checks passed`);

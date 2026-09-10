@@ -46,6 +46,8 @@ for (let i = 0; i < TEACHER_LESSONS.length; i++) {
   await sleep(800);
   let t = await task();
   if (t.screen !== 'screen-task') { ok(`${les.title}: the path row opens the lesson`, false, `opened=${opened} screen=${t.screen}`); continue; }
+  const teaching = await b.eval(`document.getElementById('task-teach').textContent`);
+  ok(`${les.title}: audited teaching is rendered`, les.teach.every(line => teaching.includes(line)));
   const vid = await b.eval(`(() => { const a = document.querySelector('#task-video a'); return a && a.getBoundingClientRect().width > 0 ? a.href : null; })()`);
   ok(`${les.title}: a verified video link is on the page`, !!vid && /youtube\.com\/watch/.test(vid), vid ?? 'none');
   await b.eval(`document.getElementById('task-start').click(); true`); await sleep(500);

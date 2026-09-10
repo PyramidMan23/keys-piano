@@ -13,7 +13,9 @@
 //
 // Run: node tools/lesson-walk-probe.mjs      (needs the :4180 serving copy)
 import { launch } from './cdp.mjs';
-import { LESSONS } from '../js/lessons.mjs';
+import { LESSONS, bridgeSongFor } from '../js/lessons.mjs';
+import { SHELF } from '../js/songs.mjs';
+import { metSongDemands, demandConnection } from '../js/difficulty.mjs';
 
 const b = await launch({ width: 1418, height: 900, scale: 1, port: 9781, extraArgs: ['--autoplay-policy=no-user-gesture-required'] });
 const results = [];
@@ -28,6 +30,8 @@ for (let i = 0; i < LESSONS.length; i++) {
   const les = LESSONS[i];
   const done = Object.fromEntries(LESSONS.slice(0, i).map((l) => [l.id, Date.now() - (i - LESSONS.indexOf(l)) * 864e5]));
   const seed = { firstRunDone: true, diagnosticDone: Date.now(), calibratedAt: Date.now() - 864e5, calOffsetMs: 0, lib: { learning: true }, lessons: done };
+  // Run C: this learner has timed repertoire evidence, not just pitch lessons.
+  if (les.id === 'the-cs') seed.playable = {'river-easy':{provenAt:Date.now()-86400000,dueAt:Date.now()+86400000}};
   await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify(seed))}); true`);
   await b.goto('http://localhost:4180/index.html'); await b.ready(); await sleep(600);
   await b.eval(`document.getElementById('btn-lessons').click(); true`); await sleep(600);
@@ -41,6 +45,8 @@ for (let i = 0; i < LESSONS.length; i++) {
     if (title !== les.title) { await b.eval(`window.__show('lessons'); true`); await sleep(400); }
   }
   if (title !== les.title) { ok(`${i + 1}. ${les.title}: Continue here opens it`, false, `opened "${title}"`); continue; }
+  const teaching = await b.eval(`document.getElementById('lesson-steps').textContent`);
+  ok(`${les.title}: audited teaching is rendered`, les.steps.every(line => teaching.includes(line)));
   const vid = await b.eval(`(() => { const a = document.querySelector('#lesson-video a'); return a && a.getBoundingClientRect().width > 0 ? a.href : null; })()`);
   ok(`${i + 1}. ${les.title}: a verified video link is on the page`, !!vid && /youtube\.com\/watch/.test(vid), vid ?? 'none');
   if (les.drill.type === 'rhythm-gate') {
@@ -74,6 +80,24 @@ for (let i = 0; i < LESSONS.length; i++) {
   const wrongScored = afterWrong.misses > st.misses;
   const rightScored = (afterRight.qi ?? 0) > 0 || afterRight.li > st.li || afterRight.done === true || afterRight.misses === afterWrong.misses;
   ok(`${i + 1}. ${les.title}: wrong press counts as a miss, right press advances`, wrongScored && rightScored, `misses ${st.misses}->${afterWrong.misses}->${afterRight.misses}, qi=${afterRight.qi} li ${st.li}->${afterRight.li}`);
+  if (les.id === 'the-cs') {
+    // Finish through the real input handler, including release between targets.
+    for (let tries=0; tries<150; tries++) {
+      const next=await b.eval(`(() => {const r=window.__lesson?.(); if (!r || r.done) return null;
+        const c=r.current; return Array.isArray(c) ? c : c.ms ?? [c.m];})()`);
+      if (!next) break;
+      await b.eval(`(() => {for (const m of ${JSON.stringify(next)}) {window.__simNote(m,true);window.__simNote(m,false);} return true;})()`);
+      await sleep(80);
+    }
+    const saved=await b.eval(`JSON.parse(localStorage.getItem('keys-v1'))`);
+    const bridge=bridgeSongFor(les.id,SHELF,saved);
+    const shown=await b.eval(`({id:document.getElementById('lesson-rhythm-link').dataset.bridge,
+      visible:!document.getElementById('lesson-rhythm-link').hidden,
+      text:document.getElementById('lesson-msg').textContent})`);
+    ok('completed reading lesson offers the demand-matched song and its connection',
+      !!saved.lessons?.[les.id] && !!bridge && shown.visible && shown.id===bridge.id &&
+      shown.text.includes(demandConnection(bridge,metSongDemands(saved,SHELF))),JSON.stringify(shown));
+  }
   const errs = await b.eval('window.__errs.splice(0)');
   ok(`${i + 1}. ${les.title}: no errors`, !errs.length, errs.join('|'));
 }

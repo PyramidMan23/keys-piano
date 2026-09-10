@@ -1,3 +1,4 @@
+import { songDemands, metSongDemands, demandsFit } from './difficulty.mjs';
 // The taught curriculum (2026-08-23): what a teacher would explain before
 // asking you to read. Each lesson = plain-English teaching + a drill answered
 // ON THE PIANO while reading real notation. Sequential unlock. DOM-free logic.
@@ -55,7 +56,7 @@ const SCALE_DOWN = { h: R, ms: [72, 71, 69, 67, 65, 64, 62, 60], fs: [5, 4, 3, 2
 // The sentence every technique lesson says out loud, because the rubric must
 // never sound like more than it is (11th council: performance evidence, never
 // technique verdicts).
-const HONEST_RUBRIC = 'What the app checks: the notes, in order, and how evenly you space them. That is all a keyboard can report, because it sees keys and not fingers. It cannot see your hands, so the fingering is on you: the numbers are printed with the notes on the stave.';
+const HONEST_RUBRIC = 'What the app checks: the notes, in order, and how evenly you space them. Those are the measurements used here; the keyboard reports keys, not which fingers played them. It cannot see your hands, so the fingering is on you: the numbers are printed with the notes on the stave.';
 
 export const LESSONS = [
   {
@@ -63,7 +64,7 @@ export const LESSONS = [
     title: 'Middle C and the grand staff',
     steps: [
       'Piano music lives on TWO staves joined together: the top one (treble) is mostly your right hand, the bottom one (bass) is mostly your left.',
-      'The keyboard is just 7 letters, C D E F G A B, repeated over and over. Each repeat is an OCTAVE, and the number says which repeat: middle C is C4, the next C to the right is C5, the one to the left is C3. Same letter + different number = a different key.',
+      'Note letters repeat along the keyboard every OCTAVE. The number tells you which repeat: middle C is C4. A higher octave number means a key further right. This lesson asks only for middle C.',
       'Middle C is the C nearest the middle of your keyboard. On paper it sits BETWEEN the two staves, on its own little line (a ledger line). It wears a dot on the keyboard below: count from it whenever you are lost.',
       'Worked example: the note lit on the keyboard below is middle C. That exact key is what the drill will ask for.',
     ],
@@ -77,7 +78,7 @@ export const LESSONS = [
       ],
       mixed: [{ m: 60, h: R }, { m: 60, h: L }],
       melody: [{ m: 60, h: R }, { m: 60, h: L }, { m: 60, h: R }, { m: 60, h: L }],
-      capability: 'You can now find middle C from either staff.',
+      capability: 'You practised finding middle C from either staff.',
     },
   },
   {
@@ -86,8 +87,8 @@ export const LESSONS = [
     steps: [
       'The five LINES of the top staff, reading bottom to top, are E-G-B-D-F: "Every Good Boy Deserves Fruit".',
       'A note is ON a line when the line passes through its middle. The bottom line is E4, the E just above middle C.',
-      'A full piano has eight Es, so which E? HEIGHT on the paper decides: the higher a note sits on the stave, the further RIGHT it is on the keyboard. Everything on the treble staff lives between middle C and the C two octaves up. (A stacked 4/4 at the start of real music is the TIME signature, beats per bar; it has nothing to do with octave numbers.)',
-      'Worked example: the note shown on the stave is B4, the MIDDLE line. It is lit on the keyboard below: count up from middle C if you lose it (C, D, E, F, G, A, B).',
+      'Which octave? HEIGHT on the paper tells you: higher staff positions mean higher note letters. These five lines run from E4 to F5; ledger lines extend the range. The stacked 4/4 is a TIME signature: four quarter-note beats per bar, not an octave number.',
+      'Worked example: the note shown on the stave is B4, the MIDDLE line. It is lit on the keyboard below: use the middle line as your landmark.',
     ],
     ex: { m: 71, h: R },
     video: VID_GRAND_STAFF,
@@ -102,7 +103,7 @@ export const LESSONS = [
       ],
       mixed: [{ m: 64, h: R }, { m: 67, h: R }, { m: 71, h: R }, { m: 74, h: R }, { m: 77, h: R }],
       melody: [{ m: 64, h: R }, { m: 67, h: R }, { m: 71, h: R }, { m: 74, h: R }, { m: 77, h: R }, { m: 74, h: R }, { m: 71, h: R }, { m: 67, h: R }, { m: 64, h: R }],
-      capability: 'You can now read all five treble lines: E G B D F.',
+      capability: 'You practised reading all five treble lines: E G B D F.',
     },
   },
   {
@@ -125,7 +126,7 @@ export const LESSONS = [
       ],
       mixed: [{ m: 65, h: R }, { m: 69, h: R }, { m: 72, h: R }, { m: 76, h: R }],
       melody: [{ m: 65, h: R }, { m: 69, h: R }, { m: 72, h: R }, { m: 76, h: R }, { m: 72, h: R }, { m: 69, h: R }, { m: 65, h: R }],
-      capability: 'You can now read the treble spaces: F A C E.',
+      capability: 'You practised reading the treble spaces: F A C E.',
     },
   },
   {
@@ -133,7 +134,7 @@ export const LESSONS = [
     title: 'The bass lines: G B D F A',
     steps: [
       'Left hand territory now. The bass staff lines, bottom to top, are G-B-D-F-A: "Good Boys Deserve Fruit Always".',
-      'The TOP line is the A just below middle C, so this whole staff lives to the LEFT of where you have been playing.',
+      'The TOP line is A3, below middle C. These five lines are below middle C; ledger lines can extend beyond them.',
       'Worked example: the stave shows the middle line, D3. It is lit below, an octave and a bit left of middle C.',
     ],
     ex: { m: 50, h: L },
@@ -149,7 +150,7 @@ export const LESSONS = [
       ],
       mixed: [{ m: 43, h: L }, { m: 47, h: L }, { m: 50, h: L }, { m: 53, h: L }, { m: 57, h: L }],
       melody: [{ m: 43, h: L }, { m: 47, h: L }, { m: 50, h: L }, { m: 53, h: L }, { m: 57, h: L }, { m: 53, h: L }, { m: 50, h: L }, { m: 47, h: L }, { m: 43, h: L }],
-      capability: 'You can now read all five bass lines: G B D F A.',
+      capability: 'You practised reading all five bass lines: G B D F A.',
     },
   },
   {
@@ -157,7 +158,7 @@ export const LESSONS = [
     title: 'The bass spaces: A C E G',
     steps: [
       'The bass staff spaces spell A-C-E-G, bottom to top: "All Cows Eat Grass".',
-      'That C in the second space is C3, the one your left hand plays all through Ode to Joy.',
+      'That C in the second space is C3. It is one octave below middle C.',
       'Worked example: the stave shows C3, lit on the keyboard below.',
     ],
     ex: { m: 48, h: L },
@@ -167,12 +168,12 @@ export const LESSONS = [
       intro: [
         { pool: [{ m: 53, h: L }, { m: 55, h: L }, { m: 57, h: L }], focus: { m: 55, h: L }, name: 'G3, the top space' },
         { pool: [{ m: 50, h: L }, { m: 52, h: L }, { m: 55, h: L }], focus: { m: 52, h: L }, name: 'E3' },
-        { pool: [{ m: 48, h: L }, { m: 50, h: L }, { m: 52, h: L }], focus: { m: 48, h: L }, name: 'C3, your Ode to Joy bass' },
+        { pool: [{ m: 48, h: L }, { m: 50, h: L }, { m: 52, h: L }], focus: { m: 48, h: L }, name: 'C3, the second space' },
         { pool: [{ m: 43, h: L }, { m: 45, h: L }, { m: 48, h: L }], focus: { m: 45, h: L }, name: 'A2, the bottom space' },
       ],
       mixed: [{ m: 45, h: L }, { m: 48, h: L }, { m: 52, h: L }, { m: 55, h: L }],
       melody: [{ m: 45, h: L }, { m: 48, h: L }, { m: 52, h: L }, { m: 55, h: L }, { m: 52, h: L }, { m: 48, h: L }, { m: 45, h: L }],
-      capability: 'You can now read the bass spaces: A C E G.',
+      capability: 'You practised reading the bass spaces: A C E G.',
     },
   },
   {
@@ -193,15 +194,15 @@ export const LESSONS = [
       ],
       mixed: [{ m: 48, h: L }, { m: 60, h: R }, { m: 60, h: L }, { m: 72, h: R }],
       melody: [{ m: 48, h: L }, { m: 60, h: L }, { m: 72, h: R }, { m: 60, h: R }, { m: 48, h: L }],
-      capability: 'You can now navigate from the three landmark Cs.',
+      capability: 'You practised navigating from the three landmark Cs.',
     },
   },
   {
     id: 'phrases',
     title: 'Reading short phrases',
     steps: [
-      'Real reading is not naming one note at a time: find a LANDMARK note you know, then follow the SHAPE.',
-      'Line-space-line climbing is STEPS (next letter each time). A jump that skips a line or space is a SKIP (a third).',
+      'For these phrases, find a LANDMARK note you know, then follow the SHAPE rather than naming every note.',
+      'Line-space-line climbing is STEPS (next letter each time). Skipping one staff position makes a third; larger skips make larger intervals.',
       'Play each phrase in order. A wrong note restarts the phrase, just like real reading practice.',
     ],
     ex: { m: 60, h: R },
@@ -217,7 +218,7 @@ export const LESSONS = [
       ],
       mixed: [{ h: R, ms: [60, 64, 62, 60] }, { h: R, ms: [67, 69, 71, 72] }, { h: R, ms: [65, 64, 62, 60] }, { h: L, ms: [43, 45, 47, 48] }],
       melody: [{ h: R, ms: [60, 62, 64, 67, 65] }],
-      capability: 'You can now read short phrases by shape, both hands.',
+      capability: 'You practised reading short phrases by shape with either hand.',
     },
   },
   {
@@ -225,8 +226,8 @@ export const LESSONS = [
     title: 'Sharps, flats, and the black keys',
     steps: [
       'A SHARP (#) moves a note one key to the RIGHT (usually onto a black key). A FLAT (b) moves it one key LEFT.',
-      'Every black key has two names: C# and Db are the same key. On paper the # sign sits just BEFORE the notehead, at the same height.',
-      'Worked example: the stave shows F#4, lit below: the black key just right of F4. Your songs use these: Game of Thrones needs Eb, Runaway needs D#, C# and G#.',
+      'Black keys can have more than one name: C# and Db are the same key. On paper the # sign sits just BEFORE the notehead, at the same height.',
+      'Worked example: the stave shows F#4, lit below: the black key just right of F4. This drill also asks for C#, D#, G# and A#.',
     ],
     ex: { m: 66, h: R },
     video: VID_SHARPS_FLATS,
@@ -235,13 +236,13 @@ export const LESSONS = [
       intro: [
         { pool: [{ m: 65, h: R }, { m: 66, h: R }, { m: 67, h: R }], focus: { m: 66, h: R }, name: 'F# lives between F and G' },
         { pool: [{ m: 60, h: R }, { m: 61, h: R }, { m: 66, h: R }], focus: { m: 61, h: R }, name: 'C#' },
-        { pool: [{ m: 61, h: R }, { m: 63, h: R }, { m: 64, h: R }], focus: { m: 63, h: R }, name: 'D# (your Runaway note)' },
+        { pool: [{ m: 61, h: R }, { m: 63, h: R }, { m: 64, h: R }], focus: { m: 63, h: R }, name: 'D#' },
         { pool: [{ m: 67, h: R }, { m: 68, h: R }, { m: 69, h: R }], focus: { m: 68, h: R }, name: 'G#' },
         { pool: [{ m: 69, h: R }, { m: 70, h: R }, { m: 71, h: R }], focus: { m: 70, h: R }, name: 'A#' },
       ],
       mixed: [{ m: 61, h: R }, { m: 63, h: R }, { m: 66, h: R }, { m: 68, h: R }, { m: 70, h: R }],
       melody: [{ m: 66, h: R }, { m: 68, h: R }, { m: 70, h: R }, { m: 68, h: R }, { m: 66, h: R }],
-      capability: 'You can now read sharps and flats on the black keys.',
+      capability: 'You practised reading sharps and flats on the black keys.',
     },
   },
   {
@@ -249,7 +250,7 @@ export const LESSONS = [
     title: 'Intervals: the distance between notes',
     steps: [
       'An INTERVAL is the distance between two notes, counted in letters INCLUDING both ends: C to D is a 2nd, C to E is a 3rd, C to G is a 5th.',
-      'On the staff a 2nd looks like notes touching; a 3rd is line-to-line or space-to-space. Good readers read intervals, not note names.',
+      'On the staff a 2nd looks like notes touching; a 3rd is line-to-line or space-to-space. Reading intervals can help you follow a shape after finding the first note.',
       'Worked example: the stave shows C4 and E4 together, a 3rd. Both keys are lit below. In the drill, play both notes AT THE SAME TIME.',
     ],
     ex: { m: 60, h: R },
@@ -264,15 +265,15 @@ export const LESSONS = [
       ],
       mixed: [[60, 62], [60, 64], [62, 65], [64, 67], [60, 67], [65, 69]],
       melody: [[60, 64], [62, 65], [64, 67], [60, 64]],
-      capability: 'You can now read and play 2nds, 3rds, 4ths and 5ths.',
+      capability: 'You practised reading and playing 2nds, 3rds and 5ths.',
     },
   },
   {
     id: 'triads',
     title: 'Triads: chords on the staff',
     steps: [
-      'Stack two 3rds and you get a TRIAD, the basic chord. On the staff it looks like a snowman: line-line-line or space-space-space.',
-      'Major triads have a bottom gap of 4 semitones, minor 3. Still D.R.E. is three minor-family triads with one moving note.',
+      'Stack two 3rds and you get a root-position TRIAD. On the staff it looks like a snowman: line-line-line or space-space-space.',
+      'In root position, a major triad has gaps of 4 then 3 semitones; a minor triad has gaps of 3 then 4. Here we practise C major, A minor, F major and G major.',
       'Worked example: the stave shows the C major triad, C-E-G. All three keys are lit below. Play every chord ALL NOTES TOGETHER.',
     ],
     ex: { m: 60, h: R },
@@ -286,15 +287,15 @@ export const LESSONS = [
       ],
       mixed: [[60, 64, 67], [57, 60, 64], [65, 69, 72], [67, 71, 74]],
       melody: [[60, 64, 67], [57, 60, 64], [65, 69, 72], [67, 71, 74], [60, 64, 67]],
-      capability: 'You can now play the chords behind most of your songs.',
+      capability: 'You practised reading C major, A minor, F major and G major triads.',
     },
   },
   {
     id: 'rhythm-values',
     title: 'Rhythm: note values',
     steps: [
-      'Note SHAPES tell you how long: hollow with no stem = whole note (4 beats), hollow with stem = half (2), filled with stem = quarter (1), flag or beam = eighth (half a beat).',
-      'A dot after a note adds half its value again. The time signature (4/4, 3/4) says how many beats fill a bar.',
+      'With a quarter note as one beat, note SHAPES tell you how long: hollow with no stem = whole note (4 beats), hollow with stem = half (2), filled with stem = quarter (1), one flag or one beam = eighth (half a beat).',
+      'A dot after a note adds half its value again. In 4/4 there are four quarter-note beats per bar; in 3/4 there are three.',
       'To finish this lesson, go win one clean round of Rhythm tap, then come back.',
     ],
     ex: null,
@@ -311,7 +312,7 @@ export const LESSONS = [
     video: VID_FIVE_FINGER,
     steps: [
       'Time to think about the HAND, not just the note. Fingers are numbered the same on both hands: thumb 1, index 2, middle 3, ring 4, little finger 5.',
-      'C position, right hand: thumb on middle C, then one finger per white key going right. 1 on C4, 2 on D4, 3 on E4, 4 on F4, 5 on G4. Nothing reaches, nothing moves. Play up 1-2-3-4-5, then back down 5-4-3-2-1.',
+      'C position, right hand: thumb on middle C, then one finger per white key going right. 1 on C4, 2 on D4, 3 on E4, 4 on F4, 5 on G4. Keep a comfortable hand shape without forcing a stretch. Play up 1-2-3-4-5, then back down 5-4-3-2-1.',
       'The left hand mirrors it an octave lower: little finger 5 on C3, 4 on D3, 3 on E3, 2 on F3, thumb 1 on G3. Going RIGHT in the left hand counts the numbers DOWN.',
       'Space the notes like a slow clock, one every second is plenty. Slow and even beats fast and lumpy every time, and evenness is the thing this drill is actually for.',
       HONEST_RUBRIC,
@@ -334,7 +335,7 @@ export const LESSONS = [
         { m: 67, h: R, f: 5 }, { m: 65, h: R, f: 4 }, { m: 64, h: R, f: 3 }, { m: 62, h: R, f: 2 },
         { m: 60, h: R, f: 1 },
       ],
-      capability: 'You can now play a five-finger C position with either hand, evenly.',
+      capability: 'You practised five-finger C-position notes with either hand and even spacing.',
     },
   },
   {
@@ -342,12 +343,12 @@ export const LESSONS = [
     title: 'The C major scale, right hand',
     video: VID_C_SCALE,
     steps: [
-      'Five fingers, eight notes: the hand has to move. The trick is the THUMB UNDER, and it happens in the same place every time.',
+      'Five fingers, eight notes: the hand has to move. For this one-octave fingering, the thumb passes under on the way up; the third finger crosses over on the way down.',
       'Going up from middle C: 1 on C4, 2 on D4, 3 on E4, then the thumb travels under those fingers and lands on F4 as 1 again. From there 2 on G4, 3 on A4, 4 on B4, 5 on C5.',
       'So the full run up is 1-2-3, 1-2-3-4-5, and the join is between E and F. Coming down it reverses: 5-4-3-2-1 down to F4, then the third finger crosses back over the thumb onto E4, and 3-2-1 finishes on middle C.',
-      'Keep the thumb moving under EARLY, while fingers 2 and 3 are still playing, so the crossing makes no gap. A bump in the timing at F is the usual sign the thumb left late.',
+      'Keep the thumb moving under EARLY, while fingers 2 and 3 are still playing, so the crossing makes no gap. A timing gap at F is a reason to slow down and check the crossing; the app cannot tell what your thumb did.',
       HONEST_RUBRIC,
-      'Worked example: the key lit below is middle C, right thumb, finger 1. The scale starts and ends there.',
+      'Worked example: the key lit below is middle C, right thumb, finger 1. The full up-and-down run starts and ends there.',
     ],
     ex: { m: 60, h: R },
     drill: { type: 'technique', runs: [SCALE_LOW, SCALE_HIGH, SCALE_UP, SCALE_DOWN] },
@@ -365,7 +366,7 @@ export const LESSONS = [
         { m: 71, h: R, f: 4 }, { m: 69, h: R, f: 3 }, { m: 67, h: R, f: 2 }, { m: 65, h: R, f: 1 },
         { m: 64, h: R, f: 3 }, { m: 62, h: R, f: 2 }, { m: 60, h: R, f: 1 },
       ],
-      capability: 'You can now play C major up and down, one octave, with the thumb under at F.',
+      capability: 'You practised the notes of C major up and down, one octave. Check the printed fingering yourself.',
     },
   },
 ];
@@ -497,24 +498,18 @@ export function cumulativeTaughtMidis(lessonId, lessons = LESSONS) {
 }
 
 // the one song to offer after this lesson, or null. Never a placeholder.
-export function bridgeSongFor(lessonId, songs) {
-  const set = cumulativeTaughtMidis(lessonId);
-  if (!set) return null;
-  const fits = [];
-  for (const s of songs) {
-    const rh = s.notes.filter((n) => n.h === 'R');
-    if (!rh.length) continue;
-    if (!rh.every((n) => set.has(n.m))) continue;
-    fits.push({ s, n: rh.length });
-  }
-  if (!fits.length) return null;
-  // Easy tier first, then the shortest right hand, then the id so the choice is
-  // deterministic. Preferring Easy is also what keeps the level-less technique
-  // drills (the scales and arpeggios) from winning on shortness alone.
-  fits.sort((a, b) => (a.s.level === 'Easy' ? 0 : 1) - (b.s.level === 'Easy' ? 0 : 1)
-    || a.n - b.n
-    || (a.s.id < b.s.id ? -1 : 1));
-  return fits[0].s;
+export function bridgeSongFor(lessonId, songs, state = {}) {
+  if (!LESSONS.some(l=>l.id===lessonId)) return null;
+  // Only actually completed lessons count, including a just-completed lesson.
+  const taught=new Set(LESSONS.filter(l=>state.lessons?.[l.id]).flatMap(lessonTaughtMidis));
+  const met=metSongDemands(state,songs);
+  const fits=songs.filter(s=>!s.ladder && !s.sightRead && !s.quarantined &&
+    s.notes.some(n=>n.h==='R') && s.notes.filter(n=>n.h==='R').every(n=>taught.has(n.m)) &&
+    demandsFit(songDemands(s),met));
+  fits.sort((a,b)=>songDemands(a).longestPhrase-songDemands(b).longestPhrase ||
+    songDemands(b).shortestNote-songDemands(a).shortestNote ||
+    songDemands(a).tempo-songDemands(b).tempo || a.id.localeCompare(b.id));
+  return fits[0] ?? null;
 }
 
 // ---- the technique rubric: only what a keyboard can actually report ---------

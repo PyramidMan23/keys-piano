@@ -227,6 +227,32 @@ ok('file restore survives reload with song proof and technique history', restore
 ok('restore retains the previous browser snapshot', await b.eval(`!!localStorage.getItem('keys-v1-before-restore')`));
 ok('no errors', !(await errs()).length);
 
+// Run C: the same dated skill evidence reaches My Path and Trophies.
+{
+  const at = Date.UTC(2026,8,1);
+  await boot(seed({mastery:{pulse:{stage:'retained',lastTested:at+86400000,dueAt:Date.now()+86400000,
+    evidence:[{t:at,passed:true,assisted:false},{t:at+86400000,passed:true,assisted:false}]}}}));
+  await b.eval(`document.getElementById('btn-path').click(); true`); await sleep(700);
+  const pathText = await b.eval(`document.getElementById('path-skills').textContent.toLowerCase()`);
+  ok('dated remembered skill renders in My Path', pathText.includes('still remembered') && pathText.includes('2026-09-02'), pathText);
+  await b.eval(`document.getElementById('btn-trophies').click(); true`); await sleep(700);
+  const trophies = await b.eval(`document.getElementById('screen-trophies').textContent.toLowerCase()`);
+  ok('Trophies repeats the same earned word and date', trophies.includes('still remembered') && trophies.includes('2026-09-02'), trophies);
+}
+
+// Run C: an earned song word and date appear in both its row and hero chip.
+{
+  const at=Date.UTC(2026,8,1);
+  const attempt=t=>({t,acc:90,passed:true,assisted:false,wait:false,tempo:100,
+    whole:true,hand:'both',scope:'whole:both',start:0,end:64});
+  await boot(seed({songs:{'ode-to-joy':{plays:2,best:90,stars:3,attempts:[attempt(at),attempt(at+86400000)]}},
+    lastSession:{songId:'ode-to-joy',at:Date.now()},lib:{learning:true}}));
+  const words=await b.eval(`([...document.querySelectorAll('#screen-library *')]
+    .filter(e=>!e.children.length && e.getBoundingClientRect().width>0)
+    .map(e=>e.textContent.trim()).filter(t=>t.includes('still remembered') && t.includes('2026-09-02')))`);
+  ok('library row and hero chip carry the same dated competence',words.length>=2,JSON.stringify(words));
+}
+
 const failedN = results.filter((r) => !r.pass).length;
 console.log(`\n${results.length - failedN}/${results.length} passed`);
 await b.close?.();

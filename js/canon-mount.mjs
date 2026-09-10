@@ -60,8 +60,41 @@ export const boardFor = (key) =>
 // clientWidth measures are untouched; tap handlers normalise by rect scale.
 export function applyCanonZoom(card) {
   if (!card) return;
-  const z = Math.min(1, window.innerWidth / DESKTOP_W);
+  const z = canonScale(window.innerWidth, !!card.dataset.responsiveBoard);
   card.style.zoom = z < 1 ? String(z) : '';
+}
+
+// Keep the drawn widths as reference compositions. Other desktop widths use
+// layout space directly; a narrow phone still uses the existing column fit.
+export const canonScale = (width, responsive = false) =>
+  responsive && width >= 1024 ? 1 : Math.min(1, width / DESKTOP_W);
+
+export const responsiveWidth = (width) => width >= 1024 && width !== DESKTOP_W;
+export function responsiveLibraryPlan(width, height, total) {
+  const columns = Math.max(1, Math.floor((width - 28 + 6) / 138));
+  const availableRows = Math.max(1, Math.floor((height - 368 + 14) / 180));
+  const rows = Math.min(availableRows, Math.max(1, Math.ceil((total + 3) / columns)));
+  return { columns, rows, gap: 14, capacity: Math.max(1, rows * columns - 3) };
+}
+
+// Tag layout containers AFTER binders have measured the drawn samples. No
+// markup is replaced, so listeners, sample text and live surfaces survive.
+export function prepareResponsive(root, screen) {
+  if (!root) return;
+  root.dataset.responsiveBoard = screen;
+  root.dataset.reflow = 'board';
+  root.parentElement.dataset.canonScreen = screen;
+  for (const el of root.querySelectorAll('div, span')) {
+    if (el.closest('#score-wrap, #lesson-stave, .session-guide, .practice-adjust, .practice-prescription')) continue;
+    if (el.style.position === 'absolute' || el.style.position === 'fixed') continue;
+    if (el.style.display === 'flex' || el.style.display === 'inline-flex') {
+      el.dataset.reflow = el.style.flexDirection === 'column' ? 'column' : 'row';
+    }
+  }
+  // A desktop frame is the sole child carrying the same drawn width.
+  const frame = root.firstElementChild;
+  if (frame?.style.width === root.style.width) frame.dataset.reflow = 'frame';
+  if (root.style.width === `${DESKTOP_W}px`) applyCanonZoom(root);
 }
 
 export function mountCanonScreens() {
@@ -117,8 +150,14 @@ export function mountCanonScreens() {
     }
     host.appendChild(legacy);          // after: renderCanonScreen replaces innerHTML
     const names = nameControls(host.firstElementChild);
+    if (['path', 'lesson', 'lessons'].includes(key)) prepareResponsive(host.firstElementChild, key);
     mounted.push({ key, claimed: claimed.size, stripped, a11y, named: names.named, unnamed: names.unnamed });
   }
+  window.addEventListener('resize', () => {
+    for (const card of document.querySelectorAll('[data-responsive-board]')) {
+      if (card.style.width === `${DESKTOP_W}px`) applyCanonZoom(card);
+    }
+  });
   return mounted;
 }
 

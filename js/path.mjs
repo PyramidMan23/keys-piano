@@ -1,4 +1,4 @@
-import { skillCheckDates } from './teacher.mjs';
+import { competenceRank, competence, competenceLine, skillCheckDates } from './teacher.mjs';
 import { LESSONS as READING_LESSONS } from './lessons.mjs';
 import { setTextKeeping, setHTMLKeeping, CANON_ON, hideRestingLayer } from './canon-mount.mjs';
 import { CANON } from './canon-templates.mjs';
@@ -148,10 +148,11 @@ export function installPath(ctx) {
   }
 
   // ---------- the Path screen ----------
-  function stageChip(stage) {
-    const label = { unseen: 'not met', introduced: 'met', guided: 'with help', independent: 'on your own', retained: 'checked after a day' }[stage] ?? stage;
-    const shape = { unseen: '·', introduced: '◔', guided: '◑', independent: '●', retained: '★' }[stage] ?? '·';
-    return '<span class="stage-chip s-' + stage + '"><i>' + shape + '</i>' + label + '</span>';
+  function stageChip(record) {
+    const earned = competence(record);
+    const label = competenceLine(record);
+    const shape = earned?.word === 'with help' ? '◑' : earned?.word === 'alone' ? '●' : earned ? '★' : '·';
+    return '<span class="stage-chip"><i>' + shape + '</i>' + label + '</span>';
   }
 
   function renderPath() {
@@ -216,20 +217,19 @@ export function installPath(ctx) {
           && (e.textContent.trim() === sample || stem(e.textContent).startsWith(stem(sample))));
       const skillId = rx.skillId
         ?? (rx.lessonId && TEACHER_LESSONS.find((l2) => l2.id === rx.lessonId)?.skillIds?.[0]) ?? null;
-      const STAGES2 = ['unseen', 'introduced', 'guided', 'independent', 'retained'];
       const m2 = skillId ? (mastery()[skillId] ?? { stage: 'unseen', evidence: [] }) : null;
-      const rank2 = m2 ? STAGES2.indexOf(m2.stage) : -1;
+      const rank2 = competenceRank(m2);
       // header statement
       const head = leafBy(scr, '2 OF 5 SKILLS INDEPENDENT');
       if (head) {
-        const n2 = SKILLS.filter((s3) => STAGES2.indexOf((mastery()[s3.id] ?? { stage: 'unseen' }).stage) >= 3).length;
+        const n2 = SKILLS.filter(s3 => ['alone','still remembered'].includes(competence(mastery()[s3.id])?.word)).length;
         head.textContent = `${n2} OF ${SKILLS.length} SKILLS INDEPENDENT`;
       }
       const reason = $('path-reason');
       const act = leafBy(reason, 'Build Cm7 and F7 from the symbol, left hand alone.');
       if (act) act.textContent = rx.reason ?? '';
       const why = leafBy(reason, 'Independent for six days. It decays Thursday.');
-      if (why) why.textContent = rx.evidence ?? rx.reason ?? '';
+      if (why) why.textContent = m2 ? competenceLine(m2) : rx.evidence ?? rx.reason ?? '';
       const mile = leafBy(reason, 'One clean run moves this to Guided');
       if (mile) {
         mile.textContent = rank2 >= 0 && rank2 < 4
@@ -255,10 +255,7 @@ export function installPath(ctx) {
         }
         const rr = leafBy(ev, 'Two clean builds of three');
         if (rr) {
-          const tail = (m2?.evidence ?? []).slice(-3);
-          rr.textContent = tail.length
-            ? `${tail.filter((e2) => e2.passed).length} clean of the last ${tail.length}`
-            : 'No attempts on record';
+          rr.textContent = competenceLine(m2);
         }
         const tg = leafBy(ev, 'Three clean builds, no help');
         if (tg) {
@@ -331,12 +328,11 @@ export function installPath(ctx) {
 
     // The canon drew a row per skill, with five pips for the stage ladder.
     // STAGES is the design's own order, read off its sample rows.
-    const STAGES = ['unseen', 'introduced', 'guided', 'independent', 'retained'];
     const skillRows = SKILLS.map((s2) => {
       const m2 = mastery()[s2.id] ?? { stage: 'unseen' };
-      const rank2 = STAGES.indexOf(m2.stage);
-      const bottom = skillCheckDates(m2);
-      return { name: s2.name, stage: m2.stage, title: s2.passRule, bottom,
+      const rank2 = competenceRank(m2);
+      const bottom = competenceLine(m2) + '. ' + skillCheckDates(m2);
+      return { name: s2.name, stage: competenceLine(m2), title: s2.passRule, bottom,
                filled: Math.max(0, rank2 + 1) };
     });
     if (!(CANON_ON && bindPathSkills(skillRows))) {
@@ -344,7 +340,7 @@ export function installPath(ctx) {
       SKILLS.map((s) => {
         const m = mastery()[s.id] ?? { stage: 'unseen' };
         return '<div class="skill-row"><span class="skill-name">' + s.name + '</span>' +
-          stageChip(m.stage) +
+          stageChip(m) +
           '<span class="skill-rule" title="how this is judged">' + s.passRule + '</span></div>';
       }).join('');
     }
@@ -675,9 +671,7 @@ export function installPath(ctx) {
     awardXp?.('lessonCleared', lessonDef.id);
     store.save(state);
     comboFlash(isReplay ? 'REPLAY ✓' : 'STEP CLEARED');
-    $('task-msg').textContent = isReplay
-      ? '✓ ' + (res.note ?? '') + ' Good practice. "' + lessonDef.title + '" was already yours; nothing changed on the ledger.'
-      : '✓ ' + (res.note ?? '') + ' "' + lessonDef.title + '" is yours. ' + SKILL_BY_ID[lessonDef.skillIds[0]].name + ' is now "on your own".';
+    $('task-msg').textContent = (res.note ?? '') + ' ' + competenceLine(mastery()[lessonDef.skillIds[0]]);
     $('task-start').hidden = true;
     setTimeout(() => { if (!$('screen-task').hidden) openPath(); }, 2400);
   }

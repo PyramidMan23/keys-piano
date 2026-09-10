@@ -16,7 +16,7 @@
 import { CANON } from './canon-templates.mjs';
 import { applyInherited, mountMarkup, renderCanonScreen } from './canon-screen.mjs';
 import { bindSegment as segmentVariants } from './canon-bind.mjs';
-import { reclaimIds, captureFocus, restoreFocus, nameControls, desktopFits, applyCanonZoom } from './canon-mount.mjs';
+import { reclaimIds, captureFocus, restoreFocus, nameControls, desktopFits, applyCanonZoom, prepareResponsive } from './canon-mount.mjs';
 import { coverDataUrl, sleeveUrlByGroup } from './covers.mjs';
 
 // THE SAMPLE ROWS, FOUND STRUCTURALLY.
@@ -398,6 +398,7 @@ export function renderCanonLibrary(host, ctx) {
     if (alternate) control(alternate).hidden = true;
     if (resume) control(resume).classList.add('practice-secondary');
   }
+  prepareResponsive(root, 'library');
   restoreFocus(host, focus);
   return root;
 }

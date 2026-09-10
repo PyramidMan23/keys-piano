@@ -11,7 +11,7 @@ window.addEventListener('beforeinstallprompt', (e) => { window.__installPrompt =
 // remain in the full SONGS export for tools and tests, but the app must never
 // offer one to a learner - a wrong hand teaches a wrong hand. This one import
 // line filters every read site: library, tier chips, continue cards, paths.
-import { SHELF as SONGS, validateSong, LADDER } from './songs.mjs';
+import { SHELF as SONGS, validateSong, songEndBeat, LADDER } from './songs.mjs';
 import { ContinuityTracker } from './perform.mjs';
 import { LOOPS, chordAt, compNotes } from './improv.mjs';
 import { Engine, medianOffset, chunkRange, timingSummary, biasText } from './engine.mjs';
@@ -34,16 +34,18 @@ import { analyzePedal, pedalNotes } from './pedal.mjs';
 import { analyzeArticulation, articulationSummary } from './artic.mjs';
 import { analyzeVoicing, voicingText } from './voicing.mjs';
 import { appendDiagnostic, PROGRESS_MAX_BYTES, exportProgress, importProgress, saveProgress, restoreProgress, groupSongs, classifyGroups, filterExplore } from './library.mjs';
-import { initializeExposure, RETENTION_MIN_DELAY, exposePassage, schedulePassageCheck, passageCheckKind, reconcileMastery, assessmentConditions, prescribe, qualifiesPlayable, recordPlayableRun, PROOF_PASS, SKILL_BY_ID, TEACHER_LESSONS, STAGES } from './teacher.mjs';
+// Run C: dated evidence adapters; storage fields remain additive.
+import { competenceRank, evidenceDate, competence, competenceLine, songEvidence, recordSongAttempt, initializeExposure, RETENTION_MIN_DELAY, exposePassage, schedulePassageCheck, passageCheckKind, reconcileMastery, assessmentConditions, prescribe, qualifiesPlayable, recordPlayableRun, PROOF_PASS, SKILL_BY_ID, TEACHER_LESSONS, STAGES } from './teacher.mjs';
 import {
   grantXp, totalXp, gameLevel, questsFor, chooseQuest, settleQuest,
   isoWeek, weeklyOptions, chooseWeekly, settleWeekly,
   rhythmOf, freezeOffer, useFreeze, earnFreeze, rebaseWeekly,
   LISTEN_MIN_PROPORTION, listeningCoverage, verdictWord, badges, JOURNEYS, journeyState, journeyAdvance, journeyWindow, journeyPlan, journeySettingsMatch, journeyAttemptMatches, firstPhrasePlan, firstRunEligible, recordBlock, blockCount,
 } from './game.mjs';
-import { difficultyLabel, difficultyScore, difficultyBand, HALL_OF_FAME } from './difficulty.mjs';
+// Run C: demand connection uses the existing lesson action.
+import { metSongDemands, demandConnection, difficultyLabel, difficultyScore, difficultyBand, HALL_OF_FAME } from './difficulty.mjs';
 import { coverDataUrl } from './covers.mjs';
-import { CANON_ON, setTextKeeping, setHTMLKeeping, setRichText, hideRestingLayer, setCanonNav, desktopFits, applyCanonZoom } from './canon-mount.mjs';
+import { CANON_ON, setTextKeeping, setHTMLKeeping, setRichText, hideRestingLayer, setCanonNav, desktopFits, applyCanonZoom, responsiveWidth, responsiveLibraryPlan } from './canon-mount.mjs';
 import { bindTrophyList, bindXpLog, bindKeys12, bindKeys12Count, bindLessonList, bindImprovLoop, bindSegmentByIds, bindSegment } from './canon-bind.mjs';
 import { installPracticeDisclosure, mountWidePlay, syncWidePlay, bindHandCells, syncHandCells } from './canon-play.mjs';
 import { renderCanonLibrary } from './canon-library.mjs';
@@ -660,16 +662,18 @@ function canonRowOf(variants) {
   // proofs per tier, easiest first: exactly the pips the design draws
   const tiers = variants.map((v) => songStats(v.id).stars || 0);
   const plays = variants.reduce((a, v) => a + (songStats(v.id).plays || 0), 0);
-  const banked = variants.some((v) => state.playable?.[v.id]?.provenAt);
-  const passedOnce = variants.some((v) => state.playable?.[v.id]?.days?.length);
+  // Run C: select one earned tier; never combine passes from different tiers.
+  const earned = variants.map(v => ({song:v, value:competence(songEvidence(state,v.id))}))
+    .filter(x => x.value).sort((a,b) => b.value.at-a.value.at)[0];
+  const status = earned ? `${earned.value.word} · ${earned.value.date}${earned.song.level ? ' · '+earned.song.level : ''}` : 'Not checked yet';
   return {
     song: main,
     title: main.title,
     sub: main.composer.replace(' · easy arrangement', ''),
     plays: String(plays),
     diff: difficultyLabel(main),
-    statusLabel: banked ? 'Proven' : passedOnce ? 'Passed once' : (plays > 0 || variants.some((v) => songStats(v.id).ms >= 60000)) ? 'Practising' : 'Not started',
-    state: banked ? 'Banked' : (plays > 0 || tiers.some((t) => t > 0) || variants.some((v) => songStats(v.id).ms >= 60000)) ? 'Needs work' : 'Not started',
+    statusLabel: status,
+    state: earned?.value.word === 'still remembered' ? 'Banked' : earned ? 'Needs work' : 'Not started',
     tiers,
     // ☠️ A PIP IS A LEVEL, NOT A POSITION. The design draws E, M and H, and the
     // renderer filled them by index: a song that ships Easy and Hard drew "E M",
@@ -908,11 +912,10 @@ function canonLibraryCtx() {
       const skillName = (skillId && SKILL_BY_ID[skillId]?.name)
         ?? rx.title
         ?? ({ diagnostic: 'The check-in', assessment: 'The assessment', done: 'Path complete' }[rx.kind] ?? 'Continue learning');
-      const stage = skillId ? (state.mastery?.[skillId]?.stage ?? 'unseen') : null;
-      const rank = stage ? STAGES.indexOf(stage) : -1;
+      const rank = skillId ? competenceRank(state.mastery?.[skillId]) : -1;
       return {
         skill: skillName, action: rx.reason, evidence: rx.evidence ?? '',
-        stage: rx.evidence ?? '',
+        stage: skillId ? competenceLine(state.mastery?.[skillId]) : rx.evidence ?? '',
         stagesDone: rank >= 0 ? rank + 1 : null,
         stagesTotal: rank >= 0 ? STAGES.length : null,
       };
@@ -1016,6 +1019,7 @@ const LIB_SEAM_MAX = 40;     // no single seam may open wider than this
 const LIB_GRID_TOP = 162;    // header 54 + tools 50 + tabs 44, off the board
 let libShelfTotal = 0;       // how many songs the active shelf actually has
 function libPlan() {
+  if (responsiveWidth(window.innerWidth)) return responsiveLibraryPlan(window.innerWidth, window.innerHeight, libShelfTotal);
   // WHOLE, FULL ROWS. Mark, 2026-08-30: "if we have enough songs, let the songs
   // take up that whole black space and just leave the last square as the See
   // all". So we never open a row we cannot completely fill: we take the tallest
@@ -1063,7 +1067,7 @@ function applyLibraryAtmosphere() {
   if (!frame || !frame.style.height) return;      // phone board: fixed column
   const z = Math.min(1, window.innerWidth / 1418);
   const target = Math.max(738, Math.round(window.innerHeight / z));
-  const prescribedLayout = card.classList.contains('practice-library');
+  const prescribedLayout = card.classList.contains('practice-library') || responsiveWidth(window.innerWidth);
   if (!prescribedLayout) frame.style.height = target + 'px';
   // the hero/tile band is the flexible region; find it as the frame child
   // containing the grid's show-more control
@@ -1726,7 +1730,13 @@ function finishSong() {
   const acc = engine.accuracy();
   const stars = acc >= 90 ? 3 : acc >= 75 ? 2 : acc >= 50 ? 1 : 0;
   const st = songStats(song.id);
-  const prevAcc = st.lastAcc;
+  // Run C: compare only the same passage, hands, help and tempo.
+  const compared = recordSongAttempt(state, song.id, {t:Date.now(), acc,
+    start:engine.startBeat, end:engine.endBeat, hand:engine.hand, tempo:engine.tempo*100,
+    wait:engine.waitMode, whole:!engine.loop && engine.startBeat === 0 && engine.endBeat >= songEndBeat(song)});
+  const prevAcc = compared.previous?.acc;
+  const resultCompetence = compared.attempt.whole && engine.hand === 'both' ? verdictWord(state, song.id)
+    : 'This passage: ' + competenceLine(st.attempts.filter(e => e?.scope === compared.attempt.scope));
   st.lastAcc = acc;
   st.plays++;
   st.best = Math.max(st.best, acc);
@@ -1773,13 +1783,13 @@ function finishSong() {
     (acc >= 90 ? 'Beautiful.' : acc >= 70 ? 'Nice one.' : 'Keep at it.');
   // capability delta (council: this replaces XP as the motivator)
   const delta = prevAcc != null
-    ? `<span class="${acc >= prevAcc ? 'delta-up' : 'delta-down'}">last time ${prevAcc}% → today <b>${acc}%</b></span>`
+    ? `<span class="${acc >= prevAcc ? 'delta-up' : 'delta-down'}">${evidenceDate(compared.previous.t)} ${prevAcc}% → today <b>${acc}%</b></span>`
     : '';
   // 14th council: assessment leads with accuracy + ONE verdict; the arcade
   // numbers are honest fun, visually subordinate and labelled arcade.
   $('results-stats').innerHTML = `
     <span class="lead"><b>${acc}%</b>accuracy</span>
-    <span class="lead verdict"><b>${verdictWord(state, song.id)}</b></span>
+    <span class="lead verdict"><b>${resultCompetence}</b></span>
     <span><b>${s.wrong}</b>wrong</span>` + delta +
     `<span class="arcade">arcade: ${points} pts · x${bestCombo} combo</span>`;
   // mastery analyzers (council 08-24): how he played, not just what he hit.
@@ -1824,6 +1834,7 @@ function finishSong() {
     const r = perf.tracker.result();
     $('results-title').textContent = `${r.rating}`;
     $('results-stats').innerHTML = `
+      <span class="lead verdict"><b>${resultCompetence}</b></span>
       <span><b>${r.longestRun}</b>longest run</span>
       <span><b>${r.stumbles}</b>stumbles</span>
       <span><b>${r.avgRecoveryBeats}</b>beats to recover</span>
@@ -2311,11 +2322,12 @@ function completeLesson() {
   // chosen by bridgeSongFor from the shipped library, never hand-listed and
   // never a placeholder. It reuses the canon's own action button because that
   // is the only action slot the lesson board draws.
-  const bridge = bridgeSongFor(lessonDef.id, SONGS);
+  const bridge = bridgeSongFor(lessonDef.id, SONGS, state);
   if (bridge) {
     const btn = $('lesson-rhythm-link');
     btn.dataset.label ??= (btn.textContent || '').trim();
     btn.dataset.bridge = bridge.id;
+    $('lesson-msg').textContent += ' ' + demandConnection(bridge, metSongDemands(state, SONGS));
     setTextKeeping(btn, `Now play: ${bridge.title} (right hand)`);
     btn.hidden = false;
   }
@@ -3844,7 +3856,7 @@ function renderTrophies() {
   // through to the app's own markup when the flag is off.
   const trophyRows = list.map((b) => {
     const ev = b.evidence ?? {};
-    const evText = b.id.startsWith('playable:') || b.id === 'first-playable'
+    const evText = ev.line ? ev.line : b.id.startsWith('playable:') || b.id === 'first-playable'
       ? `proven ${NOTE_DATE(ev.at)}`
       : b.id === 'first-proof' ? `${ev.songId ?? ''} ${ev.acc ?? ''}%`
       : b.id === 'calibrated' ? `${NOTE_DATE(ev.at)}`
@@ -3871,7 +3883,7 @@ function renderTrophies() {
   if (!(CANON_ON && bindTrophyList(trophyShow) && bindXpLog(xpShow))) {
   $('trophy-list').innerHTML = list.length ? list.map((b) => {
     const ev = b.evidence ?? {};
-    const evText = b.id.startsWith('playable:') || b.id === 'first-playable'
+    const evText = ev.line ? ev.line : b.id.startsWith('playable:') || b.id === 'first-playable'
       ? `proven ${NOTE_DATE(ev.at)} · two clean days, no waiting, full tempo`
       : b.id === 'first-proof' ? `${ev.songId ?? ''} · ${ev.section ?? ''} · ${ev.acc ?? ''}% · ${ev.at ? NOTE_DATE(ev.at) : ''}`
       : b.id === 'calibrated' ? `${NOTE_DATE(ev.at)} · median offset ${ev.offsetMs}ms`
@@ -3903,7 +3915,8 @@ $('btn-trophies').addEventListener('click', () => {
 // check: unexposed material tests transfer, familiar material tests retention.
 function journeyPass(sd, { acc }) {
   const all = journeyState(state, song);
-  const n2 = journeyAdvance(state, song);
+  // Run C: retain passed rung settings for the next challenge.
+  const n2 = journeyAdvance(state, song, acc == null ? null : {acc,at:Date.now(),tempo:engine.tempo*100,wait:engine.waitMode});
   journeyRetry = false;
   if (engine?.__guidedAttempt) guidedHold = true;
   journeyFeedback = acc == null ? 'Listening step banked. ' : `${acc}% accuracy. Step banked. `;
@@ -4490,10 +4503,28 @@ midi.onControl = (cc, val) => {
 };
 
 // ---------- boot ----------
+// Rotation can happen during a song. Adopt the existing live canvas and
+// controls without calling show(), which would stop the current activity.
+function refitPlayLayout() {
+  const host = $('screen-play');
+  if (active !== 'play' || host?.dataset.widePlay === '1' || !song) return;
+  if (!mountWidePlay(host)) return;
+  syncWidePlay({title:song.title,sub:songSub(song),
+    bpm:Math.round(song.bpm * (+$('tempo').value) / 100) + ' bpm',
+    accuracy:engine ? engine.accuracy() : 0,combo:0,tier:(falls?.comboLevel ?? 0)+1,
+    art:coverDataUrl(song,96)});
+  installPracticeDisclosure(host);
+}
+function refitLessonLayout() {
+  if (active !== 'lesson' || !lessonView) return;
+  lessonView.resize();
+  drawLessonKeys();
+}
 // sight exercises are throwaway ids; stop their stats entries accumulating
 for (const k of Object.keys(state.songs)) if (k.startsWith('sight-')) delete state.songs[k];
 window.addEventListener('resize', () => {
   falls?.resize(); fpView?.resize(); echoView?.resize(); window.__refitPlay?.();
+  refitLessonLayout();
   // the elastic library re-plans only when a WHOLE row of capacity changes
   if (CANON_ON && !$('screen-library').hidden) {
     const cap = libCapacity();
@@ -4544,6 +4575,7 @@ if ('serviceWorker' in navigator && location.protocol === 'https:') {
   window.addEventListener('resize', () => {
     clearTimeout(t);
     t = setTimeout(() => {
+      refitPlayLayout();
       const next = canonLibraryScreen();
       if (next !== composed) {
         composed = next;

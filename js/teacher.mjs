@@ -1,3 +1,4 @@
+import { songDemands, metSongDemands, demandsFit, demandConnection } from './difficulty.mjs';
 import { LESSONS as READING_LESSONS } from './lessons.mjs';
 // Teacher Loop v1 (11th council 2026-08-25): the spine that turns Keys from a
 // toolbox into a teacher, diagnose -> teach -> practise -> assess -> prescribe.
@@ -60,7 +61,7 @@ export const SKILLS = [
   {
     id: 'pulse', name: 'Steady pulse', prerequisites: [],
     observable: 'onset timing against a metronome click',
-    passRule: '8 of 10 taps inside 150ms',
+    passRule: 'At least 80% of taps within 150 milliseconds of the click',
   },
   {
     id: 'chord-symbol', name: 'Chords from a symbol', prerequisites: [],
@@ -91,6 +92,58 @@ export const stageRank = (s) => RANK[s] ?? 0;
 
 const DAY = 86400000;
 export const RETENTION_MIN_DELAY = DAY;
+// Run C: one dated competence vocabulary. No passed evidence means no claim.
+// A novel task cannot establish remembered learning of the preceding material.
+export function competence(record) {
+  const evidence = Array.isArray(record) ? record : record?.evidence;
+  const passes = (Array.isArray(evidence) ? evidence : [])
+    .filter(e => e?.passed === true && Number.isFinite(e.t) && Math.abs(e.t) <= 8640000000000000)
+    .slice().sort((a,b) => a.t-b.t);
+  const last = passes.at(-1);
+  if (!last) return null;
+  const previous = passes.slice(0,-1).findLast(e => e.assisted === false &&
+    (e.scope ?? '') === (last.scope ?? ''));
+  const word = last.assisted !== false ? 'with help' : !last.novel && previous &&
+    last.t - previous.t >= RETENTION_MIN_DELAY ? 'still remembered' : 'alone';
+  return {word, at:last.t, date:evidenceDate(last.t)};
+}
+export function competenceRank(record) {
+  return {'with help':2,alone:3,'still remembered':4}[competence(record)?.word] ?? -1;
+}
+export function evidenceDate(t) {
+  const d=new Date(t);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+export function competenceLine(record) {
+  const earned = competence(record);
+  return earned ? earned.word + ' · ' + earned.date : 'Not checked yet';
+}
+
+// Full-song evidence stays separate from passage and one-hand results.
+// Old proven dates remain usable; missing assistance or timing is not invented.
+export function songEvidence(st, songId) {
+  const current = Array.isArray(st.songs?.[songId]?.attempts) ? st.songs[songId].attempts : [];
+  const whole = current.filter(e => e?.whole && e.hand === 'both');
+  const provenAt = st.playable?.[songId]?.provenAt;
+  return Number.isFinite(provenAt) && provenAt > 0 && !whole.some(e => e.t <= provenAt)
+    ? [{t:provenAt, passed:true, assisted:false, scope:'whole:both'}, ...whole] : whole;
+}
+export function recordSongAttempt(st, songId, run) {
+  const stats = ((st.songs ??= {})[songId] ??= {});
+  if (!Array.isArray(stats.attempts)) {
+    if (stats.attempts != null) stats.legacyAttempts ??= stats.attempts;
+    stats.attempts=[];
+  }
+  const attempts = stats.attempts;
+  const attempt = {...run, passed:run.acc >= 85,
+    assisted:run.wait || run.tempo < 100, scope:run.whole ? `whole:${run.hand}` : `${run.start}:${run.end}:${run.hand}`};
+  const previous = attempts.findLast(e => e?.start === run.start && e.end === run.end &&
+    e.hand === run.hand && e.tempo === run.tempo && e.wait === run.wait);
+  attempts.push(attempt);
+  if (attempts.length > 80) attempts.shift();
+  return {attempt, previous:previous ?? null};
+}
+
 // spacing after each stage is reached (retention is TESTED, never assumed)
 const REVIEW_GAP = { introduced: 0, guided: DAY, independent: 2 * DAY, retained: 6 * DAY };
 
@@ -260,11 +313,10 @@ function prescribeCore(st, now, ctx = {}) {
     .sort((a, b) => mastery[a.id].dueAt - mastery[b.id].dueAt)[0];
   if (overdue) {
     const m = mastery[overdue.id];
-    const days = Math.max(1, Math.round((now - m.lastTested) / DAY));
     return {
       kind: 'review', skillId: overdue.id,
       reason: 'Time to check "' + overdue.name + '" is still there.',
-      evidence: 'last tested ' + days + ' day(s) ago · stage: ' + m.stage,
+      evidence: competenceLine(m),
     };
   }
 
@@ -315,7 +367,7 @@ function prescribeCore(st, now, ctx = {}) {
         return {
           kind: 'skill', skillId: missing, lessonId: lessonTeaching(missing)?.id,
           reason: '"' + SKILL_BY_ID[sid].name + '" needs "' + SKILL_BY_ID[missing].name + '" solid first.',
-          evidence: SKILL_BY_ID[missing].name + ' is at "' + (mastery[missing]?.stage ?? 'unseen') + '", it needs "independent"',
+          evidence: SKILL_BY_ID[missing].name + ': ' + competenceLine(mastery[missing]) + '. A pass alone is needed.',
         };
       }
     }
@@ -398,15 +450,15 @@ function prescribeCore(st, now, ctx = {}) {
     return {
       kind: 'lesson', lessonId: nextUndone.id,
       reason: 'Next up: "' + nextUndone.title + '".',
-      evidence: nextUndone.skillIds.map((sid) => SKILL_BY_ID[sid].name + ': ' + (mastery[sid]?.stage ?? 'unseen')).join(' · '),
+      evidence: nextUndone.skillIds.map((sid) => SKILL_BY_ID[sid].name + ': ' + competenceLine(mastery[sid])).join(' · '),
     };
   }
 
   if (!st.teacherAssessed) {
     return {
       kind: 'assessment',
-      reason: 'Every lesson is done. The last step is eight bars you have never seen.',
-      evidence: 'novel material is the only honest test of independence',
+      reason: 'Every chord lesson is done. Try eight bars in a different order, with help off.',
+      evidence: 'Both hands, with help off; a later pass is needed to test remembered learning',
     };
   }
 
@@ -443,13 +495,14 @@ function prescribeCore(st, now, ctx = {}) {
   // 8. earn the next playable song from the proof map
   const provenIds = new Set(Object.keys(st.playable ?? {}).filter((id) => st.playable[id].provenAt));
   const candidates = [...new Set(Object.values(SKILL_REPERTOIRE).flatMap((m) => m.proof.map((p) => p.songId)))];
-  const nextEarn = candidates.find((id) => !provenIds.has(id));
+  const met = metSongDemands(st, songs);
+  const nextEarn = candidates.find(id => !provenIds.has(id) && demandsFit(songDemands(songs.find(s=>s.id===id)),met));
   if (nextEarn) {
     const s = songs.find((x) => x.id === nextEarn);
     const p = st.playable?.[nextEarn];
     return {
       kind: 'repertoire', sub: 'earn-playable', songId: nextEarn,
-      reason: 'Make ' + (s?.title ?? nextEarn) + ' truly yours: full run, no waiting, full tempo.',
+      reason: demandConnection(s,met),
       evidence: (p?.days?.length ? 'one qualifying day banked, one more day proves it' : 'two ≥85% runs on different days make it playable'),
     };
   }
@@ -459,21 +512,30 @@ function prescribeCore(st, now, ctx = {}) {
     const s = songs.find((x) => x.id === id);
     if (!s?.group) continue;
     const next = songs
-      .filter((x) => x.group === s.group && (RANK_T[x.level] ?? 1) > (RANK_T[s.level] ?? 1) && !provenIds.has(x.id))
+      .filter((x) => x.group === s.group && (RANK_T[x.level] ?? 1) > (RANK_T[s.level] ?? 1) && !provenIds.has(x.id) && demandsFit(songDemands(x),met))
       .sort((a, b) => (RANK_T[a.level] ?? 1) - (RANK_T[b.level] ?? 1))[0];
     if (next) {
       return {
         kind: 'repertoire', sub: 'tier-up', songId: next.id,
-        reason: s.title + ' is proven on ' + s.level + ', time for ' + next.level + '.',
+        reason: demandConnection(next,met),
         evidence: 'a tier unlocks only after the one below is retained',
       };
     }
+  }
+  if (candidates.some(id=>songs.some(s=>s.id===id) && !provenIds.has(id))) {
+    const familiar=songs.find(s=>provenIds.has(s.id) && demandsFit(songDemands(s),met));
+    if (familiar) return {kind:'repertoire',sub:'consolidate',songId:familiar.id,
+      reason:'Play '+familiar.title+' again with help off; the next pieces ask for more than your recorded playing covers.',
+      evidence:competenceLine(songEvidence(st,familiar.id))};
+    return {kind:'review',skillId:'pulse',
+      reason:'Start with a steady-pulse check; there is not enough timed evidence to choose a new piece yet.',
+      evidence:competenceLine(mastery.pulse)};
   }
   const nGroups = playableGroups(st, songs).length;
   return {
     kind: 'done',
     reason: 'Foundation complete · ' + nGroups + ' song' + (nGroups === 1 ? '' : 's') + ' independently playable.',
-    evidence: SKILLS.map((s) => s.name + ': ' + (mastery[s.id]?.stage ?? 'unseen')).join(' · '),
+    evidence: SKILLS.map((s) => s.name + ': ' + competenceLine(mastery[s.id])).join(' · '),
   };
 }
 
@@ -485,21 +547,21 @@ export const TEACHER_LESSONS = [
     id: 'tl-pulse', title: 'A pulse you can trust', skillIds: ['pulse'],
     video: { url: 'https://www.youtube.com/watch?v=st7pabkIMZQ', title: "Playing with a Metronome: Beginner Piano Exercises for a Steady Tempo" },  // oEmbed-verified 2026-09-07
     teach: [
-      'Music is a clock: tick, tick, tick, tick. Your only job here is to press a key ON each tick.',
+      'For this exercise, keep a steady pulse: tick, tick, tick, tick. Your only job here is to press a key ON each tick.',
       'Say it out loud: "1, 2, 3, 4". Press as you SAY the number, like stepping on stones.',
       'Any key counts. This game is about WHEN you press, not WHICH key.',
     ],
     guided: { type: 'pulse', beats: 8, bpm: 70, help: true },
     transfer: { type: 'pulse', beats: 8, bpm: 84, help: false },
-    passRule: '8 of 10 taps inside 150ms',
+    passRule: 'At least 80% of taps within 150 milliseconds of the click',
   },
   {
     id: 'tl-symbols', title: 'Four chords from their symbols', skillIds: ['chord-symbol'],
     video: { url: 'https://www.youtube.com/watch?v=P28KMjSNQYg', title: "Master Major and Minor Triads" },  // oEmbed-verified 2026-09-07
     teach: [
-      'A chord is 3 keys pressed together, and its name tells you where to START: the C chord starts on the C key.',
-      'The recipe never changes: press the letter key, SKIP one white key, press, SKIP one, press. Letter, skip, press, skip, press.',
-      'A small m (like Am) is the same recipe, it just sounds sadder. The keys LIGHT UP to teach you: copy the lights until your fingers know it.',
+      'In this lesson each chord is a three-note triad in root position: the C major chord starts on the C key.',
+      'For these four root-position chords only (C major, A minor, F major and G major), start on the named white key, skip one white key, press, skip one, press. Other chords can need black keys.',
+      'The small m in Am means A minor. Here it uses the same white-key pattern; major and minor have different gaps in semitones. Copy the lit keys, then try recalling them without lights.',
     ],
     guided: { type: 'chord', pool: ['C', 'Am', 'F', 'G'], help: true },
     transfer: { type: 'chord', pool: ['G', 'F', 'Am', 'C'], help: false },
@@ -509,9 +571,9 @@ export const TEACHER_LESSONS = [
     id: 'tl-inversions', title: 'Move less: nearest position', skillIds: ['inversion'],
     video: { url: 'https://www.youtube.com/watch?v=KU4YLMlN5hk', title: "Beginner's Guide to Chord Inversions" },  // oEmbed-verified 2026-09-07
     teach: [
-      'Here is a secret: C chord (C+E+G) and Am chord (A+C+E) SHARE two keys. C and E are in both!',
-      'So to go from C to Am, keep two fingers glued down and move JUST ONE: the top finger slides from G down to A. One finger!',
-      'That is the whole lesson: be lazy. Move as few fingers as you can. The lights show the lazy way: copy them, and when the lights go off, press "Show me" any time you forget.',
+      'Here is a secret: C chord (C+E+G) and Am chord (A+C+E) SHARE two note names. C and E are in both!',
+      'From C4+E4+G4, keep C4 and E4 and move G4 UP to A4. The result C4+E4+A4 is A minor in an inversion: the same chord notes in a different order.',
+      'For each change, choose the position with the least total key-to-key travel. Some changes move all three notes. The lights show the target; "Show me" offers help and makes that attempt assisted.',
     ],
     guided: { type: 'inversion', seq: ['C', 'Am', 'F', 'G'], help: true },
     transfer: { type: 'inversion', seq: ['Am', 'F', 'C', 'G'], help: false },
@@ -523,7 +585,7 @@ export const TEACHER_LESSONS = [
     teach: [
       'Right hand: the chord (3 keys). Left hand: ONE low key, the chord letter. C chord = left hand presses a low C.',
       'Both hands land at the SAME moment, like two feet jumping together. One thud, not two.',
-      'Say the chord name out loud as you land. It feels silly. It works.',
+      'Try saying the chord name as you land if that helps you coordinate the change.',
     ],
     guided: { type: 'twohand', seq: ['C', 'Am', 'F', 'G'], help: true },
     transfer: { type: 'twohand', seq: ['F', 'C', 'G', 'Am'], help: false },
@@ -533,9 +595,9 @@ export const TEACHER_LESSONS = [
     id: 'tl-leadsheet', title: 'Play a lead sheet', skillIds: ['lead-sheet'],
     video: { url: 'https://www.youtube.com/watch?v=5v3z0cd7okY', title: "Reading Chords on a Lead Sheet" },  // oEmbed-verified 2026-09-07
     teach: [
-      'Real musicians often read just LETTERS above the music: C... Am... F... G. That whole line is called a lead sheet, and you can already play every chord in it.',
-      'Each letter lasts one bar (four clicks). On click 1: left hand letter-key, right hand chord, together. Then wait for the next bar.',
-      'The trick: while your hands play THIS letter, your eyes peek at the NEXT one. That is the whole skill.',
+      'A lead sheet usually shows a melody with chord symbols above it. Here we practise just the chord-symbol part: C, Am, F, G, using the chords from the earlier lessons.',
+      'In this exercise each chord symbol lasts one bar (four clicks). On click 1: left hand letter-key, right hand chord, together. Then wait for the next bar.',
+      'Try looking at the NEXT chord symbol while you hold this chord, so you can prepare the change.',
     ],
     guided: { type: 'leadsheet', bars: ['C', 'Am', 'F', 'G'], bpm: 60, help: true },
     transfer: { type: 'leadsheet', bars: ['Am', 'F', 'C', 'G'], bpm: 72, help: false },
@@ -546,7 +608,7 @@ export const TEACHER_LESSONS = [
 // The novel assessment: eight bars he has NOT drilled, in an order that appears
 // in no lesson. Novel material is the only honest test of independence.
 export const ASSESSMENT = {
-  id: 'tl-assessment', title: 'Eight bars you have never seen',
+  id: 'tl-assessment', title: 'Eight bars with help off',
   bars: ['F', 'G', 'C', 'Am', 'F', 'C', 'G', 'C'], bpm: 66,
   passRule: '7 of 8 bars correct, both hands together',
 };

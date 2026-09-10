@@ -31,7 +31,7 @@
 // look; the app keeps the behaviour it already proved.
 import { CANON } from './canon-templates.mjs';
 import { applyInherited } from './canon-screen.mjs';
-import { nameControls, bindBack, CANON_ON, desktopFits, applyCanonZoom } from './canon-mount.mjs';
+import { nameControls, bindBack, CANON_ON, desktopFits, prepareResponsive } from './canon-mount.mjs';
 import { bindSegment } from './canon-bind.mjs';
 import { voiceInfo } from './audio.mjs';
 
@@ -50,6 +50,9 @@ export function widePlayFits() {
   // 1000+, fit-scaled: the same gate every desktop composition now uses
   return CANON_ON && !!CANON['play-training'] && desktopFits();
 }
+
+export const playScale = (width, height) => width >= 1024
+  ? 1 : Math.min(1, width / 1418, height / 738);
 
 // Idempotent: safe to call on every show('play').
 export function mountWidePlay(host) {
@@ -70,7 +73,7 @@ export function mountWidePlay(host) {
   // height while width stays full, and the width-only zoom clipped the rail's
   // bottom buttons clean off (Mark, 2026-08-30: "there's no restart button").
   const fitZoom = () => {
-    const z = Math.min(1, window.innerWidth / 1418, window.innerHeight / 738);
+    const z = playScale(window.innerWidth, window.innerHeight);
     board.style.zoom = z < 1 ? String(z) : '';
   };
   fitZoom();
@@ -595,6 +598,18 @@ export function mountWidePlay(host) {
 
   bindBack(board);
   nameControls(board);
+  prepareResponsive(board, 'play');
+  for (const [el, role] of [[wrap, 'play-frame'], [header, 'play-header'], [main, 'play-main'],
+    [deckSide, 'play-stage'], [column, 'play-controls'], [region, 'play-deck']]) {
+    if (el) el.dataset.reflow = role;
+  }
+  rail.dataset.reflow = 'play-rail';
+  // Content changes (the correction card, disclosure and first-minute keys)
+  // resize the canvas too, even when the window itself has not resized.
+  const observer = new ResizeObserver(() => window.__falls?.resize?.());
+  observer.observe(falls);
+  board.__responsiveObserver = observer;
+  fitZoom();
   syncWidePlay();
   return true;
 }

@@ -1,3 +1,4 @@
+import { SKILL_BY_ID, competence, competenceLine, songEvidence } from './teacher.mjs';
 // Gamification engine (14th council 2026-08-28, Mark's directive: "gamify
 // everything... according to psychology"). The laws baked in:
 //  - XP from VALUE, not volume: no per-note, per-lap or combo XP; one-time
@@ -168,10 +169,7 @@ export function earnFreeze(st, cap = 3) {
 
 // ---- assessment vocabulary (one voice everywhere judgment lives) ----
 export function verdictWord(st, songId) {
-  if (st.playable?.[songId]?.provenAt) return 'Playable independently';
-  const s = st.songs?.[songId];
-  if (!s || !s.plays) return 'Not yet assessed';
-  return (s.best ?? 0) >= 85 ? 'One clean day banked' : 'Needs work';
+  return competenceLine(songEvidence(st, songId));
 }
 
 // ---- badges: an evidence cabinet, never hue-only ----
@@ -184,6 +182,28 @@ export function badges(st, songs = []) {
   for (const [id, p] of playable) {
     const s = songs.find((x) => x.id === id);
     out.push({ id: 'playable:' + id, word: (s?.title ?? id) + ' · playable', shape: '★', evidence: { songId: id, at: p.provenAt } });
+  }
+  // Run C: dated ability rows include assisted and first independent passes.
+  for (const id of Object.keys(st.songs ?? {})) {
+    const earned = competence(songEvidence(st,id));
+    if (!earned || playable.some(([key]) => key === id)) continue;
+    const song = songs.find(s => s.id === id);
+    out.push({id:'competence:'+id, word:(song?.title ?? id) + ' · ' + earned.word,
+      shape:earned.word === 'with help' ? '◑' : earned.word === 'alone' ? '●' : '★',
+      evidence:{songId:id, at:earned.at, line:competenceLine(songEvidence(st,id))}});
+  }
+  for (const [id, record] of Object.entries(st.mastery ?? {})) {
+    const earned = competence(record);
+    if (earned) out.push({id:'skill:'+id, word:(SKILL_BY_ID[id]?.name ?? id) + ' / ' + earned.word,
+      shape:earned.word === 'with help' ? '◑' : earned.word === 'alone' ? '●' : '★',
+      evidence:{at:earned.at, line:competenceLine(record)}});
+  }
+  for (const badge of out) {
+    if (!badge.id.startsWith('playable:') && badge.id !== 'first-playable') continue;
+    const earned = competence(songEvidence(st,badge.evidence.songId));
+    const song = songs.find(s => s.id === badge.evidence.songId);
+    badge.word = (song?.title ?? badge.evidence.songId) + ' · ' + (earned?.word ?? 'Not checked yet');
+    badge.evidence.line = competenceLine(songEvidence(st,badge.evidence.songId));
   }
   if (st.calibratedAt) out.push({ id: 'calibrated', word: 'Calibrated', shape: '◎', evidence: { at: st.calibratedAt, offsetMs: st.calOffsetMs } });
   if ((st.bestRhythm ?? 0) >= 7) out.push({ id: 'rhythm7', word: '7-day rhythm', shape: '●', evidence: { best: st.bestRhythm } });
@@ -301,12 +321,19 @@ export function journeyWindow(st, song) {
   const idx = shown.findIndex(({ i }) => i === js.step);
   return { steps: shown.map(({ s }) => s), step: idx < 0 ? shown.length : idx, all: js };
 }
-export function journeyAdvance(st, song) {
+export function journeyAdvance(st, song, evidence = null) {
   const id = typeof song === 'string' ? song : song?.id;
   const steps = typeof song === 'string' ? JOURNEYS[song] : journeyFor(song);
   if (!steps || !id) return null;
   const j = ((st.journeys ??= {})[id] ??= { step: 0 });
-  if (j.step < steps.length) j.step++;
+  if (j.step < steps.length) {
+    const step=steps[j.step];
+    if (evidence && Number.isFinite(evidence.acc) && step.pass !== 'hear') {
+      (j.passes ??= []).push({...step,...evidence});
+      if (j.passes.length > 100) j.passes.shift();
+    }
+    j.step++;
+  }
   return j.step;
 }
 
