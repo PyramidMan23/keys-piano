@@ -97,11 +97,20 @@ export function measure(screen, baseline = null, intersects = overlap) {
     if (!targets.length) problems.push('missing text: '+selector);
     if (targets.length) fonts[selector] = Math.min(...targets.map(el=>parseFloat(getComputedStyle(el).fontSize)));
     if (baseline?.[selector] && fonts[selector] + .01 < baseline[selector]) problems.push('smaller type: '+selector+' '+fonts[selector]+' < '+baseline[selector]);
+    // Two leaves can share one text (a hero title and a grid tile of the same
+    // song). The baseline recorded the LARGEST instance, so compare the largest
+    // (Fable, 2026-09-10: a 17px tile was read as a 24px title shrinking).
+    const byKey = new Map();
     for (const el of targets) {
       const key=selector+'|'+el.textContent.trim();
-      fonts[key]=parseFloat(getComputedStyle(el).fontSize);
+      const size=parseFloat(getComputedStyle(el).fontSize);
+      const cur=byKey.get(key);
+      if(!cur || size>cur.size) byKey.set(key,{size,el});
+    }
+    for (const [key,{size,el}] of byKey) {
+      fonts[key]=size;
       const drawn=baseline?.[key] ?? (parseFloat(el.style.fontSize) || baseline?.[selector]);
-      if(drawn && fonts[key]+.01<drawn) problems.push('smaller type: '+name(el)+' '+fonts[key]+' < '+drawn);
+      if(drawn && size+.01<drawn) problems.push('smaller type: '+name(el)+' '+size+' < '+drawn);
     }
   }
   const surface = card.querySelector(screen === 'lesson' ? '#lesson-stave' : '#score-wrap');
@@ -143,7 +152,8 @@ async function main() {
       if(screen==='play') await click('Resume the session','#screen-library');
       if(screen==='path' || screen==='lesson') {
         await click('All tools','#screen-library'); await click(screen==='path'?'My path':'Lessons');
-        if(screen==='lesson') await click('Continue here','#screen-lessons');
+        // the phone lessons board has no "Continue here" control; a lesson title opens it there
+        if(screen==='lesson') { try { await click('Continue here','#screen-lessons'); } catch { await click('Middle C and the grand staff','#screen-lessons'); } }
       }
       await b.eval('window.scrollTo(0,0); true'); await settle();
     };
@@ -181,7 +191,11 @@ async function main() {
         await open(screen);
         await b.eval('window.__responsiveEngine=window.__engine; true');
         await b.send('Emulation.setDeviceMetricsOverride',{width:1400,height:756,deviceScaleFactor:1,mobile:false});
-        await b.eval('new Promise(r=>setTimeout(r,600))'); await b.ready(6000); await settle();
+        // Crossing the desktop width while idling on the library reloads the shell on purpose
+        // (app.mjs, the composition swap). Wait on the Node side so a page eval is never in
+        // flight during that navigation, then let the app come back up.
+        await new Promise(r=>setTimeout(r,1500)); await b.ready(8000); await settle();
+        if(screen==='library') { await b.eval('window.scrollTo(0,0); true'); await settle(); }
         const r=await read(screen,baselines[screen]);
         if(screen==='play' && !(await b.eval('!!window.__engine && window.__responsiveEngine===window.__engine'))) r.problems.push('rotation replaced the live engine');
         if(r.problems.length)failed++;
