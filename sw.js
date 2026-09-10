@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v125';  // Run A of the road to 9.5: the musical first minute, one guided session on the play screen, one correction after a miss
+const VERSION = 'keys-v126';  // Runs B and C of the road to 9.5: genuinely responsive layouts; competence words with dates; next song chosen by measured demands; every lesson's wording corrected
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
