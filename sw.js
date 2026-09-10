@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v124';  // Gerudo Valley Hard carries all 1,732 video strikes (273 merged repeats recovered); per-tier video provenance and reconciliation numbers on the three video songs
+const VERSION = 'keys-v125';  // Run A of the road to 9.5: the musical first minute, one guided session on the play screen, one correction after a miss
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
