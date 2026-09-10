@@ -166,7 +166,7 @@ for (const width of [756, 1418]) {
   ok(width + ': reload restores the exact rung with a visible instruction and named exit', resumed.hand === 'L' && resumed.wait && resumed.tempo === 1 && resumed.sec === '0' && resumed.count === 1 && resumed.fits && resumed.sized && /left hand, help on.*70%/.test(resumed.instruction) && /resume at Left hand/.test(resumed.exit), JSON.stringify(resumed));
   // Activate the exit with the keyboard, then prove leaving ends the screen.
   await b.eval(`document.getElementById('j-exit').focus(); true`);
-  await b.send('Input.dispatchKeyEvent', {type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+  await b.send('Input.dispatchKeyEvent', {type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,text:'\r',unmodifiedText:'\r'});
   await b.send('Input.dispatchKeyEvent', {type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
   await sleep(400);
   ok(width + ': the named exit works from the keyboard and ends the demo', (await visible()) === 'library' && await b.eval('!window.__falls?.seekable'));
@@ -181,7 +181,7 @@ for (const [width, experience, expectedHand] of [[756,'new','R'],[1418,'returnin
   await b.eval(`document.getElementById('firstrun-retry').click(); true`); await sleep(250);
   if (experience === 'new') {
     await b.eval(`document.getElementById('firstrun-taps').focus(); true`);
-    await b.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+    await b.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13,text:'\r',unmodifiedText:'\r'});
     await b.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
   } else await b.eval(`window.__simNote(64,true); window.__simNote(64,false); true`);
   const heardKey = await b.eval(`document.getElementById('firstrun-msg').textContent`);
@@ -203,7 +203,8 @@ for (const [width, experience, expectedHand] of [[756,'new','R'],[1418,'returnin
   const result = await b.eval(`({label:document.getElementById('j-go').textContent,words:document.getElementById('j-instruction').textContent,saved:JSON.parse(localStorage.getItem('keys-v1')).firstMinuteResult})`);
   ok(width+': playing screen notes earns a scored first phrase', result.label==='Open library' && result.saved?.accuracy>=70 && /Four bars banked/.test(result.words), JSON.stringify(result));
   await b.eval(`document.getElementById('j-go').click(); true`); await sleep(500);
-  ok(width+': the library offers the check-in without opening it', (await visible())==='library' && await b.eval(`/check-in/i.test(document.getElementById('practice-primary')?.textContent ?? '')`));
+  // the offer is the prescription module naming the check-in above one primary button; the button's own label is the action word
+  ok(width+': the library offers the check-in without opening it', (await visible())==='library' && await b.eval(`/check-in/i.test(document.querySelector('.practice-prescription')?.textContent ?? '') && !!document.getElementById('practice-primary')`));
   await b.goto('http://localhost:4180/index.html'); await b.ready(); await sleep(500);
   ok(width+': a returning player never sees the welcome again', await b.eval(`document.getElementById('firstrun').hidden`));
 }

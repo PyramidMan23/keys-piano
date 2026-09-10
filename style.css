@@ -940,6 +940,10 @@ button:active:not(:disabled),
 .practice-adjust:not([open]) > .practice-adjust-modes { display: none; }
 .practice-adjust-modes > * { min-height: 44px; max-width: 100%; }
 .session-guide { box-sizing: border-box; flex: 0 0 auto; width: 100%; padding: 10px 12px; border: 1px solid currentColor; border-radius: 12px; color: inherit; font: inherit; }
+/* While immersed, the Play again pill lives in the top-right of the readout strip (canon-play.mjs, the
+   only band with nothing in it). Run A put the session guide in that strip, so the pill printed over the
+   guide's first lines (restart-probe, 2026-09-10). The guide cedes that corner while the pill is shown. */
+.canon-root [data-immersed="1"] .session-guide { padding-right: 200px; }
 .session-guide p { margin: 0 0 8px; line-height: 1.4; }
 .session-guide .session-goal { font-weight: 700; }
 .session-actions { display: flex; flex-wrap: wrap; gap: 8px; }

@@ -693,15 +693,8 @@ export function installPracticeDisclosure(host) {
   details.appendChild(modes);
   controls[0].parentElement.insertBefore(details, controls[0]);
   for (const control of controls) modes.appendChild(control);
-  const selectors = '#section-select, [data-guide-section], .hand-btn, [data-hand-cell], #wait-mode, [data-reflects="wait-mode"], #tempo, [data-proxy-for="tempo"]';
-  const settings = [...host.querySelectorAll(selectors)]
-    .filter(el => el.getBoundingClientRect().width > 0 && !el.closest('.practice-adjust'));
-  for (const control of settings) {
-    if (control.closest('.practice-adjust')) continue;
-    if (control.matches('select, input')) {
-      const label = document.createElement('label');
-      label.textContent = control.tagName === 'SELECT' ? 'Section ' : control.type === 'checkbox' ? 'Help on ' : 'Tempo ';
-      label.appendChild(control); modes.appendChild(label);
-    } else modes.appendChild(control);
-  }
+  // The drawn Section, Hands, Help and Tempo controls STAY where the design drew them. Run A moved them
+  // into this disclosure too; at the drawn desktop width that clipped the section select below the
+  // column, shrank the hand cells to 22px and lost the Wait for me label (canon-journeys PLAY PARITY,
+  // 2026-09-10). The controller sets them itself; the four alternate modes are the override.
 }
