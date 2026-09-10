@@ -45,6 +45,9 @@ for (const width of process.argv[2] ? [Number(process.argv[2])] : [1418, 1100, 7
     assert.equal(seek.repeat,false); assert.equal(seek.range.start,0);
     assert.equal(seek.range.end,seek.end); assert.ok(seek.first>=seek.start);
     assert.equal(seek.guided,false); assert.equal(seek.stats.missed,0);
+    await b.eval(`__falls.onSeek(0)`);
+    assert.equal(await b.eval('__engine.loop'),null,'returning to zero restores a full-song attempt');
+    await b.eval(`__falls.onSeek(${seek.start/seek.end})`);
     await b.eval(`document.getElementById('guide-toggle').scrollIntoView({block:'center'})`);
     await tap('guide-toggle');
     assert.equal(await b.eval(`document.getElementById('guide-body').hidden`),false);

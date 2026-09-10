@@ -3067,7 +3067,8 @@ function seekPractice(frac) {
   const notes = song.notes.filter(n => hand === 'both' || n.h === hand);
   if (!notes.length) return;
   const lastOnset = Math.max(...notes.map(n => n.b));
-  practiceStart = Math.min(lastOnset, Math.max(0, Math.min(1, frac)) * songEndBeat(song));
+  const start = Math.min(lastOnset, Math.max(0, Math.min(1, frac)) * songEndBeat(song));
+  practiceStart = start > 0 ? start : null; // returning to zero is a genuine full-song attempt
   chunkIdx = null; loopOverride = null; syncChunkLabel();
   $('section-select').value = '';
   ((state.journeys ??= {})[song.id] ??= {step:0}).guided = false;
@@ -3075,7 +3076,7 @@ function seekPractice(frac) {
   falls.pressed.clear();
   rebuildEngine();
   fadePlayCover();
-  jlog('practice_seek', {id:song.id, start:practiceStart, end:engine.endBeat});
+  jlog('practice_seek', {id:song.id, start:engine.startBeat, end:engine.endBeat});
 }
 
 function armPracticeTransport() {
