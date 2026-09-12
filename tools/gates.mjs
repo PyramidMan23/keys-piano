@@ -48,6 +48,8 @@ const ALL = [
   'tools/bars-probe.mjs',
   'tools/finger-probe.mjs',
   'test/check.mjs',
+  'test/five-improvements.mjs',
+  'tools/five-improvements-probe.mjs',
   'test/import-roundtrip.mjs',
   'tools/score-render-check.mjs',
   'tools/hand-audit.mjs',

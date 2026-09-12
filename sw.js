@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v128';  // Restart names the chosen song position; one click restores the beginning.
+const VERSION = 'keys-v129';  // Coaching, source evidence, custom passages and engraved notation.
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
@@ -13,6 +13,10 @@ const SHELL = [
   'js/touch.mjs', 'js/pedal.mjs', 'js/artic.mjs', 'js/voicing.mjs', 'js/takes.mjs', 'js/form.mjs', 'js/memory.mjs',
   'js/perform.mjs', 'js/improv.mjs', 'js/teacher.mjs', 'js/path.mjs', 'js/library.mjs', 'js/game.mjs', 'js/difficulty.mjs', 'js/covers.mjs',
   'js/art-manifest.mjs',
+  'js/notation.mjs', 'js/engraving.mjs', 'vendor/vexflow-4.2.5.js',
+  'js/practice-insight.mjs', 'js/music-source.mjs', 'js/source-checks.mjs',
+  'js/practice-template.mjs',
+  'js/source-signature.mjs',
   // the canon: the design as markup, and everything that mounts and binds it
   'js/canon-templates.mjs', 'js/canon-mount.mjs', 'js/canon-screen.mjs', 'js/canon-play.mjs',
   'js/canon-library.mjs', 'js/canon-bind.mjs', 'js/canon-list.mjs',

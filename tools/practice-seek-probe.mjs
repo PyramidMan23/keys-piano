@@ -35,6 +35,7 @@ for (const width of process.argv[2] ? [Number(process.argv[2])] : [1418, 1100, 7
       await click(tier.x,tier.y);
     }
     assert.equal(await b.eval('__engine.song.id'),songId);
+    if (await b.eval(`document.getElementById('guide-body').hidden`)) await tap('guide-toggle');
     const before=await box('falls');
     await tap('guide-toggle');
     assert.equal(await b.eval(`document.getElementById('guide-body').hidden`),true);

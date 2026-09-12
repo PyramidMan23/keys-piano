@@ -51,8 +51,8 @@ const PAGE = `(async () => {
     return +(((Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05))).toFixed(2);
   };
   const ground = getComputedStyle(wrap).backgroundColor;
-  const heads = [...svg.querySelectorAll('ellipse')];
-  const lines = [...svg.querySelectorAll('line')];
+  const heads = [...svg.querySelectorAll('ellipse, .vf-notehead path')];
+  const lines = [...svg.querySelectorAll('line, .vf-stave path')];
   const glyphs = [...svg.querySelectorAll('text')];
   const paint = (els, prop) => {
     const seen = new Map();

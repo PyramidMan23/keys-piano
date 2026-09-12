@@ -1,5 +1,6 @@
 journal.log
 *.log
 node_modules/
+.impeccable/review/
 .DS_Store
 desktop.ini

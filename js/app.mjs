@@ -18,6 +18,9 @@ import { Engine, medianOffset, chunkRange, timingSummary, biasText } from './eng
 import { MidiInput } from './midi.mjs';
 import { FallsView, LOW, HIGH, COLORS } from './falls.mjs';
 import { ScoreView } from './score.mjs';
+import { attemptComparison, practiceConditions, recentEvidence, passageBounds } from './practice-insight.mjs';
+import { musicSource } from './music-source.mjs';
+import { PRACTICE_TEMPLATE } from './practice-template.mjs';
 import { playPreview, stopPreview, setVoiceMode, voiceInfo, voiceModeLabel, voiceModeNext, soundModeNext, tapSoundActive } from './audio.mjs';
 import { pickPhrase, EchoRound, TransposeRound } from './echo.mjs';
 import { MEM_STAGES, memCues, memAdvance, randomStartBar } from './memory.mjs';
@@ -45,7 +48,7 @@ import {
 // Run C: demand connection uses the existing lesson action.
 import { metSongDemands, demandConnection, difficultyLabel, difficultyScore, difficultyBand, HALL_OF_FAME } from './difficulty.mjs';
 import { coverDataUrl } from './covers.mjs';
-import { CANON_ON, setTextKeeping, setHTMLKeeping, setRichText, hideRestingLayer, setCanonNav, desktopFits, applyCanonZoom, responsiveWidth, responsiveLibraryPlan } from './canon-mount.mjs';
+import { CANON_ON, setTextKeeping, setHTMLKeeping, setRichText, hideRestingLayer, setCanonNav, desktopFits, applyCanonZoom, responsiveWidth, responsiveLibraryPlan, prepareResponsive } from './canon-mount.mjs';
 import { bindTrophyList, bindXpLog, bindKeys12, bindKeys12Count, bindLessonList, bindImprovLoop, bindSegmentByIds, bindSegment } from './canon-bind.mjs';
 import { installPracticeDisclosure, mountWidePlay, syncWidePlay, bindHandCells, syncHandCells } from './canon-play.mjs';
 import { renderCanonLibrary } from './canon-library.mjs';
@@ -1371,7 +1374,8 @@ let memo = null; // memory ladder {section, rec:{stage,passes}, cues, recallBar}
 let memoLastClickBeat = null; // blank-stage metronome edge detector
 let loopOverride = null; // one-shot {start,end} consumed by the next rebuild
 let practiceStart = null;
-let guideCollapsed = false;
+let customPassage = null;
+let guideCollapsed = window.innerWidth < 756;
 const PASS_ACC = 85;
 let previewActive = false, previewStop = null;
 let demoEngine = null; // Hear-it v2 (Mark 2026-08-28): the song PLAYS ITSELF: 
@@ -1427,6 +1431,7 @@ function bankBlock(kind, ref) {
   return n;
 }
 function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
+  customPassage = null;
   jlog('song_start', { id: s.id, sight: !!s.sightRead });
   (state.passageExposure ??= {})[s.id] ??= { known: !state.songs?.[s.id], sections: {} };
   songStats(s.id).lastAt = Date.now(); // touched: the Learning shelf's recency key
@@ -1451,6 +1456,7 @@ function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   $('btn-train').disabled = sightMode;
   show('play');
   bindNarrowPlayHeader();
+  if (CANON_ON && !$('screen-play').dataset.widePlay) prepareResponsive($('screen-play').firstElementChild,'play');
   // "free time": this song's grid is the transcriber's default, not measured
   // meter, so the app must not sell it as bars-and-counts (council 2026-09-01).
   $('now-playing').textContent = `${s.title}${s.level ? ' · ' + s.level : ''} · ${s.composer.replace(' · easy arrangement', '')} · ${difficultyLabel(s)} (estimated)${s.freeTime ? ' · free time' : ''}${s.meterVerified ? ` · ${s.timeSig[0]}/${s.timeSig[1]}` : ''}`;
@@ -1511,6 +1517,8 @@ function rebuildEngine(preserveCorrection = false, preserveFirstMinute = false) 
   guidedHold = false;
   bankSongTime(); // a rebuild replaces the engine: keep what the old one counted
   const secIdx = $('section-select').value;
+  if (secIdx !== '' || chunkIdx !== null || preserveCorrection === true || preserveFirstMinute === true) customPassage = null;
+  if (customPassage) loopOverride = {...customPassage};
   if (loopOverride || chunkIdx !== null || secIdx !== '') practiceStart = null;
   const loop = loopOverride ? { ...loopOverride }
     : practiceStart !== null ? { start: practiceStart, end: songEndBeat(song) }
@@ -1754,7 +1762,7 @@ function finishSong() {
     st.stars = Math.max(st.stars || 0, stars);
     st.bestScore = Math.max(st.bestScore || 0, points);
   }
-  if ((scorePassFlag || viewMode === 'score') && practiceStart === null) st.scorePasses++;
+  if ((scorePassFlag || viewMode === 'score') && score?.engraved && practiceStart === null) st.scorePasses++;
   st.bestCombo = Math.max(st.bestCombo ?? 0, bestCombo); // arcade stat, labelled arcade
   // playable-song ledger (13th council): only uncarryable evidence counts, 
   // whole song, help off, full tempo, both hands, ≥85%. Two days prove it.
@@ -2658,6 +2666,14 @@ function scheduleFrame() {
 }
 
 function onLap(ev) {
+  if (customPassage && !engine.__correction) {
+    recordSongAttempt(state, song.id, {t:Date.now(),acc:ev.accuracy,start:engine.startBeat,end:engine.endBeat,
+      hand:engine.hand,tempo:engine.tempo*100,wait:engine.waitMode,whole:false});
+    bankBlock('custom-passage',`${song.id}|${engine.startBeat}:${engine.endBeat}`);
+    jlog('custom_passage_result',{id:song.id,start:engine.startBeat,end:engine.endBeat,acc:ev.accuracy});
+    renderJourney();
+    return;
+  }
   if (engine.__correction && correction?.phase === 'trying') {
     correction.after = passageAccuracy(ev.evidence, correction.start, correction.end);
     correction.phase = 'result'; guidedHold = true;
@@ -3066,6 +3082,7 @@ function seekPractice(frac) {
   if (previewActive || active !== 'play' || !song || sightMode || perf) return;
   const notes = song.notes.filter(n => hand === 'both' || n.h === hand);
   if (!notes.length) return;
+  customPassage = null;
   const lastOnset = Math.max(...notes.map(n => n.b));
   const start = Math.min(lastOnset, Math.max(0, Math.min(1, frac)) * songEndBeat(song));
   practiceStart = start > 0 ? start : null; // returning to zero is a genuine full-song attempt
@@ -3093,14 +3110,15 @@ function practiceStartTime() {
 }
 
 function syncPracticeRestart() {
-  const label = practiceStart === null ? 'Restart' : `Restart from ${practiceStartTime()}`;
+  const label = customPassage ? 'Restart passage' : practiceStart === null ? 'Restart' : `Restart from ${practiceStartTime()}`;
   $('btn-restart').textContent = label;
   $('btn-restart').setAttribute('aria-label', label);
-  $('results-again').textContent = practiceStart === null ? 'Play again' : label;
+  const fromStart = !customPassage && practiceStart === null;
+  $('results-again').textContent = fromStart ? 'Play again' : label;
   const immersed = $('cp-again');
   if (immersed) {
-    immersed.setAttribute('aria-label', practiceStart === null ? 'Play again from the start' : label);
-    immersed.querySelector('span').textContent = practiceStart === null ? 'Play again' : label;
+    immersed.setAttribute('aria-label', fromStart ? 'Play again from the start' : label);
+    immersed.querySelector('span').textContent = fromStart ? 'Play again' : label;
   }
 }
 
@@ -3205,6 +3223,8 @@ function disarmTransport() {
 }
 
 function syncModeButtons() {
+  window.__viewMode = viewMode;
+  for (const mode of ['falls', 'score']) $('mode-' + mode).setAttribute('aria-pressed', String(viewMode === mode));
   // under the canon the selected look is an inline style, not a CSS rule
   if (!(CANON_ON && bindSegmentByIds(['mode-falls', 'mode-score'], viewMode === 'score' ? 'mode-score' : 'mode-falls'))) {
     $('mode-falls').dataset.on = String(viewMode === 'falls');
@@ -3213,6 +3233,7 @@ function syncModeButtons() {
   $('falls').hidden = viewMode !== 'falls';
   $('score-wrap').hidden = viewMode !== 'score';
   if (viewMode === 'falls') falls?.resize();
+  if (CANON_ON) syncWidePlay();
 }
 
 $('mode-falls').addEventListener('click', () => { viewMode = 'falls'; syncModeButtons(); });
@@ -4066,6 +4087,7 @@ function renderCorrection() {
   }
 }
 function applyJourneyPlan() {
+  customPassage = null;
   const plan = journeyPlan(state, song);
   if (!plan) return false;
   practiceStart = null;
@@ -4092,6 +4114,7 @@ function renderJourney() {
   const label = !cur ? null : previewActive ? 'Stop listening' : journeyRetry ? `Try again: ${cur.name}` : plan.action;
   // There is only one live controller. The desktop binder adopts this node.
   const focused = document.getElementById('session-guide')?.contains(document.activeElement) ? document.activeElement.id : null;
+  const openDetails = [...document.querySelectorAll('#session-guide details[open]')].map(d=>d.id);
   document.getElementById('session-guide')?.remove();
   strip.innerHTML = jw.steps.map((s2, i) => `
     <span class="j-step ${i < jw.step ? 'done' : i === jw.step ? 'now' : ''}" style="white-space:nowrap">
@@ -4150,8 +4173,51 @@ function renderJourney() {
   });
   if (firstMinute) renderFirstMinute();
   renderCorrection();
+  if (!firstMinute && !correction) renderPracticeTools(openDetails);
   if (CANON_ON) syncWidePlay();
   if (focused) $(focused)?.focus({preventScroll:true});
+}
+
+function renderPracticeTools(openDetails=[]) {
+  if (!engine || !song || !$('guide-body')) return;
+  const host=document.createElement('div'); host.className='practice-tools'; host.innerHTML=PRACTICE_TEMPLATE;
+  $('guide-body').append(host);
+  const context={start:engine.startBeat,end:engine.endBeat,whole:!engine.loop&&engine.startBeat===0&&engine.endBeat>=songEndBeat(song),hand:engine.hand,tempo:engine.tempo*100,wait:engine.waitMode};
+  const history=state.songs?.[song.id]?.attempts;
+  const baseline=attemptComparison(history,context);
+  $('practice-baseline-label').textContent=baseline.label;
+  $('practice-baseline').textContent=baseline.text;
+  $('practice-conditions').textContent=practiceConditions(context);
+  for(const e of recentEvidence(history)){
+    const li=document.createElement('li');
+    const when=new Date(e.t).toLocaleDateString(undefined,{month:'short',day:'numeric'});
+    const span=e.whole?'Whole song':`${Math.round(e.start*60/song.bpm)}–${Math.round(e.end*60/song.bpm)} seconds`;
+    li.textContent=`${when}: ${Math.round(e.acc)}% · ${span}. ${practiceConditions(e)}`;
+    $('practice-history').append(li);
+  }
+  if(!$('practice-history').children.length){const li=document.createElement('li');li.textContent='No completed attempts recorded for this tier yet.';$('practice-history').append(li);}
+  const source=musicSource(song);$('source-label').textContent=source.label;
+  for(const [term,value] of source.rows){const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=term;dd.textContent=value;$('source-facts').append(dt,dd);}
+  const total=songEndBeat(song),range=customPassage??{start:engine.startBeat,end:engine.endBeat};
+  $('passage-from').value=(range.start*60/song.bpm).toFixed(1);
+  $('passage-to').value=(range.end*60/song.bpm).toFixed(1);
+  $('passage-clear').hidden=!customPassage;
+  if(customPassage){$('j-instruction').textContent=`Looping ${$('passage-from').value} to ${$('passage-to').value} seconds. Each full lap records its own result.`;
+    $('passage-message').textContent='Passage loop active. Restart returns to its beginning.';}
+  $('passage-apply').onclick=()=>{
+    const start=Number($('passage-from').value)*song.bpm/60;
+    const end=Number($('passage-to').value)*song.bpm/60;
+    const bounds=passageBounds(start,Math.min(end,total),total);
+    if(!$('passage-from').value||!$('passage-to').value||!bounds||!song.notes.some(n=>n.b>=start&&n.b<end&&(hand==='both'||n.h===hand))){
+      $('passage-message').textContent='Choose an end after the start, with at least one note for the selected hand.';return;}
+    previewStop?.();stopDemo();killClicks();customPassage=bounds;practiceStart=null;chunkIdx=null;
+    $('section-select').value='';((state.journeys??={})[song.id]??={step:0}).guided=false;
+    syncChunkLabel();rebuildEngine();fadePlayCover();
+    $('passage-details').open=true;
+    jlog('custom_passage_start',{id:song.id,...bounds});
+  };
+  $('passage-clear').onclick=()=>{previewStop?.();stopDemo();seekPractice(0);};
+  for(const id of openDetails)if($(id))$(id).open=true;
 }
 
 // ---------- first run: hardware-aware, one-tap skippable ----------

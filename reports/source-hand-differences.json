@@ -1,0 +1,1106 @@
+[
+  {
+    "song": "arabesque-1-easy",
+    "beat": 200,
+    "midi": 50,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "arabesque-1-easy",
+    "beat": 374,
+    "midi": 69,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "arabesque-1-easy",
+    "beat": 376.25,
+    "midi": 64,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "arabesque-1-easy",
+    "beat": 381.75,
+    "midi": 64,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "arabesque-1-easy",
+    "beat": 386,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "arabesque-1-easy",
+    "beat": 387.75,
+    "midi": 63,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "arabesque-1-easy",
+    "beat": 390,
+    "midi": 64,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "arabesque-1-easy",
+    "beat": 422,
+    "midi": 64,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 164,
+    "midi": 57,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 200,
+    "midi": 50,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 228,
+    "midi": 57,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 19,
+    "midi": 73,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 19.25,
+    "midi": 71,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 19.75,
+    "midi": 69,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 59.5,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 63.5,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 73,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 75,
+    "midi": 71,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 77,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 79,
+    "midi": 68,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 81,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 83,
+    "midi": 64,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 85,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 89,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 91,
+    "midi": 62,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 93,
+    "midi": 62,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 95,
+    "midi": 62,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 97,
+    "midi": 62,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 97.25,
+    "midi": 56,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 99,
+    "midi": 54,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 99.25,
+    "midi": 56,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 99.75,
+    "midi": 59,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 109,
+    "midi": 54,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 127,
+    "midi": 61,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 299,
+    "midi": 73,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 299.25,
+    "midi": 71,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 299.75,
+    "midi": 69,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 339.5,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 343.5,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 401.5,
+    "midi": 59,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 406.25,
+    "midi": 59,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "arabesque-1-hard",
+    "beat": 407.25,
+    "midi": 61,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "bach-prelude-c-easy",
+    "beat": 20.5,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper:"
+  },
+  {
+    "song": "bach-prelude-c-easy",
+    "beat": 28.5,
+    "midi": 64,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper:"
+  },
+  {
+    "song": "bach-prelude-c-easy",
+    "beat": 60.5,
+    "midi": 57,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper:"
+  },
+  {
+    "song": "bach-prelude-c-easy",
+    "beat": 131.75,
+    "midi": 50,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper:"
+  },
+  {
+    "song": "bach-prelude-c-hard",
+    "beat": 20.5,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper:"
+  },
+  {
+    "song": "bach-prelude-c-hard",
+    "beat": 28.5,
+    "midi": 64,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper:"
+  },
+  {
+    "song": "bach-prelude-c-hard",
+    "beat": 60.5,
+    "midi": 57,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper:"
+  },
+  {
+    "song": "bach-prelude-c-hard",
+    "beat": 131.75,
+    "midi": 50,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper:"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 68,
+    "midi": 60,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 180.25,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 229.75,
+    "midi": 75,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 257,
+    "midi": 65,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 131.25,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 133,
+    "midi": 61,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 135.75,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 137.25,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 139.75,
+    "midi": 58,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 140.25,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 146.75,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 147,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 147.25,
+    "midi": 75,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 147.75,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 148.75,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 190,
+    "midi": 58,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 201.5,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 207,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 209,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 212,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 213,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 213.25,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 223.75,
+    "midi": 75,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 299.25,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 303.25,
+    "midi": 68,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 172.75,
+    "midi": 78,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 133,
+    "midi": 61,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 135.75,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 137.25,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 140.25,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 146.75,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 147,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 147.25,
+    "midi": 75,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 147.75,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 148.75,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 150.25,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 190,
+    "midi": 58,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 201.5,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 207,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 209,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 211.25,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 212,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 213,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 213.25,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 223.75,
+    "midi": 75,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 303.25,
+    "midi": 68,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 68,
+    "midi": 60,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 90.25,
+    "midi": 61,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 172,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 180.25,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 229.75,
+    "midi": 75,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 257,
+    "midi": 65,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 131,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 131.25,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 133,
+    "midi": 61,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 135.75,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 137.25,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 139.75,
+    "midi": 58,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 140.25,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 146.75,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 147,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 147.25,
+    "midi": 75,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 147.75,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 148.75,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 190,
+    "midi": 58,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 201.5,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 203,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 203,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 207,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 209,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 212,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 213,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 213.25,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 223.75,
+    "midi": 75,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 299.25,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 303.25,
+    "midi": 68,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "goldberg-aria-hard",
+    "beat": 34,
+    "midi": 64,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper:"
+  },
+  {
+    "song": "goldberg-aria-hard",
+    "beat": 43,
+    "midi": 64,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper:"
+  },
+  {
+    "song": "goldberg-aria-hard",
+    "beat": 58,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper:"
+  },
+  {
+    "song": "goldberg-aria-hard",
+    "beat": 22,
+    "midi": 59,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower:1"
+  },
+  {
+    "song": "gymnopedie-1",
+    "beat": 55,
+    "midi": 55,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "bass:"
+  },
+  {
+    "song": "gymnopedie-1",
+    "beat": 58,
+    "midi": 59,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "bass:"
+  },
+  {
+    "song": "gymnopedie-1",
+    "beat": 61,
+    "midi": 53,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "bass:"
+  },
+  {
+    "song": "gymnopedie-1",
+    "beat": 64,
+    "midi": 57,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "bass:"
+  },
+  {
+    "song": "gymnopedie-1-hard",
+    "beat": 58,
+    "midi": 67,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "bass:"
+  },
+  {
+    "song": "nocturne-op9-2",
+    "beat": 120.25,
+    "midi": 67,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "nocturne-op9-2-easy",
+    "beat": 120.25,
+    "midi": 67,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  },
+  {
+    "song": "nocturne-op9-2-hard",
+    "beat": 120.25,
+    "midi": 67,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower"
+  }
+]

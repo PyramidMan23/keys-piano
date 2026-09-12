@@ -25,6 +25,7 @@ export function parseMidi(buf) {
   const tracks = [];
   const tempos = [{ tick: 0, usPerQuarter: 500000 }];   // 120bpm until told otherwise
   let timeSig = [4, 4];
+  const keySignatures = [];
 
   for (let t = 0; t < ntrks && p < buf.length; t++) {
     if (tag() !== 'MTrk') break;
@@ -53,6 +54,14 @@ export function parseMidi(buf) {
         if (meta === 0x51 && mlen === 3) tempos.push({ tick, usPerQuarter: (data[0] << 16) | (data[1] << 8) | data[2] });
         else if (meta === 0x58 && mlen >= 2) timeSig = [data[0], 2 ** data[1]];
         else if (meta === 0x03) trackName = data.toString('utf8').trim();
+        else if (meta === 0x59 && mlen === 2) {
+          const count = data[0] > 127 ? data[0] - 256 : data[0];
+          if (count >= -7 && count <= 7 && data[1] <= 1) {
+            const names = data[1] ? ['Abm','Ebm','Bbm','Fm','Cm','Gm','Dm','Am','Em','Bm','F#m','C#m','G#m','D#m','A#m']
+              : ['Cb','Gb','Db','Ab','Eb','Bb','F','C','G','D','A','E','B','F#','C#'];
+            keySignatures.push({tick,key:names[count+7]});
+          }
+        }
       } else if (status === 0xf0 || status === 0xf7) {
         let slen = 0;
         for (;;) { const x = u8(); slen = (slen << 7) | (x & 0x7f); if (!(x & 0x80)) break; }
@@ -76,7 +85,7 @@ export function parseMidi(buf) {
   // score in the library was taught too fast. A stated tempo replaces the
   // fallback; it never sits next to it.
   if (tempos.length > 1 && tempos[1].tick === 0) tempos.splice(0, 1);
-  return { format, ticksPerQuarter, timeSig, tempos, tracks };
+  return { format, ticksPerQuarter, timeSig, tempos, tracks, keySignatures };
 }
 
 // Pair note-ons with note-offs and return notes in QUARTER-NOTE BEATS.

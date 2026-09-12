@@ -115,7 +115,7 @@ export function measure(screen, baseline = null, intersects = overlap) {
   }
   const surface = card.querySelector(screen === 'lesson' ? '#lesson-stave' : '#score-wrap');
   const falls = card.querySelector('#falls');
-  const scoreInk = card.querySelector('#score-wrap > svg');
+  const scoreInk = card.querySelector('#score-wrap svg');
   const fallsHeight = falls && shown(falls) ? falls.getBoundingClientRect().height : null;
   const scoreInkHeight = scoreInk && shown(scoreInk) ? scoreInk.getBoundingClientRect().height : null;
   if (screen==='play' && fallsHeight!==null && fallsHeight<240) problems.push('falling-notes area below 240: '+fallsHeight);

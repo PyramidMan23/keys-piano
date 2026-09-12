@@ -1,10 +1,10 @@
 // Score mode: grand staff rendered as SVG, horizontally scrolling strip of
 // measures with the current group highlighted and the next measure visible.
 // Hands-separate GREYS the other staff, never hides it (council ruling).
-// ponytail: hand-rolled renderer tuned to our curated songs; ceiling = no
-// beaming, no rests, sharps spelt from the black key (fine for curated set).
-// Upgrade path if curation outgrows it: VexFlow.
+// VexFlow engraves regular timing. The small legacy renderer remains for
+// single-note lessons and explicitly labelled pitch-only fallback.
 
+import { EngravedScore } from './engraving.mjs';
 const NS = 'http://www.w3.org/2000/svg';
 const STEP = 5;           // half a staff space in px
 const MEASURE_W = 190;
@@ -49,11 +49,24 @@ const BASS_TOP_IDX = diatonic(57).idx;   // A3 top line of bass
 export class ScoreView {
   constructor(container) {
     this.container = container; // scrollable div
+    container.classList.add('score-wrap');
     this.svg = null;
     this.noteEls = new Map(); // note -> element
   }
 
   build(song, engine) {
+    this.engraved = null;
+    this.notationReason = null;
+    if (!song.noTimeSig) {
+      const engraved = new EngravedScore(this.container);
+      if (engraved.build(song, engine)) {
+        this.engraved = engraved;
+        this.svg = engraved.svg;
+        this.noteEls = engraved.noteEls;
+        return;
+      }
+      this.notationReason = engraved.model.reason;
+    } else this.notationReason = null;
     this.container.innerHTML = '';
     const beatsPerBar = song.timeSig[0];
     const endBeat = engine.endBeat;
@@ -80,7 +93,7 @@ export class ScoreView {
     text(svg, 18, BASS_TOP + 3 * STEP * 2 + 2, '\u{1D122}', 40, 'var(--score-ink)');
     // time signature (lesson prompts set noTimeSig: a lone drill note has no
     // meter, and Mark read the stacked 4/4 as "use octave 4", 2026-08-25)
-    if (!song.noTimeSig) {
+    if (!song.noTimeSig && !this.notationReason) {
       text(svg, 52, TREBLE_TOP + STEP * 2 + 4, String(song.timeSig[0]), 20, 'var(--score-ink)', 'bold');
       text(svg, 52, TREBLE_TOP + STEP * 6 + 4, String(song.timeSig[1]), 20, 'var(--score-ink)', 'bold');
       text(svg, 52, BASS_TOP + STEP * 2 + 4, String(song.timeSig[0]), 20, 'var(--score-ink)', 'bold');
@@ -89,7 +102,7 @@ export class ScoreView {
 
     // bar lines + bar shading rects (for current/next highlight)
     this.barRects = [];
-    for (let b = 0; b <= bars; b++) {
+    for (let b = 0; !this.notationReason && b <= bars; b++) {
       const x = 70 + b * MEASURE_W;
       line(svg, x, TREBLE_TOP, x, BASS_TOP + 8 * STEP, 'var(--score-line)');
       if (b < bars) {
@@ -114,6 +127,12 @@ export class ScoreView {
       this.noteEls.set(n, el);
     }
     this.container.appendChild(svg);
+    if (this.notationReason) {
+      const notice = document.createElement('p');
+      notice.className = 'score-notice';
+      notice.textContent = 'Pitch guide only. ' + this.notationReason;
+      this.container.prepend(notice);
+    }
   }
 
   _drawNote(svg, n, song) {
@@ -129,7 +148,7 @@ export class ScoreView {
     for (let ly = topY - STEP * 2; ly >= y - 1; ly -= STEP * 2) line(g, x - 9, ly, x + 9, ly, 'var(--score-line)');
     for (let ly = botY + STEP * 2; ly <= y + 1; ly += STEP * 2) line(g, x - 9, ly, x + 9, ly, 'var(--score-line)');
 
-    const beats = n.d * (song.beatUnit === 8 ? 0.5 : 1); // duration in quarter notes
+    const beats = this.notationReason ? 1 : n.d * (song.beatUnit === 8 ? 0.5 : 1);
     const open = beats >= 2;
     const head = document.createElementNS(NS, 'ellipse');
     head.setAttribute('cx', x); head.setAttribute('cy', y);
@@ -144,7 +163,7 @@ export class ScoreView {
     const dotted = beats === 1.5 || beats === 3;
     if (dotted) circle(g, x + 11, y - 2, 2, 'var(--note-ink, var(--score-ink))');
 
-    if (beats < 4) { // stem
+    if (beats < 4 && !this.notationReason) { // a pitch-only fallback claims no rhythmic value
       const up = treble ? idx < diatonic(71).idx : idx < diatonic(50).idx;
       const sx = up ? x + 5.5 : x - 5.5;
       const sy2 = up ? y - 30 : y + 30;
@@ -166,6 +185,7 @@ export class ScoreView {
   // Update highlight: current group amber, played notes dimmed, wrong flash
   // handled via CSS classes; auto-scroll keeps current + next measure visible.
   update(engine, hand) {
+    if (this.engraved) { this.engraved.update(engine, hand); this.svg=this.engraved.svg; return; }
     if (!this.svg) return;
     const cur = engine.currentGroup();
     const curBar = Math.floor((cur ? cur.beat : engine.beat) / this.beatsPerBar);

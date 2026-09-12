@@ -227,8 +227,12 @@ export function mountWidePlay(host) {
   const modeF = proxy('Falls', 'mode-falls');
   const modeS = proxy('Score', 'mode-score');
   if (modeF && modeS) {
-    const restyle = () => bindSegment([modeF, modeS], (el) =>
-      el === (window.__viewMode === 'score' ? modeS : modeF));
+    const restyle = () => {
+      const selected = window.__viewMode === 'score' ? modeS : modeF;
+      bindSegment([modeF, modeS], el => el === selected);
+      for (const el of [modeF, modeS]) el.setAttribute('aria-pressed', String(el === selected));
+    };
+    board.__syncMode = restyle;
     modeF.addEventListener('click', () => setTimeout(restyle, 0));
     modeS.addEventListener('click', () => setTimeout(restyle, 0));
   }
@@ -649,6 +653,7 @@ export function syncWidePlay(info = {}) {
   syncHandCells();
   board?.__mirrorSections?.();
   board?.__syncSound?.();
+  board?.__syncMode?.();
   board?.__mirrorJourney?.();
   board?.__cycleReflect?.();
   board?.__syncTiers?.();

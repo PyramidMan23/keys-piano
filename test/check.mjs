@@ -2501,7 +2501,7 @@ ok('no decoy modules in the repo root shadowing a shipped js/ module');
       songStats:()=>({}),store:{save:silent},assessmentConditions:T.assessmentConditions,PROOF_PASS:T.PROOF_PASS,
       comboFlash:silent,dayStat:silent,awardXp:(kind)=>credits.push(kind),settleGame:silent,
       bankBlock:silent,journeyState:()=>null,explainMiss:()=>null,schedulePassageCheck:T.schedulePassageCheck};
-    vm.runInNewContext(onLap+'; onLap({accuracy:95,wrong:0});',ctx);
+    vm.runInNewContext('let customPassage=null;'+onLap+'; onLap({accuracy:95,wrong:0});',ctx);
     return {state,credits,banner:ctx.falls.banner};
   };
   for(const type of ['proof','transfer']) for(const weak of [{hand:'R'},{hand:'L'},{tempo:0.5},{waitMode:true},{endBeat:4}]) {
@@ -2736,7 +2736,7 @@ ok('mastery reconciliation tolerates absent legacy records');
   assert.equal(nodes.get('wait-mode').checked,true); assert.equal(ctx.engine.__correction,true);
   assert.equal(ctx.viewMode,'falls'); assert.equal(ctx.hand,'R');
   assert.equal(logs[0].e,'correction_tried');
-  vm.runInNewContext(fn('onLap')+'; onLap({evidence:{verdicts:[{type:"good",beat:4},{type:"good",beat:5}]}})',ctx);
+  vm.runInNewContext('let customPassage=null;'+fn('onLap')+'; onLap({evidence:{verdicts:[{type:"good",beat:4},{type:"good",beat:5}]}})',ctx);
   assert.equal(ctx.correction.after,80); assert.equal(ctx.correction.phase,'result'); assert.equal(ctx.guidedHold,true);
   assert.equal(logs.at(-1).e,'correction_result'); assert.equal(logs.at(-1).before,20);
   assert.equal(logs.at(-1).helpNow,true);
@@ -2797,7 +2797,7 @@ ok('mastery reconciliation tolerates absent legacy records');
   let blocks=0, corrections=0;
   const lap={engine:{},firstMinute:{phase:'playing',hand:'R',pass:70},state:{},song:{id:'faded-easy'},
     store:{save(){}},bankBlock(){blocks++;},jlog(){},showCorrection(){corrections++;},renderJourney(){}};
-  vm.runInNewContext(fn('onLap')+'; onLap({accuracy:60,evidence:{}})',lap);
+  vm.runInNewContext('let customPassage=null;'+fn('onLap')+'; onLap({accuracy:60,evidence:{}})',lap);
   assert.equal(blocks,0); assert.equal(corrections,1); assert.equal(lap.firstMinute.phase,'result');
   lap.firstMinute.phase='playing'; vm.runInNewContext('onLap({accuracy:80,evidence:{}})',lap);
   assert.equal(blocks,1); assert.equal(lap.state.firstMinuteResult.accuracy,80); assert.equal(lap.guidedHold,true);

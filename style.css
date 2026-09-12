@@ -960,6 +960,55 @@ button:active:not(:disabled),
 .session-actions #j-exit { margin-left: auto; }
 .correction-card { margin-top: 12px; padding-top: 12px; border-top: 1px solid currentColor; }
 .correction-card .session-actions { margin-bottom: 8px; }
+.session-guide { border-color: #253129; }
+.practice-tools { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); column-gap: 16px; }
+.practice-insight { grid-column: 1/-1; margin: 8px 0 0; padding-top: 10px; border-top: 1px solid #253129; }
+.practice-insight strong { display: inline; font-size: 12px; margin-right: 8px; }
+.practice-insight p { display: inline; font-size: 12px; }
+.practice-insight #practice-conditions { display: block; margin: 5px 0 0; color: #b5c5b9; }
+.practice-details { margin-top: 4px; font-size: 12px; min-width: 0; }
+.practice-details[open] { grid-column: 1/-1; }
+.practice-details summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; gap: 8px; text-decoration: underline; text-underline-offset: 4px; }
+.practice-details summary::before { content: '+'; font-size: 18px; }
+.practice-details[open] summary::before { content: '−'; }
+.practice-details dl { display: grid; grid-template-columns: minmax(70px, .4fr) minmax(0, 1fr); gap: 8px 12px; margin: 8px 0; }
+.practice-details dt { font-weight: 700; }
+.practice-details dd { margin: 0; overflow-wrap: anywhere; }
+.passage-fields { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; }
+.passage-fields label { flex: 1 1 90px; display: grid; gap: 6px; }
+.passage-fields input { box-sizing: border-box; min-width: 0; width: 100%; min-height: 44px; border: 1px solid var(--line, #253129); border-radius: 6px; padding: 8px; color: inherit; background: var(--bg, #0a0d0b); font: inherit; }
+.passage-fields button { min-height: 44px; }
+.session-guide :is(button,input,summary):focus-visible { outline: 2px solid #82bf9c; outline-offset: 3px; }
+.practice-history { margin: 8px 0; padding-left: 18px; }
+.practice-history li { margin-bottom: 8px; line-height: 1.5; }
+@media(max-width:600px) { .practice-tools { grid-template-columns: 1fr; gap: 0; } }
+.score-notice { position: sticky; left: 0; max-width: min(65ch, 90vw); padding: 12px; font: 13px/1.5 Helvetica,Arial,sans-serif; color: #23282f; }
+.engraved-score { color: #23282f; }
+.engraved-score svg { display: block; max-width: none; }
+.score-wrap > .engraved-score { flex: 0 0 auto; min-width: 0; }
+#screen-play #score-wrap { background: #f5f1e6 !important; }
+.engraved-score [data-state="current"] { filter: drop-shadow(0 0 1px #23282f); }
+.engraved-score [data-state="current"] path { fill: #2e6b47; stroke: #2e6b47; }
+.engraved-score [data-state="played"] { opacity: .6; }
+@media (prefers-reduced-motion: reduce) {
+  .session-guide *, #cp-again { transition: none !important; animation: none !important; }
+}
+@media (max-width: 755px) {
+  .canon-root[data-canon-screen="play"] { width: 100% !important; max-width: 100%; margin: 0 !important; }
+  .canon-root[data-canon-screen="play"] [data-reflow="board"],
+  .canon-root[data-canon-screen="play"] [data-reflow="frame"] {
+    width: 100% !important; height: auto !important; min-height: 100dvh; zoom: 1 !important; margin: 0 !important;
+  }
+  .canon-root[data-canon-screen="play"] [data-reflow="row"] { flex-wrap: wrap !important; min-width: 0; height: auto !important; }
+  .canon-root[data-canon-screen="play"] [data-reflow="column"] { width: 100% !important; max-width: 100%; min-width: 0; height: auto !important; }
+  .canon-root[data-canon-screen="play"] [data-reflow] { box-sizing: border-box; }
+  .canon-root[data-canon-screen="play"] #score-wrap { max-width: 100%; min-width: 0; overflow-x: auto; }
+  .canon-root[data-canon-screen="play"] #falls { width: 100% !important; min-height: 260px; }
+  .canon-root[data-canon-screen="play"] .session-guide { width: 100%; min-width: 0; }
+  .canon-root[data-canon-screen="play"] :has(> #cp-title-n) { min-width: 150px !important; flex: 1 1 150px !important; }
+  .canon-root[data-canon-screen="play"] #cp-title-n { white-space: normal; overflow-wrap: normal; }
+  .canon-root[data-canon-screen="play"] :is(button, summary, input, select) { min-height: 44px !important; max-width: 100%; }
+}
 .first-phrase-keys { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
 .first-phrase-keys p { flex-basis: 100%; }
 .first-phrase-keys button { min-width: 44px; min-height: 44px; }
