@@ -1,8 +1,10 @@
 # Source comparison
 
-Generated 2026-09-12T10:03:35.104Z. No song data changed.
+Generated 2026-09-12T10:52:25.403Z. No song data changed.
 
-Onsets match within 0.126 quarter beats, allowing the existing quarter-beat import grid. Durations match within 1/32 quarter beat. Sources are aligned at the first retained note; omitted source notes remain counted. Hand comparisons map explicit upper/treble/right tracks to right and lower/bass/left tracks to left. Staff labels alone do not prove the intended playing hand; differences need editorial review. Easier tiers omit notes intentionally. A match does not prove the source is the intended edition.
+Onsets match within 0.126 quarter beats, allowing the existing quarter-beat import grid. Durations match within 1/32 quarter beat. Sources are aligned at the first retained note; omitted source notes remain counted. Hand comparisons map explicit upper/treble/right tracks to right and lower/bass/left tracks to left. Staff labels alone do not prove the intended playing hand. Every difference is checked against the committed hand-adjustment ledgers; unexplained differences remain open. Easier tiers omit notes intentionally. A match does not prove the source is the intended edition.
+
+Reviewed differences: 241 recorded arrangement adjustments; 0 unexplained. Note units come from the importer contract, not the meter denominator. See source-hand-differences.json for each note and its correction file.
 
 | Tier | Availability | Recorded source | Onsets matched/shipped | Hands agreed/compared | Durations matched/onsets |
 |---|---|---|---|---|---|
@@ -139,9 +141,9 @@ Onsets match within 0.126 quarter beats, allowing the existing quarter-beat impo
 | bach-prelude-c-hard | Available | Mutopia Project, BachJS/BWV846/wtk1-prelude1 | 549/549 | 545/549 | 549/549 |
 | beanie | Available | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |
 | beanie-easy | Available | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |
-| clair-de-lune | Available | Mutopia Project, DebussyC/L75/debussy_Ste_Bergamesq_Clair | 66/977 | 41/66 | 3/66 |
-| clair-de-lune-easy | Available | Mutopia Project, DebussyC/L75/debussy_Ste_Bergamesq_Clair | 39/490 | 18/39 | 2/39 |
-| clair-de-lune-hard | Available | Mutopia Project, DebussyC/L75/debussy_Ste_Bergamesq_Clair | 90/1468 | 60/90 | 3/90 |
+| clair-de-lune | Available | Mutopia Project, DebussyC/L75/debussy_Ste_Bergamesq_Clair | 977/977 | 907/977 | 975/977 |
+| clair-de-lune-easy | Available | Mutopia Project, DebussyC/L75/debussy_Ste_Bergamesq_Clair | 490/490 | 471/490 | 488/490 |
+| clair-de-lune-hard | Available | Mutopia Project, DebussyC/L75/debussy_Ste_Bergamesq_Clair | 1468/1468 | 1383/1468 | 1465/1468 |
 | coffin-dance | Available | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |
 | coffin-dance-easy | Available | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |
 | comptine | Available | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |
@@ -220,9 +222,9 @@ Onsets match within 0.126 quarter beats, allowing the existing quarter-beat impo
 | never-gonna-2-hard | Available | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |
 | next-episode | Available | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |
 | next-episode-easy | Available | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |
-| nocturne-op9-2 | Available | Mutopia, ChopinFF/O9 | 44/783 | 43/44 | 0/44 |
-| nocturne-op9-2-easy | Available | Mutopia, ChopinFF/O9 | 27/419 | 26/27 | 0/27 |
-| nocturne-op9-2-hard | Available | Mutopia, ChopinFF/O9 | 75/1236 | 74/75 | 0/75 |
+| nocturne-op9-2 | Available | Mutopia, ChopinFF/O9 | 783/783 | 783/783 | 738/783 |
+| nocturne-op9-2-easy | Available | Mutopia, ChopinFF/O9 | 419/419 | 411/419 | 374/419 |
+| nocturne-op9-2-hard | Available | Mutopia, ChopinFF/O9 | 1236/1236 | 1236/1236 | 1164/1236 |
 | overwatch | Quarantined | machine transcription of a solo piano performance, youtube.com/watch?v=jIKX3ShvLxo (Patrik Pietschmann, Mark's own link 2026-09-01) | Not compared | Not compared | Not compared |
 | overwatch-easy | Available | machine transcription of a solo piano performance, youtube.com/watch?v=jIKX3ShvLxo (Patrik Pietschmann, Mark's own link 2026-09-01) | Not compared | Not compared | Not compared |
 | pain | Quarantined | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |
@@ -233,9 +235,9 @@ Onsets match within 0.126 quarter beats, allowing the existing quarter-beat impo
 | pathetique-2 | Available | Mutopia Project, BeethovenLv/O13/pathetique-2 | 819/819 | 0/0 | 509/819 |
 | pathetique-2-easy | Available | Mutopia Project, BeethovenLv/O13/pathetique-2 | 578/578 | 0/0 | 357/578 |
 | pathetique-2-hard | Available | Mutopia Project, BeethovenLv/O13/pathetique-2 | 1380/1380 | 0/0 | 711/1380 |
-| prelude-e-minor | Available | Mutopia Project, ChopinFF/O28/Chop-28-4 | 22/257 | 0/0 | 0/22 |
-| prelude-e-minor-easy | Available | Mutopia Project, ChopinFF/O28/Chop-28-4 | 6/105 | 0/0 | 0/6 |
-| prelude-e-minor-hard | Available | Mutopia Project, ChopinFF/O28/Chop-28-4 | 53/600 | 0/0 | 0/53 |
+| prelude-e-minor | Available | Mutopia Project, ChopinFF/O28/Chop-28-4 | 257/257 | 0/0 | 248/257 |
+| prelude-e-minor-easy | Available | Mutopia Project, ChopinFF/O28/Chop-28-4 | 105/105 | 0/0 | 97/105 |
+| prelude-e-minor-hard | Available | Mutopia Project, ChopinFF/O28/Chop-28-4 | 600/600 | 0/0 | 590/600 |
 | rachmaninoff-pc2 | Available | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |
 | rachmaninoff-pc2-easy | Available | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |
 | rachmaninoff-pc2-hard | Quarantined | machine transcription of a solo piano performance, 2026-08-31 | Not compared | Not compared | Not compared |

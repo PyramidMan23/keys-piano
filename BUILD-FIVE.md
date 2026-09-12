@@ -62,3 +62,41 @@ preserved and the scored desktop/mobile design review cleared its fixes.
 No public deployment or :4180 serving-copy update was performed. Next acceptance:
 real P-45 playing, editorial source review, and resolving the intermittent trial
 result before any public release. Unsupported tuplets/free timing remain labeled.
+
+## Finish receipt, 2026-09-12
+
+This supersedes the source counts and unresolved implementation findings above.
+
+- Imported MIDI note positions are quarter-note units even when the time signature
+  denominator is eight. `noteBeatUnit: 4` now records that contract. Notation,
+  source comparison, practice chunks, memory starts and feedback bar numbers use
+  the correct units. Existing eighth-unit curated arrangements retain their units.
+- All 37 tiers with available source MIDI match every shipped note onset within
+  the documented import tolerance. All 241 staff/hand differences trace to exact
+  committed arrangement adjustments; zero are unexplained. This is traceability,
+  not certification of an edition or independent approval of every playing hand.
+  The 270-tier inventory continues to disclose which sources were not compared.
+- Every four-bar window of all 165 eligible shelf tiers engraves successfully,
+  including the six previously unsupported triplet tiers. The remaining 76
+  performance-timed arrangements intentionally retain a labeled pitch guide:
+  their recordings do not establish a verified regular score grid.
+- Desktop and narrow visual review cleared the compact guide, triplet notation,
+  score clearance and keyboard focus. The selected difficulty now correctly
+  matches the open arrangement, including Easy on the wide play surface.
+- The learning-trial race was in the probe: it clicked before listening finished.
+  It now waits for the real playback transition. The Chrome launcher also uses
+  uniquely allocated debugging ports, and failed gates retain full diagnostic logs.
+  The perfect-lap fixture resets and plays in one task so browser scheduling cannot
+  grade its first simulated note as a delayed wait-mode response.
+
+Core regression remains 437/437; notation/source acceptance and MIDI import
+round-trip checks pass. The full final suite finished **29/29 green**, including
+53/53 learning-trial checks. Seek, perfect-lap, responsive and audio-exit probes
+passed the runner's isolated retries after the loaded parallel run. The fast
+worklist reports zero implementation items open; its historical form-rating
+proposal remains a separate user decision. Logs: `gates-final.log` and the full
+per-gate outputs under `reports/gate-logs/` (local, ignored).
+
+Claude's cold code review was attempted but its OAuth session is expired. Physical
+P-45 acceptance and real learner improvement remain external checks. No public
+deployment or update to the separate :4180 serving copy was performed; use :4193.

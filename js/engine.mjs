@@ -1,3 +1,4 @@
+import { beatsPerBar } from './meter.mjs';
 // Practice engine. DOM-free so the node test can drive it.
 // Council spec: wait mode, tempo scaling, looping, hands-separate,
 // per-note timing + wrong-note feedback, calibration offset applied to input.
@@ -244,7 +245,7 @@ export function biasText(deltas, minN = 6, thresholdMs = 35) {
 // Learning chunks (Mark 2026-08-24): slice a song into fixed bar-pair windows
 // with clear start/stop points, the unit a phrase is actually learned in.
 export function chunkRange(song, idx, bars = 2) {
-  const chunkBeats = bars * song.timeSig[0];
+  const chunkBeats = bars * beatsPerBar(song);
   const endBeat = Math.max(...song.notes.map((n) => n.b + n.d));
   const count = Math.ceil(endBeat / chunkBeats);
   const i = Math.max(0, Math.min(count - 1, idx));

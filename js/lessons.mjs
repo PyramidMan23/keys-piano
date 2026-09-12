@@ -1,4 +1,5 @@
 import { songDemands, metSongDemands, demandsFit } from './difficulty.mjs';
+import { beatsPerBar } from './meter.mjs';
 // The taught curriculum (2026-08-23): what a teacher would explain before
 // asking you to read. Each lesson = plain-English teaching + a drill answered
 // ON THE PIANO while reading real notation. Sequential unlock. DOM-free logic.
@@ -464,7 +465,7 @@ export function correctionFor(song, evidence) {
   }
   const usable = errors.filter(e => Number.isFinite(e.beat) && e.beat >= evidence.start && e.beat < evidence.end);
   if (!usable.length) return null;
-  const bar = song.timeSig?.[0] ?? 4;
+  const bar = beatsPerBar(song);
   const boundaries = song.barBeats?.length ? song.barBeats : null;
   const barIndex = beat => boundaries ? Math.max(0,boundaries.findLastIndex(b => b <= beat)) : Math.floor(beat / bar);
   const counts = new Map();

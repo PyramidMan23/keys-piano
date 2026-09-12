@@ -34,7 +34,9 @@ try{
     return {start:__engine.startBeat,end:__engine.endBeat,repeat:__engine.repeat,label:document.getElementById('btn-restart').textContent};
   })()`);
   assert.equal(loop.start,2);assert.equal(loop.end,8);assert.equal(loop.label,'Restart passage');
-  await b.eval(`(()=>{const e=__engine;for(const g of e.groups){e.beat=g.beat;for(const n of g.notes)e.noteOn(n.m);}
+  // Reset and drive the lap in one task: a delayed CDP round trip can otherwise
+  // let the first note enter wait mode before this perfect-timing fixture starts.
+  await b.eval(`(()=>{const e=__engine;e.reset();for(const g of e.groups){e.beat=g.beat;for(const n of g.notes)e.noteOn(n.m);}
     e.tick((e.endBeat-e.beat+.01)*e.msPerBeat());})()`);
   await new Promise(r=>setTimeout(r,250));
   const evidence=await b.eval(`(()=>{const s=JSON.parse(localStorage.getItem('keys-v1'));return {attempt:s.songs['ode-to-joy'].attempts.at(-1),proven:s.playable?.['ode-to-joy']?.provenAt};})()`);
@@ -50,6 +52,11 @@ try{
   await b.freezeMotion();
   await b.eval('document.fonts.ready');await new Promise(r=>setTimeout(r,350));
   writeFileSync(new URL('../.impeccable/review/desktop.png',import.meta.url),await b.shot());
+  await b.eval(`window.__show('library');const search=document.getElementById('lib-search');search.value='The Legend of Zelda';search.dispatchEvent(new Event('input',{bubbles:true}));[...document.querySelectorAll('#screen-library *')].find(e=>!e.children.length&&e.textContent.trim()==='The Legend of Zelda (Main Theme)')?.click();(document.querySelector('[data-proxy-for="mode-score"]')??document.getElementById('mode-score')).click();`);
+  assert.ok(await b.eval(`document.querySelector('#score-wrap .engraved-score svg')`)!==null,'Triplet song opens its engraved score');
+  assert.equal(await b.eval(`document.querySelector('[data-tier-cell][data-on="true"]')?.dataset.tierCell===window.__tierInfo().current`),true,'Tier selection matches the open arrangement');
+  await b.eval(`document.getElementById('guide-toggle').click();`);
+  writeFileSync(new URL('../.impeccable/review/triplets.png',import.meta.url),await b.shot());
   console.log('PASS custom loop, restart, tempo, whole-song reset and score route');
 }finally{await b.close();}
 }

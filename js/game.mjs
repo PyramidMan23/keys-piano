@@ -1,4 +1,5 @@
 import { SKILL_BY_ID, competence, competenceLine, songEvidence } from './teacher.mjs';
+import { beatsPerBar } from './meter.mjs';
 // Gamification engine (14th council 2026-08-28, Mark's directive: "gamify
 // everything... according to psychology"). The laws baked in:
 //  - XP from VALUE, not volume: no per-note, per-lap or combo XP; one-time
@@ -296,7 +297,7 @@ export function journeyAttemptMatches(song, step, engine) {
 export function firstPhrasePlan(song, experience) {
   if (!song || song.level?.toLowerCase() !== 'easy' || song.freeTime) return null;
   const start = song.barBeats?.[0] ?? 0;
-  const end = song.barBeats?.[4] ?? start + 4 * song.timeSig[0];
+  const end = song.barBeats?.[4] ?? start + 4 * beatsPerBar(song);
   if (Math.max(...song.notes.map(n=>n.b+n.d)) < end) return null;
   const hand = experience === 'returning' ? 'both' : 'R';
   const notes = song.notes.filter(n=>n.b>=start && n.b<end && (hand==='both' || n.h===hand));

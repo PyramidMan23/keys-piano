@@ -21,6 +21,7 @@ import { ScoreView } from './score.mjs';
 import { attemptComparison, practiceConditions, recentEvidence, passageBounds } from './practice-insight.mjs';
 import { musicSource } from './music-source.mjs';
 import { PRACTICE_TEMPLATE } from './practice-template.mjs';
+import { beatsPerBar } from './meter.mjs';
 import { playPreview, stopPreview, setVoiceMode, voiceInfo, voiceModeLabel, voiceModeNext, soundModeNext, tapSoundActive } from './audio.mjs';
 import { pickPhrase, EchoRound, TransposeRound } from './echo.mjs';
 import { MEM_STAGES, memCues, memAdvance, randomStartBar } from './memory.mjs';
@@ -1819,16 +1820,16 @@ function finishSong() {
   const realInput = $('midi-status').dataset.connected === 'true';
   if (realInput && engine.pedalLog.length) {
     const pf = analyzePedal(engine.pedalLog, engine.playLog, { sections: song.sections ?? [] });
-    const barOf = (b) => Math.floor(b / song.timeSig[0]) + 1;
+    const barOf = (b) => Math.floor(b / beatsPerBar(song)) + 1;
     const pnotes = pedalNotes(pf, barOf);
     analysis.push(...(pnotes.length ? pnotes.map((t) => '🦶 Pedal: ' + t) : ['🦶 Pedal: clean. Changes landed with the harmony.']));
   }
   let art = null, voi = null;
   if (realInput) {
-    art = articulationSummary(analyzeArticulation(engine.playLog, engine.msPerBeat()), song.sections ?? [], song.timeSig[0]);
+    art = articulationSummary(analyzeArticulation(engine.playLog, engine.msPerBeat()), song.sections ?? [], beatsPerBar(song));
     if (art) analysis.push('♪ Articulation: ' + art.text);
     voi = state.touch?.zones ? analyzeVoicing(engine.playLog, state.touch) : null;
-    const vtext = voicingText(voi, song.timeSig[0]);
+    const vtext = voicingText(voi, beatsPerBar(song));
     if (vtext) analysis.push('⚖ Voicing: ' + vtext);
   } else {
     analysis.push('Input: screen taps, touch, pedal and voicing analysis wait for the real piano.');
@@ -2934,7 +2935,7 @@ function syncMemButton() {
 function rebuildEngineKeepMemo() {
   const m = memo;
   if (m.cues.randomStart) {
-    const rs = randomStartBar(m.section, song.timeSig[0]);
+    const rs = randomStartBar(m.section, beatsPerBar(song));
     m.recallBar = rs.bar;
     loopOverride = { start: rs.startBeat, end: m.section.endBeat };
     comboFlash(`FROM BAR ${rs.bar}`);
@@ -2973,7 +2974,8 @@ $('btn-mem').addEventListener('click', () => { if (memo) exitMemorize(); else st
 // blank/recall stages keep time with a metronome click, nothing else
 function memMetronomeTick() {
   if (!memo?.cues.metronome || !engine || engine.finished) return;
-  const b = Math.floor(engine.beat);
+  const step = beatsPerBar(song) / song.timeSig[0];
+  const b = Math.floor(engine.beat / step);
   if (b === memoLastClickBeat) return;
   memoLastClickBeat = b;
   metCtx ??= new (window.AudioContext || window.webkitAudioContext)();

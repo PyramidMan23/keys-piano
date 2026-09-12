@@ -413,7 +413,7 @@ for (const level of wantTiers) {
   built.push({
     id: level === 'hard' ? id + '-hard' : level === 'easy' ? id + '-easy' : id,
     group, level: level[0].toUpperCase() + level.slice(1),
-    title, composer, bpm: tierBpm, timeSig, beatUnit: timeSig[1],
+    title, composer, bpm: tierBpm, timeSig, beatUnit: timeSig[1], noteBeatUnit: 4,
     // handAssignment stays 'generated' because four tools key on it; the video
     // provenance rides in its own field and in the source string
     handAssignment: 'generated', ...(videoHands ? { provenance: 'video-authored-hands' } : {}), ...(key ? { key } : {}), source,
@@ -520,7 +520,7 @@ if (fromScore || videoHands) {
     console.log(`${lvl.toLowerCase()}: cut from the score by density, ${made.length} of ${notes.length} notes (a step down from ${above}${below ? `, and ${below} is a step down from it` : ''})`);
     built.push({
       id: tid, group, level: lvl,
-      title, composer, bpm: tierBpm, timeSig, beatUnit: timeSig[1],
+      title, composer, bpm: tierBpm, timeSig, beatUnit: timeSig[1], noteBeatUnit: 4,
       // the filled tier is a SUBSET of the tier above, so its hands came from
       // wherever that tier's did: a video-authored parent makes a video-authored cut
       handAssignment: 'generated', ...(videoHands ? { provenance: 'video-authored-hands' } : {}), ...(key ? { key } : {}), source,

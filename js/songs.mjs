@@ -2715,6 +2715,9 @@ export function validateSong(song) {
 // Imported songs live in their own generated file so the importer can never
 // rewrite a curated one, and so provenance survives: every one of them carries
 // handAssignment: 'generated' and the source it came from.
+// MIDI/transcription importers store b/d in quarter-note units even in 6/8 or
+// 9/8. beatUnit is the meter denominator, not the unit of those stored values.
+for (const s of IMPORTED) s.noteBeatUnit ??= 4;
 SONGS.push(...IMPORTED);
 
 // THE HANDS A SCRIPT GOT WRONG, corrected offline and committed. See

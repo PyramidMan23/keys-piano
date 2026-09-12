@@ -16,6 +16,11 @@ const b = await launch({ width: 1418, height: 900, scale: 1, port: 9741, extraAr
 const results = [];
 const ok = (name, pass, note = '') => { results.push({ name, pass }); console.log((pass ? 'PASS ' : 'FAIL ') + name + (note ? '  ' + note : '')); };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const waitFor = async (expression,timeout) => {
+  const deadline=Date.now()+timeout;
+  while(Date.now()<deadline){if(await b.eval(expression))return true;await sleep(100);}
+  return false;
+};
 await b.send('Page.addScriptToEvaluateOnNewDocument', { source: `window.__errs = []; window.addEventListener('error', (e) => window.__errs.push(e.message + ' @' + (e.filename || '').split('/').pop() + ':' + e.lineno));` });
 const SONG = 'song-of-storms-easy';
 const seed = (extra = {}) => ({ firstRunDone: true, diagnosticDone: Date.now() - 864e5, calibratedAt: Date.now() - 864e5, calOffsetMs: 0, lib: { learning: true }, lastSession: { songId: SONG, at: Date.now() - 36e5 }, ...extra });
@@ -58,7 +63,7 @@ st = await strip();
 ok('starting then stopping earns no listening rung', st.steps[0] === 'Hear it=now', JSON.stringify(st));
 await b.eval(`document.getElementById('j-go').click(); true`);
 const listenMs = await b.eval(`(window.__demo.endBeat - window.__demo.startBeat) * window.__demo.msPerBeat()`);
-await sleep(listenMs + 1500);
+await waitFor(`!window.__demo`,listenMs+15000);
 st = await strip();
 ok('playback completes the listening rung', st.steps[0] === 'Hear it=done' && st.steps[1] === 'Right hand \u00b7 A=now', JSON.stringify(st.steps));
 
@@ -190,8 +195,10 @@ for (const [width, experience, expectedHand] of [[756,'new','R'],[1418,'returnin
   ok(width+': experience selection opens the phrase, without a diagnostic', (await visible())==='play' && await b.eval(`window.__engine.hand===${JSON.stringify(expectedHand)} && window.__engine.waitMode && window.__engine.endBeat-window.__engine.startBeat===16`));
   await b.eval(`document.getElementById('j-go').click(); true`); await sleep(150);
   const duration = await b.eval(`(window.__demo.endBeat-window.__demo.startBeat)*window.__demo.msPerBeat()`);
-  await sleep(duration+1500);
-  ok(width+': hearing the real phrase unlocks the attempt', await b.eval(`document.getElementById('j-go').textContent==='Play four bars'`));
+  // Audio setup and frame scheduling are asynchronous. A wall-time sleep can
+  // click Stop listening before playback ends, then leave every note disabled.
+  const unlocked=await waitFor(`document.getElementById('j-go').textContent==='Play four bars'`,duration+15000);
+  ok(width+': hearing the real phrase unlocks the attempt',unlocked);
   await b.eval(`document.getElementById('j-go').click(); true`);
   const keysSized = await b.eval(`(() => {const keys=[...document.querySelectorAll('.first-phrase-keys button')];return keys.length>0 && keys.every(k=>!k.disabled && k.getBoundingClientRect().height>=44 && k.getAttribute('aria-label').startsWith('Play '));})()`);
   ok(width+': the phrase has named, sized note buttons for keyboard and screen input', keysSized);

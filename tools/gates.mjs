@@ -10,10 +10,9 @@
 //
 // They are separate processes that share nothing but the serving copy, which
 // they only READ, so they can run together. The one thing that used to stop
-// that was the fixed debugging port each gate hardcoded; cdp.mjs now treats
-// that number as a starting point and steps past anything already answering,
-// so two gates asking for 9595 no longer fight, and neither can attach to a
-// stale browser left by a killed run.
+// that was the fixed debugging port each gate hardcoded; cdp.mjs now asks
+// Chrome to allocate a unique port and reads it from the child's own profile,
+// so gates cannot fight over a port or attach to a stale test browser.
 //
 //   node tools/gates.mjs              every gate, in parallel        (~3 min)
 //   node tools/gates.mjs songs        only what a song change breaks (~30 s)
@@ -26,6 +25,7 @@
 // run the full suite before you push, which is what the ship rule already says.
 import { spawn } from 'node:child_process';
 import { join } from 'node:path';
+import { mkdirSync, writeFileSync } from 'node:fs';
 
 const ROOT = join(import.meta.dirname, '..');
 
@@ -96,7 +96,12 @@ const run = (gate) => new Promise((res) => {
   const p = spawn(process.execPath, [join(ROOT, gate)], { cwd: ROOT });
   p.stdout.on('data', (d) => out.push(d));
   p.stderr.on('data', (d) => out.push(d));
-  p.on('close', (code) => res({ gate, code, secs: Math.round((Date.now() - started) / 1000), text: Buffer.concat(out).toString() }));
+  p.on('close', (code) => {
+    const text=Buffer.concat(out).toString();
+    mkdirSync(join(ROOT,'reports','gate-logs'),{recursive:true});
+    writeFileSync(join(ROOT,'reports','gate-logs',`${gate.replaceAll('/','-')}-${started}.log`),text);
+    res({gate,code,secs:Math.round((Date.now()-started)/1000),text});
+  });
 });
 
 // Five at a time. Each gate drives its own headless Chrome, and nineteen of
@@ -124,7 +129,7 @@ for (const r of results.filter((x) => x.code !== 0)) {
 retrying ${r.gate} alone (it may have lost a timing race under load)`);
   const again = await run(r.gate);
   console.log(`${again.code === 0 ? 'PASS' : 'FAIL'}  ${again.gate.replace(/^tools\/|^test\//, '').padEnd(24)} ${String(again.secs).padStart(4)}s  (solo re-run)`);
-  if (again.code === 0) { r.code = 0; r.text = again.text; r.retried = true; }
+  r.code=again.code;r.text=again.text;r.retried=true;
 }
 const failed = results.filter((r) => r.code !== 0);
 const wall = Math.round((Date.now() - started) / 1000);
@@ -132,7 +137,9 @@ const cpu = results.reduce((a, r) => a + r.secs, 0);
 console.log(`\n${results.length - failed.length}/${results.length} green in ${wall}s wall clock (${cpu}s of work)`);
 for (const f of failed) {
   console.log(`\n---- ${f.gate} (exit ${f.code}) ----`);
-  console.log(f.text.split('\n').slice(-25).join('\n'));
+  const lines=f.text.split('\n');
+  console.log(lines.filter(line=>/^FAIL|Error:|AssertionError/.test(line)).join('\n'));
+  console.log(lines.slice(-25).join('\n'));
 }
 if (lane !== 'all') console.log(`\nthis is the ${lane} lane, not the whole suite: run 'node tools/gates.mjs' before you push`);
 process.exit(failed.length ? 1 : 0);

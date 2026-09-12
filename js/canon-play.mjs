@@ -206,6 +206,9 @@ export function mountWidePlay(host) {
       return l ? l.closest('button') : null;
     });
     if (tierCells.filter(Boolean).length === 3) {
+      // This artboard draws MEDIUM selected, unlike the first-selected mode
+      // segments. Capture that pair of looks before hiding unavailable tiers.
+      bindSegment([tierCells[1],tierCells[0],tierCells[2]], el=>el===tierCells[1]);
       tierCells.forEach((c, i) => {
         c.dataset.tierCell = ['Easy', 'Medium', 'Hard'][i];
         if (!c.dataset.disp) c.dataset.disp = c.style.display || 'flex';
@@ -218,7 +221,7 @@ export function mountWidePlay(host) {
         const sig = info.have.join(',') + '|' + info.current;
         if (board.dataset.tsig === sig) return;
         board.dataset.tsig = sig;
-        tierCells.forEach((c) => { c.style.display = info.have.includes(c.dataset.tierCell) ? c.dataset.disp : 'none'; });
+        tierCells.forEach((c) => { c.style.display = info.have.includes(c.dataset.tierCell) ? c.dataset.disp : 'none'; c.setAttribute('aria-pressed',String(c.dataset.tierCell===info.current)); });
         bindSegment(tierCells.filter((c) => c.style.display !== 'none'), (el) => el.dataset.tierCell === info.current);
       };
       board.__syncTiers();

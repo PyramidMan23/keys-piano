@@ -6,33 +6,22 @@
 // the SAME browser at the SAME deviceScaleFactor, or font rastering differences
 // drown the real signal and you spend hours chasing noise.
 import { spawn } from 'node:child_process';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, rmSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
 const CHROME = 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 
-// ☠️ A FIXED PORT IS A TRAP, AND IT COST HOURS ON 2026-09-05. Every gate asked
-// for its own hardcoded port. Stop a gate run (Ctrl-C, a timeout, a killed
-// shell) and its Chrome survives, still LISTENING on that port; the next run's
-// Chrome then fails to bind, this loop finds the OLD browser answering, and the
-// gate silently drives another run's pages. canon-journeys read 25/30 with five
-// impossible failures that way, and later hung for 28 minutes. The port a
-// caller passes is now only a STARTING POINT: anything already answering is
-// skipped, so a stale browser can never be mistaken for ours.
-const portFree = async (p) => {
-  try { await fetch(`http://127.0.0.1:${p}/json/version`, { signal: AbortSignal.timeout(400) }); return false; }
-  catch { return true; }
-};
-
-export async function launch({ width = 756, height = 1400, scale = 2, port = 9333, extraArgs = [] } = {}) {
-  const wanted = port;
-  for (let i = 0; i < 40 && !(await portFree(port)); i++) port = wanted + 1 + i;
-  if (!(await portFree(port))) throw new Error(`no free debugging port near ${wanted}`);
+// Let Chrome allocate an available port atomically. Probing then binding a
+// requested port races parallel gates and recently closed Chrome processes.
+// Read only this child's unique profile; never attach to an old test browser.
+// https://chromedevtools.github.io/devtools-protocol/
+export async function launch({ width = 756, height = 1400, scale = 2, extraArgs = [] } = {}) {
+  let port = 0;
   const profile = mkdtempSync(join(tmpdir(), 'keys-cdp-'));
   const proc = spawn(CHROME, [
     '--headless=new',
-    `--remote-debugging-port=${port}`,
+    '--remote-debugging-port=0',
     `--user-data-dir=${profile}`,
     `--window-size=${width},${height}`,
     '--hide-scrollbars',
@@ -54,6 +43,10 @@ export async function launch({ width = 756, height = 1400, scale = 2, port = 933
   for (let i = 0; i < 260; i++) {
     await new Promise((r) => setTimeout(r, 150));
     try {
+      if (!port) {
+        port = Number(readFileSync(join(profile, 'DevToolsActivePort'), 'utf8').split('\n')[0]);
+        if (!(port > 0 && port < 65536)) { port = 0; continue; }
+      }
       const list = await (await fetch(`http://127.0.0.1:${port}/json/list`)).json();
       target = list.find((t) => t.type === 'page');
       if (target) break;

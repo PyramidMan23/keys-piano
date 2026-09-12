@@ -1,5 +1,5 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v129';  // Coaching, source evidence, custom passages and engraved notation.
+const VERSION = 'keys-v130';  // Source beat units and triplet engraving.
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
@@ -17,6 +17,7 @@ const SHELL = [
   'js/practice-insight.mjs', 'js/music-source.mjs', 'js/source-checks.mjs',
   'js/practice-template.mjs',
   'js/source-signature.mjs',
+  'js/meter.mjs',
   // the canon: the design as markup, and everything that mounts and binds it
   'js/canon-templates.mjs', 'js/canon-mount.mjs', 'js/canon-screen.mjs', 'js/canon-play.mjs',
   'js/canon-library.mjs', 'js/canon-bind.mjs', 'js/canon-list.mjs',

@@ -1,3 +1,4 @@
+import { beatsPerBar } from './meter.mjs';
 // Falling-notes renderer v3 "magic pass" (council 2026-08-23, locked list):
 // dark restraint + one razor-bright contact moment. Contact bead + lens flare
 // at impact, tapered breathing light fountains on held keys, pre-rendered
@@ -511,7 +512,7 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
         // many bars as Beethoven wrote - and did the same to Clair de Lune
         // (9/8) and the Op.9 nocturne (12/8). The same conversion already
         // lives in import-midi.mjs and the corpus harness.
-        const per = engine.song.timeSig[0] * (4 / engine.song.timeSig[1]);
+        const per = beatsPerBar(engine.song);
         const out = [];
         for (let k = Math.ceil(beat / per); k * per < beat + this.lookaheadBeats + 1; k++) out.push(k * per);
         return out;
@@ -660,7 +661,7 @@ this.kbH = Math.max(78, Math.min(130, this.h * 0.24));
       }
     };
     // memory-ladder cue filter: landmarks = only each bar's first-beat notes
-    const tsb = engine.song.timeSig[0];
+    const tsb = beatsPerBar(engine.song);
     const cueShow = (n) => !this.cueFilter || (this.cueFilter === 'landmarks' && n.b % tsb === 0);
     for (const g of engine.groups) for (const n of g.notes) if (cueShow(n)) drawNote(n, false);
     for (const n of engine.passive) if (cueShow(n)) drawNote(n, true);

@@ -5,6 +5,8 @@ import {join} from 'node:path';
 import {SONGS} from '../js/songs.mjs';
 import {parseMidi,midiNotes,tempoOf} from './midi.mjs';
 import {songSignature} from '../js/source-signature.mjs';
+import {REHANDED} from '../js/songs-hands.mjs';
+import {FIXED} from '../js/songs-fixed.mjs';
 const root=process.env.KEYS_SOURCE_ROOT||'C:/Users/markh/keys-piano-tools';
 const aliases={'nocturne-op9-2':'chopin-nocturne-op9-2'};
 const checks={}, differences=[];
@@ -16,20 +18,27 @@ for(const song of SONGS){
   const raw=midiNotes(mid).filter(n=>n.vel>12);
   const first=Math.min(...raw.map(n=>n.b));
   const ref=raw.map(n=>({...n,b:n.b-first,h:/^(lower|bass|left)\b/i.test(mid.tracks[n.track].name)?'L':/^(upper|treble|right)\b/i.test(mid.tracks[n.track].name)?'R':null}));
-  const used=new Set();let matched=0,durationMatches=0,handMatches=0,handCompared=0,maxOnsetError=0;
+  const used=new Set();let matched=0,durationMatches=0,handMatches=0,handCompared=0,documentedAdjustments=0,maxOnsetError=0;
   for(const n of song.notes){
-    const factor=4/(song.beatUnit||4);
+    const factor=4/(song.noteBeatUnit||song.beatUnit||4);
     let best=-1, distance=Infinity;
     for(let i=0;i<ref.length;i++){if(used.has(i)||ref[i].m!==n.m)continue;const d=Math.abs(ref[i].b-n.b*factor);if(d<distance){distance=d;best=i;}}
     if(best<0||distance>.126)continue;
     used.add(best);matched++;maxOnsetError=Math.max(maxOnsetError,distance);
     if(Math.abs(ref[best].d-n.d*factor)<=1/32)durationMatches++;
     if(ref[best].h){handCompared++;if(ref[best].h===n.h)handMatches++;
-      else differences.push({song:song.id,beat:n.b,midi:n.m,shippedHand:n.h,sourceHand:ref[best].h,sourceTrack:mid.tracks[ref[best].track].name});}
+      else {
+        const correctionFile=[['js/songs-hands.mjs',REHANDED[song.id]],['js/songs-fixed.mjs',FIXED[song.id]]]
+          .find(([,fix])=>fix?.moves?.some(m=>m.b===n.b&&m.m===n.m&&m.from===ref[best].h&&m.to===n.h))?.[0]??null;
+        if(correctionFile)documentedAdjustments++;
+        differences.push({song:song.id,beat:n.b,midi:n.m,shippedHand:n.h,sourceHand:ref[best].h,sourceTrack:mid.tracks[ref[best].track].name,
+          disposition:correctionFile?'documented arrangement adjustment':'unexplained',correctionFile});
+      }}
   }
   checks[song.id]={songSignature:songSignature(song),sourceFile:file.split(/[\\/]/).at(-1),sha256:createHash('sha256').update(bytes).digest('hex'),
     notes:song.notes.length,sourceNotes:ref.length,matched,missing:ref.length-used.size,
-    extra:song.notes.length-matched,durationMatches,handCompared,handMatches,
+    extra:song.notes.length-matched,durationMatches,handCompared,handMatches,documentedAdjustments,
+    unexplainedHands:handCompared-handMatches-documentedAdjustments,noteBeatUnit:song.noteBeatUnit||song.beatUnit||4,
     maxOnsetError:+maxOnsetError.toFixed(6),sourceBpm:tempoOf(mid).bpm,sourceMeter:mid.timeSig,
     sourceKey:mid.keySignatures.length&&Math.min(...mid.keySignatures.map(k=>k.tick))<=first*mid.ticksPerQuarter&&new Set(mid.keySignatures.map(k=>k.key)).size===1?mid.keySignatures[0].key:null};
 }
@@ -40,8 +49,10 @@ writeFileSync(new URL('../js/source-checks.mjs',import.meta.url),
 const rows=SONGS.map(s=>{const c=checks[s.id];return `| ${s.id} | ${s.quarantined?'Quarantined':'Available'} | ${(s.source??'Local arrangement / exercise').replaceAll('|','/')} | ${c?`${c.matched}/${c.notes}`:'Not compared'} | ${c?`${c.handMatches}/${c.handCompared}`:'Not compared'} | ${c?`${c.durationMatches}/${c.matched}`:'Not compared'} |`;});
 writeFileSync(new URL('../reports/music-source-audit.md',import.meta.url),
   '# Source comparison\n\nGenerated '+new Date().toISOString()+'. No song data changed.\n\n'+
-  'Onsets match within 0.126 quarter beats, allowing the existing quarter-beat import grid. Durations match within 1/32 quarter beat. Sources are aligned at the first retained note; omitted source notes remain counted. Hand comparisons map explicit upper/treble/right tracks to right and lower/bass/left tracks to left. Staff labels alone do not prove the intended playing hand; differences need editorial review. Easier tiers omit notes intentionally. A match does not prove the source is the intended edition.\n\n'+
+  'Onsets match within 0.126 quarter beats, allowing the existing quarter-beat import grid. Durations match within 1/32 quarter beat. Sources are aligned at the first retained note; omitted source notes remain counted. Hand comparisons map explicit upper/treble/right tracks to right and lower/bass/left tracks to left. Staff labels alone do not prove the intended playing hand. Every difference is checked against the committed hand-adjustment ledgers; unexplained differences remain open. Easier tiers omit notes intentionally. A match does not prove the source is the intended edition.\n\n'+
+  'Reviewed differences: '+differences.filter(d=>d.correctionFile).length+' recorded arrangement adjustments; '+differences.filter(d=>!d.correctionFile).length+' unexplained. Note units come from the importer contract, not the meter denominator. See source-hand-differences.json for each note and its correction file.\n\n'+
   '| Tier | Availability | Recorded source | Onsets matched/shipped | Hands agreed/compared | Durations matched/onsets |\n|---|---|---|---|---|---|\n'+rows.join('\n')+'\n');
 console.log(JSON.stringify({tiers:SONGS.length,sourceCompared:Object.keys(checks).length,
   completeOnsetMatches:Object.values(checks).filter(c=>!c.extra).length,
-  sourceHandDisagreements:Object.values(checks).reduce((a,c)=>a+c.handCompared-c.handMatches,0)}));
+  sourceHandDisagreements:Object.values(checks).reduce((a,c)=>a+c.handCompared-c.handMatches,0),
+  unexplainedHands:Object.values(checks).reduce((a,c)=>a+c.unexplainedHands,0)}));

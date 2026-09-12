@@ -5,7 +5,9 @@
     "midi": 50,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-easy",
@@ -13,7 +15,9 @@
     "midi": 69,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-easy",
@@ -21,7 +25,9 @@
     "midi": 64,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-easy",
@@ -29,7 +35,9 @@
     "midi": 64,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-easy",
@@ -37,7 +45,9 @@
     "midi": 66,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-easy",
@@ -45,7 +55,9 @@
     "midi": 63,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-easy",
@@ -53,7 +65,9 @@
     "midi": 64,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-easy",
@@ -61,7 +75,9 @@
     "midi": 64,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -69,7 +85,9 @@
     "midi": 57,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -77,7 +95,9 @@
     "midi": 50,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -85,7 +105,9 @@
     "midi": 57,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -93,7 +115,9 @@
     "midi": 73,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -101,7 +125,9 @@
     "midi": 71,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -109,7 +135,9 @@
     "midi": 69,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -117,7 +145,9 @@
     "midi": 76,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -125,7 +155,9 @@
     "midi": 76,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -133,7 +165,9 @@
     "midi": 70,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -141,7 +175,9 @@
     "midi": 71,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -149,7 +185,9 @@
     "midi": 70,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -157,7 +195,9 @@
     "midi": 68,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -165,7 +205,9 @@
     "midi": 66,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -173,7 +215,9 @@
     "midi": 64,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -181,7 +225,9 @@
     "midi": 63,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -189,7 +235,9 @@
     "midi": 63,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -197,7 +245,9 @@
     "midi": 62,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -205,7 +255,9 @@
     "midi": 62,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -213,7 +265,9 @@
     "midi": 62,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -221,7 +275,9 @@
     "midi": 62,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -229,7 +285,9 @@
     "midi": 56,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -237,7 +295,9 @@
     "midi": 54,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -245,7 +305,9 @@
     "midi": 56,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -253,7 +315,9 @@
     "midi": 59,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -261,7 +325,9 @@
     "midi": 54,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -269,7 +335,9 @@
     "midi": 61,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -277,7 +345,9 @@
     "midi": 73,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -285,7 +355,9 @@
     "midi": 71,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -293,7 +365,9 @@
     "midi": 69,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -301,7 +375,9 @@
     "midi": 76,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -309,7 +385,9 @@
     "midi": 76,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -317,7 +395,9 @@
     "midi": 59,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -325,7 +405,9 @@
     "midi": 59,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "arabesque-1-hard",
@@ -333,7 +415,9 @@
     "midi": 61,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "bach-prelude-c-easy",
@@ -341,7 +425,9 @@
     "midi": 66,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper:"
+    "sourceTrack": "upper:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "bach-prelude-c-easy",
@@ -349,7 +435,9 @@
     "midi": 64,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper:"
+    "sourceTrack": "upper:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "bach-prelude-c-easy",
@@ -357,7 +445,9 @@
     "midi": 57,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper:"
+    "sourceTrack": "upper:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "bach-prelude-c-easy",
@@ -365,7 +455,9 @@
     "midi": 50,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper:"
+    "sourceTrack": "upper:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "bach-prelude-c-hard",
@@ -373,7 +465,9 @@
     "midi": 66,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper:"
+    "sourceTrack": "upper:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "bach-prelude-c-hard",
@@ -381,7 +475,9 @@
     "midi": 64,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper:"
+    "sourceTrack": "upper:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "bach-prelude-c-hard",
@@ -389,7 +485,9 @@
     "midi": 57,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper:"
+    "sourceTrack": "upper:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "bach-prelude-c-hard",
@@ -397,39 +495,199 @@
     "midi": 50,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper:"
+    "sourceTrack": "upper:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 68,
+    "beat": 36,
+    "midi": 56,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 147.5,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 162.25,
+    "midi": 73,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 174.75,
+    "midi": 73,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 177.25,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 199.5,
+    "midi": 58,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 204,
+    "midi": 58,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 205.5,
     "midi": 60,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 180.25,
+    "beat": 209.25,
+    "midi": 63,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 211.25,
+    "midi": 63,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 211.5,
     "midi": 66,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 229.75,
-    "midi": 75,
+    "beat": 213.75,
+    "midi": 63,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 257,
+    "beat": 261,
+    "midi": 56,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 60.25,
+    "midi": 61,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 63.25,
     "midi": 65,
-    "shippedHand": "L",
-    "sourceHand": "R",
-    "sourceTrack": "upper"
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 93.25,
+    "midi": 54,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 102.25,
+    "midi": 58,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 127,
+    "midi": 65,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 127.25,
+    "midi": 68,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
@@ -437,31 +695,69 @@
     "midi": 63,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 133,
-    "midi": 61,
+    "beat": 131.5,
+    "midi": 67,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 135.75,
-    "midi": 66,
+    "beat": 131.75,
+    "midi": 63,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 137.25,
-    "midi": 66,
+    "beat": 133.75,
+    "midi": 55,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 135.25,
+    "midi": 58,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 136.75,
+    "midi": 58,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 138.5,
+    "midi": 60,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
@@ -469,119 +765,309 @@
     "midi": 58,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 140.25,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune",
-    "beat": 146.75,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune",
-    "beat": 147,
-    "midi": 70,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune",
-    "beat": 147.25,
-    "midi": 75,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune",
-    "beat": 147.75,
-    "midi": 70,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune",
-    "beat": 148.75,
-    "midi": 70,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune",
-    "beat": 190,
+    "beat": 141.25,
     "midi": 58,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 201.5,
+    "beat": 144.75,
     "midi": 63,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 207,
+    "beat": 145,
     "midi": 66,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 209,
-    "midi": 66,
+    "beat": 151.5,
+    "midi": 68,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 212,
-    "midi": 66,
+    "beat": 154.75,
+    "midi": 68,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 213,
-    "midi": 66,
+    "beat": 159.25,
+    "midi": 68,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 213.25,
+    "beat": 180.75,
+    "midi": 73,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 181,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 181.25,
+    "midi": 78,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 181.5,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 181.75,
+    "midi": 73,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 182,
+    "midi": 69,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 199.75,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 204.25,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 210.25,
     "midi": 70,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 223.75,
-    "midi": 75,
+    "beat": 225.5,
+    "midi": 80,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 225.75,
+    "midi": 84,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 230.25,
+    "midi": 81,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 234.75,
+    "midi": 80,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 239.25,
+    "midi": 78,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 248.25,
+    "midi": 66,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 248.5,
+    "midi": 70,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 257.25,
+    "midi": 68,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 260.5,
+    "midi": 37,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 289,
+    "midi": 80,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 292.75,
+    "midi": 53,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 294,
+    "midi": 53,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 295.75,
+    "midi": 53,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 298.75,
+    "midi": 59,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 299,
+    "midi": 64,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
@@ -589,15 +1075,209 @@
     "midi": 66,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune",
-    "beat": 303.25,
+    "beat": 299.5,
     "midi": 68,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 301.75,
+    "midi": 65,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 303,
+    "midi": 65,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 304.75,
+    "midi": 65,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 308,
+    "midi": 71,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 308.25,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 311,
+    "midi": 71,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 311.25,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 315.75,
+    "midi": 61,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 316,
+    "midi": 65,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 318,
+    "midi": 80,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune",
+    "beat": 318.5,
+    "midi": 85,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 36,
+    "midi": 56,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 93.25,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 102.25,
+    "midi": 70,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 118.75,
+    "midi": 56,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 123.25,
+    "midi": 56,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 147.5,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 162.25,
+    "midi": 73,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 163.75,
+    "midi": 76,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-easy",
@@ -605,223 +1285,419 @@
     "midi": 78,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-easy",
-    "beat": 133,
-    "midi": 61,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
+    "beat": 174.75,
+    "midi": 73,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-easy",
-    "beat": 135.75,
+    "beat": 177.25,
     "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-easy",
-    "beat": 137.25,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 140.25,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 146.75,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 147,
-    "midi": 70,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 147.25,
-    "midi": 75,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 147.75,
-    "midi": 70,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 148.75,
-    "midi": 70,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 150.25,
-    "midi": 70,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 190,
+    "beat": 199.5,
     "midi": 58,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-easy",
-    "beat": 201.5,
-    "midi": 63,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
+    "beat": 204,
+    "midi": 58,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-easy",
-    "beat": 207,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 209,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 211.25,
-    "midi": 63,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 212,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 213,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 213.25,
-    "midi": 70,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 223.75,
-    "midi": 75,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-easy",
-    "beat": 303.25,
-    "midi": 68,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-hard",
-    "beat": 68,
+    "beat": 205.5,
     "midi": 60,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 209.25,
+    "midi": 63,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 213.75,
+    "midi": 63,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 261,
+    "midi": 56,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 297.25,
+    "midi": 56,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-easy",
+    "beat": 306.25,
+    "midi": 68,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 90.25,
+    "beat": 45,
     "midi": 61,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 172,
-    "midi": 66,
+    "beat": 45.5,
+    "midi": 63,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 180.25,
-    "midi": 66,
+    "beat": 70,
+    "midi": 70,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 229.75,
+    "beat": 74.5,
     "midi": 75,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 257,
-    "midi": 65,
+    "beat": 76,
+    "midi": 73,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper"
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 131,
+    "beat": 79,
     "midi": 70,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 84.25,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 93.25,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 102.25,
+    "midi": 70,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 106,
+    "midi": 70,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 107,
+    "midi": 75,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 147.5,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 162.25,
+    "midi": 73,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 174.75,
+    "midi": 73,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 177.25,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 193,
+    "midi": 54,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 199.5,
+    "midi": 58,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 204,
+    "midi": 58,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 205.5,
+    "midi": 60,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 209.25,
+    "midi": 63,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 211.25,
+    "midi": 63,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 211.5,
+    "midi": 66,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 213.75,
+    "midi": 63,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 215,
+    "midi": 72,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 270.5,
+    "midi": 63,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 54,
+    "midi": 59,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 58.5,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 60.25,
+    "midi": 61,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 115,
+    "midi": 72,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 127,
+    "midi": 65,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 127.25,
+    "midi": 68,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
@@ -829,31 +1705,69 @@
     "midi": 63,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 133,
-    "midi": 61,
+    "beat": 131.5,
+    "midi": 67,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 135.75,
-    "midi": 66,
+    "beat": 131.75,
+    "midi": 63,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 137.25,
-    "midi": 66,
+    "beat": 133.75,
+    "midi": 55,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 135.25,
+    "midi": 58,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 136.75,
+    "midi": 58,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 138.5,
+    "midi": 60,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
@@ -861,135 +1775,339 @@
     "midi": 58,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 140.25,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-hard",
-    "beat": 146.75,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-hard",
-    "beat": 147,
-    "midi": 70,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-hard",
-    "beat": 147.25,
-    "midi": 75,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-hard",
-    "beat": 147.75,
-    "midi": 70,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-hard",
-    "beat": 148.75,
-    "midi": 70,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-hard",
-    "beat": 190,
+    "beat": 141.25,
     "midi": 58,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 201.5,
+    "beat": 144.75,
     "midi": 63,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 203,
+    "beat": 145,
     "midi": 66,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 203,
+    "beat": 151.5,
+    "midi": 68,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 154.75,
+    "midi": 68,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 159.25,
+    "midi": 68,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 180.75,
+    "midi": 73,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 181,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 181.25,
+    "midi": 78,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 181.5,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 181.75,
+    "midi": 73,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 182,
+    "midi": 69,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 199.75,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 204.25,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 210.25,
     "midi": 70,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 207,
+    "beat": 225.5,
+    "midi": 80,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 225.75,
+    "midi": 84,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 230.25,
+    "midi": 81,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 234.75,
+    "midi": 80,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 239.25,
+    "midi": 78,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 248.25,
     "midi": 66,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 209,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-hard",
-    "beat": 212,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-hard",
-    "beat": 213,
-    "midi": 66,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
-  },
-  {
-    "song": "clair-de-lune-hard",
-    "beat": 213.25,
+    "beat": 248.5,
     "midi": 70,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 223.75,
-    "midi": 75,
+    "beat": 257.25,
+    "midi": 68,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 259,
+    "midi": 60,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 260.5,
+    "midi": 44,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 274.5,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 286,
+    "midi": 63,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 289,
+    "midi": 80,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 292.75,
+    "midi": 53,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 294,
+    "midi": 53,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 295.75,
+    "midi": 53,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 298.75,
+    "midi": 59,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 299,
+    "midi": 64,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
@@ -997,15 +2115,129 @@
     "midi": 66,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "clair-de-lune-hard",
-    "beat": 303.25,
+    "beat": 299.5,
     "midi": 68,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 301.75,
+    "midi": 65,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 303,
+    "midi": 65,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 304.75,
+    "midi": 65,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 308,
+    "midi": 71,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 308.25,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 311,
+    "midi": 71,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 311.25,
+    "midi": 76,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 315.75,
+    "midi": 61,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 316,
+    "midi": 65,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 318,
+    "midi": 80,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "clair-de-lune-hard",
+    "beat": 318.5,
+    "midi": 85,
+    "shippedHand": "R",
+    "sourceHand": "L",
+    "sourceTrack": "lower",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "goldberg-aria-hard",
@@ -1013,7 +2245,9 @@
     "midi": 64,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper:"
+    "sourceTrack": "upper:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "goldberg-aria-hard",
@@ -1021,7 +2255,9 @@
     "midi": 64,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper:"
+    "sourceTrack": "upper:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "goldberg-aria-hard",
@@ -1029,7 +2265,9 @@
     "midi": 66,
     "shippedHand": "L",
     "sourceHand": "R",
-    "sourceTrack": "upper:"
+    "sourceTrack": "upper:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "goldberg-aria-hard",
@@ -1037,7 +2275,9 @@
     "midi": 59,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "lower:1"
+    "sourceTrack": "lower:1",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "gymnopedie-1",
@@ -1045,7 +2285,9 @@
     "midi": 55,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "bass:"
+    "sourceTrack": "bass:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "gymnopedie-1",
@@ -1053,7 +2295,9 @@
     "midi": 59,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "bass:"
+    "sourceTrack": "bass:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "gymnopedie-1",
@@ -1061,7 +2305,9 @@
     "midi": 53,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "bass:"
+    "sourceTrack": "bass:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "gymnopedie-1",
@@ -1069,7 +2315,9 @@
     "midi": 57,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "bass:"
+    "sourceTrack": "bass:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "gymnopedie-1-hard",
@@ -1077,30 +2325,88 @@
     "midi": 67,
     "shippedHand": "R",
     "sourceHand": "L",
-    "sourceTrack": "bass:"
-  },
-  {
-    "song": "nocturne-op9-2",
-    "beat": 120.25,
-    "midi": 67,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
+    "sourceTrack": "bass:",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
     "song": "nocturne-op9-2-easy",
-    "beat": 120.25,
-    "midi": 67,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
+    "beat": 18.5,
+    "midi": 70,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   },
   {
-    "song": "nocturne-op9-2-hard",
-    "beat": 120.25,
-    "midi": 67,
-    "shippedHand": "R",
-    "sourceHand": "L",
-    "sourceTrack": "lower"
+    "song": "nocturne-op9-2-easy",
+    "beat": 42.5,
+    "midi": 70,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "nocturne-op9-2-easy",
+    "beat": 90.5,
+    "midi": 70,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "nocturne-op9-2-easy",
+    "beat": 138.5,
+    "midi": 70,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "nocturne-op9-2-easy",
+    "beat": 160.5,
+    "midi": 74,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "nocturne-op9-2-easy",
+    "beat": 176,
+    "midi": 68,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "nocturne-op9-2-easy",
+    "beat": 176.25,
+    "midi": 71,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
+  },
+  {
+    "song": "nocturne-op9-2-easy",
+    "beat": 176.5,
+    "midi": 75,
+    "shippedHand": "L",
+    "sourceHand": "R",
+    "sourceTrack": "upper",
+    "disposition": "documented arrangement adjustment",
+    "correctionFile": "js/songs-hands.mjs"
   }
 ]

@@ -14,14 +14,18 @@ export class EngravedScore {
   drawWindow(first){
     const m=this.model;this.window=first;this.noteEls.clear();this.container.replaceChildren();
     const host=document.createElement('div');host.className='engraved-score';this.container.append(host);
-    const count=Math.min(4,m.bars-first), widthPerBar=340, leading=110;
+    const count=Math.min(4,m.bars-first),leading=110;
+    const widths=Array.from({length:count},(_,i)=>{
+      const onsets=new Set(Object.values(m.tracks).flatMap(voices=>voices.flatMap(v=>v[first+i].map(e=>e.at))));
+      return Math.max(340,90+onsets.size*28)+(i===0?leading:0);
+    });
     const renderer=new VF.Renderer(host,VF.Renderer.Backends.SVG);
-    renderer.resize(count*widthPerBar+leading,290);
+    renderer.resize(widths.reduce((a,b)=>a+b,0),290);
     const ctx=renderer.getContext();ctx.setFillStyle('#23282f');ctx.setStrokeStyle('#23282f');
     const ties=new Map();
     for(let bar=first;bar<first+count;bar++){
-      const x=(bar-first)*widthPerBar, width=widthPerBar+(bar===first?leading:0), bx=x+(bar===first?0:leading);
-      const staves={},voices=[],entries=[];
+      const width=widths[bar-first],bx=widths.slice(0,bar-first).reduce((a,b)=>a+b,0);
+      const staves={},voices=[],entries=[],tuplets=[];
       for(const hand of ['R','L']){
         const clef=hand==='R'?'treble':'bass';
         const stave=new VF.Stave(bx,hand==='R'?15:145,width);
@@ -29,6 +33,7 @@ export class EngravedScore {
         if(bar===first){stave.addClef(clef);if(m.key)stave.addKeySignature(m.key);stave.addTimeSignature(m.meter.join('/'));}
         stave.setMeasure(bar+1);stave.setContext(ctx).draw();staves[hand]=stave;
         for(const [vi,voice] of m.tracks[hand].entries()){
+          const tupleGroups=new Map();
           const tickables=voice[bar].map(event=>{
             const rest=!event.notes.length;
             const note=new VF.StaveNote({clef,keys:rest?[hand==='R'?'b/4':'d/3']:event.notes.map(n=>spellPitch(n.m,m.key??'C')),
@@ -38,8 +43,10 @@ export class EngravedScore {
             // Secondary-voice padding is spacing, not an extra rest to learn.
             if(rest&&vi>0)note.setStyle({fillStyle:'transparent',strokeStyle:'transparent'});
             if(!rest)event.notes.forEach((n,index)=>{if(n.f&&!event.tieFrom)note.addModifier(new VF.FretHandFinger(String(n.f)).setPosition(hand==='R'?VF.Modifier.Position.ABOVE:VF.Modifier.Position.BELOW),index);});
+            if(event.tuplet){if(!tupleGroups.has(event.tuplet))tupleGroups.set(event.tuplet,[]);tupleGroups.get(event.tuplet).push(note);}
             entries.push({note,event,hand,vi});return note;
           });
+          for(const notes of tupleGroups.values())tuplets.push(new VF.Tuplet(notes,{num_notes:3,notes_occupied:2,bracketed:true}));
           const v=new VF.Voice({num_beats:m.meter[0],beat_value:m.meter[1]}).addTickables(tickables);
           v.setStave(stave);voices.push(v);
         }
@@ -53,6 +60,7 @@ export class EngravedScore {
       for(const voice of voices){
         const beams=VF.Beam.generateBeams(voice.getTickables(),{groups:[new VF.Fraction(m.meter[0]>3&&m.meter[0]%3===0&&m.meter[1]===8?3:1,m.meter[1]===8?8:4)]});
         voice.draw(ctx,voice.getStave());beams.forEach(beam=>beam.setContext(ctx).draw());}
+      tuplets.forEach(tuplet=>tuplet.setContext(ctx).draw());
       for(const {note,event,hand,vi} of entries){
         const el=note.getSVGElement();
         if(el){el.dataset.hand=hand;el.dataset.beat=event.at/m.factor;}
