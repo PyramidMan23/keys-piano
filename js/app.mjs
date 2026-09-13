@@ -3333,8 +3333,21 @@ $('tempo').addEventListener('input', () => { $('tempo-val').textContent = $('tem
 $('tempo').addEventListener('change', rebuildEngine);
 $('section-select').addEventListener('change', rebuildEngine);
 $('wait-mode').addEventListener('change', rebuildEngine);
-$('btn-restart').addEventListener('click', rebuildEngine);
-$('results-again').addEventListener('click', () => { $('results').hidden = true; rebuildEngine(); raf = requestAnimationFrame(loopFrame); });
+// RESTARTING DISMISSES THE SCORE CARD, whichever button does it. Restart only
+// rebuilt the engine and left the card lying over the fresh run: invisible
+// until 2026-09-13, because a failed run's card was suppressed by its own
+// correction and a passed run's card was dismissed by Play again. The moment a
+// finished run started showing its score, leave-probe caught it. The frame loop
+// is cancelled before it is scheduled, so pressing Restart mid-run cannot end
+// up with two loops drawing the same deck.
+function restartRun() {
+  $('results').hidden = true;
+  rebuildEngine();
+  cancelAnimationFrame(raf);
+  raf = requestAnimationFrame(loopFrame);
+}
+$('btn-restart').addEventListener('click', restartRun);
+$('results-again').addEventListener('click', restartRun);
 $('results-score-pass').addEventListener('click', () => {
   if (sightMode) { $('results').hidden = true; newSightExercise(); return; }
   startSong(song, { asScorePass: true });
