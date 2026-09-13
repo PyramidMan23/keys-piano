@@ -1,0 +1,40 @@
+{
+ "id": "sheet-music-boss-3d-red-cyan",
+ "renderer": "Sheet Music Boss 3D keyboard render painting the two hands RED and CYAN over a grey-white 3D keyboard with a blue strike line and particle flare; One Summer's Day (Simplified Version) g9B2ly3UYRI. Not the same render as the 2020-22 blue/green or dark-blue/cyan families: here one class is genuinely RED, so the separating metric is redness, not a green/blue ratio.",
+ "metric": "redness",
+ "metricNote": "(r-b)/r, median per frame over each press. MEASURED 2026-09-13 on this video's own 290 probe events with an empty-class template: WHITE keys cyan -0.75..-0.60 (173 events) vs red +0.80 (89), nothing at all between -0.60 and +0.80. BLACK keys cyan -4685..-6.30 (18 events; r collapses to near zero under a cyan tint on a black key, so the ratio blows up but never changes sign) vs red +0.75..+0.80 (10), nothing between -6.30 and +0.75. g/b and (g-b)/max were BOTH measured on the same events and neither separates the classes (g/b is a continuum 0.05..0.75), which is why this template does not reuse the other 3D templates' metric.",
+ "classesWhite": [
+  {
+   "name": "cyan",
+   "max": -0.3
+  },
+  {
+   "name": "red",
+   "min": 0.4
+  }
+ ],
+ "classesBlack": [
+  {
+   "name": "cyan",
+   "max": -1.5
+  },
+  {
+   "name": "red",
+   "min": 0.4
+  }
+ ],
+ "hysteresisFrames": 2,
+ "settleFramesAfterSceneBreak": 12,
+ "sceneMinShare": 0.8,
+ "pressDeviation": 60,
+ "pressDeviationNote": "Euclidean RGB distance from the key's own rest colour; inherited from the Silksong/3D family and re-checked by this video's probe extraction, where every event tint sits well clear of rest.",
+ "maxSimultaneousKeys": 10,
+ "handMapping": {
+  "red": "L",
+  "cyan": "R"
+ },
+ "handMappingNote": "Established from the arranger own engraving in this video, not from pitch.",
+ "onsetLatencyMs": 84,
+ "handMappingEvidence": "The video (g9B2ly3UYRI) shows page 1 of Andrew Wrangell's own engraving from 107s (frames saved as z-alt-summers-short/st.png, st3.png, st4.png): 'One Summer's Day, from Spirited Away, Simplified Version, Joe Hisaishi, arr. Andrew Wrangell', 4/4, no key signature, Andante quarter = 74. Two independent structural readings, neither of which uses pitch. (1) NOTE COUNT PER STAFF: bars 1 and 2 are rolled chords with THREE noteheads on the upper staff and TWO on the lower (the lower staff is in TREBLE clef here, so the left hand is playing mid-range); the video paints exactly three CYAN and two RED in each of those rolls (bar 1 cyan 79/81/88 red 65/72; bar 2 cyan 74/79/84 red 64/69). (2) BAR 5 TEXTURE: the upper staff has an eighth rest then a run of eighth notes while the lower staff (now bass clef) holds a FOUR-note whole chord tied across the bar; the video paints a four-note chord RED at 17.083s held 5.80s and a run of single CYAN eighths from 17.717s. Upper staff = cyan = right, lower staff = red = left. Checked 2026-09-13: no instant in the whole video has one colour spanning more than a tenth, no held span over 16 semitones, and no red note above a simultaneous cyan one.",
+ "onsetLatencyNote": "MEASURED 2026-09-13 with compare.mjs against a ByteDance transcription of this video own audio: best constant latency 84ms, residual onset error median 4ms, p90 9ms over 290 matched notes. Audio-consistency gate on this video: 290 matched / 290 video / 342 transcription, precision 1.000, recall 0.848, F1 0.918, worst 30s window 0.840 - PASSES both committed thresholds (F1 >= 0.90, worst >= 0.75), the first SMB render in this lane to do so."
+}
