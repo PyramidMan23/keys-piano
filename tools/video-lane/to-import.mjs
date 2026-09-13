@@ -34,6 +34,14 @@ const meterArg = String(flag('meter', '4'));
 const [meterNum, meterDen] = meterArg.includes('/') ? meterArg.split('/').map(Number) : [Number(meterArg), 4];
 const outPath = flag('out', 'song.mid');
 const bpmSource = flag('bpm-source');
+// --grid N: subdivisions per beat the onsets are snapped to. 4 (the importer's
+// own quarter-beat grid) is the default and what every earlier video used. 12
+// is for a render whose eighths are triplet-swung: on a 1/4 grid a swung
+// eighth at 2/3 of a beat is dragged to 3/4 and the app teaches a dotted
+// rhythm the arranger did not write. Which one is right is MEASURED (the fit
+// below), never assumed.
+const GRID = Number(flag('grid', 4));
+if (!Number.isInteger(GRID) || GRID < 1) { console.error('--grid must be a positive integer (4 = quarter-beat, 12 = triplet)'); process.exit(2); }
 if (!eventsPath || !templatePath || !bpm || !bpmSource) { console.error('usage: to-import.mjs <events.json> <template.json> --bpm N --bpm-source "where the tempo comes from" [--meter 4] --out song.mid'); process.exit(2); }
 
 const T = JSON.parse(readFileSync(templatePath, 'utf8'));
@@ -66,21 +74,21 @@ const beat = 60 / bpm;
 let bestPhase = 0, bestErr = Infinity;
 for (let ph = 0; ph < beat; ph += beat / 200) {
   let err = 0;
-  for (const e of ev) { const b = (e.on + latency - ph) / beat; err += Math.abs(b - Math.round(b * 4) / 4); }
+  for (const e of ev) { const b = (e.on + latency - ph) / beat; err += Math.abs(b - Math.round(b * GRID) / GRID); }
   if (err < bestErr) { bestErr = err; bestPhase = ph; }
 }
 const moves = [];
 const notes = ev.map((e) => {
   const raw = (e.on + latency - bestPhase) / beat;
-  const b = Math.round(raw * 4) / 4;             // the importer's own 1/4-beat grid
+  const b = Math.round(raw * GRID) / GRID;       // the chosen grid (4 = quarter-beat, 12 = triplet)
   moves.push(Math.abs(raw - b));
-  const d = Math.max(0.25, Math.round(((e.off - e.on) / beat) * 4) / 4);
+  const d = Math.max(1 / GRID, Math.round(((e.off - e.on) / beat) * GRID) / GRID);
   const hand = T.handMapping[e.colour];         // 'L' | 'R'
   return { b, d, m: e.midi, track: hand === 'L' ? 0 : 1, hand };
 });
 const mean = moves.reduce((a, c) => a + c, 0) / moves.length;
 const worst = Math.max(...moves);
-console.log(`${ev.length} events at ${bpm}bpm (${bpmSource}), grid phase ${(bestPhase * 1000).toFixed(0)}ms: mean move ${mean.toFixed(3)} beats, worst ${worst.toFixed(3)}`);
+console.log(`${ev.length} events at ${bpm}bpm (${bpmSource}), grid 1/${GRID} beat, phase ${(bestPhase * 1000).toFixed(0)}ms: mean move ${mean.toFixed(3)} beats, worst ${worst.toFixed(3)}`);
 const MEAN_MAX = 0.12, WORST_MAX = 0.45;
 if (mean >= MEAN_MAX || worst >= WORST_MAX) {
   console.error(`REFUSE: the onsets do not sit on a ${bpm}bpm grid (committed: mean < ${MEAN_MAX}, worst < ${WORST_MAX}). Either the tempo is wrong or the render is not metronomic; a song that is not on a grid stays in seconds.`);

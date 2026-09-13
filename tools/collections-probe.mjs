@@ -47,12 +47,18 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ---- the truth, read in node from the modules the app itself imports -------
 const { SHELF } = await import('../js/songs.mjs');
-const { groupSongs, filterCollection, COLLECTIONS } = await import('../js/library.mjs');
+const { groupSongs, filterCollection, COLLECTIONS, isPiece } = await import('../js/library.mjs');
 const { difficultyScore, HALL_OF_FAME } = await import('../js/difficulty.mjs');
 const GROUPS = [...groupSongs(SHELF).values()];
 const EXPECTED = Object.fromEntries(COLLECTIONS.map((c) => [c.key, filterCollection(GROUPS, c.key).length]));
 const titleOf = (v) => v[v.length - 1].title;
 const CLASSICAL_TITLES = new Set(filterCollection(GROUPS, 'classical').map(titleOf));
+// The drills. They are kind 'exercise' and they belong to the 12-keys surface,
+// so they may not appear on Learning, Repertoire or Hall of fame either (Mark,
+// 2026-09-13: "those scales ones have sat on the top and i never play them").
+const DRILLS = GROUPS.filter((v) => !isPiece(v));
+const DRILL_TITLES = new Set(DRILLS.map(titleOf));
+const DRILL_ID = DRILLS[0]?.[0].id ?? null;
 // the app orders Weakest first by the EASIEST tier's score, so that is what the
 // rendered order is graded against
 const SCORE = new Map(GROUPS.map((v) => [titleOf(v), difficultyScore(v[0])]));
@@ -298,6 +304,52 @@ for (const [width, height] of WIDTHS) {
     if (fameAll.length !== HALL_OF_FAME.length)
       bad(`Hall of fame shows ${fameAll.length} rows, the list has ${HALL_OF_FAME.length}`);
     console.log(at(`Repertoire ${repertoireAll.length} rows, Hall of fame ${fameAll.length} rows, no chip row on either`));
+
+    // ---- Learning: most recently played first, and music only -------------
+    // Mark, 2026-09-13: "can we have the list of songs be sorted by most
+    // recently opened/played? ive just been playing mainly fur elise and mario
+    // but those scales ones have sat on the top and i never play them haha".
+    // Two causes, so two assertions: the shared sort ran the shelf A to Z, and
+    // the two original scale songs were still classified as music. The drill
+    // here carries FAR more time and far more finished runs than either song,
+    // so the only thing that can keep it off the shelf is the kind rule, and
+    // the only thing that can order the two songs is the clock.
+    if (!DRILL_ID) bad('no exercise group in the library, so the drill rule was never tested');
+    else {
+      const NOW = Date.now();
+      const LEARN = {
+        firstRunDone: true, diagnosticDone: true, calibratedAt: NOW - 864e5, calOffsetMs: 0,
+        days: [], pmin: {}, lessons: {},
+        songs: {
+          [DRILL_ID]: { plays: 40, stars: 3, best: 99, ms: 36e5, lastAt: NOW - 7 * 864e5 },
+          'ode-to-joy': { plays: 3, stars: 1, best: 60, ms: 12e4, lastAt: NOW - 72e5 },
+          'fur-elise': { plays: 2, stars: 1, best: 70, ms: 6e4, lastAt: NOW - 36e5 },
+        },
+        lib: { learning: true, canonTab: 'learning' },
+      };
+      await b.goto(BASE + '?canon=0');
+      await b.eval('localStorage.setItem("keys-v1", ' + JSON.stringify(JSON.stringify(LEARN)) + '); true');
+      await b.goto(BASE + '?canon=1');
+      await b.ready();
+      await wait(1400);
+      const head = await b.eval(`[...document.querySelectorAll('#screen-library *')]
+        .find((e) => !e.children.length && /^LEARNING/.test(e.textContent.trim()) && e.getBoundingClientRect().width > 0)
+        ?.textContent.trim() ?? null`);
+      if (head !== 'LEARNING, MOST RECENT FIRST')
+        bad(`the Learning header reads ${JSON.stringify(head)}, not the order on screen`);
+      const learnRows = (await whole()).titles;
+      if (!/^F(ü|u)r Elise/.test(learnRows[0] ?? ''))
+        bad(`Learning leads with ${JSON.stringify(learnRows[0])}, not the most recently played song`);
+      if (!learnRows.some((t) => /^Ode to Joy/.test(t)))
+        bad(`the older song fell off Learning entirely (${JSON.stringify(learnRows)})`);
+      for (const [shelfName, titles] of [['Learning', learnRows],
+        ['Repertoire', await shelfOf('repertoire', { collection: 'all' })],
+        ['Hall of fame', await shelfOf('fame', { collection: 'all' })]]) {
+        const drill = titles.find((t) => DRILL_TITLES.has(t));
+        if (drill) bad(`${shelfName} carries the drill ${JSON.stringify(drill)}; exercises belong to the 12 keys`);
+      }
+      console.log(at(`Learning ${learnRows.length} rows, ${JSON.stringify(head)}, leading with ${JSON.stringify(learnRows[0])}, no drill on any learner shelf`));
+    }
 
     // ---- Explore, All, COLLAPSED, as a person finds it ---------------------
     let m = await open({ canonTab: 'explore', collection: 'all' });
