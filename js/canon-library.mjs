@@ -141,6 +141,8 @@ export function renderCanonLibrary(host, ctx) {
   const search = root.querySelector('input[type="search"]');
   if (search) {
     search.id = 'lib-search';
+    // the desktop frame's box carries a placeholder and no accessible name
+    search.setAttribute('aria-label', 'Search all songs');
     // the box always shows the query the table is filtered by; a remount used
     // to leave it blank over SEARCH RESULTS (restoreFocus below wins mid-typing)
     search.value = ctx.query ?? '';
@@ -224,6 +226,9 @@ export function renderCanonLibrary(host, ctx) {
     const activeEl = tabControls.find((t) => t.id === ctx.activeTab)?.el ?? null;
     segmentVariants(tabControls.map((t) => t.el), (el) => el === activeEl);
   }
+
+  // ---- the collection chips, under the strip, Explore only ----------------
+  const chipRow = renderCollections(root, ctx, tabStrip);
 
   // the table's sort control. Two buttons the design draws as a segment, and
   // neither did anything: the app's own sort lives on #explore-sort.
@@ -399,8 +404,205 @@ export function renderCanonLibrary(host, ctx) {
     if (resume) control(resume).classList.add('practice-secondary');
   }
   prepareResponsive(root, 'library');
+  // the collection row measures itself against the WINDOW, and only now is the
+  // board in the position it will be drawn in
+  chipRow?.__fit?.();
   restoreFocus(host, focus);
   return root;
+}
+
+// ---- collection chips ------------------------------------------------------
+// Explore is 81 pieces on one wall. These are the way in.
+//
+// APP-DRAWN INSIDE A CANON BOARD, AND EXEMPTED IN THE SAME BREATH (Law 7, and
+// the five times that bug has been paid for). `.lib-collections` is on the
+// exemption list in style.css, and every visible property is written here as an
+// inline style as well, so the box and the ink cannot come apart the way the
+// score note heads and the lesson stave did.
+//
+// Nothing here is invented. A chip IS the design's own tab button, measured out
+// of the artboard: 44px tall, #000 ground, a 12px Helvetica label in #E9EDE7, a
+// 700 12px ui-monospace tabular count in #788c82, and the active state is the
+// strip's own 2px underline, HARVESTED off the live tab rather than typed in.
+// Two things differ, and both are asked for: the row WRAPS (up to three lines
+// at 375px, one at 1418) and never scrolls sideways, and the active chip also
+// carries a filled dot, because Mark is colour blind and an underline plus a
+// hue is still one signal wearing two coats.
+const CHIP_ACCENT = '#82bf9c';     // --accent; the fallback if the strip has no underline to harvest
+const CHIP_INK = '#E9EDE7';        // the design's label ink, 15.0:1 on #000
+const CHIP_COUNT_INK = '#788c82';  // the design's count ink,  6.7:1 on #000
+// The chip row measures itself against the WINDOW, so it has to re-measure when
+// the window changes. ONE listener, registered here for the life of the tab and
+// pointed at whichever row is currently live: the library remounts on every
+// render, so a listener registered inside the renderer would have left one more
+// closure bound to an already-detached row, every time.
+let liveCollectionRow = null;
+if (typeof window !== 'undefined') {
+  window.addEventListener('resize', () => {
+    if (liveCollectionRow?.isConnected) liveCollectionRow.__fit?.();
+  }, { passive: true });
+}
+
+// The tab strip's selected underline, read out of the artboard itself. Exactly
+// one `border-bottom:2px solid #xxxxxx` is drawn in each library composition
+// and it is that underline; a miss returns null and the caller falls back.
+const drawnUnderlines = new Map();
+function drawnUnderline(screen) {
+  const key = CANON[screen] ? screen : 'library';
+  if (!drawnUnderlines.has(key)) {
+    drawnUnderlines.set(key, /border-bottom:\s*2px solid\s*(#[0-9a-fA-F]{3,8})/.exec(CANON[key] ?? '')?.[1] ?? null);
+  }
+  return drawnUnderlines.get(key);
+}
+function renderCollections(root, ctx, tabStrip) {
+  const list = ctx.collections;
+  if (!tabStrip || !Array.isArray(list) || !list.length) return null;
+  // The chips are Explore's, and only Explore's. A search sets activeTab to
+  // 'search', which is no tab at all: the collection is suspended for the life
+  // of the query and the row goes with it, rather than sitting there claiming
+  // to filter results it is not filtering.
+  if (ctx.activeTab !== 'explore') return null;
+
+  // HARVEST THE UNDERLINE, DO NOT TYPE IT, AND HARVEST IT FROM THE MARKUP.
+  //
+  // The first cut read it off the live tab strip, because segmentVariants has
+  // already written the active look there. It came back TRANSPARENT every time,
+  // and the probe caught it on the first run: at the moment this runs the
+  // strip's own underline has not settled, so the chips copied a colour that
+  // was not on screen a frame later. Reading the DESIGN instead is both earlier
+  // and truer - `border-bottom:2px solid #xxxxxx` appears exactly once in each
+  // library artboard, and it is the tab strip's selected underline - so the
+  // chips cannot drift from the strip, and a redraw of the strip moves them.
+  // The live value is still preferred when it has settled; the accent is the
+  // last resort and never the first answer.
+  const activeTab = tabStrip.parent.querySelector('[data-on="true"]')
+    ?? [...tabStrip.controls.values()].find((c) => parseFloat(getComputedStyle(c).borderBottomWidth) > 0);
+  const cs = activeTab ? getComputedStyle(activeTab) : null;
+  const live = (cs && parseFloat(cs.borderBottomWidth) > 0) ? cs.borderBottomColor : null;
+  const underline = (live && !/rgba\(0, 0, 0, 0\)|transparent/.test(live))
+    ? live
+    : (drawnUnderline(ctx.screen) ?? CHIP_ACCENT);
+  // and the strip's own hover, which the extraction parks in `style-hover`.
+  // Read from ANY tab, not the selected one: the design draws the selected tab
+  // with no hover attribute at all (it is already lit), so asking the active
+  // control alone harvested nothing and the fallback answered every time.
+  const hoverBorder = [...tabStrip.controls.values()]
+    .map((c) => /border-color:\s*([^;]+)/.exec(c.getAttribute('style-hover') ?? '')?.[1]?.trim())
+    .find(Boolean) ?? '#3d4f45';
+
+  const row = document.createElement('div');
+  row.className = 'lib-collections';
+  row.setAttribute('role', 'group');
+  row.setAttribute('aria-label', 'Collections');
+  // WRAP, NEVER SCROLL. A sideways scroller hides collections behind an edge,
+  // which is the wall's own problem one level up.
+  row.style.cssText = 'display:flex;flex-wrap:wrap;align-items:flex-start'
+    + ';column-gap:8px;row-gap:4px;margin:0 0 12px;padding:0;background:#000'
+    + ';box-sizing:border-box;min-width:0';
+  // ☠️ AFTER cssText, NEVER BEFORE. Assigning cssText replaces the whole
+  // declaration block, custom properties included, so setting the harvested
+  // hover colour first threw it away and the CSS fallback won every time. It
+  // looked right on screen, which is the only reason it survived a review.
+  // (Codex, cold review of fa14c00.)
+  row.style.setProperty('--chip-hover-border', hoverBorder);
+
+  // ☠️ AND THE ROW IS BOUND BY THE WINDOW, NOT BY THE ARTBOARD. The phone
+  // composition is a fixed 756px card that the page scrolls sideways, so a row
+  // that fills its column runs to x=526 in a 375px viewport and the last three
+  // chips sit off the side of Mark's phone: exactly the thing wrapping was
+  // chosen to prevent, reintroduced by the column it wraps inside. The first
+  // probe hid it by scrolling to reach them, which is the gate agreeing with
+  // the bug. The row's width is the VISIBLE window from its own left edge,
+  // capped by the column, and a third line at 375 is the correct answer.
+  const fitToWindow = () => {
+    row.style.maxWidth = '';
+    const left = row.getBoundingClientRect().x;
+    const visible = Math.max(120, (window.innerWidth || document.documentElement.clientWidth) - left - 2);
+    row.style.maxWidth = visible + 'px';
+  };
+  // ☠️ AND IT HAS TO BE MEASURED AGAIN WHEN THE SCREEN HAS SETTLED. The
+  // practice-first layout lifts the prescription above the tabs AFTER this
+  // runs, and prepareResponsive re-tags the whole board: the row's left edge
+  // moved from -5 to 13 between the two, so a width measured here was 18px too
+  // wide and the last chip still hung off the side. renderCanonLibrary calls
+  // this again at the end, and the module-level resize handler above calls it
+  // too. That handler is registered ONCE, for the life of the tab: the library
+  // remounts on every render, so a listener registered here would have been one
+  // more listener bound to an already-detached row, every time.
+  row.__fit = fitToWindow;
+  liveCollectionRow = row;
+  fitToWindow();
+
+  for (const c of list) {
+    const active = c.key === ctx.collection;
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'lib-collection';
+    chip.dataset.collection = c.key;
+    chip.setAttribute('aria-pressed', String(active));
+    // the underline is always 2px, transparent when off, so selecting a chip
+    // changes no height and the row never reflows under the finger on it
+    chip.style.cssText = 'height:44px;min-height:44px;padding:0 8px;border:0'
+      + ';border-bottom:2px solid ' + (active ? underline : 'transparent')
+      + ';background:#000;display:inline-flex;align-items:center;gap:7px;cursor:pointer'
+      + ';flex:none;box-sizing:border-box;white-space:nowrap;border-radius:0'
+      + ';transition:border-color .12s,background .12s';
+
+    // THE DOT IS THE SECOND SIGNAL, and its space is reserved on every chip so
+    // that pressing one moves no label by a pixel.
+    const dot = document.createElement('i');
+    dot.style.cssText = 'width:6px;height:6px;border-radius:50%;flex:none;display:block'
+      + ';background:' + (active ? underline : 'transparent');
+    chip.appendChild(dot);
+
+    const label = document.createElement('span');
+    label.textContent = c.label;
+    // the strip sets its selected label to 700 and the others to 400: same here
+    label.style.cssText = 'font:' + (active ? 700 : 400) + ' 12px/1.35 Helvetica,Arial,sans-serif'
+      + ';color:' + CHIP_INK;
+    chip.appendChild(label);
+
+    const count = document.createElement('span');
+    count.textContent = String(c.count);
+    count.style.cssText = 'font:700 12px/1 ui-monospace,Menlo,monospace'
+      + ';font-variant-numeric:tabular-nums;color:' + (active ? underline : CHIP_COUNT_INK);
+    chip.appendChild(count);
+
+    // A ZERO-COUNT CHIP IS STILL A CHIP. Disabling it answers "what is in Jazz
+    // and blues?" with nothing at all; pressing it answers honestly.
+    chip.addEventListener('click', () => ctx.onCollection?.(c.key));
+    row.appendChild(chip);
+  }
+  tabStrip.parent.insertAdjacentElement('afterend', row);
+  fitToWindow();   // the left edge is only real once the row is in the document
+
+  // THE EMPTY STATE SITS WHERE THE LIST WOULD, not in a toast, and its way out
+  // is a real control: a filter with no pieces and no exit is a trap.
+  if (ctx.collectionEmpty) {
+    const empty = document.createElement('div');
+    empty.className = 'lib-collections lib-collection-empty';
+    empty.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;column-gap:12px;row-gap:4px'
+      + ';margin:0 0 12px;padding:0;background:#000;box-sizing:border-box';
+    empty.style.maxWidth = row.style.maxWidth;   // bound by the window, as the row is
+    const fitRow = row.__fit;
+    row.__fit = () => { fitRow(); empty.style.maxWidth = row.style.maxWidth; };
+    const words = document.createElement('span');
+    words.textContent = 'No pieces in this collection';
+    words.style.cssText = 'font:400 12px/1.35 Helvetica,Arial,sans-serif;color:' + CHIP_INK;
+    empty.appendChild(words);
+    const reset = document.createElement('button');
+    reset.type = 'button';
+    reset.className = 'lib-collection-reset';
+    reset.textContent = 'Show all';
+    reset.style.cssText = 'height:44px;min-height:44px;padding:0 8px;border:0'
+      + ';border-bottom:2px solid ' + underline + ';background:#000;cursor:pointer'
+      + ';display:inline-flex;align-items:center;border-radius:0;flex:none'
+      + ';font:700 12px/1.35 Helvetica,Arial,sans-serif;color:' + CHIP_INK;
+    reset.addEventListener('click', () => ctx.onCollection?.('all'));
+    empty.appendChild(reset);
+    row.insertAdjacentElement('afterend', empty);
+  }
+  return row;
 }
 
 // ---- repeated groups -------------------------------------------------------
@@ -966,6 +1168,10 @@ function openLibraryGallery(ctx) {
     }
     const plays = leaves(tile).filter((l) => /^\d+$/.test(l.textContent.trim())).pop();
     if (plays && song.plays != null) plays.textContent = String(song.plays);
+    // NAME THE ROW, the third renderer to do it. At desktop the show-more
+    // control opens this wall rather than paging the grid, so this is where the
+    // whole collection is on screen and where a gate has to count it.
+    tile.dataset.libRow = song.title;
     if (song.onOpen) {
       tile.style.cursor = 'pointer';
       tile.addEventListener('click', () => { close(); song.onOpen(song); });
@@ -1424,6 +1630,10 @@ function renderTiles(root, ctx) {
       const plays = leaves(pips.parentElement).filter((l) => /^\d+$/.test(l.textContent.trim())).pop();
       if (plays && song.plays != null) plays.textContent = String(song.plays);
     }
+    // NAME THE ROW. tools/collections-probe.mjs has to read the titles actually
+    // on the wall, and the two renderers draw entirely different markup; this
+    // is the same kind of stable hook as data-lib-grid below.
+    tile.dataset.libRow = song.title;
     if (song.onOpen) {
       tile.style.cursor = 'pointer';
       tile.addEventListener('click', () => song.onOpen(song));
@@ -1590,6 +1800,7 @@ function renderRows(root, ctx, anchors) {
     const row = tpl.cloneNode(true);
     list.insertBefore(row, anchorAfter);
 
+    row.dataset.libRow = song.title;   // the ledger half of the same hook
     const [titleEl, subEl] = leaves(slot(row, TEXT));
     if (titleEl) titleEl.textContent = song.title;
     if (subEl) subEl.textContent = song.sub;

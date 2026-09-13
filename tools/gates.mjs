@@ -58,6 +58,7 @@ const ALL = [
   'tools/shell-check.mjs',
   'tools/leave-probe.mjs',
   'tools/phone-library-probe.mjs',
+  'tools/collections-probe.mjs',
   'tools/trial-probe.mjs',
   'tools/lesson-walk-probe.mjs',
   'tools/teacher-walk-probe.mjs',
@@ -73,6 +74,7 @@ const LANES = {
     'tools/canon-journeys.mjs',   // opens a song from the library and plays it
     'tools/void-check.mjs',       // the library screens render song tiles
     'tools/canon-samples.mjs',    // real data must replace every drawn sample
+    'tools/collections-probe.mjs', // every song classified, and the chips count what is there
     'test/check.mjs',             // song shape, ids, counts, tier ladder
     'test/import-roundtrip.mjs',  // the importer itself
     'tools/score-render-check.mjs',
