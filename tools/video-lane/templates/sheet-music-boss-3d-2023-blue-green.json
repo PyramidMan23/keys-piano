@@ -1,0 +1,41 @@
+{
+ "id": "sheet-music-boss-3d-2023-blue-green",
+ "renderer": "Sheet Music Boss 3D keyboard render (2023 era, blue glow strike line, full 88-key keyboard, saturated key tints) painting hands BLUE and GREEN; Hey Jude ML5C_zWswqI (uploaded 2023-01-15). This is NOT the 2020-2022 3D render: its tints are far more saturated (blue about (26,43,239), green about (12,145,21)) and the (g-b)/max clumps sit at different places, so the 2020-2022 thresholds are not reused.",
+ "metric": "gmb",
+ "metricNote": "(g-b)/max(r,g,b), median per frame over each press. MEASURED 2026-09-13 on this video's own 1267 events with a classless template: white keys blue -1.00..-0.40 (675 events, two sub-clumps at -1.00..-0.90 and -0.50..-0.40 from the key's vertical gradient), green +0.15..+1.00 in two sub-clumps, a bright one at +0.90..+1.00 (391) and a faded one at +0.15..+0.25 (16, all in the outro, tints like (84,165,108) where green is plainly the dominant channel: this render fades the tint out across the release, so a short press read late in its fade lands low but never crosses zero). Black keys blue -0.85..-0.60 (114), green +0.75..+0.85 (71), nothing between. Thresholds sit in the measured gaps: nothing at all was measured between -0.40 and +0.15 on white keys or between -0.60 and +0.75 on black keys.",
+ "classesWhite": [
+  {
+   "name": "blue",
+   "max": -0.3
+  },
+  {
+   "name": "green",
+   "min": 0.1
+  }
+ ],
+ "classesBlack": [
+  {
+   "name": "blue",
+   "max": -0.4
+  },
+  {
+   "name": "green",
+   "min": 0.5
+  }
+ ],
+ "hysteresisFrames": 2,
+ "settleFramesAfterSceneBreak": 12,
+ "sceneMinShare": 0.8,
+ "pressDeviation": 60,
+ "pressDeviationNote": "Euclidean RGB distance from the key's own rest colour. Re-measured 2026-09-13 by the classless probe extraction on this video: every accepted event's tint sits more than 100 from rest, and nothing sits between 23 and 100.",
+ "maxSimultaneousKeys": 10,
+ "handMapping": {
+  "blue": "L",
+  "green": "R"
+ },
+ "handMappingNote": "Hand mapping comes from the visible engraved staves, never mean pitch. A held-span failure must not be hidden by this mapping.",
+ "handMappingEvidence": "Hey Jude end-card engraving, 'arr. Andrew Wrangell', page 1 visible at 246-250 s (endcard_248.png). Bar 0 is a treble-only quarter-note pickup over a bass-staff quarter REST; the video's first event is a single GREEN C4 at 3.567 s. Bar 1 beat 1 is a bass-staff eighth-note chord under a treble half note; the video plays BLUE C3 + BLUE F3 together with a GREEN A3 at 4.383 s, i.e. green sounds ABOVE blue while blue carries the chord, which a pitch split could not produce. Bars 1-4 of the engraving (treble line over a bass chord-plus-walking-bass figure) were read against the extracted events. Green = right (treble staff), blue = left (bass staff). Later engraved bars beyond page 1 are not shown, so a whole-piece staff proof is UNVERIFIED.",
+ "onsetLatencyMs": 92,
+ "onsetLatencyNote": "MEASURED 2026-09-13 with compare.mjs against a ByteDance transcription of this video's own audio: best constant latency 92 ms, residual onset error median 6 ms, p90 15 ms over 1251 matched notes. The key tint lights about 92 ms BEFORE the note sounds in this render. LOCKED here; it must be tested unchanged on held-out footage from this renderer before it is trusted on another video.",
+ "durationSemantics": "UNVERIFIED as physical note-off. No written release values have been checked on this renderer; tint endpoints are not certified finger releases."
+}

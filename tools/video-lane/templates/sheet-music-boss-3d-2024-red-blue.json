@@ -1,0 +1,41 @@
+{
+ "id": "sheet-music-boss-3d-2024-red-blue",
+ "renderer": "Sheet Music Boss 3D keyboard render (2024 era, blue glow strike line, full 88-key keyboard, red particle spray) painting hands RED and BLUE; Perfect Ly_Ie4Tr5Hw (uploaded 2024-10-03). The key tint FADES toward the key's rest colour as the note releases, so a press caught late in its fade reads as a washed pink (about (130,85,97)) rather than the full (168,2,4); the per-frame median over the run keeps it on the red side of zero but not near 1.0, which is why the red class reaches down to 0.",
+ "metric": "redness",
+ "metricNote": "(r-b)/r, median per frame over each press. MEASURED 2026-09-13 on this video's own 1323 events with a classless template: white keys blue -6.00..-0.60 (229 events; the very negative values are the saturated blue (96,24,246), the -0.6 group a faded blue), red +0.02..+1.00 (298); NOTHING between -0.60 and +0.02. Black keys blue -2.10..-1.30 (288), red +0.80..+1.00 (508), nothing between. Thresholds sit in the measured gaps.",
+ "classesWhite": [
+  {
+   "name": "blue",
+   "max": -0.4
+  },
+  {
+   "name": "red",
+   "min": 0.0
+  }
+ ],
+ "classesBlack": [
+  {
+   "name": "blue",
+   "max": -0.6
+  },
+  {
+   "name": "red",
+   "min": 0.4
+  }
+ ],
+ "hysteresisFrames": 2,
+ "settleFramesAfterSceneBreak": 12,
+ "sceneMinShare": 0.8,
+ "pressDeviation": 60,
+ "pressDeviationNote": "Euclidean RGB distance from the key's own rest colour. Re-measured 2026-09-13 by the classless probe extraction on this video: every accepted event's tint sits more than 100 from rest.",
+ "maxSimultaneousKeys": 10,
+ "handMapping": {
+  "red": "L",
+  "blue": "R"
+ },
+ "handMappingNote": "Hand mapping comes from the visible engraved staves, never mean pitch. NOTE that this is the OPPOSITE of the Embers template, where red is the right hand: the colour-to-hand mapping is a property of the render, established per template, and must never be carried across from another one.",
+ "handMappingEvidence": "Perfect end-card engraving, 'arr. Andrew Wrangell', page 1 visible at 262-266 s (endcard_264.png). Marked 'Slowly dotted-quarter = 63', 6/8, four flats. Bar 1's treble staff is a WHOLE-BAR REST while the bass staff alone carries a six-eighth Ab arpeggio; the video's first six events are Ab2, Eb3, Ab3, C4, Ab3, Eb3 and every one of them is RED. The treble enters in bar 2 after a dotted-quarter rest and the video's first BLUE event is Eb4 at 6.417 s, inside bar 2. Red = left (bass staff), blue = right (treble staff). Later engraved bars beyond page 1 are not shown, so a whole-piece staff proof is UNVERIFIED.",
+ "onsetLatencyMs": 101,
+ "onsetLatencyNote": "MEASURED 2026-09-13 with compare.mjs against a ByteDance transcription of this video's own audio: best constant latency 101 ms, residual onset error median 6 ms, p90 16 ms over 1314 matched notes. LOCKED here; it must be tested unchanged on held-out footage from this renderer before it is trusted on another video.",
+ "durationSemantics": "UNVERIFIED as physical note-off. This render fades the tint out over the release, so a tint endpoint is certainly NOT a certified physical note-off. No written release values have been checked."
+}
