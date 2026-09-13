@@ -1,0 +1,23 @@
+{
+ "id": "sheet-music-boss-embers-blue-grey",
+ "renderer": "Embers-style Sheet Music Boss render painting the two hands BLUE and COOL GREY over a full 88-key drawn keyboard with a blue strike-line glow and a particle burst; Ain't No Sunshine Jn2E4ccAa_4. Same family as sheet-music-boss-embers but NOT the same profile: that one is red/grey and separates on redness, this one is blue/grey and redness cannot see it (a blue bar has r = 0, so (r-b)/r is undefined or nonsense). Every threshold below was re-measured on this video's own tint histogram.",
+ "metric": "gb",
+ "metricNote": "g/b, median per frame over each press. MEASURED 2026-09-13 by an extraction whose template could classify nothing, over all 636 presses in Jn2E4ccAa_4. WHITE keys: blue 0.00 (164 events), grey 0.60..0.85 (461), and NOTHING AT ALL between 0.00 and 0.60. BLACK keys: blue 0.00 (11 events); this arrangement plays only two black keys in the whole piece (G#1 and G#2, the leading tone of A minor under its E7), both blue, so no grey black key exists to measure and none is claimed. A grey black key would come back ambiguous and be listed rather than silently joining a hand, which is the behaviour we want.",
+ "classesWhite": [
+  { "name": "blue", "max": 0.30 },
+  { "name": "grey", "min": 0.50 }
+ ],
+ "classesBlack": [
+  { "name": "blue", "max": 0.30 }
+ ],
+ "hysteresisFrames": 2,
+ "settleFramesAfterSceneBreak": 12,
+ "sceneMinShare": 0.8,
+ "pressDeviation": 60,
+ "pressDeviationNote": "Euclidean RGB distance from the key's own rest colour. Re-measured on this video 2026-09-13 from raw frames: rest white (210,213,225) and rest black (34,33,62), a pressed white key reads (0,0,~148) and a pressed black key (0,1,253), so the deviations run 190-314 while an unpressed key stays under 40. 60 sits in the empty middle.",
+ "maxSimultaneousKeys": 10,
+ "handMapping": null,
+ "handMappingNote": "NULL until read off the arranger's own engraving on this video's end card. Never from pitch.",
+ "onsetLatencyMs": 0,
+ "onsetLatencyNote": "NOT MEASURED for this renderer, and set to zero deliberately: to-import.mjs fits the grid PHASE freely, and a constant latency and a constant phase are one degree of freedom, so a zero costs the written MIDI nothing. compare.mjs against an audio transcription would have to find its own best latency before its numbers mean anything."
+}

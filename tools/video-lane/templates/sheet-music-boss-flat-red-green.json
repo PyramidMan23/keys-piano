@@ -1,0 +1,40 @@
+{
+ "id": "sheet-music-boss-flat-red-green",
+ "renderer": "Sheet Music Boss flat Synthesia-style render painting the two hands RED and GREEN over a full 88-key drawn keyboard with a blue strike-line glow and a particle burst at the strike; Merry Christmas, Mr. Lawrence Oi7MtXwVhjc (2019). NOT the same profile as the blue/green 2019 render: the colours, and therefore every threshold, are different, and they were re-measured on this video's own tint histogram.",
+ "metric": "gmb",
+ "metricNote": "(g-b)/max(r,g,b), median per frame over each press. MEASURED 2026-09-13 on the 2116 presses the unclassified probe extraction found in Oi7MtXwVhjc. WHITE keys: red -0.10..0.00 (464 events), green 0.25..0.95 (202), nothing at all between 0.00 and 0.25. BLACK keys: red -0.30..0.20 (765), green 0.95..1.00 (239), nothing between 0.20 and 0.95. The two key types need their own ranges because a black key's rest colour is dark, so the same paint reads differently on it; that is why classesWhite and classesBlack differ here by more than rounding.",
+ "classesWhite": [
+  {
+   "name": "red",
+   "max": 0.1
+  },
+  {
+   "name": "green",
+   "min": 0.2
+  }
+ ],
+ "classesBlack": [
+  {
+   "name": "red",
+   "max": 0.5
+  },
+  {
+   "name": "green",
+   "min": 0.8
+  }
+ ],
+ "hysteresisFrames": 2,
+ "settleFramesAfterSceneBreak": 12,
+ "sceneMinShare": 0.8,
+ "pressDeviation": 60,
+ "pressDeviationNote": "Euclidean RGB distance from the key's own rest colour. Re-measured on this video by the probe extraction: every event's tint sits far outside the rest colour of its key type, and the same 60 that sits in the empty middle of the gap for every other Sheet Music Boss profile sits in it here too.",
+ "maxSimultaneousKeys": 10,
+ "handMapping": {
+  "green": "L",
+  "red": "R"
+ },
+ "handMappingNote": "Established from the arranger's own engraving, never from pitch.",
+ "onsetLatencyMs": 0,
+ "onsetLatencyNote": "NOT MEASURED for this renderer. It is set to zero deliberately: to-import.mjs fits the grid PHASE freely, and a constant latency and a constant phase are the same degree of freedom, so a zero here costs the written MIDI nothing. It does mean compare.mjs against an audio transcription would have to find its own best latency before its numbers mean anything.",
+ "handMappingEvidence": "The video (Oi7MtXwVhjc) shows page 1 of Andrew Wrangell's own engraving on its end card (saved as z-d-mcml/endcard_288.png): 6/8, five flats (D flat major), 'Moderately quarter = 105'. The TOP staff, marked 8va, carries six eighth notes to the bar as a continuous single line. The BOTTOM staff, written in a treble clef, carries ONE chord per bar, tied across each pair of bars. The extraction reads exactly that shape: from the first onset at 3.567s GREEN paints F#5+G#5+C#6 together and holds them 3.50s, then repeats as a new chord at 7.150s (3.583s later, two bars), while RED paints one short note every 0.28-0.30s (an eighth) unbroken through both bars. Green is therefore the bottom staff and red the top staff; staff assignment is the arranger's, so green = left, red = right. The evidence is TEXTURE and DURATION off the engraving, not pitch. Checked 2026-09-13. Over the whole video no instant has a green note above a simultaneous red one (0 of 1005 instants) and no instant has one colour spanning more than a major tenth, so this render is not painting voices the way Song of Storms did."
+}
