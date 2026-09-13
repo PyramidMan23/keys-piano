@@ -3111,4 +3111,28 @@ ok('mastery reconciliation tolerates absent legacy records');
   assert.match(rx.reason,/next pieces ask for more/);
   ok('when no new piece fits, the prescription consolidates proven music instead of inventing readiness');
 }
+{
+  // A SEEKED ATTEMPT MUST NOT SCORE AS A WHOLE ONE.
+  //
+  // keys-v128 let the practice bar be dragged, which made a partial attempt
+  // possible for the first time. tools/seek-probe.mjs used to guarantee that by
+  // disarming the bar the moment a watch stopped; that rule is gone on purpose,
+  // and the protection now lives in the credit writes themselves. A fresh
+  // attempt sits armed until a trigger press, so a probe cannot drive a seeked
+  // run to its end without also playing the song: this reads the source
+  // instead. Weaker than a behavioural check, and it still fails loudly the day
+  // someone drops the guard.
+  const {readFileSync}=await import('node:fs');
+  const source=readFileSync(new URL('../js/app.mjs',import.meta.url),'utf8');
+  const open=source.indexOf('  if (practiceStart === null) {');
+  assert.ok(open>=0,'the personal-best block is guarded by practiceStart === null');
+  const guarded=source.slice(open,source.indexOf('\n  }',open));
+  for(const field of ['st.best','st.stars','st.bestScore'])
+    assert.ok(guarded.includes(field),field+' is written inside the practiceStart guard');
+  assert.match(source,/&& practiceStart === null\) st\.scorePasses\+\+;/);
+  assert.match(source,/if \(practiceStart === null && jj && jj\.step < jj\.steps\.length\)/);
+  assert.match(source,/sight: sightMode \|\| !!engine\.loop/);
+  assert.match(source,/repeat: practiceStart === null/);
+  ok('a seeked practice attempt earns no best, stars, score pass, playable proof or journey credit');
+}
 console.log(`\nALL GREEN: ${n} checks passed`);

@@ -3131,9 +3131,21 @@ $('btn-hear').addEventListener('click', () => {
     return;
   }
   const secIdx = $('section-select').value;
+  // ☠️ THE CHOSEN POSITION BELONGS IN THIS CHAIN (Mark, 2026-09-13: "when i drag
+  // it to a time and it has restart at (whatever time it is i draged it too) i
+  // want to be able to go listen or hear it and it plays from where i dragged
+  // it to and not the start off the song"). Dragging the bar renamed the
+  // Restart button and really did move the practice engine, but this chain knew
+  // about a correction, the first minute, a chunk and a section and nothing
+  // else, so Hear it rebuilt the demo from beat 0 of the whole song while every
+  // label on screen said otherwise. A passage loop has the same claim on it.
+  // Seek, passage, chunk and section each clear the others, so the branches
+  // stay mutually exclusive.
   const range = correction?.phase === 'hearing'
     ? {startBeat:correction.start,endBeat:correction.end}
     : firstMinute?.phase === 'hearing' ? {startBeat:firstMinute.start,endBeat:firstMinute.end}
+    : customPassage ? { startBeat: customPassage.start, endBeat: customPassage.end }
+    : practiceStart !== null ? { startBeat: practiceStart, endBeat: songEndBeat(song) }
     : chunkIdx !== null
     ? (() => { const c = chunkRange(song, chunkIdx, chunkBars()); return { startBeat: c.start, endBeat: c.end }; })()
     : secIdx === '' ? null : song.sections[+secIdx];
@@ -4141,7 +4153,7 @@ function renderJourney() {
   $('j-instruction').textContent = plan
     ? journeyFeedback + (guidedHold ? 'Next: ' : settingsMatch ? '' : 'Start this step to set: ') + plan.instruction
     : 'Every step is banked. Return to the library to choose your next practice.';
-  if (practiceStart !== null) $('j-instruction').textContent = `Playing from ${practiceStartTime()} to the end. Restart returns to ${practiceStartTime()}. Drag the timeline to choose a different starting point.`;
+  if (practiceStart !== null) $('j-instruction').textContent = `Playing from ${practiceStartTime()} to the end. Restart and Hear it both begin there. Drag the timeline to choose a different starting point.`;
   if ($('j-go')) $('j-go').textContent = label;
   $('j-exit').textContent = plan ? plan.resume : 'Return to library';
   $('j-exit').onclick = () => {
