@@ -30,27 +30,44 @@ export function groupSongs(songs) {
 // starts in the 3 to 5 Sep journal were abandoned before 5%. The minute floor
 // keeps that council's intent (an accidental launch never promotes).
 // Repertoire = a tier has passed the two-day playable proof. Explore = everything else.
+//
+// THE LEARNER-STATE SHELVES ARE MUSIC ONLY (Mark, 2026-09-13: "those scales
+// ones have sat on the top and i never play them haha"). The 46 ladder drills
+// already hide behind `song.ladder`; the two original scale songs carry
+// `kind: 'exercise'` instead, which kept them off the collections wall but not
+// out of Learning, Repertoire or the search. An exercise has no learner state
+// worth shelving, so it is classified into nothing at all here and keeps its
+// one home on the 12-keys surface, practice history and all.
 export const LEARNING_MIN_MS = 60000;
 export function classifyGroups(groups, statsOf, playable = {}) {
   const learning = [], repertoire = [], explore = [];
   const timeIn = (variants) => variants.reduce((a, v) => a + (statsOf(v.id).ms || 0), 0);
   const lastAt = (variants) => Math.max(0, ...variants.map((v) => statsOf(v.id).lastAt || 0));
   for (const variants of groups.values()) {
+    if (!isPiece(variants)) continue; // drills belong to the 12 keys, not the shelves
     const proven = variants.some((v) => playable?.[v.id]?.provenAt);
     const played = variants.some((v) => (statsOf(v.id).plays || 0) > 0);
     if (proven) repertoire.push(variants);
     else if (played || timeIn(variants) >= LEARNING_MIN_MS) learning.push(variants);
     else explore.push(variants);
   }
-  // Learning: most time in the song first, then most recently opened, then the
-  // old weakness order (fewest stars, lowest best) for anything older than the
-  // clock, which has no time recorded.
+  // Learning: MOST RECENTLY OPENED OR PLAYED FIRST, then most time in the song,
+  // then the old weakness order (fewest stars, lowest best) for anything older
+  // than the clock, which has neither recorded.
+  //
+  // Two asks, and which one won. 2026-09-09: "make sure that any song I'm
+  // learning comes up there in the order that I've tried playing or spent the
+  // most time in", which shipped as time-in-song first. 2026-09-13: "can we
+  // have the list of songs be sorted by most recently opened/played? ive just
+  // been playing mainly fur elise and mario but those scales ones have sat on
+  // the top". The newer word is recency and it supersedes the older one, so
+  // time in the song drops to the tie-break it always was for equal clocks.
   const weakness = (variants) => {
     const stars = variants.reduce((a, v) => a + (statsOf(v.id).stars || 0), 0);
     const best = Math.max(...variants.map((v) => statsOf(v.id).best || 0));
     return stars * 1000 + best;
   };
-  learning.sort((a, b) => timeIn(b) - timeIn(a) || lastAt(b) - lastAt(a) || weakness(a) - weakness(b));
+  learning.sort((a, b) => lastAt(b) - lastAt(a) || timeIn(b) - timeIn(a) || weakness(a) - weakness(b));
   const byTitle = (a, b) => a[0].title.localeCompare(b[0].title);
   repertoire.sort(byTitle);
   explore.sort(byTitle);

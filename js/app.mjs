@@ -38,7 +38,7 @@ import { analyzePedal, pedalNotes } from './pedal.mjs';
 import { analyzeArticulation, articulationSummary } from './artic.mjs';
 import { analyzeVoicing, voicingText } from './voicing.mjs';
 import { appendDiagnostic, PROGRESS_MAX_BYTES, exportProgress, importProgress, saveProgress, restoreProgress, groupSongs, classifyGroups, filterExplore,
-  COLLECTIONS, collectionKey, filterCollection, collectionCounts, searchText } from './library.mjs';
+  COLLECTIONS, collectionKey, filterCollection, collectionCounts, searchText, isPiece } from './library.mjs';
 // Run C: dated evidence adapters; storage fields remain additive.
 import { competenceRank, evidenceDate, competence, competenceLine, songEvidence, recordSongAttempt, initializeExposure, RETENTION_MIN_DELAY, exposePassage, schedulePassageCheck, passageCheckKind, reconcileMastery, assessmentConditions, prescribe, qualifiesPlayable, recordPlayableRun, PROOF_PASS, SKILL_BY_ID, TEACHER_LESSONS, STAGES } from './teacher.mjs';
 import {
@@ -729,7 +729,9 @@ function canonLibraryCtx() {
   // happens." The table now shows the ACTIVE tab's list, and the search box
   // filters across every shelf, tagged with where each hit lives.
   const q = libQuery.trim();
-  const fameGroups = HALL_OF_FAME.map((h2) => groups.get(h2.group)).filter(Boolean);
+  // Hall of fame is a shelf of MUSIC like the other three (2026-09-13), so an
+  // exercise cannot reach it even if one were ever listed.
+  const fameGroups = HALL_OF_FAME.map((h2) => groups.get(h2.group)).filter(Boolean).filter(isPiece);
   // THE DEFAULT IS THE SMART ORDER. The setting used to fall back to A to Z
   // when unset, so the Learning shelf Mark asked to see by time (2026-09-09)
   // showed A to Z until he found the toggle, under a header that admitted it.
@@ -760,7 +762,10 @@ function canonLibraryCtx() {
   const azSort = (list) => [...list].sort((a2, b2) =>
     a2[a2.length - 1].title.localeCompare(b2[b2.length - 1].title));
   const az = sortMode2 === 'az';
-  const smartTitle = { learning: 'LEARNING, MOST PLAYED FIRST', repertoire: 'REPERTOIRE, STRONGEST FIRST',
+  // LEARNING NAMES ITS OWN ORDER: Mark's 2026-09-13 ask is recency, so the
+  // header says recency. A header that names an order the rows do not follow is
+  // the bug he reported twice now.
+  const smartTitle = { learning: 'LEARNING, MOST RECENT FIRST', repertoire: 'REPERTOIRE, STRONGEST FIRST',
     fame: 'HALL OF FAME', explore: 'EXPLORE, EASIEST FIRST' };
   const shelf = (key, list) => ({
     rows: az ? azSort(list) : list,
@@ -808,7 +813,7 @@ function canonLibraryCtx() {
     // Explore's own tab count is EVERY PIECE, never the filtered subset: the
     // tab says how big the shelf is, the chips say how it divides.
     counts: { learning: learning.length, repertoire: repertoire.length,
-              fame: HALL_OF_FAME.length, explore: pieceGroups.length },
+              fame: fameGroups.length, explore: pieceGroups.length },
     // the chips: label and a count of distinct EXPLORE GROUPS (three tiers of
     // Fur Elise are one entry on the wall and count as one), before any search
     collection,
@@ -1312,7 +1317,7 @@ function renderLibrary() {
   fameEl.innerHTML = '';
   for (const h of HALL_OF_FAME) {
     const variants = groups.get(h.group);
-    if (variants) fameEl.appendChild(makeRow(variants, '🎬 ' + h.from));
+    if (variants && isPiece(variants)) fameEl.appendChild(makeRow(variants, '🎬 ' + h.from));
   }
   // explore ordering: A–Z or by measured entry difficulty (easiest tier first)
   const sortMode = state.lib.exploreSort === 'az' ? 'az' : 'diff';
@@ -1784,6 +1789,19 @@ function finishSong() {
   logPracticeMinutes(engine.timeMs / 60000);
   jlog('song_finish', { id: song.id, acc: engine.accuracy(), wrong: engine.stats.wrong, mode: viewMode, sight: sightMode });
   if (sightMode) { finishSightRead(); return; }
+  // ☠️ A FINISHED RUN ALWAYS SHOWS ITS SCORE (Mark, 2026-09-13: "now when i
+  // finish a song i cant see my score and i dont see that card that used to
+  // come up its just black"). The card was hidden whenever a correction
+  // existed, and every run under 85% creates one, so his three Fur Elise
+  // finishes at 80, 76 and 78 and his Mario at 78 showed him nothing at all:
+  // the correction draws into #guide-body and his guide was collapsed, so the
+  // score was suppressed and the thing that replaced it was invisible. A
+  // correction is an ADDITION to the results card, never a replacement. The
+  // only thing that still withholds the card is the GUIDED-JOURNEY hold,
+  // which the journey strip answers instead; it is read HERE because both the
+  // journey block below and showCorrection raise guidedHold for their own
+  // reasons before the card is decided.
+  const guidedRun = guidedHold || !!engine.__guidedAttempt;
   const acc = engine.accuracy();
   const stars = acc >= 90 ? 3 : acc >= 75 ? 2 : acc >= 50 ? 1 : 0;
   const st = songStats(song.id);
@@ -1919,7 +1937,7 @@ function finishSong() {
     tBtn.onclick = () => openTheoryCard(card);
   } else tBtn.hidden = true;
   if (acc < 85 && !correction) showCorrection(engine.evidence());
-  $('results').hidden = guidedHold || !!correction;
+  $('results').hidden = guidedRun;
 }
 
 // ---------- sight reading ----------
@@ -4088,6 +4106,11 @@ function showCorrection(evidence) {
   if (!plan) return;
   correction = {...plan,phase:'ready'};
   guidedHold = true;
+  // renderCorrection appends the card into #guide-body, which syncGuide hides
+  // whenever the guide is collapsed (it starts collapsed under 756px and stays
+  // wherever Mark last left it). A correction nobody can see is worse than no
+  // correction, so making one opens the guide.
+  guideCollapsed = false;
   jlog('correction_shown', {id:song.id,start:plan.start,end:plan.end,kind:plan.kind,before:plan.before});
   renderJourney();
 }

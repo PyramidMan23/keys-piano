@@ -63,6 +63,7 @@ const ALL = [
   'tools/lesson-walk-probe.mjs',
   'tools/teacher-walk-probe.mjs',
   'tools/learning-order-probe.mjs',
+  'tools/finish-card-probe.mjs',
 ];
 
 // What a change to the SONG DATA (songs-imported, songs-fingers, tiers-refused,
