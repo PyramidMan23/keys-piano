@@ -163,6 +163,10 @@
 /* App-drawn inside the canon: every box-and-ink pair is written here together,
    so a reverted stylesheet can never take the ink without the box. */
 .lw-quests { display: block; margin: 18px 0 0; padding: 0; }
+#screen-lessons:has(> #lw-block) { flex-direction: column; align-items: center; justify-content: flex-start; }
+#screen-lessons:has(> #lw-block) > * { flex-shrink: 0; }
+#screen-lessons:has(> #lw-block) > :first-child { max-width: 100%; }
+#screen-lessons > #lw-block { width: min(100%, 756px); box-sizing: border-box; padding: 0 24px 24px; }
 .lw-quests-head {
   display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
   margin: 0 0 8px;
@@ -283,6 +287,7 @@
   .lw-facts dd { margin-bottom: 7px; }
   .lw-quest-row { flex-wrap: wrap; }
   .lw-quest-state { width: 100%; }
+  .lw-quests-next .lw-quest-state { width: auto; }
   .passage-actions button { flex: 1 1 46%; }
   .lw-tap { width: 100%; }
 }

@@ -52,6 +52,7 @@ const ALL = [
   'test/reading-session.mjs',
   'test/learning-lab.mjs',
   'tools/learning-wave-probe.mjs',
+  'tools/learning-lifecycle-probe.mjs',
   'tools/lab-score-probe.mjs',
   'test/lab-score.mjs',
   'test/five-improvements.mjs',

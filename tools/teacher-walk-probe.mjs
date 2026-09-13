@@ -103,7 +103,7 @@ for (let i = 0; i < TEACHER_LESSONS.length; i++) {
   ok('echo: no errors', !(await errs()).length);
 }
 
-// ---- a theory card: opens with a real task, two correct plays learn it
+// ---- a theory card: two prompted plays are practice, not retained knowledge
 {
   await boot(seed({ lastSession: { songId: 'song-of-storms-easy', at: Date.now() - 36e5 } }));
   await b.eval(`[...document.querySelectorAll('#screen-library *')].find((e) => !e.children.length && e.textContent.trim() === 'Resume the session').closest('button').click(); true`); await sleep(900);
@@ -113,7 +113,8 @@ for (let i = 0; i < TEACHER_LESSONS.length; i++) {
   const once = await b.eval(`document.getElementById('theory-status').textContent`);
   await press([60, 64, 67], 300); await sleep(300);
   const twice = await b.eval(`document.getElementById('theory-status').textContent`);
-  ok('theory: two correct plays learn the chord', /once more/i.test(once) && /learned/i.test(twice), `${once} -> ${twice}`);
+  ok('theory: two prompted plays are recorded as practice, with retention left to a later check',
+    /once more/i.test(once) && /practised/i.test(twice) && /later check/i.test(twice) && !/learned/i.test(twice), `${once} -> ${twice}`);
   ok('theory: no errors', !(await errs()).length);
 }
 

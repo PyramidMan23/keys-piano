@@ -289,7 +289,7 @@ try {
     // tool label -> the screen it must land on. Read from the app's own rails,
     // asserted against the visible screen, so a dead drawer row cannot hide.
     const MAP = {
-      'My path': 'path', 'Lessons': 'lessons', 'Sight reading': 'play',
+      'My path': 'path', 'Lessons': 'lessons', 'Sight reading': 'reading',
       // Skill workout is "ear or scales, ALTERNATING EACH DAY": scales day
       // lands on play, ear day on echo. Pinning one broke on the date rollover.
       'Quick win': 'play', 'Improve a song': 'play', 'Skill workout': ['play', 'echo'],
@@ -308,7 +308,8 @@ try {
       if (!wanted.includes(where)) bad.push(`${label} landed on ${where}, expected ${wanted.join(' or ')}`);
       // and back, whatever screen we are on
       if (where !== 'library') {
-        if (await clickText('Library') !== 'ok') bad.push(`no way back from ${label} (${where})`);
+        const back = where === 'reading' ? await clickId('reading-back') : await clickText('Library');
+        if (back !== 'ok') bad.push(`no way back from ${label} (${where})`);
         await new Promise((r) => setTimeout(r, 700));
         if (await visible() !== 'library') bad.push(`could not return to the library from ${label}`);
       }

@@ -426,10 +426,9 @@ export function installLearningUI(ctx) {
   // The lessons board under the canon replaces the screen's markup, so the ONE
   // copy of this block is created here and moved to whichever host is live.
   function blockHost() {
-    const screen = $('screen-lessons');
-    if (!screen) return null;
-    const board = screen.firstElementChild;
-    return board && !board.dataset.legacyScreen ? board : screen;
+    // Extend the lessons screen after its designed board, without inserting
+    // new markup into that board or changing the existing lesson composition.
+    return $('screen-lessons');
   }
   function ensureBlock() {
     const host = blockHost();
@@ -888,11 +887,11 @@ export function installLearningUI(ctx) {
     questView.pressed.clear();
     if (ctx.CANON_ON) ctx.hideRestingLayer($('quest-keys'));
     questView.resize();
-    drawQuestKeys();
 
     // the answer question, when the rung has one
     renderAsk(s);
     syncQuestControls(s);
+    drawQuestKeys();
   }
 
   // A QUEST'S PAGE IS AUTHORED, NOT DERIVED. The generic ScoreView engraves

@@ -1,5 +1,5 @@
 {
- "when": "2026-09-13T12:06:45.414Z",
+ "when": "2026-09-13T13:14:47.268Z",
  "origin": "http://localhost:4193",
  "rows": [
   {
@@ -13152,10 +13152,10 @@
    "error": null,
    "x": 4,
    "y": 18,
-   "width": 403,
-   "height": 142,
-   "overflowing": false,
-   "hintShown": false
+   "width": 382,
+   "height": 161,
+   "overflowing": true,
+   "hintShown": true
   },
   {
    "label": "ties",
@@ -13166,10 +13166,10 @@
    "error": null,
    "x": 4,
    "y": 18,
-   "width": 387,
-   "height": 152,
-   "overflowing": false,
-   "hintShown": false
+   "width": 382,
+   "height": 171,
+   "overflowing": true,
+   "hintShown": true
   },
   {
    "label": "tie-and-slur",
@@ -13180,10 +13180,10 @@
    "error": null,
    "x": 4,
    "y": 18,
-   "width": 387,
-   "height": 152,
-   "overflowing": false,
-   "hintShown": false
+   "width": 382,
+   "height": 171,
+   "overflowing": true,
+   "hintShown": true
   },
   {
    "label": "triplets",
@@ -13222,10 +13222,10 @@
    "error": null,
    "x": 4,
    "y": 18,
-   "width": 385,
-   "height": 332,
-   "overflowing": false,
-   "hintShown": false
+   "width": 382,
+   "height": 351,
+   "overflowing": true,
+   "hintShown": true
   },
   {
    "label": "six-eight",
@@ -13236,7 +13236,7 @@
    "error": null,
    "x": 4,
    "y": 18,
-   "width": 384,
+   "width": 382,
    "height": 171,
    "overflowing": true,
    "hintShown": true
@@ -13250,7 +13250,7 @@
    "error": null,
    "x": 4,
    "y": 18,
-   "width": 383,
+   "width": 382,
    "height": 296,
    "overflowing": true,
    "hintShown": true
@@ -13264,7 +13264,7 @@
    "error": null,
    "x": 4,
    "y": 18,
-   "width": 383,
+   "width": 382,
    "height": 171,
    "overflowing": true,
    "hintShown": true

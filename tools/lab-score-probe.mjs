@@ -309,6 +309,9 @@ const watch = b.watchErrors();
 await b.goto(ORIGIN + '/index.html');
 await b.ready();
 await b.freezeMotion();
+// The real library intentionally reloads when crossing the desktop breakpoint.
+// This isolated engraving board must stay on a stable non-library surface.
+await b.eval("window.__show('quest'); true");
 
 const count = await b.eval(SETUP);
 ok(`every authored exercise is reachable (${count} found)`, count >= 138, `${count} exercises`);

@@ -27,6 +27,9 @@ export function measure(screen, baseline = null, intersects = overlap) {
   const name = el => el.id || el.tagName + ' ' + el.textContent.trim().slice(0, 40);
   const shown = el => {
     if (el.closest('[hidden], [data-legacy-screen]')) return false;
+    // Closed <details> content can retain a bounding box without painting.
+    // Only genuinely rendered controls participate in overlap measurements.
+    if (el.checkVisibility && !el.checkVisibility()) return false;
     const r = el.getBoundingClientRect(), s = getComputedStyle(el);
     return r.width > 0 && r.height > 0 && s.visibility !== 'hidden' && s.display !== 'none';
   };
@@ -172,6 +175,9 @@ async function main() {
           if(screen==='play') {
             await b.eval(`document.querySelector('#screen-play .practice-adjust')?.setAttribute('open',''); true`); await settle();
             const expanded=await read(screen,baselines[screen]); r.problems.push(...expanded.problems.map(p=>'expanded: '+p));
+            await b.eval(`document.getElementById('passage-from')?.closest('details')?.setAttribute('open',''); true`); await settle();
+            const passage=await read(screen,baselines[screen]); r.problems.push(...passage.problems.map(p=>'passage controls: '+p));
+            await b.eval(`document.getElementById('passage-from')?.closest('details')?.removeAttribute('open'); true`);
             await click('Score','#screen-play');
             const score=await read(screen,baselines[screen]); r.problems.push(...score.problems.map(p=>'score: '+p));
             if(!(score.surfaceHeight>=238)) r.problems.push('score height below 238: '+score.surfaceHeight);
