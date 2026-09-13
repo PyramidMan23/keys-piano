@@ -106,6 +106,28 @@ a per-note COLOUR, which is the hand information audio throws away:
   the two-track MIDI; `import-midi.mjs --video-hands` takes the tracks as hands
   and NOTHING else a score would earn (fromScore false, pedal fix runs, Hard
   faces the audit, the transcription re-split never touches them).
+- ☠️ **A VIDEO-LANE MIDI IMPORTED WITHOUT `--video-hands` PRETENDS TO BE A SCORE
+  (2026-09-13).** The 13 September batch handed nine video-lane files straight to
+  `import-midi.mjs --midi` with a hand-written `--source`. Two tracks with
+  distinct ranges is exactly the shape `parts.length === 2` reads as an engraved
+  score, so every one of them came out with `fromScore` true, no `provenance`
+  field, and two consequences. First, the PEDAL FIX was skipped (`if (!fromScore)`
+  guards `unpedal` and `releaseOverlaps`), and a falling-note render paints the
+  key tint for as long as the pedal holds the key lit, so tiers shipped carrying
+  holds no finger kept: 5 unplayable held spans on Schindler's List, 8 on Hey
+  Jude, 19 on Merry Christmas Mr. Lawrence. Second, `hand-audit.mjs` reads
+  provenance from the shipped RECORD, not from what the importer believed, and
+  its `fromScore` test is `/mutopia|wikimedia/` on the source string, so the
+  exemption the importer had already granted at import time did not survive into
+  the library and six tiers were flagged. Both halves are the same missing flag.
+  The fix is the re-import, never a hand-edit and never a wider threshold: the
+  same MIDI with `--video-hands` gave byte-identical beats, pitches and hands on
+  all 27 tiers, differing only in the durations the pedal fix shortens, and the
+  audit went 6 flagged to 0. **The Schindler's List MEDIUM was the honest test**
+  (a Medium is OURS and is never exempt): its flagged chord, left hand G2 held
+  under A#3 at beat 53.75, was a sustain artefact and not a thinning fault, and
+  `releaseOverlaps` cleared all 5 of them, so it needed neither a refusal in
+  `js/tiers-refused.mjs` nor a rolled-chord excuse.
 - ☠️ **The grid fit cannot prove the tempo.** Onsets on a quarter-beat grid at
   70 fit at 35, 140 and 210 too. The bpm is a fact from outside (the
   arranger's marking) and `--bpm-source` says where; the fit only proves the

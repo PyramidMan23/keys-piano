@@ -20,6 +20,15 @@ export const TIERS_REFUSED = {
   "notes": 912,
   "why": "a fuller arrangement of this recording asks for 81 chords wider than 14 semitones, 13 moments with the hands crossed, 3 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
  },
+ "chopin-prelude-op28-7": {
+  "tiers": 2,
+  "why": "engraved score, hands from the staves; Hard missing because no note count between 56 (Easy) and undefined (Hard) is a step down from both, or every cut that reaches it either fails the playability audit as the staves label the hands or does not sit between its neighbours on the library's difficulty scale"
+ },
+ "clementi-sonatina-36-1": {
+  "tiers": 2,
+  "notes": 333,
+  "why": "engraved score, hands from the staves; Medium missing because no note count between 260 (Easy) and 333 (Hard) is a step down from both, or every cut that reaches it either fails the playability audit as the staves label the hands or does not sit between its neighbours on the library's difficulty scale"
+ },
  "coffin-dance": {
   "tiers": 2,
   "notes": 2697,
@@ -99,6 +108,11 @@ export const TIERS_REFUSED = {
   "tiers": 2,
   "notes": 1178,
   "why": "a fuller arrangement of this recording asks for 106 chords wider than 14 semitones, 30 moments with the hands crossed, 12 jumps faster than 120 semitones a second, so the audit refused it rather than ship an unplayable tier"
+ },
+ "petzold-minuet-g": {
+  "tiers": 2,
+  "notes": 204,
+  "why": "engraved score, hands from the staves; Medium missing because no note count between 158 (Easy) and 204 (Hard) is a step down from both, or every cut that reaches it either fails the playability audit as the staves label the hands or does not sit between its neighbours on the library's difficulty scale"
  },
  "say-yes-to-heaven": {
   "tiers": 2,
