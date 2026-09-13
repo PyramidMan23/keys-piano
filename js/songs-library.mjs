@@ -201,4 +201,32 @@ export const LIBRARY = {
   'arp-g-majarp': drill(),
   'arp-g-minarp': drill(),
   'arp-gs-minarp': drill(),
+
+  // ---- the 13 September batch: 22 pieces, sourced by four agents --------------
+  // Public domain from Mutopia (Greensleeves through the two Joplin rags), the
+  // video lane for everything in copyright, and one original twelve-bar blues.
+  // Ragtime carries both jazz and classical: Joplin is the root of one and is
+  // written like the other, and a person looking under either wants him.
+  'greensleeves': { kind: 'piece', tags: ['folk'] },
+  'silent-night': { kind: 'piece', tags: ['christmas', 'hymns'] },
+  'chopin-prelude-op28-7': { kind: 'piece', tags: ['classical'] },
+  'schumann-melody-op68-1': { kind: 'piece', tags: ['classical'] },
+  'schumann-soldiers-march': { kind: 'piece', tags: ['classical'] },
+  'petzold-minuet-g': { kind: 'piece', tags: ['classical'] },
+  'burgmuller-candeur': { kind: 'piece', tags: ['classical'] },
+  'burgmuller-arabesque': { kind: 'piece', tags: ['classical'] },
+  'clementi-sonatina-36-1': { kind: 'piece', tags: ['classical'] },
+  'gnossienne-1': { kind: 'piece', tags: ['classical'] },
+  'the-entertainer': { kind: 'piece', tags: ['jazz', 'classical'] },
+  'maple-leaf-rag': { kind: 'piece', tags: ['jazz', 'classical'] },
+  'blues-in-c': { kind: 'piece', tags: ['blues'] },
+  'hey-jude': { kind: 'piece', tags: ['pop'] },
+  'perfect': { kind: 'piece', tags: ['pop'] },
+  'schindlers-list': { kind: 'piece', tags: ['film'] },
+  'time-inception': { kind: 'piece', tags: ['film'] },
+  'minecraft-sweden': { kind: 'piece', tags: ['games'] },
+  'minecraft-wet-hands': { kind: 'piece', tags: ['games'] },
+  'one-summers-day': { kind: 'piece', tags: ['anime'] },
+  'fly-me-to-the-moon': { kind: 'piece', tags: ['jazz'] },
+  'merry-christmas-mr-lawrence': { kind: 'piece', tags: ['contemporary'] },
 };

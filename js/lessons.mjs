@@ -204,7 +204,8 @@ export const LESSONS = [
     steps: [
       'For these phrases, find a LANDMARK note you know, then follow the SHAPE rather than naming every note.',
       'Line-space-line climbing is STEPS (next letter each time). Skipping one staff position makes a third; larger skips make larger intervals.',
-      'Play each phrase in order. A wrong note restarts the phrase, just like real reading practice.',
+      'Play each phrase in order. A wrong note restarts the phrase HERE, because this drill is deliberate repair of a short passage: you go back and get it right.',
+      'That is not how reading a piece works. Reading continuously means keeping going past a wrong note and picking the next one up in time. First reading practises that, and it never restarts you.',
     ],
     ex: { m: 60, h: R },
     video: VID_READ_PRACTICE,
@@ -229,6 +230,7 @@ export const LESSONS = [
       'A SHARP (#) moves a note one key to the RIGHT (usually onto a black key). A FLAT (b) moves it one key LEFT.',
       'Black keys can have more than one name: C# and Db are the same key. On paper the # sign sits just BEFORE the notehead, at the same height.',
       'Worked example: the stave shows F#4, lit below: the black key just right of F4. This drill also asks for C#, D#, G# and A#.',
+      'Everything drilled here is written as a SHARP. Flat spelling, natural signs and key signatures are a separate skill and get their own quest on the Lessons screen; finishing this lesson does not cover them.',
     ],
     ex: { m: 66, h: R },
     video: VID_SHARPS_FLATS,
@@ -243,7 +245,7 @@ export const LESSONS = [
       ],
       mixed: [{ m: 61, h: R }, { m: 63, h: R }, { m: 66, h: R }, { m: 68, h: R }, { m: 70, h: R }],
       melody: [{ m: 66, h: R }, { m: 68, h: R }, { m: 70, h: R }, { m: 68, h: R }, { m: 66, h: R }],
-      capability: 'You practised reading sharps and flats on the black keys.',
+      capability: 'You practised reading SHARPS on the black keys. Flat spelling and natural signs are drilled separately, in the reading quests.',
     },
   },
   {
@@ -297,11 +299,15 @@ export const LESSONS = [
     steps: [
       'With a quarter note as one beat, note SHAPES tell you how long: hollow with no stem = whole note (4 beats), hollow with stem = half (2), filled with stem = quarter (1), one flag or one beam = eighth (half a beat).',
       'A dot after a note adds half its value again. In 4/4 there are four quarter-note beats per bar; in 3/4 there are three.',
-      'To finish this lesson, go win one clean round of Rhythm tap, then come back.',
+      'To finish this lesson, READ one written rhythm and play it: the notation quest below deals you a bar you have not heard, and you play its note values and rests from the page.',
+      'Rhythm tap is still here and still worth playing, but it is an EAR exercise: it plays a pattern and you copy it. Copying a pattern back is not evidence that you read one.',
     ],
     ex: null,
     video: VID_NOTE_VALUES,
-    drill: { type: 'rhythm-gate' },
+    // The gate is a WRITTEN-rhythm pass, not a clean ear-copy round (2026-09-13).
+    // `type` stays 'rhythm-gate' because that is the app's routing word for "this
+    // lesson is finished somewhere else"; `gate` says where that somewhere is.
+    drill: { type: 'rhythm-gate', gate: 'rhythm-read' },
   },
   // ---- technique: what your HANDS do, not what the page says ----------------
   // No video field on either of these: every link in this file was oEmbed-checked
@@ -620,7 +626,7 @@ export class LevelRunner {
         this.seqIdx = 0; // the notes were right: the RUN restarts, from the top
         return 'uneven';
       }
-      this.seqIdx = 0; // wrong note restarts the phrase, like reading practice
+      this.seqIdx = 0; // deliberate repair: the run restarts (never the reading rule)
       this.times = [];
       return false;
     }
@@ -701,6 +707,13 @@ export class LevelRunner {
 // Phrase-reading bridge (council 2026-08-24): 3-5 sequential notes read off
 // the stave, untimed. Landmark start, mostly steps, the odd skip. This is the
 // missing rung between single-note reading and 2-bar sight-reading.
+//
+// ☠️ RESTART-ON-ERROR IS A REPAIR RULE, NOT A READING RULE (2026-09-13). The
+// copy here used to call it "real reading practice", which taught the exact
+// habit that wrecks a first reading: stop, go back, start again. It is right
+// for DELIBERATE REPAIR of a short passage, which is what this drill is, and
+// wrong for reading continuously, which is what the first-reading lane is. Both
+// exist on purpose and each one says which it is.
 export const PHRASES = [
   { h: 'R', ms: [60, 62, 64] },
   { h: 'R', ms: [67, 65, 64] },
@@ -748,7 +761,7 @@ export class PhraseDrill {
       return { ok: true, done: false, idx: this.idx };
     }
     this.missesOnCurrent++;
-    this.idx = 0; // wrong note restarts the phrase, like real reading practice
+    this.idx = 0; // deliberate repair: the phrase restarts. NOT the reading rule.
     return { ok: false, done: false, hint: this.missesOnCurrent >= 2 };
   }
 }

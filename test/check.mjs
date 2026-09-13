@@ -1700,7 +1700,17 @@ const { groupSongs, classifyGroups, filterExplore } = await import('../js/librar
   const fresh = classifyGroups(groups, zero);
   assert.equal(fresh.learning.length, 0, 'fresh state: nothing in Learning');
   assert.equal(fresh.repertoire.length, 0, 'fresh state: nothing in Repertoire');
-  assert.equal(fresh.explore.length, groups.size, 'fresh state: everything in Explore');
+  // the four learner-state shelves are music only (2026-09-13): the two scale
+  // songs carry kind 'exercise' and are classified into none of them
+  const drills = [...groups.values()].filter((v) => v.every((x) => x.kind === 'exercise'));
+  assert.ok(drills.length >= 2, 'the scale drills are still grouped songs, found ' + drills.length);
+  assert.equal(fresh.explore.length, groups.size - drills.length, 'fresh state: every PIECE in Explore, no drills');
+  const drillId = drills[0][0].id;
+  const played = classifyGroups(groups, (id) => (id === drillId ? { plays: 9, ms: 9e5, lastAt: Date.now() } : { plays: 0, stars: 0, best: 0 }),
+    { [drillId]: { days: ['2026-09-08', '2026-09-09'], provenAt: 100 } });
+  for (const shelfName of ['learning', 'repertoire', 'explore'])
+    assert.ok(!played[shelfName].some((v) => v.some((x) => x.id === drillId)),
+      `a practised drill still never reaches ${shelfName}`);
   // a finished run promotes to Learning; 3 stars on the TOP tier -> Repertoire
   const statsA = (id) => (id === 'fur-elise' ? { plays: 3, stars: 1, best: 70 } : zero());
   const a = classifyGroups(groups, statsA);
@@ -1712,14 +1722,21 @@ const { groupSongs, classifyGroups, filterExplore } = await import('../js/librar
   const b = classifyGroups(groups, statsB, {[marioTop]:{days:['2026-09-08','2026-09-09'],provenAt:100}});
   assert.ok(b.repertoire.some((v) => v.some((s) => s.id === marioTop)), 'two-day playable proof lands in Repertoire');
   assert.ok(!b.learning.some((v) => v.some((s) => s.id === marioTop)), 'and leaves Learning');
-  // learning sorts by time in the song, then recency, then the old weakness order (2026-09-09)
+  // learning sorts by RECENCY, then time in the song, then the old weakness
+  // order (Mark 2026-09-13 supersedes his 2026-09-09 time-first ask)
   const statsC = (id) => id === 'fur-elise' ? { plays: 1, stars: 2, best: 90 } : id === 'ode-to-joy' ? { plays: 1, stars: 0, best: 40 } : zero();
   const c = classifyGroups(groups, statsC);
   const ids = c.learning.map((v) => v[0].id);
   assert.ok(ids.indexOf('ode-to-joy') < ids.indexOf('fur-elise'), 'with no clock, the weakest song still leads Learning');
   const statsD = (id) => id === 'fur-elise' ? { plays: 1, stars: 2, best: 90, ms: 300000 } : id === 'ode-to-joy' ? { plays: 1, stars: 0, best: 40, ms: 60000 } : zero();
   const d = classifyGroups(groups, statsD).learning.map((v) => v[0].id);
-  assert.ok(d.indexOf('fur-elise') < d.indexOf('ode-to-joy'), 'the song with the most time in it leads Learning');
+  assert.ok(d.indexOf('fur-elise') < d.indexOf('ode-to-joy'), 'with no clock either side, the most time in the song leads Learning');
+  // recency WINS over time in the song: the scale he drilled for an hour last
+  // week sits under the song he opened tonight
+  const statsR = (id) => id === 'fur-elise' ? { plays: 1, stars: 2, best: 90, ms: 6000, lastAt: 9000 }
+    : id === 'ode-to-joy' ? { plays: 1, stars: 0, best: 40, ms: 3600000, lastAt: 1000 } : zero();
+  const r2 = classifyGroups(groups, statsR).learning.map((v) => v[0].id);
+  assert.ok(r2.indexOf('fur-elise') < r2.indexOf('ode-to-joy'), 'most recently played leads Learning, even against far more time');
   // a minute of play with NO finished run is Learning; twenty seconds is still Explore (accidental launch)
   const { LEARNING_MIN_MS } = await import('../js/library.mjs');
   const statsE = (id) => id === 'fur-elise' ? { plays: 0, stars: 0, best: 0, ms: LEARNING_MIN_MS } : id === 'ode-to-joy' ? { plays: 0, stars: 0, best: 0, ms: 20000 } : zero();
@@ -1729,7 +1746,7 @@ const { groupSongs, classifyGroups, filterExplore } = await import('../js/librar
   // same time: the most recently opened leads
   const statsF = (id) => id === 'fur-elise' ? { plays: 0, ms: 90000, lastAt: 1000 } : id === 'ode-to-joy' ? { plays: 0, ms: 90000, lastAt: 2000 } : zero();
   const f = classifyGroups(groups, statsF).learning.map((v) => v[0].id);
-  assert.ok(f.indexOf('ode-to-joy') < f.indexOf('fur-elise'), 'equal time: the most recently opened leads');
+  assert.ok(f.indexOf('ode-to-joy') < f.indexOf('fur-elise'), 'the most recently opened leads');
   // explore search filters by title and composer
   const ex = fresh.explore;
   assert.ok(filterExplore(ex, 'moonlight').length === 1, 'search finds Moonlight by title');
@@ -2678,7 +2695,15 @@ ok('mastery reconciliation tolerates absent legacy records');
   const heldClock = source.match(/const clockHeld = ([^;]+);/)[1];
   assert.equal(vm.runInNewContext(heldClock,{guidedHold:true,armed:false,armCountUntil:0,t:1}),true);
   assert.match(source,/if \(guidedHold && !previewActive\)/);
-  assert.match(source,/\$\('results'\)\.hidden = guidedHold/);
+  // A FINISHED RUN ALWAYS SHOWS ITS SCORE (Mark, 2026-09-13: "i cant see my
+  // score ... its just black"). The card answers to the GUIDED-JOURNEY hold
+  // read at the top of finishSong, never to the existence of a correction:
+  // every run under 85% makes one, and it draws into a guide he had collapsed.
+  assert.match(source,/const guidedRun = guidedHold \|\| !!engine\.__guidedAttempt;/);
+  assert.match(source,/\$\('results'\)\.hidden = guidedRun;/);
+  assert.doesNotMatch(source,/\$\('results'\)\.hidden = .*correction/,'a correction must never suppress the results card');
+  // and a correction can never be drawn into a container nobody can see
+  assert.match(fn('showCorrection'),/guideCollapsed = false/);
   const css = readFileSync(new URL('../style.css',import.meta.url),'utf8');
   assert.match(css,/:not\([^)]*\.session-guide, \.session-guide \*/);
   assert.match(css,/\.session-actions button \{ min-height: 44px/);

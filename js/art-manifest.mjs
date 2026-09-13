@@ -122,15 +122,35 @@ export const ART = {
     "generated": true,
     "drawnFrom": "the notes of Bella Ciao, Italian traditional"
   },
+  "blues-in-c": {
+    "generated": true,
+    "drawnFrom": "the notes of Twelve-Bar Blues in C, Keys original"
+  },
   "bohemian-rhapsody": {
     "artist": "Queen",
     "album": "A Night At The Opera",
     "year": "1975"
   },
+  "burgmuller-arabesque": {
+    "generated": true,
+    "drawnFrom": "the notes of Arabesque, Op. 100 No. 2, Friedrich Burgmüller"
+  },
+  "burgmuller-candeur": {
+    "generated": true,
+    "drawnFrom": "the notes of La Candeur, Op. 100 No. 1, Friedrich Burgmüller"
+  },
+  "chopin-prelude-op28-7": {
+    "generated": true,
+    "drawnFrom": "the notes of Prelude in A major, Op. 28 No. 7, Chopin"
+  },
   "clair-de-lune": {
     "artist": "The Arts Symphonic Orchestra, Robert Emery & Claude Debussy",
     "album": "The Rhythm of Life",
     "year": "2019"
+  },
+  "clementi-sonatina-36-1": {
+    "generated": true,
+    "drawnFrom": "the notes of Sonatina Op. 36 No. 1, 1st movement, Muzio Clementi"
   },
   "coffin-dance": {
     "artist": "Vicetone & Tony Igy",
@@ -167,6 +187,10 @@ export const ART = {
     "album": "Chopin: Fantaisie-impromptu, Op. 66 - Single",
     "year": "2024"
   },
+  "fly-me-to-the-moon": {
+    "generated": true,
+    "drawnFrom": "the notes of Fly Me to the Moon, Bart Howard · arr. Andrew Wrangell"
+  },
   "fray-save-a-life": {
     "artist": "The Fray",
     "album": "How to Save a Life",
@@ -196,6 +220,10 @@ export const ART = {
     "album": "Gladiator (Soundtrack from the Motion Picture)",
     "year": "2000"
   },
+  "gnossienne-1": {
+    "generated": true,
+    "drawnFrom": "the notes of Gnossienne No. 1, Erik Satie"
+  },
   "goldberg-aria": {
     "artist": "Miki Skuta",
     "album": "Johann Sebastian Bach - Goldberg Variations, BWV 988",
@@ -206,6 +234,10 @@ export const ART = {
     "album": "Gray Day - Single",
     "year": "2025"
   },
+  "greensleeves": {
+    "generated": true,
+    "drawnFrom": "the notes of Greensleeves, English traditional"
+  },
   "gymnopedie-1": {
     "artist": "Mark Isaacs",
     "album": "Intimacies",
@@ -214,6 +246,10 @@ export const ART = {
   "happy-birthday": {
     "generated": true,
     "drawnFrom": "the notes of Happy Birthday, Traditional"
+  },
+  "hey-jude": {
+    "generated": true,
+    "drawnFrom": "the notes of Hey Jude, The Beatles · arr. Andrew Wrangell"
   },
   "hotel-california": {
     "artist": "Eagles",
@@ -310,6 +346,10 @@ export const ART = {
     "album": "Lost Demos",
     "year": "2023"
   },
+  "maple-leaf-rag": {
+    "generated": true,
+    "drawnFrom": "the notes of Maple Leaf Rag, Scott Joplin"
+  },
   "mariage-d-amour": {
     "artist": "Francesco Digilio",
     "album": "Piano Masterpieces: The Best Of Richard Clayderman",
@@ -325,10 +365,22 @@ export const ART = {
     "album": "Up (Soundtrack from the Motion Picture)",
     "year": "2009"
   },
+  "merry-christmas-mr-lawrence": {
+    "generated": true,
+    "drawnFrom": "the notes of Merry Christmas Mr. Lawrence, Ryuichi Sakamoto · arr. Andrew Wrangell"
+  },
   "mia-sebastian": {
     "artist": "Justin Hurwitz",
     "album": "La La Land (Original Motion Picture Soundtrack)",
     "year": "2016"
+  },
+  "minecraft-sweden": {
+    "generated": true,
+    "drawnFrom": "the notes of Sweden (Minecraft), C418 · arr. Sheet Music Boss"
+  },
+  "minecraft-wet-hands": {
+    "generated": true,
+    "drawnFrom": "the notes of Wet Hands (Minecraft), C418 · arr. Sheet Music Boss"
   },
   "moonlight-sonata": {
     "artist": "Wilhelm Kempff",
@@ -365,6 +417,10 @@ export const ART = {
     "album": "Beethoven: Symphony No. 9",
     "year": "1984"
   },
+  "one-summers-day": {
+    "generated": true,
+    "drawnFrom": "the notes of One Summer's Day (Spirited Away), Joe Hisaishi · arr. Andrew Wrangell"
+  },
   "overwatch": {
     "artist": "Neal Acree & Derek Duke",
     "album": "Overwatch Collector's Edition Soundtrack",
@@ -384,6 +440,14 @@ export const ART = {
     "artist": "Adolf Drescher",
     "album": "Beethoven \"Pathetique\" Sonata No. 8 in C Minor, Op. 13 - Single",
     "year": "2019"
+  },
+  "perfect": {
+    "generated": true,
+    "drawnFrom": "the notes of Perfect, Ed Sheeran · arr. Andrew Wrangell"
+  },
+  "petzold-minuet-g": {
+    "generated": true,
+    "drawnFrom": "the notes of Minuet in G, BWV Anh. 114, Christian Petzold (attr. Bach)"
   },
   "piano-man": {
     "artist": "Billy Joel",
@@ -526,6 +590,18 @@ export const ART = {
     "generated": true,
     "drawnFrom": "the notes of G# Minor Scale, Technique drill · one octave, both hands"
   },
+  "schindlers-list": {
+    "generated": true,
+    "drawnFrom": "the notes of Theme from Schindler's List, John Williams · arr. Sheet Music Boss"
+  },
+  "schumann-melody-op68-1": {
+    "generated": true,
+    "drawnFrom": "the notes of Melody, Op. 68 No. 1, Robert Schumann, Album for the Young"
+  },
+  "schumann-soldiers-march": {
+    "generated": true,
+    "drawnFrom": "the notes of Soldiers' March, Op. 68 No. 2, Robert Schumann, Album for the Young"
+  },
   "see-you-again": {
     "artist": "Wiz Khalifa",
     "album": "Furious 7 (Original Motion Picture Soundtrack)",
@@ -535,6 +611,10 @@ export const ART = {
     "artist": "Evgeny Grinko",
     "album": "Orange Marmalade",
     "year": "2021"
+  },
+  "silent-night": {
+    "generated": true,
+    "drawnFrom": "the notes of Silent Night, Franz Gruber"
   },
   "silksong": {
     "generated": true,
@@ -558,6 +638,14 @@ export const ART = {
     "artist": "Dr. Dre",
     "album": "2001",
     "year": "1999"
+  },
+  "the-entertainer": {
+    "generated": true,
+    "drawnFrom": "the notes of The Entertainer, Scott Joplin"
+  },
+  "time-inception": {
+    "generated": true,
+    "drawnFrom": "the notes of Time (Inception), Hans Zimmer · arr. Luke Faulkner"
   },
   "traumerei": {
     "artist": "Gheorghe Zamfir, Harry van Hoof & Harry van Hoof Orkest",

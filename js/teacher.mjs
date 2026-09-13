@@ -462,6 +462,31 @@ function prescribeCore(st, now, ctx = {}) {
     };
   }
 
+  // 6.5 A SHORT FRESH READ STAYS REACHABLE (2026-09-13). Everything below this
+  // line is repertoire, and repertoire never runs out, so once the foundation
+  // was done the brain could recommend reading again only as a lesson revisit.
+  // A learner who has opened the reading lane gets the fresh-reading offer back
+  // two days after their last independent one, ahead of the endless song loop.
+  // It is an OFFER in the ordinary prescription slot, not a quota: skipping it
+  // costs nothing and it simply comes round again.
+  // The ledger is reading-session's own (state.sight, v2): reads[] carries one
+  // row per read with `independent` and `verdict` already decided there. This
+  // reads it, it never re-judges it.
+  {
+    const reads = st.sight?.reads ?? [];
+    const lastIndependent = reads.filter((r) => r.independent && r.verdict === 'clean').at(-1)?.t ?? 0;
+    const lastAny = reads.at(-1)?.t ?? 0;
+    if (reads.length && now - (lastIndependent || lastAny) >= 2 * DAY) {
+      return {
+        kind: 'first-reading',
+        reason: 'Read something you have never seen: one short first reading, help off.',
+        evidence: lastIndependent
+          ? 'last clean unaided read ' + Math.round((now - lastIndependent) / DAY) + ' day(s) ago'
+          : 'no clean unaided read recorded yet; every read so far was guided or took help',
+      };
+    }
+  }
+
   // ---- the ongoing repertoire loop (13th council: after the foundation, the
   // path's job is making SONGS independently playable, forever) ----
   // 7. the weakest section of anything he is learning (the old library target)
@@ -680,6 +705,11 @@ export function skillCheckDates(record, now = Date.now()) {
   const tested = record.lastTested ? 'Last checked ' + date(record.lastTested) : 'Not checked yet';
   return tested + (record.dueAt ? record.dueAt <= now ? '. Check again today.' : '. Next check ' + date(record.dueAt) + '.' : '.');
 }
+
+// The daily route USED to live here. It does not any more: js/learning-lab.mjs
+// owns `dailyRoute` / `configureRoute` / `skipSegment`, and two route models
+// would be two answers to the same question. This module keeps the one thing
+// the route asks it for, `prescribe()`, which dailyRoute passes through whole.
 
 export function initializeExposure(st, songs) {
   if (st.exposureTrackingSince) return;

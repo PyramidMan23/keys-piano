@@ -25,11 +25,28 @@ import { beatsPerBar } from './meter.mjs';
 import { playPreview, stopPreview, setVoiceMode, voiceInfo, voiceModeLabel, voiceModeNext, soundModeNext, tapSoundActive } from './audio.mjs';
 import { pickPhrase, EchoRound, TransposeRound } from './echo.mjs';
 import { MEM_STAGES, memCues, memAdvance, randomStartBar } from './memory.mjs';
-import { makeExercise, judgeSight } from './sight.mjs';
+// The reading lane's model (package 1, 2026-09-13). judgeSight's 85% gate could
+// not be reached by a flawless GUIDED read, because wait mode freezes the clock
+// and every accepted press scores `good`: a perfect level-1 read is exactly 80.
+// The model separates the two activities instead of moving the number.
+// presentExercise (not readingPlan) is what puts music on screen and spends it;
+// learning-ui owns that call and hands the presentation here.
+import { readAttempt, gradeRead, feedbackLines,
+  migrateReading, CONTAMINANTS, READING_VERSION } from './reading-session.mjs';
 import { matchCard, CardTask } from './theory.mjs';
 import { pickPattern, RhythmRound } from './rhythm.mjs';
 import { LESSONS, StaffDrill, TogetherDrill, PhraseDrill, PHRASES, pickReviewItems, lessonKeyRange, buildLevels, LevelRunner, lessonItemKeyOf, bridgeSongFor, explainMiss, correctionFor, passageAccuracy } from './lessons.mjs';
 import { installPath } from './path.mjs';
+import { installLearningUI } from './learning-ui.mjs';
+// The curriculum model (packages 2-5): 29 authored cards, five rungs each, and
+// every judgement in them. Imported as a namespace because the UI hands the
+// whole module to learning-ui rather than re-exporting thirty names through it.
+import * as learningLab from './learning-lab.mjs';
+// The lab's OWN engraver. A quest page is authored notation (an accidental the
+// page must print, a rest, a tie, a tuplet bracket); ScoreView re-derives
+// spelling from MIDI and would print A sharp where the flats card wrote B flat.
+// Reading and repertoire keep ScoreView; only the quests use this.
+import { LabScore } from './lab-score.mjs';
 import { makeCountCells } from './rhythm.mjs';
 import { TouchDiagnostic, buildCalibration, ZONES } from './touch.mjs';
 import { addTake, removeTake, takeUsage, newTakeId, eventsToNotes } from './takes.mjs';
@@ -38,7 +55,7 @@ import { analyzePedal, pedalNotes } from './pedal.mjs';
 import { analyzeArticulation, articulationSummary } from './artic.mjs';
 import { analyzeVoicing, voicingText } from './voicing.mjs';
 import { appendDiagnostic, PROGRESS_MAX_BYTES, exportProgress, importProgress, saveProgress, restoreProgress, groupSongs, classifyGroups, filterExplore,
-  COLLECTIONS, collectionKey, filterCollection, collectionCounts, searchText } from './library.mjs';
+  COLLECTIONS, collectionKey, filterCollection, collectionCounts, searchText, isPiece } from './library.mjs';
 // Run C: dated evidence adapters; storage fields remain additive.
 import { competenceRank, evidenceDate, competence, competenceLine, songEvidence, recordSongAttempt, initializeExposure, RETENTION_MIN_DELAY, exposePassage, schedulePassageCheck, passageCheckKind, reconcileMastery, assessmentConditions, prescribe, qualifiesPlayable, recordPlayableRun, PROOF_PASS, SKILL_BY_ID, TEACHER_LESSONS, STAGES } from './teacher.mjs';
 import {
@@ -296,7 +313,7 @@ window.__simCC = (cc, val) => midi.onControl?.(cc, val);
 FallsView.onKeyDefault = (m, down) => midi.onNote?.(m, 90, down);
 
 // ---------- screens ----------
-const screens = ['library', 'play', 'freeplay', 'calibrate', 'echo', 'metronome', 'rhythm', 'lessons', 'lesson', 'touch', 'takes', 'improv', 'keys12', 'path', 'task', 'trophies'];
+const screens = ['library', 'play', 'freeplay', 'calibrate', 'echo', 'metronome', 'rhythm', 'lessons', 'lesson', 'touch', 'takes', 'improv', 'keys12', 'path', 'task', 'trophies', 'reading', 'quest'];
 
 // THE TOP BAR, ABSORBED. The desktop library is drawn as a full 1418x738 frame,
 // and the app's 61px bar sat above it, so the frame could never fit and the
@@ -337,6 +354,13 @@ function show(name) {
   // a running path task (its click track, its pending continuations) dies with
   // its screen; pathUI is installed later in this module, hence the guard
   if (name !== 'task') leaveTask?.();
+  // LEAVING A SCREEN ENDS WHAT THE SCREEN STARTED, the learning wave's half:
+  // a quest's click track, its pending continuations and its lit keys, and the
+  // reading lane's score preview, all die with their screen. Installed later
+  // in this module, hence the guard, same shape as leaveTask above.
+  leaveLearning?.(name);
+  // a bounded passage assessment belongs to the play screen it was opened on
+  if (name !== 'play' && name !== 'quest') passageAssess = null;
   // A song opened from the search results comes back to the WHOLE library
   // (Mark, 2026-09-06: "if I search for a song and then go back I only see
   // that search song"). The canon remounts its search box empty on every
@@ -405,6 +429,18 @@ function show(name) {
 }
 let active = 'library';
 let leaveTask = null; // set once the path module is installed (bottom of this file)
+let leaveLearning = null; // same, for the learning-wave surfaces
+let learningUI = null;
+// A quest's applied rung, bound to one song, section, hand, tempo and help
+// setting. While it holds, that engine runs ONE pass instead of lapping; the
+// moment any of those five things changes, or the screen is left, it is gone.
+let passageAssess = null;
+function passageAssessLive() {
+  if (!passageAssess || !song || song.id !== passageAssess.songId) return false;
+  const secName = song.sections?.[$('section-select').value]?.name ?? null;
+  return secName === passageAssess.section && hand === passageAssess.hand &&
+    $('wait-mode').checked === passageAssess.wait && +$('tempo').value === passageAssess.tempo;
+}
 
 // ---------- library ----------
 // 2026-08-28 council: ONE page, progressive disclosure. One amber next-action,
@@ -476,6 +512,10 @@ function renderNextAction() {
 // One launcher for every prescription kind, the path screen calls this too.
 function runPrescription(rx) {
   if (rx.kind === 'resume') { resumeLastSession(); $('j-go')?.click(); return; }
+  // A fresh read stays reachable from the app's ONE next-action voice, not only
+  // from the tools rail: the repertoire loop never ends, so without this the
+  // brain could offer reading again only as a lesson revisit.
+  if (rx.kind === 'first-reading') { learningUI?.openReading(); return; }
   if (rx.kind === 'reading') {
     const les = LESSONS.find((l) => l.id === rx.lessonId);
     if (les) { jlog('reading_prescribed', { id: les.id }); openLesson(les); return; }
@@ -729,7 +769,9 @@ function canonLibraryCtx() {
   // happens." The table now shows the ACTIVE tab's list, and the search box
   // filters across every shelf, tagged with where each hit lives.
   const q = libQuery.trim();
-  const fameGroups = HALL_OF_FAME.map((h2) => groups.get(h2.group)).filter(Boolean);
+  // Hall of fame is a shelf of MUSIC like the other three (2026-09-13), so an
+  // exercise cannot reach it even if one were ever listed.
+  const fameGroups = HALL_OF_FAME.map((h2) => groups.get(h2.group)).filter(Boolean).filter(isPiece);
   // THE DEFAULT IS THE SMART ORDER. The setting used to fall back to A to Z
   // when unset, so the Learning shelf Mark asked to see by time (2026-09-09)
   // showed A to Z until he found the toggle, under a header that admitted it.
@@ -760,7 +802,10 @@ function canonLibraryCtx() {
   const azSort = (list) => [...list].sort((a2, b2) =>
     a2[a2.length - 1].title.localeCompare(b2[b2.length - 1].title));
   const az = sortMode2 === 'az';
-  const smartTitle = { learning: 'LEARNING, MOST PLAYED FIRST', repertoire: 'REPERTOIRE, STRONGEST FIRST',
+  // LEARNING NAMES ITS OWN ORDER: Mark's 2026-09-13 ask is recency, so the
+  // header says recency. A header that names an order the rows do not follow is
+  // the bug he reported twice now.
+  const smartTitle = { learning: 'LEARNING, MOST RECENT FIRST', repertoire: 'REPERTOIRE, STRONGEST FIRST',
     fame: 'HALL OF FAME', explore: 'EXPLORE, EASIEST FIRST' };
   const shelf = (key, list) => ({
     rows: az ? azSort(list) : list,
@@ -808,7 +853,7 @@ function canonLibraryCtx() {
     // Explore's own tab count is EVERY PIECE, never the filtered subset: the
     // tab says how big the shelf is, the chips say how it divides.
     counts: { learning: learning.length, repertoire: repertoire.length,
-              fame: HALL_OF_FAME.length, explore: pieceGroups.length },
+              fame: fameGroups.length, explore: pieceGroups.length },
     // the chips: label and a count of distinct EXPLORE GROUPS (three tiers of
     // Fur Elise are one entry on the wall and count as one), before any search
     collection,
@@ -1312,7 +1357,7 @@ function renderLibrary() {
   fameEl.innerHTML = '';
   for (const h of HALL_OF_FAME) {
     const variants = groups.get(h.group);
-    if (variants) fameEl.appendChild(makeRow(variants, '🎬 ' + h.from));
+    if (variants && isPiece(variants)) fameEl.appendChild(makeRow(variants, '🎬 ' + h.from));
   }
   // explore ordering: A–Z or by measured entry difficulty (easiest tier first)
   const sortMode = state.lib.exploreSort === 'az' ? 'az' : 'diff';
@@ -1454,6 +1499,16 @@ function bindNarrowPlayHeader() {
 }
 function songSub(s) {
   if (!s) return null;
+  // A reading exercise has no TIER: it is generated, it is not an arrangement
+  // of anything, and `s.level ?? 'easy'` printed "Easy tier" over it. It gets
+  // its reading level, which is the number that actually means something here.
+  if (s.sightRead) {
+    const parts = ['Reading level ' + (s.sightLevel ?? 1)];
+    if (s.key) parts.push(s.key);
+    if (s.timeSig) parts.push(s.timeSig[0] + '/' + s.timeSig[1]);
+    if (s.bpm) parts.push(Math.round(s.bpm) + ' bpm');
+    return parts.join(' · ');
+  }
   const lv = s.level ?? 'easy';
   const parts = [lv[0].toUpperCase() + lv.slice(1) + ' tier'];
   if (s.key) parts.push(s.key);
@@ -1493,6 +1548,12 @@ function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   $('mode-falls').disabled = sightMode;
   $('btn-hear').disabled = sightMode;
   $('btn-train').disabled = sightMode;
+  // ...and no chunk looping. A looped engine REPEATS instead of finishing
+  // (engine.tick laps when `loop && repeat`), so a chunked read can never
+  // reach finishSightRead: the learner would lap a bar forever and bank
+  // nothing, with no way to tell. A two-bar exercise has nothing to chunk
+  // anyway. Disabled, not silently ignored, so the dead end is visible.
+  for (const id of ['chunk-prev', 'chunk-label', 'chunk-next', 'chunk-size']) $(id).disabled = sightMode;
   show('play');
   bindNarrowPlayHeader();
   if (CANON_ON && !$('screen-play').dataset.widePlay) prepareResponsive($('screen-play').firstElementChild,'play');
@@ -1503,9 +1564,16 @@ function startSong(s, { asScorePass = false, playHand = 'both' } = {}) {
   $('section-select').value = '';
   chunkIdx = null; syncChunkLabel();
   trainer = null; syncTrainButton();
-  $('tempo').value = 100; $('tempo-val').textContent = '100%';
-  // sight reading: read at your own pace early, in time from level 3
-  $('wait-mode').checked = sightMode ? (state.sight?.level ?? 1) < 3 : true;
+  // A tempo the learner CHOSE before the read starts is a legitimate reading
+  // condition, not a failure: reading slowly and steadily is the skill, and
+  // the exercise's written bpm is a default, never a floor. The policy carries
+  // the choice, so the slider, the count-in and the pulse all follow one value.
+  const readTempo = sightMode ? Math.round((sightPlan?.policy.tempo ?? 1) * 100) : 100;
+  $('tempo').value = readTempo; $('tempo-val').textContent = readTempo + '%';
+  // Reading: the POLICY decides the help, not a number scattered here. Levels
+  // 1-2 read at their own pace, level 3+ in time, and a declared first reading
+  // is always in time. Same rule as before, in one place that says why.
+  $('wait-mode').checked = sightMode ? (sightPlan?.policy.waitMode ?? true) : true;
   if (!sightMode && !asScorePass && state.journeys?.[s.id]?.guided) applyJourneyPlan();
   rebuildEngine();
   syncModeButtons();
@@ -1573,10 +1641,19 @@ function rebuildEngine(preserveCorrection = false, preserveFirstMinute = false) 
     tempo: (+$('tempo').value) / 100,
     waitMode: $('wait-mode').checked,
     loop,
-    repeat: practiceStart === null,
+    // ☠️ AN ASSESSMENT IS ONE PASS. A looped engine LAPS instead of finishing
+    // (engine.tick resets and pushes a 'lap' event while `loop && repeat`), so
+    // anything judged in finishSong can never be reached through a loop. Two
+    // things are assessments: a reading exercise, and a quest's applied rung,
+    // which opens a real SECTION and therefore always has a loop. Ordinary
+    // section and chunk practice keeps repeating, which is what it is for.
+    ...(sightMode || passageAssessLive()
+      ? { repeat: false }
+      : { repeat: practiceStart === null }),
     calOffsetMs: state.calOffsetMs,
   });
   combo = 0; points = 0; bestCombo = 0;
+  readPulseBeat = -1; // a new engine starts the reading pulse from its first beat
   paceSamples = [];
   lastBiasAt = 0;
   wrongByGroup = new Map();
@@ -1643,12 +1720,18 @@ function startArmCountIn() {
   armed = false;
   falls.banner = null;
   fadePlayCover();
-  armCountUntil = performance.now() + 4 * engine.msPerBeat();
+  // One BAR of count-in, and the bar is the exercise's own: 4 for every kernel
+  // shipped today, so nothing changes now, and a 3/4 or 6/8 kernel gets counted
+  // in correctly the day one is authored rather than counted in four.
+  const beats = sightMode
+    ? (state.readingCountIn === false ? 0 : (sightPlan?.policy.countIn.beats || 4))
+    : 4;
+  armCountUntil = performance.now() + beats * engine.msPerBeat();
   metCtx ??= new (window.AudioContext || window.webkitAudioContext)();
   metCtx.resume();
   const spb = engine.msPerBeat() / 1000;
   const t0 = metCtx.currentTime + 0.08;
-  for (let i = 0; i < 4; i++) metClick(t0 + i * spb, i === 0 ? 1500 : 1000, i === 0 ? 0.25 : 0.16);
+  for (let i = 0; i < beats; i++) metClick(t0 + i * spb, i === 0 ? 1500 : 1000, i === 0 ? 0.25 : 0.16);
 }
 
 function loopFrame(t) {
@@ -1746,6 +1829,7 @@ function loopFrame(t) {
   falls.hint = (!memo || memo.cues.hints) && engine.waiting && due.length ? due.map((n) => noteName(n.m)).join(' + ') : null;
   falls.targets = (!memo || memo.cues.targets) ? new Set(due.map((n) => n.m)) : new Set();
   memMetronomeTick();
+  readingPulseTick();
   if (viewMode === 'falls') falls.draw(engine);
   else score.update(engine, hand);
   const s = engine.stats;
@@ -1778,12 +1862,37 @@ function finishSong() {
   window.__deckImmersion?.(false);   // the run is over; give the controls back
   if (engine.__finishHandled) return; // pumped frames must not double-count
   engine.__finishHandled = true;
+  // ☠️ A FINISHED RUN ALWAYS SHOWS ITS SCORE (Mark, 2026-09-13: "i cant see my
+  // score ... its just black"). The results card belongs to the GUIDED JOURNEY
+  // hold, which is read HERE, before anything in this function can set it.
+  // showCorrection() sets guidedHold as a side effect, and every run under 85%
+  // makes a correction, so reading the flag at the bottom meant an ordinary
+  // sub-85 run suppressed its own results card and drew the correction into a
+  // practice guide he had collapsed. One line, two bugs.
+  const guidedRun = guidedHold || !!engine.__guidedAttempt;
   if (takeRec) finishTake(); // a finished song closes and shelves its take
   bankSongTime();
   markPracticedToday();
   logPracticeMinutes(engine.timeMs / 60000);
   jlog('song_finish', { id: song.id, acc: engine.accuracy(), wrong: engine.stats.wrong, mode: viewMode, sight: sightMode });
   if (sightMode) { finishSightRead(); return; }
+  // A quest's applied rung is played on THIS surface, and this surface's own
+  // accuracy IS the measurement: it is handed straight back to the session
+  // rather than re-derived anywhere else. The run also stays an ordinary run
+  // for every other ledger, which is why this comes after the banking above.
+  // ...and only while the binding still holds: the same song, section, hand,
+  // tempo and help setting it was opened with. Anything else and this is an
+  // ordinary run that happens to follow a quest, not the quest's evidence.
+  if (passageAssessLive() && learningUI?.questPassageResult({
+    acc: engine.accuracy(), wrong: engine.stats.wrong,
+    stats: { ...engine.stats },
+    required: engine.groups.reduce((count, group) => count + group.notes.length, 0),
+    played: engine.playLog.length,
+    songId: song.id, startBeat: engine.startBeat, endBeat: engine.endBeat, title: song.title,
+    assisted: engine.waitMode || engine.tempo < 1,
+    hand: engine.hand, tempo: Math.round(engine.tempo * 100), wait: engine.waitMode,
+    section: song.sections?.[$('section-select').value]?.name ?? null,
+  }, passageAssess)) { passageAssess = null; return; }
   const acc = engine.accuracy();
   const stars = acc >= 90 ? 3 : acc >= 75 ? 2 : acc >= 50 ? 1 : 0;
   const st = songStats(song.id);
@@ -1919,38 +2028,121 @@ function finishSong() {
     tBtn.onclick = () => openTheoryCard(card);
   } else tBtn.hidden = true;
   if (acc < 85 && !correction) showCorrection(engine.evidence());
-  $('results').hidden = guidedHold || !!correction;
+  $('results').hidden = guidedRun;
 }
 
-// ---------- sight reading ----------
-const sightState = () => (state.sight ??= { level: 1, cleans: 0, flops: 0, done: 0 });
-function newSightExercise() {
-  const s = sightState();
-  const ex = makeExercise(s.level, (Date.now() ^ (s.done * 2654435761)) >>> 0);
-  startSong(ex);
+// ---------- the reading lane ----------
+// Two named activities, never one blurred "sight reading". LEARN MODE may
+// pause, explain and be repeated; it is guided practice and says so. A FIRST
+// READING is one continuous read of music never seen, in time, and any help
+// taken converts it to guided practice in front of the learner rather than
+// quietly scoring it as reading. reading-session.mjs owns the ledger.
+const sightState = () => (state.sight =
+  state.sight?.v === READING_VERSION ? state.sight : migrateReading(state.sight));
+let sightPlan = null, sightSession = null, readingIntent = 'practice';
+const readingTempoChoice = () => (state.lib?.readingTempo ?? 100) / 100;
+// `plan` is a PRESENTATION from learning-ui: the exercise, its policy and the
+// receipt that says this attempt is that first showing of that music. The
+// reading lane always supplies one; the results panel's "Next exercise" has
+// none, so it asks for a fresh presentation, which SPENDS a piece of the pool.
+function newSightExercise(intent = readingIntent, tempo = readingTempoChoice(), plan = null) {
+  readingIntent = intent === 'first-read' ? 'first-read' : 'practice';
+  plan ??= learningUI?.presentNext(readingIntent, tempo) ?? null;
+  if (!plan?.exercise) {
+    setTextKeeping($('reading-msg'), 'No exercise at this level can be engraved right now. ' +
+      (plan?.engraving?.reason ?? '') + ' Nothing was started.');
+    return false;
+  }
+  sightPlan = plan;
+  // WHAT HE CHOSE BEFORE, AND WHAT HE MOVED DURING. A tempo, a hand or a
+  // passage picked before the read is a CONDITION of it and is recorded as
+  // one; the same control moved mid-read is what turns the read into practice.
+  // The app has to carry the *Changed flags because rebuildEngine replaces the
+  // engine on every settings change, so the finished engine can look untouched.
+  // They are STICKY for the life of this presentation: nothing below resets
+  // them, so a help toggle that was toggled back cannot hide itself.
+  sightSession = {
+    // THE RECEIPT. Without it a read can never be a first reading: exposure was
+    // banked when the score went on screen, so "has he seen this" is already
+    // true by grading time, and only the receipt says "this attempt IS that
+    // first showing". It is consumed by the first gradeRead and cannot replay.
+    presentation: plan.presentation ?? null,
+    startTempo: plan.policy.tempo, startHand: plan.policy.hand,
+    startRange: { start: 0, end: plan.exercise.endBeat },
+    tempoChanged: false, handChanged: false, rangeChanged: false,
+    helpToggled: false, restarts: 0, heardAudio: false, letterCues: false,
+  };
+  startSong(plan.exercise);
+  if (!plan.novel && falls) falls.biasNote(plan.poolExhausted
+    ? 'You have read every exercise at this level. This one is practice, not a fresh test.'
+    : 'You have read this one before: practice, not a fresh test.');
+  if (readingIntent === 'first-read' && falls) {
+    falls.banner = `Look it over (about ${plan.policy.preview.seconds} seconds), then press any key. ` +
+      'One bar counts you in and the pulse keeps going. Wrong notes are fine: keep going.';
+  }
+  return true;
+}
+// One control moved during a first reading is not a failure, it is a CHANGE OF
+// ACTIVITY, and the learner is told so at the moment it happens rather than
+// finding out at the end. Sticky by construction: a flag is only ever set.
+const READING_FLAG_WORD = {
+  restart: 'retry', heardAudio: 'heard-audio', letterCues: 'letter-cues',
+  helpToggled: 'help-toggled', tempoChanged: 'tempo-changed',
+  handChanged: 'hand-changed', rangeChanged: 'range-changed',
+};
+function readingSettingChanged(flag) {
+  if (!sightMode || !sightSession) return;
+  if (flag === 'restart') sightSession.restarts++;
+  else sightSession[flag] = true;
+  if (readingIntent !== 'first-read') return;
+  setTextKeeping($('reading-msg'), CONTAMINANTS[READING_FLAG_WORD[flag]] ?? '');
+  if (falls) falls.biasNote('Changed mid-read, which is fine: this read now counts as guided practice, not as reading new music.');
 }
 function finishSightRead() {
-  const acc = engine.accuracy();
-  const s = engine.stats;
-  const { next, msg } = judgeSight(sightState(), acc, s.wrong);
-  state.sight = next;
+  const ex = sightPlan?.exercise ?? song;
+  let res;
+  try { res = gradeRead(sightState(), readAttempt(ex, engine, sightSession ?? {})); }
+  catch { return; } // only a reading exercise can enter the reading ledger
+  // The graded ledger is authoritative and is stored as it comes back. The app
+  // does NOT re-judge it: partial scope already holds the whole-exercise ladder
+  // inside judgeSight (`ladderMoved: false`), and a second hold here would be a
+  // second opinion about the same read.
+  state.sight = res.reading;
+  const level = res.level;
+  const levelChanged = res.levelChanged;
+  const heldLadder = res.ladderMoved === false && res.scopeFull === false;
+  // ☠️ PROOF IS THE ONLY THING THAT PAYS. `proof` means clean, alone, whole
+  // exercise, music never seen. "Independent attempt" (alone but it did not
+  // come off) and "independent reading of a part" are real and are recorded,
+  // and neither earns XP, a day stat or a celebration.
+  if (res.proof) {
+    dayStat('firstReads');
+    awardXp('readFirst', 'read:' + (ex.contentKey ?? ex.id));
+  }
+  learningUI?.readingGraded();   // the receipt is spent; a retry is practice
   store.save(state);
-  $('results-title').textContent = `📖 ${msg}`;
+  settleGame();
+  const [head, ...lines] = feedbackLines(res);
+  $('results-title').textContent = `📖 ${head}`;
+  // three dimensions, printed apart. The timing cell says "not measured" when
+  // the clock never ran, instead of the 80% a frozen clock manufactures, and
+  // the middle value is called a median because that is what it is.
   $('results-stats').innerHTML = `
-    <span><b>${s.perfect + s.good}</b>on time</span>
-    <span><b>${s.late}</b>late</span>
-    <span><b>${s.wrong}</b>wrong</span>
-    <span><b>${acc}%</b>accuracy</span>
-    <span><b>L${next.level}</b>sight level</span>`;
-  $('results-nudge').textContent = next.level >= 3 && (state.sight.level ?? 1) >= 3
-    ? 'From level 3 the exercise runs in time: read AHEAD of the cursor.'
-    : 'Read the score, not your hands. Wrong notes are fine; stopping is the enemy.';
+    <span><b>${res.pitch.correct}/${res.pitch.required}</b>notes read</span>
+    <span><b>${res.pitch.wrong}</b>wrong</span>
+    <span><b>${res.rhythm.measured ? Math.abs(res.rhythm.median ?? 0) + 'ms' : 'not measured'}</b>median timing</span>
+    <span><b>${res.continuity.longestRun}</b>longest run</span>
+    <span><b>L${level}</b>reading level</span>`;
+  $('results-nudge').textContent = lines.slice(1).join(' ') +
+    (heldLadder ? ` Part of the exercise only (${res.scope}), so the reading level did not move.` : '');
   $('results-score-pass').style.display = '';
   $('results-score-pass').textContent = 'Next exercise →';
   $('results-theory').hidden = true;
   $('results').hidden = false;
+  if (res.credit !== 'none') bankBlock('reading', `${ex.contentKey ?? ex.id}|${res.credit}|${res.scope ?? ''}`);
+  learningUI?.readingResult({ ...res, level, levelChanged, heldLadder });
 }
-$('btn-sight').addEventListener('click', () => { show('play'); newSightExercise(); });
+$('btn-sight').addEventListener('click', () => learningUI?.openReading());
 
 // ---------- theory card ----------
 function openTheoryCard(card) {
@@ -1974,8 +2166,11 @@ function theoryNote(m, isDown) {
   const res = cardTask.note(m, isDown);
   if (res === 'again') $('theory-status').textContent = 'Yes. Once more.';
   else if (res === 'done') {
-    $('theory-status').textContent = '✓ Learned. That chord is yours now.';
-    comboFlash('THEORY ★');
+    // Two presses of a chord that is lit and named is PRACTICE, not learning
+    // (2026-09-13). "That chord is yours now" claimed retention off a repeat
+    // with the answer on screen. The transfer quest is what tests it.
+    $('theory-status').textContent = '✓ Practised, twice, with the notes in front of you. Whether it stuck is what a later check decides.';
+    comboFlash('PRACTISED ✓');
     setTimeout(() => { $('theory-card').hidden = true; cardTask = null; }, 1400);
   }
 }
@@ -2062,8 +2257,10 @@ function renderLessonList() {
         }
       }
     }
+    learningUI?.renderLessonExtras();
     if (bound) return;
   }
+  learningUI?.renderLessonExtras();
   list.innerHTML = '';
   // numbered curriculum spine (10th council): sequential states as shape+word
   let unlocked = true;
@@ -2226,8 +2423,18 @@ function openLesson(les) {
   // the action button is shared with the song bridge: put its own word back
   const actionBtn = $('lesson-rhythm-link');
   delete actionBtn.dataset.bridge;
+  delete actionBtn.dataset.quest;
   if (actionBtn.dataset.label) setTextKeeping(actionBtn, actionBtn.dataset.label);
   actionBtn.hidden = les.drill.type !== 'rhythm-gate';
+  // THE FLATS LINK. "Sharps, flats and the black keys" drills sharps only, and
+  // its capability line now says so; this is the exercise that actually drills
+  // flat spelling, natural signs and the accidental carry rule, one tap away
+  // from the lesson that names them.
+  if (les.id === 'sharps-flats') {
+    actionBtn.dataset.quest = 'nt-flats';
+    setTextKeeping(actionBtn, 'Drill flats and naturals');
+    actionBtn.hidden = false;
+  }
   $('lesson-phase').textContent = '';
   $('lesson-stave').innerHTML = '';
   lessonScore = null;
@@ -2250,17 +2457,34 @@ function openLesson(les) {
 
   if (les.drill.type === 'rhythm-gate') {
     $('lesson-start').hidden = true;
-    const cleans = (state.rhythm?.totalCleans ?? 0);
+    // ☠️ A CLEAN RHYTHM TAP ROUND IS NOT EVIDENCE OF READING RHYTHM. Rhythm
+    // tap plays the pattern and you copy it: it is an EAR exercise, and it
+    // used to finish this lesson, so "Rhythm: note values" could be completed
+    // without reading a single note value off a page. The gate is now the
+    // written-rhythm rung of the notation quest the lesson names, which deals
+    // a bar nobody has heard. Rhythm tap is untouched and still worth playing.
+    const gateCard = les.drill.gate === 'rhythm-read' ? 'rh-values' : null;
+    const gatePassed = gateCard
+      ? !!state.lab?.cards?.[gateCard]?.stages?.independent?.passedAt
+      : (state.rhythm?.totalCleans ?? 0) > 0;
+    const btn = $('lesson-rhythm-link');
+    btn.dataset.label ??= (btn.textContent || '').trim();
+    if (gateCard) {
+      setTextKeeping(btn, 'Open the written-rhythm quest');
+      btn.dataset.quest = gateCard;
+    }
+    btn.hidden = false;
     // ☠️ Codex lessons round: REOPENING this lesson used to re-fire the whole
     // completion (celebration, timestamp overwrite, auto-exit) with nothing
-    // played. Opening a lesson may never complete it; only a FIRST clean
-    // round may.
+    // played. Opening a lesson may never complete it; only a FIRST pass may.
     if (lessonsDone()[les.id]) {
-      setTextKeeping($('lesson-msg'), 'Already complete. Any clean Rhythm tap round keeps it fresh.');
+      setTextKeeping($('lesson-msg'), 'Already complete. Reading another written rhythm keeps it fresh.');
       $('lesson-progress').textContent = '';
-    } else if (cleans > 0) { completeLesson(); }
+    } else if (gatePassed) { completeLesson(); }
     else {
-      setTextKeeping($('lesson-msg'), 'One clean Rhythm tap round finishes this lesson.');
+      setTextKeeping($('lesson-msg'), gateCard
+        ? 'To finish this lesson, read one written rhythm you have not heard: play "Whole, half and quarter notes" on your own, in the quest below. Copying a pattern back by ear is a different skill and finishes nothing here.'
+        : 'One clean Rhythm tap round finishes this lesson.');
       $('lesson-progress').textContent = '';
     }
     return;
@@ -2592,6 +2816,8 @@ $('lesson-rhythm-link').addEventListener('click', (e) => {
   // one button, two jobs: the rhythm gate's link, and the finished lesson's
   // "Now play" bridge. The bridge opens the song through startSong, the same
   // path every other open in the app uses.
+  const quest = e.currentTarget.dataset.quest;
+  if (quest) { learningUI?.openQuest(quest); return; }
   const id = e.currentTarget.dataset.bridge;
   if (!id) { $('btn-rhythm').click(); return; }
   const s = SONGS.find((x) => x.id === id);
@@ -3022,6 +3248,25 @@ function memMetronomeTick() {
   metClick(metCtx.currentTime, accent ? 1500 : 1000, accent ? 0.22 : 0.13);
 }
 
+// THE READING PULSE. A first reading runs in time, so it gets a continuous
+// pulse under it: that is what "keep going" means physically. It is driven off
+// engine.beat exactly like the memorise click, so in wait mode (where the clock
+// is frozen) it simply never advances and stays silent by itself, and it goes
+// through metClick(), so leaving the screen kills it under the existing law.
+let readPulseBeat = -1;
+function readingPulseTick() {
+  if (!sightMode || !sightPlan?.policy.pulse.continuous || !state.readingPulse) return;
+  if (!engine || engine.finished || engine.waitMode) return;
+  const perBar = sightPlan.policy.pulse.beatsPerBar || 4;
+  const b = Math.floor(engine.beat);
+  if (b === readPulseBeat || b < 0) return;
+  readPulseBeat = b;
+  metCtx ??= new (window.AudioContext || window.webkitAudioContext)();
+  if (metCtx.state !== 'running') { metCtx.resume(); return; }
+  const accent = ((b % perBar) + perBar) % perBar === 0;
+  metClick(metCtx.currentTime, accent ? 1500 : 1000, accent ? 0.20 : 0.12);
+}
+
 function onMemLap(ev) {
   const { rec, stageUp, done } = memAdvance(memo.rec, ev.accuracy, ev.wrong);
   memo.rec = rec;
@@ -3048,6 +3293,7 @@ function setChunk(i) {
     const c = chunkRange(song, i, chunkBars());
     chunkIdx = c.idx;
   }
+  readingSettingChanged('rangeChanged'); // narrowing the passage mid-read is a change
   syncChunkLabel();
   rebuildEngine();
 }
@@ -3296,6 +3542,7 @@ $('mode-score').addEventListener('click', () => {
 });
 for (const b of document.querySelectorAll('.hand-btn')) {
   b.addEventListener('click', () => {
+    if (hand !== b.dataset.hand) readingSettingChanged('handChanged');
     hand = b.dataset.hand;
     document.querySelectorAll('.hand-btn').forEach((x) => (x.dataset.on = String(x === b)));
     rebuildEngine();
@@ -3312,11 +3559,39 @@ if (CANON_ON) {
   for (const id of ['met-bpm', 'met-bpm-num']) { const el = $(id); if (el) { el.min = '40'; el.max = '200'; } }
 }
 $('tempo').addEventListener('input', () => { $('tempo-val').textContent = $('tempo').value + '%'; });
-$('tempo').addEventListener('change', rebuildEngine);
-$('section-select').addEventListener('change', rebuildEngine);
-$('wait-mode').addEventListener('change', rebuildEngine);
-$('btn-restart').addEventListener('click', rebuildEngine);
-$('results-again').addEventListener('click', () => { $('results').hidden = true; rebuildEngine(); raf = requestAnimationFrame(loopFrame); });
+$('tempo').addEventListener('change', () => {
+  // A reading tempo chosen here is remembered for the next read, so the
+  // learner's own pace is a setting rather than something to re-pick each time.
+  // Moved DURING a read it is also a change, and the read becomes practice.
+  if (sightMode) (state.lib ??= {}).readingTempo = +$('tempo').value;
+  readingSettingChanged('tempoChanged');
+  rebuildEngine();
+});
+$('section-select').addEventListener('change', () => { readingSettingChanged('rangeChanged'); rebuildEngine(); });
+// CONTAMINATION IS OBSERVED WHERE IT HAPPENS, not inferred afterwards: help
+// switched on mid-read, a restart, and a replay of the same presentation each
+// convert the run to guided practice, and reading-session prints the reason.
+$('wait-mode').addEventListener('change', () => { readingSettingChanged('helpToggled'); rebuildEngine(); });
+// RESTARTING DISMISSES THE SCORE CARD, whichever button does it. Restart only
+// rebuilt the engine and left the card lying over the fresh run: invisible
+// until 2026-09-13, because a failed run's card was suppressed by its own
+// correction and a passed run's card was dismissed by Play again. The moment a
+// finished run started showing its score, leave-probe caught it. The frame loop
+// is cancelled before it is scheduled, so pressing Restart mid-run cannot end
+// up with two loops drawing the same deck.
+//
+// The reading hook rides along here, not in the two listeners: a restart is a
+// restart however it was reached, and a first reading that was restarted is
+// practice, not evidence of reading unseen music.
+function restartRun() {
+  readingSettingChanged('restart');
+  $('results').hidden = true;
+  rebuildEngine();
+  cancelAnimationFrame(raf);
+  raf = requestAnimationFrame(loopFrame);
+}
+$('btn-restart').addEventListener('click', restartRun);
+$('results-again').addEventListener('click', restartRun);
 $('results-score-pass').addEventListener('click', () => {
   if (sightMode) { $('results').hidden = true; newSightExercise(); return; }
   startSong(song, { asScorePass: true });
@@ -3986,7 +4261,9 @@ $('sess-skill').addEventListener('click', () => {
 // ---------- trophies: the evidence cabinet ----------
 const NOTE_DATE = (t) => new Date(t).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
 function renderTrophies() {
-  const list = badges(state, SONGS);
+  // the lab's rows join the EXISTING cabinet rather than opening a second one:
+  // they are already in badges()' own shape, evidence line included
+  const list = [...badges(state, SONGS), ...(learningUI?.labBadges() ?? [])];
   // The canon drew these rows; bind into them rather than over them. Falls
   // through to the app's own markup when the flag is off.
   const trophyRows = list.map((b) => {
@@ -4088,6 +4365,9 @@ function showCorrection(evidence) {
   if (!plan) return;
   correction = {...plan,phase:'ready'};
   guidedHold = true;
+  // and a correction can never be drawn into a container nobody can see: the
+  // guide may have been collapsed (it is collapsed by default on a phone).
+  guideCollapsed = false;
   jlog('correction_shown', {id:song.id,start:plan.start,end:plan.end,kind:plan.kind,before:plan.before});
   renderJourney();
 }
@@ -4269,6 +4549,10 @@ function renderPracticeTools(openDetails=[]) {
     jlog('custom_passage_start',{id:song.id,...bounds});
   };
   $('passage-clear').onclick=()=>{previewStop?.();stopDemo();seekPractice(0);};
+  // UNDERSTAND THIS PASSAGE: a compact disclosure inside the practice guide,
+  // drawn only where an applied card's harmony was verified against the song
+  // data that actually shipped. No card, no claim, nothing drawn.
+  learningUI?.passageCard($('guide-body'), song, engine);
   for(const id of openDetails)if($(id))$(id).open=true;
 }
 
@@ -4400,6 +4684,19 @@ function metClick(at, hz, vol) {
 }
 function killClicks() {
   for (const o of metNodes.splice(0)) { try { o.stop(); } catch { /* already ended */ } }
+}
+// One bar of count-in for a caller that owns its own clock (the skill quests).
+// Returns BEAT ZERO in performance.now() terms, so the caller can stamp every
+// press in milliseconds from the downbeat. Every click goes through metClick,
+// so leaving the screen silences them under the existing law.
+function metCountIn(beats, msPerBeat) {
+  metCtx ??= new (window.AudioContext || window.webkitAudioContext)();
+  metCtx.resume();
+  const lead = 0.15;                       // enough for the context to be running
+  const spb = msPerBeat / 1000;
+  const t0 = metCtx.currentTime + lead;
+  for (let i = 0; i < beats; i++) metClick(t0 + i * spb, i === 0 ? 1500 : 1000, i === 0 ? 0.25 : 0.16);
+  return performance.now() + (lead + beats * spb) * 1000;
 }
 function stopMetronome() {
   if (metTicker) { clearInterval(metTicker); metTicker = null; }
@@ -4655,6 +4952,7 @@ midi.onNote = (m, vel, down) => {
   if (cardTask) { theoryNote(m, down); return; }
   if (active === 'task') { if (down) pathUI.noteOn(m); else pathUI.noteOff(m); return; }
   if (active === 'lesson') { lessonNote(m, down); return; }
+  if (active === 'quest') { learningUI?.questNote(m, down, vel, 'midi'); return; }
   if (active === 'rhythm') { if (down) rhythmNote(); return; }
   if (active === 'touch') { if (down) touchNote(m, vel); return; }
   if (active === 'play' && engine) {
@@ -4691,6 +4989,10 @@ midi.onNote = (m, vel, down) => {
 // timeline; the analyzers read it after the run.
 midi.onControl = (cc, val) => {
   if (cc !== 64) return;
+  // a pedal that has spoken once is a pedal this device HAS: the expression
+  // cards ask that question before claiming to measure a pedal change
+  if (!state.pedalSeen) { state.pedalSeen = true; store.save(state); }
+  if (active === 'quest') { learningUI?.questPedal(val >= 64); return; }
   if (takeRec && active === 'play') takeRec.events.push({ kind: 'cc', t: performance.now() - takeRec.t0, cc, val });
   if (active === 'play' && engine) engine.pedal(val >= 64);
 };
@@ -4746,6 +5048,78 @@ const pathUI = installPath({
 });
 window.__path = pathUI; // debug lever, same spirit as __engine / __lesson
 leaveTask = pathUI.leave;
+
+// The learning wave's own surfaces. Same shape as the path install above: this
+// module owns the reading lane, the skill quests, the passage card and the
+// daily route, and app.mjs keeps the wiring.
+learningUI = installLearningUI({
+  state, store, show, jlog, renderLibrary, SONGS, songStats, FallsView, COLORS, ScoreView, Engine,
+  playPreview, stopPreview, comboFlash, bankBlock, awardXp, dayStat, settleGame, markPracticedToday,
+  metClick, killClicks, metCountIn, lessonKeyRange, launchSong: launchSongFragment, runPrescription,
+  CANON_ON, hideRestingLayer, LabScore,
+  startReading: (intent, tempo, presented) => { newSightExercise(intent, tempo, presented); },
+  openLessons: () => { show('lessons'); renderLessonList(); },
+  midiConnected: () => $('midi-status').dataset.connected === 'true',
+  touchCal: () => state.touchCal ?? null,
+  // the ONE prescription voice, handed to the route whole
+  prescribeNow: () => prescribe(state, Date.now(), { songs: SONGS, statsOf: songStats }),
+  // A quest's applied rung opens the real passage at its exact settings.
+  // `assess` marks it as a bounded ONE-PASS assessment; a plain navigation
+  // (the way back from a technique detour) leaves ordinary looping alone.
+  launchPassage: ({ songId, section, hand, tempo, wait, assess = null,
+    chunk = null, custom = null, practiceStart: fromBeat = null }) => {
+    const s = SONGS.find((x) => x.id === songId);
+    if (!s) return false;
+    passageAssess = null;
+    startSong(s, { playHand: hand ?? 'both' });
+    const secIdx = section ? (s.sections ?? []).findIndex((x) => x.name === section) : -1;
+    if (secIdx >= 0) $('section-select').value = String(secIdx);
+    $('wait-mode').checked = wait !== false;
+    const pct = Number.isFinite(tempo) ? tempo : 100;
+    $('tempo').value = pct; $('tempo-val').textContent = pct + '%';
+    // a captured range comes back as the same KIND of range it was: a chunk, a
+    // dragged custom passage, or a start position on the practice bar
+    if (custom) { customPassage = { ...custom }; loopOverride = { ...custom }; }
+    else if (Number.isFinite(chunk)) { chunkIdx = chunk; syncChunkLabel(); }
+    else if (Number.isFinite(fromBeat) && fromBeat > 0) practiceStart = fromBeat;
+    // The identity this assessment is bound to. Every field is re-checked at
+    // rebuild and at finish, so a different song, section, hand, tempo or help
+    // setting silently ends the binding rather than mis-attributing a run.
+    if (assess) passageAssess = { ...assess, songId: s.id, section: section ?? null,
+      hand: hand ?? 'both', tempo: pct, wait: wait !== false, at: Date.now() };
+    rebuildEngine();
+    return true;
+  },
+  // WHERE HE ACTUALLY IS, captured off the live engine so a detour can come
+  // back to it: the range he is looping (a section, a chunk, a dragged custom
+  // passage, or a seek position), the hand, the tempo and the help setting.
+  // Not the card's authored defaults, which may be nothing like it.
+  currentPassage: () => {
+    if (!song || !engine) return null;
+    const secName = song.sections?.[$('section-select').value]?.name ?? null;
+    const whole = !engine.loop && engine.startBeat === 0;
+    return {
+      songId: song.id, title: song.title, section: secName,
+      startBeat: engine.startBeat, endBeat: engine.endBeat,
+      hand: engine.hand, tempo: Math.round(engine.tempo * 100), wait: engine.waitMode,
+      chunk: chunkIdx, custom: customPassage ? { ...customPassage } : null,
+      practiceStart,
+      where: secName ?? (whole ? 'the whole piece'
+        : `${(engine.startBeat * 60 / song.bpm).toFixed(0)}s to ${(engine.endBeat * 60 / song.bpm).toFixed(0)}s`),
+    };
+  },
+  // the technique route: the shipped scale the card names, never an invented one
+  openScale: (scaleId) => {
+    const s = SONGS.find((x) => x.id === scaleId);
+    if (s) { startSong(s); return true; }
+    $('btn-keys12')?.click();
+    return false;
+  },
+});
+learningUI.setLab(learningLab);
+window.__learning = learningUI; // debug lever, same spirit as __path / __lesson
+window.__quest = () => learningUI.questDebug();
+leaveLearning = learningUI.leave;
 
 midi.connect();
 renderLibrary();

@@ -1,16 +1,23 @@
-// THE LEARNING SHELF ORDERS BY TIME IN THE SONG, AND THE CLOCK ACTUALLY RUNS.
+// THE LEARNING SHELF ORDERS BY WHAT HE PLAYED LAST, AND THE CLOCK ACTUALLY RUNS.
 //
 // Mark, 2026-09-09: "how we make sure that any song I'm learning comes up there
 // in the order that I've tried playing or spent the most time in the song comes
 // up first". Before this, Learning held only songs with a FINISHED run, weakest
 // first, so a song he drilled for twenty minutes and never played end to end
-// sat in Explore with no trace. This gate seeds three songs (five minutes with
+// sat in Explore with no trace. He came back on 2026-09-13 with the newer
+// word: "can we have the list of songs be sorted by most recently opened/played?
+// ive just been playing mainly fur elise and mario but those scales ones have
+// sat on the top and i never play them haha". Recency leads now and time in the
+// song is the tie-break. This gate seeds three songs (five minutes with
 // no finish, one minute plus two finishes, twenty seconds with no finish),
 // reads the RENDERED shelf, then opens a song, lets the engine run, leaves,
 // and proves the persisted clock moved.
 //
 //   node tools/learning-order-probe.mjs
 import { launch } from './cdp.mjs';
+
+// Point at another tree with PORT=xxxx; the gates run against the serving copy.
+const BASE = 'http://localhost:' + (process.env.PORT || 4180) + '/index.html';
 
 const b = await launch({ width: 756, height: 1400, scale: 1, port: 9771, extraArgs: ['--autoplay-policy=no-user-gesture-required'] });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -29,9 +36,9 @@ const SEED = {
     'ode-to-joy':          { plays: 0, stars: 0, best: 0, ms: 20000, lastAt: NOW - 18e5 },    // twenty seconds: an accidental launch
   },
 };
-await b.goto('http://localhost:4180/index.html'); await b.ready();
+await b.goto(BASE); await b.ready();
 await b.eval(`localStorage.setItem('keys-v1', ${JSON.stringify(JSON.stringify(SEED))}); true`);
-await b.goto('http://localhost:4180/index.html'); await b.ready(); await sleep(800);
+await b.goto(BASE); await b.ready(); await sleep(800);
 
 const visible = () => b.eval(`[...document.querySelectorAll('[id^=screen-]')].filter((s) => !s.hidden).map((s) => s.id.replace('screen-', '')).join(',')`);
 const header = () => b.eval(`[...document.querySelectorAll('#screen-library *')].find((e) => !e.children.length && /^(LEARNING|SEARCH RESULTS|EXPLORE|REPERTOIRE|HALL OF FAME)/.test(e.textContent.trim()) && e.getBoundingClientRect().width > 0)?.textContent.trim()`);
@@ -50,9 +57,9 @@ const stored = (id) => b.eval(`JSON.parse(localStorage.getItem('keys-v1')).songs
 
 // 1. the rendered shelf
 const h1 = await header();
-ok('the header names the order on screen', h1 === 'LEARNING, MOST PLAYED FIRST', JSON.stringify(h1));
+ok('the header names the order on screen', h1 === 'LEARNING, MOST RECENT FIRST', JSON.stringify(h1));
 const r1 = await rows();
-ok('most time in the song leads Learning', r1 && r1[0] === 'Song of Storms', JSON.stringify(r1));
+ok('the most recently played song leads Learning', r1 && r1[0] === 'Song of Storms', JSON.stringify(r1));
 ok('a song with finished runs is still in Learning', r1 && r1.includes('Für Elise'), JSON.stringify(r1));
 ok('five minutes with NO finished run is in Learning', r1 && r1.includes('Song of Storms'), JSON.stringify(r1));
 ok('twenty seconds (an accidental launch) is NOT in Learning', r1 && !r1.includes('Ode to Joy'), JSON.stringify(r1));

@@ -1,0 +1,288 @@
+/* Learning wave surfaces: the reading lane, the skill quests, the passage card.
+   Same world as style.css, on purpose: true black ground, hairline structure,
+   Fraunces only for titles, mint for the one action, and never a second
+   dashboard. Every state here is a SHAPE plus a WORD as well as a colour,
+   because Mark is colour-blind and these screens carry pass/fail information.
+
+   This file loads UNLAYERED, after style.css, for one reason: two of these
+   surfaces (the quest block on the lessons board and the passage card inside
+   the practice guide) are app-drawn subtrees inside a canon root, where the
+   whole `app` layer has been reverted. Their containers are named in the
+   canon reset's exemption list in style.css; these rules are what reaches
+   them. Everything is scoped to lw- / passage- prefixes, so nothing here can
+   reach the canon's own markup. */
+
+/* ---- shared chrome -------------------------------------------------------- */
+/* The two new screens are NOT canon boards (the design drew no artboard for
+   them), so they would run the full window width while every mounted board is
+   a centred column. Match the column instead of inventing a second layout. */
+#screen-reading, #screen-quest { width: 100%; max-width: 860px; margin-inline: auto; }
+/* `.screen` is a COLUMN flex container, so every direct child is a flex item
+   and shrinks on the vertical axis: the mode selector measured 2px tall around
+   42px buttons. Same fix style.css already applies to .echo-actions and
+   friends, and the same 44px floor the canon forces on its own controls. */
+#screen-reading > *, #screen-quest > * { flex: none; }
+#screen-reading :is(button, summary, select, input[type="checkbox"]),
+#screen-quest :is(button, summary, select) { min-height: 44px; }
+#screen-reading input[type="checkbox"] { min-height: 0; }
+.lw-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.lw-title {
+  font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 26px;
+  letter-spacing: -0.01em; margin: 0; color: var(--ink); flex: 1; min-width: 0;
+}
+.lw-sub {
+  font: 600 11.5px/1.4 ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+  margin: 18px 0 8px;
+}
+.lw-what { max-width: 62ch; margin: 8px 0 12px; line-height: 1.5; font-size: 15px; }
+/* Action first, explaining second. The row keeps Start above the fold at every
+   width the app supports, and never wraps the button under the conditions. */
+.lw-actionrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 0 0 10px; }
+.lw-conditions { flex: 1 1 220px; min-width: 0; color: var(--muted); font-size: 13px; }
+.lw-factsline { margin: 0 0 10px; font-size: 13.5px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.lw-factsline b { font-weight: 600; }
+.lw-factsline .lw-new { color: var(--accent); font-weight: 600; }
+.lw-factsline .lw-again { color: var(--urgent); font-weight: 600; }
+.lw-more { border: 1px solid var(--line); border-radius: 12px; margin: 12px 0; }
+.lw-more > summary {
+  list-style: none; cursor: pointer; padding: 10px 14px; display: flex; align-items: center; gap: 9px;
+  font: 600 13.5px/1.3 'Segoe UI', system-ui, sans-serif; color: var(--ink);
+}
+.lw-more > summary::-webkit-details-marker { display: none; }
+.lw-more > summary::before { content: '▸'; color: var(--accent); font-size: 12px; }
+.lw-more[open] > summary::before { content: '▾'; }
+.lw-more-body { padding: 0 14px 14px; }
+.lw-notice > p, .lw-notice > ul { margin: 10px 14px 14px; }
+.lw-seg { align-self: flex-start; }
+.lw-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; margin: 12px 0 8px; }
+
+/* ---- reading lane --------------------------------------------------------- */
+.lw-prep { border: 1px solid var(--line); border-radius: 14px; padding: 4px 16px 16px; margin-bottom: 12px; }
+.lw-prep[hidden] { display: none; }
+.lw-facts {
+  display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px;
+  margin: 0 0 12px; font-size: 14px; font-variant-numeric: tabular-nums;
+}
+.lw-facts dt { color: var(--muted); }
+.lw-facts dd { margin: 0; color: var(--ink); }
+.lw-stave { min-height: 0; }
+.lw-stave:empty { display: none; }
+
+/* Result rows: one line per measured thing. Never a single blended number,
+   and never a bar with no value printed beside it. */
+.lw-scores { display: flex; flex-direction: column; gap: 8px; margin: 6px 0 10px; }
+.lw-score {
+  display: grid; grid-template-columns: 1fr max-content; align-items: baseline;
+  gap: 4px 14px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+}
+.lw-score:last-child { border-bottom: 0; }
+.lw-score-name { font-weight: 600; }
+.lw-score-val { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--accent); }
+.lw-score-val[data-unknown="1"] { color: var(--muted); font-weight: 600; }
+.lw-score-why { grid-column: 1 / -1; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.lw-flag {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 6px;
+  border: 1px solid var(--urgent); border-radius: 999px; padding: 3px 11px;
+  color: var(--urgent); font-size: 12.5px; font-weight: 600;
+}
+.lw-flag::before { content: '◑'; font-size: 13px; }
+
+/* ---- quest rungs ---------------------------------------------------------- */
+.lw-rungs {
+  display: flex; flex-wrap: wrap; gap: 6px 8px; list-style: none;
+  margin: 0 0 12px; padding: 0;
+}
+.lw-rung {
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px;
+  font-size: 12.5px; color: var(--muted); white-space: nowrap;
+}
+.lw-rung > i { font-style: normal; font-size: 12px; }
+.lw-rung[data-state="done"] { color: var(--good); border-color: var(--good); }
+.lw-rung[data-state="now"] { color: var(--ink); border-color: var(--accent); font-weight: 700; }
+.lw-rung[data-state="locked"] { opacity: 0.62; }
+.lw-rung[data-state="due"] { color: var(--urgent); border-color: var(--urgent); }
+
+.lw-teach { max-width: 68ch; line-height: 1.6; margin-bottom: 10px; }
+.lw-teach ol, .lw-teach ul { margin: 6px 0; padding-left: 20px; }
+.lw-teach li { margin-bottom: 6px; }
+.lw-teach .lw-said { color: var(--muted); font-size: 13.5px; }
+
+/* the written-rhythm count row: "1 & 2 & 3 & 4 &" over the bar being read */
+.lw-counts {
+  position: relative; height: 46px; margin: 4px 0 10px;
+  border: 1px solid var(--line); border-radius: 10px;
+}
+.lw-counts b {
+  position: absolute; top: 6px; transform: translateX(-50%);
+  font: 600 13px/1 ui-monospace, Consolas, monospace; color: var(--muted);
+}
+.lw-counts b[data-on="1"] { color: var(--ink); }
+.lw-counts i.lw-beat { position: absolute; top: 26px; width: 1px; height: 14px; background: var(--line); }
+.lw-counts span.lw-hold {
+  position: absolute; top: 30px; height: 6px; border-radius: 3px;
+  background: var(--accent); opacity: 0.75;
+}
+.lw-counts span.lw-hold[data-verdict="short"] { background: var(--wrong); }
+.lw-counts span.lw-hold[data-verdict="long"] { background: var(--urgent); }
+
+/* the multiple choice on a worked or listening rung */
+.lw-ask { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 10px 0; }
+.lw-ask > p { margin: 0 0 9px; font-weight: 600; }
+.lw-ask .passage-actions button[data-on="true"] { border-color: var(--accent); color: var(--accent); }
+
+/* the route rows: the action, and a skip that costs nothing */
+.lw-route-row { display: flex; align-items: stretch; gap: 8px; }
+.lw-route-row > .lw-route-item { flex: 1; min-width: 0; }
+.lw-route-skip {
+  flex: none; min-height: 44px; padding: 0 12px; border: 1px solid var(--line);
+  border-radius: 10px; background: var(--panel); color: var(--muted);
+  font: 600 12px/1 'Segoe UI', system-ui, sans-serif; cursor: pointer;
+}
+.lw-route-skip:hover { color: var(--ink); border-color: var(--muted); }
+.lw-route-skip:empty { display: none; }
+.lw-route-wrap { border: 1px solid var(--line); border-radius: 12px; margin: 0 0 14px; }
+.lw-route-wrap > summary {
+  list-style: none; cursor: pointer; padding: 11px 14px; min-height: 44px;
+  display: flex; align-items: center; gap: 9px;
+  font: 600 13.5px/1.3 'Segoe UI', system-ui, sans-serif; color: var(--ink);
+}
+.lw-route-wrap > summary::-webkit-details-marker { display: none; }
+.lw-route-wrap > summary::before { content: '▸'; color: var(--accent); font-size: 12px; }
+.lw-route-wrap[open] > summary::before { content: '▾'; }
+.lw-route-wrap > .lw-route, .lw-route-wrap > .hint { padding: 0 14px; }
+.lw-route-wrap > .hint:last-child { padding-bottom: 14px; }
+.lw-route .hint { margin: 2px 0 8px; }
+
+.lw-tap-row { margin: 8px 0 12px; }
+.lw-tap { min-width: 200px; min-height: 56px; touch-action: none; }
+.lw-tap[data-down="1"] { filter: brightness(1.18); }
+
+/* ---- the quest block on the lessons board --------------------------------- */
+/* App-drawn inside the canon: every box-and-ink pair is written here together,
+   so a reverted stylesheet can never take the ink without the box. */
+.lw-quests { display: block; margin: 18px 0 0; padding: 0; }
+.lw-quests-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  margin: 0 0 8px;
+}
+.lw-quests-title {
+  font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 19px;
+  letter-spacing: -0.01em; margin: 0; color: var(--ink);
+}
+.lw-quests-count {
+  font: 600 11px/1 ui-monospace, Consolas, monospace; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+}
+.lw-quests-next {
+  border: 1px solid var(--accent); border-radius: 12px; padding: 11px 14px;
+  margin: 0 0 10px; background: var(--panel-2); color: var(--ink);
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+  font: inherit; cursor: pointer;
+}
+.lw-quests-next:hover { border-color: var(--ink); }
+.lw-quests-next-what { flex: 1; min-width: 0; }
+.lw-quests-next-kicker {
+  display: block; font: 600 10.5px/1.4 ui-monospace, Consolas, monospace;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+}
+.lw-quest-list { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.lw-quest-row {
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+  border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px;
+  background: var(--panel); color: var(--ink); font: inherit; cursor: pointer;
+}
+.lw-quest-row:hover { border-color: var(--accent); }
+.lw-quest-row[disabled] { cursor: default; opacity: 0.55; }
+.lw-quest-name { flex: 1; min-width: 0; font-weight: 600; }
+.lw-quest-sub { display: block; color: var(--muted); font-size: 12.5px; font-weight: 400; margin-top: 2px; }
+.lw-quest-state {
+  display: inline-flex; align-items: center; gap: 6px; flex: none;
+  font-size: 12px; color: var(--muted); white-space: nowrap;
+}
+.lw-quest-state > i { font-style: normal; }
+.lw-quest-state[data-state="done"] { color: var(--good); }
+.lw-quest-state[data-state="due"] { color: var(--urgent); }
+.lw-quest-pips { display: inline-flex; gap: 3px; flex: none; }
+.lw-quest-pips > i {
+  width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--muted);
+  display: inline-block; font-style: normal;
+}
+.lw-quest-pips > i[data-on="1"] { background: var(--accent); border-color: var(--accent); }
+
+/* ---- "Understand this passage", inside the practice guide ----------------- */
+.passage-card {
+  border: 1px solid var(--line); border-radius: 12px; padding: 0;
+  margin: 10px 0 0; background: var(--panel); color: var(--ink);
+}
+.passage-card > summary {
+  list-style: none; cursor: pointer; padding: 10px 13px; min-height: 44px;
+  display: flex; align-items: center; gap: 9px;
+  font: 600 13.5px/1.3 'Segoe UI', system-ui, sans-serif; color: var(--ink);
+}
+.passage-card > summary::-webkit-details-marker { display: none; }
+.passage-card > summary::before { content: '▸'; color: var(--accent); font-size: 12px; }
+.passage-card[open] > summary::before { content: '▾'; }
+.passage-card-body { padding: 0 13px 13px; }
+.passage-facts {
+  display: grid; grid-template-columns: max-content 1fr; gap: 3px 14px;
+  margin: 0 0 10px; font-size: 13px;
+}
+.passage-facts dt { color: var(--muted); }
+.passage-facts dd { margin: 0; color: var(--ink); }
+.passage-source { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 0 0 10px; }
+.passage-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.passage-actions button {
+  min-height: 44px; padding: 0 13px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--panel); color: var(--ink); font: 600 13px/1 'Segoe UI', system-ui, sans-serif;
+  cursor: pointer;
+}
+.passage-actions button:hover { border-color: var(--accent); }
+.passage-actions button.is-primary { background: var(--accent-fill); border-color: var(--accent-fill); color: #ffffff; }
+.passage-unknown { color: var(--muted); font-size: 13px; line-height: 1.55; margin: 0; }
+.passage-return {
+  border: 1px solid var(--accent); border-radius: 12px; padding: 10px 13px;
+  margin: 10px 0 0; background: var(--panel-2); color: var(--ink);
+}
+.passage-return .passage-source { margin-bottom: 8px; }
+
+/* ---- session route -------------------------------------------------------- */
+.lw-route { display: flex; flex-direction: column; gap: 6px; margin: 8px 0 0; }
+.lw-route-item {
+  display: flex; align-items: center; gap: 10px; width: 100%; text-align: left;
+  border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; min-height: 44px;
+  background: var(--panel); color: var(--ink); font: inherit; cursor: pointer;
+}
+.lw-route-item:hover { border-color: var(--accent); }
+.lw-route-item[data-state="done"] { color: var(--muted); }
+.lw-route-mins { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; flex: none; }
+.lw-route-skip { color: var(--muted); font-size: 12px; }
+
+/* ---- restrained celebration ---------------------------------------------- */
+/* One authored moment: the milestone line rises 6px and settles. No overlay,
+   nothing during playing, and nothing at all under prefers-reduced-motion. */
+.lw-milestone {
+  display: flex; align-items: center; gap: 9px; margin: 10px 0 0;
+  border: 1px solid var(--accent); border-radius: 12px; padding: 10px 13px;
+  background: var(--panel-2); color: var(--ink); font-size: 13.5px;
+  animation: lw-settle 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.lw-milestone > i { font-style: normal; color: var(--accent); }
+@keyframes lw-settle { from { transform: translateY(6px); opacity: 0.4; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .lw-milestone { animation: none; }
+  .lw-tap { transition: none; }
+}
+
+/* ---- narrow --------------------------------------------------------------- */
+@media (max-width: 430px) {
+  .lw-title { font-size: 21px; }
+  .lw-row { gap: 8px 14px; }
+  .lw-facts { grid-template-columns: 1fr; gap: 1px 0; }
+  .lw-facts dd { margin-bottom: 7px; }
+  .lw-quest-row { flex-wrap: wrap; }
+  .lw-quest-state { width: 100%; }
+  .passage-actions button { flex: 1 1 46%; }
+  .lw-tap { width: 100%; }
+}

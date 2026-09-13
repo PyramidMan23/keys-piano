@@ -30,10 +30,10 @@ export const CARDS = [
   { match: '0,4,9', title: 'A minor, first inversion', body: 'The Still D.R.E. chord: A minor is A-C-E. Here it is stacked C-E-A (the A moved up top), which is called first inversion. Same chord, different order, silkier sound. Minor = the middle note sits 3 semitones up instead of 4, which is what makes it moody.' },
   { match: '4,9,11', title: 'E suspended 4th', body: 'B-E-A is Esus4: the chord E would use a G#, but the A "suspends" above where the G# wants to be. Suspensions create tension that wants to resolve, which is exactly why the D.R.E. riff pulls forward.' },
   { match: '4,7,11', title: 'E minor', body: 'E minor is E-G-B. In the riff it lands as B-E-G. Notice the whole riff only ever moves ONE note at a time between its three chords. That is voice leading, and it is why it sounds smooth.' },
-  { match: '0,4,7', title: 'C major', body: 'C-E-G, the home chord of the white keys. Root, a major third up (4 semitones), then a fifth. Every major chord is this exact shape starting somewhere else.' },
+  { match: '0,4,7', title: 'C major', body: 'C-E-G, the home chord of the white keys. Root, a major third up (4 semitones), then a fifth (7 semitones from the root). Every major chord uses that same interval recipe from its own root. The recipe is what travels; the KEYS under your hand are not the same shape from every root, because which of them are black changes.' },
   { match: '0,3,7', title: 'C minor', body: 'C-Eb-G: the Game of Thrones sound. Take C major and pull the middle finger down one key onto the black Eb. One semitone of difference is the whole mood.' },
   { match: '4,8,11', title: 'E major', body: 'E-G#-B, the home chord of Runaway. The G# (black key) is what makes it major; with plain G it would be E minor.' },
-  { match: '0,5,9', title: 'F major', body: 'F-A-C. Same major shape as C, moved to start on F. Learn the shape, not the letters, and every major chord is one hand position.' },
+  { match: '0,5,9', title: 'F major', body: 'F-A-C. Same interval recipe as C major (4 semitones, then 3), started on F. It happens to land on three white keys again, so this one really does feel like the C shape. Move the same recipe to Eb or B and it does not: the hand position and the fingering change with which keys are black. The formula is constant, the hand shape is not.' },
   { match: '2,7,11', title: 'G major', body: 'G-B-D. In the key of C this is "the five chord", the one that pulls you back home to C. Play G then C and feel the landing.' },
 ];
 

@@ -786,8 +786,15 @@ button:disabled { opacity: 0.35; cursor: default; }
    written inline (the box and the ink together, so they cannot come apart), and
    the exemption is what lets the hover and focus rules below reach them at all,
    since no inline style can express a pseudo-class. */
+/* .lw-quests and .passage-card joined 2026-09-13, in the SAME EDIT that drew
+   them, for the same reason. Both are subtrees the APP draws inside a canon
+   board: the skill-quest block appended to the lessons board, and the
+   "Understand this passage" card appended inside the practice guide. Their
+   styles live in js/learning-ui.css, unlayered, and this exemption is what
+   lets those rules (and their hover/focus/open pseudo-states, which no inline
+   style can express) reach them at all. */
 .canon-root,
-.canon-root *:not([data-reflow], #score-wrap, #score-wrap *, #cp-again, #cp-again *, #lesson-stave, #lesson-stave *, .practice-prescription, .practice-prescription *, .practice-adjust, .practice-adjust *, .session-guide, .session-guide *, .lib-collections, .lib-collections *) {
+.canon-root *:not([data-reflow], #score-wrap, #score-wrap *, #cp-again, #cp-again *, #lesson-stave, #lesson-stave *, .practice-prescription, .practice-prescription *, .practice-adjust, .practice-adjust *, .session-guide, .session-guide *, .lib-collections, .lib-collections *, .lw-quests, .lw-quests *, .passage-card, .passage-card *) {
   all: revert;
   /* The one thing that must come BACK. The canon was authored in a page with
      `* { box-sizing: border-box }` and every width in it assumes that; reverting

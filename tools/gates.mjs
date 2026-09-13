@@ -49,6 +49,11 @@ const ALL = [
   'tools/bars-probe.mjs',
   'tools/finger-probe.mjs',
   'test/check.mjs',
+  'test/reading-session.mjs',
+  'test/learning-lab.mjs',
+  'tools/learning-wave-probe.mjs',
+  'tools/lab-score-probe.mjs',
+  'test/lab-score.mjs',
   'test/five-improvements.mjs',
   'tools/five-improvements-probe.mjs',
   'test/import-roundtrip.mjs',
@@ -63,6 +68,7 @@ const ALL = [
   'tools/lesson-walk-probe.mjs',
   'tools/teacher-walk-probe.mjs',
   'tools/learning-order-probe.mjs',
+  'tools/finish-card-probe.mjs',
 ];
 
 // What a change to the SONG DATA (songs-imported, songs-fingers, tiers-refused,

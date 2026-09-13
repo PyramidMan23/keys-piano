@@ -28,10 +28,20 @@ export const XP = {
   passageIndependent: 25,
   passageRetention: 40,
   transfer: 40,       // a day-later unaided check on an undrilled passage passed: the mastery upgrade (18th council)
+  // ---- the learning wave (2026-09-13) --------------------------------------
+  // Still ONE currency, still paid for VALUE. Every one of these is one-time by
+  // a ref that names the thing done, so replaying a quest rung, re-reading the
+  // same exercise, or opening a lesson twice pays exactly nothing. There is no
+  // source here for opening, viewing or listening to anything.
+  readFirst: 35,      // a first reading finished with the evidence intact (once per piece of material)
+  questRung: 20,      // one quest rung passed (once per quest+rung)
+  questRecall: 30,    // a quest's delayed-recall rung passed a day later (once per quest)
+  questTransfer: 45,  // a quest applied to material it was never drilled on (once per quest)
 };
 // quest/weekly rewards are once-per-period by REF (day / ISO week), a re-pick
 // can never double-pay (Codex review P1, 2026-08-28)
-const ONCE = new Set(['proof', 'playable', 'sectionMastered', 'lessonCleared', 'calibrated', 'firstCleanRun', 'questDone', 'weeklyDone', 'transfer', 'passageIndependent', 'passageRetention']);
+const ONCE = new Set(['proof', 'playable', 'sectionMastered', 'lessonCleared', 'calibrated', 'firstCleanRun', 'questDone', 'weeklyDone', 'transfer', 'passageIndependent', 'passageRetention',
+  'readFirst', 'questRung', 'questRecall', 'questTransfer']);
 
 export function grantXp(st, src, ref, now) {
   if (!XP[src]) return null;
@@ -67,6 +77,11 @@ export function questsFor(st, day) {
   const lessonsDone = st.teacherLessons ?? {};
   const proofPending = Object.keys(lessonsDone).some((id) => !(st.pathProofs ?? {})[id]);
   if (proofPending) pool.push({ id: 'proof', label: 'Bank a song proof', why: 'a lesson is not real until it survives a song', done: (ds.proofsBanked ?? 0) >= 1 });
+  // The learning wave's two quests join the pool only once the learner has
+  // actually opened those lanes. An offer for a surface nobody has met is not
+  // autonomy, it is noise, and the three-of-a-pool shape is the council's.
+  if ((st.sight?.reads ?? []).length) pool.push({ id: 'first-reading', label: 'One first reading', why: 'music you have never seen, read straight through, help off', done: (ds.firstReads ?? 0) >= 1 });
+  if (Object.keys(st.quests ?? {}).length) pool.push({ id: 'quest-rung', label: 'Clear a quest rung', why: 'one rung of one skill, played not read about', done: (ds.questRungs ?? 0) >= 1 });
   const reviewDue = Object.values(st.playable ?? {}).some((p) => p.provenAt && p.dueAt && p.dueAt <= Date.parse(day + 'T23:59:59'));
   if (reviewDue) pool.push({ id: 'review', label: 'Still playable?', why: 'retention is tested, never assumed', done: (ds.reviewsPassed ?? 0) >= 1 });
   // seeded pick of 3, stable all day
@@ -352,6 +367,82 @@ export function recordBlock(st, kind, ref, now = Date.now()) {
 export const isPerformedBlock = (b) => b.kind !== 'listening' && !(b.kind === 'journey' && b.ref?.endsWith('|Hear it'));
 export function blockCount(st, sinceMs = 0, kind = 'practice') {
   return (st.blocks ?? []).filter((b) => b.t >= sinceMs && (kind === 'listening' ? b.kind === 'listening' : isPerformedBlock(b))).length;
+}
+
+// ---- three strands of evidence, never one number (2026-09-13) -------------
+// Reading, repertoire and musical skill are different things and the app had
+// one word for all three. A song played beautifully from memory says nothing
+// about reading; a clean first reading says nothing about repertoire. So they
+// are counted apart, they are counted from EVENTS, and an empty strand says
+// "not checked yet" rather than zero-as-a-score.
+//
+// The READING half deliberately owns no ledger of its own. js/reading-session.mjs
+// already records every read with its conditions, its contaminants and its three
+// separate dimensions, under `state.sight`; a second copy here would be a second
+// truth, and the first thing to disagree. So this reads THAT ledger's own
+// `readingSummary()` output, which the caller passes in.
+
+// A first reading comes back around after two days: the point is fresh
+// material often, not a daily quota, and nothing is lost by skipping it.
+export const READ_FRESH_GAP = 2 * DAY;
+// Straight off reading-session's reads[]: the last CLEAN INDEPENDENT read.
+export function lastIndependentRead(st) {
+  const reads = st.sight?.reads ?? [];
+  return reads.filter((r) => r.independent && r.verdict === 'clean').at(-1)?.t ?? 0;
+}
+export function freshReadDue(st, now = Date.now()) {
+  const reads = st.sight?.reads ?? [];
+  if (!reads.length) return false;               // the lane has never been used
+  return now - (lastIndependentRead(st) || reads.at(-1).t) >= READ_FRESH_GAP;
+}
+
+// One quest rung banked. Rungs are named by the quest catalogue; this only
+// records that a named rung of a named quest was passed, and when.
+export function recordQuestRung(st, questId, rung, opts = {}, now = Date.now()) {
+  const q = ((st.quests ??= {})[questId] ??= { rungs: {}, fails: 0 });
+  if (!q.rungs || typeof q.rungs !== 'object') q.rungs = {};
+  q.lastAt = now;
+  if (!opts.passed) { q.fails = (q.fails ?? 0) + 1; q.lastFailAt = now; return q; }
+  // First pass of a rung is the one that dates it. A replay refreshes `lastAt`
+  // and nothing else: it cannot backfill a stage or re-open a reward.
+  q.rungs[rung] ??= { at: now, assisted: !!opts.assisted, novel: !!opts.novel };
+  if (opts.due) q.dueAt = opts.due;
+  else if (rung === 'independent' && !q.rungs.recall) q.dueAt = now + DAY;
+  return q;
+}
+export const questRungPassed = (st, questId, rung) => !!st.quests?.[questId]?.rungs?.[rung];
+export function questDue(st, now = Date.now()) {
+  return Object.entries(st.quests ?? {})
+    .filter(([, q]) => q.dueAt && q.dueAt <= now && !q.rungs?.recall)
+    .sort((a, b) => a[1].dueAt - b[1].dueAt)
+    .map(([id]) => id);
+}
+
+// The three strands, each with its own word and its own evidence line. Missing
+// evidence is UNKNOWN. Nothing here is derived from another strand.
+// `summary` is reading-session's readingSummary(state.sight), passed in so this
+// module keeps no second copy of the reading ledger.
+export function evidenceStrands(st, summary = null) {
+  const levels = summary?.levels ?? [];
+  const independentReads = levels.reduce((a, l) => a + (l.independentCleans ?? 0), 0);
+  const guidedReads = levels.reduce((a, l) => a + (l.guidedCleans ?? 0), 0);
+  const proven = Object.values(st.playable ?? {}).filter((p) => p.provenAt).length;
+  const quests = Object.values(st.quests ?? {});
+  const rungs = quests.reduce((a, q) => a + Object.keys(q.rungs ?? {}).length, 0);
+  const transfers = quests.filter((q) => q.rungs?.transfer).length;
+  return [
+    { id: 'reading', name: 'Reading',
+      line: independentReads ? `${independentReads} clean read${independentReads === 1 ? '' : 's'} of music you had not seen` : null,
+      detail: guidedReads ? `${guidedReads} clean guided read${guidedReads === 1 ? '' : 's'}`
+        : summary?.legacy?.reads ? `${summary.legacy.reads} earlier reads, conditions not recorded` : null },
+    { id: 'repertoire', name: 'Repertoire',
+      line: proven ? `${proven} song${proven === 1 ? '' : 's'} proven playable` : null,
+      detail: (st.blocks ?? []).filter(isPerformedBlock).length
+        ? `${(st.blocks ?? []).filter(isPerformedBlock).length} practice blocks banked` : null },
+    { id: 'skill', name: 'Musical skill',
+      line: rungs ? `${rungs} quest rung${rungs === 1 ? '' : 's'} passed` : null,
+      detail: transfers ? `${transfers} applied to new material` : null },
+  ].map((s) => ({ ...s, known: !!s.line, line: s.line ?? 'Not checked yet' }));
 }
 
 // Listening credit measures unique playback coverage, never the seek position.

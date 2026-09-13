@@ -147,15 +147,13 @@ const ITEMS = [
     what: 'Every gate is green',
     needsBrowser: true,
     check: () => {
-      const fails = [];
-      const suite = run('../test/check.mjs');
-      if (!/ALL GREEN/.test(suite)) fails.push('suite');
-      for (const [tool, want] of [['overlay.mjs', /38\/38 screens/], ['canon-journeys.mjs', /30\/30 journeys/],
-        ['canon-geometry.mjs', /19\/19 states/], ['canon-samples.mjs', /18\/18 screens/],
-        ['score-render-check.mjs', /^PASS/m], ['../test/import-roundtrip.mjs', /survive/]]) {
-        if (!want.test(run(tool))) fails.push(tool.replace('../test/', '').replace('.mjs', ''));
-      }
-      return { ok: !fails.length, detail: fails.length ? `red: ${fails.join(', ')}` : 'all gates green' };
+      // Keep one authoritative roster: new learning gates must not be skipped
+      // by an older, hand-maintained subset claiming "every gate" passed.
+      const output = run('gates.mjs');
+      const summary = output.match(/(\d+)\/(\d+) green in ([^\n]+)/);
+      const ok = !!summary && Number(summary[2]) > 0 && summary[1] === summary[2];
+      return { ok, detail: summary ? summary[0]
+        : 'Full gate suite did not produce a completion summary; inspect reports/gate-logs.' };
     },
   },
   {

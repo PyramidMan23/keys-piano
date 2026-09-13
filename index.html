@@ -9,6 +9,10 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
+<!-- Loaded AFTER style.css and outside its @layer on purpose: the quest block
+     and the passage card are app-drawn subtrees inside canon boards, where the
+     whole app layer is reverted. Both containers are exempted in style.css. -->
+<link rel="stylesheet" href="js/learning-ui.css">
 </head>
 <body>
 
@@ -308,6 +312,88 @@
   <div class="echo-actions">
     <button id="rhythm-go" class="tool accent">▶ Play pattern</button>
   </div>
+</main>
+
+<!-- READING LANE: two named activities, never one blurred "sight reading".
+     Learn mode may pause, explain and repeat. First reading is a one-shot read
+     of material never seen, judged on pitch, rhythm and continuity separately,
+     and any help taken converts it to guided practice in front of the learner. -->
+<main id="screen-reading" class="screen" hidden>
+  <div class="lw-head">
+    <button id="reading-back" class="ghost">← Library</button>
+    <h2 class="lw-title">Reading</h2>
+  </div>
+  <div class="seg lw-seg" role="radiogroup" aria-label="Reading activity">
+    <button id="reading-mode-learn" class="seg-btn" role="radio" aria-checked="true" data-on="true">Learn mode</button>
+    <button id="reading-mode-first" class="seg-btn" role="radio" aria-checked="false">First reading</button>
+  </div>
+  <p id="reading-what" class="lw-what"></p>
+  <!-- The action comes BEFORE the explaining. Start is visible without
+       scrolling at 1400 and at 375; the conditions sit beside it as a short
+       line, and the rationale lives in the disclosure under the score. -->
+  <div class="lw-actionrow">
+    <button id="reading-go" class="tool accent">▶ Start</button>
+    <span id="reading-conditions" class="lw-conditions"></span>
+    <button id="reading-new" class="ghost" title="Deal a different exercise. The one on screen is already spent.">↻ Another one</button>
+    <button id="reading-prep-toggle" class="ghost">Hide the score</button>
+  </div>
+  <p id="reading-facts-line" class="lw-factsline"></p>
+  <div id="reading-prep-stave" class="lw-stave"></div>
+  <div id="reading-msg" class="echo-msg" role="status"></div>
+  <details id="reading-more" class="lw-more">
+    <summary>How this read is judged</summary>
+    <div class="lw-more-body">
+      <p id="reading-why" class="hint"></p>
+      <dl id="reading-prep-facts" class="lw-facts"></dl>
+      <div class="lw-row">
+        <label class="ctl">Your tempo <input id="reading-tempo" type="range" min="40" max="100" value="100" step="5"><span id="reading-tempo-val">100%</span></label>
+        <label class="ctl chk"><input id="reading-countin" type="checkbox" checked> Count-in bar</label>
+        <label class="ctl chk"><input id="reading-pulse" type="checkbox" checked> Pulse while I read</label>
+      </div>
+      <p id="reading-prep-note" class="hint"></p>
+    </div>
+  </details>
+  <section id="reading-result" class="lw-result" hidden aria-live="polite">
+    <h3 class="lw-sub">Last reading session</h3>
+    <div id="reading-result-rows" class="lw-scores"></div>
+    <p id="reading-result-evidence" class="hint"></p>
+  </section>
+  <section class="lw-progress" aria-labelledby="reading-progress-h">
+    <h3 id="reading-progress-h" class="lw-sub">Reading evidence</h3>
+    <div id="reading-progress" class="lw-scores"></div>
+    <p id="reading-progress-note" class="hint"></p>
+  </section>
+</main>
+
+<!-- LEARNING QUESTS: one playable skill per quest, five rungs each. -->
+<main id="screen-quest" class="screen" hidden>
+  <div class="lw-head">
+    <button id="quest-back" class="ghost">← Lessons</button>
+    <h2 id="quest-title" class="lw-title"></h2>
+  </div>
+  <p id="quest-why" class="hint"></p>
+  <ol id="quest-rungs" class="lw-rungs" aria-label="Quest stages"></ol>
+  <div id="quest-teach" class="lw-teach"></div>
+  <div id="quest-stave" class="lesson-stave"></div>
+  <div id="quest-counts" class="lw-counts" hidden></div>
+  <div class="echo-status">
+    <span id="quest-phase"></span>
+    <span id="quest-progress"></span>
+  </div>
+  <div id="quest-msg" class="echo-msg"></div>
+  <div class="echo-actions">
+    <button id="quest-go" class="tool accent">▶ Start</button>
+    <button id="quest-show" class="ghost" hidden>👁 Show me</button>
+    <button id="quest-hint" class="ghost" hidden>Hint</button>
+    <button id="quest-retry" class="ghost" hidden>↺ Retry</button>
+    <button id="quest-next" class="tool" hidden>Next</button>
+    <button id="quest-kb" class="ghost">Hide keyboard</button>
+  </div>
+  <div id="quest-tap-row" class="lw-tap-row" hidden>
+    <button id="quest-tap" class="tool accent lw-tap" aria-keyshortcuts="Space">Tap / hold here</button>
+    <p class="hint">No piano? Tap and HOLD this button, or hold the space bar, for as long as each note lasts.</p>
+  </div>
+  <canvas id="quest-keys" class="falls lesson-keys"></canvas>
 </main>
 
 <!-- METRONOME -->

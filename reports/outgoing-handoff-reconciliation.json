@@ -1,0 +1,1986 @@
+{
+  "source": "C:/Users/markh/keys-piano",
+  "baseline": "cd4e5a6",
+  "reason": "Preserve completed outgoing v132 handoff absent from Git checkout",
+  "deferred": [
+    "js/app.mjs (manual integration required)",
+    "sw.js (integrator owns newer version)"
+  ],
+  "copied": [
+    {
+      "file": "js/art-manifest.mjs",
+      "prior": "23d4a6b10e219520ddcc82570dc77c947b78ad21ddd65fc337ac7373dede0ce1",
+      "sha256": "191a3fb3a87a0fc25ea7e6bbec07ae5fc80a8751e3eea233693ae8356df20abd"
+    },
+    {
+      "file": "js/library.mjs",
+      "prior": "4507cb7129dbc095a3b4eeaa01424a4399dc8ffdc0c3ef7c4d834b76c24825cb",
+      "sha256": "ae1fee3f756ecbd19b6ea6fb123b07d1dd2f1f970e84c0dc7d93f012d12590b2"
+    },
+    {
+      "file": "js/songs-fingers.mjs",
+      "prior": "d607e39591a88a317f1c523977e490b574f541067e60ee901255570dda962e9f",
+      "sha256": "1f28323ded26b6ff0ced274ee1813b990cd2753bf91cc331bc36095b39306c69"
+    },
+    {
+      "file": "js/songs-imported.mjs",
+      "prior": "7708a55fbf93e8a1d600e9a710f8e9119b25388fde398a9ac61145a419a2ba35",
+      "sha256": "36062407375ff5b408ce3de92c57023578acc3146399b65f3eedca8867cfc904"
+    },
+    {
+      "file": "js/songs-library.mjs",
+      "prior": "c1783309010178c8dd8e079b1e4d6184febbee547b1cbc97a50f007d7b5594bb",
+      "sha256": "159f97fbc5ff5c7bc1ab245bc830f75f84ff75ea73783bc5fbcac105f195cb61"
+    },
+    {
+      "file": "js/tiers-refused.mjs",
+      "prior": "27c5365469ea95a1b1a126c15418451b67b906de67b746edbcea68f814a84e93",
+      "sha256": "e203d7fcce52c6a2b2c43356cdd90ad189ab2fad944b6a400aaf138fc00cb31b"
+    },
+    {
+      "file": "tools/gates.mjs",
+      "prior": "96a5d8f1c4a660629248147cd21b8132dbf9c3fc68b6bf882daf7f5d9607bea0",
+      "sha256": "0199a653fc50ba05f48f11b385e9de3a2ec67181cc394b4985a294f19f5f5898"
+    },
+    {
+      "file": "tools/learning-order-probe.mjs",
+      "prior": "cb4b729c4e9d86c8d94069748785f76de295bfe3311e2764504c224acd55ab64",
+      "sha256": "bd1553d51b3b55407c8bda2f458be478892f63b144d07f89c17edbaed632a4a2"
+    },
+    {
+      "file": "tools/finish-card-probe.mjs",
+      "prior": null,
+      "sha256": "7197be3182888a7e9ae86158af43d8edb26ffd93efb6306792614dbbd2eedd4d"
+    },
+    {
+      "file": "test/check.mjs",
+      "prior": "93b9ecc95b7c986abb1b93eab8fc17baebc868febebc0e6bcd962a29edd9782b",
+      "sha256": "2558303dafff5d80010ef20c699e374d42680d66f08412ab8a7abb644c90c4a4"
+    },
+    {
+      "file": "art/128/blues-in-c.jpg",
+      "prior": null,
+      "sha256": "55ff8b053b85eb433c0d74b0a9481bb3a09f26450d6bb5e3f223eca4486b4459"
+    },
+    {
+      "file": "art/128/burgmuller-arabesque.jpg",
+      "prior": null,
+      "sha256": "19fb245ae196acbe892b680a2719f4a39b8da4eda44c20a599a0c7656f91964f"
+    },
+    {
+      "file": "art/128/burgmuller-candeur.jpg",
+      "prior": null,
+      "sha256": "f583331c3c3e1f5992a5ca12562ed5a9a766e4dbcf9fa81f7b85078c33484dc7"
+    },
+    {
+      "file": "art/128/chopin-prelude-op28-7.jpg",
+      "prior": null,
+      "sha256": "150a865a7acdc0f596434f201978c7840fcab68d7f00932be18e88d562a6f577"
+    },
+    {
+      "file": "art/128/clementi-sonatina-36-1.jpg",
+      "prior": null,
+      "sha256": "19eda5f6582606e2c1c1cc17975f0b4180e889bae54fad7e44de0216f722d078"
+    },
+    {
+      "file": "art/128/desktop.ini",
+      "prior": null,
+      "sha256": "f0ea3329b14d0b0412acded346e63c2b3715c4b1082070d7b2ba0bd41a7e1592"
+    },
+    {
+      "file": "art/128/fly-me-to-the-moon.jpg",
+      "prior": null,
+      "sha256": "211a2c9995e0c49880eac17c2f947b5a66792abf33a0f1da69b0c98d66386373"
+    },
+    {
+      "file": "art/128/gnossienne-1.jpg",
+      "prior": null,
+      "sha256": "c68d360683eebe5b9bc8532b17449bb2d0f4a9ab22085d5fcc960ed44610f157"
+    },
+    {
+      "file": "art/128/greensleeves.jpg",
+      "prior": null,
+      "sha256": "9b8147c345f9639734f0c94748de71d29b22c834eb52a8653c86eac9a81891e3"
+    },
+    {
+      "file": "art/128/hey-jude.jpg",
+      "prior": null,
+      "sha256": "0dca5d942be6b66ddcea2b810d9bd44bc73e338e7e8c5d510dd204bfd92a9e0c"
+    },
+    {
+      "file": "art/128/maple-leaf-rag.jpg",
+      "prior": null,
+      "sha256": "dabeb184724289dbe08155fbd66c5bd56162380d4323119c610a8b6ca7374b6b"
+    },
+    {
+      "file": "art/128/merry-christmas-mr-lawrence.jpg",
+      "prior": null,
+      "sha256": "a912d96839563c1417825016dc04980083ceeda2d8e7d135f85033d2b44399ae"
+    },
+    {
+      "file": "art/128/minecraft-sweden.jpg",
+      "prior": null,
+      "sha256": "a52f85340c3ac142061094370dadd1912aff217d7a3948ef34ddec3607604d26"
+    },
+    {
+      "file": "art/128/minecraft-wet-hands.jpg",
+      "prior": null,
+      "sha256": "fd57c34e7607bdd2ff332defb9636b5d507a6981fffd7015f5bbb173f817a937"
+    },
+    {
+      "file": "art/128/one-summers-day.jpg",
+      "prior": null,
+      "sha256": "91c89e2daad9bee744f4ba9b5e6c0355d05f224592e0a339f497de33d7a43704"
+    },
+    {
+      "file": "art/128/perfect.jpg",
+      "prior": null,
+      "sha256": "c5d192de495392fdc4be33ee648e3e16c7fba7b19618be296eb1ff6abb57719a"
+    },
+    {
+      "file": "art/128/petzold-minuet-g.jpg",
+      "prior": null,
+      "sha256": "9782631383c28cb9fcc4535ee23c5241646e459c5632a992e2fa7745f26bef4d"
+    },
+    {
+      "file": "art/128/schindlers-list.jpg",
+      "prior": null,
+      "sha256": "029067801a3860c31b2046be161bb3a46a0b04e5ea26621376d45d00af879054"
+    },
+    {
+      "file": "art/128/schumann-melody-op68-1.jpg",
+      "prior": null,
+      "sha256": "9500aa50a7882139b80e860be84c9334afaa202166583af6d2bdeb2667e67794"
+    },
+    {
+      "file": "art/128/schumann-soldiers-march.jpg",
+      "prior": null,
+      "sha256": "c5ab762dbf66360f0ebe78affed460168ce016e5889d66d854a787db0c61cd9a"
+    },
+    {
+      "file": "art/128/silent-night.jpg",
+      "prior": null,
+      "sha256": "ffa756b2cd6a855f6a62a3412ad099852291a6c371ba6ac0eb9764358688883b"
+    },
+    {
+      "file": "art/128/the-entertainer.jpg",
+      "prior": null,
+      "sha256": "989ef4250b377ca57406169e73e0d26054b1a29dd414da0cdc2d13f8cf9955a4"
+    },
+    {
+      "file": "art/128/time-inception.jpg",
+      "prior": null,
+      "sha256": "aaf2ee13557907d9d0bb8e64de1b63beb8f4c138ac11642cdb4718f79f533ebc"
+    },
+    {
+      "file": "art/512/blues-in-c.jpg",
+      "prior": null,
+      "sha256": "5ac4fb50d11932a515a686e05813ca71da89f5cd866477e89d1ff9b491b5a8ef"
+    },
+    {
+      "file": "art/512/burgmuller-arabesque.jpg",
+      "prior": null,
+      "sha256": "67576a6c07d8a3895f8dfba0f3fe6cec2acfd6ac3be075d2776a8bddaee29f7a"
+    },
+    {
+      "file": "art/512/burgmuller-candeur.jpg",
+      "prior": null,
+      "sha256": "50de2e6f6b2f88d5c2c9bd58197fd68bd8d530fe75132154566212cce81b78f1"
+    },
+    {
+      "file": "art/512/chopin-prelude-op28-7.jpg",
+      "prior": null,
+      "sha256": "8be187e0b9921a5426f59e3c7a434adb1892daefd87bc7357fd833b166328c19"
+    },
+    {
+      "file": "art/512/clementi-sonatina-36-1.jpg",
+      "prior": null,
+      "sha256": "fdb8d7f911da6b42325c702ca582fcab6a3033ae9a69386e80a09c0817aee5f1"
+    },
+    {
+      "file": "art/512/desktop.ini",
+      "prior": null,
+      "sha256": "f0ea3329b14d0b0412acded346e63c2b3715c4b1082070d7b2ba0bd41a7e1592"
+    },
+    {
+      "file": "art/512/fly-me-to-the-moon.jpg",
+      "prior": null,
+      "sha256": "e6e2f7d13cf25d61ed3e683875f3db78c9113572b6641ae6b97f39d5ef5c3803"
+    },
+    {
+      "file": "art/512/gnossienne-1.jpg",
+      "prior": null,
+      "sha256": "049822653f02332e718142ff095e9a824bb38fc3208669e2091832a8cf5e546b"
+    },
+    {
+      "file": "art/512/greensleeves.jpg",
+      "prior": null,
+      "sha256": "3f01b1b68df917340843d296a6d107cb21d2b15e1fd263460432b16cd202a44a"
+    },
+    {
+      "file": "art/512/hey-jude.jpg",
+      "prior": null,
+      "sha256": "9a6a7b4e1f7967309ed5de619c37122e1789d1147fb3dfe4c09e7b2d7dc30467"
+    },
+    {
+      "file": "art/512/maple-leaf-rag.jpg",
+      "prior": null,
+      "sha256": "c521d2d9d88248a8270f0591fa5f715fc1d8b7f0834029e16d667a5fcb19468d"
+    },
+    {
+      "file": "art/512/merry-christmas-mr-lawrence.jpg",
+      "prior": null,
+      "sha256": "6669bb305bd106e5b62e4163c5b54f38ca0832052db1e64e33fe0d3970880e73"
+    },
+    {
+      "file": "art/512/minecraft-sweden.jpg",
+      "prior": null,
+      "sha256": "3d2f43d20c9805086803c43d87ba713308b1ba6353189ec6abdb60030a6ff6d8"
+    },
+    {
+      "file": "art/512/minecraft-wet-hands.jpg",
+      "prior": null,
+      "sha256": "8caa534ca0ae59e8a60b43f7044351fef05eda9eed39b4d51a30abbc7f58a7d4"
+    },
+    {
+      "file": "art/512/one-summers-day.jpg",
+      "prior": null,
+      "sha256": "a810c1a19c4e58ca9beaa2cf22d1fdb8b0a8d116c330dd1beaec0816edfb22c6"
+    },
+    {
+      "file": "art/512/perfect.jpg",
+      "prior": null,
+      "sha256": "df1bcbcca66aa7a113eff31e82167db5fcce43f309686aad5df0a3b774251879"
+    },
+    {
+      "file": "art/512/petzold-minuet-g.jpg",
+      "prior": null,
+      "sha256": "0d3c3008cc42d738c71fa557f2ac5a42c074beacdc5a926b8dca00e07fb9bb7e"
+    },
+    {
+      "file": "art/512/schindlers-list.jpg",
+      "prior": null,
+      "sha256": "19aaba485933f238b5497c65e752481fe8e934c48cd37e52a452b7361c0d51b1"
+    },
+    {
+      "file": "art/512/schumann-melody-op68-1.jpg",
+      "prior": null,
+      "sha256": "6f58d4b9ee92dfe9db92cd203f0e37a16345309f11e0d863033e89ec8c0ac70b"
+    },
+    {
+      "file": "art/512/schumann-soldiers-march.jpg",
+      "prior": null,
+      "sha256": "d834153e78c039034149259cb0b0d79637e4f3e68c68409be3f8fe98da997fee"
+    },
+    {
+      "file": "art/512/silent-night.jpg",
+      "prior": null,
+      "sha256": "427d60c6a6bf76ac0b21de7ef67613c5490393fe283fe9a1aafcf66a82d7c95e"
+    },
+    {
+      "file": "art/512/the-entertainer.jpg",
+      "prior": null,
+      "sha256": "840f760be3d4d0d50f2a29f8efb22c43a725e768109352984a4aeba1106bf5d0"
+    },
+    {
+      "file": "art/512/time-inception.jpg",
+      "prior": null,
+      "sha256": "ce532300b05a66365729ea9adb2f6a6a6fb2d22f0b3d61cca23dbc9d5bc75410"
+    },
+    {
+      "file": "art/afterglow.jpg",
+      "prior": null,
+      "sha256": "80e360e3bc48d9181c91246fba5cab9768966b9718de7e2c31432596c6dbc4be"
+    },
+    {
+      "file": "art/arabesque-1.jpg",
+      "prior": null,
+      "sha256": "cbe81cadd53624ef0bd21df5f446c4760c82652611df9388fa5f1860e6ee29b9"
+    },
+    {
+      "file": "art/bach-prelude-c.jpg",
+      "prior": null,
+      "sha256": "6691190ff28d4c2d1bd0075b03ae3f724393f23806178cbf4993df9e0dd76b6a"
+    },
+    {
+      "file": "art/beanie.jpg",
+      "prior": null,
+      "sha256": "59bcb4fdb294557ae391debcb43de3b1869a66f44b7c58120581e2fce144e57b"
+    },
+    {
+      "file": "art/bohemian-rhapsody.jpg",
+      "prior": null,
+      "sha256": "4499d132111abfa2904ef0bdbc0adeec5a20d86d5abb86d2b0fe5bd14d8aed84"
+    },
+    {
+      "file": "art/clair-de-lune.jpg",
+      "prior": null,
+      "sha256": "ad81161a19029ada5dba54f645a0fb401f464f8079d7f3a2dc08ff1c0ae5482a"
+    },
+    {
+      "file": "art/coffin-dance.jpg",
+      "prior": null,
+      "sha256": "fbd998dea499e12916542cc593809a613b9f15238933c33d0339c106fb951b48"
+    },
+    {
+      "file": "art/comptine.jpg",
+      "prior": null,
+      "sha256": "0555b57ac29999c42fc6ff96cbc6b24d3aec511678d7021d0a2a60d47d010536"
+    },
+    {
+      "file": "art/consolation-3.jpg",
+      "prior": null,
+      "sha256": "9dfc1107e61ef3fd905b41b206c800e7c6e0fc6e8c43d68c2b2462e7e1549faf"
+    },
+    {
+      "file": "art/desktop.ini",
+      "prior": null,
+      "sha256": "f0ea3329b14d0b0412acded346e63c2b3715c4b1082070d7b2ba0bd41a7e1592"
+    },
+    {
+      "file": "art/disney-star.jpg",
+      "prior": null,
+      "sha256": "4bfd122e77ddb75e5fcbb0bbb7ff8578cd87e1abf37d81169a73cd3d46fe0406"
+    },
+    {
+      "file": "art/empire.jpg",
+      "prior": null,
+      "sha256": "77e970d1fba04604261796cee576963e039fc008433cbefa33df68e765dd7e56"
+    },
+    {
+      "file": "art/faded.jpg",
+      "prior": null,
+      "sha256": "a7a5e259978e245b212cca307911fc60acbe673a5c9d0e2c49e90d741f84ddfb"
+    },
+    {
+      "file": "art/fantaisie-impromptu.jpg",
+      "prior": null,
+      "sha256": "1ea6046161963eaa2e222caed091b5b2eeaa73e056148bf4a646bac38d947aff"
+    },
+    {
+      "file": "art/fray-save-a-life.jpg",
+      "prior": null,
+      "sha256": "645186b837edc1c8470ab7baf043d4e2d53806594785401a03008847f5d68f4a"
+    },
+    {
+      "file": "art/fur-elise.jpg",
+      "prior": null,
+      "sha256": "18bb175b5138be93aac047e78f2314b4e88e3282a8580b268f195d7a26f26bb6"
+    },
+    {
+      "file": "art/game-of-thrones.jpg",
+      "prior": null,
+      "sha256": "13d1e2cbb035dad0ea29301eb40ada7c6d2b7a82f4ee7ac2685a11c41fd5e389"
+    },
+    {
+      "file": "art/gangstas-paradise.jpg",
+      "prior": null,
+      "sha256": "1d54482af94a55af6bfae963c1ac34759da5d8aac79ba03844ea32bf2121d071"
+    },
+    {
+      "file": "art/gladiator.jpg",
+      "prior": null,
+      "sha256": "89a23c1231cf665a29dcaf428da181a4182c7f7049cc26fab2b81d993ca13de9"
+    },
+    {
+      "file": "art/goldberg-aria.jpg",
+      "prior": null,
+      "sha256": "575113be3e87f1daa2e179ba2568c1b5e22a1e20774ae1cb01e93abc1311f0a7"
+    },
+    {
+      "file": "art/gray-day.jpg",
+      "prior": null,
+      "sha256": "27804610347cb391c7ecc9fc513566368845bb156de8b6ada302b2e45984f49b"
+    },
+    {
+      "file": "art/gymnopedie-1.jpg",
+      "prior": null,
+      "sha256": "8f36868e084e06cff8aed9979c49c454e3637a731e561454c906ed4f7fbb8eaf"
+    },
+    {
+      "file": "art/hotel-california.jpg",
+      "prior": null,
+      "sha256": "6f4d94d1157c9df9731d7a1a87fa4e6e921bcd5e90a59b04ad1e6874985753b5"
+    },
+    {
+      "file": "art/i-giorni.jpg",
+      "prior": null,
+      "sha256": "f59606f55a6fdd08e2f2a31649cde61df0bca3b5cdb8b517f8149a38dbd4e7b2"
+    },
+    {
+      "file": "art/i-wanted-to-leave.jpg",
+      "prior": null,
+      "sha256": "e673233be3afc44636e7ee75bfd8b25fff7d2cc526980357e3015027cf811d1e"
+    },
+    {
+      "file": "art/icarus.jpg",
+      "prior": null,
+      "sha256": "f76b6e1602b907b1b70f16f165187e4d655211d713b2a57c208d713064aa156c"
+    },
+    {
+      "file": "art/idea-10.jpg",
+      "prior": null,
+      "sha256": "106d2f5c8ffb44ce917807e64829e570b3ee5f5cc14f926dd6163fba42e65494"
+    },
+    {
+      "file": "art/idea-12.jpg",
+      "prior": null,
+      "sha256": "aba0842562b8427a48486df1e5312156ae066f6fe0c7118f5a3b8155ac84587b"
+    },
+    {
+      "file": "art/imperial-march.jpg",
+      "prior": null,
+      "sha256": "9c19d8dcbee69012286a984a22d93ef41e9cfdbbf6cdb87f9ff0d13acd5060f1"
+    },
+    {
+      "file": "art/in-a-gadda-da-vida.jpg",
+      "prior": null,
+      "sha256": "198331a893b69cd98490f690d19bf584f084774f45955db3d866557f70b355db"
+    },
+    {
+      "file": "art/in-the-end.jpg",
+      "prior": null,
+      "sha256": "e10b12b3087e383cbf48b6e8c6a8a126a566d8e4b8f8918eff916b52f7bb267e"
+    },
+    {
+      "file": "art/interstellar.jpg",
+      "prior": null,
+      "sha256": "5ef11ff23902e6a99a8b16a2e0fefa18a770780970f98c872c3023a4cf72614f"
+    },
+    {
+      "file": "art/jaws.jpg",
+      "prior": null,
+      "sha256": "76c521394f126d17c94b636cbef601f3eaece86007c251d7a91fba22b7a7620e"
+    },
+    {
+      "file": "art/la-petite-fille.jpg",
+      "prior": null,
+      "sha256": "94d546a788a6676f60deefce8b22397d4fbabf01d96b9c8e16bbcd9200b22fb8"
+    },
+    {
+      "file": "art/last-friday-night.jpg",
+      "prior": null,
+      "sha256": "a7d6b28889addd3588d77f465d62248a1908b6f919bf9eebb305dc425c28ce52"
+    },
+    {
+      "file": "art/last-waltz.jpg",
+      "prior": null,
+      "sha256": "917ab14d5e75507cb8d9921800c91bd4f19c2a1229cefe5cb12a6060d668d1c5"
+    },
+    {
+      "file": "art/lauras-dance.jpg",
+      "prior": null,
+      "sha256": "98e4b06e60c29a5dd75abc55028dcc7225dd636f10135973f20e299a43396e25"
+    },
+    {
+      "file": "art/liebestraum-3.jpg",
+      "prior": null,
+      "sha256": "86df06d66b58ede0c434171eef1407344a1d2c1660f6af26342d97b47c3d855f"
+    },
+    {
+      "file": "art/light-of-the-seven.jpg",
+      "prior": null,
+      "sha256": "e0ef7d7d43d903a806d21f4ccad19a749120928a3f0e9a9a95408095ad29cb1a"
+    },
+    {
+      "file": "art/little-things.jpg",
+      "prior": null,
+      "sha256": "cdd0e96fb18428564ed41a8b1abf04f3e5a2f9ce90c68094109952b7fe470788"
+    },
+    {
+      "file": "art/lost.jpg",
+      "prior": null,
+      "sha256": "193502af44b65f0bb039bfede5905533f920ed4dafb7f426bf46bff35f4ee074"
+    },
+    {
+      "file": "art/mariage-d-amour.jpg",
+      "prior": null,
+      "sha256": "ce9749472f37c55a9ac98ab7bfe8bb32a51f780ae945302c1df5f6554faec655"
+    },
+    {
+      "file": "art/mario.jpg",
+      "prior": null,
+      "sha256": "c5f0825eea897e50373f1a9bd22a685627b946461c6ea1319c11eb5b811749e9"
+    },
+    {
+      "file": "art/married-life.jpg",
+      "prior": null,
+      "sha256": "19f85d28d022bc97b44c174eff344d900b943023c6a600c1f7346acdcde4bbc1"
+    },
+    {
+      "file": "art/mia-sebastian.jpg",
+      "prior": null,
+      "sha256": "eb41a4d53a469fb974220e671194ceee6a6db41613187b802537bd82ce321bd0"
+    },
+    {
+      "file": "art/moonlight-sonata.jpg",
+      "prior": null,
+      "sha256": "1cbf812c785e71d8670ab9df4fb76c663eb22ad32f1315f6ced89c95df3dfa58"
+    },
+    {
+      "file": "art/mozart-pc21-2.jpg",
+      "prior": null,
+      "sha256": "c7db503e0853112df9108552d79ab813e654a4eca23444d7a3f004011e11fb96"
+    },
+    {
+      "file": "art/never-gonna-2.jpg",
+      "prior": null,
+      "sha256": "3d2d9d60ddcb3a8829b315870b6276b68de3c4d552ada94437bf3bc77fda2001"
+    },
+    {
+      "file": "art/next-episode.jpg",
+      "prior": null,
+      "sha256": "fa686dcb3dfee6c8e7060b71b32f8b83e000a1bd1db5dde7fb17d2f2380a3a2b"
+    },
+    {
+      "file": "art/nocturne-op9-2.jpg",
+      "prior": null,
+      "sha256": "23443b6ee541cb573ae8000b64e58054adf003a4c5ad18a6f5a4ddb97eeb49c4"
+    },
+    {
+      "file": "art/numb.jpg",
+      "prior": null,
+      "sha256": "4d36ecc65a3c2d1ce787f730f5cf4a2077243d8cc6d6fd15712d5d21f2bb9181"
+    },
+    {
+      "file": "art/ode-to-joy.jpg",
+      "prior": null,
+      "sha256": "27d44794bc891aa3c24d71029d15fc3d647e02e0b6852be0ee748beb5a2a6ac5"
+    },
+    {
+      "file": "art/overwatch.jpg",
+      "prior": null,
+      "sha256": "0a6c33333222dfa63fee6a74619b861e9e3e965eb52235a692d2714a2db67293"
+    },
+    {
+      "file": "art/pain.jpg",
+      "prior": null,
+      "sha256": "4109b8ba25f841e26810ad6f6975b397bb6b553a14c935cbea38ecaba01aeb86"
+    },
+    {
+      "file": "art/passacaglia.jpg",
+      "prior": null,
+      "sha256": "801b42fbc026cddd86e057ccb2b6772e3536dac5276599c75a054ed54edfe9c5"
+    },
+    {
+      "file": "art/pathetique-2.jpg",
+      "prior": null,
+      "sha256": "86ab6f112496c794e4d3257355e9ee7250a37df8b764f0c630fb7c5ed90d0c45"
+    },
+    {
+      "file": "art/piano-man.jpg",
+      "prior": null,
+      "sha256": "cc8e9f8d5f7358e6af70e8212e84f23c3f6734d8744bb21c0c469d9e947d131f"
+    },
+    {
+      "file": "art/pirates.jpg",
+      "prior": null,
+      "sha256": "2f5c79720322af86aefa942ad3f574ba0ee649f7187b3a8d8f6c0e7350abcfb5"
+    },
+    {
+      "file": "art/prelude-e-minor.jpg",
+      "prior": null,
+      "sha256": "cf0038611134d17d817746125e7470d90d2d9160f37e0fc74f442cb59fdfab20"
+    },
+    {
+      "file": "art/rachmaninoff-pc2.jpg",
+      "prior": null,
+      "sha256": "23c536b52d5136a6a51121741c14845f418ef8b36316c5d52e1a3e108da05b5c"
+    },
+    {
+      "file": "art/raindrop-prelude.jpg",
+      "prior": null,
+      "sha256": "9e846dba0fc5227a4a3f31b43302baf3124cd5d89133ad1aac95a3134c687187"
+    },
+    {
+      "file": "art/river.jpg",
+      "prior": null,
+      "sha256": "d13fa8e381ee4d2483faf924f7d8e41b5f37f0c6e0fc8d17edb321fc995364b3"
+    },
+    {
+      "file": "art/rondo-alla-turca.jpg",
+      "prior": null,
+      "sha256": "a2f4330cc7119246413b7aa06390095fcf2432a74e56ec766853e657a7e2dab9"
+    },
+    {
+      "file": "art/runaway.jpg",
+      "prior": null,
+      "sha256": "8a8e3fc3f1bb88ca43255248c2f1d62f6a8d93c1f8c20cb8acfac74f26af4813"
+    },
+    {
+      "file": "art/say-yes-to-heaven.jpg",
+      "prior": null,
+      "sha256": "6731ae11377fe35827525d761ad1a02f2bb78f47df252f151fb2259300df54ec"
+    },
+    {
+      "file": "art/see-you-again.jpg",
+      "prior": null,
+      "sha256": "d08bf88312eef30da8162027151716913ef3e60dd3519f52d187bfdeb6b911a0"
+    },
+    {
+      "file": "art/see-you-tomorrow.jpg",
+      "prior": null,
+      "sha256": "df8baa3071b792543757f50bf45e776355208d08718c51d2aca896ba08181df9"
+    },
+    {
+      "file": "art/stairway.jpg",
+      "prior": null,
+      "sha256": "bb04471414b2ce68dff812e262b5d14d5945f1625e0de70cbb529a6bcdb99522"
+    },
+    {
+      "file": "art/star-wars.jpg",
+      "prior": null,
+      "sha256": "edc96ae084617fcc5f1e9536d706cf544b150c75e3832e09725b489fcb8a5b04"
+    },
+    {
+      "file": "art/still-dre.jpg",
+      "prior": null,
+      "sha256": "fa686dcb3dfee6c8e7060b71b32f8b83e000a1bd1db5dde7fb17d2f2380a3a2b"
+    },
+    {
+      "file": "art/traumerei.jpg",
+      "prior": null,
+      "sha256": "bc9102c64fd8934cb68c8ecdd32fab35837a1a87ed6636e86112cebef9d8d721"
+    },
+    {
+      "file": "art/un-sospiro.jpg",
+      "prior": null,
+      "sha256": "52806a80317e12cc9e1ed8e5855545294562312cb7915f706a50f9c2f1511dbd"
+    },
+    {
+      "file": "art/valzer-d-inverno.jpg",
+      "prior": null,
+      "sha256": "6bba63325d8d9728bb1bca56e9a0cbf7c710a18241f90135cd788b02203946ce"
+    },
+    {
+      "file": "art/van-gogh.jpg",
+      "prior": null,
+      "sha256": "078223727b4ef15d97cb4d7df50c4cc8587b526e3fdfb6556336d2e497ca4992"
+    },
+    {
+      "file": "art/what-ive-done.jpg",
+      "prior": null,
+      "sha256": "13b20749f55f9868917a65a138da87f24cdc42d0d56ef40168c7193b32146d61"
+    },
+    {
+      "file": "art/where-is-my-mind.jpg",
+      "prior": null,
+      "sha256": "e4431d56c1c2870cf2700b6f304bca193f2b1f71bd8aa7306dbba4ef6e697f25"
+    },
+    {
+      "file": "art/work-this-time.jpg",
+      "prior": null,
+      "sha256": "c0badbdaa11eba7388abe5cdd454b558a078d4690a1ddfdf6b3caf1eb26438d5"
+    },
+    {
+      "file": "art/x-files.jpg",
+      "prior": null,
+      "sha256": "3adf027290abfd167fc871ae880e2aea284ada1ac0a431d2d8dc7f44778e4d47"
+    },
+    {
+      "file": "art/_candidates/afterglow-0.jpg",
+      "prior": null,
+      "sha256": "80e360e3bc48d9181c91246fba5cab9768966b9718de7e2c31432596c6dbc4be"
+    },
+    {
+      "file": "art/_candidates/arabesque-1-0.jpg",
+      "prior": null,
+      "sha256": "cbe81cadd53624ef0bd21df5f446c4760c82652611df9388fa5f1860e6ee29b9"
+    },
+    {
+      "file": "art/_candidates/arabesque-1-1.jpg",
+      "prior": null,
+      "sha256": "ffbb310a65498e38d28125608aa6e2c5241abd52265baa0c6515cfba3a5bd1af"
+    },
+    {
+      "file": "art/_candidates/arabesque-1-2.jpg",
+      "prior": null,
+      "sha256": "8f36868e084e06cff8aed9979c49c454e3637a731e561454c906ed4f7fbb8eaf"
+    },
+    {
+      "file": "art/_candidates/arabesque-1-3.jpg",
+      "prior": null,
+      "sha256": "739fe32a9ea17ea142ea91854fb4ffa16e2fdba97df5e77ebdcbe40923f4f63b"
+    },
+    {
+      "file": "art/_candidates/arabesque-1-4.jpg",
+      "prior": null,
+      "sha256": "912ab6f1e3104f6140ac1dd22e323083f729fdf8bb63b8ef5629b67fde571cc4"
+    },
+    {
+      "file": "art/_candidates/bach-prelude-c-0.jpg",
+      "prior": null,
+      "sha256": "6691190ff28d4c2d1bd0075b03ae3f724393f23806178cbf4993df9e0dd76b6a"
+    },
+    {
+      "file": "art/_candidates/bach-prelude-c-1.jpg",
+      "prior": null,
+      "sha256": "933331e3ada0f9b484ab0f67e041098c2f98e5cf1a5a0f7efb24f13d03bffa40"
+    },
+    {
+      "file": "art/_candidates/bach-prelude-c-2.jpg",
+      "prior": null,
+      "sha256": "4086f2cc3b3bf5cc4570a07bac5a8bed053e579a2bccfa1b207dc89c4f62b281"
+    },
+    {
+      "file": "art/_candidates/bach-prelude-c-3.jpg",
+      "prior": null,
+      "sha256": "e42c5a8b144edfc4ed5168b41b3f494fda72784caf7f857afc66d4b7dc2e036a"
+    },
+    {
+      "file": "art/_candidates/bach-prelude-c-4.jpg",
+      "prior": null,
+      "sha256": "4c771d8711b3b75ffbb56c4d5eb25a27903c064a5a2ada57258b5e989342279a"
+    },
+    {
+      "file": "art/_candidates/beanie-0.jpg",
+      "prior": null,
+      "sha256": "59bcb4fdb294557ae391debcb43de3b1869a66f44b7c58120581e2fce144e57b"
+    },
+    {
+      "file": "art/_candidates/beanie-1.jpg",
+      "prior": null,
+      "sha256": "290fd295ac4897ca7251e3c581d3058e0064062585ddcadecd91024adbff41db"
+    },
+    {
+      "file": "art/_candidates/beanie-2.jpg",
+      "prior": null,
+      "sha256": "99a4f13638894fea20b79df2b9e351439b7cce69de5c0257f700f02845d2ba39"
+    },
+    {
+      "file": "art/_candidates/beanie-3.jpg",
+      "prior": null,
+      "sha256": "fbfb561f686d151fc5750b5d6573df85ecf636d67c28ed29f33c597f9268ee9a"
+    },
+    {
+      "file": "art/_candidates/beanie-4.jpg",
+      "prior": null,
+      "sha256": "c3ed4d7d91902c39e7830f46e5298eda2c02f88ddc60c05faa5f0a59111f5390"
+    },
+    {
+      "file": "art/_candidates/clair-de-lune-0.jpg",
+      "prior": null,
+      "sha256": "ad81161a19029ada5dba54f645a0fb401f464f8079d7f3a2dc08ff1c0ae5482a"
+    },
+    {
+      "file": "art/_candidates/clair-de-lune-1.jpg",
+      "prior": null,
+      "sha256": "52a464fdfcc257c386235288d4a87065fe610e1f62fec62a88baadbab1dde207"
+    },
+    {
+      "file": "art/_candidates/clair-de-lune-2.jpg",
+      "prior": null,
+      "sha256": "dd07905032f618141f3cb190e5328ac9eb26049e7329f7dd5a9a60f957b603e3"
+    },
+    {
+      "file": "art/_candidates/clair-de-lune-3.jpg",
+      "prior": null,
+      "sha256": "c7234ae0944a93b46fc5c3289ab54611460aecddb375a43b2f3ac2fa2ea13c6d"
+    },
+    {
+      "file": "art/_candidates/clair-de-lune-4.jpg",
+      "prior": null,
+      "sha256": "257e908e7289500b15785feeb0b7307932265a029c4f1d4077b488a0f98db312"
+    },
+    {
+      "file": "art/_candidates/coffin-dance-0.jpg",
+      "prior": null,
+      "sha256": "fbd998dea499e12916542cc593809a613b9f15238933c33d0339c106fb951b48"
+    },
+    {
+      "file": "art/_candidates/coffin-dance-1.jpg",
+      "prior": null,
+      "sha256": "50c9ccad1ab0193ccb8d195be8d92e2855322e13f54c9a9c9ee240cf053c8f97"
+    },
+    {
+      "file": "art/_candidates/coffin-dance-2.jpg",
+      "prior": null,
+      "sha256": "b5962c1f9be475474f06c6f4dffdb8d05e4fd2977d5603772a29cd7ca7021b1e"
+    },
+    {
+      "file": "art/_candidates/coffin-dance-3.jpg",
+      "prior": null,
+      "sha256": "1c66d5ff0db5dde9510a61c429c4b237b8f8699c84cc21384b8d5839edcc451f"
+    },
+    {
+      "file": "art/_candidates/coffin-dance-4.jpg",
+      "prior": null,
+      "sha256": "dfd9f8da1841c318342b50ca1ae73eedd4701c3f2506df6cefa6341c77e1e912"
+    },
+    {
+      "file": "art/_candidates/comptine-0.jpg",
+      "prior": null,
+      "sha256": "0555b57ac29999c42fc6ff96cbc6b24d3aec511678d7021d0a2a60d47d010536"
+    },
+    {
+      "file": "art/_candidates/comptine-1.jpg",
+      "prior": null,
+      "sha256": "95a507d340f2e0079380133e545c8374e0b5be9b62143d665656e6c6ea56dc42"
+    },
+    {
+      "file": "art/_candidates/consolation-3-0.jpg",
+      "prior": null,
+      "sha256": "9dfc1107e61ef3fd905b41b206c800e7c6e0fc6e8c43d68c2b2462e7e1549faf"
+    },
+    {
+      "file": "art/_candidates/consolation-3-1.jpg",
+      "prior": null,
+      "sha256": "06683f048fc69407c6809fba3860e92c93f0a629107393b2c52d537b4ecdee9e"
+    },
+    {
+      "file": "art/_candidates/consolation-3-2.jpg",
+      "prior": null,
+      "sha256": "fa3b0a4327df9b812f38fddcdf130f4ab77fe58e6d2d57ac0d66d7bf5255314f"
+    },
+    {
+      "file": "art/_candidates/consolation-3-3.jpg",
+      "prior": null,
+      "sha256": "1c49f37724ac2233a86c8df1fa7e21d0ed980dcd791bf26d33c5e0c6ffa2691d"
+    },
+    {
+      "file": "art/_candidates/consolation-3-4.jpg",
+      "prior": null,
+      "sha256": "e7c1be2dfc668f7707ab378e81ad71ec6d911c15f9378e82687feaed4a74a8c3"
+    },
+    {
+      "file": "art/_candidates/desktop.ini",
+      "prior": null,
+      "sha256": "f0ea3329b14d0b0412acded346e63c2b3715c4b1082070d7b2ba0bd41a7e1592"
+    },
+    {
+      "file": "art/_candidates/disney-star-0.jpg",
+      "prior": null,
+      "sha256": "4bfd122e77ddb75e5fcbb0bbb7ff8578cd87e1abf37d81169a73cd3d46fe0406"
+    },
+    {
+      "file": "art/_candidates/disney-star-1.jpg",
+      "prior": null,
+      "sha256": "a891be9f859eae30b68c742172f146704d9cf92df7bd60a59298b5c39b0e36e4"
+    },
+    {
+      "file": "art/_candidates/disney-star-2.jpg",
+      "prior": null,
+      "sha256": "011600406830157da20c2cf6fec2f73a3ac6b4430d7d508c8f7e83027aaede32"
+    },
+    {
+      "file": "art/_candidates/disney-star-3.jpg",
+      "prior": null,
+      "sha256": "4f711d98048ce38546265be1b82bc72f6b27feaa84815c03e524a19b82681186"
+    },
+    {
+      "file": "art/_candidates/disney-star-4.jpg",
+      "prior": null,
+      "sha256": "8b0e251516dbf8477adbf3c5f4780401b1345e240439149c5362f15b48a84c0c"
+    },
+    {
+      "file": "art/_candidates/fantaisie-impromptu-0.jpg",
+      "prior": null,
+      "sha256": "1ea6046161963eaa2e222caed091b5b2eeaa73e056148bf4a646bac38d947aff"
+    },
+    {
+      "file": "art/_candidates/fantaisie-impromptu-1.jpg",
+      "prior": null,
+      "sha256": "1fc641197363488d32221cca4186e5c8f6c546c682485d38e2e9694f9fc9f8f4"
+    },
+    {
+      "file": "art/_candidates/fantaisie-impromptu-2.jpg",
+      "prior": null,
+      "sha256": "461061ab2d813238a63ece11e2e1581e47be86b089e8cda01ca50e12c5333df1"
+    },
+    {
+      "file": "art/_candidates/fantaisie-impromptu-3.jpg",
+      "prior": null,
+      "sha256": "7b80cbec52722af1309acf3d3cd427be273ff527263853b275ddf70eec7f883a"
+    },
+    {
+      "file": "art/_candidates/fantaisie-impromptu-4.jpg",
+      "prior": null,
+      "sha256": "7ed37e6defdd0841fb1c71b2215b0130d7f9c1b7939c0a26916298aa3645e035"
+    },
+    {
+      "file": "art/_candidates/gladiator-0.jpg",
+      "prior": null,
+      "sha256": "89a23c1231cf665a29dcaf428da181a4182c7f7049cc26fab2b81d993ca13de9"
+    },
+    {
+      "file": "art/_candidates/gladiator-1.jpg",
+      "prior": null,
+      "sha256": "10965ff0ff54a98e788231918a189bde8bf8fa998d4ac32d01fef2bd570265bb"
+    },
+    {
+      "file": "art/_candidates/gladiator-2.jpg",
+      "prior": null,
+      "sha256": "9d47eb6b3c186a1d822212ed21e8f5933f4d19f78103110feada141398e0cf81"
+    },
+    {
+      "file": "art/_candidates/gladiator-3.jpg",
+      "prior": null,
+      "sha256": "50c005c17b60c766cc67fe2565ea98543e308ff17fe576117510449588364a2f"
+    },
+    {
+      "file": "art/_candidates/gladiator-4.jpg",
+      "prior": null,
+      "sha256": "c13050a99b78937e530498955f1cba5e996a5b7d5329c64998e8d8e872e83431"
+    },
+    {
+      "file": "art/_candidates/goldberg-aria-0.jpg",
+      "prior": null,
+      "sha256": "575113be3e87f1daa2e179ba2568c1b5e22a1e20774ae1cb01e93abc1311f0a7"
+    },
+    {
+      "file": "art/_candidates/goldberg-aria-1.jpg",
+      "prior": null,
+      "sha256": "47ca07f766b2144b07dd96f2f51fdd49679786ac1b4521f5957a0f470c8c0202"
+    },
+    {
+      "file": "art/_candidates/goldberg-aria-2.jpg",
+      "prior": null,
+      "sha256": "e81709cc28967e8c62727fbafeafbb246e1749dc5a0ac09bfdafd9d02f619885"
+    },
+    {
+      "file": "art/_candidates/goldberg-aria-3.jpg",
+      "prior": null,
+      "sha256": "64a858e6f6511e0a58484b0f795b0bc9be1fd02cbeeb2797804a8329a63f0340"
+    },
+    {
+      "file": "art/_candidates/goldberg-aria-4.jpg",
+      "prior": null,
+      "sha256": "48ba56307ac7b0fabd4ad3dbd731e278324a8e9e01ed266357145587a4dd93ef"
+    },
+    {
+      "file": "art/_candidates/gray-day-0.jpg",
+      "prior": null,
+      "sha256": "27804610347cb391c7ecc9fc513566368845bb156de8b6ada302b2e45984f49b"
+    },
+    {
+      "file": "art/_candidates/gymnopedie-1-0.jpg",
+      "prior": null,
+      "sha256": "8f36868e084e06cff8aed9979c49c454e3637a731e561454c906ed4f7fbb8eaf"
+    },
+    {
+      "file": "art/_candidates/gymnopedie-1-1.jpg",
+      "prior": null,
+      "sha256": "caf9cf973625db9699a47e9e71bac8697432b791858420df6ae743b2014cc62c"
+    },
+    {
+      "file": "art/_candidates/gymnopedie-1-2.jpg",
+      "prior": null,
+      "sha256": "8bb35d710809bb9acbdf702259d0f084b67a649ad6ae5747a2946c458cdbae7e"
+    },
+    {
+      "file": "art/_candidates/gymnopedie-1-3.jpg",
+      "prior": null,
+      "sha256": "00618498d5d9c3a52894061c115bf28146515c00d8a5580c8757c38749a8f4c8"
+    },
+    {
+      "file": "art/_candidates/gymnopedie-1-4.jpg",
+      "prior": null,
+      "sha256": "18109ee45a1d99d76cb04285e953ed49fd07813b3d7a060d45dafbcdbaa497af"
+    },
+    {
+      "file": "art/_candidates/i-giorni-0.jpg",
+      "prior": null,
+      "sha256": "f59606f55a6fdd08e2f2a31649cde61df0bca3b5cdb8b517f8149a38dbd4e7b2"
+    },
+    {
+      "file": "art/_candidates/i-giorni-1.jpg",
+      "prior": null,
+      "sha256": "994bb24d896ead8914471aff616b3966c22da2ec1b0d704c9947fa586a8c7fe8"
+    },
+    {
+      "file": "art/_candidates/i-giorni-2.jpg",
+      "prior": null,
+      "sha256": "a2083d4476519d5b59bc2800ca26cf8fd6cbb3a5a9531945053d5dc041d160d3"
+    },
+    {
+      "file": "art/_candidates/i-giorni-3.jpg",
+      "prior": null,
+      "sha256": "762e0d68c9429aafbd93d920c19a94eae5bdd3e4ded4231d4102a6f56fb38881"
+    },
+    {
+      "file": "art/_candidates/i-giorni-4.jpg",
+      "prior": null,
+      "sha256": "731ef4d15a3ce4de8a94b56aa221b2726e6bc00663a8032c1041de824a3a1120"
+    },
+    {
+      "file": "art/_candidates/i-wanted-to-leave-0.jpg",
+      "prior": null,
+      "sha256": "e673233be3afc44636e7ee75bfd8b25fff7d2cc526980357e3015027cf811d1e"
+    },
+    {
+      "file": "art/_candidates/i-wanted-to-leave-1.jpg",
+      "prior": null,
+      "sha256": "f43765b9f0e46598af59e9596f34d59c544a86ecb566c299d9a2727532eb4269"
+    },
+    {
+      "file": "art/_candidates/i-wanted-to-leave-2.jpg",
+      "prior": null,
+      "sha256": "c858499ebf71504c863c0d70af6a8dce2c92add7c9ec6ee3f28e3fb5688a14a5"
+    },
+    {
+      "file": "art/_candidates/i-wanted-to-leave-3.jpg",
+      "prior": null,
+      "sha256": "596734eb7a07f6da80cec5a464d8270b0e1a4479fef34199c7e03f357ddde19a"
+    },
+    {
+      "file": "art/_candidates/icarus-0.jpg",
+      "prior": null,
+      "sha256": "f76b6e1602b907b1b70f16f165187e4d655211d713b2a57c208d713064aa156c"
+    },
+    {
+      "file": "art/_candidates/icarus-1.jpg",
+      "prior": null,
+      "sha256": "8643830b25dcf6c6d779603f691a7250f8e5e42e5600b51f7b9f78353e69e143"
+    },
+    {
+      "file": "art/_candidates/icarus-2.jpg",
+      "prior": null,
+      "sha256": "36ec171add72dd8e69d3481fe89600b5900c4d6f09bd47b8bbd8b9e6944deece"
+    },
+    {
+      "file": "art/_candidates/icarus-3.jpg",
+      "prior": null,
+      "sha256": "dcb77a1d8e0e2baa79bd7c2f284528b8471b2c0a73bfc8b77f5df162b6440531"
+    },
+    {
+      "file": "art/_candidates/icarus-4.jpg",
+      "prior": null,
+      "sha256": "016d952c9b4f6a73ab34031c64a2b4bdd27033c0256fc09c1ef75d1896ca5d2d"
+    },
+    {
+      "file": "art/_candidates/idea-10-0.jpg",
+      "prior": null,
+      "sha256": "106d2f5c8ffb44ce917807e64829e570b3ee5f5cc14f926dd6163fba42e65494"
+    },
+    {
+      "file": "art/_candidates/idea-10-1.jpg",
+      "prior": null,
+      "sha256": "5c2c65ba5efbc683e20954055e8a5cdc04cfc5a7564986b65fc734bcc8792189"
+    },
+    {
+      "file": "art/_candidates/idea-10-2.jpg",
+      "prior": null,
+      "sha256": "045dc5e066ff665e0ac52a7bb3834bfec0981e59293effe2b2e04f3674786b1a"
+    },
+    {
+      "file": "art/_candidates/idea-12-0.jpg",
+      "prior": null,
+      "sha256": "aba0842562b8427a48486df1e5312156ae066f6fe0c7118f5a3b8155ac84587b"
+    },
+    {
+      "file": "art/_candidates/idea-12-1.jpg",
+      "prior": null,
+      "sha256": "b93832cc912ba648df0c1f8b2cd94b7911d6e23d88c62bf262b07758653507e3"
+    },
+    {
+      "file": "art/_candidates/idea-12-2.jpg",
+      "prior": null,
+      "sha256": "f0662dddcea8b3846bb42bea4ce0f41c979625ffd0c7c1ac94568df22e23de8b"
+    },
+    {
+      "file": "art/_candidates/imperial-march-0.jpg",
+      "prior": null,
+      "sha256": "9c19d8dcbee69012286a984a22d93ef41e9cfdbbf6cdb87f9ff0d13acd5060f1"
+    },
+    {
+      "file": "art/_candidates/imperial-march-1.jpg",
+      "prior": null,
+      "sha256": "75b90358d33035faec952885334d6d89d1d9c24ef9464396753a0daa94fca5df"
+    },
+    {
+      "file": "art/_candidates/imperial-march-2.jpg",
+      "prior": null,
+      "sha256": "df6268a8800be7efcf094a6f5fd7dfc7cea6fca27328fee338fc003286b734a4"
+    },
+    {
+      "file": "art/_candidates/imperial-march-3.jpg",
+      "prior": null,
+      "sha256": "d849bb1b58092f584540f7a9b4b3d2435e3fdc7a138396cdf41b4a18d1b1d53f"
+    },
+    {
+      "file": "art/_candidates/imperial-march-4.jpg",
+      "prior": null,
+      "sha256": "efbefea4ee4627d75b957a86440f4bb0eaa8f2daffa046b87468d3f3a685d728"
+    },
+    {
+      "file": "art/_candidates/jaws-0.jpg",
+      "prior": null,
+      "sha256": "76c521394f126d17c94b636cbef601f3eaece86007c251d7a91fba22b7a7620e"
+    },
+    {
+      "file": "art/_candidates/jaws-1.jpg",
+      "prior": null,
+      "sha256": "11e18a2eb7c2a0e7884cdabb00690a192b795d174c8ed81200d23506a015608c"
+    },
+    {
+      "file": "art/_candidates/jaws-2.jpg",
+      "prior": null,
+      "sha256": "9c373e112f33bafc52c7c5ac0714b7b86c1a040962dc7d4062ddf0d77c509182"
+    },
+    {
+      "file": "art/_candidates/la-petite-fille-0.jpg",
+      "prior": null,
+      "sha256": "94d546a788a6676f60deefce8b22397d4fbabf01d96b9c8e16bbcd9200b22fb8"
+    },
+    {
+      "file": "art/_candidates/la-petite-fille-1.jpg",
+      "prior": null,
+      "sha256": "5443bfd3911ed9dba2e86be5f487ea5bf0d2e3c204015852fdf9f437768948cf"
+    },
+    {
+      "file": "art/_candidates/la-petite-fille-2.jpg",
+      "prior": null,
+      "sha256": "2e63691e39c4808d7bc6c0d55ffc8fbbda490abc9f61fe3111ec7cc4e9961ef7"
+    },
+    {
+      "file": "art/_candidates/la-petite-fille-3.jpg",
+      "prior": null,
+      "sha256": "990cd25556526a2031f41f52007058d52f32a9faccf539636c2926f47037158b"
+    },
+    {
+      "file": "art/_candidates/la-petite-fille-4.jpg",
+      "prior": null,
+      "sha256": "1519145ac3404948c08e75ef81bc77610e15c5e97faee7b81e622c82d2733f09"
+    },
+    {
+      "file": "art/_candidates/last-friday-night-0.jpg",
+      "prior": null,
+      "sha256": "a7d6b28889addd3588d77f465d62248a1908b6f919bf9eebb305dc425c28ce52"
+    },
+    {
+      "file": "art/_candidates/last-friday-night-1.jpg",
+      "prior": null,
+      "sha256": "eb4a75a012932f67c2d23b46fb9538a8feb4d93c5697b1eecc197ef066cf67fb"
+    },
+    {
+      "file": "art/_candidates/last-friday-night-2.jpg",
+      "prior": null,
+      "sha256": "38a89e576eac88e95a738863c52b88f126a34c407be1ca2b109c8cc0e46676ba"
+    },
+    {
+      "file": "art/_candidates/last-friday-night-3.jpg",
+      "prior": null,
+      "sha256": "d1b548057f33134717b98ce4ab49feb86baa46bbb885f6b209ac08f5c53d80a0"
+    },
+    {
+      "file": "art/_candidates/last-friday-night-4.jpg",
+      "prior": null,
+      "sha256": "21c7fe50e383289c96836b5ec5eabb66266d2fba25970f6dde5690961e1ab0ed"
+    },
+    {
+      "file": "art/_candidates/last-waltz-0.jpg",
+      "prior": null,
+      "sha256": "917ab14d5e75507cb8d9921800c91bd4f19c2a1229cefe5cb12a6060d668d1c5"
+    },
+    {
+      "file": "art/_candidates/lauras-dance-0.jpg",
+      "prior": null,
+      "sha256": "98e4b06e60c29a5dd75abc55028dcc7225dd636f10135973f20e299a43396e25"
+    },
+    {
+      "file": "art/_candidates/lauras-dance-1.jpg",
+      "prior": null,
+      "sha256": "27cbae07656ecbc3e1684263c8283ab205fba853d40a7a0d1d3f7f910724622f"
+    },
+    {
+      "file": "art/_candidates/lauras-dance-2.jpg",
+      "prior": null,
+      "sha256": "d15569f554e68fc90541a842b7a7c6afff30504ddc451640512bf128a04d2d2c"
+    },
+    {
+      "file": "art/_candidates/lauras-dance-3.jpg",
+      "prior": null,
+      "sha256": "849c5776fabfc8ae15f9ec7faab48545fd83c6021306f0954fcf16475662ff88"
+    },
+    {
+      "file": "art/_candidates/lauras-dance-4.jpg",
+      "prior": null,
+      "sha256": "8968cd6fe46260ebc6b88a7f6aa5ccd94e3987804837dc6e2e55e93512e364ee"
+    },
+    {
+      "file": "art/_candidates/liebestraum-3-0.jpg",
+      "prior": null,
+      "sha256": "86df06d66b58ede0c434171eef1407344a1d2c1660f6af26342d97b47c3d855f"
+    },
+    {
+      "file": "art/_candidates/liebestraum-3-1.jpg",
+      "prior": null,
+      "sha256": "021446d31f78cf2e0af6181534145b2166b2d68295cb27221941e81b0dbc4aad"
+    },
+    {
+      "file": "art/_candidates/liebestraum-3-2.jpg",
+      "prior": null,
+      "sha256": "0d160d099c1108a38abd034bd14dac2712d1d8def0eb46dd26f6d3eadc6fd5f8"
+    },
+    {
+      "file": "art/_candidates/liebestraum-3-3.jpg",
+      "prior": null,
+      "sha256": "576a440a6a6b23eb8e048eef01989ed5aaa6db5bfd46967ff311276327c5be24"
+    },
+    {
+      "file": "art/_candidates/liebestraum-3-4.jpg",
+      "prior": null,
+      "sha256": "092bb53b7a1e4b504deb4985e64eaaa7cab0fc4024203f27a35859cc1a886680"
+    },
+    {
+      "file": "art/_candidates/light-of-the-seven-0.jpg",
+      "prior": null,
+      "sha256": "e0ef7d7d43d903a806d21f4ccad19a749120928a3f0e9a9a95408095ad29cb1a"
+    },
+    {
+      "file": "art/_candidates/little-things-0.jpg",
+      "prior": null,
+      "sha256": "cdd0e96fb18428564ed41a8b1abf04f3e5a2f9ce90c68094109952b7fe470788"
+    },
+    {
+      "file": "art/_candidates/little-things-1.jpg",
+      "prior": null,
+      "sha256": "57c06c24a3a3d6afacf2bc05e4a7b57c2669d054782829cb34525dee4598722a"
+    },
+    {
+      "file": "art/_candidates/little-things-2.jpg",
+      "prior": null,
+      "sha256": "a2222f14fe4030fab97b0066d777f7ba8c5270cb8581509aa03d177aaf4cf635"
+    },
+    {
+      "file": "art/_candidates/little-things-3.jpg",
+      "prior": null,
+      "sha256": "33e830eabeddea1a7d18aa57b7f28cd8e69d3267868ae734aed9107dd9d1347a"
+    },
+    {
+      "file": "art/_candidates/mariage-d-amour-0.jpg",
+      "prior": null,
+      "sha256": "ce9749472f37c55a9ac98ab7bfe8bb32a51f780ae945302c1df5f6554faec655"
+    },
+    {
+      "file": "art/_candidates/married-life-0.jpg",
+      "prior": null,
+      "sha256": "19f85d28d022bc97b44c174eff344d900b943023c6a600c1f7346acdcde4bbc1"
+    },
+    {
+      "file": "art/_candidates/married-life-1.jpg",
+      "prior": null,
+      "sha256": "daf48884b5bada136e874ad0a20cbc0c9856de77efb22203641770345f9d7b09"
+    },
+    {
+      "file": "art/_candidates/married-life-2.jpg",
+      "prior": null,
+      "sha256": "6f75267235ec39fecf6cd1746826a1eac02b33502740773949bd4afb8f7895b2"
+    },
+    {
+      "file": "art/_candidates/married-life-3.jpg",
+      "prior": null,
+      "sha256": "fd22bb69cd8acfdb0cdcbed36eba4a491229c36abc83a03eff82217f0ad0820d"
+    },
+    {
+      "file": "art/_candidates/married-life-4.jpg",
+      "prior": null,
+      "sha256": "5e1f741add942da2bd45f44c6b18601f6ba0012cb2ea8c1d78dacbe7e10ea8d4"
+    },
+    {
+      "file": "art/_candidates/mia-sebastian-0.jpg",
+      "prior": null,
+      "sha256": "eb41a4d53a469fb974220e671194ceee6a6db41613187b802537bd82ce321bd0"
+    },
+    {
+      "file": "art/_candidates/mia-sebastian-1.jpg",
+      "prior": null,
+      "sha256": "17d1c0399605772e58a86ea081ccf4443647ccaba5953e500f8c2fd069020026"
+    },
+    {
+      "file": "art/_candidates/mia-sebastian-2.jpg",
+      "prior": null,
+      "sha256": "59f4782ec5f882cbb2a9e88c8ce19db65d5cee9619de882de0f5c983f5d1c40e"
+    },
+    {
+      "file": "art/_candidates/mozart-pc21-2-0.jpg",
+      "prior": null,
+      "sha256": "c7db503e0853112df9108552d79ab813e654a4eca23444d7a3f004011e11fb96"
+    },
+    {
+      "file": "art/_candidates/mozart-pc21-2-1.jpg",
+      "prior": null,
+      "sha256": "be926e48d75c97a637ec8b581b736031fa64bbe9a557eba9a095df0a0264cef0"
+    },
+    {
+      "file": "art/_candidates/mozart-pc21-2-2.jpg",
+      "prior": null,
+      "sha256": "626d43421424f0c6622aa783dbc5a27553d4e11502f5b4bf3722684d123fa84e"
+    },
+    {
+      "file": "art/_candidates/mozart-pc21-2-3.jpg",
+      "prior": null,
+      "sha256": "b877716b6677e9c85271bfa7da4b7a5500b4f3650568c981dc2cac79b1282d5a"
+    },
+    {
+      "file": "art/_candidates/mozart-pc21-2-4.jpg",
+      "prior": null,
+      "sha256": "a51eeb5ad1cd704ba593970d1cbbfc8944357867897ef48861bafea94e020078"
+    },
+    {
+      "file": "art/_candidates/never-gonna-2-0.jpg",
+      "prior": null,
+      "sha256": "3d2d9d60ddcb3a8829b315870b6276b68de3c4d552ada94437bf3bc77fda2001"
+    },
+    {
+      "file": "art/_candidates/never-gonna-2-1.jpg",
+      "prior": null,
+      "sha256": "76fc05047714a7b89f94070d177677a3b1a984542193da768875cf86fbcd01fa"
+    },
+    {
+      "file": "art/_candidates/never-gonna-2-2.jpg",
+      "prior": null,
+      "sha256": "29fc7b6e6fad0ab6fa15b5f00cd266bdc58cc0b8b34b51a0fd2c441a0e5b60ad"
+    },
+    {
+      "file": "art/_candidates/never-gonna-2-3.jpg",
+      "prior": null,
+      "sha256": "ee4d82e6b80d6b1a6e8738575f2db00c63aea8d6cf43db4a0997467cdf4a37ea"
+    },
+    {
+      "file": "art/_candidates/never-gonna-2-4.jpg",
+      "prior": null,
+      "sha256": "a4199c273ca300c59a9fa9716159c425c7a66de2f5d3327d60550c16afdc484e"
+    },
+    {
+      "file": "art/_candidates/next-episode-0.jpg",
+      "prior": null,
+      "sha256": "fa686dcb3dfee6c8e7060b71b32f8b83e000a1bd1db5dde7fb17d2f2380a3a2b"
+    },
+    {
+      "file": "art/_candidates/next-episode-1.jpg",
+      "prior": null,
+      "sha256": "4eda4a44d5b316a4777fa05ae10f2d14edcbac58eae1d6ed93826a6ff7609a0c"
+    },
+    {
+      "file": "art/_candidates/next-episode-2.jpg",
+      "prior": null,
+      "sha256": "11f5fd506ec56f83069726c803e498cd40e13dcf8d774d6076e877916e66a797"
+    },
+    {
+      "file": "art/_candidates/next-episode-3.jpg",
+      "prior": null,
+      "sha256": "605354100bfddd60e7b86868082da6cbb9fbe7c12593dfea0239d183f47f2294"
+    },
+    {
+      "file": "art/_candidates/next-episode-4.jpg",
+      "prior": null,
+      "sha256": "1bc7e5e108d6de6a7a31256d78cc5c5bb35ff2964d0fb22c4bd6c941297a9d77"
+    },
+    {
+      "file": "art/_candidates/nocturne-op9-2-0.jpg",
+      "prior": null,
+      "sha256": "23443b6ee541cb573ae8000b64e58054adf003a4c5ad18a6f5a4ddb97eeb49c4"
+    },
+    {
+      "file": "art/_candidates/nocturne-op9-2-1.jpg",
+      "prior": null,
+      "sha256": "c81480bee9adf6e7fdff8c9638fa004772c88ce819a0d16cec13144debf4345c"
+    },
+    {
+      "file": "art/_candidates/nocturne-op9-2-2.jpg",
+      "prior": null,
+      "sha256": "d639da5197b9013e65159eb493b5eab031b84d785643c994d0fd0b82465bfa64"
+    },
+    {
+      "file": "art/_candidates/nocturne-op9-2-3.jpg",
+      "prior": null,
+      "sha256": "2212afc0d21c5499e209263c55677399d9f2421db853ccd89aeff0c7207421c4"
+    },
+    {
+      "file": "art/_candidates/nocturne-op9-2-4.jpg",
+      "prior": null,
+      "sha256": "c2e1df151182acf9fa6f558882d3856eb07ca4e9d29f01ad1ff5f200aab0a6da"
+    },
+    {
+      "file": "art/_candidates/overwatch-0.jpg",
+      "prior": null,
+      "sha256": "0a6c33333222dfa63fee6a74619b861e9e3e965eb52235a692d2714a2db67293"
+    },
+    {
+      "file": "art/_candidates/pain-0.jpg",
+      "prior": null,
+      "sha256": "4109b8ba25f841e26810ad6f6975b397bb6b553a14c935cbea38ecaba01aeb86"
+    },
+    {
+      "file": "art/_candidates/pain-1.jpg",
+      "prior": null,
+      "sha256": "4c9ec93425c0ba53a9b489f238d5d4f478ecc1a5000373e1092c97027e1c0712"
+    },
+    {
+      "file": "art/_candidates/pain-2.jpg",
+      "prior": null,
+      "sha256": "5af7d95bdaa68521c020acb50db77222c929b2017528b388fddde5ee28cb7dc8"
+    },
+    {
+      "file": "art/_candidates/pain-3.jpg",
+      "prior": null,
+      "sha256": "966fceb2237026021470f321e654851a907ac1a06a2fcda0d36a80767c5dfe07"
+    },
+    {
+      "file": "art/_candidates/passacaglia-0.jpg",
+      "prior": null,
+      "sha256": "801b42fbc026cddd86e057ccb2b6772e3536dac5276599c75a054ed54edfe9c5"
+    },
+    {
+      "file": "art/_candidates/passacaglia-1.jpg",
+      "prior": null,
+      "sha256": "f23971d53e82703b38b160f2ee3a357bac7cd8e0d551b5e49fd2bcf5ca1b9e8a"
+    },
+    {
+      "file": "art/_candidates/passacaglia-2.jpg",
+      "prior": null,
+      "sha256": "73fb624f79416e60d240c42cdd3216bb6e9f069ab12ae3f0f39417403ecaf3bf"
+    },
+    {
+      "file": "art/_candidates/passacaglia-3.jpg",
+      "prior": null,
+      "sha256": "4f9491e766aa54807adc751d7ba4c592405a6fb8bc50a50ad41cf87eafcd49d8"
+    },
+    {
+      "file": "art/_candidates/passacaglia-4.jpg",
+      "prior": null,
+      "sha256": "2b5091fe70b13fbd1d5ab20c3ba90154a4950ac5712726f4a57e29ee23356d92"
+    },
+    {
+      "file": "art/_candidates/pathetique-2-0.jpg",
+      "prior": null,
+      "sha256": "86ab6f112496c794e4d3257355e9ee7250a37df8b764f0c630fb7c5ed90d0c45"
+    },
+    {
+      "file": "art/_candidates/pathetique-2-1.jpg",
+      "prior": null,
+      "sha256": "dfaf0e8dd0d6783ca57af2a3728020c86f2def788dd2524bb15b5428bf105e88"
+    },
+    {
+      "file": "art/_candidates/pathetique-2-2.jpg",
+      "prior": null,
+      "sha256": "09c239945538985ae46b1db3156ace204533e34c90488f3f93e2b31d4d9d2574"
+    },
+    {
+      "file": "art/_candidates/pathetique-2-3.jpg",
+      "prior": null,
+      "sha256": "8bc39506c76ab51701781632e4ac675dfdc7683b9da9b70c3f6a1cf9d3b1ca83"
+    },
+    {
+      "file": "art/_candidates/pathetique-2-4.jpg",
+      "prior": null,
+      "sha256": "1df77e41e50d785a9d90cac4d2e6360b39be7ed8ffb85a98600ffc1cc5830abe"
+    },
+    {
+      "file": "art/_candidates/prelude-e-minor-0.jpg",
+      "prior": null,
+      "sha256": "cf0038611134d17d817746125e7470d90d2d9160f37e0fc74f442cb59fdfab20"
+    },
+    {
+      "file": "art/_candidates/prelude-e-minor-1.jpg",
+      "prior": null,
+      "sha256": "432328ff6ff51a0c0bbb346bc8aaa6882af6863764a2cfae686afc679be4399d"
+    },
+    {
+      "file": "art/_candidates/prelude-e-minor-2.jpg",
+      "prior": null,
+      "sha256": "34c2e2539afe184b63bd87b4eb4d6b727990f3e9216142109e7d3c9cc6053816"
+    },
+    {
+      "file": "art/_candidates/prelude-e-minor-3.jpg",
+      "prior": null,
+      "sha256": "4ed8afa1d25afc7a2903e1f0d9151b91b9af73b921c29d4f52042bd9b65c90bf"
+    },
+    {
+      "file": "art/_candidates/prelude-e-minor-4.jpg",
+      "prior": null,
+      "sha256": "028747a9a0b32395178d8fb4d718d7d943c4910fb1e5829a4c92674393e90879"
+    },
+    {
+      "file": "art/_candidates/rachmaninoff-pc2-0.jpg",
+      "prior": null,
+      "sha256": "23c536b52d5136a6a51121741c14845f418ef8b36316c5d52e1a3e108da05b5c"
+    },
+    {
+      "file": "art/_candidates/rachmaninoff-pc2-1.jpg",
+      "prior": null,
+      "sha256": "da8834e5e203e31b3c530d3f5ee41a4ea604d104b10c2de0162ef2d992e9ac6f"
+    },
+    {
+      "file": "art/_candidates/rachmaninoff-pc2-2.jpg",
+      "prior": null,
+      "sha256": "32d37c663629a804a1fa8d59c10341e4884d7a8ab9c6b9b61e04209c5f2b4473"
+    },
+    {
+      "file": "art/_candidates/rachmaninoff-pc2-3.jpg",
+      "prior": null,
+      "sha256": "8f615244f0e039d05d52f9d9f498f40592b5deb28b058502f0b2f0d15444f14c"
+    },
+    {
+      "file": "art/_candidates/rachmaninoff-pc2-4.jpg",
+      "prior": null,
+      "sha256": "2ed107c8d0e34fd8331668818ea4ab7b3fe910b2d1d41f609bea4bf4f5cb631b"
+    },
+    {
+      "file": "art/_candidates/raindrop-prelude-0.jpg",
+      "prior": null,
+      "sha256": "9e846dba0fc5227a4a3f31b43302baf3124cd5d89133ad1aac95a3134c687187"
+    },
+    {
+      "file": "art/_candidates/raindrop-prelude-1.jpg",
+      "prior": null,
+      "sha256": "445653ae67884c487543aac06247e3d2fae1ae6138fb27a9261b00e7bfab9d50"
+    },
+    {
+      "file": "art/_candidates/raindrop-prelude-2.jpg",
+      "prior": null,
+      "sha256": "d1374464fbb684d8bf457dc82c552c05b8582aecfa1452b2c543f27e2c5ecaff"
+    },
+    {
+      "file": "art/_candidates/raindrop-prelude-3.jpg",
+      "prior": null,
+      "sha256": "893a3ced4d4e1f618cc895ca95d66c5fd2f60e06a89e198190104f77ad0c2b93"
+    },
+    {
+      "file": "art/_candidates/raindrop-prelude-4.jpg",
+      "prior": null,
+      "sha256": "ca1dbde49c3a5b205e675476bdbf8c6a14bae0dbe61d0bf2886bf227b2157324"
+    },
+    {
+      "file": "art/_candidates/rondo-alla-turca-0.jpg",
+      "prior": null,
+      "sha256": "a2f4330cc7119246413b7aa06390095fcf2432a74e56ec766853e657a7e2dab9"
+    },
+    {
+      "file": "art/_candidates/rondo-alla-turca-1.jpg",
+      "prior": null,
+      "sha256": "e3eb02ee8b6bc68f530e0bd1a4bfd3a25eaad8ead5e7c3d105919e36cdf5a96b"
+    },
+    {
+      "file": "art/_candidates/rondo-alla-turca-2.jpg",
+      "prior": null,
+      "sha256": "3dec85a55231800492b68b80faa42503a7f8d259ab370d7ba0874610040742f4"
+    },
+    {
+      "file": "art/_candidates/rondo-alla-turca-3.jpg",
+      "prior": null,
+      "sha256": "5202f8eb70828dd992ef71e9d40d1d74e6fee7b27591475047f1aff0630dafb6"
+    },
+    {
+      "file": "art/_candidates/rondo-alla-turca-4.jpg",
+      "prior": null,
+      "sha256": "b5c0d06cd766386a776958aefcab9a381aa901b0133f2f63385d9484b23a2d04"
+    },
+    {
+      "file": "art/_candidates/say-yes-to-heaven-0.jpg",
+      "prior": null,
+      "sha256": "6731ae11377fe35827525d761ad1a02f2bb78f47df252f151fb2259300df54ec"
+    },
+    {
+      "file": "art/_candidates/say-yes-to-heaven-1.jpg",
+      "prior": null,
+      "sha256": "de728e318142fab9cc9299242c71d2b58dea6841f7609357590a986fd243943c"
+    },
+    {
+      "file": "art/_candidates/say-yes-to-heaven-2.jpg",
+      "prior": null,
+      "sha256": "1e49e13d32e25edbada24ba8d088a038055a6038843fa80c202c3e741ea4ee58"
+    },
+    {
+      "file": "art/_candidates/say-yes-to-heaven-3.jpg",
+      "prior": null,
+      "sha256": "1b05b6d0b9271c717e28f7e5cc54d76e9ef9c24e8ba7c016f0bc891aa73cf01b"
+    },
+    {
+      "file": "art/_candidates/say-yes-to-heaven-4.jpg",
+      "prior": null,
+      "sha256": "e303fcb2c14a421537f62dfb58c3a4992036ca123d797820d0dd42aa94696806"
+    },
+    {
+      "file": "art/_candidates/see-you-tomorrow-0.jpg",
+      "prior": null,
+      "sha256": "df8baa3071b792543757f50bf45e776355208d08718c51d2aca896ba08181df9"
+    },
+    {
+      "file": "art/_candidates/see-you-tomorrow-1.jpg",
+      "prior": null,
+      "sha256": "e1bb059737318e937a7cb98d10e316a9e05c71eb7c5d4f7ff30fc4f54febd5a8"
+    },
+    {
+      "file": "art/_candidates/traumerei-0.jpg",
+      "prior": null,
+      "sha256": "bc9102c64fd8934cb68c8ecdd32fab35837a1a87ed6636e86112cebef9d8d721"
+    },
+    {
+      "file": "art/_candidates/traumerei-1.jpg",
+      "prior": null,
+      "sha256": "bf971f35a5d4f768a52dcbda664ce0565a95fb9135bc244599c7132d5249df3c"
+    },
+    {
+      "file": "art/_candidates/traumerei-2.jpg",
+      "prior": null,
+      "sha256": "0e35de1fd4e506fb8a546bc6ff135cadbd4fe0c3432a2c1556ae6ec80f870427"
+    },
+    {
+      "file": "art/_candidates/traumerei-3.jpg",
+      "prior": null,
+      "sha256": "5c3a69a153af25b34adf2342f807bff64826b351974d6914c77881a2fdd94f84"
+    },
+    {
+      "file": "art/_candidates/traumerei-4.jpg",
+      "prior": null,
+      "sha256": "caba0f6b6a932084e980cd319ab386dfd0363bdb68003202b0d6322a4d052db9"
+    },
+    {
+      "file": "art/_candidates/un-sospiro-0.jpg",
+      "prior": null,
+      "sha256": "52806a80317e12cc9e1ed8e5855545294562312cb7915f706a50f9c2f1511dbd"
+    },
+    {
+      "file": "art/_candidates/un-sospiro-1.jpg",
+      "prior": null,
+      "sha256": "240089caf7224b50c88b1a637474f286af39ce854c95e2ad93a4b2547c49b9c9"
+    },
+    {
+      "file": "art/_candidates/un-sospiro-2.jpg",
+      "prior": null,
+      "sha256": "06683f048fc69407c6809fba3860e92c93f0a629107393b2c52d537b4ecdee9e"
+    },
+    {
+      "file": "art/_candidates/un-sospiro-3.jpg",
+      "prior": null,
+      "sha256": "5c691a7c42288ccc6da27d9a7042112f223ade6cedbd8938e8cde1e090f5d17a"
+    },
+    {
+      "file": "art/_candidates/un-sospiro-4.jpg",
+      "prior": null,
+      "sha256": "912ab6f1e3104f6140ac1dd22e323083f729fdf8bb63b8ef5629b67fde571cc4"
+    },
+    {
+      "file": "art/_candidates/valzer-d-inverno-0.jpg",
+      "prior": null,
+      "sha256": "6bba63325d8d9728bb1bca56e9a0cbf7c710a18241f90135cd788b02203946ce"
+    },
+    {
+      "file": "art/_candidates/valzer-d-inverno-1.jpg",
+      "prior": null,
+      "sha256": "e2ed6ad7238361aeb2e46387f6169b5b841ff6176b2e2513f6cba3a07e7c0e84"
+    },
+    {
+      "file": "art/_candidates/valzer-d-inverno-2.jpg",
+      "prior": null,
+      "sha256": "786d1e6269a7f3d6db0c9e773ecdd87d499e2b2fcaa4ff2ce4565f4a2d948772"
+    },
+    {
+      "file": "art/_candidates/valzer-d-inverno-3.jpg",
+      "prior": null,
+      "sha256": "cb761c06201d00253fa11a7b34f385f6b8b526315a5fd1ea2540a5209497f248"
+    },
+    {
+      "file": "art/_candidates/van-gogh-0.jpg",
+      "prior": null,
+      "sha256": "078223727b4ef15d97cb4d7df50c4cc8587b526e3fdfb6556336d2e497ca4992"
+    },
+    {
+      "file": "art/_candidates/van-gogh-1.jpg",
+      "prior": null,
+      "sha256": "83f2eead980caba6a788ac4c48b0554da71794c056043533769d3b916d8ca65c"
+    },
+    {
+      "file": "art/_candidates/van-gogh-2.jpg",
+      "prior": null,
+      "sha256": "3fd21fbb313d7eef4792e80e878fbfac0926cdaed4b338245d6ddc3b77871386"
+    },
+    {
+      "file": "art/_candidates/where-is-my-mind-0.jpg",
+      "prior": null,
+      "sha256": "e4431d56c1c2870cf2700b6f304bca193f2b1f71bd8aa7306dbba4ef6e697f25"
+    },
+    {
+      "file": "art/_candidates/where-is-my-mind-1.jpg",
+      "prior": null,
+      "sha256": "1169ef94c99b40d900b362d2a16604ccf1d327125a8db3ca6ea797231ac4436e"
+    },
+    {
+      "file": "art/_candidates/where-is-my-mind-2.jpg",
+      "prior": null,
+      "sha256": "e883b5743b3d2ebfff5f8b421342b0940e49ee1cf59bce1b63715ea255a1605e"
+    },
+    {
+      "file": "art/_candidates/where-is-my-mind-3.jpg",
+      "prior": null,
+      "sha256": "2778072cabeb5b607b8eca01cdc8c65e615b7b3f51138bef1e2aeecc3bd3221f"
+    },
+    {
+      "file": "art/_candidates/x-files-0.jpg",
+      "prior": null,
+      "sha256": "3adf027290abfd167fc871ae880e2aea284ada1ac0a431d2d8dc7f44778e4d47"
+    },
+    {
+      "file": "art/_candidates/x-files-1.jpg",
+      "prior": null,
+      "sha256": "b7760d80d16704d7a1c91329363aa983116f3e1ceeb095dcff015d81c255b21f"
+    },
+    {
+      "file": "art/_candidates/x-files-2.jpg",
+      "prior": null,
+      "sha256": "f3e86983b6d64fc0d7745563e9dea437b30c92a0c5363d1001af242f0db7431b"
+    },
+    {
+      "file": "art/_full/afterglow.jpg",
+      "prior": null,
+      "sha256": "80e360e3bc48d9181c91246fba5cab9768966b9718de7e2c31432596c6dbc4be"
+    },
+    {
+      "file": "art/_full/arabesque-1.jpg",
+      "prior": null,
+      "sha256": "cbe81cadd53624ef0bd21df5f446c4760c82652611df9388fa5f1860e6ee29b9"
+    },
+    {
+      "file": "art/_full/bach-prelude-c.jpg",
+      "prior": null,
+      "sha256": "6691190ff28d4c2d1bd0075b03ae3f724393f23806178cbf4993df9e0dd76b6a"
+    },
+    {
+      "file": "art/_full/beanie.jpg",
+      "prior": null,
+      "sha256": "59bcb4fdb294557ae391debcb43de3b1869a66f44b7c58120581e2fce144e57b"
+    },
+    {
+      "file": "art/_full/clair-de-lune.jpg",
+      "prior": null,
+      "sha256": "ad81161a19029ada5dba54f645a0fb401f464f8079d7f3a2dc08ff1c0ae5482a"
+    },
+    {
+      "file": "art/_full/coffin-dance.jpg",
+      "prior": null,
+      "sha256": "fbd998dea499e12916542cc593809a613b9f15238933c33d0339c106fb951b48"
+    },
+    {
+      "file": "art/_full/comptine.jpg",
+      "prior": null,
+      "sha256": "0555b57ac29999c42fc6ff96cbc6b24d3aec511678d7021d0a2a60d47d010536"
+    },
+    {
+      "file": "art/_full/consolation-3.jpg",
+      "prior": null,
+      "sha256": "9dfc1107e61ef3fd905b41b206c800e7c6e0fc6e8c43d68c2b2462e7e1549faf"
+    },
+    {
+      "file": "art/_full/desktop.ini",
+      "prior": null,
+      "sha256": "f0ea3329b14d0b0412acded346e63c2b3715c4b1082070d7b2ba0bd41a7e1592"
+    },
+    {
+      "file": "art/_full/disney-star.jpg",
+      "prior": null,
+      "sha256": "4bfd122e77ddb75e5fcbb0bbb7ff8578cd87e1abf37d81169a73cd3d46fe0406"
+    },
+    {
+      "file": "art/_full/fantaisie-impromptu.jpg",
+      "prior": null,
+      "sha256": "1ea6046161963eaa2e222caed091b5b2eeaa73e056148bf4a646bac38d947aff"
+    },
+    {
+      "file": "art/_full/gladiator.jpg",
+      "prior": null,
+      "sha256": "89a23c1231cf665a29dcaf428da181a4182c7f7049cc26fab2b81d993ca13de9"
+    },
+    {
+      "file": "art/_full/goldberg-aria.jpg",
+      "prior": null,
+      "sha256": "575113be3e87f1daa2e179ba2568c1b5e22a1e20774ae1cb01e93abc1311f0a7"
+    },
+    {
+      "file": "art/_full/gray-day.jpg",
+      "prior": null,
+      "sha256": "27804610347cb391c7ecc9fc513566368845bb156de8b6ada302b2e45984f49b"
+    },
+    {
+      "file": "art/_full/gymnopedie-1.jpg",
+      "prior": null,
+      "sha256": "8f36868e084e06cff8aed9979c49c454e3637a731e561454c906ed4f7fbb8eaf"
+    },
+    {
+      "file": "art/_full/i-giorni.jpg",
+      "prior": null,
+      "sha256": "f59606f55a6fdd08e2f2a31649cde61df0bca3b5cdb8b517f8149a38dbd4e7b2"
+    },
+    {
+      "file": "art/_full/i-wanted-to-leave.jpg",
+      "prior": null,
+      "sha256": "e673233be3afc44636e7ee75bfd8b25fff7d2cc526980357e3015027cf811d1e"
+    },
+    {
+      "file": "art/_full/icarus.jpg",
+      "prior": null,
+      "sha256": "f76b6e1602b907b1b70f16f165187e4d655211d713b2a57c208d713064aa156c"
+    },
+    {
+      "file": "art/_full/idea-10.jpg",
+      "prior": null,
+      "sha256": "106d2f5c8ffb44ce917807e64829e570b3ee5f5cc14f926dd6163fba42e65494"
+    },
+    {
+      "file": "art/_full/idea-12.jpg",
+      "prior": null,
+      "sha256": "aba0842562b8427a48486df1e5312156ae066f6fe0c7118f5a3b8155ac84587b"
+    },
+    {
+      "file": "art/_full/imperial-march.jpg",
+      "prior": null,
+      "sha256": "9c19d8dcbee69012286a984a22d93ef41e9cfdbbf6cdb87f9ff0d13acd5060f1"
+    },
+    {
+      "file": "art/_full/jaws.jpg",
+      "prior": null,
+      "sha256": "76c521394f126d17c94b636cbef601f3eaece86007c251d7a91fba22b7a7620e"
+    },
+    {
+      "file": "art/_full/la-petite-fille.jpg",
+      "prior": null,
+      "sha256": "94d546a788a6676f60deefce8b22397d4fbabf01d96b9c8e16bbcd9200b22fb8"
+    },
+    {
+      "file": "art/_full/last-friday-night.jpg",
+      "prior": null,
+      "sha256": "a7d6b28889addd3588d77f465d62248a1908b6f919bf9eebb305dc425c28ce52"
+    },
+    {
+      "file": "art/_full/last-waltz.jpg",
+      "prior": null,
+      "sha256": "917ab14d5e75507cb8d9921800c91bd4f19c2a1229cefe5cb12a6060d668d1c5"
+    },
+    {
+      "file": "art/_full/lauras-dance.jpg",
+      "prior": null,
+      "sha256": "98e4b06e60c29a5dd75abc55028dcc7225dd636f10135973f20e299a43396e25"
+    },
+    {
+      "file": "art/_full/liebestraum-3.jpg",
+      "prior": null,
+      "sha256": "86df06d66b58ede0c434171eef1407344a1d2c1660f6af26342d97b47c3d855f"
+    },
+    {
+      "file": "art/_full/light-of-the-seven.jpg",
+      "prior": null,
+      "sha256": "e0ef7d7d43d903a806d21f4ccad19a749120928a3f0e9a9a95408095ad29cb1a"
+    },
+    {
+      "file": "art/_full/little-things.jpg",
+      "prior": null,
+      "sha256": "cdd0e96fb18428564ed41a8b1abf04f3e5a2f9ce90c68094109952b7fe470788"
+    },
+    {
+      "file": "art/_full/mariage-d-amour.jpg",
+      "prior": null,
+      "sha256": "ce9749472f37c55a9ac98ab7bfe8bb32a51f780ae945302c1df5f6554faec655"
+    },
+    {
+      "file": "art/_full/married-life.jpg",
+      "prior": null,
+      "sha256": "19f85d28d022bc97b44c174eff344d900b943023c6a600c1f7346acdcde4bbc1"
+    },
+    {
+      "file": "art/_full/mia-sebastian.jpg",
+      "prior": null,
+      "sha256": "eb41a4d53a469fb974220e671194ceee6a6db41613187b802537bd82ce321bd0"
+    },
+    {
+      "file": "art/_full/mozart-pc21-2.jpg",
+      "prior": null,
+      "sha256": "c7db503e0853112df9108552d79ab813e654a4eca23444d7a3f004011e11fb96"
+    },
+    {
+      "file": "art/_full/never-gonna-2.jpg",
+      "prior": null,
+      "sha256": "3d2d9d60ddcb3a8829b315870b6276b68de3c4d552ada94437bf3bc77fda2001"
+    },
+    {
+      "file": "art/_full/next-episode.jpg",
+      "prior": null,
+      "sha256": "fa686dcb3dfee6c8e7060b71b32f8b83e000a1bd1db5dde7fb17d2f2380a3a2b"
+    },
+    {
+      "file": "art/_full/nocturne-op9-2.jpg",
+      "prior": null,
+      "sha256": "23443b6ee541cb573ae8000b64e58054adf003a4c5ad18a6f5a4ddb97eeb49c4"
+    },
+    {
+      "file": "art/_full/overwatch.jpg",
+      "prior": null,
+      "sha256": "0a6c33333222dfa63fee6a74619b861e9e3e965eb52235a692d2714a2db67293"
+    },
+    {
+      "file": "art/_full/pain.jpg",
+      "prior": null,
+      "sha256": "4109b8ba25f841e26810ad6f6975b397bb6b553a14c935cbea38ecaba01aeb86"
+    },
+    {
+      "file": "art/_full/passacaglia.jpg",
+      "prior": null,
+      "sha256": "801b42fbc026cddd86e057ccb2b6772e3536dac5276599c75a054ed54edfe9c5"
+    },
+    {
+      "file": "art/_full/pathetique-2.jpg",
+      "prior": null,
+      "sha256": "86ab6f112496c794e4d3257355e9ee7250a37df8b764f0c630fb7c5ed90d0c45"
+    },
+    {
+      "file": "art/_full/prelude-e-minor.jpg",
+      "prior": null,
+      "sha256": "cf0038611134d17d817746125e7470d90d2d9160f37e0fc74f442cb59fdfab20"
+    },
+    {
+      "file": "art/_full/rachmaninoff-pc2.jpg",
+      "prior": null,
+      "sha256": "23c536b52d5136a6a51121741c14845f418ef8b36316c5d52e1a3e108da05b5c"
+    },
+    {
+      "file": "art/_full/raindrop-prelude.jpg",
+      "prior": null,
+      "sha256": "9e846dba0fc5227a4a3f31b43302baf3124cd5d89133ad1aac95a3134c687187"
+    },
+    {
+      "file": "art/_full/rondo-alla-turca.jpg",
+      "prior": null,
+      "sha256": "a2f4330cc7119246413b7aa06390095fcf2432a74e56ec766853e657a7e2dab9"
+    },
+    {
+      "file": "art/_full/say-yes-to-heaven.jpg",
+      "prior": null,
+      "sha256": "6731ae11377fe35827525d761ad1a02f2bb78f47df252f151fb2259300df54ec"
+    },
+    {
+      "file": "art/_full/see-you-tomorrow.jpg",
+      "prior": null,
+      "sha256": "df8baa3071b792543757f50bf45e776355208d08718c51d2aca896ba08181df9"
+    },
+    {
+      "file": "art/_full/traumerei.jpg",
+      "prior": null,
+      "sha256": "bc9102c64fd8934cb68c8ecdd32fab35837a1a87ed6636e86112cebef9d8d721"
+    },
+    {
+      "file": "art/_full/un-sospiro.jpg",
+      "prior": null,
+      "sha256": "52806a80317e12cc9e1ed8e5855545294562312cb7915f706a50f9c2f1511dbd"
+    },
+    {
+      "file": "art/_full/valzer-d-inverno.jpg",
+      "prior": null,
+      "sha256": "6bba63325d8d9728bb1bca56e9a0cbf7c710a18241f90135cd788b02203946ce"
+    },
+    {
+      "file": "art/_full/van-gogh.jpg",
+      "prior": null,
+      "sha256": "078223727b4ef15d97cb4d7df50c4cc8587b526e3fdfb6556336d2e497ca4992"
+    },
+    {
+      "file": "art/_full/where-is-my-mind.jpg",
+      "prior": null,
+      "sha256": "e4431d56c1c2870cf2700b6f304bca193f2b1f71bd8aa7306dbba4ef6e697f25"
+    },
+    {
+      "file": "art/_full/x-files.jpg",
+      "prior": null,
+      "sha256": "3adf027290abfd167fc871ae880e2aea284ada1ac0a431d2d8dc7f44778e4d47"
+    }
+  ]
+}
