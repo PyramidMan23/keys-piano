@@ -19,9 +19,19 @@
 // (METER, BARS, QUARANTINE), so the easy, medium and hard arrangements of one
 // piece share one entry and can never drift apart.
 //
-// ☠️ COVERAGE IS A GATE, NOT A HABIT. test/check.mjs fails if any song on the
-// SHELF is missing from this map, carries an unknown tag, or carries an unknown
-// kind. That is deliberate: an import that adds a song without classifying it
+// ☠️ COVERAGE IS A GATE, NOT A HABIT, AND IT WALKS THE RAW CATALOGUE. The gate
+// in test/check.mjs fails if any song in SONGS is missing from this map, carries
+// an unknown tag, or carries an unknown kind.
+//
+// SONGS, not SHELF: three groups (in-the-end, stairway, gray-day) ship only
+// quarantined tiers, so a gate that walked the shelf would have let them through
+// unclassified, and the day a quarantined tier is released it would arrive on
+// the wall with no collection and nothing red. Codex caught that in review of
+// the first cut. Classification is a fact about the music, not about whether a
+// tier currently passes the playability audit, so it is written for all 132
+// groups; the chips still count only what the shelf renders, which is 129.
+//
+// The gate is deliberate: an import that adds a song without classifying it
 // would otherwise land silently in "All" and nowhere else, and nothing would go
 // red. The cost of the gate is one line per import.
 //
@@ -79,6 +89,8 @@ export const LIBRARY = {
   'still-dre': piece('pop'),
 
   // ---- rock ----
+  'in-the-end': piece('rock'),          // quarantined tiers, still classified: see the note above
+  'stairway': piece('rock'),
   'bohemian-rhapsody': piece('rock'),
   'hotel-california': piece('rock'),
   'in-a-gadda-da-vida': piece('rock'),
@@ -123,6 +135,7 @@ export const LIBRARY = {
 
   // ---- contemporary: living composers writing for solo piano ----
   'afterglow': piece('contemporary'),
+  'gray-day': piece('contemporary'),    // Clavier, like Afterglow, Last Waltz and Pain
   'i-giorni': piece('contemporary'),
   'icarus': piece('contemporary'),
   'idea-10': piece('contemporary'),

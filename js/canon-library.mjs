@@ -228,7 +228,7 @@ export function renderCanonLibrary(host, ctx) {
   }
 
   // ---- the collection chips, under the strip, Explore only ----------------
-  renderCollections(root, ctx, tabStrip);
+  const chipRow = renderCollections(root, ctx, tabStrip);
 
   // the table's sort control. Two buttons the design draws as a segment, and
   // neither did anything: the app's own sort lives on #explore-sort.
@@ -404,6 +404,9 @@ export function renderCanonLibrary(host, ctx) {
     if (resume) control(resume).classList.add('practice-secondary');
   }
   prepareResponsive(root, 'library');
+  // the collection row measures itself against the WINDOW, and only now is the
+  // board in the position it will be drawn in
+  chipRow?.__fit?.();
   restoreFocus(host, focus);
   return root;
 }
@@ -428,6 +431,18 @@ export function renderCanonLibrary(host, ctx) {
 const CHIP_ACCENT = '#82bf9c';     // --accent; the fallback if the strip has no underline to harvest
 const CHIP_INK = '#E9EDE7';        // the design's label ink, 15.0:1 on #000
 const CHIP_COUNT_INK = '#788c82';  // the design's count ink,  6.7:1 on #000
+// The chip row measures itself against the WINDOW, so it has to re-measure when
+// the window changes. ONE listener, registered here for the life of the tab and
+// pointed at whichever row is currently live: the library remounts on every
+// render, so a listener registered inside the renderer would have left one more
+// closure bound to an already-detached row, every time.
+let liveCollectionRow = null;
+if (typeof window !== 'undefined') {
+  window.addEventListener('resize', () => {
+    if (liveCollectionRow?.isConnected) liveCollectionRow.__fit?.();
+  }, { passive: true });
+}
+
 // The tab strip's selected underline, read out of the artboard itself. Exactly
 // one `border-bottom:2px solid #xxxxxx` is drawn in each library composition
 // and it is that underline; a miss returns null and the caller falls back.
@@ -467,20 +482,56 @@ function renderCollections(root, ctx, tabStrip) {
   const underline = (live && !/rgba\(0, 0, 0, 0\)|transparent/.test(live))
     ? live
     : (drawnUnderline(ctx.screen) ?? CHIP_ACCENT);
-  // and the strip's own hover, which the extraction parks in `style-hover`
-  const hoverBorder = /border-color:\s*([^;]+)/.exec(activeTab?.getAttribute('style-hover') ?? '')?.[1]?.trim()
-    ?? '#3d4f45';
+  // and the strip's own hover, which the extraction parks in `style-hover`.
+  // Read from ANY tab, not the selected one: the design draws the selected tab
+  // with no hover attribute at all (it is already lit), so asking the active
+  // control alone harvested nothing and the fallback answered every time.
+  const hoverBorder = [...tabStrip.controls.values()]
+    .map((c) => /border-color:\s*([^;]+)/.exec(c.getAttribute('style-hover') ?? '')?.[1]?.trim())
+    .find(Boolean) ?? '#3d4f45';
 
   const row = document.createElement('div');
   row.className = 'lib-collections';
   row.setAttribute('role', 'group');
   row.setAttribute('aria-label', 'Collections');
-  row.style.setProperty('--chip-hover-border', hoverBorder);
   // WRAP, NEVER SCROLL. A sideways scroller hides collections behind an edge,
   // which is the wall's own problem one level up.
   row.style.cssText = 'display:flex;flex-wrap:wrap;align-items:flex-start'
     + ';column-gap:8px;row-gap:4px;margin:0 0 12px;padding:0;background:#000'
-    + ';box-sizing:border-box;max-width:100%;min-width:0';
+    + ';box-sizing:border-box;min-width:0';
+  // ☠️ AFTER cssText, NEVER BEFORE. Assigning cssText replaces the whole
+  // declaration block, custom properties included, so setting the harvested
+  // hover colour first threw it away and the CSS fallback won every time. It
+  // looked right on screen, which is the only reason it survived a review.
+  // (Codex, cold review of fa14c00.)
+  row.style.setProperty('--chip-hover-border', hoverBorder);
+
+  // ☠️ AND THE ROW IS BOUND BY THE WINDOW, NOT BY THE ARTBOARD. The phone
+  // composition is a fixed 756px card that the page scrolls sideways, so a row
+  // that fills its column runs to x=526 in a 375px viewport and the last three
+  // chips sit off the side of Mark's phone: exactly the thing wrapping was
+  // chosen to prevent, reintroduced by the column it wraps inside. The first
+  // probe hid it by scrolling to reach them, which is the gate agreeing with
+  // the bug. The row's width is the VISIBLE window from its own left edge,
+  // capped by the column, and a third line at 375 is the correct answer.
+  const fitToWindow = () => {
+    row.style.maxWidth = '';
+    const left = row.getBoundingClientRect().x;
+    const visible = Math.max(120, (window.innerWidth || document.documentElement.clientWidth) - left - 2);
+    row.style.maxWidth = visible + 'px';
+  };
+  // ☠️ AND IT HAS TO BE MEASURED AGAIN WHEN THE SCREEN HAS SETTLED. The
+  // practice-first layout lifts the prescription above the tabs AFTER this
+  // runs, and prepareResponsive re-tags the whole board: the row's left edge
+  // moved from -5 to 13 between the two, so a width measured here was 18px too
+  // wide and the last chip still hung off the side. renderCanonLibrary calls
+  // this again at the end, and the module-level resize handler above calls it
+  // too. That handler is registered ONCE, for the life of the tab: the library
+  // remounts on every render, so a listener registered here would have been one
+  // more listener bound to an already-detached row, every time.
+  row.__fit = fitToWindow;
+  liveCollectionRow = row;
+  fitToWindow();
 
   for (const c of list) {
     const active = c.key === ctx.collection;
@@ -523,6 +574,7 @@ function renderCollections(root, ctx, tabStrip) {
     row.appendChild(chip);
   }
   tabStrip.parent.insertAdjacentElement('afterend', row);
+  fitToWindow();   // the left edge is only real once the row is in the document
 
   // THE EMPTY STATE SITS WHERE THE LIST WOULD, not in a toast, and its way out
   // is a real control: a filter with no pieces and no exit is a trap.
@@ -530,7 +582,10 @@ function renderCollections(root, ctx, tabStrip) {
     const empty = document.createElement('div');
     empty.className = 'lib-collections lib-collection-empty';
     empty.style.cssText = 'display:flex;flex-wrap:wrap;align-items:center;column-gap:12px;row-gap:4px'
-      + ';margin:0 0 12px;padding:0;background:#000;box-sizing:border-box;max-width:100%';
+      + ';margin:0 0 12px;padding:0;background:#000;box-sizing:border-box';
+    empty.style.maxWidth = row.style.maxWidth;   // bound by the window, as the row is
+    const fitRow = row.__fit;
+    row.__fit = () => { fitRow(); empty.style.maxWidth = row.style.maxWidth; };
     const words = document.createElement('span');
     words.textContent = 'No pieces in this collection';
     words.style.cssText = 'font:400 12px/1.35 Helvetica,Arial,sans-serif;color:' + CHIP_INK;
@@ -1113,6 +1168,10 @@ function openLibraryGallery(ctx) {
     }
     const plays = leaves(tile).filter((l) => /^\d+$/.test(l.textContent.trim())).pop();
     if (plays && song.plays != null) plays.textContent = String(song.plays);
+    // NAME THE ROW, the third renderer to do it. At desktop the show-more
+    // control opens this wall rather than paging the grid, so this is where the
+    // whole collection is on screen and where a gate has to count it.
+    tile.dataset.libRow = song.title;
     if (song.onOpen) {
       tile.style.cursor = 'pointer';
       tile.addEventListener('click', () => { close(); song.onOpen(song); });

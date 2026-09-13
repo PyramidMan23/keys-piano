@@ -3147,10 +3147,18 @@ ok('mastery reconciliation tolerates absent legacy records');
   // on screen looks wrong. That is exactly the silent failure the canon binder
   // has a whole essay about, so it gets the same treatment - the miss is loud
   // here, in a node check, one second after the import that caused it.
-  const missing = SHELF.filter((s) => !LIBRARY[s.group ?? s.id]).map((s) => s.group ?? s.id);
+  //
+  // ☠️ AND IT WALKS SONGS, NOT SHELF. The first cut walked the shelf and passed
+  // while in-the-end, stairway and gray-day carried no entry at all: all three
+  // ship only quarantined tiers, so the shelf never sees them, and the day one
+  // is released it would have arrived on the wall with no collection and
+  // nothing red. (Codex, cold review of fa14c00.) Classification is a fact
+  // about the music, not about whether a tier currently passes the playability
+  // audit. 132 groups here; the chips still count the 129 the shelf renders.
+  const missing = SONGS.filter((s) => !LIBRARY[s.group ?? s.id]).map((s) => s.group ?? s.id);
   assert.deepEqual([...new Set(missing)], [],
-    'these groups are in the library with no entry in js/songs-library.mjs: classify them');
-  for (const s of SHELF) {
+    'these groups are in the catalogue with no entry in js/songs-library.mjs: classify them');
+  for (const s of SONGS) {
     const entry = LIBRARY[s.group ?? s.id];
     assert.ok(KINDS.includes(entry.kind), `${s.id}: unknown kind ${JSON.stringify(entry.kind)}`);
     assert.ok(Array.isArray(entry.tags), `${s.id}: tags is not a list`);
@@ -3161,18 +3169,33 @@ ok('mastery reconciliation tolerates absent legacy records');
     assert.equal(s.kind, entry.kind, `${s.id}: kind did not merge`);
     assert.deepEqual(s.tags, entry.tags, `${s.id}: tags did not merge`);
   }
-  ok(`all ${new Set(SHELF.map((s) => s.group ?? s.id)).size} library groups carry a known kind and known tags`);
+  // no entry for music that is not in the catalogue at all: a stale key is a
+  // classification nobody can see, and it hides a rename
+  const live = new Set(SONGS.map((s) => s.group ?? s.id));
+  assert.deepEqual(Object.keys(LIBRARY).filter((k) => !live.has(k)), [],
+    'js/songs-library.mjs classifies groups that no longer exist');
+  const quarantinedOnly = [...live].filter((k) => !SHELF.some((s) => (s.group ?? s.id) === k));
+  ok(`all ${live.size} catalogue groups carry a known kind and known tags `
+    + `(${live.size - quarantinedOnly.length} on the shelf, ${quarantinedOnly.length} quarantined: ${quarantinedOnly.join(', ')})`);
 }
 {
   // ---- the collections themselves ----
   // EXERCISES NEVER REACH EXPLORE. The 46 ladder drills hide behind
   // `song.ladder` before grouping; the two original scale songs do not, and
   // `kind` is the only thing keeping them off the wall.
+  //
+  // The RENDERED counts come off the SHELF, so a quarantined group is
+  // classified above and still absent here: classification and shipping are
+  // two different questions and this is where they part.
   const groups = [...groupForCollections(SHELF).values()];
   const all = filterCollection(groups, 'all');
   assert.ok(all.every((v) => v.every((s) => s.kind === 'piece')), 'a drill reached the Explore wall');
   assert.ok(groups.some((v) => v[0].kind === 'exercise'), 'the scale songs should still be grouped, just not shown');
   assert.ok(all.length >= 60 && all.length < groups.length, `${all.length} pieces of ${groups.length} groups`);
+  for (const key of ['in-the-end', 'stairway', 'gray-day']) {
+    assert.ok(LIBRARY[key], `${key} is classified`);
+    assert.ok(!all.some((v) => (v[0].group ?? v[0].id) === key), `${key} is quarantined and must not render`);
+  }
 
   // The counts on the chips are DISTINCT GROUPS, never arrangement totals:
   // three tiers of Fur Elise are one entry on the wall.

@@ -816,11 +816,11 @@ function canonLibraryCtx() {
     collectionEmpty: !q && activeTab === 'explore' && collected.length === 0,
     onCollection: (key) => {
       state.lib.collection = collectionKey(key);
-      // The show-all flag is NOT reset here, and a tab click still resets it.
-      // A collection is a narrower view of the same shelf, so someone who has
-      // already asked to see everything should not have to ask again for each
-      // of six smaller lists; a tab is a different shelf, which is why that
-      // one still starts at the top.
+      // A new collection starts at the top, exactly as a tab click does. The
+      // first cut kept the show-all flag so that a gate could count whole
+      // collections without paging; that is the gate bending the app to suit
+      // itself, and Codex called it. The gate pages the way a person does now.
+      state.lib.canonShowAll = false;
       store.save(state);
       jlog('collection', { collection: state.lib.collection });
       renderLibrary();
