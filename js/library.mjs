@@ -69,6 +69,55 @@ export function filterExplore(explore, query) {
     variants[0].title.toLowerCase().includes(q) || variants[0].composer.toLowerCase().includes(q));
 }
 
+// ---- collections (Mark's ask, 2026-09-13: a way into the wall) ------------
+// Explore is the ALL SONGS shelf and it is 81 pieces deep. Six chips, in this
+// order, each one a set of tags. The order is the shelf order in a record shop,
+// not an alphabet: the big rooms first, the specialist ones last.
+//
+// "All" is not a tag list, it is EVERY PIECE, which is why kind does the work
+// here and not a tag: a drill has no honest collection, and putting the 46
+// ladder scales in with the music is what the chips exist to undo.
+export const COLLECTIONS = [
+  { key: 'all', label: 'All', tags: null },
+  { key: 'classical', label: 'Classical', tags: ['classical'] },
+  { key: 'pop-rock', label: 'Pop & rock', tags: ['pop', 'rock'] },
+  { key: 'film-games', label: 'Film & games', tags: ['film', 'games', 'anime'] },
+  { key: 'jazz-blues', label: 'Jazz & blues', tags: ['jazz', 'blues'] },
+  { key: 'folk-hymns', label: 'Folk & hymns', tags: ['folk', 'hymns', 'christmas'] },
+  { key: 'contemporary', label: 'Contemporary', tags: ['contemporary'] },
+];
+// Anything missing or unrecognised reads as All. A stored key from a build that
+// had a collection this one does not must not leave the shelf empty forever.
+export const collectionKey = (key) =>
+  COLLECTIONS.some((c) => c.key === key) ? key : 'all';
+
+// EXPLORE IS PIECES. A group is a piece if any of its variants is (they share
+// one LIBRARY entry, so in practice all of them are or none are).
+export const isPiece = (variants) => variants.some((v) => v.kind !== 'exercise');
+const tagsOf = (variants) => new Set(variants.flatMap((v) => v.tags ?? []));
+
+// The filter runs BEFORE the A-Z / difficulty sort, so the sort keeps working
+// on exactly what is on screen.
+export function filterCollection(groups, key) {
+  const want = COLLECTIONS.find((c) => c.key === collectionKey(key))?.tags;
+  const pieces = groups.filter(isPiece);
+  if (!want) return pieces;
+  return pieces.filter((variants) => {
+    const tags = tagsOf(variants);
+    return want.some((t) => tags.has(t));
+  });
+}
+
+// The number on each chip: distinct EXPLORE GROUPS, never arrangement totals.
+// Three tiers of Fur Elise are one entry on the wall and must count as one.
+export const collectionCounts = (groups) =>
+  Object.fromEntries(COLLECTIONS.map((c) => [c.key, filterCollection(groups, c.key).length]));
+
+// Search matches tags as well as title and composer, so "games" or "classical"
+// finds the shelf a person is thinking of even with no chip pressed.
+export const searchText = (variants) => variants
+  .map((v) => `${v.title} ${v.composer ?? ''} ${(v.tags ?? []).join(' ')}`).join(' ').toLowerCase();
+
 // Past this size the Explore search stops being an icon and stays a field.
 export const SEARCH_PERSISTENT_AT = 40;
 

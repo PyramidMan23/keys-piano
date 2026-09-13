@@ -11,6 +11,7 @@ import { FIXED } from './songs-fixed.mjs';
 import { QUARANTINE } from './songs-quarantine.mjs';
 import { METER } from './songs-meter.mjs';
 import { BARS } from './songs-bars.mjs';
+import { LIBRARY } from './songs-library.mjs';
 
 export const SONGS = [
   {
@@ -2869,6 +2870,20 @@ for (const song of SONGS) {
     if (bm) song.barBeats = bm.bars;
   }
   if (/machine transcription/i.test(song.source || '') && !song.meterVerified) song.freeTime = true;
+}
+
+// ---- kind and collection tags (js/songs-library.mjs) -----------------------
+// Merged the way METER is merged, after assembly, so every song object carries
+// the two facts the collection chips need and no read site has to know where
+// they came from. Keyed by GROUP, so easy, medium and hard share one entry.
+//
+// A song with no entry keeps kind 'piece' and no tags: it shows up in All and
+// in nothing else, which is visible rather than hidden, and test/check.mjs
+// goes red the same run. An unclassified import must be noisy, not invisible.
+for (const song of SONGS) {
+  const entry = LIBRARY[song.group ?? song.id];
+  song.kind = entry ? entry.kind : 'piece';
+  song.tags = entry ? entry.tags : [];
 }
 
 // THE SHELF: what a learner may be offered. The app imports this as its SONGS

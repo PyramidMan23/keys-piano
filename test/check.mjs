@@ -3,6 +3,9 @@
 import assert from 'node:assert/strict';
 import { readFileSync as readVideoEvidence } from 'node:fs';
 import { SONGS, validateSong, songEndBeat } from '../js/songs.mjs';
+import { SHELF } from '../js/songs.mjs';
+import { LIBRARY, KINDS, TAGS } from '../js/songs-library.mjs';
+import { COLLECTIONS, filterCollection, collectionCounts, groupSongs as groupForCollections, searchText } from '../js/library.mjs';
 import { Engine, classifyTiming, medianOffset, buildGroups, PERFECT_MS, GOOD_MS } from '../js/engine.mjs';
 
 let n = 0;
@@ -3134,5 +3137,62 @@ ok('mastery reconciliation tolerates absent legacy records');
   assert.match(source,/sight: sightMode \|\| !!engine\.loop/);
   assert.match(source,/repeat: practiceStart === null/);
   ok('a seeked practice attempt earns no best, stars, score pass, playable proof or journey credit');
+}
+{
+  // ---- EVERY SONG IS CLASSIFIED, AND THIS IS WHAT FORCES THE NEXT IMPORT TO ----
+  //
+  // The Explore collection chips read `kind` and `tags`, which come from
+  // js/songs-library.mjs and from nowhere else. A song with no entry there
+  // still renders: it lands in All with no tags, on no collection, and nothing
+  // on screen looks wrong. That is exactly the silent failure the canon binder
+  // has a whole essay about, so it gets the same treatment - the miss is loud
+  // here, in a node check, one second after the import that caused it.
+  const missing = SHELF.filter((s) => !LIBRARY[s.group ?? s.id]).map((s) => s.group ?? s.id);
+  assert.deepEqual([...new Set(missing)], [],
+    'these groups are in the library with no entry in js/songs-library.mjs: classify them');
+  for (const s of SHELF) {
+    const entry = LIBRARY[s.group ?? s.id];
+    assert.ok(KINDS.includes(entry.kind), `${s.id}: unknown kind ${JSON.stringify(entry.kind)}`);
+    assert.ok(Array.isArray(entry.tags), `${s.id}: tags is not a list`);
+    for (const t of entry.tags) assert.ok(TAGS.includes(t), `${s.id}: unknown tag ${JSON.stringify(t)}`);
+    // a drill has no honest collection, so it carries none rather than a made-up one
+    if (entry.kind === 'exercise') assert.deepEqual(entry.tags, [], `${s.id}: an exercise carries no tags`);
+    // and the merge in songs.mjs actually reached the song object
+    assert.equal(s.kind, entry.kind, `${s.id}: kind did not merge`);
+    assert.deepEqual(s.tags, entry.tags, `${s.id}: tags did not merge`);
+  }
+  ok(`all ${new Set(SHELF.map((s) => s.group ?? s.id)).size} library groups carry a known kind and known tags`);
+}
+{
+  // ---- the collections themselves ----
+  // EXERCISES NEVER REACH EXPLORE. The 46 ladder drills hide behind
+  // `song.ladder` before grouping; the two original scale songs do not, and
+  // `kind` is the only thing keeping them off the wall.
+  const groups = [...groupForCollections(SHELF).values()];
+  const all = filterCollection(groups, 'all');
+  assert.ok(all.every((v) => v.every((s) => s.kind === 'piece')), 'a drill reached the Explore wall');
+  assert.ok(groups.some((v) => v[0].kind === 'exercise'), 'the scale songs should still be grouped, just not shown');
+  assert.ok(all.length >= 60 && all.length < groups.length, `${all.length} pieces of ${groups.length} groups`);
+
+  // The counts on the chips are DISTINCT GROUPS, never arrangement totals:
+  // three tiers of Fur Elise are one entry on the wall.
+  const counts = collectionCounts(groups);
+  assert.equal(counts.all, all.length);
+  for (const c of COLLECTIONS.slice(1)) {
+    assert.equal(counts[c.key], filterCollection(groups, c.key).length);
+    for (const v of filterCollection(groups, c.key))
+      assert.ok(c.tags.some((t) => v[0].tags.includes(t)), `${v[0].id} is not ${c.key}`);
+  }
+  // every piece is reachable from at least one chip, or the wall has a hole
+  const reachable = new Set(COLLECTIONS.slice(1).flatMap((c) => filterCollection(groups, c.key).map((v) => v[0].id)));
+  assert.deepEqual(all.filter((v) => !reachable.has(v[0].id)).map((v) => v[0].id), [],
+    'these pieces are on no collection chip at all');
+  // an unknown or missing key reads as All, never as an empty shelf
+  assert.equal(filterCollection(groups, 'jazz-fusion').length, all.length);
+  assert.equal(filterCollection(groups, undefined).length, all.length);
+  // and search matches TAGS, so "games" finds Zelda with no chip pressed
+  const zelda = groups.find((v) => v[0].id.startsWith('zelda-main-theme'));
+  assert.ok(searchText(zelda).includes('games'), 'search text carries the tags');
+  ok(`${COLLECTIONS.length} collections: ` + COLLECTIONS.map((c) => `${c.label} ${counts[c.key]}`).join(', '));
 }
 console.log(`\nALL GREEN: ${n} checks passed`);

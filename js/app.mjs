@@ -37,7 +37,8 @@ import { FORM_CHECKS, formDue } from './form.mjs';
 import { analyzePedal, pedalNotes } from './pedal.mjs';
 import { analyzeArticulation, articulationSummary } from './artic.mjs';
 import { analyzeVoicing, voicingText } from './voicing.mjs';
-import { appendDiagnostic, PROGRESS_MAX_BYTES, exportProgress, importProgress, saveProgress, restoreProgress, groupSongs, classifyGroups, filterExplore } from './library.mjs';
+import { appendDiagnostic, PROGRESS_MAX_BYTES, exportProgress, importProgress, saveProgress, restoreProgress, groupSongs, classifyGroups, filterExplore,
+  COLLECTIONS, collectionKey, filterCollection, collectionCounts, searchText } from './library.mjs';
 // Run C: dated evidence adapters; storage fields remain additive.
 import { competenceRank, evidenceDate, competence, competenceLine, songEvidence, recordSongAttempt, initializeExposure, RETENTION_MIN_DELAY, exposePassage, schedulePassageCheck, passageCheckKind, reconcileMastery, assessmentConditions, prescribe, qualifiesPlayable, recordPlayableRun, PROOF_PASS, SKILL_BY_ID, TEACHER_LESSONS, STAGES } from './teacher.mjs';
 import {
@@ -607,7 +608,10 @@ function makeRow(variants, fromLabel = null) {
   return row;
 }
 
-state.lib = Object.assign({ learning: true, repertoire: false, fame: false, explore: false }, state.lib || {});
+state.lib = Object.assign({ learning: true, repertoire: false, fame: false, explore: false, collection: 'all' }, state.lib || {});
+// Anything invalid or missing reads as All, so a stored key from a build with
+// a collection this one does not have cannot leave the shelf empty forever.
+state.lib.collection = collectionKey(state.lib.collection);
 let libQuery = ''; // the GLOBAL search, one box, every shelf
 function renderGameRow() {
   const lvl = gameLevel(totalXp(state));
@@ -735,6 +739,18 @@ function canonLibraryCtx() {
   // all our songs in it, that's our all songs area"): every group, not just
   // the untouched remainder, so the sleeve wall from here is the whole catalogue
   const allGroups = [...groups.values()];
+  // ---- collections (Mark, 2026-09-13) ------------------------------------
+  // EXERCISES ARE NOT REPERTOIRE. The 46 ladder drills already hide behind
+  // `song.ladder`; the two original scale songs had no flag and sat on the wall
+  // between Rondo alla Turca and Runaway as though they were music. `kind`
+  // covers both now, and they keep their home on the 12-keys surface.
+  //
+  // THE FILTER RUNS BEFORE THE SORT, so A to Z and Weakest first keep working
+  // on exactly the rows that are on screen rather than on the whole catalogue.
+  const collection = collectionKey(state.lib.collection);
+  const pieceGroups = filterCollection(allGroups, 'all');
+  const collected = filterCollection(allGroups, collection);
+  const chipCounts = collectionCounts(allGroups);
   // THE SORT APPLIES TO EVERY SHELF (Mark, 2026-08-30: "I don't think those
   // buttons do anything"). He was right: only Explore consulted the setting,
   // so on Learning the click stored a preference, moved nothing, and left the
@@ -756,17 +772,21 @@ function canonLibraryCtx() {
     repertoire: shelf('repertoire', repertoire),
     fame: shelf('fame', fameGroups),
     explore: shelf('explore', sortMode2 === 'diff'
-      ? [...allGroups].sort((a2, b2) => difficultyScore(a2[0]) - difficultyScore(b2[0]))
-      : allGroups),
+      ? [...collected].sort((a2, b2) => difficultyScore(a2[0]) - difficultyScore(b2[0]))
+      : collected),
   };
   const activeTab = LISTS[state.lib.canonTab] ? state.lib.canonTab : 'learning';
   // Search over EVERY variant of every group. filterExplore only reads
   // variants[0], while the table displays the LAST variant's composer, so a
   // search for words a person can literally see on screen ("rondo", the
   // arranger credit) found nothing. Codex caught it in review.
+  // A TYPED QUERY BYPASSES THE COLLECTION and searches everything, then the
+  // collection comes back the moment the box is empty: a person who types a
+  // title should never be told it does not exist because a chip is pressed.
+  // searchText matches TAGS as well as title and composer, so "games" or
+  // "classical" finds the shelf someone is thinking of with no chip pressed.
   const qLower = q.toLowerCase();
-  const searchHits = q ? [...groups.values()].filter((v) =>
-    v.some((x) => `${x.title} ${x.composer ?? ''}`.toLowerCase().includes(qLower))) : [];
+  const searchHits = q ? [...groups.values()].filter((v) => searchText(v).includes(qLower)) : [];
   const active = q
     ? { rows: searchHits, title: 'SEARCH RESULTS', word: 'results' }
     : LISTS[activeTab];
@@ -785,8 +805,26 @@ function canonLibraryCtx() {
     practiceLabel: heroSong ? 'Practise this passage' : 'Start prescribed practice',
     level: { n: lvl.level, xp: lvl.into, next: lvl.next },
     streak: { current: r.current, best: r.best },
+    // Explore's own tab count is EVERY PIECE, never the filtered subset: the
+    // tab says how big the shelf is, the chips say how it divides.
     counts: { learning: learning.length, repertoire: repertoire.length,
-              fame: HALL_OF_FAME.length, explore: allGroups.length },
+              fame: HALL_OF_FAME.length, explore: pieceGroups.length },
+    // the chips: label and a count of distinct EXPLORE GROUPS (three tiers of
+    // Fur Elise are one entry on the wall and count as one), before any search
+    collection,
+    collections: COLLECTIONS.map((c) => ({ key: c.key, label: c.label, count: chipCounts[c.key] })),
+    collectionEmpty: !q && activeTab === 'explore' && collected.length === 0,
+    onCollection: (key) => {
+      state.lib.collection = collectionKey(key);
+      // The show-all flag is NOT reset here, and a tab click still resets it.
+      // A collection is a narrower view of the same shelf, so someone who has
+      // already asked to see everything should not have to ask again for each
+      // of six smaller lists; a tab is a different shelf, which is why that
+      // one still starts at the top.
+      store.save(state);
+      jlog('collection', { collection: state.lib.collection });
+      renderLibrary();
+    },
     prescription: heroSong
       ? { title: heroSong.title, reason: [rx.section ?? journeyState(state, heroSong)?.steps[journeyState(state, heroSong)?.step]?.name, rx.reason, rx.evidence].filter(Boolean).join(' | '), song: heroSong,
           // the hero's state chip carries the recommended GROUP's real state

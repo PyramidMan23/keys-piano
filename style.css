@@ -780,8 +780,14 @@ button:disabled { opacity: 0.35; cursor: default; }
    ellipse, its rx/ry reverted to 0, a 0x0 head with the right fill, and the
    staff lines still painted because lines have no rx. Same tell as ever: the
    box is right and the ink is missing. */
+/* .lib-collections joined 2026-09-13, and it joined in the SAME EDIT that drew
+   it, which is the whole point of the rule above. The Explore collection chips
+   are app-drawn buttons inside the canon column: every property they need is
+   written inline (the box and the ink together, so they cannot come apart), and
+   the exemption is what lets the hover and focus rules below reach them at all,
+   since no inline style can express a pseudo-class. */
 .canon-root,
-.canon-root *:not([data-reflow], #score-wrap, #score-wrap *, #cp-again, #cp-again *, #lesson-stave, #lesson-stave *, .practice-prescription, .practice-prescription *, .practice-adjust, .practice-adjust *, .session-guide, .session-guide *) {
+.canon-root *:not([data-reflow], #score-wrap, #score-wrap *, #cp-again, #cp-again *, #lesson-stave, #lesson-stave *, .practice-prescription, .practice-prescription *, .practice-adjust, .practice-adjust *, .session-guide, .session-guide *, .lib-collections, .lib-collections *) {
   all: revert;
   /* The one thing that must come BACK. The canon was authored in a page with
      `* { box-sizing: border-box }` and every width in it assumes that; reverting
@@ -930,6 +936,21 @@ button:active:not(:disabled),
 .practice-library .practice-prescription [hidden] { display: none !important; }
 .practice-library #practice-primary { width: auto !important; padding: 10px 16px !important; min-height: 44px !important; white-space: normal !important; }
 .practice-library .practice-secondary { background: transparent !important; box-shadow: none !important; border-color: transparent !important; }
+
+/* The Explore collection chips. Everything visible is inline on the elements
+   (canon-library.mjs renderCollections, harvested from the design's own tab
+   strip); these three rules are only the states no inline style can reach.
+   The row WRAPS and never scrolls: up to three lines at 375px, one at 1418. */
+.lib-collections { flex-wrap: wrap !important; overflow: visible !important; }
+/* Hover leaves a SELECTED chip alone. The first cut did not, and the probe
+   caught it at once: a real click leaves the pointer resting on the chip, so
+   the hover border overwrote the active underline and the measured colour came
+   back #3d4f45 instead of the accent. State outranks hover. */
+.lib-collections > button[aria-pressed="false"]:hover { border-color: var(--chip-hover-border, #3d4f45) !important; }
+/* The canon's own focus ring, repeated here because the reset exemption above
+   hands this subtree back to the app stylesheet and `.canon-root :focus-visible`
+   is not specific enough to beat a chip's inline border. */
+.lib-collections > button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .practice-adjust { width: 100%; flex-basis: 100%; color: inherit; }
 .practice-adjust summary { cursor: pointer; min-height: 44px; padding: 12px 4px; font: inherit; }
