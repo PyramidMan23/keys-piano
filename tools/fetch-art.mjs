@@ -10,13 +10,23 @@
 // Songs with no honest recording (scales, drills, folk tunes with no canonical
 // album) are listed in NO_ALBUM and deliberately get NO art here - they keep
 // the generative plate from covers.mjs. "Notes yes, guessed art never."
-import { writeFile, mkdir } from 'node:fs/promises';
+import { writeFile, mkdir, readFile } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const ART = join(ROOT, 'art');
 const CAND = join(ART, '_candidates');
+
+// Adding a WAVE without disturbing the sleeves already on disk.
+//   ONLY=a,b,c   fetch just these groups and MERGE the result into the existing
+//                art.json + art-manifest.mjs, leaving every other entry byte-identical.
+//                Without it the run is a full refresh, which re-picks all ~77 and
+//                lets the store's ranking move a sleeve Mark already accepted.
+//   DRY=1        rank and PRINT the candidates, download nothing, write nothing.
+//                A search term is a guess until you have seen what it returns.
+const ONLY = (process.env.ONLY ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+const DRY = process.env.DRY === '1';
 
 // group -> the real recording we are asking for. term = what we search,
 // artist/track = what the result MUST contain to be accepted, album = the
@@ -130,6 +140,44 @@ const WANT = {
   'last-waltz':         { term: 'Last Waltz Clavier',                         artist: 'clavier',        track: 'last waltz' },
   'married-life':       { term: 'Married Life Up Michael Giacchino',        artist: 'giacchino',      track: 'married life' },
   'pain':               { term: 'Pain Clavier',                               artist: 'clavier',        track: 'pain' },
+
+  // ---- the 2026-09-14 wave. Mark, looking at the shelf after the 22-song
+  // v132 import: "lots that were added recently don't have cover art we can get
+  // cover art for." True: every song that arrives without a hand-written entry
+  // here lands on a generative plate, and the import waves outran this map.
+  // Same rule as every wave before it - the artist/track/album check runs first,
+  // so a wrong sleeve is REJECTED, never substituted, and anything that misses
+  // keeps the plate it already has.
+  //
+  // Classical follows the precedent set above: artist left EMPTY so any credible
+  // performer passes and the check falls on the WORK, not on one recording.
+  'the-entertainer':    { term: 'Scott Joplin The Entertainer',                artist: '',               track: 'entertainer', album: 'joplin' },
+  'maple-leaf-rag':     { term: 'Scott Joplin Maple Leaf Rag',                 artist: '',               track: 'maple leaf', album: 'joplin' },
+  'gnossienne-1':       { term: 'Satie Gnossienne No. 1',                      artist: '',               track: 'gnossienne', album: 'satie' },
+  'petzold-minuet-g':   { term: 'Minuet in G major BWV Anh. 114 Notebook for Anna Magdalena Bach', artist: '', track: 'minuet in g major, bwv anh', album: 'bach' },
+  'chopin-prelude-op28-7': { term: 'Chopin Prelude in A major Op. 28 No. 7',   artist: '',               track: 'prelude', album: 'chopin' },
+  'clementi-sonatina-36-1': { term: 'Clementi Sonatina in C major Op. 36 No. 1', artist: '',             track: 'sonatina', album: 'clementi' },
+  'schumann-melody-op68-1': { term: 'Schumann Album for the Young Melodie Op. 68', artist: '',           track: 'melod', album: 'schumann' },
+  'schumann-soldiers-march': { term: "Schumann Soldiers' March Album for the Young Op. 68", artist: '',  track: 'march', album: 'schumann' },
+  'burgmuller-arabesque': { term: 'Burgmuller 25 Etudes faciles Op. 100 Arabesque', artist: '',          track: 'arabesque', album: 'op. 100' },
+  'burgmuller-candeur': { term: 'Burgmuller 25 Etudes faciles Op. 100 La Candeur', artist: '',           track: 'candeur', album: 'op. 100' },
+
+  // film, television and game scores with a real commercial release
+  'time-inception':     { term: 'Time Inception Hans Zimmer',                  artist: 'zimmer',         track: 'time', album: 'inception' },
+  'schindlers-list':    { term: "Schindler's List Theme John Williams Itzhak Perlman", artist: '',       track: 'schindler' },
+  'merry-christmas-mr-lawrence': { term: 'Merry Christmas Mr. Lawrence Ryuichi Sakamoto', artist: 'sakamoto', track: 'merry christmas' },
+  'one-summers-day':    { term: "Spirited Away Joe Hisaishi One Summer's Day", artist: 'hisaishi',       track: "one summer's day", album: 'spirited away' },
+  'minecraft-sweden':   { term: 'C418 Minecraft Volume Alpha Sweden',          artist: 'c418',           track: 'sweden' },
+  'minecraft-wet-hands': { term: 'C418 Minecraft Volume Alpha Wet Hands',      artist: 'c418',           track: 'wet hands' },
+  'silksong':           { term: 'Hollow Knight Silksong Christopher Larkin',   artist: 'larkin',         track: '', album: 'silksong' },
+
+  // songs everybody knows, where one recording IS the record
+  'hey-jude':           { term: 'Hey Jude The Beatles',                        artist: 'beatles',        track: 'hey jude', album: 'hey jude' },
+  'perfect':            { term: 'Perfect Ed Sheeran Divide',                   artist: 'ed sheeran',     track: 'perfect' },
+  // It Might as Well Be Swing, the 1964 record this was cut for, is not on the AU
+  // store at all; the Sinatra-Basie Reprise set is where that same take lives.
+  'fly-me-to-the-moon': { term: 'Fly Me to the Moon Frank Sinatra Count Basie', artist: 'sinatra', track: 'fly me to the moon', album: 'sinatra-basie' },
+  'silent-night':       { term: 'Silent Night Bing Crosby',                    artist: 'crosby',         track: 'silent night' },
 };
 
 // iTunes has no honest release for these, so they come from MusicBrainz +
@@ -138,10 +186,25 @@ const WANT = {
 // mbid is pinned by hand after reading the search result, never guessed.
 const MB = {
   'mario':     { mbid: '138c0ebc-2c41-4763-9b87-b6753e8946cb', artist: 'Koji Kondo', album: 'Super Mario Bros. 35 Original Soundtrack', year: '2020' },
+  // 2026-09-14: same story as Mario. Every iTunes hit for the Zelda pieces is a
+  // cover band, and 'Zelda's Lullaby' is hard-rejected by JUNK on the word
+  // lullaby anyway. These four mbids were read out of a MusicBrainz release
+  // search for Koji Kondo and each one was OPENED and looked at before it was
+  // pinned here. The three Ocarina pieces share a sleeve because they share a
+  // record, the same way the two Dr. Dre tracks both wear 2001.
+  'gerudo-valley':    { mbid: 'e78b3cd0-7643-4520-99fe-4b180bb5098c', artist: 'Koji Kondo', album: 'The Legend of Zelda: Ocarina of Time (Original Soundtrack)', year: '1998' },
+  'zeldas-lullaby':   { mbid: 'e78b3cd0-7643-4520-99fe-4b180bb5098c', artist: 'Koji Kondo', album: 'The Legend of Zelda: Ocarina of Time (Original Soundtrack)', year: '1998' },
+  'song-of-storms':   { mbid: 'e78b3cd0-7643-4520-99fe-4b180bb5098c', artist: 'Koji Kondo', album: 'The Legend of Zelda: Ocarina of Time (Original Soundtrack)', year: '1998' },
+  // the series theme is not an Ocarina track, so it wears the series record
+  'zelda-main-theme': { mbid: 'fe88cd3f-1880-4ddf-98c4-2f74ca5f99f2', artist: 'Koji Kondo', album: 'The Legend of Zelda: 25th Anniversary Special Orchestra CD', year: '2011' },
 };
 
 // No honest recording exists at all for these. They keep the generative plate.
-const NO_ALBUM = ['happy-birthday', 'bella-ciao', 'scale-c-major', 'scale-a-minor'];
+const NO_ALBUM = ['happy-birthday', 'bella-ciao', 'scale-c-major', 'scale-a-minor',
+  // 2026-09-14: checked, not skipped. Greensleeves is a 16th-century tune whose
+  // every release is somebody else's arrangement of it, and the twelve-bar blues
+  // is a FORM plus Mark's own take on it. Neither has a record to photograph.
+  'greensleeves', 'blues-in-c'];
 
 // A result carrying any of these is not the record; it is a knock-off.
 const JUNK = /karaoke|tribute|made (famous|popular)|in the style of|cover version|8-bit|8 bit|lullaby|string quartet|ringtone|instrumental version|piano version|rockabye|meditat|sleep baby|as made/i;
@@ -165,7 +228,7 @@ function score(res, want) {
   if (want.album && !c.includes(flat(want.album))) return -1;          // not the record it came out on
   let s = 100;
   if (/live|remix|edit\)|demo/i.test(t)) s -= 40;
-  if (/greatest hits|very best|best of|essential|collection|now that|compilation|volume|vol\.|top 10|50 greatest/i.test(c)) s -= 60;
+  if (/greatest hits|very best|best of|essential|collection|now that|compilation|volume|vol\.|top 10|50 greatest|classical classics|masterpieces|while you work|for reading|for breakfast|relaxing|playlist|peaceful|lullabies|timeless|sensual|music for|\d{2,} pieces|\d{2,} minutes/i.test(c)) s -= 60;
   if (/remaster|deluxe|anniversary|expanded/i.test(c)) s -= 5;
   if (t === flat(want.track)) s += 10;
   return s;
@@ -180,7 +243,9 @@ async function download(url, file) {
 const manifest = {}, rejects = {};
 await mkdir(CAND, { recursive: true });
 
-for (const [group, want] of Object.entries(WANT)) {
+const wanted = ([g]) => !ONLY.length || ONLY.includes(g);
+
+for (const [group, want] of Object.entries(WANT).filter(wanted)) {
   let results;
   try { results = await search(want.term); }
   catch (e) { rejects[group] = `search failed: ${e.message}`; continue; }
@@ -202,6 +267,11 @@ for (const [group, want] of Object.entries(WANT)) {
                  year: (r.releaseDate ?? '').slice(0, 4), art: big(r.artworkUrl100), url: r.collectionViewUrl });
     if (cands.length === 5) break;
   }
+  if (DRY) {
+    console.log(`\n${group}  <- "${want.term}"`);
+    for (const c of cands) console.log(`   ${String(c.score).padStart(4)}  ${c.artist} - ${c.track}  [${c.album}, ${c.year}]`);
+    continue;
+  }
   for (let i = 0; i < cands.length; i++) {
     try { await download(cands[i].art, join(CAND, `${group}-${i}.jpg`)); cands[i].file = `_candidates/${group}-${i}.jpg`; }
     catch (e) { cands[i].error = e.message; }
@@ -212,7 +282,8 @@ for (const [group, want] of Object.entries(WANT)) {
                       track: cands[0].track, year: cands[0].year, source: cands[0].url, candidates: cands };
   console.log(`OK   ${group.padEnd(20)} ${cands[0].artist} - ${cands[0].album} (${cands[0].year})  [${cands.length} candidates]`);
 }
-for (const [group, m] of Object.entries(MB)) {
+for (const [group, m] of Object.entries(MB).filter(wanted)) {
+  if (DRY) { console.log(`\n${group}  <- Cover Art Archive ${m.mbid} (${m.artist} - ${m.album})`); continue; }
   const url = `https://coverartarchive.org/release/${m.mbid}/front-1200`;
   try {
     await download(url, join(ART, `${group}.jpg`));
@@ -223,16 +294,35 @@ for (const [group, m] of Object.entries(MB)) {
     console.log(`OK   ${group.padEnd(20)} ${m.artist} - ${m.album} (${m.year})  [Cover Art Archive]`);
   } catch (e) { rejects[group] = `CAA: ${e.message}`; }
 }
-for (const g of NO_ALBUM) manifest[g] = { file: null, reason: 'no canonical recording - generative plate' };
+for (const g of NO_ALBUM.filter((g) => !ONLY.length || ONLY.includes(g))) {
+  manifest[g] = { file: null, reason: 'no canonical recording - generative plate' };
+}
 for (const [g, why] of Object.entries(rejects)) console.log(`MISS ${g.padEnd(20)} ${why}`);
 
-await writeFile(join(ART, 'art.json'), JSON.stringify({ fetched: new Date().toISOString(), source: 'iTunes Search API', manifest, rejects }, null, 2));
+if (DRY) { console.log('DRY=1: nothing downloaded, nothing written.'); process.exit(0); }
+
+// MERGE, never replace. A group absent from this run keeps exactly the record it
+// already had: the provenance in art.json and the sleeve on disk both survive.
+const prev = await readFile(join(ART, 'art.json'), 'utf8').then(JSON.parse).catch(() => ({}));
+const mergedManifest = { ...(prev.manifest ?? {}), ...manifest };
+const mergedRejects = { ...(prev.rejects ?? {}) };
+for (const g of Object.keys(manifest)) delete mergedRejects[g];
+Object.assign(mergedRejects, rejects);
+
+await writeFile(join(ART, 'art.json'), JSON.stringify({ fetched: new Date().toISOString(), source: 'iTunes Search API', manifest: mergedManifest, rejects: mergedRejects }, null, 2));
 
 // The runtime module. The app must not fetch art.json at boot (offline PWA),
 // so the manifest is compiled to an ES module the shell already caches.
-const runtime = Object.fromEntries(Object.entries(manifest)
+// The generated plates registered by tools/register-sleeves.mjs live in this same
+// module and are NOT this tool's to delete, so start from what is already there.
+const existing = await readFile(join(ROOT, 'js', 'art-manifest.mjs'), 'utf8')
+  .then((t) => JSON.parse(t.match(/export const ART = (\{[\s\S]*?\});?\s*$/)[1]))
+  .catch(() => ({}));
+const real = Object.fromEntries(Object.entries(mergedManifest)
   .filter(([, m]) => m.file)
   .map(([g, m]) => [g, { artist: m.artist, album: m.album, year: m.year }]));
+const runtime = Object.fromEntries(Object.keys({ ...existing, ...real }).sort()
+  .map((g) => [g, real[g] ?? existing[g]]));
 const header = [
   '// GENERATED by tools/fetch-art.mjs. Do not hand-edit; re-run the fetcher.',
   '// group -> the real record its sleeve came from. Presence here means',
@@ -242,4 +332,4 @@ const header = [
 await writeFile(join(ROOT, 'js', 'art-manifest.mjs'),
   header + 'export const ART = ' + JSON.stringify(runtime, null, 2) + ';\n');
 console.log(`wrote js/art-manifest.mjs (${Object.keys(runtime).length} sleeves)`);
-console.log(`\n${Object.values(manifest).filter((m) => m.file).length} groups with real art, ${NO_ALBUM.length} deliberately without, ${Object.keys(rejects).length} misses`);
+console.log(`\n${Object.values(mergedManifest).filter((m) => m.file).length} groups with real art, ${Object.values(runtime).filter((v) => v.generated).length} on a generative plate, ${Object.keys(mergedRejects).length} misses`);
