@@ -2010,7 +2010,14 @@ ok('covers: deterministic, all distinct, dark-glass palette, notes-as-art, notch
   const { fileURLToPath } = await import('node:url');
   const { ART } = await import('../js/art-manifest.mjs');
   const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-  const NO_SLEEVE = ['happy-birthday', 'bella-ciao', 'scale-c-major', 'scale-a-minor'];
+  // 2026-09-14: Greensleeves and the twelve-bar blues joined this list when the
+  // cover art wave went through the catalogue. Greensleeves is a 16th-century
+  // tune whose every release is somebody else's ARRANGEMENT of it, a different
+  // work from the one in the app, and the blues is a form plus Mark's own take
+  // on it. Neither has a record to photograph, and a later wave reaching for
+  // "everything without a sleeve" is exactly how one would acquire a fake.
+  const NO_SLEEVE = ['happy-birthday', 'bella-ciao', 'scale-c-major', 'scale-a-minor',
+    'greensleeves', 'blues-in-c'];
 
   assert.ok(Object.keys(ART).length >= 26, 'the manifest still carries the fetched sleeves');
   for (const g of Object.keys(ART)) {
