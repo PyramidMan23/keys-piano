@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-08-28T13:29:03.131Z",
+  "fetched": "2026-09-14T00:33:45.786Z",
   "source": "iTunes Search API",
   "manifest": {
     "still-dre": {
@@ -1167,6 +1167,1024 @@
     "scale-a-minor": {
       "file": null,
       "reason": "no canonical recording - generative plate"
+    },
+    "the-entertainer": {
+      "file": "art/the-entertainer.jpg",
+      "artist": "Guido Nielsen",
+      "album": "Scott Joplin: The Complete Rags, Marches, Waltzes & Songs",
+      "track": "The Entertainer (Ragtime Two-Step)",
+      "year": "2002",
+      "source": "https://music.apple.com/au/album/the-entertainer-ragtime-two-step/105645759?i=105642123&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Guido Nielsen",
+          "track": "The Entertainer (Ragtime Two-Step)",
+          "album": "Scott Joplin: The Complete Rags, Marches, Waltzes & Songs",
+          "year": "2002",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/e7/cc/16/e7cc16e8-22dc-f2ad-70de-5ce70bbb09df/mzi.adtkzwkr.tif/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/the-entertainer-ragtime-two-step/105645759?i=105642123&uo=4",
+          "file": "_candidates/the-entertainer-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Phillip Dyson",
+          "track": "The Entertainer",
+          "album": "Scott Joplin – The King of Ragtime: Complete Piano Works",
+          "year": "2022",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/86/36/5f/86365f08-12c9-8952-998a-c0854fdf2f33/18UMGIM49781.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/the-entertainer/1616913322?i=1616913714&uo=4",
+          "file": "_candidates/the-entertainer-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Daniel Blumenthal",
+          "track": "The Entertainer - A Ragtime Two Step",
+          "album": "Joplin: The Ragtime Dance - Rag and Waltzes",
+          "year": "1989",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/4d/c3/cd/4dc3cd32-77f1-ecbe-a477-e3e1a723c69f/5410939731725_cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/the-entertainer-a-ragtime-two-step/552918347?i=552918350&uo=4",
+          "file": "_candidates/the-entertainer-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Dick Hyman",
+          "track": "The Entertainer (2023 Remastered Version)",
+          "album": "Scott Joplin - The Complete Works For Piano",
+          "year": "1975",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/8d/56/95/8d5695b3-675e-c3d8-978b-3b2e7308f684/196589988676.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/the-entertainer-2023-remastered-version/1702008227?i=1702008716&uo=4",
+          "file": "_candidates/the-entertainer-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Richard Zimmerman",
+          "track": "The Entertainer",
+          "album": "Scott Joplin, The Entertainer",
+          "year": "1974",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/7c/d5/8f/7cd58fc5-9c99-9329-9d5d-eb1b9b12a603/191018104986.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/the-entertainer/1473890972?i=1473890983&uo=4",
+          "file": "_candidates/the-entertainer-4.jpg"
+        }
+      ]
+    },
+    "maple-leaf-rag": {
+      "file": "art/maple-leaf-rag.jpg",
+      "artist": "Alexander Peskanov",
+      "album": "Scott Joplin: Piano Rags",
+      "track": "Maple Leaf Rag",
+      "year": "2004",
+      "source": "https://music.apple.com/au/album/maple-leaf-rag/60618282?i=60617995&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Alexander Peskanov",
+          "track": "Maple Leaf Rag",
+          "album": "Scott Joplin: Piano Rags",
+          "year": "2004",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/ed/49/82/ed498232-77b8-26a2-799e-5d13317d1467/s05.uejcuiek.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/maple-leaf-rag/60618282?i=60617995&uo=4",
+          "file": "_candidates/maple-leaf-rag-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Scott Joplin",
+          "track": "Maple Leaf Rag",
+          "album": "30 Greatest Scott Joplin Ragtime Piano Pieces",
+          "year": "2017",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/24/ae/7c/24ae7c8b-363e-fc74-1b4d-7edf31ebb592/191061443445.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/maple-leaf-rag/1213701636?i=1213701755&uo=4",
+          "file": "_candidates/maple-leaf-rag-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Joshua Rifkin",
+          "track": "Maple Leaf Rag (LP Version)",
+          "album": "Scott Joplin Piano Rags",
+          "year": "1994",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/cb/05/a5/mzi.fyislgoq.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/maple-leaf-rag-lp-version/83146601?i=83146376&uo=4",
+          "file": "_candidates/maple-leaf-rag-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Claudio Colombo",
+          "track": "Maple Leaf Rag",
+          "album": "Scott Joplin: Maple Leaf Rag, The Entertainer and other famous piano pieces",
+          "year": "2026",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/79/b0/95/79b09541-4897-e69d-869c-60f68f43f2b9/820233616294.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/maple-leaf-rag/6777101808?i=6777101818&uo=4",
+          "file": "_candidates/maple-leaf-rag-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "James D. M. Tucker",
+          "track": "Maple Leaf Rag",
+          "album": "Scott Joplin's Most Famous Rags",
+          "year": "2020",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/03/aa/0c/03aa0c28-e147-424b-4ff9-f02782e9c698/5059505104848_cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/maple-leaf-rag/1505488827?i=1505488829&uo=4",
+          "file": "_candidates/maple-leaf-rag-4.jpg"
+        }
+      ]
+    },
+    "gnossienne-1": {
+      "file": "art/gnossienne-1.jpg",
+      "artist": "Pio Palumbo",
+      "album": "Satie: Gnossienne No. 1 - Single",
+      "track": "Gnossiennes: No. 1, Lent",
+      "year": "2024",
+      "source": "https://music.apple.com/au/album/gnossiennes-no-1-lent/1775337866?i=1775337869&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Pio Palumbo",
+          "track": "Gnossiennes: No. 1, Lent",
+          "album": "Satie: Gnossienne No. 1 - Single",
+          "year": "2024",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0a/85/ea/0a85eaeb-fff8-6da2-2fed-1abda01cbfbf/454342.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/gnossiennes-no-1-lent/1775337866?i=1775337869&uo=4",
+          "file": "_candidates/gnossienne-1-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Raphael Dubouis",
+          "track": "Gnossienne No. 1",
+          "album": "Satie: Gnossienne No. 1 - Single",
+          "year": "2022",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/04/59/84/045984a6-45b3-d074-696d-649b02960409/1963620713165.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/gnossienne-no-1/1790474489?i=1790474493&uo=4",
+          "file": "_candidates/gnossienne-1-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Cristiano Pedras",
+          "track": "Satie: Gnossienne No. 1",
+          "album": "Satie: Gnossienne No. 1 - Single",
+          "year": "2021",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/39/09/6b/39096b7f-bdc6-24ff-aef6-3b36e7e70bb9/195999782201.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/satie-gnossienne-no-1/1560687702?i=1560687703&uo=4",
+          "file": "_candidates/gnossienne-1-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Juan María Solare",
+          "track": "Satie: Gnossienne No. 1 - Lent",
+          "album": "Satie: Gnossiennes - EP",
+          "year": "2025",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/99/6f/6a/996f6ad3-cacc-7c42-0bde-1913f74e587c/319186.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/satie-gnossienne-no-1-lent/1796522987?i=1796523272&uo=4",
+          "file": "_candidates/gnossienne-1-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "The Flaming Piano",
+          "track": "Satie - Gnossienne 1 (piano cover by the Flaming Piano)",
+          "album": "Satie - Gnossienne 1 (piano cover by the Flaming Piano) - Single",
+          "year": "2022",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/28/22/57/28225764-ef29-13fa-96c6-14454c019555/594467.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/satie-gnossienne-1-piano-cover-by-the-flaming-piano/1793705073?i=1793705077&uo=4",
+          "file": "_candidates/gnossienne-1-4.jpg"
+        }
+      ]
+    },
+    "petzold-minuet-g": {
+      "file": "art/petzold-minuet-g.jpg",
+      "artist": "János Sebestyén",
+      "album": "J. S. Bach: Favourite Piano Works",
+      "track": "Minuet in G Major, BWV Anh.114",
+      "year": "1993",
+      "source": "https://music.apple.com/au/album/minuet-in-g-major-bwv-anh-114/2599436?i=2599406&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "János Sebestyén",
+          "track": "Minuet in G Major, BWV Anh.114",
+          "album": "J. S. Bach: Favourite Piano Works",
+          "year": "1993",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/y2003/m09/d19/h23/s03.iwkcvawp.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/minuet-in-g-major-bwv-anh-114/2599436?i=2599406&uo=4",
+          "file": "_candidates/petzold-minuet-g-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Daniil Trifonov",
+          "track": "Minuet in G Major, BWV Anh. 114 (Notebook for Anna Magdalena Bach, 1725)",
+          "album": "BACH: The Art of Life",
+          "year": "2021",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/59/4f/a8/594fa861-e9a0-8db8-c39b-6e2c0cc35870/19UM1IM14434.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/minuet-in-g-major-bwv-anh-114-notebook-for-anna-magdalena/1577776877?i=1577781357&uo=4",
+          "file": "_candidates/petzold-minuet-g-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "KaJeng WONG",
+          "track": "Minuet in G Major, BWV Anh. 114 (Notebook for Anna Magdalena Bach, 1725)",
+          "album": "Mostly Bach",
+          "year": "2024",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/5f/f2/03/5ff2038b-7e86-3aac-38ab-3def8a1db76d/196871885119.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/minuet-in-g-major-bwv-anh-114-notebook-for-anna-magdalena/1733443914?i=1733443917&uo=4",
+          "file": "_candidates/petzold-minuet-g-2.jpg"
+        }
+      ]
+    },
+    "chopin-prelude-op28-7": {
+      "file": "art/chopin-prelude-op28-7.jpg",
+      "artist": "Roger Woodward",
+      "album": "The Chopin Album",
+      "track": "Prelude in A Major, Op. 28, No. 7",
+      "year": "1998",
+      "source": "https://music.apple.com/au/album/prelude-in-a-major-op-28-no-7/1583132110?i=1583133176&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Roger Woodward",
+          "track": "Prelude in A Major, Op. 28, No. 7",
+          "album": "The Chopin Album",
+          "year": "1998",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/c9/81/f9/c981f935-8592-030a-d343-630fad6ab2fa/196292180190.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/prelude-in-a-major-op-28-no-7/1583132110?i=1583133176&uo=4",
+          "file": "_candidates/chopin-prelude-op28-7-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Ida Czernicka",
+          "track": "Prélude in A Major, Op. 28 No. 7",
+          "album": "Clásicos Románticos - Frédéric Chopin - Valses, Preludios y Mazurcas",
+          "year": "1991",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music3/v4/88/6c/d5/886cd5a6-dfc8-d9e9-bf64-8cf213aa01eb/889176081033.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/pr%C3%A9lude-in-a-major-op-28-no-7/933997176?i=933997823&uo=4",
+          "file": "_candidates/chopin-prelude-op28-7-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Aquiles Delle Vigne",
+          "track": "Chopin: Prelude in A major Op. 28 No.7",
+          "album": "Aquiles Delle Vigne - Chopin:  op. 35, op. 28",
+          "year": "2017",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/b7/94/ae/b794aeb5-286f-a8dd-eed2-8741ea85a8d3/5057302881931_cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/chopin-prelude-in-a-major-op-28-no-7/1191563866?i=1191565104&uo=4",
+          "file": "_candidates/chopin-prelude-op28-7-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Tzvi Erez",
+          "track": "Prelude in A Major, Op. 28 No. 7",
+          "album": "Tzvi Erez plays Chopin",
+          "year": "2010",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/d6/e4/f1/mzi.fbsmhrof.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/prelude-in-a-major-op-28-no-7/397516401?i=397516425&uo=4",
+          "file": "_candidates/chopin-prelude-op28-7-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "John Champ",
+          "track": "Prelude in A Major, Op. 28, No. 7",
+          "album": "Raindrops: The Exquisite Music of Chopin",
+          "year": "2010",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/5c/a3/ba/5ca3ba41-bfbc-1cea-e261-65d34cec204d/196292167993.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/prelude-in-a-major-op-28-no-7/1583141199?i=1583143321&uo=4",
+          "file": "_candidates/chopin-prelude-op28-7-4.jpg"
+        }
+      ]
+    },
+    "clementi-sonatina-36-1": {
+      "file": "art/clementi-sonatina-36-1.jpg",
+      "artist": "Lang Lang",
+      "album": "Clementi: Sonatina No. 1 in C Major, Op. 36 - Single",
+      "track": "Sonatina No. 1 in C Major, Op. 36: II. Andante",
+      "year": "2019",
+      "source": "https://music.apple.com/au/album/sonatina-no-1-in-c-major-op-36-ii-andante/1513597055?i=1513597319&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Lang Lang",
+          "track": "Sonatina No. 1 in C Major, Op. 36: II. Andante",
+          "album": "Clementi: Sonatina No. 1 in C Major, Op. 36 - Single",
+          "year": "2019",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/36/a5/f7/36a5f7e8-04ea-100b-4003-cb0362a26161/20UMGIM32326.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/sonatina-no-1-in-c-major-op-36-ii-andante/1513597055?i=1513597319&uo=4",
+          "file": "_candidates/clementi-sonatina-36-1-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Christoph Eschenbach",
+          "track": "Sonatina in C Major, Op. 36 No. 1: I. Allegro",
+          "album": "Piano Lessons - Piano Sonatinas by Beethoven, Clementi, Diabelli, Dussek, Kuhlau",
+          "year": "2021",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/c1/ca/c8/c1cac87f-c8ba-1df6-72ab-e38fee20fc1f/20UMGIM93127.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/sonatina-in-c-major-op-36-no-1-i-allegro/1540575398?i=1540575424&uo=4",
+          "file": "_candidates/clementi-sonatina-36-1-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Chun-Young June",
+          "track": "Keyboard Sonatina in C major, Op. 36, No. 1: I. Allegro",
+          "album": "Clementi, M.: Keyboard Sonatinas - Opp. 36, 38",
+          "year": "1999",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/a7/d3/69/mzi.ibptafjq.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/keyboard-sonatina-in-c-major-op-36-no-1-i-allegro/397246410?i=397246660&uo=4",
+          "file": "_candidates/clementi-sonatina-36-1-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Tumoko Sudaka",
+          "track": "Clementi: Sonatina in C Major, Op. 36 No. 1: III. Vivace (Polytimbrical Version)",
+          "album": "Clementi: Sonatina in C Major Op. 36 No. 1 - EP",
+          "year": "2020",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/e4/e2/f1/e4e2f103-19e4-58ca-1c5d-ac5bd28586ce/5054526798908_1.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/clementi-sonatina-in-c-major-op-36-no-1-iii-vivace/1494033310?i=1494033437&uo=4",
+          "file": "_candidates/clementi-sonatina-36-1-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "CAIGE",
+          "track": "Clementi: Sonatina in C Major, Op. 36, No. 1, Allegro",
+          "album": "Clementi: Sonatina in C Major, Op. 36, No. 1, Allegro - Single",
+          "year": "2023",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/7b/e3/f4/7be3f49f-7d02-8283-a19b-a8ffe5a9a033/888618316948.png/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/clementi-sonatina-in-c-major-op-36-no-1-allegro/1689420568?i=1689420569&uo=4",
+          "file": "_candidates/clementi-sonatina-36-1-4.jpg"
+        }
+      ]
+    },
+    "schumann-melody-op68-1": {
+      "file": "art/schumann-melody-op68-1.jpg",
+      "artist": "Alexis Weissenberg",
+      "album": "Schumann: Album for the Young, Op. 68 & Scenes from Childhood, Op. 15",
+      "track": "Album für die Jugend, Op. 68: No. 1, Melodie",
+      "year": "1989",
+      "source": "https://music.apple.com/au/album/album-f%C3%BCr-die-jugend-op-68-no-1-melodie/1570912403?i=1570912404&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Alexis Weissenberg",
+          "track": "Album für die Jugend, Op. 68: No. 1, Melodie",
+          "album": "Schumann: Album for the Young, Op. 68 & Scenes from Childhood, Op. 15",
+          "year": "1989",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/b7/2e/a6/b72ea6e5-ef78-a4ae-9f97-a891622ef96f/190296619199.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/album-f%C3%BCr-die-jugend-op-68-no-1-melodie/1570912403?i=1570912404&uo=4",
+          "file": "_candidates/schumann-melody-op68-1-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Luba Edlina",
+          "track": "Album for the Young, Op. 68: No. 1, Melody (Melodie)",
+          "album": "Schumann: Album for the Young",
+          "year": "1999",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/33/86/8e/33868e19-346f-547f-5106-1d42cd81be83/5059864973130.png/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/album-for-the-young-op-68-no-1-melody-melodie/1761614090?i=1761614091&uo=4",
+          "file": "_candidates/schumann-melody-op68-1-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Kei Itoh",
+          "track": "Album Fur Die Jugend Op.68 Erste Abteilung: Fur Kleinere Melodie",
+          "album": "Schumanniana 10",
+          "year": "2002",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/82/b3/d2/82b3d27f-64c0-15bd-0fb2-aad530d019d9/4580789699269.png/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/album-fur-die-jugend-op-68-erste-abteilung-fur-kleinere/1799677973?i=1799677974&uo=4",
+          "file": "_candidates/schumann-melody-op68-1-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Claudio Colombo",
+          "track": "Album für die Jugend, Op. 68: No. 1, Melodie",
+          "album": "Schumann: Album für die Jugend, Op. 68",
+          "year": "2023",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/e6/79/3a/e6793ace-55a0-40bd-0c36-45512d2d0388/cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/album-f%C3%BCr-die-jugend-op-68-no-1-melodie/1679519379?i=1679519777&uo=4",
+          "file": "_candidates/schumann-melody-op68-1-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Dieter Goldmann",
+          "track": "Album for the Young, Op. 68: No. 1 Melodie",
+          "album": "Schumann: Album for the Young",
+          "year": "1992",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music71/v4/cd/b9/e5/cdb9e561-fa1f-41b2-ec8d-066d7f09a6c1/191018289461.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/album-for-the-young-op-68-no-1-melodie/1173531009?i=1173531229&uo=4",
+          "file": "_candidates/schumann-melody-op68-1-4.jpg"
+        }
+      ]
+    },
+    "schumann-soldiers-march": {
+      "file": "art/schumann-soldiers-march.jpg",
+      "artist": "Oriol Jürgens",
+      "album": "Robert Schumann Soldier's March from Album for the Young Op. 68 No. 2 - Single",
+      "track": "Robert Schumann Soldier's March from Album for the Young Op. 68 No. 2",
+      "year": "2022",
+      "source": "https://music.apple.com/au/album/robert-schumann-soldiers-march-from-album-for-the/1607350721?i=1607350722&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Oriol Jürgens",
+          "track": "Robert Schumann Soldier's March from Album for the Young Op. 68 No. 2",
+          "album": "Robert Schumann Soldier's March from Album for the Young Op. 68 No. 2 - Single",
+          "year": "2022",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/27/fa/ac/27faac6d-f477-fc78-26ef-c5ed9ee5cb32/S_A8720356894031.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/robert-schumann-soldiers-march-from-album-for-the/1607350721?i=1607350722&uo=4",
+          "file": "_candidates/schumann-soldiers-march-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Carlos Marquez",
+          "track": "Album für die Jugend, Op. 68: 2. Soldier's March",
+          "album": "Robert Schumann: Album für die Jugend Op. 68",
+          "year": "2024",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/21/a2/a4/21a2a475-5750-eee2-6242-de5766bf1850/5063621037799_cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/album-f%C3%BCr-die-jugend-op-68-2-soldiers-march/1778530213?i=1778530216&uo=4",
+          "file": "_candidates/schumann-soldiers-march-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Logan Skelton",
+          "track": "Album for The Young, Op. 68: No. 2, Soldier's March",
+          "album": "Schumann: Album for The Young",
+          "year": "2021",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/2e/4a/99/2e4a9916-d4e6-8c08-84c9-4a1bcab7a866/20210528_bolcom_youth_3000x3000.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/album-for-the-young-op-68-no-2-soldiers-march/1579779076?i=1579779078&uo=4",
+          "file": "_candidates/schumann-soldiers-march-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Leslie Howard",
+          "track": "Album für die Jugend, Op. 68, Pt. I: No. 2, Soldiers' March",
+          "album": "Leslie Howard Plays Mozart, Beethoven, Schumann and Grieg",
+          "year": "2015",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music3/v4/42/fd/f8/42fdf8c9-05c5-f384-f7a2-aeaae90a238e/COMP001.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/album-f%C3%BCr-die-jugend-op-68-pt-i-no-2-soldiers-march/1041207239?i=1041208796&uo=4",
+          "file": "_candidates/schumann-soldiers-march-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Rico Gulda",
+          "track": "Album fur die Jugend (Album for the Young), Op. 68, Part I: Fur Kleinere : No. 2. Soldatenmarsch (Soldier's March)",
+          "album": "Easy-Listening Piano Classics: Schumann",
+          "year": "2001",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/05/d2/74/mzi.lghzqgkv.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/album-fur-die-jugend-album-for-the-young-op-68-part-i/354587447?i=354587636&uo=4",
+          "file": "_candidates/schumann-soldiers-march-4.jpg"
+        }
+      ]
+    },
+    "burgmuller-arabesque": {
+      "file": "art/burgmuller-arabesque.jpg",
+      "artist": "Carl Petersson",
+      "album": "Burgmüller: 25 Études faciles et progressives, Op. 100 & 18 Études, Op. 109",
+      "track": "25 Études faciles et progressives, Op. 100: No. 2, L'arabesque",
+      "year": "2019",
+      "source": "https://music.apple.com/au/album/25-%C3%A9tudes-faciles-et-progressives-op-100-no-2-larabesque/1473650250?i=1473650253&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Carl Petersson",
+          "track": "25 Études faciles et progressives, Op. 100: No. 2, L'arabesque",
+          "album": "Burgmüller: 25 Études faciles et progressives, Op. 100 & 18 Études, Op. 109",
+          "year": "2019",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/d0/07/d0/d007d0f8-a312-8032-8ed5-9f89f8c17ced/747313981625.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/25-%C3%A9tudes-faciles-et-progressives-op-100-no-2-larabesque/1473650250?i=1473650253&uo=4",
+          "file": "_candidates/burgmuller-arabesque-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Christoph Eschenbach",
+          "track": "25 Études faciles et progressives, Op. 100: 2. L'Arabesque. Allegro scherzando",
+          "album": "Piano Lessons - Burgmüller: 25 Etudes, Op. 100; Bach, J.S.: 6 little Preludes, BWV 933-938, Various Piano Pieces",
+          "year": "1979",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/2d/18/c0/2d18c08f-84f8-84f9-c5b6-38fd599a5f17/20UMGIM93119.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/25-%C3%A9tudes-faciles-et-progressives-op-100-2-larabesque/1542036123?i=1542036338&uo=4",
+          "file": "_candidates/burgmuller-arabesque-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Soonhwon Kwon",
+          "track": "25 Études faciles et progressives, Op. 100: No. 2, L'Arabesque. Allegro scherzando",
+          "album": "Burgmüller: 25 Études faciles et progressives, Op. 100",
+          "year": "2008",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ff/a1/4d/ffa14d65-39cf-f13a-ba16-bbafdeea7298/191953101231.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/25-%C3%A9tudes-faciles-et-progressives-op-100-no-2-larabesque/1547819733?i=1547819735&uo=4",
+          "file": "_candidates/burgmuller-arabesque-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Masako Ezaki",
+          "track": "25 Etudes Faciles Op. 100: II. L'arabesque",
+          "album": "Burgmüller: 18 Studies Op. 109, 25 Etudes Faciles Op. 100 etc.",
+          "year": "2009",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/4f/a7/6c/4fa76c35-bb5d-283e-6461-b9f39c14211e/4580789619502.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/25-etudes-faciles-op-100-ii-larabesque/1731098513?i=1731098535&uo=4",
+          "file": "_candidates/burgmuller-arabesque-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Chiharu Aizawa",
+          "track": "25 Études faciles et progressives, Op. 100: No. 2 in A Minor, L'arabesque",
+          "album": "Burgmüller: 25 Études faciles et progressives, Op. 100 & 18 Études de genre, Op. 109",
+          "year": "2019",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/53/e0/7f/53e07fd7-bd8b-5c82-067b-683d83fdb0d1/cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/25-%C3%A9tudes-faciles-et-progressives-op-100-no-2-in-a/1448546284?i=1448546694&uo=4",
+          "file": "_candidates/burgmuller-arabesque-4.jpg"
+        }
+      ]
+    },
+    "burgmuller-candeur": {
+      "file": "art/burgmuller-candeur.jpg",
+      "artist": "Carl Petersson",
+      "album": "Burgmüller: 25 Études faciles et progressives, Op. 100 & 18 Études, Op. 109",
+      "track": "25 Études faciles et progressives, Op. 100: No. 1, La candeur",
+      "year": "2019",
+      "source": "https://music.apple.com/au/album/25-%C3%A9tudes-faciles-et-progressives-op-100-no-1-la-candeur/1473650250?i=1473650251&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Carl Petersson",
+          "track": "25 Études faciles et progressives, Op. 100: No. 1, La candeur",
+          "album": "Burgmüller: 25 Études faciles et progressives, Op. 100 & 18 Études, Op. 109",
+          "year": "2019",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/d0/07/d0/d007d0f8-a312-8032-8ed5-9f89f8c17ced/747313981625.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/25-%C3%A9tudes-faciles-et-progressives-op-100-no-1-la-candeur/1473650250?i=1473650251&uo=4",
+          "file": "_candidates/burgmuller-candeur-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Soonhwon Kwon",
+          "track": "25 Études faciles et progressives, Op. 100: No. 1, La candeur. Allegro moderato",
+          "album": "Burgmüller: 25 Études faciles et progressives, Op. 100",
+          "year": "2008",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/ff/a1/4d/ffa14d65-39cf-f13a-ba16-bbafdeea7298/191953101231.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/25-%C3%A9tudes-faciles-et-progressives-op-100-no-1-la-candeur/1547819733?i=1547819734&uo=4",
+          "file": "_candidates/burgmuller-candeur-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Masako Ezaki",
+          "track": "25 Etudes Faciles Op. 100: I. La candeur",
+          "album": "Burgmüller: 18 Studies Op. 109, 25 Etudes Faciles Op. 100 etc.",
+          "year": "2009",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/4f/a7/6c/4fa76c35-bb5d-283e-6461-b9f39c14211e/4580789619502.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/25-etudes-faciles-op-100-i-la-candeur/1731098513?i=1731098534&uo=4",
+          "file": "_candidates/burgmuller-candeur-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Claudio Colombo",
+          "track": "25 Études faciles et progressives, Op. 100: No. 1, La candeur. Allegro moderato",
+          "album": "Friedrich Burgmüller: 25 Études faciles et progressives, Op. 100",
+          "year": "2022",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/98/e5/39/98e539f6-6bf8-893d-2402-a53a8307f4b2/cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/25-%C3%A9tudes-faciles-et-progressives-op-100-no-1-la-candeur/1605995587?i=1605995588&uo=4",
+          "file": "_candidates/burgmuller-candeur-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Chiharu Aizawa",
+          "track": "25 Études faciles et progressives, Op. 100: No. 1 in C Major, La candeur",
+          "album": "Burgmüller: 25 Études faciles et progressives, Op. 100 & 18 Études de genre, Op. 109",
+          "year": "2019",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/53/e0/7f/53e07fd7-bd8b-5c82-067b-683d83fdb0d1/cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/25-%C3%A9tudes-faciles-et-progressives-op-100-no-1-in-c/1448546284?i=1448546693&uo=4",
+          "file": "_candidates/burgmuller-candeur-4.jpg"
+        }
+      ]
+    },
+    "time-inception": {
+      "file": "art/time-inception.jpg",
+      "artist": "Hans Zimmer",
+      "album": "Inception (Music from the Motion Picture)",
+      "track": "Time",
+      "year": "2010",
+      "source": "https://music.apple.com/au/album/time/380349905?i=380350246&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "Hans Zimmer",
+          "track": "Time",
+          "album": "Inception (Music from the Motion Picture)",
+          "year": "2010",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/2b/62/eb/2b62ebd7-aa99-988a-0fee-714162f6fbeb/093624965008.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/time/380349905?i=380350246&uo=4",
+          "file": "_candidates/time-inception-0.jpg"
+        }
+      ]
+    },
+    "schindlers-list": {
+      "file": "art/schindlers-list.jpg",
+      "artist": "John Williams, Itzhak Perlman & Boston Symphony Orchestra",
+      "album": "Schindler's List (Original Motion Picture Score)",
+      "track": "Theme from Schindler's List",
+      "year": "1993",
+      "source": "https://music.apple.com/au/album/theme-from-schindlers-list/1440502968?i=1440502971&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "John Williams, Itzhak Perlman & Boston Symphony Orchestra",
+          "track": "Theme from Schindler's List",
+          "album": "Schindler's List (Original Motion Picture Score)",
+          "year": "1993",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/5b/9e/40/5b9e404f-0c3e-1950-f83d-19ea359c6e34/00008811096922.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/theme-from-schindlers-list/1440502968?i=1440502971&uo=4",
+          "file": "_candidates/schindlers-list-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "John Williams, Itzhak Perlman & Pittsburgh Symphony Orchestra",
+          "track": "Theme (From \"Schindler's List\")",
+          "album": "John Williams: The Great Movie Soundtracks",
+          "year": "1966",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music19/v4/35/7b/c5/357bc5ed-08f2-c8b3-cb72-09f6687a7b4c/mzm.odmqrktj.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/theme-from-schindlers-list/1046364912?i=1046366483&uo=4",
+          "file": "_candidates/schindlers-list-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "John Williams, Itzhak Perlman & Pittsburgh Symphony Orchestra",
+          "track": "Schindler's List: Theme",
+          "album": "Sony Classical - Great Performances, 1903-1998",
+          "year": "1966",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/56/2f/30/mzi.xtyljlkq.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/schindlers-list-theme/344472774?i=344473510&uo=4",
+          "file": "_candidates/schindlers-list-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "John Williams, Itzhak Perlman & Pittsburgh Symphony Orchestra",
+          "track": "Theme from Schindler's List",
+          "album": "Cinema Serenade",
+          "year": "1966",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/2e/84/74/2e8474bf-e002-5bca-13d9-5034f6a5b2b3/contsched.zlimktrn.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/theme-from-schindlers-list/168410166?i=168410807&uo=4",
+          "file": "_candidates/schindlers-list-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "John Williams, Itzhak Perlman & Pittsburgh Symphony Orchestra",
+          "track": "Theme from Schindler's List",
+          "album": "Itzhak Perlman Plays Concertos and Sonatas",
+          "year": "1966",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music118/v4/61/5b/5b/615b5be6-18a6-f967-061b-1d0738e4c1f4/886443753983.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/theme-from-schindlers-list/599799933?i=599801707&uo=4",
+          "file": "_candidates/schindlers-list-4.jpg"
+        }
+      ]
+    },
+    "merry-christmas-mr-lawrence": {
+      "file": "art/merry-christmas-mr-lawrence.jpg",
+      "artist": "Ryuichi Sakamoto",
+      "album": "Merry Christmas, Mr. Lawrence",
+      "track": "Merry Christmas Mr. Lawrence",
+      "year": "1983",
+      "source": "https://music.apple.com/au/album/merry-christmas-mr-lawrence/1500818100?i=1500818105&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Ryuichi Sakamoto",
+          "track": "Merry Christmas Mr. Lawrence",
+          "album": "Merry Christmas, Mr. Lawrence",
+          "year": "1983",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/62/d7/35/62d735b2-a993-a2ad-e08c-5edd9be06202/886448177739.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/merry-christmas-mr-lawrence/1500818100?i=1500818105&uo=4",
+          "file": "_candidates/merry-christmas-mr-lawrence-0.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Ryuichi Sakamoto",
+          "track": "Merry Christmas Mr. Lawrence",
+          "album": "Opus",
+          "year": "2024",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/b9/7a/02/b97a0206-d37b-43c8-dda3-6f9795f8e00c/196872221275.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/merry-christmas-mr-lawrence/1753124262?i=1753124607&uo=4",
+          "file": "_candidates/merry-christmas-mr-lawrence-1.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Ryuichi Sakamoto",
+          "track": "Merry Christmas Mr. Lawrence",
+          "album": "Playing The Piano",
+          "year": "2004",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/cc/22/48/cc224811-3e15-3a37-b6fb-972ff431f4c8/881036000093_cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/merry-christmas-mr-lawrence/1581111685?i=1581111688&uo=4",
+          "file": "_candidates/merry-christmas-mr-lawrence-2.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Ryuichi Sakamoto",
+          "track": "Merry Christmas Mr. Lawrence",
+          "album": "Playing the Piano 12122020",
+          "year": "2021",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ee/0e/13/ee0e13d0-0759-e76f-a242-7df4ebe76d8f/4988064774791_cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/merry-christmas-mr-lawrence/1594653981?i=1594654460&uo=4",
+          "file": "_candidates/merry-christmas-mr-lawrence-3.jpg"
+        },
+        {
+          "score": 100,
+          "artist": "Ryuichi Sakamoto",
+          "track": "Merry Christmas Mr. Lawrence",
+          "album": "1996 (Re-Mastered)",
+          "year": "1996",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7b/a2/ce/7ba2ce4d-a220-9715-7704-b11efff6a1be/881036000000_cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/merry-christmas-mr-lawrence/1488023157?i=1488023163&uo=4",
+          "file": "_candidates/merry-christmas-mr-lawrence-4.jpg"
+        }
+      ]
+    },
+    "one-summers-day": {
+      "file": "art/one-summers-day.jpg",
+      "artist": "Joe Hisaishi",
+      "album": "Spirited Away (Original Soundtrack)",
+      "track": "One Summer's Day",
+      "year": "2001",
+      "source": "https://music.apple.com/au/album/one-summers-day/883501721?i=883501723&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "Joe Hisaishi",
+          "track": "One Summer's Day",
+          "album": "Spirited Away (Original Soundtrack)",
+          "year": "2001",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/12/dc/cf/12dccf7e-32ce-12e8-03fe-37574d6c2197/TKCA-72165.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/one-summers-day/883501721?i=883501723&uo=4",
+          "file": "_candidates/one-summers-day-0.jpg"
+        }
+      ]
+    },
+    "minecraft-sweden": {
+      "file": "art/minecraft-sweden.jpg",
+      "artist": "C418",
+      "album": "Minecraft - Volume Alpha",
+      "track": "Sweden",
+      "year": "2011",
+      "source": "https://music.apple.com/au/album/sweden/1867885113?i=1867885632&uo=4",
+      "candidates": [
+        {
+          "score": 50,
+          "artist": "C418",
+          "track": "Sweden",
+          "album": "Minecraft - Volume Alpha",
+          "year": "2011",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/7c/04/bf/7c04bfc6-be8c-661a-3306-b97fc2c4999b/859705593825.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/sweden/1867885113?i=1867885632&uo=4",
+          "file": "_candidates/minecraft-sweden-0.jpg"
+        }
+      ]
+    },
+    "minecraft-wet-hands": {
+      "file": "art/minecraft-wet-hands.jpg",
+      "artist": "C418",
+      "album": "Minecraft - Volume Alpha",
+      "track": "Wet Hands",
+      "year": "2009",
+      "source": "https://music.apple.com/au/album/wet-hands/1867885113?i=1867885443&uo=4",
+      "candidates": [
+        {
+          "score": 50,
+          "artist": "C418",
+          "track": "Wet Hands",
+          "album": "Minecraft - Volume Alpha",
+          "year": "2009",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/7c/04/bf/7c04bfc6-be8c-661a-3306-b97fc2c4999b/859705593825.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/wet-hands/1867885113?i=1867885443&uo=4",
+          "file": "_candidates/minecraft-wet-hands-0.jpg"
+        }
+      ]
+    },
+    "silksong": {
+      "file": "art/silksong.jpg",
+      "artist": "Christopher Larkin",
+      "album": "Hollow Knight: Silksong (Original Soundtrack)",
+      "track": "Silksong",
+      "year": "2025",
+      "source": "https://music.apple.com/au/album/silksong/1838949732?i=1838953941&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Christopher Larkin",
+          "track": "Silksong",
+          "album": "Hollow Knight: Silksong (Original Soundtrack)",
+          "year": "2025",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ce/9d/5c/ce9d5c25-4700-7abf-db05-d00b242f6722/859717033227_cover.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/silksong/1838949732?i=1838953941&uo=4",
+          "file": "_candidates/silksong-0.jpg"
+        }
+      ]
+    },
+    "hey-jude": {
+      "file": "art/hey-jude.jpg",
+      "artist": "The Beatles",
+      "album": "Hey Jude",
+      "track": "Hey Jude",
+      "year": "1968",
+      "source": "https://music.apple.com/au/album/hey-jude/1468023095?i=1468032748&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "The Beatles",
+          "track": "Hey Jude",
+          "album": "Hey Jude",
+          "year": "1968",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/f3/ad/d2/f3add268-3a49-10d4-e7f7-154b9ffc9042/00602537669035.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/hey-jude/1468023095?i=1468032748&uo=4",
+          "file": "_candidates/hey-jude-0.jpg"
+        }
+      ]
+    },
+    "perfect": {
+      "file": "art/perfect.jpg",
+      "artist": "Ed Sheeran",
+      "album": "÷ (Deluxe)",
+      "track": "Perfect",
+      "year": "2017",
+      "source": "https://music.apple.com/au/album/perfect/1193700802?i=1193700926&uo=4",
+      "candidates": [
+        {
+          "score": 105,
+          "artist": "Ed Sheeran",
+          "track": "Perfect",
+          "album": "÷ (Deluxe)",
+          "year": "2017",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/20/03/4c/20034cdb-b2b1-74a7-2ec0-521ccf471bbd/190295851286.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/perfect/1193700802?i=1193700926&uo=4",
+          "file": "_candidates/perfect-0.jpg"
+        },
+        {
+          "score": 60,
+          "artist": "Ed Sheeran",
+          "track": "Perfect (Live)",
+          "album": "Disc 1 Live",
+          "year": "2024",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/f9/c8/96/f9c896ef-986e-e60c-0c20-d2c77918832f/5021732586186.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/perfect-live/1784250923?i=1784251633&uo=4",
+          "file": "_candidates/perfect-1.jpg"
+        }
+      ]
+    },
+    "fly-me-to-the-moon": {
+      "file": "art/fly-me-to-the-moon.jpg",
+      "artist": "Frank Sinatra",
+      "album": "Sinatra-Basie: The Complete Reprise Studio Recordings (feat. Count Basie and His Orchestra)",
+      "track": "Fly Me to the Moon (feat. Count Basie and His Orchestra)",
+      "year": "2011",
+      "source": "https://music.apple.com/au/album/fly-me-to-the-moon-feat-count-basie-and-his-orchestra/1440824137?i=1440824459&uo=4",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Frank Sinatra",
+          "track": "Fly Me to the Moon (feat. Count Basie and His Orchestra)",
+          "album": "Sinatra-Basie: The Complete Reprise Studio Recordings (feat. Count Basie and His Orchestra)",
+          "year": "2011",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/a6/55/0c/a6550cbf-8e40-b493-33e9-72fdd6b894c2/00602537570805.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/fly-me-to-the-moon-feat-count-basie-and-his-orchestra/1440824137?i=1440824459&uo=4",
+          "file": "_candidates/fly-me-to-the-moon-0.jpg"
+        }
+      ]
+    },
+    "silent-night": {
+      "file": "art/silent-night.jpg",
+      "artist": "Bing Crosby",
+      "album": "White Christmas",
+      "track": "Silent Night",
+      "year": "1945",
+      "source": "https://music.apple.com/au/album/silent-night/1425234668?i=1425235070&uo=4",
+      "candidates": [
+        {
+          "score": 110,
+          "artist": "Bing Crosby",
+          "track": "Silent Night",
+          "album": "White Christmas",
+          "year": "1945",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/9f/05/d3/9f05d3bb-c85c-3d87-af68-a82129e86f1f/06UMGIM06377.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/silent-night/1425234668?i=1425235070&uo=4",
+          "file": "_candidates/silent-night-0.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Bing Crosby",
+          "track": "Silent Night",
+          "album": "Swinging on a Star (Selections from \"Road To Morocco\", \"Dixie\", and \"Going My Way\")",
+          "year": "1962",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/4d/fc/71/4dfc71d8-945a-97e5-efa1-204db323ac08/06UMGIM13324.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/silent-night/1443455593?i=1443455840&uo=4",
+          "file": "_candidates/silent-night-1.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Bing Crosby",
+          "track": "Silent Night",
+          "album": "Christmas",
+          "year": "1988",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/12/2a/92/122a92b9-ce28-8956-8e84-a2073837710c/15UMGIM52173.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/silent-night/1425258573?i=1425258600&uo=4",
+          "file": "_candidates/silent-night-2.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Bing Crosby",
+          "track": "Silent Night",
+          "album": "A Vintage Christmas",
+          "year": "2013",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/48/cb/92/48cb92bc-bd45-5430-cc6f-c80427cd1b61/888003620896.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/silent-night/763823783?i=763825012&uo=4",
+          "file": "_candidates/silent-night-3.jpg"
+        },
+        {
+          "score": 110,
+          "artist": "Bing Crosby",
+          "track": "Silent Night",
+          "album": "A Centennial Anthology of His Decca Recordings",
+          "year": "1997",
+          "art": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/51/31/04/513104d5-4381-cbd5-c37e-986439dcc5de/06UMGIM10046.rgb.jpg/1000x1000bb.jpg",
+          "url": "https://music.apple.com/au/album/silent-night/1444531043?i=1444531310&uo=4",
+          "file": "_candidates/silent-night-4.jpg"
+        }
+      ]
+    },
+    "greensleeves": {
+      "file": null,
+      "reason": "no canonical recording - generative plate"
+    },
+    "blues-in-c": {
+      "file": null,
+      "reason": "no canonical recording - generative plate"
+    },
+    "gerudo-valley": {
+      "file": "art/gerudo-valley.jpg",
+      "artist": "Koji Kondo",
+      "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "year": "1998",
+      "source": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Koji Kondo",
+          "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "year": "1998",
+          "art": "https://archive.org/download/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c-14767446925_thumb1200.jpg",
+          "url": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+          "file": "_candidates/gerudo-valley-0.jpg"
+        }
+      ]
+    },
+    "zeldas-lullaby": {
+      "file": "art/zeldas-lullaby.jpg",
+      "artist": "Koji Kondo",
+      "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "year": "1998",
+      "source": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Koji Kondo",
+          "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "year": "1998",
+          "art": "https://archive.org/download/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c-14767446925_thumb1200.jpg",
+          "url": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+          "file": "_candidates/zeldas-lullaby-0.jpg"
+        }
+      ]
+    },
+    "song-of-storms": {
+      "file": "art/song-of-storms.jpg",
+      "artist": "Koji Kondo",
+      "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "year": "1998",
+      "source": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Koji Kondo",
+          "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "year": "1998",
+          "art": "https://archive.org/download/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c-14767446925_thumb1200.jpg",
+          "url": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+          "file": "_candidates/song-of-storms-0.jpg"
+        }
+      ]
+    },
+    "zelda-main-theme": {
+      "file": "art/zelda-main-theme.jpg",
+      "artist": "Koji Kondo",
+      "album": "The Legend of Zelda: 25th Anniversary Special Orchestra CD",
+      "track": "The Legend of Zelda: 25th Anniversary Special Orchestra CD",
+      "year": "2011",
+      "source": "https://musicbrainz.org/release/fe88cd3f-1880-4ddf-98c4-2f74ca5f99f2",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Koji Kondo",
+          "track": "The Legend of Zelda: 25th Anniversary Special Orchestra CD",
+          "album": "The Legend of Zelda: 25th Anniversary Special Orchestra CD",
+          "year": "2011",
+          "art": "https://archive.org/download/mbid-fe88cd3f-1880-4ddf-98c4-2f74ca5f99f2/mbid-fe88cd3f-1880-4ddf-98c4-2f74ca5f99f2-40775085992_thumb1200.jpg",
+          "url": "https://musicbrainz.org/release/fe88cd3f-1880-4ddf-98c4-2f74ca5f99f2",
+          "file": "_candidates/zelda-main-theme-0.jpg"
+        }
+      ]
     }
   },
   "rejects": {}

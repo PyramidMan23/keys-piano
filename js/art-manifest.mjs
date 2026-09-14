@@ -132,16 +132,19 @@ export const ART = {
     "year": "1975"
   },
   "burgmuller-arabesque": {
-    "generated": true,
-    "drawnFrom": "the notes of Arabesque, Op. 100 No. 2, Friedrich Burgmüller"
+    "artist": "Carl Petersson",
+    "album": "Burgmüller: 25 Études faciles et progressives, Op. 100 & 18 Études, Op. 109",
+    "year": "2019"
   },
   "burgmuller-candeur": {
-    "generated": true,
-    "drawnFrom": "the notes of La Candeur, Op. 100 No. 1, Friedrich Burgmüller"
+    "artist": "Carl Petersson",
+    "album": "Burgmüller: 25 Études faciles et progressives, Op. 100 & 18 Études, Op. 109",
+    "year": "2019"
   },
   "chopin-prelude-op28-7": {
-    "generated": true,
-    "drawnFrom": "the notes of Prelude in A major, Op. 28 No. 7, Chopin"
+    "artist": "Roger Woodward",
+    "album": "The Chopin Album",
+    "year": "1998"
   },
   "clair-de-lune": {
     "artist": "The Arts Symphonic Orchestra, Robert Emery & Claude Debussy",
@@ -149,8 +152,9 @@ export const ART = {
     "year": "2019"
   },
   "clementi-sonatina-36-1": {
-    "generated": true,
-    "drawnFrom": "the notes of Sonatina Op. 36 No. 1, 1st movement, Muzio Clementi"
+    "artist": "Lang Lang",
+    "album": "Clementi: Sonatina No. 1 in C Major, Op. 36 - Single",
+    "year": "2019"
   },
   "coffin-dance": {
     "artist": "Vicetone & Tony Igy",
@@ -188,8 +192,9 @@ export const ART = {
     "year": "2024"
   },
   "fly-me-to-the-moon": {
-    "generated": true,
-    "drawnFrom": "the notes of Fly Me to the Moon, Bart Howard · arr. Andrew Wrangell"
+    "artist": "Frank Sinatra",
+    "album": "Sinatra-Basie: The Complete Reprise Studio Recordings (feat. Count Basie and His Orchestra)",
+    "year": "2011"
   },
   "fray-save-a-life": {
     "artist": "The Fray",
@@ -212,8 +217,9 @@ export const ART = {
     "year": "1995"
   },
   "gerudo-valley": {
-    "generated": true,
-    "drawnFrom": "the notes of Gerudo Valley, Koji Kondo · arr. Sheet Music Boss"
+    "artist": "Koji Kondo",
+    "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+    "year": "1998"
   },
   "gladiator": {
     "artist": "Lisa Gerrard, Gavin Greenaway, The Lyndhurst Orchestra, Bruce Fowler, Yvonne S. Moriarty, Walt Fowler, Ladd McIntosh, Elizabeth Finch, Jack Smalley & Hans Zimmer",
@@ -221,8 +227,9 @@ export const ART = {
     "year": "2000"
   },
   "gnossienne-1": {
-    "generated": true,
-    "drawnFrom": "the notes of Gnossienne No. 1, Erik Satie"
+    "artist": "Pio Palumbo",
+    "album": "Satie: Gnossienne No. 1 - Single",
+    "year": "2024"
   },
   "goldberg-aria": {
     "artist": "Miki Skuta",
@@ -248,8 +255,9 @@ export const ART = {
     "drawnFrom": "the notes of Happy Birthday, Traditional"
   },
   "hey-jude": {
-    "generated": true,
-    "drawnFrom": "the notes of Hey Jude, The Beatles · arr. Andrew Wrangell"
+    "artist": "The Beatles",
+    "album": "Hey Jude",
+    "year": "1968"
   },
   "hotel-california": {
     "artist": "Eagles",
@@ -347,8 +355,9 @@ export const ART = {
     "year": "2023"
   },
   "maple-leaf-rag": {
-    "generated": true,
-    "drawnFrom": "the notes of Maple Leaf Rag, Scott Joplin"
+    "artist": "Alexander Peskanov",
+    "album": "Scott Joplin: Piano Rags",
+    "year": "2004"
   },
   "mariage-d-amour": {
     "artist": "Francesco Digilio",
@@ -366,8 +375,9 @@ export const ART = {
     "year": "2009"
   },
   "merry-christmas-mr-lawrence": {
-    "generated": true,
-    "drawnFrom": "the notes of Merry Christmas Mr. Lawrence, Ryuichi Sakamoto · arr. Andrew Wrangell"
+    "artist": "Ryuichi Sakamoto",
+    "album": "Merry Christmas, Mr. Lawrence",
+    "year": "1983"
   },
   "mia-sebastian": {
     "artist": "Justin Hurwitz",
@@ -375,12 +385,14 @@ export const ART = {
     "year": "2016"
   },
   "minecraft-sweden": {
-    "generated": true,
-    "drawnFrom": "the notes of Sweden (Minecraft), C418 · arr. Sheet Music Boss"
+    "artist": "C418",
+    "album": "Minecraft - Volume Alpha",
+    "year": "2011"
   },
   "minecraft-wet-hands": {
-    "generated": true,
-    "drawnFrom": "the notes of Wet Hands (Minecraft), C418 · arr. Sheet Music Boss"
+    "artist": "C418",
+    "album": "Minecraft - Volume Alpha",
+    "year": "2009"
   },
   "moonlight-sonata": {
     "artist": "Wilhelm Kempff",
@@ -418,8 +430,9 @@ export const ART = {
     "year": "1984"
   },
   "one-summers-day": {
-    "generated": true,
-    "drawnFrom": "the notes of One Summer's Day (Spirited Away), Joe Hisaishi · arr. Andrew Wrangell"
+    "artist": "Joe Hisaishi",
+    "album": "Spirited Away (Original Soundtrack)",
+    "year": "2001"
   },
   "overwatch": {
     "artist": "Neal Acree & Derek Duke",
@@ -442,12 +455,14 @@ export const ART = {
     "year": "2019"
   },
   "perfect": {
-    "generated": true,
-    "drawnFrom": "the notes of Perfect, Ed Sheeran · arr. Andrew Wrangell"
+    "artist": "Ed Sheeran",
+    "album": "÷ (Deluxe)",
+    "year": "2017"
   },
   "petzold-minuet-g": {
-    "generated": true,
-    "drawnFrom": "the notes of Minuet in G, BWV Anh. 114, Christian Petzold (attr. Bach)"
+    "artist": "János Sebestyén",
+    "album": "J. S. Bach: Favourite Piano Works",
+    "year": "1993"
   },
   "piano-man": {
     "artist": "Billy Joel",
@@ -591,16 +606,19 @@ export const ART = {
     "drawnFrom": "the notes of G# Minor Scale, Technique drill · one octave, both hands"
   },
   "schindlers-list": {
-    "generated": true,
-    "drawnFrom": "the notes of Theme from Schindler's List, John Williams · arr. Sheet Music Boss"
+    "artist": "John Williams, Itzhak Perlman & Boston Symphony Orchestra",
+    "album": "Schindler's List (Original Motion Picture Score)",
+    "year": "1993"
   },
   "schumann-melody-op68-1": {
-    "generated": true,
-    "drawnFrom": "the notes of Melody, Op. 68 No. 1, Robert Schumann, Album for the Young"
+    "artist": "Alexis Weissenberg",
+    "album": "Schumann: Album for the Young, Op. 68 & Scenes from Childhood, Op. 15",
+    "year": "1989"
   },
   "schumann-soldiers-march": {
-    "generated": true,
-    "drawnFrom": "the notes of Soldiers' March, Op. 68 No. 2, Robert Schumann, Album for the Young"
+    "artist": "Oriol Jürgens",
+    "album": "Robert Schumann Soldier's March from Album for the Young Op. 68 No. 2 - Single",
+    "year": "2022"
   },
   "see-you-again": {
     "artist": "Wiz Khalifa",
@@ -613,16 +631,19 @@ export const ART = {
     "year": "2021"
   },
   "silent-night": {
-    "generated": true,
-    "drawnFrom": "the notes of Silent Night, Franz Gruber"
+    "artist": "Bing Crosby",
+    "album": "White Christmas",
+    "year": "1945"
   },
   "silksong": {
-    "generated": true,
-    "drawnFrom": "the notes of Silksong (Main Theme), Christopher Larkin · arr. Sheet Music Boss"
+    "artist": "Christopher Larkin",
+    "album": "Hollow Knight: Silksong (Original Soundtrack)",
+    "year": "2025"
   },
   "song-of-storms": {
-    "generated": true,
-    "drawnFrom": "the notes of Song of Storms (The Legend of Zelda), Koji Kondo · Ocarina of Time · arr. Sebastian, NinSheetMusic"
+    "artist": "Koji Kondo",
+    "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+    "year": "1998"
   },
   "stairway": {
     "artist": "Led Zeppelin",
@@ -640,12 +661,14 @@ export const ART = {
     "year": "1999"
   },
   "the-entertainer": {
-    "generated": true,
-    "drawnFrom": "the notes of The Entertainer, Scott Joplin"
+    "artist": "Guido Nielsen",
+    "album": "Scott Joplin: The Complete Rags, Marches, Waltzes & Songs",
+    "year": "2002"
   },
   "time-inception": {
-    "generated": true,
-    "drawnFrom": "the notes of Time (Inception), Hans Zimmer · arr. Luke Faulkner"
+    "artist": "Hans Zimmer",
+    "album": "Inception (Music from the Motion Picture)",
+    "year": "2010"
   },
   "traumerei": {
     "artist": "Gheorghe Zamfir, Harry van Hoof & Harry van Hoof Orkest",
@@ -688,11 +711,13 @@ export const ART = {
     "year": "1996"
   },
   "zelda-main-theme": {
-    "generated": true,
-    "drawnFrom": "the notes of The Legend of Zelda (Main Theme), Koji Kondo · Overworld theme, arr. JDMEK5, NinSheetMusic"
+    "artist": "Koji Kondo",
+    "album": "The Legend of Zelda: 25th Anniversary Special Orchestra CD",
+    "year": "2011"
   },
   "zeldas-lullaby": {
-    "generated": true,
-    "drawnFrom": "the notes of Zelda's Lullaby, Koji Kondo · arr. Sheet Music Boss"
+    "artist": "Koji Kondo",
+    "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+    "year": "1998"
   }
 };
