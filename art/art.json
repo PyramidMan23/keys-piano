@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-09-13T14:58:00.967Z",
+  "fetched": "2026-09-14T00:33:45.786Z",
   "source": "iTunes Search API",
   "manifest": {
     "still-dre": {
@@ -2105,12 +2105,87 @@
     "blues-in-c": {
       "file": null,
       "reason": "no canonical recording - generative plate"
+    },
+    "gerudo-valley": {
+      "file": "art/gerudo-valley.jpg",
+      "artist": "Koji Kondo",
+      "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "year": "1998",
+      "source": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Koji Kondo",
+          "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "year": "1998",
+          "art": "https://archive.org/download/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c-14767446925_thumb1200.jpg",
+          "url": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+          "file": "_candidates/gerudo-valley-0.jpg"
+        }
+      ]
+    },
+    "zeldas-lullaby": {
+      "file": "art/zeldas-lullaby.jpg",
+      "artist": "Koji Kondo",
+      "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "year": "1998",
+      "source": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Koji Kondo",
+          "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "year": "1998",
+          "art": "https://archive.org/download/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c-14767446925_thumb1200.jpg",
+          "url": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+          "file": "_candidates/zeldas-lullaby-0.jpg"
+        }
+      ]
+    },
+    "song-of-storms": {
+      "file": "art/song-of-storms.jpg",
+      "artist": "Koji Kondo",
+      "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+      "year": "1998",
+      "source": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Koji Kondo",
+          "track": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+          "year": "1998",
+          "art": "https://archive.org/download/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c/mbid-e78b3cd0-7643-4520-99fe-4b180bb5098c-14767446925_thumb1200.jpg",
+          "url": "https://musicbrainz.org/release/e78b3cd0-7643-4520-99fe-4b180bb5098c",
+          "file": "_candidates/song-of-storms-0.jpg"
+        }
+      ]
+    },
+    "zelda-main-theme": {
+      "file": "art/zelda-main-theme.jpg",
+      "artist": "Koji Kondo",
+      "album": "The Legend of Zelda: 25th Anniversary Special Orchestra CD",
+      "track": "The Legend of Zelda: 25th Anniversary Special Orchestra CD",
+      "year": "2011",
+      "source": "https://musicbrainz.org/release/fe88cd3f-1880-4ddf-98c4-2f74ca5f99f2",
+      "candidates": [
+        {
+          "score": 100,
+          "artist": "Koji Kondo",
+          "track": "The Legend of Zelda: 25th Anniversary Special Orchestra CD",
+          "album": "The Legend of Zelda: 25th Anniversary Special Orchestra CD",
+          "year": "2011",
+          "art": "https://archive.org/download/mbid-fe88cd3f-1880-4ddf-98c4-2f74ca5f99f2/mbid-fe88cd3f-1880-4ddf-98c4-2f74ca5f99f2-40775085992_thumb1200.jpg",
+          "url": "https://musicbrainz.org/release/fe88cd3f-1880-4ddf-98c4-2f74ca5f99f2",
+          "file": "_candidates/zelda-main-theme-0.jpg"
+        }
+      ]
     }
   },
-  "rejects": {
-    "gerudo-valley": "CAA: fetch failed",
-    "zeldas-lullaby": "CAA: fetch failed",
-    "song-of-storms": "CAA: fetch failed",
-    "zelda-main-theme": "CAA: fetch failed"
-  }
+  "rejects": {}
 }

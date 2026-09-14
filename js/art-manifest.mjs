@@ -217,8 +217,9 @@ export const ART = {
     "year": "1995"
   },
   "gerudo-valley": {
-    "generated": true,
-    "drawnFrom": "the notes of Gerudo Valley, Koji Kondo · arr. Sheet Music Boss"
+    "artist": "Koji Kondo",
+    "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+    "year": "1998"
   },
   "gladiator": {
     "artist": "Lisa Gerrard, Gavin Greenaway, The Lyndhurst Orchestra, Bruce Fowler, Yvonne S. Moriarty, Walt Fowler, Ladd McIntosh, Elizabeth Finch, Jack Smalley & Hans Zimmer",
@@ -640,8 +641,9 @@ export const ART = {
     "year": "2025"
   },
   "song-of-storms": {
-    "generated": true,
-    "drawnFrom": "the notes of Song of Storms (The Legend of Zelda), Koji Kondo · Ocarina of Time · arr. Sebastian, NinSheetMusic"
+    "artist": "Koji Kondo",
+    "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+    "year": "1998"
   },
   "stairway": {
     "artist": "Led Zeppelin",
@@ -709,11 +711,13 @@ export const ART = {
     "year": "1996"
   },
   "zelda-main-theme": {
-    "generated": true,
-    "drawnFrom": "the notes of The Legend of Zelda (Main Theme), Koji Kondo · Overworld theme, arr. JDMEK5, NinSheetMusic"
+    "artist": "Koji Kondo",
+    "album": "The Legend of Zelda: 25th Anniversary Special Orchestra CD",
+    "year": "2011"
   },
   "zeldas-lullaby": {
-    "generated": true,
-    "drawnFrom": "the notes of Zelda's Lullaby, Koji Kondo · arr. Sheet Music Boss"
+    "artist": "Koji Kondo",
+    "album": "The Legend of Zelda: Ocarina of Time (Original Soundtrack)",
+    "year": "1998"
   }
 };

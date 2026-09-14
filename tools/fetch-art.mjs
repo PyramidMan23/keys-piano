@@ -184,19 +184,25 @@ const WANT = {
 // the Cover Art Archive instead (checked: Nintendo has never put the Super
 // Mario soundtrack on any store, so every iTunes hit is a cover band).
 // mbid is pinned by hand after reading the search result, never guessed.
+//
+// `caa` is the Cover Art Archive's id for the FRONT image of that release. It
+// has to be pinned too, because the only thing that knows which of a release's
+// images is the front is coverartarchive.org's own redirector, and this machine
+// cannot reach it (see the loop below). Each one was read out of a real redirect
+// and then the picture was OPENED and looked at before it was written here.
 const MB = {
-  'mario':     { mbid: '138c0ebc-2c41-4763-9b87-b6753e8946cb', artist: 'Koji Kondo', album: 'Super Mario Bros. 35 Original Soundtrack', year: '2020' },
+  'mario':     { mbid: '138c0ebc-2c41-4763-9b87-b6753e8946cb', caa: '33400328726', artist: 'Koji Kondo', album: 'Super Mario Bros. 35 Original Soundtrack', year: '2020' },
   // 2026-09-14: same story as Mario. Every iTunes hit for the Zelda pieces is a
   // cover band, and 'Zelda's Lullaby' is hard-rejected by JUNK on the word
   // lullaby anyway. These four mbids were read out of a MusicBrainz release
   // search for Koji Kondo and each one was OPENED and looked at before it was
   // pinned here. The three Ocarina pieces share a sleeve because they share a
   // record, the same way the two Dr. Dre tracks both wear 2001.
-  'gerudo-valley':    { mbid: 'e78b3cd0-7643-4520-99fe-4b180bb5098c', artist: 'Koji Kondo', album: 'The Legend of Zelda: Ocarina of Time (Original Soundtrack)', year: '1998' },
-  'zeldas-lullaby':   { mbid: 'e78b3cd0-7643-4520-99fe-4b180bb5098c', artist: 'Koji Kondo', album: 'The Legend of Zelda: Ocarina of Time (Original Soundtrack)', year: '1998' },
-  'song-of-storms':   { mbid: 'e78b3cd0-7643-4520-99fe-4b180bb5098c', artist: 'Koji Kondo', album: 'The Legend of Zelda: Ocarina of Time (Original Soundtrack)', year: '1998' },
+  'gerudo-valley':    { mbid: 'e78b3cd0-7643-4520-99fe-4b180bb5098c', caa: '14767446925', artist: 'Koji Kondo', album: 'The Legend of Zelda: Ocarina of Time (Original Soundtrack)', year: '1998' },
+  'zeldas-lullaby':   { mbid: 'e78b3cd0-7643-4520-99fe-4b180bb5098c', caa: '14767446925', artist: 'Koji Kondo', album: 'The Legend of Zelda: Ocarina of Time (Original Soundtrack)', year: '1998' },
+  'song-of-storms':   { mbid: 'e78b3cd0-7643-4520-99fe-4b180bb5098c', caa: '14767446925', artist: 'Koji Kondo', album: 'The Legend of Zelda: Ocarina of Time (Original Soundtrack)', year: '1998' },
   // the series theme is not an Ocarina track, so it wears the series record
-  'zelda-main-theme': { mbid: 'fe88cd3f-1880-4ddf-98c4-2f74ca5f99f2', artist: 'Koji Kondo', album: 'The Legend of Zelda: 25th Anniversary Special Orchestra CD', year: '2011' },
+  'zelda-main-theme': { mbid: 'fe88cd3f-1880-4ddf-98c4-2f74ca5f99f2', caa: '40775085992', artist: 'Koji Kondo', album: 'The Legend of Zelda: 25th Anniversary Special Orchestra CD', year: '2011' },
 };
 
 // No honest recording exists at all for these. They keep the generative plate.
@@ -282,9 +288,16 @@ for (const [group, want] of Object.entries(WANT).filter(wanted)) {
                       track: cands[0].track, year: cands[0].year, source: cands[0].url, candidates: cands };
   console.log(`OK   ${group.padEnd(20)} ${cands[0].artist} - ${cands[0].album} (${cands[0].year})  [${cands.length} candidates]`);
 }
+// ☠️ 2026-09-14: node cannot open coverartarchive.org from this machine at all.
+// ETIMEDOUT on connect, every retry, with and without a User-Agent, while curl
+// to the very same IP succeeds - so the /front-1200 redirector is not something
+// a build can depend on. All it ever does is redirect into archive.org, which
+// node reaches fine, so go straight there. The one thing that costs us is the
+// redirector's knowledge of WHICH image is the front, which is why every MB
+// entry above pins its own `caa` id.
 for (const [group, m] of Object.entries(MB).filter(wanted)) {
   if (DRY) { console.log(`\n${group}  <- Cover Art Archive ${m.mbid} (${m.artist} - ${m.album})`); continue; }
-  const url = `https://coverartarchive.org/release/${m.mbid}/front-1200`;
+  const url = `https://archive.org/download/mbid-${m.mbid}/mbid-${m.mbid}-${m.caa}_thumb1200.jpg`;
   try {
     await download(url, join(ART, `${group}.jpg`));
     await download(url, join(CAND, `${group}-0.jpg`));
