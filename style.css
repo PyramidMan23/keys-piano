@@ -856,6 +856,21 @@ button:disabled { opacity: 0.35; cursor: default; }
   --accent: #2e6b47;   /* 5.62:1 on the cream page */
 }
 .score-wrap.dimmed { opacity: 0.5; }
+/* THE LESSON STAVE IS NOT THE PRINTED PAGE. The canon draws #lesson-stave as a
+   black box (inline background:#000, which no class rule can beat), and since
+   2026-09-12 ScoreView adds .score-wrap to whatever it draws in, which handed
+   the lesson the cream page's DARK ink: dark clefs and note heads on black,
+   which Mark could not read (2026-09-15). The lesson keeps the app's own dark
+   look it had up to keys-v131: near-white ink on black. The staff lines are
+   #6b7280 rather than the root's #4a5160 because they carry pitch and owe the
+   3:1 floor on black (#4a5160 measures 1.9:1, #6b7280 measures 4.4:1). */
+#lesson-stave.score-wrap {
+  background: #000; color: #e8e4da;
+  --score-ink: #e8e4da; --score-line: #6b7280;
+  --score-passive: #7d8694; --score-played: #a8b0ba; --score-finger: #a8b0ba;
+  --score-cur-bar: rgba(240, 168, 50, 0.10); --score-next-bar: rgba(232, 228, 218, 0.05);
+  --right: #f0a832; --left: #5ec8f2; --accent: #82bf9c;
+}
 
 /* ── PRESS FEEL ───────────────────────────────────────────────────────────────
    Mark, 2026-08-31: "can we make the feeling of pressing the buttons better?"

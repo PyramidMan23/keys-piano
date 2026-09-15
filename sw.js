@@ -3,7 +3,7 @@
 // v133 is that shell plus the learning wave's modules. Bumped rather than
 // reused, or a client already holding v132 keeps its cached shell and never
 // fetches the new ones.
-const VERSION = 'keys-v135';  // v133's learning wave plus real cover art for every song that has a record.
+const VERSION = 'keys-v136';  // v135 plus the lesson stave back to white ink on black
 const SHELL = [
   '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
