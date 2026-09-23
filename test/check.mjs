@@ -3250,4 +3250,17 @@ ok('mastery reconciliation tolerates absent legacy records');
   assert.ok(searchText(zelda).includes('games'), 'search text carries the tags');
   ok(`${COLLECTIONS.length} collections: ` + COLLECTIONS.map((c) => `${c.label} ${counts[c.key]}`).join(', '));
 }
+// The journal, the diagnostic report and every progress export stamp the
+// build from index.html's keys-build meta. It sat at keys-v121-astra-audit-1
+// from v122 to v136, so two weeks of practice rows named the wrong build.
+// It must name the same shell the service worker caches.
+{
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  const sw = readFileSync(new URL('../sw.js', import.meta.url), 'utf8');
+  const meta = html.match(/<meta name="keys-build" content="([^"]+)">/)?.[1];
+  const ver = sw.match(/const VERSION = '([^']+)'/)?.[1];
+  assert.ok(ver, 'sw.js declares VERSION');
+  assert.equal(meta, ver, 'index.html keys-build must equal sw.js VERSION (bump both)');
+  ok(`build stamp ${meta} matches the service worker shell`);
+}
 console.log(`\nALL GREEN: ${n} checks passed`);
