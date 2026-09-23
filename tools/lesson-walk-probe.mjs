@@ -80,15 +80,22 @@ for (let i = 0; i < LESSONS.length; i++) {
   const wrongScored = afterWrong.misses > st.misses;
   const rightScored = (afterRight.qi ?? 0) > 0 || afterRight.li > st.li || afterRight.done === true || afterRight.misses === afterWrong.misses;
   ok(`${i + 1}. ${les.title}: wrong press counts as a miss, right press advances`, wrongScored && rightScored, `misses ${st.misses}->${afterWrong.misses}->${afterRight.misses}, qi=${afterRight.qi} li ${st.li}->${afterRight.li}`);
+  // FINISH EVERY LESSON through the real input handler, including its melody
+  // payoff. Only the-cs used to be finished, and the phrases payoff (the one
+  // melody written as a phrase) threw at its last level for Mark on 10 and 15
+  // Sep while this gate stayed green.
+  let melHeads = null;
+  for (let tries = 0; tries < 400; tries++) {
+    const next = await b.eval(`(() => {const r=window.__lesson?.(); if (!r || r.done || !r.current) return null;
+      const e=r.expected(); if (e?.length) return e; const c=r.current; return Array.isArray(c) ? c : c.ms ?? [c.m];})()`);
+    if (!next) break;
+    if (melHeads == null) melHeads = await b.eval(`window.__lesson()?.level?.melody ? document.querySelectorAll('#lesson-stave ellipse, #lesson-stave .vf-notehead').length : null`);
+    await b.eval(`(() => {for (const m of ${JSON.stringify(next)}) window.__simNote(m,true,90); for (const m of ${JSON.stringify(next)}) window.__simNote(m,false); return true;})()`);
+    await sleep(les.drill.type === 'technique' ? 260 : 60);
+  }
+  const finished = await b.eval(`!!JSON.parse(localStorage.getItem('keys-v1')).lessons?.[${JSON.stringify(les.id)}]`);
+  ok(`${i + 1}. ${les.title}: finishes, melody payoff drawn`, finished && melHeads > 0, `finished=${finished} payoffHeads=${melHeads}`);
   if (les.id === 'the-cs') {
-    // Finish through the real input handler, including release between targets.
-    for (let tries=0; tries<150; tries++) {
-      const next=await b.eval(`(() => {const r=window.__lesson?.(); if (!r || r.done) return null;
-        const c=r.current; return Array.isArray(c) ? c : c.ms ?? [c.m];})()`);
-      if (!next) break;
-      await b.eval(`(() => {for (const m of ${JSON.stringify(next)}) {window.__simNote(m,true);window.__simNote(m,false);} return true;})()`);
-      await sleep(80);
-    }
     const saved=await b.eval(`JSON.parse(localStorage.getItem('keys-v1'))`);
     const bridge=bridgeSongFor(les.id,SHELF,saved);
     const shown=await b.eval(`({id:document.getElementById('lesson-rhythm-link').dataset.bridge,

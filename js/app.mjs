@@ -2171,7 +2171,8 @@ function theoryNote(m, isDown) {
     // with the answer on screen. The transfer quest is what tests it.
     $('theory-status').textContent = '✓ Practised, twice, with the notes in front of you. Whether it stuck is what a later check decides.';
     comboFlash('PRACTISED ✓');
-    setTimeout(() => { $('theory-card').hidden = true; cardTask = null; }, 1400);
+    const owner = cardTask; // a card opened inside the wait stays open
+    setTimeout(() => { if (cardTask === owner) { $('theory-card').hidden = true; cardTask = null; } }, 1400);
   }
 }
 
@@ -2303,7 +2304,12 @@ function showLessonPrompt(items) {
 let lessonRunner = null, lessonView = null;
 let lessonTapCount = 0, lessonMidiCount = 0;
 
+// one frame handle: every resize and keyboard toggle calls this, and each
+// call used to start another loop, so the flares ran N times too fast
+let lessonKeysRaf = 0;
 function drawLessonKeys() {
+  cancelAnimationFrame(lessonKeysRaf);
+  lessonKeysRaf = 0;
   if (active !== 'lesson' || !lessonView) return;
   const c = lessonView;
   c.ctx.fillStyle = COLORS.bg;
@@ -2316,7 +2322,7 @@ function drawLessonKeys() {
   c._drawFlares(4, dt);
   c._drawParticles(dt);
   c._drawFloaters(dt);
-  requestAnimationFrame(drawLessonKeys);
+  lessonKeysRaf = requestAnimationFrame(drawLessonKeys);
 }
 
 // every midi a lesson can ask for, to size the zoomed keyboard
@@ -2351,14 +2357,24 @@ function promptItems(it) {
   if (it.ms) return it.ms.map((m, i) => ({ m, h: it.h, b: i, f: it.fs?.[i] }));
   return [it];
 }
+// a melody payoff as notes on a running beat. A melody item may be a note,
+// a chord (array) or a phrase ({h, ms}); the phrases lesson's payoff is one
+// phrase, and reading it as a note gave m undefined and threw on 10 and 15 Sep.
+function melodyItems(mel) {
+  let b = 0;
+  return mel.flatMap((it) => {
+    const out = it.ms ? promptItems(it).map((x) => ({ ...x, b: b + x.b }))
+      : Array.isArray(it) ? promptItems(it).map((x) => ({ ...x, b })) : [{ ...it, b }];
+    b += it.ms ? it.ms.length : 1;
+    return out;
+  });
+}
 function showCurrentPrompt() {
   const lv = lessonRunner.level;
   if (lv?.melody) {
     // the payoff: whole melody on the stave, current note lit (victory lap,
     // not assessment, no litems recorded here)
-    const items = lv.melody.flatMap((it, i) =>
-      Array.isArray(it) ? it.map((m) => ({ m, h: m < 60 ? 'L' : 'R', b: i })) : [{ ...it, b: i }]);
-    showLessonPrompt(items);
+    showLessonPrompt(melodyItems(lv.melody));
   } else showLessonPrompt(promptItems(lessonRunner.current));
   lessonView.targets = new Set(lv?.melody ? lessonRunner.expected() : []);
 }
@@ -2381,7 +2397,11 @@ function updateLessonHud() {
     (p.melody ? '' : `<span class="slot-need">${p.firstTry} / ${p.pass} clean</span>`);
 }
 
+// bumped whenever a lesson or review opens, so the auto-return to the list
+// from a finished one cannot close the next one opened inside its wait
+let lessonGen = 0;
 function openLesson(les) {
+  lessonGen++;
   lessonDef = les;
   reviewMode = false;
   lessonRunner = null;
@@ -2594,12 +2614,7 @@ function completeLesson() {
   comboFlash(clean ? 'CLEAN RUN ★' : wasComplete ? 'REPLAY ✓' : 'LESSON ✓');
   // flourish: the app plays back the melody he just earned, on the grand
   const mel = lessonDef.game?.melody;
-  if (mel) {
-    const notes = mel.flatMap((it, i) => Array.isArray(it)
-      ? it.map((mm) => ({ b: i, d: 1, m: mm, h: mm < 60 ? 'L' : 'R' }))
-      : [{ b: i, d: 1, m: it.m, h: it.h }]);
-    playPreview(notes, 140, null, null);
-  }
+  if (mel) playPreview(melodyItems(mel).map(({ b, m, h }) => ({ b, d: 1, m, h })), 140, null, null);
   lessonRunner = null;
   // THE BRIDGE (2026-09-02): one offer of real music the learner can now read,
   // chosen by bridgeSongFor from the shipped library, never hand-listed and
@@ -2616,7 +2631,8 @@ function completeLesson() {
   }
   // an offer that vanishes cannot be taken, so the auto-return only runs when
   // there is nothing on offer; with one up, Back and the offer are the exits
-  if (!bridge) setTimeout(() => { if (active === 'lesson') { show('lessons'); renderLessonList(); } }, 2600);
+  const gen = lessonGen;
+  if (!bridge) setTimeout(() => { if (active === 'lesson' && gen === lessonGen) { show('lessons'); renderLessonList(); } }, 2600);
 }
 
 function lessonNote(m, isDown, mode = 'midi') {
@@ -2736,6 +2752,8 @@ function startReview() {
   reviewIdx = 0; reviewFirstTry = 0; reviewTotal = reviewItems.length;
   reviewLessonClean = {}; // lessonId -> stayed first-try this review (retention ★)
   reviewMode = true;
+  lessonGen++;
+  lessonRunner = null; // a half-run lesson must not take the review's key presses
   lessonDef = { id: 'review', title: 'Quick review', body: 'Six things you have already learned, mixed together and weighted toward what you have missed before. First try is what counts.', drill: { type: 'review' } };
   show('lesson');
   $('now-playing').textContent = 'Review';
@@ -2785,7 +2803,8 @@ function finishReview() {
   comboFlash(starred.length ? `RETENTION ★ ×${starred.length}` : `REVIEW ${reviewFirstTry}/${reviewTotal} FIRST TRY`);
   setTextKeeping($('lesson-msg'), `Done: ${reviewFirstTry} of ${reviewTotal} on the first try.` +
     (starred.length ? ` ★ Retention star${starred.length > 1 ? 's' : ''} earned, see the lesson list.` : ' Misses come back next review, weighted.'));
-  setTimeout(() => { if (active === 'lesson') { show('lessons'); renderLessonList(); } }, 2200);
+  const gen = lessonGen;
+  setTimeout(() => { if (active === 'lesson' && gen === lessonGen) { show('lessons'); renderLessonList(); } }, 2200);
 }
 
 function reviewNote(m, isDown) {
@@ -3644,7 +3663,12 @@ $('btn-freeplay').addEventListener('click', () => {
   fpView.resize();
   drawFreeplay();
 });
+// the tool screens are mutually exclusive, so one frame handle keeps exactly
+// one keyboard loop alive however often a screen's button is pressed
+let toolKeysRaf = 0;
 function drawFreeplay() {
+  cancelAnimationFrame(toolKeysRaf);
+  toolKeysRaf = 0;
   if (active !== 'freeplay') return;
   const c = fpView;
   const ctx = c.ctx;
@@ -3662,7 +3686,7 @@ function drawFreeplay() {
     ctx.fillText('Play anything. Every note and chord you play is named, top right.', c.w / 2, Math.max(28, (c.h - c.kbH) / 2 + 18));
     ctx.textAlign = 'left';
   }
-  requestAnimationFrame(drawFreeplay);
+  toolKeysRaf = requestAnimationFrame(drawFreeplay);
 }
 
 // ---------- calibration ----------
@@ -3935,13 +3959,15 @@ $('btn-takes').addEventListener('click', () => {
   renderTakes();
 });
 function drawTakes() {
+  cancelAnimationFrame(toolKeysRaf);
+  toolKeysRaf = 0;
   if (active !== 'takes') return;
   const c = takesView;
   c.ctx.fillStyle = COLORS.bg;
   c.ctx.fillRect(0, 0, c.w, c.h);
   c.kbH = c.h - 4;
   c._drawKeyboard(4);
-  requestAnimationFrame(drawTakes);
+  toolKeysRaf = requestAnimationFrame(drawTakes);
 }
 function renderTakes() {
   const takes = [...(state.takes ?? [])].sort((a, b) => b.at - a.at);
@@ -4099,6 +4125,8 @@ $('improv-go').addEventListener('click', () => {
   playComp();
 });
 function drawImprov() {
+  cancelAnimationFrame(toolKeysRaf);
+  toolKeysRaf = 0;
   if (active !== 'improv') return;
   const c = improvView;
   const beat = improvOn ? (performance.now() - improvT0) / 750 : 0;
@@ -4110,7 +4138,7 @@ function drawImprov() {
   c.ctx.fillRect(0, 0, c.w, c.h);
   c.kbH = c.h - 4;
   c._drawKeyboard(4);
-  requestAnimationFrame(drawImprov);
+  toolKeysRaf = requestAnimationFrame(drawImprov);
 }
 
 // ---------- 12-key fluency ladder (mastery item 10b) ----------
@@ -4827,13 +4855,15 @@ function updateEchoHud(msg) {
 }
 
 function drawEcho() {
+  cancelAnimationFrame(toolKeysRaf);
+  toolKeysRaf = 0;
   if (active !== 'echo') return;
   const c = echoView;
   c.ctx.fillStyle = COLORS.bg;
   c.ctx.fillRect(0, 0, c.w, c.h);
   c.kbH = c.h - 4;
   c._drawKeyboard(4);
-  requestAnimationFrame(drawEcho);
+  toolKeysRaf = requestAnimationFrame(drawEcho);
 }
 
 // Echo modes (mastery item 8): plain echo, audiation ("sing first"), and

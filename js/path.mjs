@@ -410,12 +410,16 @@ export function installPath(ctx) {
     drawKeys();
   }
 
-  let drawing = false;
+  // one frame handle: setKeyboard runs on every task step and each call used
+  // to start ANOTHER loop, so a check-in ran ~10 at once and the flares
+  // played ten times too fast
+  let keysRaf = 0;
   function drawKeys() {
+    cancelAnimationFrame(keysRaf);
+    keysRaf = 0;
     if (!view) return;
     const on = !$('screen-task').hidden && !$('task-keys').hidden;
-    if (!on) { drawing = false; return; }
-    drawing = true;
+    if (!on) return;
     view.ctx.fillStyle = COLORS.bg;
     view.ctx.fillRect(0, 0, view.w, view.h);
     // The working area FLEXES taller when a task hides the sheet, and filling
@@ -427,7 +431,7 @@ export function installPath(ctx) {
     view._drawKeyboard(kbTop);
     view._drawFlares(kbTop, 0.016);
     view._drawParticles(0.016);
-    requestAnimationFrame(drawKeys);
+    keysRaf = requestAnimationFrame(drawKeys);
   }
 
   function slots(n, states) {
@@ -673,7 +677,8 @@ export function installPath(ctx) {
     comboFlash(isReplay ? 'REPLAY ✓' : 'STEP CLEARED');
     $('task-msg').textContent = (res.note ?? '') + ' ' + competenceLine(mastery()[lessonDef.skillIds[0]]);
     $('task-start').hidden = true;
-    setTimeout(() => { if (!$('screen-task').hidden) openPath(); }, 2400);
+    const gen = taskGen; // Back then a new task inside the wait must not be yanked away
+    setTimeout(() => { if (gen === taskGen && !$('screen-task').hidden) openPath(); }, 2400);
   }
 
   let introWindow = new Set(); // same roll/staccato tolerance as the tasks
@@ -1058,7 +1063,8 @@ export function installPath(ctx) {
         'Anything you already showed me is marked as met; anything you skipped simply starts at the beginning.',
       ]);
       $('task-start').hidden = true;
-      setTimeout(() => { if (!$('screen-task').hidden) openPath(); }, 2000);
+      const gen = taskGen; // Back then a new task inside the wait must not be yanked away
+      setTimeout(() => { if (gen === taskGen && !$('screen-task').hidden) openPath(); }, 2000);
       return;
     }
     const d = DIAGNOSTIC[diagIdx];
@@ -1108,7 +1114,8 @@ export function installPath(ctx) {
           $('task-msg').textContent = (passed ? '★ ' : '· ') + hits +
             (passed ? ' Transfer passed on this exercise. Come back for a delayed check.'
                     : ' Needed 7 of 8. Nothing is lost, the path will point you at the weak part.');
-          setTimeout(() => { if (!$('screen-task').hidden) openPath(); }, 2800);
+          const gen = taskGen; // Back then a new task inside the wait must not be yanked away
+          setTimeout(() => { if (gen === taskGen && !$('screen-task').hidden) openPath(); }, 2800);
         },
       });
     };
