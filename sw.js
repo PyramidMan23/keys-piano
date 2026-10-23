@@ -1,7 +1,7 @@
 // App-shell cache. Bump VERSION on every deploy so clients update.
-const VERSION = 'keys-v134.1';  // v134 art plus the bug sweep: phrases payoff crash, stacked key loops, stale return timers, true build stamp
+const VERSION = 'keys-v135';  // Duet: score and falls on one screen; phone library fits 390px  // v134 art plus the bug sweep: phrases payoff crash, stacked key loops, stale return timers, true build stamp
 const SHELL = [
-  '.', 'index.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
+  '.', 'index.html', 'duet.html', 'style.css', 'icon.svg', 'icon-192.png', 'icon-512.png', 'manifest.webmanifest', 'fonts/Fraunces.ttf',
   // ☠️ songs.mjs IMPORTS songs-hands.mjs AND songs-fingers.mjs. Neither was
   // listed here: a shell that caches a module but not what it imports installs
   // a build that cannot boot offline, and the failure appears only on the
@@ -15,7 +15,7 @@ const SHELL = [
   'js/art-manifest.mjs',
   'js/notation.mjs', 'js/engraving.mjs', 'vendor/vexflow-4.2.5.js',
   'js/practice-insight.mjs', 'js/music-source.mjs', 'js/source-checks.mjs',
-  'js/practice-template.mjs',
+  'js/practice-template.mjs', 'js/duet.mjs',
   'js/source-signature.mjs',
   'js/meter.mjs',
   // the canon: the design as markup, and everything that mounts and binds it

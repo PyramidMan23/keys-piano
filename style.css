@@ -1164,3 +1164,35 @@ button:active:not(:disabled),
   .canon-root[data-canon-screen="lesson"] #lesson-msg { flex-wrap: wrap !important; }
   .canon-root[data-canon-screen="lesson"] #lesson-nomidi { flex-basis: 100% !important; min-height: 44px; }
 }
+
+/* Phones: the library board is drawn 756px wide with a 186px rail beside the
+   collection, which pushed the page to 520px+ on a 390px screen and cut the
+   rail and the welcome card off. Below 755px the rail stacks above the
+   collection as a wrapped strip, and nothing is wider than the screen. */
+@media (max-width: 755px) {
+  #screen-library .practice-reflow { width: 100% !important; max-width: 100vw; min-width: 0 !important; }
+  #screen-library .practice-reflow:has(> [style*="width:186px"]) { flex-direction: column !important; min-height: 0 !important; }
+  #screen-library .practice-reflow > [style*="width:186px"] {
+    width: 100% !important; border-right: 0 !important; border-bottom: 1px solid #253129 !important;
+    flex-direction: row !important; flex-wrap: wrap !important; height: auto !important;
+  }
+  #screen-library .practice-reflow > [style*="width:186px"] > * { min-width: 0; }
+  #screen-library .practice-reflow [style*="width:412px"] { width: 100% !important; }
+  #screen-library .practice-reflow [style*="flex:1;min-width:0"] { width: 100% !important; }
+  #screen-library .practice-reflow [style*="gap:12px;padding:14px"],
+  #screen-library .practice-reflow [style*="gap:12px;padding:0 14px 14px"] { flex-wrap: wrap !important; }
+  #screen-library .practice-reflow [style*="gap:12px;padding:14px"] > *,
+  #screen-library .practice-reflow [style*="gap:12px;padding:0 14px 14px"] > * { flex: 1 1 100% !important; min-width: 0 !important; width: auto !important; }
+  /* the four shelf tabs scroll sideways inside their own row, never the page */
+  #screen-library .practice-reflow :has(> [style*="flex: 0 0 auto; padding: 0px 13px; height: 48px"]) {
+    overflow-x: auto !important; max-width: 100% !important; scrollbar-width: none;
+  }
+  #screen-library .practice-reflow [style*="gap:8px;padding:0 14px 7px 12px"] { display: none !important; }
+  .firstrun-card { max-width: calc(100vw - 32px); margin: 16px; padding: 22px 20px; box-sizing: border-box; }
+  .firstrun-card h2 { font-size: 28px; }
+}
+
+/* Flat menus (Mark, 2026-10-23: "no random glows in the background of the main
+   menus"). The library design put a blurred tinted copy behind every cover;
+   the covers keep their 1px frame and sit on plain black. */
+#screen-library [style*="blur("], .practice-reflow [style*="blur("], [data-canon-screen^="library"] [style*="blur("] { display: none !important; }

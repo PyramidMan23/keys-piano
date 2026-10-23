@@ -14,7 +14,7 @@ export class EngravedScore {
   drawWindow(first){
     const m=this.model;this.window=first;this.noteEls.clear();this.container.replaceChildren();
     const host=document.createElement('div');host.className='engraved-score';this.container.append(host);
-    const count=Math.min(4,m.bars-first),leading=110;
+    const count=Math.min(this.windowBars??4,m.bars-first),leading=110;
     const widths=Array.from({length:count},(_,i)=>{
       const onsets=new Set(Object.values(m.tracks).flatMap(voices=>voices.flatMap(v=>v[first+i].map(e=>e.at))));
       return Math.max(340,90+onsets.size*28)+(i===0?leading:0);
@@ -83,7 +83,7 @@ export class EngravedScore {
   update(engine,hand){
     const beat=engine.currentGroup()?.beat??engine.beat;
     const bar=Math.max(0,Math.min(this.model.bars-1,Math.floor(beat*this.model.factor/this.model.barLength)));
-    if(bar<this.window||bar>=this.window+4)this.drawWindow(bar);
+    if(bar<this.window||bar>=this.window+(this.windowBars??4))this.drawWindow(bar);
     for(const [n,els] of this.noteEls){const passive=hand!=='both'&&n.h!==hand;
       const current=n.b===engine.currentGroup()?.beat&&!passive;
       for(const el of els){if(!el)continue;

@@ -1247,7 +1247,10 @@ function applyLibraryAtmosphere() {
           return [r2 + m2, g2 + m2, b2 + m2].map((v) => Math.round(v * 255)).join(', ');
         })();
       const peak = sat < 0.10 ? '.035' : '.065';
-      wash.style.background = `radial-gradient(ellipse 82% 88% at 24% 38%, rgba(${col},${peak}) 0%, rgba(${col},.035) 38%, rgba(${col},.012) 62%, transparent 82%)`;
+      // Mark, 2026-10-23: "no random glows in the background of the main menus".
+      // The menu ground stays flat black; the tint is computed but not painted.
+      void col; void peak;
+      wash.style.background = 'none';
     } catch { wash.style.background = 'none'; }
   };
   if (heroImg) {
@@ -3323,9 +3326,36 @@ function syncModeButtons() {
   $('score-wrap').hidden = viewMode !== 'score';
   if (viewMode === 'falls') falls?.resize();
   if (CANON_ON) syncWidePlay();
+  placeDuetButton();
 }
 
 $('mode-falls').addEventListener('click', () => { viewMode = 'falls'; syncModeButtons(); });
+// Duet: the score and the falls on one screen, help that moves itself. Its own
+// page, so it leaves the canon play screen and its gates exactly as they are.
+// Under the canon, canon-play.mjs draws it into the board; this is the plain shell.
+function placeDuetButton() {
+  const scoreBtn = $('mode-score');
+  // the wide canon board draws its own (canon-play.mjs); this covers the rest
+  if (!scoreBtn || !scoreBtn.offsetParent || document.querySelector('[data-duet]')?.offsetParent) return;
+  let btn = document.getElementById('mode-duet');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id = 'mode-duet';
+    btn.type = 'button';
+    btn.textContent = 'Duet';
+    btn.title = 'Score and falling notes together';
+    btn.addEventListener('click', () => { location.href = 'duet.html?song=' + encodeURIComponent(song?.id ?? ''); });
+  }
+  if (btn.previousElementSibling === scoreBtn) return;
+  btn.setAttribute('style', scoreBtn.getAttribute('style') ?? '');
+  btn.className = scoreBtn.className;
+  btn.style.borderLeft = '0';
+  btn.style.color = '#82bf9c';
+  btn.style.borderRadius = '0 3px 3px 0';
+  scoreBtn.style.borderRadius = '0';
+  scoreBtn.after(btn);
+}
+placeDuetButton();
 $('mode-score').addEventListener('click', () => {
   exposePassage(state, song, 0, Math.max(...song.notes.map((n) => n.b + n.d)), Date.now());
   if (engine) engine.__checkKind = null;

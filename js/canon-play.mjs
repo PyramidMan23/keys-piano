@@ -238,6 +238,22 @@ export function mountWidePlay(host) {
     board.__syncMode = restyle;
     modeF.addEventListener('click', () => setTimeout(restyle, 0));
     modeS.addEventListener('click', () => setTimeout(restyle, 0));
+    // Duet sits on the end of the same segment: drawn like Score, its own page
+    if (!board.querySelector('[data-duet]')) {
+      const duet = modeS.cloneNode(false);
+      duet.removeAttribute('id');
+      duet.dataset.duet = '';
+      duet.type = 'button';
+      duet.textContent = 'Duet';
+      duet.title = 'Score and falling notes together';
+      duet.setAttribute('aria-label', 'Duet: score and falling notes together');
+      duet.style.borderLeft = '0';
+      duet.style.color = '#82bf9c';
+      duet.style.borderRadius = '0 3px 3px 0';
+      duet.addEventListener('click', () => { location.href = 'duet.html?song=' + encodeURIComponent(window.__engine?.song?.id ?? ''); });
+      modeS.style.borderRadius = '0';
+      modeS.after(duet);
+    }
   }
 
   // toggles: the row clicks the real checkbox; the word prints its state.
