@@ -45,6 +45,7 @@ self.addEventListener('fetch', (e) => {
         }
         return res;
       })
-      .catch(() => caches.match(e.request))
+      // a page opened with a query (duet.html?song=x) is the same cached shell
+      .catch(() => caches.match(e.request, { ignoreSearch: e.request.mode === 'navigate' }))
   );
 });

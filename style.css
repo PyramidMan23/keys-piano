@@ -1188,6 +1188,15 @@ button:active:not(:disabled),
     overflow-x: auto !important; max-width: 100% !important; scrollbar-width: none;
   }
   #screen-library .practice-reflow [style*="gap:8px;padding:0 14px 7px 12px"] { display: none !important; }
+  /* song rows (Learning, search results): four fixed columns left the title
+     0px wide, so it could not be read or tapped. Title gets the first line,
+     plays and diff go, state and tiers drop to a second line under it. */
+  #screen-library .practice-reflow :has(> [style*="width:140px;flex:none"]) { flex-wrap: wrap !important; row-gap: 6px !important; }
+  #screen-library .practice-reflow :has(> [style*="width:140px;flex:none"]) > [style*="flex:1;min-width:0"] { flex: 1 1 calc(100% - 64px) !important; }
+  #screen-library .practice-reflow :has(> [style*="width:140px;flex:none"]) > [style*="width:40px;flex:none"],
+  #screen-library .practice-reflow :has(> [style*="width:140px;flex:none"]) > [style*="width:52px;flex:none"] { display: none !important; }
+  #screen-library .practice-reflow :has(> [style*="width:140px;flex:none"]) > [style*="width:92px;flex:none"] { margin-left: 56px; }
+  #screen-library .practice-reflow [style*="width:140px;flex:none"] { width: auto !important; flex: 0 1 auto !important; flex-wrap: wrap; }
   .firstrun-card { max-width: calc(100vw - 32px); margin: 16px; padding: 22px 20px; box-sizing: border-box; }
   .firstrun-card h2 { font-size: 28px; }
 }

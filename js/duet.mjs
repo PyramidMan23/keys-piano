@@ -37,6 +37,9 @@ let song = null, engine = null, demo = false, help = 1, last = 0;
 let beatX = [];          // [{beat, x}] noteheads along the strip, sorted
 let threads = [];        // {m, hand, from:{x,y}, born}
 let lastGroup = null;
+let engraved = null;
+let demoHeld = [];      // notes the demo pressed last frame
+let boostUntil = -1;    // beat until which a miss keeps the bars back    // id of the song the strip was drawn for
 const falls = new FallsView($('falls'));
 const score = new EngravedScore($('score-strip'));
 score.windowBars = Infinity; // one strip, so it can glide instead of turning pages
@@ -75,10 +78,12 @@ function load(id) {
 }
 
 function rebuild() {
-  stopPreview(); demo = false; $('hear').textContent = 'Hear it';
+  stopPreview(); demo = false; demoHeld = []; boostUntil = -1; $('hear').textContent = 'Hear it';
   engine = new Engine(song, { waitMode: $('wait').checked, tempo: $('tempo').value / 100, repeat: false });
-  score.build(song, engine);
-  measureStrip();
+  // engraving a long song is the slow part (about 2s for 3000 notes), and only
+  // the song changes it: tempo, wait mode and restart reuse the strip
+  if (engraved !== song.id) { score.build(song, engine); measureStrip(); engraved = song.id; }
+  else for (const els of score.noteEls.values()) for (const el of els) if (el) delete el.dataset.state;
   threads = []; lastGroup = null;
   applyHelp(help);
   sizeLink();
@@ -143,13 +148,13 @@ function sizeLink() {
 
 // a thread from each due notehead to its key, drawn once per new group
 function spawnThreads(g) {
-  const strip = $('score-strip'), stage = link.getBoundingClientRect();
+  const strip = $('score-strip');
   for (const n of g.notes) {
     const el = score.noteEls.get(n)?.[0];
     if (!el) continue;
     const head = el.querySelector('.vf-notehead') ?? el, r = head.getBoundingClientRect();
     if (r.right < strip.getBoundingClientRect().left) continue;
-    threads.push({ m: n.m, hand: n.h, x: r.left - stage.left + r.width / 2, y: r.bottom - stage.top, born: performance.now() });
+    threads.push({ m: n.m, hand: n.h, head, born: performance.now() }); // re-read each frame: the strip glides
   }
 }
 function drawThreads(now) {
@@ -158,16 +163,17 @@ function drawThreads(now) {
   const kbY = fr.bottom - stage.top - (falls.kbH ?? 100);
   threads = threads.filter((t) => now - t.born < 900);
   for (const t of threads) {
-    const k = falls.keyX?.get(t.m);
-    if (!k) continue;
+    const k = falls.keyX?.get(t.m), hr = t.head.getBoundingClientRect();
+    if (!k || !hr.width) continue;
+    const x = hr.left - stage.left + hr.width / 2, y = hr.bottom - stage.top;
     const kx = fr.left - stage.left + (k.x + k.w / 2) * (fr.width / falls.w);
     const life = (now - t.born) / 900, a = life < 0.15 ? life / 0.15 : 1 - (life - 0.15) / 0.85;
     lctx.globalAlpha = Math.max(0, a) * 0.85;
     lctx.strokeStyle = HAND[t.hand] ?? HAND.R;
     lctx.lineWidth = 1.5;
     lctx.beginPath();
-    lctx.moveTo(t.x, t.y);
-    lctx.bezierCurveTo(t.x, t.y + 60, kx, kbY - 80, kx, kbY);
+    lctx.moveTo(x, y);
+    lctx.bezierCurveTo(x, y + 60, kx, kbY - 80, kx, kbY);
     lctx.stroke();
   }
   lctx.globalAlpha = 1;
@@ -182,6 +188,7 @@ function finish() {
     else if (share >= CLEAN) tip += ' Read from the page, start to finish.';
     else if (share < ROUGH && help < 1) { applyHelp(Math.min(1, help + STEP)); tip += ' A little more help next time.'; }
   }
+  if (demo) { demo = false; $('hear').textContent = 'Hear it'; tip = 'That is how it goes. Your turn.'; }
   status(tip);
 }
 
@@ -195,12 +202,21 @@ function frame(now) {
   last = now;
   if (engine && !engine.finished) {
     const g = engine.currentGroup();
-    if (demo && g && engine.waiting) for (const n of g.notes) engine.noteOn(n.m);
-    // hesitation brings the bars back for this note only
-    const stuck = engine.waiting && engine._waitStartMs != null && engine.timeMs - engine._waitStartMs > HESITATE_MS;
+    // the demo plays each group as it falls due, in wait mode and timed mode
+    // alike, and lets go a frame later so every press has its release
+    for (const m of demoHeld) engine.noteOff(m);
+    demoHeld = [];
+    if (demo && g && engine.beat >= g.beat - 0.02) for (const n of g.notes) { engine.noteOn(n.m); demoHeld.push(n.m); }
+    // hesitation brings the bars back for this note only: stuck in wait mode,
+    // or (timed mode, where nothing waits) a note just missed
+    const stuck = (engine.waiting && engine._waitStartMs != null && engine.timeMs - engine._waitStartMs > HESITATE_MS)
+      || engine.beat < boostUntil;
     applyHelp(stuck ? Math.max(help, 0.75) : help, true);
     engine.tick(dt);
-    engine.drainEvents().forEach((ev) => { if (ev.type === 'perfect' || ev.type === 'good') falls.burst(ev.midi, ev.type); });
+    engine.drainEvents().forEach((ev) => {
+      if (ev.type === 'perfect' || ev.type === 'good') falls.burst(ev.midi, ev.type);
+      if (ev.type === 'missed' && !demo) boostUntil = engine.beat + 2;
+    });
     score.update(engine, 'both');
     const cur = engine.currentGroup();
     if (cur && cur !== lastGroup) { lastGroup = cur; spawnThreads(cur); }
@@ -239,4 +255,4 @@ addEventListener('resize', () => { falls.resize(); sizeLink(); measureStrip(); }
 fillPicker();
 load($('song').value);
 requestAnimationFrame(frame);
-window.__duet = { get engine() { return engine; }, get song() { return song; }, get help() { return help; }, press };
+window.__duet = { get engine() { return engine; }, get song() { return song; }, get help() { return help; }, get lookahead() { return falls.lookaheadBeats; }, press };
